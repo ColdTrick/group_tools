@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest>
+	<field key="author" value="ColdTrick IT Solutions" />
+	<field key="version" value="1.2" />
+	<field key="description" value="Combines different group additions" />
+	<field key="website" value="http://www.coldtrick.com/" />
+	<field key="copyright" value="(C) ColdTrick IT Solutions 2011" />
+	<field key="licence" value="GNU Public License version 2" />
+	<field key="elgg_version" value="2010071002" />
+</plugin_manifest>
+<!--
+
+====================
+Features
+====================
+Combines different group additions into one plugin
+
+- group admin transfer
+- group multiple admin
+- group kick
+- group activity (profile,dashboard,index,group widget)
+	- can show more than one group activity
+	- has support for river_comments and like
+- group members widget (group only)
+- group invitations widget (index, dashboard)
+- group mail
+- group invite
+	- better error messages
+	- free text with invite
+	- listing of outstanding invitations
+	- personal invitation revoke
+	- add users to group
+	- all users (admin option)
+- group listing
+	- alfabetical
+	
+====================
+Replaces
+====================
+- group_admin_transfer
+- group_multiple_admin
+- group_mail
+- group_kick
+- groupriver
+
+====================
+ToDo
+====================
+- group listing
+	- latest activity in my groups
+- import users from csv
+
+====================
+Version History
+====================
+1.2 (2011-06-27):
+	- added: alfabetical group sorting
+	- added: plugin setting which group listing is default (admin option)
+	- added: option to invite users to a group by e-mail address (admin option)
+	- changed: banned users no longer show in in group invite
+
+1.1 (2011-06-17):
+	- added: group activity widget: support for more groups
+	- fixed: accept membership request link
+	- fixed: manage membership approval always visible
+
+1.0 (2011-06-10):
+	- initial version
+
+-->
