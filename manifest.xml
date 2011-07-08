@@ -53,6 +53,12 @@ ToDo
 ====================
 Version History
 ====================
+x.x:
+	- added: dutch translation
+	- added: option to invite users by CVS upload
+	- fixed: some errors in engish translation
+	- changed: moved some code from action to functions for reusability
+
 1.2 (2011-06-27):
 	- added: alfabetical group sorting
 	- added: plugin setting which group listing is default (admin option)
