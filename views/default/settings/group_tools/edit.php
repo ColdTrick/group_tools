@@ -47,6 +47,12 @@
 </div>
 <div>
 	<?php 
+		echo elgg_echo("group_tools:settings:invite_csv");
+		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[invite_csv]", "options_values" => $noyes_options, "value" => $plugin->invite_csv));
+	?>
+</div>
+<div>
+	<?php 
 		echo elgg_echo("group_tools:settings:mail");
 		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[mail]", "options_values" => $noyes_options, "value" => $plugin->mail));
 	?>

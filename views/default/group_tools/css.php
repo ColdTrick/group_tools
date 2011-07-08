@@ -31,7 +31,8 @@
 }
 
 #group_tools_group_invite_users,
-#group_tools_group_invite_email {
+#group_tools_group_invite_email,
+#group_tools_group_invite_csv {
 	display: none;
 	margin-bottom: 10px;
 }

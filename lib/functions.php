@@ -148,5 +148,135 @@
 		
 		return $result;
 	}
+	
+	function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = ""){
+		global $CONFIG;
+		
+		$result = false;
+		
+		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = get_loggedin_user())){
+			// Create relationship
+			add_entity_relationship($group->getGUID(), "invited", $user->getGUID());
+			
+			// Send email
+			$url = $CONFIG->url . "pg/groups/invitations/" . $user->username;
+				
+			$subject = sprintf(elgg_echo("groups:invite:subject"), $user->name, $group->name);
+			$msg = sprintf(elgg_echo("group_tools:groups:invite:body"), $user->name, $loggedin_user->name, $group->name, $text, $url);
+			
+			if(notify_user($user->getGUID(), $group->getOwner(), $subject, $msg)){
+				$result = true;
+			}
+		}
+		
+		return $result;
+	}
+	
+	function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = ""){
+		$result = false;
+		
+		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = get_loggedin_user())){
+			if($group->join($user)){
+				// Remove any invite or join request flags
+				remove_entity_relationship($group->getGUID(), "invited", $user->getGUID());
+				remove_entity_relationship($user->getGUID(), "membership_request", $group->getGUID());
+					
+				// notify user
+				$subject = sprintf(elgg_echo("group_tools:groups:invite:add:subject"), $group->name);
+				$msg = sprintf(elgg_echo("group_tools:groups:invite:add:body"), $user->name, $loggedin_user->name, $group->name, $text, $group->getURL());
+					
+				if(notify_user($user->getGUID(), $group->getOwner(), $subject, $msg)){
+					$result = true;
+				}
+			}
+		}
+		
+		return $result;
+	}
+	
+	function group_tools_invite_email(ElggGroup $group, $email, $text = ""){
+		global $CONFIG;
+		
+		$result = false;
+
+		if(!empty($group) && ($group instanceof ElggGroup) && !empty($email) && is_email_address($email) && ($loggedin_user = get_loggedin_user())){
+			// get site secret
+			$site_secret = get_site_secret();
+			
+			// generate invite code
+			$invite_code = md5($site_secret . $email . $group->getGUID());
+			
+			if(!group_tools_check_group_email_invitation($invite_code, $group->getGUID())){
+				// make site email
+				if(!empty($CONFIG->site->email)){
+					if(!empty($CONFIG->site->name)){
+						$site_from = $CONFIG->site->name . " <" . $CONFIG->site->email . ">";
+					} else {
+						$site_from = $CONFIG->site->email;
+					}
+				} else {
+					// no site email, so make one up
+					if(!empty($CONFIG->site->name)){
+						$site_from = $CONFIG->site->name . " <noreply@" . get_site_domain($CONFIG->site_guid) . ">";
+					} else {
+						$site_from = "noreply@" . get_site_domain($CONFIG->site_guid);
+					}
+				}
+				
+				// register invite with group
+				$group->annotate("email_invitation", $invite_code, ACCESS_LOGGED_IN, $group->getGUID());
+				
+				// make subject
+				$subject = sprintf(elgg_echo("group_tools:groups:invite:email:subject"), $group->name);
+				
+				// make body
+				$body = sprintf(elgg_echo("group_tools:groups:invite:email:body"),
+					$loggedin_user->name,
+					$group->name,
+					$CONFIG->site->name,
+					$text,
+					$CONFIG->site->name,
+					$CONFIG->wwwroot . "pg/register",
+					$CONFIG->wwwroot . "pg/groups/invitations/?invitecode=" . $invite_code,
+					$invite_code);
+				
+				if(is_plugin_enabled("html_email_handler") && (get_plugin_setting("notifications", "html_email_handler") == "yes")){
+					// generate HTML mail body
+					$html_message = elgg_view("html_email_handler/notification/body", array("title" => $subject, "message" => parse_urls($body)));
+					if(defined("XML_DOCUMENT_NODE")){
+						if($transform = html_email_handler_css_inliner($html_message)){
+							$html_message = $transform;
+						}
+					}
+				
+					// set options for sending
+					$options = array(
+						"to" => $email,
+						"from" => $site_from,
+						"subject" => $subject,
+						"html_message" => $html_message,
+						"plaintext_message" => $body
+					);
+					
+					if(html_email_handler_send_email($options)){
+						$result = true;
+					}
+				} else {
+					// use plaintext mail
+					$headers = "From: " . $site_from . PHP_EOL;
+					$headers .= "X-Mailer: PHP/" . phpversion() . PHP_EOL;
+					$headers .= "Content-Type: text/plain; charset=\"utf-8\"" . PHP_EOL;
+						
+					if(mail($email, $subject, $body, $headers)){
+						$result = true;
+					}
+				}
+			} else {
+				$result = null;
+			}
+		}
+		
+		return $result;
+	}
 
 ?>

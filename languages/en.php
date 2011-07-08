@@ -21,6 +21,7 @@
 		
 		'group_tools:settings:invite' => "Allow all users to be invited (not just friends)",
 		'group_tools:settings:invite_email' => "Allow all users to be invited by e-mail address",
+		'group_tools:settings:invite_csv' => "Allow all users to be invited by CSV-file",
 	
 		'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
 		
@@ -87,10 +88,16 @@ You can also go to All site groups -> Group invitations and enter the following 
 	
 		// group invite
 		'group_tools:groups:invite' => "Invite users",
+		
 		'group_tools:group:invite:users' => "Find user(s)",
 		'group_tools:group:invite:users:description' => "Enter a name or username of a member and select him/her from the list",
+		
 		'group_tools:group:invite:email' => "Using e-mail address",
 		'group_tools:group:invite:email:description' => "Enter a valid e-mail address and select it from the list",
+		
+		'group_tools:group:invite:csv' => "Using CSV upload",
+		'group_tools:group:invite:csv:description' => "You can upload a CSV file with users to invite.<br />The format must be: displayname;e-mail address. There shouln't be a header line.",
+		
 		'group_tools:group:invite:text' => "Personal note (optional)",
 		'group_tools:group:invite:add:confirm' => "Are you sure you wish to add these users directly?",
 
@@ -142,13 +149,17 @@ You can also go to All site groups -> Group invitations and enter the following 
 		'group_tools:action:group:invite:success:other' => "Successfully invited %s users to join this group (%s were already a member, %s were already invited)",
 		'group_tools:action:group:invite:error:no_invites' => "No invitations send (%s were already a member, %s were already invited)",
 		
-		'group_tools:groups:invite:add:success' => "Successfully added %s users",
-		'group_tools:groups:invite:add:success:other' => "Successfully added %s users (%s were already a member)",
-		'group_tools:groups:invite:add:error:no_add' => "No users were added (%s were already a member)",
+		'group_tools:action:groups:invite:add:success' => "Successfully added %s users",
+		'group_tools:action:groups:invite:add:success:other' => "Successfully added %s users (%s were already a member)",
+		'group_tools:action:groups:invite:add:error:no_add' => "No users were added (%s were already a member)",
 		
 		'group_tools:action:group:invite:email:success' => "Successfully invited %s users by e-mail to join this group",
 		'group_tools:action:group:invite:email:success:other' => "Successfully invited %s users by e-mail to join this group (%s were already invited)",
 		'group_tools:action:group:invite:email:error:no_invites' => "No e-mail invitations send (%s were already invited)",
+		
+		'group_tools:action:group:invite:csv:error:no_invites' => "No invitations send from CSV (%s were already a member, %s were already invited)",
+		'group_tools:action:group:invite:success:other' => "Successfully invited %s users from CSV to join this group (%s were already a member, %s were already invited)",
+		'group_tools:action:group:invite:success' => "Successfully invited %s from CSV to join this group",
 		
 		// group - invite - accept e-mail
 		'group_tools:action:groups:email_invitation:error:input' => "Please enter an invitation code",
