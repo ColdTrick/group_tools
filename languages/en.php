@@ -96,7 +96,7 @@ You can also go to All site groups -> Group invitations and enter the following 
 		'group_tools:group:invite:email:description' => "Enter a valid e-mail address and select it from the list",
 		
 		'group_tools:group:invite:csv' => "Using CSV upload",
-		'group_tools:group:invite:csv:description' => "You can upload a CSV file with users to invite.<br />The format must be: displayname;e-mail address. There shouln't be a header line.",
+		'group_tools:group:invite:csv:description' => "You can upload a CSV file with users to invite.<br />The format must be: displayname;e-mail address. There shouldn't be a header line.",
 		
 		'group_tools:group:invite:text' => "Personal note (optional)",
 		'group_tools:group:invite:add:confirm' => "Are you sure you wish to add these users directly?",
@@ -132,7 +132,7 @@ You can also go to All site groups -> Group invitations and enter the following 
 		
 		// group admins - action
 		'group_tools:action:toggle_admin:error:group' => "The given input doesn't result in a group or you can't edit this group or the user is not a member",
-		'group_tools:action:toggle_admin:error:remove' => "An unknown error occured while removing the user as a group admi",
+		'group_tools:action:toggle_admin:error:remove' => "An unknown error occured while removing the user as a group admin",
 		'group_tools:action:toggle_admin:error:add' => "An unknown error occured while adding the user as a group admin",
 		'group_tools:action:toggle_admin:success:remove' => "The user was successfully removed as a group admin",
 		'group_tools:action:toggle_admin:success:add' => "The user was successfully added as a group admin",
