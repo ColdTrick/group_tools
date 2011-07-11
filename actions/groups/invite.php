@@ -6,8 +6,7 @@
 	 * @package ElggGroups
 	 */
 	
-	// Load configuration
-	global $CONFIG;
+	global $CONFIG, $GROUP_TOOLS_ACL;
 	
 	gatekeeper();
 	
@@ -73,8 +72,12 @@
 					$join = 0;
 					$member = 0;
 					
+					// make sure users are added to correct acl
+					register_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
+					$GROUP_TOOLS_ACL = $group->group_acl;
+					
 					// add users directly
-					foreach($user_guid as $u_id){
+					foreach($user_guids as $u_id){
 						if($user = get_user($u_id)){
 							if(!$group->isMember($user)){
 								if(group_tools_add_user($group, $user, $text)){
@@ -85,6 +88,9 @@
 							}
 						}
 					}
+					
+					// cleanup hook
+					unregister_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
 					
 					if(!empty($join)){
 						if(empty($member)){
@@ -158,9 +164,16 @@
 												$csv_invited++;
 											}
 										} else {
+											// make sure users are added to correct acl
+											register_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
+											$GROUP_TOOLS_ACL = $group->group_acl;
+											
 											if(group_tools_add_user($group, $user, $text)){
 												$csv_added++;
 											}
+											
+											// cleanup hook
+											unregister_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
 										}
 									} else {
 										$csv_already_invited++;

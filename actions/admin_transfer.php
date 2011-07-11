@@ -1,5 +1,7 @@
 <?php 
 
+	global $GROUP_TOOLS_ACL;
+
 	gatekeeper();
 	
 	$group_guid = (int) get_input("group_guid", 0);
@@ -18,7 +20,14 @@
 					$group->owner_guid = $new_owner->getGUID();
 					$group->container_guid = $new_owner->getGUID();
 					
+					// make sure user is added to correct acl
+					register_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
+					$GROUP_TOOLS_ACL = $group->group_acl;
+					
 					$group->join($new_owner);
+					
+					// cleanup hook
+					unregister_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
 					
 					if($group->save()){
 						$forward_url = $group->getURL();

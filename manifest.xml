@@ -31,6 +31,7 @@ Combines different group additions into one plugin
 	- personal invitation revoke
 	- add users to group
 	- all users (admin option)
+	- import users from csv
 - group listing
 	- alfabetical
 	
@@ -48,16 +49,18 @@ ToDo
 ====================
 - group listing
 	- latest activity in my groups
-- import users from csv
 
 ====================
 Version History
 ====================
-x.x:
+1.3 (2011-07-11):
 	- added: dutch translation
 	- added: option to invite users by CVS upload
 	- fixed: some errors in engish translation
 	- fixed: invite from CSV now check hidden entities
+	- fixed: when adding a user to a group, the user wasn't added to the acl is some cases 
+	- fixed: when transfering group ownership the new owner wasn't added to the group acl in some cases
+	- fixed: when removing a member from a group the user wasn't removed from the group acl is some cases  
 	- changed: moved some code from action to functions for reusability
 
 1.2 (2011-06-27):

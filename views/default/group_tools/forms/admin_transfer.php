@@ -23,7 +23,7 @@
 			$friends = elgg_get_entities_from_relationship($friends_options);
 			$members = elgg_get_entities_from_relationship($member_options);
 			
-			if(!empty($friends) && !empty($members)){
+			if(!empty($friends) || !empty($members)){
 				
 		 		$result .= elgg_echo("group_tools:admin_transfer:transfer") . ": ";
 		 		$result .= "<select name='owner_guid'>\n";
