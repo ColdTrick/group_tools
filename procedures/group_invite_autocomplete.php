@@ -15,6 +15,10 @@
 	$result = "";
 	
 	if(($user = get_loggedin_user()) && !empty($q) && !empty($group_guid)){
+		// show hidden (unvalidated) users
+		$hidden = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		
 		if($relationship != "email"){
 			// find existing users
 			$query_options = array(
@@ -66,6 +70,9 @@
 				}
 			}
 		}
+		
+		// restore hidden users
+		access_show_hidden_entities($hidden);
 	}
 	
 	echo $result;

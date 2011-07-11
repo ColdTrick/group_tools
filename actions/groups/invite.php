@@ -31,6 +31,10 @@
 	
 	if ((!empty($user_guids) || !empty($emails) || !empty($csv)) && ($group = get_entity($group_guid))){
 		if(($group instanceof ElggGroup) && $group->canEdit()){
+			// show hidden (unvalidated) users
+			$hidden = access_get_show_hidden_status();
+			access_show_hidden_entities(true);
+			
 			// invite existing users
 			if(!empty($user_guids)){
 				if($submit != elgg_echo("group_tools:add_users")){
@@ -188,6 +192,9 @@
 					register_error(sprintf(elgg_echo("group_tools:action:group:invite:csv:error:no_invites"), $csv_already_member, $csv_already_invited));
 				}
 			}
+			
+			// restore hidden users
+			access_show_hidden_entities($hidden);
 		} else {
 			register_error(elgg_echo("group_tools:action:error:edit"));
 		}

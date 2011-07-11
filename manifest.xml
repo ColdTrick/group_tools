@@ -57,6 +57,7 @@ x.x:
 	- added: dutch translation
 	- added: option to invite users by CVS upload
 	- fixed: some errors in engish translation
+	- fixed: invite from CSV now check hidden entities
 	- changed: moved some code from action to functions for reusability
 
 1.2 (2011-06-27):
