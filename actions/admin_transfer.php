@@ -67,6 +67,16 @@
 							$group->icontime = time();
 						}
 						
+						// move metadata of the group to the new owner
+						if($metadata = get_metadata_for_entity($group->getGUID())){
+							foreach($metadata as $md){
+								if($md->owner_guid == $old_owner->getGUID()){
+									$md->owner_guid = $new_owner->getGUID();
+									$md->save();
+								}
+							}
+						}
+						
 						// success message
 						system_message(sprintf(elgg_echo("group_tools:action:admin_transfer:success"), $new_owner->name));
 					} else {
