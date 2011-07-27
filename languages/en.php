@@ -60,6 +60,14 @@ If you already have an account or after you registered, please click on the foll
 
 You can also go to All site groups -> Group invitations and enter the following code:
 %s",
+		// group transfer notification
+		'group_tools:notify:transfer:subject' => "Administration of the group %s has been appointed to you",
+		'group_tools:notify:transfer:message' => "Hi %s,
+		
+%s has appointed you as the new administrator of the group %s. 
+
+To visit the group please click on the following link:
+%s",
 		
 		// admin transfer - form
 		'group_tools:admin_transfer:transfer' => "Transfer group ownership to",

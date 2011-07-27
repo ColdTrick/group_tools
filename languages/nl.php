@@ -1,5 +1,12 @@
 <?php
 $language = array (
+  'group_tools:notify:transfer:subject' => 'Beheer van de groep %s is aan je overgedragen',
+  'group_tools:notify:transfer:message' => 'Beste %s,
+
+%s heeft het beheer van de groep %s aan je overgedragen.
+
+Om de groep te bezoeken klik op onderstaande link:
+%s',
   'widgets:group_invitations:title' => 'Groep uitnodigingen',
   'widgets:group_invitations:description' => 'Toont de uitstaande groep uitnodigingen voor de huidige gebruiker',
   'widgets:group_members:title' => 'Groep leden',

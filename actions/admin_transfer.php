@@ -77,6 +77,18 @@
 							}
 						}
 						
+						// notify new owner
+						if($new_owner->getGUID() != $loggedin_user->getGUID()){
+							$subject = sprintf(elgg_echo("group_tools:notify:transfer:subject"), $group->name);
+							$message = sprintf(elgg_echo("group_tools:notify:transfer:message"), 
+												$new_owner->name,
+												$loggedin_user->name,
+												$group->name,
+												$group->getURL());
+							
+							notify_user($new_owner->getGUID(), $group->getGUID(), $subject, $message);
+						}
+						
 						// success message
 						system_message(sprintf(elgg_echo("group_tools:action:admin_transfer:success"), $new_owner->name));
 					} else {
