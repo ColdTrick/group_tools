@@ -24,16 +24,20 @@
 			$members = elgg_get_entities_from_relationship($member_options);
 			
 			if(!empty($friends) || !empty($members)){
+				$add_myself = false;
+				$add_friends = false;
+				$add_members = false;
 				
-		 		$result .= elgg_echo("group_tools:admin_transfer:transfer") . ": ";
+				$result .= elgg_echo("group_tools:admin_transfer:transfer") . ": ";
 		 		$result .= "<select name='owner_guid'>\n";
 		 		
 		 		if($group->getOwner() != $user->getGUID()){
+		 			$add_myself = true;
+		 			
 		 			$result .= "<option value='" . $user->getGUID() . "'>" . elgg_echo("group_tools:admin_transfer:myself") . "</option>\n";
 		 		}
 		 		
 		 		if(!empty($friends)){
-		 			$add_friends = false;
 		 			$friends_block .= "<optgroup label='" . elgg_echo("friends") . "'>\n";
 			 		
 		 			foreach($friends as $friend){
@@ -52,8 +56,6 @@
 		 		}
 		 		
 		 		if(!empty($members)){
-		 			$add_members = false;
-		 			
 		 			$members_block .= "<optgroup label='" . elgg_echo("groups:members") . "'>\n";
 			 		
 		 			foreach($members as $member){
@@ -74,7 +76,7 @@
 		 		$result .= "</select>\n";
 		 		$result .= "<br />";
 		 		
-		 		if($add_friends || $add_members){
+		 		if($add_myself || $add_friends || $add_members){
 			 		
 			 		$result .= elgg_view("input/hidden", array("internalname" => "group_guid", "value" => $group->getGUID()));
 			 		$result .= elgg_view("input/submit", array("value" => elgg_echo("group_tools:admin_transfer:submit")));
