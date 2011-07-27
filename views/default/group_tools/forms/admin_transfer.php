@@ -74,13 +74,17 @@
 		 		$result .= "</select>\n";
 		 		$result .= "<br />";
 		 		
-		 		$result .= elgg_view("input/hidden", array("internalname" => "group_guid", "value" => $group->getGUID()));
-		 		$result .= elgg_view("input/submit", array("value" => elgg_echo("group_tools:admin_transfer:submit")));
-		 		
-		 		$result = elgg_view("input/form", array("body" => $result,
-		 												"action" => $vars["url"] . "action/group_tools/admin_transfer",
-		 												"internalid" => "group_tools_admin_transfer_form"));
-		 		
+		 		if($add_friends || $add_members){
+			 		
+			 		$result .= elgg_view("input/hidden", array("internalname" => "group_guid", "value" => $group->getGUID()));
+			 		$result .= elgg_view("input/submit", array("value" => elgg_echo("group_tools:admin_transfer:submit")));
+			 		
+			 		$result = elgg_view("input/form", array("body" => $result,
+			 												"action" => $vars["url"] . "action/group_tools/admin_transfer",
+			 												"internalid" => "group_tools_admin_transfer_form"));
+		 		} else {
+		 			$result = elgg_echo("group_tools:admin_transfer:no_users");
+		 		}
 		 	} else {
 		 		$result = elgg_echo("group_tools:admin_transfer:no_users");
 		 	}
