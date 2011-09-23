@@ -63,3 +63,9 @@
 		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[group_listing]", "options_values" => $listing_options, "value" => $plugin->group_listing));
 	?>
 </div>
+<div>
+	<?php 
+		echo elgg_echo("group_tools:settings:search_index");
+		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[search_index]", "options_values" => $noyes_options, "value" => $plugin->search_index));
+	?>
+</div>

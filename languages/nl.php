@@ -35,6 +35,7 @@ Om de groep te bezoeken klik op onderstaande link:
   'group_tools:settings:invite_csv' => 'Nodig gebruikers uit op basis van een CSV-bestand',
   'group_tools:settings:mail' => 'Groep beheerders mogen alle leden een e-mail sturen',
   'group_tools:settings:listing' => 'Standaard groep overzicht tab',
+  'group_tools:settings:search_index' => 'Mogen besloten groepen worden ge&iuml;ndexeerd door zoekmachines',
   'group_tools:groups:invite:body' => 'Beste %s,
 
 %s heeft je uitgenodigd om lid te worden van de groep \'%s\'.

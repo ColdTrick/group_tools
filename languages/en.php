@@ -27,6 +27,8 @@
 		
 		'group_tools:settings:listing' => "Default group listing tab",
 		
+		'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
+		
 		// group invite message
 		'group_tools:groups:invite:body' => "Hi %s,
 

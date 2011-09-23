@@ -54,6 +54,9 @@ ToDo
 ====================
 Version History
 ====================
+x.x:
+	- added: admin option to manage if closed groups are indexed by search engines (default no)
+
 1.4 (2011-07-27):
 	- added: notification on group transfer to the new owner
 	- fixed: transfer pulldown showing up empty in some cases
