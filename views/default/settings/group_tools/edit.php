@@ -69,3 +69,9 @@
 		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[search_index]", "options_values" => $noyes_options, "value" => $plugin->search_index));
 	?>
 </div>
+<div>
+	<?php 
+		echo elgg_echo("group_tools:settings:auto_notification");
+		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[auto_notification]", "options_values" => $noyes_options, "value" => $plugin->auto_notification));
+	?>
+</div>

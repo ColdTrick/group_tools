@@ -28,6 +28,7 @@
 		'group_tools:settings:listing' => "Default group listing tab",
 		
 		'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
+		'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
 		
 		// group invite message
 		'group_tools:groups:invite:body' => "Hi %s,

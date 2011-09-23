@@ -1,6 +1,7 @@
 <?php 
 
 	require_once(dirname(__FILE__) . "/lib/functions.php");
+	require_once(dirname(__FILE__) . "/lib/events.php");
 
 	function group_tools_init(){
 		
@@ -41,6 +42,11 @@
 			// group invitation
 			register_action("groups/invite", false, dirname(__FILE__) . "/actions/groups/invite.php");
 			register_action("groups/joinrequest", false, dirname(__FILE__) . "/actions/groups/joinrequest.php");
+			
+			// auto enable group notifications on group join
+			if(get_plugin_setting("auto_notification", "group_tools") == "yes"){
+				register_elgg_event_handler("join", "group", "group_tools_join_group_event");
+			} 
 		}
 		
 		if(isadminloggedin()){

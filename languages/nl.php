@@ -36,6 +36,7 @@ Om de groep te bezoeken klik op onderstaande link:
   'group_tools:settings:mail' => 'Groep beheerders mogen alle leden een e-mail sturen',
   'group_tools:settings:listing' => 'Standaard groep overzicht tab',
   'group_tools:settings:search_index' => 'Mogen besloten groepen worden ge&iuml;ndexeerd door zoekmachines',
+  'group_tools:settings:auto_notification' => 'Schakel groeps notificaties automatisch in bij het lid worden van een groep',
   'group_tools:groups:invite:body' => 'Beste %s,
 
 %s heeft je uitgenodigd om lid te worden van de groep \'%s\'.
