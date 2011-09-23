@@ -7,7 +7,8 @@
 		'group_tools:revoke' => "Revoke",
 		'group_tools:add_users' => "Add users",
 		'group_tools:in' => "in",
-	
+		'group_tools:remove' => "Remove",
+		
 		// menu
 		'group_tools:menu:mail' => "Mail Members",
 		'group_tools:menu:membership' => "Membership approval",
@@ -29,6 +30,8 @@
 		
 		'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 		'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
+		'group_tools:settings:auto_join' => "Auto join groups",
+		'group_tools:settings:auto_join:description' => "New users will automaticly join the following groups",
 		
 		// group invite message
 		'group_tools:groups:invite:body' => "Hi %s,
@@ -78,6 +81,10 @@ To visit the group please click on the following link:
 		'group_tools:admin_transfer:submit' => "Tranfser",
 		'group_tools:admin_transfer:no_users' => "No members or friends to transfer ownership to.",
 		'group_tools:admin_transfer:confirm' => "Are you sure you wish to transfer ownership?",
+		
+		// auto join form
+		'group_tools:auto_join:add' => "%sAdd this group%s to the auto join groups. This will mean that new users are automaticly added to this group on registration.",
+		'group_tools:auto_join:remove' => "%sRemove this group%s from the auto join groups. This will mean that new users will no longer automaticly join this group on registration.",
 		
 		// group admins
 		'group_tools:multiple_admin:group_admins' => "Group admins",
@@ -178,8 +185,10 @@ To visit the group please click on the following link:
 		'group_tools:action:groups:email_invitation:error:join' => "An unknown error occured while joining the group %s, maybe you're already a member",
 		'group_tools:action:groups:email_invitation:success' => "You've successfully joined the group",
 		
-		'' => "",
-	
+		// group toggle auto join
+		'group_tools:action:toggle_auto_join:error:save' => "An error occured while saving the new settings",
+		'group_tools:action:toggle_auto_join:success' => "The new settings were saved successfully",
+		
 	);
 	
 	add_translation("en", $english);

@@ -20,6 +20,10 @@
 		"alfa" => elgg_echo("group_tools:groups:sorting:alfabetical"),
 	);
 	
+	if($auto_joins = $plugin->auto_join){
+		$auto_joins = string_to_tag_array($auto_joins);
+	}
+	
 ?>
 <div>
 	<?php 
@@ -75,3 +79,17 @@
 		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[auto_notification]", "options_values" => $noyes_options, "value" => $plugin->auto_notification));
 	?>
 </div>
+<?php if(!empty($auto_joins)) { ?>
+<h3 class="settings"><?php echo elgg_echo("group_tools:settings:auto_join"); ?></h3>
+<div><?php echo elgg_echo("group_tools:settings:auto_join:description"); ?></div>
+<div>
+	<?php 
+		foreach($auto_joins as $group_guid){ 
+			if($group = get_entity($group_guid)){
+				echo elgg_view("output/url", array("href" => $group->getURL(), "text" => $group->name));
+				echo "&nbsp;(" . elgg_view("output/confirmlink", array("href" => $vars["url"] . "action/group_tools/toggle_auto_join?group_guid=" . $group->getGUID(), "text" => elgg_echo("group_tools:remove"))) . ")<br />";
+			}
+		}
+	?>
+</div>
+<?php } ?>

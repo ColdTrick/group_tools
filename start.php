@@ -6,7 +6,7 @@
 	function group_tools_init(){
 		
 		if(is_plugin_enabled("groups")){
-			// extend css
+			// extend css & js
 			elgg_extend_view("css", "group_tools/css");
 			elgg_extend_view("js/initialise_elgg", "group_tools/js");
 			
@@ -46,7 +46,11 @@
 			// auto enable group notifications on group join
 			if(get_plugin_setting("auto_notification", "group_tools") == "yes"){
 				register_elgg_event_handler("join", "group", "group_tools_join_group_event");
-			} 
+			}
+			
+			// manage auto join for groups
+			elgg_extend_view("forms/groups/edit", "group_tools/forms/auto_join", 400);
+			register_elgg_event_handler("create", "member_of_site", "group_tools_join_site_handler");
 		}
 		
 		if(isadminloggedin()){
@@ -211,6 +215,7 @@
 	register_action("group_tools/toggle_admin", false, dirname(__FILE__) . "/actions/toggle_admin.php");
 	register_action("group_tools/kick", false, dirname(__FILE__) . "/actions/kick.php");
 	register_action("group_tools/mail", false, dirname(__FILE__) . "/actions/mail.php");
+	register_action("group_tools/toggle_auto_join", false, dirname(__FILE__) . "/actions/toggle_auto_join.php", true);
 	register_action("groups/email_invitation", false, dirname(__FILE__) . "/actions/groups/email_invitation.php");
 	
 ?>

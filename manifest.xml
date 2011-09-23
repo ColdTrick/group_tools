@@ -57,6 +57,7 @@ Version History
 x.x:
 	- added: admin option to manage if closed groups are indexed by search engines (default no)
 	- added: admin option to automaticly enable group notifications on group join
+	- added: option to mark a group for auto join (on registration of a new user)
 
 1.4 (2011-07-27):
 	- added: notification on group transfer to the new owner
