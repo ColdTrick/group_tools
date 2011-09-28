@@ -76,3 +76,11 @@
 #group_tools_group_invite_autocomplete_email_autocomplete_results {
 	margin-top: 10px;
 }
+
+#group_tools_mail_member_options input[type=button] {
+	margin-right: 5px;
+}
+
+#group_tools_mail_member_selection {
+	display: none;
+}

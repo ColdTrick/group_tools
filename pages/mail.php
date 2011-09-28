@@ -9,10 +9,14 @@
 		set_page_owner($group->getGUID());
 		set_context("groups");
 		
+		// get members
+		$members = $group->getMembers(false);
+		
+		// build page elements
 		$title_text = elgg_echo("group_tools:mail:title");
 		$title = elgg_view_title($title_text);
 		
-		$form = elgg_view("group_tools/forms/mail", array("entity" => $group));
+		$form = elgg_view("group_tools/forms/mail", array("entity" => $group, "members" => $members));
 		
 		$page_data = $title . $form;
 		

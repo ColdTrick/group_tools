@@ -3,13 +3,15 @@
 	gatekeeper();
 	
 	$group_guid = (int) get_input("group_guid", 0);
+	$user_guids = get_input("user_guids");
 	$subject = get_input("title");
 	$body = get_input("description");
 	
 	$forward_url = REFERER;
+	$user_guids = group_tools_verify_group_members($group_guid, $user_guids);
 	
-	if(!empty($group_guid) && !empty($body)){
-				
+	if(!empty($group_guid) && !empty($body) && !empty($user_guids)){
+		
 		if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
 			if($group->canEdit()){
 				set_time_limit(0);
@@ -19,8 +21,8 @@
 
 " . elgg_echo("group_tools:mail:message:from") . ": <a href='" . $group->getURL() . "'>" . $group->name . "</a>"; 
 					
-				foreach($group->getMembers(false) as $member){
-					notify_user($member->getGUID(), $group->getGUID(), $subject, $body, NULL, "email"); 
+				foreach($user_guids as $guid){
+					notify_user($guid, $group->getGUID(), $subject, $body, NULL, "email"); 
 				}
 				
 				system_message(elgg_echo("group_tools:action:mail:success"));

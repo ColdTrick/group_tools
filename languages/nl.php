@@ -1,5 +1,11 @@
 <?php
 $language = array (
+  'group_tools:clear_selection' => 'Selectie wissen',
+  'group_tools:all_members' => 'Alle leden',
+  'group_tools:mail:form:recipients' => 'Aantal geselecteerde ontvangers',
+  'group_tools:mail:form:members:selection' => 'Selecteer individuele leden',
+  'group_tools:mail:form:js:members' => 'Selecteer minstens één lid om het bericht aan te versturen',
+  'group_tools:mail:form:js:description' => 'Geef een bericht op',
   'group_tools:remove' => 'Verwijder',
   'group_tools:settings:auto_join' => 'Automatisch groepslidmaatschap',
   'group_tools:settings:auto_join:description' => 'Nieuwe gebruikers worden automatisch lid van de volgende groepen',
@@ -84,7 +90,7 @@ Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende co
   'group_tools:multiple_admin:group_tool_option' => 'Mogen groep beheerders andere groep beheerder aanmaken',
   'group_tools:group_kick:profile_actions:kick' => 'Verwijder uit de groep',
   'group_tools:mail:message:from' => 'Van groep',
-  'group_tools:mail:title' => 'Stuur een e-mail naar alle groep leden',
+  'group_tools:mail:title' => 'Stuur een e-mail naar de groepsleden',
   'group_tools:mail:form:title' => 'Onderwerp',
   'group_tools:mail:form:description' => 'Bericht',
   'group_tools:groups:invite' => 'Nodig gebruikers uit',

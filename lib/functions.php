@@ -279,4 +279,39 @@
 		return $result;
 	}
 
-?>
+	function group_tools_verify_group_members($group_guid, $user_guids){
+		$result = false;
+		
+		if(!empty($group_guid) && !empty($user_guids)){
+			if(!is_array($user_guids)){
+				$user_guids = array($user_guids);
+			}
+			
+			if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
+				$options = array(
+					"type" => "user",
+					"limit" => false,
+					"relationship" => "member",
+					"relationship_guid" => $group->getGUID(),
+					"inverse_relationship" => true,
+					"callback" => "group_tools_guid_only_callback"
+				);
+				
+				if($member_guids = elgg_get_entities_from_relationship($options)){
+					$result = array();
+					
+					foreach($user_guids as $user_guid){
+						if(in_array($user_guid, $member_guids)){
+							$result[] = $user_guid;
+						}
+					}
+				}
+			}
+		}
+		
+		return $result;
+	}
+	
+	function group_tools_guid_only_callback($row){
+		return $row->guid;
+	}

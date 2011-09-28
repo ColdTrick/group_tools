@@ -8,6 +8,8 @@
 		'group_tools:add_users' => "Add users",
 		'group_tools:in' => "in",
 		'group_tools:remove' => "Remove",
+		'group_tools:clear_selection' => "Clear selection",
+		'group_tools:all_members' => "All members",
 		
 		// menu
 		'group_tools:menu:mail' => "Mail Members",
@@ -99,11 +101,16 @@ To visit the group please click on the following link:
 		// group mail
 		'group_tools:mail:message:from' => "From group",
 		
-		'group_tools:mail:title' => "Send a mail to all group members",
+		'group_tools:mail:title' => "Send a mail to the group members",
+		'group_tools:mail:form:recipients' => "Number of recipients",
+		'group_tools:mail:form:members:selection' => "Select individual members",
 		
 		'group_tools:mail:form:title' => "Subject",
 		'group_tools:mail:form:description' => "Body",
 	
+		'group_tools:mail:form:js:members' => "Please select at least one member to send the message to",
+		'group_tools:mail:form:js:description' => "Please enter a message",
+		
 		// group invite
 		'group_tools:groups:invite' => "Invite users",
 		
