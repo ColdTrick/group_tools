@@ -54,6 +54,9 @@ ToDo
 ====================
 Version History
 ====================
+x.x:
+	- changed: name of robots view to be less generic
+
 1.5.1 (2011-09-28):
 	- changed: group mail form to support member selection
 

@@ -119,7 +119,7 @@
 			if($page_owner->membership != ACCESS_PUBLIC){
 				if(get_plugin_setting("search_index", "group_tools") != "yes"){
 					// closed groups should be indexed by search engines
-					elgg_extend_view("metatags", "metatags/robots");
+					elgg_extend_view("metatags", "metatags/noindex");
 				}
 			}
 		}
