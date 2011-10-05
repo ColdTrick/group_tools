@@ -55,6 +55,7 @@ ToDo
 Version History
 ====================
 x.x:
+	- added: option to resend invites to already invited users
 	- changed: name of robots view to be less generic
 
 1.5.1 (2011-09-28):

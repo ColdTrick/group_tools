@@ -1,10 +1,11 @@
 <?php
 $language = array (
+  'group_tools:group:invite:resend' => 'Uitnodiging opnieuw versturen naar gebruikers die al zijn uitgenodigd',
   'group_tools:clear_selection' => 'Selectie wissen',
   'group_tools:all_members' => 'Alle leden',
   'group_tools:mail:form:recipients' => 'Aantal geselecteerde ontvangers',
   'group_tools:mail:form:members:selection' => 'Selecteer individuele leden',
-  'group_tools:mail:form:js:members' => 'Selecteer minstens Ã©Ã©n lid om het bericht aan te versturen',
+  'group_tools:mail:form:js:members' => 'Selecteer minstens één lid om het bericht aan te versturen',
   'group_tools:mail:form:js:description' => 'Geef een bericht op',
   'group_tools:remove' => 'Verwijder',
   'group_tools:settings:auto_join' => 'Automatisch groepslidmaatschap',
@@ -30,7 +31,7 @@ Om de groep te bezoeken klik op onderstaande link:
   'widgets:group_river_widget:description' => 'Toont de activiteit van een groep in de widget',
   'widgets:group_river_widget:edit:num_display' => 'Aantal activiteiten om te tonen',
   'widgets:group_river_widget:edit:group' => 'Selecteer een groep',
-  'widgets:group_river_widget:edit:no_groups' => 'Je moet van minstens Ã©Ã©n groep lid zijn om gebruik te kunnen maken van deze widget',
+  'widgets:group_river_widget:edit:no_groups' => 'Je moet van minstens één groep lid zijn om gebruik te kunnen maken van deze widget',
   'widgets:group_river_widget:view:not_configured' => 'Deze widget is nog niet geconfigureerd',
   'widgets:group_river_widget:view:more' => 'Activiteit in de \'%s\' groep',
   'group_tools:decline' => 'Afwijzen',

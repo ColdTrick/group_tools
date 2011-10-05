@@ -149,14 +149,16 @@
 		return $result;
 	}
 	
-	function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = ""){
+	function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $resend = false){
 		global $CONFIG;
 		
 		$result = false;
 		
 		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = get_loggedin_user())){
-			// Create relationship
-			add_entity_relationship($group->getGUID(), "invited", $user->getGUID());
+			if(!$resend){
+				// Create relationship
+				add_entity_relationship($group->getGUID(), "invited", $user->getGUID());
+			}
 			
 			// Send email
 			$url = $CONFIG->url . "pg/groups/invitations/" . $user->username;
@@ -194,7 +196,7 @@
 		return $result;
 	}
 	
-	function group_tools_invite_email(ElggGroup $group, $email, $text = ""){
+	function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend = false){
 		global $CONFIG;
 		
 		$result = false;
@@ -206,7 +208,7 @@
 			// generate invite code
 			$invite_code = md5($site_secret . $email . $group->getGUID());
 			
-			if(!group_tools_check_group_email_invitation($invite_code, $group->getGUID())){
+			if(!group_tools_check_group_email_invitation($invite_code, $group->getGUID()) || $resend){
 				// make site email
 				if(!empty($CONFIG->site->email)){
 					if(!empty($CONFIG->site->name)){
@@ -223,8 +225,10 @@
 					}
 				}
 				
-				// register invite with group
-				$group->annotate("email_invitation", $invite_code, ACCESS_LOGGED_IN, $group->getGUID());
+				if(!$resend){
+					// register invite with group
+					$group->annotate("email_invitation", $invite_code, ACCESS_LOGGED_IN, $group->getGUID());
+				}
 				
 				// make subject
 				$subject = sprintf(elgg_echo("group_tools:groups:invite:email:subject"), $group->name);

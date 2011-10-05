@@ -125,6 +125,8 @@ To visit the group please click on the following link:
 		
 		'group_tools:group:invite:text' => "Personal note (optional)",
 		'group_tools:group:invite:add:confirm' => "Are you sure you wish to add these users directly?",
+		
+		'group_tools:group:invite:resend' => "Resend invitations to users who already have been invited",
 
 		'group_tools:groups:invitation:code:title' => "Group invitation by e-mail",
 		'group_tools:groups:invitation:code:description' => "If you have received an invitation to join a group by e-mail, you can enter the invitation code here to accept the invitation. If you click on the link in the invitation e-mail the code will be entered for you.",

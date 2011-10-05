@@ -79,9 +79,17 @@
 		$form_data .= $friendspicker;
 	}
 	
+	// optional text
 	$form_data .= "<div><label>" . elgg_echo("group_tools:group:invite:text") . "</label></div>";
 	$form_data .= elgg_view("input/longtext", array("internalname" => "comment"));
 	
+	// renotify existing invites
+	$form_data .= "<div>";
+	$form_data .= "<input type='checkbox' name='resend' value='yes' />";
+	$form_data .= "&nbsp;" . elgg_echo("group_tools:group:invite:resend");
+	$form_data .= "</div>";
+	
+	// form buttons
 	$form_data .= "<div>";
 	$form_data .= elgg_view("input/submit", array("internalname" => "submit", "value" => elgg_echo("invite")));
 	if(isadminloggedin()){

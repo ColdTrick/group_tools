@@ -25,6 +25,11 @@
 	}
 	
 	$csv = get_uploaded_file("csv");
+	if(get_input("resend") == "yes"){
+		$resend = true;
+	} else {
+		$resend = false;
+	}
 	
 	$submit = get_input("submit");
 	
@@ -52,6 +57,10 @@
 									}
 								} else {
 									$already_invited++;
+									
+									if($resend){
+										group_tools_invite_user($group, $user, $text, $resend);
+									}
 								}
 							} else {
 								$member++;
@@ -110,7 +119,7 @@
 				$already = 0;
 				
 				foreach($emails as $email){
-					$invite_result = group_tools_invite_email($group, $email, $text);
+					$invite_result = group_tools_invite_email($group, $email, $text, $resend);
 					if($invite_result === true){
 						$sent++;
 					} elseif($invite_result === null){
@@ -157,33 +166,37 @@
 								$user = $users[0];
 								
 								if(!$group->isMember($user)){
-									if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID())) {
-										if($submit != elgg_echo("group_tools:add_users")){
+									if($submit != elgg_echo("group_tools:add_users")){
+										if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID())) {
 											// invite user
 											if(group_tools_invite_user($group, $user, $text)){
 												$csv_invited++;
 											}
 										} else {
-											// make sure users are added to correct acl
-											register_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
-											$GROUP_TOOLS_ACL = $group->group_acl;
+											$csv_already_invited++;
 											
-											if(group_tools_add_user($group, $user, $text)){
-												$csv_added++;
+											if($resend){
+												group_tools_invite_user($group, $user, $text, $resend);
 											}
-											
-											// cleanup hook
-											unregister_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
-										}
+										} 
 									} else {
-										$csv_already_invited++;
+										// make sure users are added to correct acl
+										register_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
+										$GROUP_TOOLS_ACL = $group->group_acl;
+										
+										if(group_tools_add_user($group, $user, $text)){
+											$csv_added++;
+										}
+										
+										// cleanup hook
+										unregister_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
 									}
 								} else {
 									$csv_already_member++;
 								}
 							} else {
 								// user not found so invite based on email address
-								$invite_result = group_tools_invite_email($group, $email, $text);
+								$invite_result = group_tools_invite_email($group, $email, $text, $resend);
 								
 								if($invite_result === true){
 									$csv_invited++;
