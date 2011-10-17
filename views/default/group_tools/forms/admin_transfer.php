@@ -1,5 +1,7 @@
 <?php 
 
+	global $CONFIG;
+
 	$group = $vars["entity"];
 	$user = get_loggedin_user();
 	
@@ -10,6 +12,8 @@
 				"relationship" => "friend",
 				"relationship_guid" => $user->getGUID(),
 				"limit" => false,
+				"joins" => array("JOIN " . $CONFIG->dbprefix . "users_entity ue ON e.guid = ue.guid"),
+				"order_by" => "ue.name"
 			);
 			
 			$member_options = array(
@@ -18,6 +22,8 @@
 				"relationship_guid" => $group->getGUID(),
 				"inverse_relationship" => true,
 				"limit" => false,
+				"joins" => array("JOIN " . $CONFIG->dbprefix . "users_entity ue ON e.guid = ue.guid"),
+				"order_by" => "ue.name"
 			);
 			
 			$friends = elgg_get_entities_from_relationship($friends_options);
