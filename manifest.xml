@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
 	<field key="author" value="ColdTrick IT Solutions" />
-	<field key="version" value="1.6" />
+	<field key="version" value="1.7" />
 	<field key="description" value="Combines different group additions" />
 	<field key="website" value="http://www.coldtrick.com/" />
 	<field key="copyright" value="(C) ColdTrick IT Solutions 2011" />
@@ -54,7 +54,7 @@ ToDo
 ====================
 Version History
 ====================
-x.x:
+1.7 (2011-10-17):
 	- added: option to make all site users a member of an auto join group
 	- changed: moved some functions
 	- changed: transfer group ownership now show members alphabeticly
