@@ -2,6 +2,7 @@
 
 	require_once(dirname(__FILE__) . "/lib/functions.php");
 	require_once(dirname(__FILE__) . "/lib/events.php");
+	require_once(dirname(__FILE__) . "/lib/hooks.php");
 
 	function group_tools_init(){
 		
@@ -126,41 +127,6 @@
 		
 	}
 	
-	function group_tools_multiple_admin_can_edit_hook($hook, $type, $return_value, $params){
-		$result = $return_value;
-		
-		if(!empty($params) && is_array($params) && !$result){
-			if(array_key_exists("entity", $params) && array_key_exists("user", $params)){
-				$entity = $params["entity"];
-				$user = $params["user"];
-				
-				if(($entity instanceof ElggGroup) && ($user instanceof ElggUser)){
-					if($entity->isMember($user) && check_entity_relationship($user->getGUID(), "group_admin", $entity->getGUID())){
-						$result = true;
-					}
-				}
-			}
-		}
-		
-		return $result;
-	}
-	
-	function group_tools_multiple_admin_group_leave($event, $type, $params){
-		
-		if(!empty($params) && is_array($params)){
-			if(array_key_exists("group", $params) && array_key_exists("user", $params)){
-				$entity = $params["group"];
-				$user = $params["user"];
-				
-				if(($entity instanceof ElggGroup) && ($user instanceof ElggUser)){
-					if(check_entity_relationship($user->getGUID(), "group_admin", $entity->getGUID())){
-						return remove_entity_relationship($user->getGUID(), "group_admin", $entity->getGUID());
-					}
-				}
-			}
-		}
-	}
-	
 	function group_tools_version_1_3(){
 		global $CONFIG, $GROUP_TOOLS_ACL;
 		
@@ -192,20 +158,6 @@
 		
 	}
 	
-	function group_tools_add_user_acl_hook($hook, $type, $return_value, $params){
-		global $GROUP_TOOLS_ACL;
-		
-		$result = $return_value;
-		
-		if(!empty($GROUP_TOOLS_ACL) && is_array($result)){
-			if(!array_key_exists($GROUP_TOOLS_ACL, $result)){
-				$result[$GROUP_TOOLS_ACL] = "temp group";
-			}
-		}
-		
-		return $result;
-	}
-
 	// default elgg event handlers
 	register_elgg_event_handler("init", "system", "group_tools_init");
 	register_elgg_event_handler("pagesetup", "system", "group_tools_pagesetup");
@@ -216,6 +168,7 @@
 	register_action("group_tools/kick", false, dirname(__FILE__) . "/actions/kick.php");
 	register_action("group_tools/mail", false, dirname(__FILE__) . "/actions/mail.php");
 	register_action("group_tools/toggle_auto_join", false, dirname(__FILE__) . "/actions/toggle_auto_join.php", true);
+	register_action("group_tools/fix_auto_join", false, dirname(__FILE__) . "/actions/fix_auto_join.php", true);
 	register_action("groups/email_invitation", false, dirname(__FILE__) . "/actions/groups/email_invitation.php");
 	
-?>
+	

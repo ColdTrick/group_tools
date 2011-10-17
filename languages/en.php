@@ -87,6 +87,7 @@ To visit the group please click on the following link:
 		// auto join form
 		'group_tools:auto_join:add' => "%sAdd this group%s to the auto join groups. This will mean that new users are automaticly added to this group on registration.",
 		'group_tools:auto_join:remove' => "%sRemove this group%s from the auto join groups. This will mean that new users will no longer automaticly join this group on registration.",
+		'group_tools:auto_join:fix' => "To make all site members a member of this group, please %sclick here%s.",
 		
 		// group admins
 		'group_tools:multiple_admin:group_admins' => "Group admins",
@@ -197,6 +198,9 @@ To visit the group please click on the following link:
 		// group toggle auto join
 		'group_tools:action:toggle_auto_join:error:save' => "An error occured while saving the new settings",
 		'group_tools:action:toggle_auto_join:success' => "The new settings were saved successfully",
+		
+		// group fix auto_join
+		'group_tools:action:fix_auto_join:success' => "Group membership fixed: %s new members, %s were already a member and %s failures",
 		
 	);
 	

@@ -56,3 +56,20 @@
 			}
 		}
 	}
+	
+	function group_tools_multiple_admin_group_leave($event, $type, $params){
+	
+		if(!empty($params) && is_array($params)){
+			if(array_key_exists("group", $params) && array_key_exists("user", $params)){
+				$entity = $params["group"];
+				$user = $params["user"];
+	
+				if(($entity instanceof ElggGroup) && ($user instanceof ElggUser)){
+					if(check_entity_relationship($user->getGUID(), "group_admin", $entity->getGUID())){
+						return remove_entity_relationship($user->getGUID(), "group_admin", $entity->getGUID());
+					}
+				}
+			}
+		}
+	}
+	

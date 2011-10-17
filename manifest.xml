@@ -54,6 +54,10 @@ ToDo
 ====================
 Version History
 ====================
+x.x:
+	- added: option to make all site users a member of an auto join group
+	- changed: moved some functions
+
 1.6 (2011-10-05):
 	- added: option to resend invites to already invited users
 	- changed: name of robots view to be less generic
