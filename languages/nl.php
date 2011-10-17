@@ -1,5 +1,7 @@
 <?php
 $language = array (
+  'group_tools:group:edit:profile' => 'Groep profiel / tools',
+  'group_tools:group:edit:other' => 'Andere opties',
   'widgets:group_river_widget:edit:no_groups' => 'Je moet van minstens ��n groep lid zijn om gebruik te kunnen maken van deze widget',
   'group_tools:auto_join:fix' => 'Om alle leden van de site lid te maken van deze groep, %sklik hier%s.',
   'group_tools:mail:form:js:members' => 'Selecteer minstens ��n lid om het bericht aan te versturen',

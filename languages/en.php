@@ -77,6 +77,10 @@ You can also go to All site groups -> Group invitations and enter the following 
 To visit the group please click on the following link:
 %s",
 		
+		// group edit tabbed
+		'group_tools:group:edit:profile' => "Group profile / tools",
+		'group_tools:group:edit:other' => "Other options",
+
 		// admin transfer - form
 		'group_tools:admin_transfer:transfer' => "Transfer group ownership to",
 		'group_tools:admin_transfer:myself' => "Myself",

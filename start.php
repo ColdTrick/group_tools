@@ -52,6 +52,9 @@
 			// manage auto join for groups
 			elgg_extend_view("forms/groups/edit", "group_tools/forms/auto_join", 400);
 			register_elgg_event_handler("create", "member_of_site", "group_tools_join_site_handler");
+			
+			// show group edit as tabbed
+			elgg_extend_view("forms/groups/edit", "group_tools/group_edit_tabbed", 1);
 		}
 		
 		if(isadminloggedin()){
