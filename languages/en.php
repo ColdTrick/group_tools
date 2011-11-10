@@ -221,6 +221,7 @@ To visit the group please click on the following link:
 		'widgets:group_river_widget:view:not_configured' => "This widget is not yet configured",
 	
 		'widgets:group_river_widget:view:more' => "Activity in the '%s' group",
+		'widgets:group_river_widget:view:noactivity' => "We could not find any activity.",
 	
  	);
 

@@ -51,9 +51,19 @@ ToDo
 	- latest activity in my groups
 - group icon cron tool 
 
+- group invite
+	- preview message
+	- preview csv sample
+	- invitation report
+		- per user what happend
+	- better description of options
+
 ====================
 Version History
 ====================
+x.x:
+	- added: activity filter in group river widget
+
 1.7 (2011-10-17):
 	- added: option to make all site users a member of an auto join group
 	- changed: moved some functions

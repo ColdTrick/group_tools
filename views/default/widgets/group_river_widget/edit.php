@@ -5,6 +5,27 @@
 	 */
 
 	$widget = $vars["entity"];
+	
+	// filter activity
+	$filter_contents = array();
+	$filter_contents['all'] = 'all';
+	if (!empty($vars['config']->registered_entities)) {
+		foreach ($vars['config']->registered_entities as $type => $ar) {
+			if($type == "user"){
+				continue;
+			} else {
+				if (count($vars['config']->registered_entities[$type])) {
+					foreach ($vars['config']->registered_entities[$type] as $subtype) {
+						$keyname = 'item:' . $type . ':' . $subtype;
+						$filter_contents[$keyname] = "{$type},{$subtype}";
+					}
+				} else {
+					$keyname = 'item:' . $type;
+					$filter_contents[$keyname] = "{$type},";
+				}
+			}
+		}
+	}
 
 	if($widget->context != "groups"){
 	    //the user of the widget
@@ -49,6 +70,20 @@
 			echo elgg_echo('widgets:group_river_widget:edit:num_display'); 
 			echo " " . elgg_view("input/pulldown", array("options" => range(5, 25, 5), "value" => $widget->num_display, "internalname" => "params[num_display]"));
 			echo "</div>";
+			
+			echo "<div>";
+			echo elgg_echo("filter");
+			echo "<select name='params[activity_filter]'>";
+			foreach($filter_contents as $label => $content) {
+				if (($widget->activity_filter == $content)) {
+					$selected = 'selected="selected"';
+				} else {
+					$selected = '';
+				}
+				echo "<option value='" . $content . "' " . $selected . ">" . elgg_echo($label) . "</option>";
+			}
+			echo "</select>";
+			echo "</div>";
 	
 			echo "<div>";
 			echo elgg_echo('widgets:group_river_widget:edit:group');
@@ -71,5 +106,18 @@
 		echo elgg_echo('widgets:group_river_widget:edit:num_display'); 
 		echo " " . elgg_view("input/pulldown", array("options" => range(5, 25, 5), "value" => $widget->num_display, "internalname" => "params[num_display]"));
 		echo "</div>";
+		
+		echo "<div>";
+		echo elgg_echo("filter");
+		echo "<select name='params[activity_filter]'>";
+		foreach($filter_contents as $label => $content) {
+			if (($widget->activity_filter == $content)) {
+				$selected = 'selected="selected"';
+			} else {
+				$selected = '';
+			}
+			echo "<option value='" . $content . "' " . $selected . ">" . elgg_echo($label) . "</option>";
+		}
+		echo "</select>";
+		echo "</div>";
 	}
-?>
