@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
 	<field key="author" value="ColdTrick IT Solutions" />
-	<field key="version" value="1.7" />
+	<field key="version" value="1.8" />
 	<field key="description" value="Combines different group additions" />
 	<field key="website" value="http://www.coldtrick.com/" />
 	<field key="copyright" value="(C) ColdTrick IT Solutions 2011" />
@@ -61,7 +61,7 @@ ToDo
 ====================
 Version History
 ====================
-x.x:
+1.8 (2011-11-11):
 	- added: activity filter in group river widget
 	- added: group listing filter: open and closed
 	- added: group status (open/closed) in owner_block and group stats
