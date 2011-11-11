@@ -1,5 +1,7 @@
 <?php
 $language = array (
+  'group_tools:groups:sorting:open' => 'Open',
+  'group_tools:groups:sorting:closed' => 'Besloten',
   'widgets:group_river_widget:view:noactivity' => 'Geen activiteit gevonden.',
   'group_tools:group:edit:profile' => 'Groep profiel / tools',
   'group_tools:group:edit:other' => 'Andere opties',

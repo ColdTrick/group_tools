@@ -17,6 +17,8 @@
 		"active" => elgg_echo("groups:latestdiscussion"),
 		"newest" => elgg_echo("groups:newest"),
 		"pop" => elgg_echo("groups:popular"),
+		"open" => elgg_echo("group_tools:groups:sorting:open"),
+		"closed" => elgg_echo("group_tools:groups:sorting:closed"),
 		"alfa" => elgg_echo("group_tools:groups:sorting:alfabetical"),
 	);
 	

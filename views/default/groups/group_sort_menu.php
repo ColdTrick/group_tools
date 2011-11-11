@@ -20,6 +20,8 @@
 	<li <?php if($filter == "active") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=active"><?php echo elgg_echo('groups:latestdiscussion'); ?></a></li>
 	<li <?php if($filter == "newest") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=newest"><?php echo elgg_echo('groups:newest'); ?></a></li>
 	<li <?php if($filter == "pop") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=pop"><?php echo elgg_echo('groups:popular'); ?></a></li>
+	<li <?php if($filter == "open") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=open"><?php echo elgg_echo('group_tools:groups:sorting:open'); ?></a></li>
+	<li <?php if($filter == "closed") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=closed"><?php echo elgg_echo('group_tools:groups:sorting:closed'); ?></a></li>
 	<li <?php if($filter == "alfa") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=alfa"><?php echo elgg_echo('group_tools:groups:sorting:alfabetical'); ?></a></li>
 </ul>
 </div>

@@ -149,6 +149,8 @@ To visit the group please click on the following link:
 	
 		// group listing
 		'group_tools:groups:sorting:alfabetical' => "Alfabetical",
+		'group_tools:groups:sorting:open' => "Open",
+		'group_tools:groups:sorting:closed' => "Closed",
 	
 		// actions
 		'group_tools:action:error:input' => "Invalid input to perform this action",

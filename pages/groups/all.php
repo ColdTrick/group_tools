@@ -35,24 +35,44 @@
 		);
 		$objects = elgg_list_entities_from_metadata($params);
 	} else {
+		
+		$group_options = array(
+			"types" => "group", 
+			"owner_guid" => 0, 
+			"limit" => max(0, $limit), 
+			"offset" => max(0, $offset), 
+			"full_view" => false,
+		);
+		
 		switch($filter){
 			case "alfa":
-				$alfa_options = array(
-					"types" => "group", 
-					"owner_guid" => 0, 
-					"limit" => $limit, 
-					"offset" => $offset, 
-					"full_view" => false,
-					"joins"	=> array("JOIN {$CONFIG->dbprefix}groups_entity ge ON e.guid = ge.guid"),
-					"order_by" => "ge.name ASC" 
-				);
-				$objects = elgg_list_entities($alfa_options);
+				$group_options["joins"]	= array("JOIN {$CONFIG->dbprefix}groups_entity ge ON e.guid = ge.guid");
+				$group_options["order_by"] = "ge.name ASC";
+				
+				$objects = elgg_list_entities($group_options);
 				break;
 			case "newest":
-				$objects = elgg_list_entities(array('types' => 'group', 'owner_guid' => 0, 'limit' => $limit, 'offset' => $offset, 'full_view' => false));
+				$objects = elgg_list_entities($group_options);
 				break;
 			case "pop":
 				$objects = list_entities_by_relationship_count("member", true, "group", "", 0, $limit, false);
+				break;
+			case "open":
+				$group_options["metadata_name_value_pairs"] = array(
+					"name" => "membership",
+					"value" => ACCESS_PUBLIC
+				);
+				
+				$objects = elgg_list_entities_from_metadata($group_options);
+				break;
+			case "closed":
+				$group_options["metadata_name_value_pairs"] = array(
+					"name" => "membership",
+					"value" => ACCESS_PUBLIC,
+					"operand" => "<>"
+				);
+				
+				$objects = elgg_list_entities_from_metadata($group_options);
 				break;
 			case "active":
 			default:
