@@ -64,6 +64,7 @@ Version History
 x.x:
 	- added: activity filter in group river widget
 	- added: group listing filter: open and closed
+	- changed: group search listing
 
 1.7 (2011-10-17):
 	- added: option to make all site users a member of an auto join group
