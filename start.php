@@ -55,6 +55,11 @@
 			
 			// show group edit as tabbed
 			elgg_extend_view("forms/groups/edit", "group_tools/group_edit_tabbed", 1);
+			
+			// show group status in owner block
+			elgg_extend_view("owner_block/extend", "group_tools/owner_block");
+			// show group status in stats (on group profile)
+			elgg_extend_view("groups/groupprofile", "group_tools/group_stats");
 		}
 		
 		if(isadminloggedin()){

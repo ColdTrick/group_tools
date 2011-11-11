@@ -84,3 +84,7 @@
 #group_tools_mail_member_selection {
 	display: none;
 }
+
+#group_tools_group_status {
+	font-weight: normal;
+}
