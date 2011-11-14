@@ -88,3 +88,13 @@
 #group_tools_group_status {
 	font-weight: normal;
 }
+
+#group_tools_group_status.group_status_open,
+#group_stats .group_status_open {
+	color: green;
+}
+
+#group_tools_group_status.group_status_closed,
+#group_stats .group_status_closed {
+	color: orange;
+}

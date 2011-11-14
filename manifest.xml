@@ -61,6 +61,9 @@ ToDo
 ====================
 Version History
 ====================
+x.x:
+	- changed: group status (open/closed) CSS
+
 1.8 (2011-11-11):
 	- added: activity filter in group river widget
 	- added: group listing filter: open and closed
