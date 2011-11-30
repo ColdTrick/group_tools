@@ -49,6 +49,7 @@ ToDo
 ====================
 - group listing
 	- latest activity in my groups
+	- my groups (and remove menu item)
 - group icon cron tool 
 
 - group invite
@@ -57,11 +58,15 @@ ToDo
 	- invitation report
 		- per user what happend
 	- better description of options
+- group widgets
+	- group listing on popular
+- closed group, but show widgets
 
 ====================
 Version History
 ====================
 x.x:
+	- changed: activity filter in group river widget (now more advanced)
 	- changed: group status (open/closed) CSS
 
 1.8 (2011-11-11):

@@ -7,8 +7,8 @@
 	$widget = $vars["entity"];
 	
 	// filter activity
+	// get filter options
 	$filter_contents = array();
-	$filter_contents['all'] = 'all';
 	if (!empty($vars['config']->registered_entities)) {
 		foreach ($vars['config']->registered_entities as $type => $ar) {
 			if($type == "user"){
@@ -24,6 +24,28 @@
 					$filter_contents[$keyname] = "{$type},";
 				}
 			}
+		}
+	}
+	
+	// build selector
+	$activity_filter = $widget->getMetadata("activity_filter");
+	if(empty($activity_filter)){
+		// fallback to old situation
+		$activity_filter = $widget->activity_filter;
+	}
+	
+	if(!empty($activity_filter) && !is_array($activity_filter)){
+		$activity_filter = array($activity_filter);
+	} elseif(empty($activity_filter)){
+		$activity_filter = array();
+	}
+	
+	$filter_selector = elgg_view("input/hidden", array("internalname" => "params[activity_filter][]", "value" => "")); // needed to be able to store no selection
+	foreach($filter_contents as $label => $content){
+		if(in_array($content, $activity_filter)){
+			$filter_selector .= "<input type='checkbox' name='params[activity_filter][]' checked='checked' value='" . $content . "'>" . elgg_echo($label) . "<br />";
+		} else {
+			$filter_selector .= "<input type='checkbox' name='params[activity_filter][]' value='" . $content . "'>" . elgg_echo($label) . "<br />";
 		}
 	}
 
@@ -72,17 +94,8 @@
 			echo "</div>";
 			
 			echo "<div>";
-			echo elgg_echo("filter");
-			echo "<select name='params[activity_filter]'>";
-			foreach($filter_contents as $label => $content) {
-				if (($widget->activity_filter == $content)) {
-					$selected = 'selected="selected"';
-				} else {
-					$selected = '';
-				}
-				echo "<option value='" . $content . "' " . $selected . ">" . elgg_echo($label) . "</option>";
-			}
-			echo "</select>";
+			echo elgg_echo("filter") . "<br />";
+			echo $filter_selector;
 			echo "</div>";
 	
 			echo "<div>";
@@ -108,16 +121,7 @@
 		echo "</div>";
 		
 		echo "<div>";
-		echo elgg_echo("filter");
-		echo "<select name='params[activity_filter]'>";
-		foreach($filter_contents as $label => $content) {
-			if (($widget->activity_filter == $content)) {
-				$selected = 'selected="selected"';
-			} else {
-				$selected = '';
-			}
-			echo "<option value='" . $content . "' " . $selected . ">" . elgg_echo($label) . "</option>";
-		}
-		echo "</select>";
+		echo elgg_echo("filter") . "<br />";
+		echo $filter_selector;
 		echo "</div>";
 	}
