@@ -5,6 +5,7 @@ x.x:
 - changed: activity filter in group river widget (now more advanced)
 - changed: group status (open/closed) CSS
 - changed: moved changelog to CHANGES.txt in preperation for Elgg 1.8
+- changed: plugin information to README.txt in preperation for Elgg 1.8
 
 1.8 (2011-11-11):
 
