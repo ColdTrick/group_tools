@@ -1,0 +1,70 @@
+= Version History =
+x.x:
+
+- added: option for group admins to show group widgets to non members in case of a closed group
+- changed: activity filter in group river widget (now more advanced)
+- changed: group status (open/closed) CSS
+- changed: moved changelog to CHANGES.txt in preperation for Elgg 1.8
+
+1.8 (2011-11-11):
+
+- added: activity filter in group river widget
+- added: group listing filter: open and closed
+- added: group status (open/closed) in owner_block and group stats
+- changed: group search listing
+
+1.7 (2011-10-17):
+
+- added: option to make all site users a member of an auto join group
+- changed: moved some functions
+- changed: transfer group ownership now show members alphabeticly
+- changed: group edit now has tabs
+
+1.6 (2011-10-05):
+
+- added: option to resend invites to already invited users
+- changed: name of robots view to be less generic
+
+1.5.1 (2011-09-28):
+
+- changed: group mail form to support member selection
+
+1.5 (2011-09-23):
+
+- added: admin option to manage if closed groups are indexed by search engines (default no)
+- added: admin option to automaticly enable group notifications on group join
+- added: option to mark a group for auto join (on registration of a new user)
+
+1.4 (2011-07-27):
+
+- added: notification on group transfer to the new owner
+- fixed: transfer pulldown showing up empty in some cases
+- fixed: transfer pulldown not showing for admins in some cases
+
+1.3 (2011-07-11):
+
+- added: dutch translation
+- added: option to invite users by CVS upload
+- fixed: some errors in engish translation
+- fixed: invite from CSV now check hidden entities
+- fixed: when adding a user to a group, the user wasn't added to the acl is some cases 
+- fixed: when transfering group ownership the new owner wasn't added to the group acl in some cases
+- fixed: when removing a member from a group the user wasn't removed from the group acl is some cases  
+- changed: moved some code from action to functions for reusability
+
+1.2 (2011-06-27):
+
+- added: alfabetical group sorting
+- added: plugin setting which group listing is default (admin option)
+- added: option to invite users to a group by e-mail address (admin option)
+- changed: banned users no longer show in in group invite
+
+1.1 (2011-06-17):
+
+- added: group activity widget: support for more groups
+- fixed: accept membership request link
+- fixed: manage membership approval always visible
+
+1.0 (2011-06-10):
+
+- initial version
