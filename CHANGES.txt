@@ -1,5 +1,5 @@
 = Version History =
-x.x:
+1.9 (2011-12-05):
 
 - added: option for group admins to show group widgets to non members in case of a closed group
 - changed: activity filter in group river widget (now more advanced)
