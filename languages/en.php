@@ -100,6 +100,11 @@ To visit the group please click on the following link:
 	
 		'group_tools:multiple_admin:group_tool_option' => "Enable group admins to assign other group admins",
 
+		// group profile widgets
+		'group_tools:profile_widgets:title' => "Show group profile widgets to non members",
+		'group_tools:profile_widgets:description' => "This is a closed group. Default no widgets are shown to non members. Here you can configure if you whish to change that.",
+		'group_tools:profile_widgets:option' => "Allow non members to view widgets on the group profile page:",
+		
 		// group kick
 		'group_tools:group_kick:profile_actions:kick' => "Kick from group",
 	
@@ -157,6 +162,8 @@ To visit the group please click on the following link:
 		'group_tools:action:error:entities' => "The given GUIDs didn't result in the correct entities",
 		'group_tools:action:error:entity' => "The given GUID didn't result in a correct entity",
 		'group_tools:action:error:edit' => "You don't have access to the given entity",
+		'group_tools:action:error:save' => "There was an error while saving the settings",
+		'group_tools:action:success' => "The settings where saved successfully",
 	
 		// admin transfer - action
 		'group_tools:action:admin_transfer:error:access' => "You're not allowed to transfer ownership of this group",

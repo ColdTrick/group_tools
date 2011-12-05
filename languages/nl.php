@@ -1,5 +1,10 @@
 <?php
 $language = array (
+  'group_tools:profile_widgets:title' => 'Toon groep widgets aan niet leden',
+  'group_tools:profile_widgets:description' => 'Dit is een besloten groep. Standaard worden er geen widgets getoond aan niet leden. Hier kan kan je deze instelling aanpassen',
+  'group_tools:profile_widgets:option' => 'Mogen niet leden de widgets zien op de groep profiel pagina:',
+  'group_tools:action:error:save' => 'Er is een fout opgetreden tijdens het opslaan van de instellingen',
+  'group_tools:action:success' => 'De instellingen zijn succesvol opgeslagen',
   'group_tools:groups:sorting:open' => 'Open',
   'group_tools:groups:sorting:closed' => 'Besloten',
   'widgets:group_river_widget:view:noactivity' => 'Geen activiteit gevonden.',

@@ -56,6 +56,9 @@
 			// show group edit as tabbed
 			elgg_extend_view("forms/groups/edit", "group_tools/group_edit_tabbed", 1);
 			
+			// show group profile widgets - edit form
+			elgg_extend_view("forms/groups/edit", "group_tools/forms/profile_widgets", 400);
+			
 			// show group status in owner block
 			elgg_extend_view("owner_block/extend", "group_tools/owner_block");
 			// show group status in stats (on group profile)
@@ -175,8 +178,10 @@
 	register_action("group_tools/toggle_admin", false, dirname(__FILE__) . "/actions/toggle_admin.php");
 	register_action("group_tools/kick", false, dirname(__FILE__) . "/actions/kick.php");
 	register_action("group_tools/mail", false, dirname(__FILE__) . "/actions/mail.php");
+	register_action("group_tools/profile_widgets", false, dirname(__FILE__) . "/actions/profile_widgets.php");
+	
 	register_action("group_tools/toggle_auto_join", false, dirname(__FILE__) . "/actions/toggle_auto_join.php", true);
 	register_action("group_tools/fix_auto_join", false, dirname(__FILE__) . "/actions/fix_auto_join.php", true);
-	register_action("groups/email_invitation", false, dirname(__FILE__) . "/actions/groups/email_invitation.php");
 	
+	register_action("groups/email_invitation", false, dirname(__FILE__) . "/actions/groups/email_invitation.php");
 	
