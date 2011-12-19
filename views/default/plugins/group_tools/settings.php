@@ -30,55 +30,55 @@
 <div>
 	<?php 
 		echo elgg_echo("group_tools:settings:admin_transfer");
-		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[admin_transfer]", "options_values" => $admin_transfer_options, "value" => $plugin->admin_transfer));
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[admin_transfer]", "options_values" => $admin_transfer_options, "value" => $plugin->admin_transfer));
 	?>
 </div>
 <div>
 	<?php 
 		echo elgg_echo("group_tools:settings:multiple_admin");
-		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[multiple_admin]", "options_values" => $noyes_options, "value" => $plugin->multiple_admin));
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[multiple_admin]", "options_values" => $noyes_options, "value" => $plugin->multiple_admin));
 	?>
 </div>
 <div>
 	<?php 
 		echo elgg_echo("group_tools:settings:invite");
-		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[invite]", "options_values" => $noyes_options, "value" => $plugin->invite));
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[invite]", "options_values" => $noyes_options, "value" => $plugin->invite));
 	?>
 </div>
 <div>
 	<?php 
 		echo elgg_echo("group_tools:settings:invite_email");
-		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[invite_email]", "options_values" => $noyes_options, "value" => $plugin->invite_email));
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[invite_email]", "options_values" => $noyes_options, "value" => $plugin->invite_email));
 	?>
 </div>
 <div>
 	<?php 
 		echo elgg_echo("group_tools:settings:invite_csv");
-		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[invite_csv]", "options_values" => $noyes_options, "value" => $plugin->invite_csv));
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[invite_csv]", "options_values" => $noyes_options, "value" => $plugin->invite_csv));
 	?>
 </div>
 <div>
 	<?php 
 		echo elgg_echo("group_tools:settings:mail");
-		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[mail]", "options_values" => $noyes_options, "value" => $plugin->mail));
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[mail]", "options_values" => $noyes_options, "value" => $plugin->mail));
 	?>
 </div>
 <div>
 	<?php 
 		echo elgg_echo("group_tools:settings:listing");
-		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[group_listing]", "options_values" => $listing_options, "value" => $plugin->group_listing));
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[group_listing]", "options_values" => $listing_options, "value" => $plugin->group_listing));
 	?>
 </div>
 <div>
 	<?php 
 		echo elgg_echo("group_tools:settings:search_index");
-		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[search_index]", "options_values" => $noyes_options, "value" => $plugin->search_index));
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[search_index]", "options_values" => $noyes_options, "value" => $plugin->search_index));
 	?>
 </div>
 <div>
 	<?php 
 		echo elgg_echo("group_tools:settings:auto_notification");
-		echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[auto_notification]", "options_values" => $noyes_options, "value" => $plugin->auto_notification));
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[auto_notification]", "options_values" => $noyes_options, "value" => $plugin->auto_notification));
 	?>
 </div>
 <?php if(!empty($auto_joins)) { ?>
@@ -94,4 +94,4 @@
 		}
 	?>
 </div>
-<?php } ?>
+<?php }

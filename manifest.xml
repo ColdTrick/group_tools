@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin_manifest>
-	<field key="author" value="ColdTrick IT Solutions" />
-	<field key="version" value="1.9" />
-	<field key="description" value="Combines different group additions" />
-	<field key="website" value="http://www.coldtrick.com/" />
-	<field key="copyright" value="(C) ColdTrick IT Solutions 2011" />
-	<field key="licence" value="GNU Public License version 2" />
-	<field key="elgg_version" value="2010071002" />
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Group Tools</name>
+	<author>ColdTrick IT Solutions</author>
+	<version>2.0</version>
+	<description>Combines different group additions into one plugin.</description>
+	<website>http://www.coldtrick.com/</website>
+	<copyright>(C) ColdTrick IT Solutions 2009 - 2011</copyright>
+	<license>GNU Public License version 2</license>
+ 	
+ 	<requires>
+		<type>elgg_version</type>
+		<version>2011110700</version>
+	</requires>
+	
+	<requires>
+		<type>plugin</type>
+		<name>groups</name>
+		<priority>after</priority>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<plugin>groups</plugin>
+		<priority>after</priority>
+	</requires>
+	
+	<suggests>
+		<type>plugin</type>
+		<name>widget_manager</name>
+		<version>4.0</version>
+	</suggests>
+	
+	<category>ColdTrick</category>
 </plugin_manifest>
