@@ -1,32 +1,50 @@
 <?php
-
 	/**
-	 * A simple view to provide the user with group filters and the number of group on the site
-	 **/
-	 
-	 $num_groups = (int) $vars['count'];
-	 if(!$num_groups){
-	 	$num_groups = 0;
-	 }
-	 	
-	 $filter = $vars['filter'];
-	 
-	 //url
-	 $url = $vars['url'] . "pg/groups/all/";
-
-?>
-<div id="elgg_horizontal_tabbed_nav">
-<ul>
-	<li <?php if($filter == "active") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=active"><?php echo elgg_echo('groups:latestdiscussion'); ?></a></li>
-	<li <?php if($filter == "newest") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=newest"><?php echo elgg_echo('groups:newest'); ?></a></li>
-	<li <?php if($filter == "pop") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=pop"><?php echo elgg_echo('groups:popular'); ?></a></li>
-	<li <?php if($filter == "open") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=open"><?php echo elgg_echo('group_tools:groups:sorting:open'); ?></a></li>
-	<li <?php if($filter == "closed") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=closed"><?php echo elgg_echo('group_tools:groups:sorting:closed'); ?></a></li>
-	<li <?php if($filter == "alfa") echo "class='selected'"; ?>><a href="<?php echo $url; ?>?filter=alfa"><?php echo elgg_echo('group_tools:groups:sorting:alfabetical'); ?></a></li>
-</ul>
-</div>
-<div class="group_count">
-	<?php
-		echo $num_groups . " " . elgg_echo("groups:count");
-	?>
-</div>
+	 * All groups listing page navigation
+	 *
+	 */
+	
+	$tabs = array(
+		"newest" => array(
+			"text" => elgg_echo("groups:newest"),
+			"href" => "groups/all?filter=newest",
+			"priority" => 200,
+		),
+		"popular" => array(
+			"text" => elgg_echo("groups:popular"),
+			"href" => "groups/all?filter=popular",
+			"priority" => 300,
+		),
+		"discussion" => array(
+			"text" => elgg_echo("groups:latestdiscussion"),
+			"href" => "groups/all?filter=discussion",
+			"priority" => 400,
+		),
+		"open" => array(
+			"text" => elgg_echo("group_tools:groups:sorting:open"),
+			"href" => "groups/all?filter=open",
+			"priority" => 500,
+		),
+		"closed" => array(
+			"text" => elgg_echo("group_tools:groups:sorting:closed"),
+			"href" => "groups/all?filter=closed",
+			"priority" => 600,
+		),
+		"alfa" => array(
+			"text" => elgg_echo("group_tools:groups:sorting:alfabetical"),
+			"href" => "groups/all?filter=alfa",
+			"priority" => 700,
+		),
+	);
+	
+	foreach ($tabs as $name => $tab) {
+		$tab["name"] = $name;
+		
+		if($vars["selected"] == $name){
+			$tab["selected"] = true;
+		}
+	
+		elgg_register_menu_item("filter", $tab);
+	}
+	
+	echo elgg_view_menu("filter", array("sort_by" => "priority", "class" => "elgg-menu-hz"));

@@ -4,6 +4,8 @@
 	$GROUP_TOOLS_PAGE_HANDLER_BACKUP = array();
 
 	function group_tools_extend_page_handler($handler, $function){
+		elgg_deprecated_notice("don't use: register", 1.7);
+		
 		global $GROUP_TOOLS_PAGE_HANDLER_BACKUP;
 		global $CONFIG;
 		
@@ -26,6 +28,7 @@
 	}
 	
 	function group_tools_fallback_page_handler($page, $handler){
+		elgg_deprecated_notice("don't use: fallback", 1.7);
 		global $GROUP_TOOLS_PAGE_HANDLER_BACKUP;
 		
 		$result = false;
@@ -48,7 +51,7 @@
 	}
 
 	function group_tools_groups_page_handler($page, $handler){
-		
+		elgg_deprecated_notice("don't use: handler", 1.7);
 		switch($page[0]){
 			case "mail":
 				if(!empty($page[1])){
@@ -71,58 +74,9 @@
 			case "group_invite_autocomplete":	
 				include(dirname(dirname(__FILE__)) . "/procedures/group_invite_autocomplete.php");
 				break;
-			case "all":
-				include(dirname(dirname(__FILE__)) . "/pages/groups/all.php");
-				break;
 			default:
 				return group_tools_fallback_page_handler($page, $handler);
 				break;
-		}
-	}
-	
-	function group_tools_replace_submenu(){
-		global $CONFIG;
-		
-		$page_owner = page_owner_entity();
-		
-		$titles = array(
-			elgg_echo("groups:invite") => elgg_echo("group_tools:groups:invite")
-		);
-		
-		$urls = array();
-		
-		$remove = array(
-			elgg_echo("groups:membershiprequests") => $CONFIG->wwwroot . "mod/groups/membershipreq.php?group_guid=" . $page_owner->getGUID()
-		);
-		
-		if(!empty($CONFIG->submenu)){
-			$submenu = $CONFIG->submenu;
-			
-			foreach($submenu as $group => $items){
-				if(!empty($items)){
-					foreach($items as $index => $item){
-						// replace menu titles
-						if(array_key_exists($item->name, $titles)){
-							$submenu[$group][$index]->name = $titles[$item->name];
-						}
-						
-						// replace urls
-						if(array_key_exists($item->name, $urls)){
-							$submenu[$group][$index]->value = $urls[$item->name];
-						}
-						
-						// remove items
-						if(array_key_exists($item->name, $remove) && ($item->value == $remove[$item->name])){
-							unset($submenu[$group][$index]);
-						}
-					}
-				} else {
-					unset($submenu[$group]);
-				}
-			}
-			
-			$CONFIG->submenu = $submenu;
-			
 		}
 	}
 	

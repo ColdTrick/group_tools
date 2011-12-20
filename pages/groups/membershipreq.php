@@ -7,38 +7,50 @@
 
 	gatekeeper();
 	
-	$group_guid = (int) get_input("group_guid");
+	$guid = (int) get_input("group_guid");
 	
-	if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup) && $group->canEdit()){
-		set_page_owner($group_guid);
+	elgg_set_page_owner_guid($guid);
 	
-		$request_options = array(
-			"type" => "user",
-			"relationship" => "membership_request", 
-			"relationship_guid" => $group_guid, 
-			"inverse_relationship" => true, 
-			"limit" => false
-		);
-		$requests = elgg_get_entities_from_relationship($request_options);
+	$group = get_entity($guid);
+	
+	$title = elgg_echo('groups:membershiprequests');
+	
+	if ($group && $group->canEdit()) {
+		elgg_push_breadcrumb($group->name, $group->getURL());
+		elgg_push_breadcrumb($title);
+	
+		// membership requests
+		$requests = elgg_get_entities_from_relationship(array(
+				'type' => 'user',
+				'relationship' => 'membership_request',
+				'relationship_guid' => $guid,
+				'inverse_relationship' => true,
+				'limit' => 0,
+		));
 		
-		$invitation_options = array(
+		// invited users
+		$invitations = elgg_get_entities_from_relationship(array(
 			"type" => "user",
 			"relationship" => "invited", 
-			"relationship_guid" => $group_guid, 
+			"relationship_guid" => $guid, 
 			"limit" => false
-		);
-		$invitations = elgg_get_entities_from_relationship($invitation_options);
+		));
 		
-		$title = elgg_echo("groups:membershiprequests");
+		$content = elgg_view('groups/membershiprequests', array(
+			'requests' => $requests,
+			'invitations' => $invitations,
+			'entity' => $group,
+		));
 	
-		$area2 = elgg_view_title($title);
-		$area2 .= elgg_view("groups/membershiprequests",array("requests" => $requests, "entity" => $group, "invitations" => $invitations));
-		
-		$body = elgg_view_layout("two_column_left_sidebar", $area1, $area2);
-		
-		page_draw($title, $body);
 	} else {
-		register_error(elgg_echo("groups:noaccess"));
-		forward(REFERER);
+		$content = elgg_echo("groups:noaccess");
 	}
-?>
+	
+	$params = array(
+			'content' => $content,
+			'title' => $title,
+			'filter' => '',
+	);
+	$body = elgg_view_layout('content', $params);
+	
+	echo elgg_view_page($title, $body);

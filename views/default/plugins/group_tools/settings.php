@@ -14,9 +14,9 @@
 	);
 	
 	$listing_options = array(
-		"active" => elgg_echo("groups:latestdiscussion"),
+		"discussion" => elgg_echo("groups:latestdiscussion"),
 		"newest" => elgg_echo("groups:newest"),
-		"pop" => elgg_echo("groups:popular"),
+		"popular" => elgg_echo("groups:popular"),
 		"open" => elgg_echo("group_tools:groups:sorting:open"),
 		"closed" => elgg_echo("group_tools:groups:sorting:closed"),
 		"alfa" => elgg_echo("group_tools:groups:sorting:alfabetical"),
@@ -81,17 +81,19 @@
 		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[auto_notification]", "options_values" => $noyes_options, "value" => $plugin->auto_notification));
 	?>
 </div>
-<?php if(!empty($auto_joins)) { ?>
-<h3 class="settings"><?php echo elgg_echo("group_tools:settings:auto_join"); ?></h3>
-<div><?php echo elgg_echo("group_tools:settings:auto_join:description"); ?></div>
-<div>
-	<?php 
-		foreach($auto_joins as $group_guid){ 
+<?php 
+
+	if(!empty($auto_joins)) { 
+		$title = elgg_echo("group_tools:settings:auto_join");
+		
+		$content = "<div>" . elgg_echo("group_tools:settings:auto_join:description") . "</div>";
+		
+		foreach($auto_joins as $group_guid){
 			if($group = get_entity($group_guid)){
-				echo elgg_view("output/url", array("href" => $group->getURL(), "text" => $group->name));
-				echo "&nbsp;(" . elgg_view("output/confirmlink", array("href" => $vars["url"] . "action/group_tools/toggle_auto_join?group_guid=" . $group->getGUID(), "text" => elgg_echo("group_tools:remove"))) . ")<br />";
+				$content .= elgg_view("output/url", array("href" => $group->getURL(), "text" => $group->name));
+				$content .= "&nbsp;(" . elgg_view("output/confirmlink", array("href" => $vars["url"] . "action/group_tools/toggle_auto_join?group_guid=" . $group->getGUID(), "text" => elgg_echo("group_tools:remove"))) . ")<br />";
 			}
 		}
-	?>
-</div>
-<?php }
+		
+		echo elgg_view_module("info", $title, content);
+	}

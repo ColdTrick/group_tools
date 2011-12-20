@@ -12,7 +12,8 @@
 			elgg_extend_view("js/initialise_elgg", "group_tools/js");
 			
 			// extend groups page handler
-			group_tools_extend_page_handler("groups", "group_tools_groups_page_handler");
+// 			group_tools_extend_page_handler("groups", "group_tools_groups_page_handler");
+			elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
 			
 			if(elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes"){
 				// add group tool option
@@ -50,11 +51,12 @@
 			}
 			
 			// manage auto join for groups
-			elgg_extend_view("forms/groups/edit", "group_tools/forms/auto_join", 400);
+			elgg_extend_view("groups/edit", "group_tools/forms/auto_join", 400);
 			elgg_register_event_handler("create", "member_of_site", "group_tools_join_site_handler");
 			
 			// show group edit as tabbed
-			elgg_extend_view("forms/groups/edit", "group_tools/group_edit_tabbed", 1);
+			elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed", 1);
+			elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed_js", 999999999);
 			
 			// show group profile widgets - edit form
 			elgg_extend_view("forms/groups/edit", "group_tools/forms/profile_widgets", 400);
@@ -78,8 +80,6 @@
 		$context = elgg_get_context();
 		
 		if(($context == "groups") && ($page_owner instanceof ElggGroup)){
-			// replace submenu
-			group_tools_replace_submenu();
 			
 			if(!empty($user)){
 				// extend profile actions
@@ -114,15 +114,27 @@
 						"inverse_relationship" => true, 
 						"count" => true
 					);
+					
 					if($requests = elgg_get_entities_from_relationship($request_options)){
 						$postfix = " [" . $requests . "]";
 					}
-					add_submenu_item(elgg_echo("group_tools:menu:membership") . $postfix, $CONFIG->wwwroot . "pg/groups/membershipreq/" . $page_owner->getGUID(), '1groupsactions');
+					
+					if(!$page_owner->isPublicMembership() || !empty($requests)){
+						elgg_register_menu_item('page', array(
+							'name' => 'membership_requests',
+							'text' => elgg_echo('groups:membershiprequests') . $postfix,
+							'href' => "groups/requests/" . $page_owner->getGUID(),
+						));
+					}
 				}
 				
 				// group mail options
-				if ($page_owner->canEdit() && (get_plugin_setting("mail", "group_tools") == "yes")) {
-					add_submenu_item(elgg_echo("group_tools:menu:mail"), $CONFIG->wwwroot . "pg/groups/mail/" . $page_owner->getGUID(), "1groupsactions");
+				if ($page_owner->canEdit() && (elgg_get_plugin_setting("mail", "group_tools") == "yes")) {
+					elgg_register_menu_item('page', array(
+						'name' => 'mail',
+						'text' => elgg_echo('group_tools:menu:mail'),
+						'href' => "groups/mail/" . $page_owner->getGUID(),
+					));
 				}
 			}	
 		}
@@ -131,7 +143,7 @@
 			if($page_owner->membership != ACCESS_PUBLIC){
 				if(elgg_get_plugin_setting("search_index", "group_tools") != "yes"){
 					// closed groups should be indexed by search engines
-					elgg_extend_view("metatags", "metatags/noindex");
+					elgg_extend_view("page/elements/head", "metatags/noindex");
 				}
 			}
 		}
@@ -171,7 +183,7 @@
 	
 	// default elgg event handlers
 	elgg_register_event_handler("init", "system", "group_tools_init");
-	elgg_register_event_handler("pagesetup", "system", "group_tools_pagesetup");
+	elgg_register_event_handler("pagesetup", "system", "group_tools_pagesetup", 550);
 
 	// actions
 	elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");
