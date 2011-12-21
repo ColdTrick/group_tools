@@ -16,6 +16,7 @@
 	$title = elgg_echo('groups:membershiprequests');
 	
 	if ($group && $group->canEdit()) {
+		elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 		elgg_push_breadcrumb($group->name, $group->getURL());
 		elgg_push_breadcrumb($title);
 	

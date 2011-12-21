@@ -65,12 +65,6 @@
 					include(dirname(dirname(__FILE__)) . "/pages/groups/invite.php");
 					break;
 				}
-			case "membershipreq":
-				if(!empty($page[1])){
-					set_input("group_guid", $page[1]);
-					include(dirname(dirname(__FILE__)) . "/pages/groups/membershipreq.php");
-					break;
-				}
 			case "group_invite_autocomplete":	
 				include(dirname(dirname(__FILE__)) . "/procedures/group_invite_autocomplete.php");
 				break;

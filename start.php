@@ -6,69 +6,68 @@
 
 	function group_tools_init(){
 		
-		if(elgg_is_active_plugin("groups")){
-			// extend css & js
-			elgg_extend_view("css/elgg", "group_tools/css/site");
-			elgg_extend_view("js/initialise_elgg", "group_tools/js");
+		// extend css & js
+		elgg_extend_view("css/elgg", "group_tools/css/site");
+		elgg_extend_view("js/initialise_elgg", "group_tools/js");
+		
+		// extend groups page handler
+		elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
+		
+		// hook on title menu
+		elgg_register_plugin_hook_handler("register", "menu:title", "group_tools_menu_title_handler");
+		elgg_register_plugin_hook_handler("register", "menu:user_hover", "group_tools_menu_entity_handler");
+		
+		if(elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes"){
+			// add group tool option
+			add_group_tool_option("group_multiple_admin_allow", elgg_echo("group_tools:multiple_admin:group_tool_option"), false);
 			
-			// extend groups page handler
-			elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
+			// register permissions check hook
+			elgg_register_plugin_hook_handler("permissions_check", "group", "group_tools_multiple_admin_can_edit_hook");
 			
-			// hook on title menu
-			elgg_register_plugin_hook_handler("register", "menu:title", "group_tools_menu_title_handler");
-			elgg_register_plugin_hook_handler("register", "menu:user_hover", "group_tools_menu_entity_handler");
-			
-			if(elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes"){
-				// add group tool option
-				add_group_tool_option("group_multiple_admin_allow", elgg_echo("group_tools:multiple_admin:group_tool_option"), false);
-				
-				// register permissions check hook
-				elgg_register_plugin_hook_handler("permissions_check", "group", "group_tools_multiple_admin_can_edit_hook");
-				
-				// register on group leave
-				elgg_register_event_handler("leave", "group", "group_tools_multiple_admin_group_leave");
-			}
-			
-			// register group activity widget
-			elgg_register_widget_type("group_river_widget", elgg_echo("widgets:group_river_widget:title"), elgg_echo("widgets:group_river_widget:description"), "dashboard,profile,index,groups", true);
-			
-			// register group members widget
-			elgg_register_widget_type("group_members", elgg_echo("widgets:group_members:title"), elgg_echo("widgets:group_members:description"), "groups", false);
-			if(is_callable("widget_manager_add_widget_title_link")){
-				widget_manager_add_widget_title_link("group_members", "[BASEURL]groups/memberlist/[GUID]");
-			}
-			
-			// register groups invitations widget
-			elgg_register_widget_type("group_invitations", elgg_echo("widgets:group_invitations:title"), elgg_echo("widgets:group_invitations:description"), "index,dashboard", false);
-			if(is_callable("widget_manager_add_widget_title_link")){
-				widget_manager_add_widget_title_link("group_invitations", "[BASEURL]groups/invitations/[USERNAME]");
-			}
-			
-			// group invitation
-			elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
-			elgg_register_action("groups/joinrequest", dirname(__FILE__) . "/actions/groups/joinrequest.php");
-			
-			// auto enable group notifications on group join
-			if(elgg_get_plugin_setting("auto_notification", "group_tools") == "yes"){
-				elgg_register_event_handler("join", "group", "group_tools_join_group_event");
-			}
-			
-			// manage auto join for groups
-			elgg_extend_view("groups/edit", "group_tools/forms/auto_join", 400);
-			elgg_register_event_handler("create", "member_of_site", "group_tools_join_site_handler");
-			
-			// show group edit as tabbed
-			elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed", 1);
-			elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed_js", 999999999);
-			
-			// show group profile widgets - edit form
-			elgg_extend_view("groups/edit", "group_tools/forms/profile_widgets", 400);
-			
-			// show group status in owner block
-			elgg_extend_view("page/elements/owner_block/extend", "group_tools/owner_block");
-			// show group status in stats (on group profile)
-			elgg_extend_view("groups/profile/summary", "group_tools/group_stats");
+			// register on group leave
+			elgg_register_event_handler("leave", "group", "group_tools_multiple_admin_group_leave");
 		}
+		
+		// register group activity widget
+		// 2011-12-21: temp disabled until widgets are fixed
+// 		elgg_register_widget_type("group_river_widget", elgg_echo("widgets:group_river_widget:title"), elgg_echo("widgets:group_river_widget:description"), "dashboard,profile,index,groups", true);
+		
+		// register group members widget
+		elgg_register_widget_type("group_members", elgg_echo("widgets:group_members:title"), elgg_echo("widgets:group_members:description"), "groups", false);
+		if(is_callable("widget_manager_add_widget_title_link")){
+			widget_manager_add_widget_title_link("group_members", "[BASEURL]groups/memberlist/[GUID]");
+		}
+		
+		// register groups invitations widget
+		elgg_register_widget_type("group_invitations", elgg_echo("widgets:group_invitations:title"), elgg_echo("widgets:group_invitations:description"), "index,dashboard", false);
+		if(is_callable("widget_manager_add_widget_title_link")){
+			widget_manager_add_widget_title_link("group_invitations", "[BASEURL]groups/invitations/[USERNAME]");
+		}
+		
+		// group invitation
+		elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
+		elgg_register_action("groups/joinrequest", dirname(__FILE__) . "/actions/groups/joinrequest.php");
+		
+		// auto enable group notifications on group join
+		if(elgg_get_plugin_setting("auto_notification", "group_tools") == "yes"){
+			elgg_register_event_handler("join", "group", "group_tools_join_group_event");
+		}
+		
+		// manage auto join for groups
+		elgg_extend_view("groups/edit", "group_tools/forms/auto_join", 400);
+		elgg_register_event_handler("create", "member_of_site", "group_tools_join_site_handler");
+		
+		// show group edit as tabbed
+		elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed", 1);
+		elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed_js", 999999999);
+		
+		// show group profile widgets - edit form
+		elgg_extend_view("groups/edit", "group_tools/forms/profile_widgets", 400);
+		
+		// show group status in owner block
+		elgg_extend_view("page/elements/owner_block/extend", "group_tools/owner_block");
+		// show group status in stats (on group profile)
+		elgg_extend_view("groups/profile/summary", "group_tools/group_stats");
 		
 		if(elgg_is_admin_logged_in()){
 			run_function_once("group_tools_version_1_3");
@@ -76,7 +75,6 @@
 	}
 	
 	function group_tools_pagesetup(){
-		global $CONFIG;
 		
 		$user = elgg_get_logged_in_user_entity();
 		$page_owner = elgg_get_page_owner_entity();

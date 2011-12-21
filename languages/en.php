@@ -10,7 +10,9 @@
 		'group_tools:remove' => "Remove",
 		'group_tools:clear_selection' => "Clear selection",
 		'group_tools:all_members' => "All members",
-		'group_tools:joinrequest:already' => "Membership already requested",
+		
+		'group_tools:joinrequest:already' => "Revoke membership request",
+		'group_tools:joinrequest:already:tooltip' => "You already requested to join this group, click here to revoke this request",
 		
 		// menu
 		'group_tools:menu:mail' => "Mail Members",
