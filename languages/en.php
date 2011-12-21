@@ -10,6 +10,7 @@
 		'group_tools:remove' => "Remove",
 		'group_tools:clear_selection' => "Clear selection",
 		'group_tools:all_members' => "All members",
+		'group_tools:joinrequest:already' => "Membership already requested",
 		
 		// menu
 		'group_tools:menu:mail' => "Mail Members",
@@ -82,6 +83,7 @@ To visit the group please click on the following link:
 		'group_tools:group:edit:other' => "Other options",
 
 		// admin transfer - form
+		'group_tools:admin_transfer:title' => "Transfer the ownership of this group",
 		'group_tools:admin_transfer:transfer' => "Transfer group ownership to",
 		'group_tools:admin_transfer:myself' => "Myself",
 		'group_tools:admin_transfer:submit' => "Tranfser",
@@ -106,9 +108,6 @@ To visit the group please click on the following link:
 		'group_tools:profile_widgets:description' => "This is a closed group. Default no widgets are shown to non members. Here you can configure if you whish to change that.",
 		'group_tools:profile_widgets:option' => "Allow non members to view widgets on the group profile page:",
 		
-		// group kick
-		'group_tools:group_kick:profile_actions:kick' => "Kick from group",
-	
 		// group mail
 		'group_tools:mail:message:from' => "From group",
 		
@@ -178,10 +177,6 @@ To visit the group please click on the following link:
 		'group_tools:action:toggle_admin:error:add' => "An unknown error occured while adding the user as a group admin",
 		'group_tools:action:toggle_admin:success:remove' => "The user was successfully removed as a group admin",
 		'group_tools:action:toggle_admin:success:add' => "The user was successfully added as a group admin",
-		
-		// group kick - action
-		'group_tools:action:kick:error' => "An unknown error occured while removing the user from the group",
-		'group_tools:action:kick:success' => "The user was successfully removed from the group",
 		
 		// group mail - action
 		'group_tools:action:mail:success' => "Message succesfully send",
@@ -254,4 +249,3 @@ To visit the group please click on the following link:
   	
   	add_translation("en", $group_invitations_widget);
   	
-?>

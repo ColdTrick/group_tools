@@ -1,25 +1,6 @@
 <?php 
 
-
 ?>
-#group_tools_multiple_admin_group_admins {
-	margin:10px;
-	-webkit-border-radius: 8px; 
-	-moz-border-radius: 8px;
-	background: white;	
-}
-
-#group_tools_multiple_admin_group_admins h2 {
-	margin:0 0 10px 0;
-	padding:5px;
-	color:#0054A7;
-	font-size:1.25em;
-	line-height:1.2em;
-}
-
-#group_tools_group_membershipreq .search_listing {
-	border: 1px solid #cecece;
-}
 
 #group_tools_group_membershipreq .search_listing:hover {
 	border-color: #333333;
@@ -85,16 +66,10 @@
 	display: none;
 }
 
-#group_tools_group_status {
-	font-weight: normal;
-}
-
-#group_tools_group_status.group_status_open,
-#group_stats .group_status_open {
+#group_tools_status_open {
 	color: green;
 }
 
-#group_tools_group_status.group_status_closed,
-#group_stats .group_status_closed {
+#group_tools_status_closed {
 	color: orange;
 }

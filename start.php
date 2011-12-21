@@ -8,12 +8,15 @@
 		
 		if(elgg_is_active_plugin("groups")){
 			// extend css & js
-			elgg_extend_view("css", "group_tools/css");
+			elgg_extend_view("css/elgg", "group_tools/css/site");
 			elgg_extend_view("js/initialise_elgg", "group_tools/js");
 			
 			// extend groups page handler
-// 			group_tools_extend_page_handler("groups", "group_tools_groups_page_handler");
 			elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
+			
+			// hook on title menu
+			elgg_register_plugin_hook_handler("register", "menu:title", "group_tools_menu_title_handler");
+			elgg_register_plugin_hook_handler("register", "menu:user_hover", "group_tools_menu_entity_handler");
 			
 			if(elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes"){
 				// add group tool option
@@ -59,12 +62,12 @@
 			elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed_js", 999999999);
 			
 			// show group profile widgets - edit form
-			elgg_extend_view("forms/groups/edit", "group_tools/forms/profile_widgets", 400);
+			elgg_extend_view("groups/edit", "group_tools/forms/profile_widgets", 400);
 			
 			// show group status in owner block
-			elgg_extend_view("owner_block/extend", "group_tools/owner_block");
+			elgg_extend_view("page/elements/owner_block/extend", "group_tools/owner_block");
 			// show group status in stats (on group profile)
-			elgg_extend_view("groups/groupprofile", "group_tools/group_stats");
+			elgg_extend_view("groups/profile/summary", "group_tools/group_stats");
 		}
 		
 		if(elgg_is_admin_logged_in()){
@@ -82,25 +85,22 @@
 		if(($context == "groups") && ($page_owner instanceof ElggGroup)){
 			
 			if(!empty($user)){
-				// extend profile actions
-				elgg_extend_view("profile/menu/actions", "group_tools/profile_actions");
-				
 				// check for admin transfer
 				$admin_transfer = elgg_get_plugin_setting("admin_transfer", "group_tools");
 				
 				if(($admin_transfer == "admin") && $user->isAdmin()){
-					elgg_extend_view("forms/groups/edit", "group_tools/forms/admin_transfer", 400);
-				} elseif(($admin_transfer == "owner") && (($page_owner->getOwner() == $user->getGUID()) || $user->isAdmin())){
-					elgg_extend_view("forms/groups/edit", "group_tools/forms/admin_transfer", 400);
+					elgg_extend_view("groups/edit", "group_tools/forms/admin_transfer", 400);
+				} elseif(($admin_transfer == "owner") && (($page_owner->getOwnerGUID() == $user->getGUID()) || $user->isAdmin())){
+					elgg_extend_view("groups/edit", "group_tools/forms/admin_transfer", 400);
 				}
 				
 				// check multiple admin
 				if(elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes"){
 					// extend group members sidebar list
-					elgg_extend_view("groups/members", "group_tools/group_admins", 400);
+					elgg_extend_view("groups/sidebar/members", "group_tools/group_admins", 400);
 					
 					// remove group tool options for group admins
-					if(($page_owner->getOwner() != $user->getGUID()) && !$user->isAdmin()){
+					if(($page_owner->getOwnerGUID() != $user->getGUID()) && !$user->isAdmin()){
 						remove_group_tool_option("group_multiple_admin_allow");
 					}
 				}
@@ -140,7 +140,7 @@
 		}
 		
 		if($page_owner instanceof ElggGroup){
-			if($page_owner->membership != ACCESS_PUBLIC){
+			if(!$page_owner->isPublicMembership()){
 				if(elgg_get_plugin_setting("search_index", "group_tools") != "yes"){
 					// closed groups should be indexed by search engines
 					elgg_extend_view("page/elements/head", "metatags/noindex");
@@ -188,7 +188,6 @@
 	// actions
 	elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");
 	elgg_register_action("group_tools/toggle_admin", dirname(__FILE__) . "/actions/toggle_admin.php");
-	elgg_register_action("group_tools/kick", dirname(__FILE__) . "/actions/kick.php");
 	elgg_register_action("group_tools/mail", dirname(__FILE__) . "/actions/mail.php");
 	elgg_register_action("group_tools/profile_widgets", dirname(__FILE__) . "/actions/profile_widgets.php");
 	
