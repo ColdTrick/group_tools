@@ -8,7 +8,9 @@
 		
 		// extend css & js
 		elgg_extend_view("css/elgg", "group_tools/css/site");
-		elgg_extend_view("js/initialise_elgg", "group_tools/js");
+		elgg_extend_view("js/elgg", "group_tools/js");
+		
+		elgg_register_js("jquery.autocomplete.min", elgg_get_site_url() . "vendors/jquery/jquery.autocomplete.min.js");
 		
 		// extend groups page handler
 		elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");

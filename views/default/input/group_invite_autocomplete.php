@@ -1,33 +1,17 @@
 <?php 
 	
-	$name = $vars["internalname"]; // input name of the selected user
-	$id = $vars["internalid"];
-	$relationship = $vars["relationship"];
+	$name = elgg_extract("name", $vars); // input name of the selected user
+	$id = elgg_extract("id", $vars);
+	$relationship = elgg_extract("relationship", $vars);
 	
 	$destination = $id . "_autocomplete_results";
 	
+	$multiple = elgg_extract("multiple", $vars, "true"); //should be string true or false
+	$max = elgg_extract("max", $vars, 50); 
+	$minChars = elgg_extract("minChars", $vars, 3);
 	
-	$multiple = $vars["multiple"]; //should be string true or false
-	if(empty($multiple)){
-		$multiple = "true";
-	}	
-
-	$max = $vars["max"]; 
-	if(empty($max)){
-		$max = 50;
-	}	
-
-	$minChars = $vars["minChars"]; 
-	if(empty($minChars)){
-		$minChars = 3;
-	}	
+	elgg_load_js('jquery.autocomplete.min');
 	
-	global $js_autocomplete;
-	if(empty($js_autocomplete)){
-		$js_autocomplete = true;
-		
-		echo "<script type='text/javascript' src='" . $vars["url"] . "vendors/jquery/jquery.autocomplete.min.js'></script>";
-	}
 ?>
 	
 	<input type="text" id="<?php echo $id; ?>_autocomplete" size="25" />
@@ -42,7 +26,7 @@
 	
 		$(document).ready(function() {
 			$.ajaxSetup( { type: "POST" } );
-			$("#<?php echo $id; ?>_autocomplete").autocomplete('<?php echo $vars["url"]; ?>pg/groups/group_invite_autocomplete', {
+			$("#<?php echo $id; ?>_autocomplete").autocomplete('<?php echo $vars["url"]; ?>groups/group_invite_autocomplete', {
 				width: 300,
 				minChars: <?php echo $minChars; ?>,
 				cacheLength: 1,

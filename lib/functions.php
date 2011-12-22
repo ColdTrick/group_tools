@@ -59,15 +59,6 @@
 					include(dirname(dirname(__FILE__)) . "/pages/mail.php");
 					break;
 				}
-			case "invite":
-				if(!empty($page[1])){
-					set_input("group_guid", $page[1]);
-					include(dirname(dirname(__FILE__)) . "/pages/groups/invite.php");
-					break;
-				}
-			case "group_invite_autocomplete":	
-				include(dirname(dirname(__FILE__)) . "/procedures/group_invite_autocomplete.php");
-				break;
 			default:
 				return group_tools_fallback_page_handler($page, $handler);
 				break;

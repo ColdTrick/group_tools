@@ -12,19 +12,21 @@
 		$include_self = true;
 	}
 	
-	$result = "";
+	$result = array();
 	
-	if(($user = get_loggedin_user()) && !empty($q) && !empty($group_guid)){
+	if(($user = elgg_get_logged_in_user_entity()) && !empty($q) && !empty($group_guid)){
 		// show hidden (unvalidated) users
 		$hidden = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 		
 		if($relationship != "email"){
+			$dbprefix = elgg_get_config("dbprefix");
+			
 			// find existing users
 			$query_options = array(
 				"type" => "user",
 				"limit" => $limit,
-				"joins" => array("JOIN {$CONFIG->dbprefix}users_entity u ON e.guid = u.guid"),
+				"joins" => array("JOIN {$dbprefix}users_entity u ON e.guid = u.guid"),
 				"wheres" => array("(u.name LIKE '%{$q}%' OR u.username LIKE '%{$q}%')", "u.banned = 'no'"),
 				"order_by" => "u.name asc"
 			);
@@ -46,14 +48,14 @@
 				$query_options["relationship_guid"] = $user->getGUID();
 			} elseif($relationship == "site"){
 				$query_options["relationship"] = "member_of_site";
-				$query_options["relationship_guid"] = $CONFIG->site_guid;
+				$query_options["relationship_guid"] = elgg_get_site_entity()->getGUID();
 				$query_options["inverse_relationship"] = true;
 			}
 			
 			if($entities = elgg_get_entities_from_relationship($query_options)){
 				foreach($entities as $entity){
 					if(!check_entity_relationship($entity->getGUID(), "member", $group_guid)){
-						$result .= "user|" . $entity->getGUID() . "|" . $entity->name . "|" . $entity->getIcon("tiny") . "\n";
+						$result[] = "user|" . $entity->getGUID() . "|" . $entity->name . "|" . $entity->getIcon("tiny");
 					}	
 				}
 			}
@@ -63,10 +65,10 @@
 			if(preg_match($regexpr, $q)){
 				if($users = get_user_by_email($q)){
 					foreach($users as $user){
-						$result .= "user|" . $user->getGUID() . "|" . $user->name . "|" . $user->getIcon("tiny") . "\n";
+						$result[] = "user|" . $user->getGUID() . "|" . $user->name . "|" . $user->getIcon("tiny");
 					}
 				} else {
-					$result .= "email|" . $q;
+					$result[] = "email|" . $q;
 				}
 			}
 		}
@@ -75,6 +77,5 @@
 		access_show_hidden_entities($hidden);
 	}
 	
-	echo $result;
-
-?>
+	echo json_encode($result);
+	

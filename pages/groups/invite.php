@@ -6,22 +6,50 @@
 	 */
 
 	gatekeeper();
+
+	$guid = (int) get_input("group_guid");
 	
-	$group_guid = (int) get_input('group_guid');
+	if(($group = get_entity($guid)) && ($group instanceof ElggGroup) && $group->canEdit()){
 	
-	if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup) && $group->canEdit()){
-		set_page_owner($group->getGUID());
-	
-		$title = elgg_echo("group_tools:groups:invite");
-	
-		$area2 = elgg_view_title($title);
-		$area2 .= elgg_view("forms/groups/invite", array('entity' => $group));
+		elgg_set_page_owner_guid($guid);
 		
-		$body = elgg_view_layout('two_column_left_sidebar', $area1, $area2);
+		// get plugin settings
+		$invite = elgg_get_plugin_setting("invite", "group_tools");
+		$invite_email = elgg_get_plugin_setting("invite_email", "group_tools");
+		$invite_csv = elgg_get_plugin_setting("invite_csv", "group_tools");
+			
+		if(in_array("yes", array($invite, $invite_csv, $invite_email))){
+			$title = elgg_echo("group_tools:groups:invite:title");
+			$breadcrumb = elgg_echo("group_tools:groups:invite");
+		} else {
+			$title = elgg_echo("groups:invite:title");
+			$breadcrumb = elgg_echo("groups:invite");
+		}
 		
-		page_draw($title, $body);
+		elgg_push_breadcrumb(elgg_echo("groups"), "groups/all");
+		elgg_push_breadcrumb($group->name, $group->getURL());
+		elgg_push_breadcrumb($breadcrumb);
+	
+		$content = elgg_view_form("groups/invite", array(
+			"id" => "invite_to_group",
+			"class" => "elgg-form-alt mtm",
+			"enctype" => "multipart/form-data"
+		), array(
+			"entity" => $group,
+			"invite" => $invite,
+			"invite_email" => $invite_email,
+			"invite_csv" => $invite_csv
+		));
+		
+		$params = array(
+			"content" => $content,
+			"title" => $title,
+			"filter" => "",
+		);
+		$body = elgg_view_layout("content", $params);
+	
+		echo elgg_view_page($title, $body);
 	} else {
 		register_error(elgg_echo("groups:noaccess"));
 		forward(REFERER);
 	}
-?>

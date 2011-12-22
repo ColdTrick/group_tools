@@ -68,6 +68,18 @@
 					
 					include(dirname(dirname(__FILE__)) . "/pages/groups/membershipreq.php");
 					break;
+				case "invite":
+					$result = false;
+					
+					set_input("group_guid", $page[1]);
+					
+					include(dirname(dirname(__FILE__)) . "/pages/groups/invite.php");
+					break;
+				case "group_invite_autocomplete":
+					$result = false;
+					
+					include(dirname(dirname(__FILE__)) . "/procedures/group_invite_autocomplete.php");
+					break;
 			}
 		}
 		

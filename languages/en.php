@@ -124,6 +124,7 @@ To visit the group please click on the following link:
 		'group_tools:mail:form:js:description' => "Please enter a message",
 		
 		// group invite
+		'group_tools:groups:invite:title' => "Invite users to this group",
 		'group_tools:groups:invite' => "Invite users",
 		
 		'group_tools:group:invite:users' => "Find user(s)",
