@@ -6,8 +6,13 @@
 
 	if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup) && ($group->canEdit())){
 		// set page owner
-		set_page_owner($group->getGUID());
-		set_context("groups");
+		elgg_set_page_owner_guid($group->getGUID());
+		elgg_set_context("groups");
+		
+		// set breadcrumb
+		elgg_push_breadcrumb(elgg_echo("groups"), "groups/all");
+		elgg_push_breadcrumb($group->name, $group->getURL());
+		elgg_push_breadcrumb(elgg_echo("group_tools:menu:mail"));
 		
 		// get members
 		$members = $group->getMembers(false);
@@ -18,11 +23,14 @@
 		
 		$form = elgg_view("group_tools/forms/mail", array("entity" => $group, "members" => $members));
 		
-		$page_data = $title . $form;
-		
-		page_draw($title_text, elgg_view_layout("two_column_left_sidebar", "", $page_data));
+		$body = elgg_view_layout("content", array(
+			"entity" => $group,
+			"title" => $title_text,
+			"content" => $form,
+			"filter" => false
+		));
+		echo elgg_view_page($title_text, $body);
 	} else {
 		forward(REFERER);
 	}
-
-?>
+	

@@ -1,11 +1,9 @@
 <?php
 
-	global $CONFIG;
-	global $GROUP_TOOLS_ACL;
-
-	set_time_limit(0);
-	
 	admin_gatekeeper();
+	
+	// this could take a while ;)
+	set_time_limit(0);
 	
 	$group_guid = (int) get_input("group_guid");
 	
@@ -19,16 +17,13 @@
 			$options = array(
 				"type" => "user",
 				"relationship" => "member_of_site",
-				"relationship_guid" => $CONFIG->site_guid,
+				"relationship_guid" => elgg_get_site_entity()->getGUID(),
 				"inverse_relationship" => true,
 				"limit" => false,
 				"callback" => "group_tools_guid_only_callback"
 			);
 			
 			if($user_guids = elgg_get_entities_from_relationship($options)){
-				// make sure we can add user to group acl
-				register_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
-				$GROUP_TOOLS_ACL = $group->group_acl;
 				
 				foreach($user_guids as $user_guid){
 					if(!is_group_member($group->getGUID(), $user_guid)){
@@ -44,12 +39,9 @@
 					// cleanup cache, to be sure
 					invalidate_cache_for_entity($user_guid);
 				}
-				
-				// cleanup hook
-				unregister_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
 			}
 			
-			system_message(sprintf(elgg_echo("group_tools:action:fix_auto_join:success"), $new, $already, $failure));
+			system_message(elgg_echo("group_tools:action:fix_auto_join:success", array($new, $already, $failure)));
 		} else {
 			register_error(elgg_echo("group_tools:action:error:entity"));
 		}

@@ -8,7 +8,7 @@
 		if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
 			$result = false;
 			
-			if($auto_join_groups = get_plugin_setting("auto_join", "group_tools")){
+			if($auto_join_groups = elgg_get_plugin_setting("auto_join", "group_tools")){
 				$auto_join_groups = string_to_tag_array($auto_join_groups);
 			} else {
 				$auto_join_groups = array();
@@ -21,9 +21,9 @@
 			}
 			
 			if(!empty($auto_join_groups)){
-				$result = set_plugin_setting("auto_join", implode(",", $auto_join_groups), "group_tools");
+				$result = elgg_set_plugin_setting("auto_join", implode(",", $auto_join_groups), "group_tools");
 			} else {
-				$result = clear_plugin_setting("auto_join", "group_tools");
+				$result = elgg_unset_plugin_setting("auto_join", "group_tools");
 			}
 			
 			if($result){

@@ -1,13 +1,11 @@
 <?php 
 
-	global $GROUP_TOOLS_ACL;
-
 	gatekeeper();
 	
 	$group_guid = (int) get_input("group_guid", 0);
 	$owner_guid = (int) get_input("owner_guid", 0);
 	
-	$loggedin_user = get_loggedin_user();
+	$loggedin_user = elgg_get_logged_in_user_entity();
 	$forward_url = REFERER;
 	
 	if(!empty($group_guid) && !empty($owner_guid)){
@@ -20,14 +18,8 @@
 					$group->owner_guid = $new_owner->getGUID();
 					$group->container_guid = $new_owner->getGUID();
 					
-					// make sure user is added to correct acl
-					register_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
-					$GROUP_TOOLS_ACL = $group->group_acl;
-					
+					// make sure user is added to the group
 					$group->join($new_owner);
-					
-					// cleanup hook
-					unregister_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
 					
 					if($group->save()){
 						$forward_url = $group->getURL();
@@ -36,7 +28,7 @@
 						if(!empty($group->icontime)){
 							$prefix = "groups/" . $group->getGUID();
 							
-							$sizes = array("", "tiny", "small", "medium", "large");
+							$sizes = array("tiny", "small", "medium", "large");
 							
 							$ofh = new ElggFile();
 							$ofh->owner_guid = $old_owner->getGUID();
@@ -68,7 +60,11 @@
 						}
 						
 						// move metadata of the group to the new owner
-						if($metadata = get_metadata_for_entity($group->getGUID())){
+						$options = array(
+							"guid" => $group->getGUID(), 
+							"limit" => false
+						);
+						if($metadata = elgg_get_metadata($options)){
 							foreach($metadata as $md){
 								if($md->owner_guid == $old_owner->getGUID()){
 									$md->owner_guid = $new_owner->getGUID();
@@ -79,18 +75,18 @@
 						
 						// notify new owner
 						if($new_owner->getGUID() != $loggedin_user->getGUID()){
-							$subject = sprintf(elgg_echo("group_tools:notify:transfer:subject"), $group->name);
-							$message = sprintf(elgg_echo("group_tools:notify:transfer:message"), 
-												$new_owner->name,
-												$loggedin_user->name,
-												$group->name,
-												$group->getURL());
+							$subject = elgg_echo("group_tools:notify:transfer:subject", array($group->name));
+							$message = elgg_echo("group_tools:notify:transfer:message", array(
+											$new_owner->name,
+											$loggedin_user->name,
+											$group->name,
+											$group->getURL()));
 							
 							notify_user($new_owner->getGUID(), $group->getGUID(), $subject, $message);
 						}
 						
 						// success message
-						system_message(sprintf(elgg_echo("group_tools:action:admin_transfer:success"), $new_owner->name));
+						system_message(elgg_echo("group_tools:action:admin_transfer:success", array($new_owner->name)));
 					} else {
 						register_error(elgg_echo("group_tools:action:admin_transfer:error:save"));
 					}
@@ -109,4 +105,3 @@
 
 	forward($forward_url);
 	
-?>

@@ -48,7 +48,6 @@
 		
 		// group invitation
 		elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
-		elgg_register_action("groups/joinrequest", dirname(__FILE__) . "/actions/groups/joinrequest.php");
 		
 		// auto enable group notifications on group join
 		if(elgg_get_plugin_setting("auto_notification", "group_tools") == "yes"){
@@ -151,34 +150,27 @@
 	}
 	
 	function group_tools_version_1_3(){
-		global $CONFIG, $GROUP_TOOLS_ACL;
+		$dbprefix = elgg_get_config("dbprefix");
 		
 		$query = "SELECT ac.id AS acl_id, ac.owner_guid AS group_guid, er.guid_one AS user_guid
-			FROM {$CONFIG->dbprefix}access_collections ac
-			JOIN {$CONFIG->dbprefix}entities e ON e.guid = ac.owner_guid
-			JOIN {$CONFIG->dbprefix}entity_relationships er ON ac.owner_guid = er.guid_two
+			FROM {$dbprefix}access_collections ac
+			JOIN {$dbprefix}entities e ON e.guid = ac.owner_guid
+			JOIN {$dbprefix}entity_relationships er ON ac.owner_guid = er.guid_two
 			WHERE e.type = 'group'
 			AND er.relationship = 'member'
 			AND er.guid_one NOT IN 
 			(
 			SELECT acm.user_guid
-			FROM {$CONFIG->dbprefix}access_collections ac2
-			JOIN {$CONFIG->dbprefix}access_collection_membership acm ON ac2.id = acm.access_collection_id
+			FROM {$dbprefix}access_collections ac2
+			JOIN {$dbprefix}access_collection_membership acm ON ac2.id = acm.access_collection_id
 			WHERE ac2.owner_guid = ac.owner_guid
 			)";
 		
 		if($data = get_data($query)){
-			elgg_register_plugin_hook_handler("access:collections:write", "user", "group_tools_add_user_acl_hook");
-			
 			foreach($data as $row){
-				$GROUP_TOOLS_ACL = $row->acl_id;
-				
 				add_user_to_access_collection($row->user_guid, $row->acl_id);
 			}
-			
-			elgg_unregister_plugin_hook_handler("access:collections:write", "user", "group_tools_add_user_acl_hook");
 		}
-		
 	}
 	
 	// default elgg event handlers

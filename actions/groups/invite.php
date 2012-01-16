@@ -6,11 +6,11 @@
 	 * @package ElggGroups
 	 */
 	
-	global $CONFIG, $GROUP_TOOLS_ACL;
+	global $CONFIG;
 	
 	gatekeeper();
 	
-	$logged_in_user = get_loggedin_user();
+	$logged_in_user = elgg_get_logged_in_user_entity();
 	
 	$user_guids = get_input("user_guid");
 	if (!empty($user_guids) && !is_array($user_guids)){
@@ -70,20 +70,16 @@
 					
 					if(!empty($new_invited)){
 						if(empty($already_invited) && empty($member)){
-							system_message(sprintf(elgg_echo("group_tools:action:group:invite:success"), $new_invited));
+							system_message(elgg_echo("group_tools:action:group:invite:success", array($new_invited)));
 						} else {
-							system_message(sprintf(elgg_echo("group_tools:action:group:invite:success:other"), $new_invited, $member, $already_invited));
+							system_message(elgg_echo("group_tools:action:group:invite:success:other", arary($new_invited, $member, $already_invited)));
 						}
 					} else {
-						register_error(sprintf(elgg_echo("group_tools:action:group:invite:error:no_invites"), $member, $already_invited));
+						register_error(elgg_echo("group_tools:action:group:invite:error:no_invites", array($member, $already_invited)));
 					}
 				} else {
 					$join = 0;
 					$member = 0;
-					
-					// make sure users are added to correct acl
-					register_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
-					$GROUP_TOOLS_ACL = $group->group_acl;
 					
 					// add users directly
 					foreach($user_guids as $u_id){
@@ -98,17 +94,14 @@
 						}
 					}
 					
-					// cleanup hook
-					unregister_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
-					
 					if(!empty($join)){
 						if(empty($member)){
-							system_message(sprintf(elgg_echo("group_tools:action:groups:invite:add:success"), $join));
+							system_message(elgg_echo("group_tools:action:groups:invite:add:success", array($join)));
 						} else {
-							system_message(sprintf(elgg_echo("group_tools:action:groups:invite:add:success:other"), $join, $member));
+							system_message(elgg_echo("group_tools:action:groups:invite:add:success:other", array($join, $member)));
 						}
 					} else {
-						register_error(sprintf(elgg_echo("group_tools:action:groups:invite:add:error:no_add"), $member));
+						register_error(elgg_echo("group_tools:action:groups:invite:add:error:no_add", array($member)));
 					}
 				}
 			}
@@ -130,12 +123,12 @@
 				// system message
 				if(!empty($sent)){
 					if(empty($already)){
-						system_message(sprintf(elgg_echo("group_tools:action:group:invite:email:success"), $sent));
+						system_message(elgg_echo("group_tools:action:group:invite:email:success", array($sent)));
 					} else {
-						system_message(sprintf(elgg_echo("group_tools:action:group:invite:email:success:other"), $sent, $already));
+						system_message(elgg_echo("group_tools:action:group:invite:email:success:other", array($sent, $already)));
 					}
 				} else {
-					register_error(sprintf(elgg_echo("group_tools:action:group:invite:email:error:no_invites"), count($emails), $already));
+					register_error(elgg_echo("group_tools:action:group:invite:email:error:no_invites", array(count($emails), $already)));
 				}
 			}
 			
@@ -180,16 +173,9 @@
 											}
 										} 
 									} else {
-										// make sure users are added to correct acl
-										register_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
-										$GROUP_TOOLS_ACL = $group->group_acl;
-										
 										if(group_tools_add_user($group, $user, $text)){
 											$csv_added++;
 										}
-										
-										// cleanup hook
-										unregister_plugin_hook("access:collections:write", "user", "group_tools_add_user_acl_hook");
 									}
 								} else {
 									$csv_already_member++;
@@ -210,12 +196,12 @@
 				
 				if(!empty($csv_added) || !empty($csv_invited)){
 					if(empty($csv_already_invited) && empty($csv_already_member)){
-						system_message(sprintf(elgg_echo("group_tools:action:group:invite:success"), ($csv_added + $csv_invited)));
+						system_message(elgg_echo("group_tools:action:group:invite:success", array(($csv_added + $csv_invited))));
 					} else {
-						system_message(sprintf(elgg_echo("group_tools:action:group:invite:success:other"), ($csv_added + $csv_invited), $csv_already_member, $csv_already_invited));
+						system_message(elgg_echo("group_tools:action:group:invite:success:other", array(($csv_added + $csv_invited), $csv_already_member, $csv_already_invited)));
 					}
 				} else {
-					register_error(sprintf(elgg_echo("group_tools:action:group:invite:csv:error:no_invites"), $csv_already_member, $csv_already_invited));
+					register_error(elgg_echo("group_tools:action:group:invite:csv:error:no_invites", array($csv_already_member, $csv_already_invited)));
 				}
 			}
 			
@@ -229,5 +215,3 @@
 	}
 	
 	forward(REFERER);
-
-?>

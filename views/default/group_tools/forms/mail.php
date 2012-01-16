@@ -10,38 +10,41 @@
 		}
 	}
 	
-	$form_data = elgg_view("input/hidden", array("internalname" => "group_guid", "value" => $group->getGUID()));
+	$form_data = elgg_view("input/hidden", array("name" => "group_guid", "value" => $group->getGUID()));
 	
 	$form_data .= "<label>" . elgg_echo("group_tools:mail:form:recipients") . ": <span id='group_tools_mail_recipients_count'>" . count($friendpicker_value) . "</span></label>";
 	$form_data .= "<br />";
 	$form_data .= "<a href='javascript:void(0);' onclick='$(\"#group_tools_mail_member_selection\").toggle();'>" . elgg_echo("group_tools:mail:form:members:selection") . "</a>";
 	
 	$form_data .= "<div id='group_tools_mail_member_selection'>";
-	$form_data .= elgg_view("friends/picker", array("entities" => $members, "value" => $friendpicker_value, "highlight" => "all", "internalname" => "user_guids"));
+	$form_data .= elgg_view("input/friendspicker", array("entities" => $members, "value" => $friendpicker_value, "highlight" => "all", "name" => "user_guids"));
 	$form_data .= "</div>";
 	
 	$form_data .= "<div id='group_tools_mail_member_options'>";
-	$form_data .= elgg_view("input/button", array("type" => "button", "value" => elgg_echo("group_tools:clear_selection"), "js" => "onclick='group_tools_mail_clear_members();'"));
-	$form_data .= elgg_view("input/button", array("type" => "button", "value" => elgg_echo("group_tools:all_members"), "js" => "onclick='group_tools_mail_all_members();'"));
+	$form_data .= elgg_view("input/button", array("class" => "elgg-button-action", "value" => elgg_echo("group_tools:clear_selection"), "onclick" => "group_tools_mail_clear_members();"));
+	$form_data .= elgg_view("input/button", array("class" => "elgg-button-action", "value" => elgg_echo("group_tools:all_members"), "onclick" => "group_tools_mail_all_members();"));
 	$form_data .= "<br />";
 	$form_data .= "</div>";
 	
-	
+	$form_data .= "<div>";
 	$form_data .= "<label>" . elgg_echo("group_tools:mail:form:title") . "</label>";
-	$form_data .= elgg_view("input/text", array("internalname" => "title"));
+	$form_data .= elgg_view("input/text", array("name" => "title"));
+	$form_data .= "</div>";
 	
+	$form_data .= "<div>";
 	$form_data .= "<label>" . elgg_echo("group_tools:mail:form:description") . "</label>";
-	$form_data .= elgg_view("input/longtext", array("internalname" => "description"));
-
+	$form_data .= elgg_view("input/longtext", array("name" => "description"));
+	$form_data .= "</div>";
+	
 	$form_data .= "<div>";
 	$form_data .= elgg_view("input/submit", array("value" => elgg_echo("send")));
 	$form_data .= "</div>";
 
 	$form = elgg_view("input/form", array("body" => $form_data,
 											"action" => $vars["url"] . "action/group_tools/mail",
-											"internalid" => "group_tools_mail_form"));
+											"id" => "group_tools_mail_form"));
 	
-	echo elgg_view("page_elements/contentwrapper", array("body" => $form));
+	echo $form;
 
 ?>
 <script type="text/javascript">

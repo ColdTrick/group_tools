@@ -30,5 +30,3 @@
 	}
 
 	forward(REFERER);
-
-?>

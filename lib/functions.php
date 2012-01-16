@@ -89,21 +89,19 @@
 	}
 	
 	function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $resend = false){
-		global $CONFIG;
-		
 		$result = false;
 		
-		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = get_loggedin_user())){
+		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = elgg_get_logged_in_user_entity())){
 			if(!$resend){
 				// Create relationship
 				add_entity_relationship($group->getGUID(), "invited", $user->getGUID());
 			}
 			
 			// Send email
-			$url = $CONFIG->url . "pg/groups/invitations/" . $user->username;
-				
-			$subject = sprintf(elgg_echo("groups:invite:subject"), $user->name, $group->name);
-			$msg = sprintf(elgg_echo("group_tools:groups:invite:body"), $user->name, $loggedin_user->name, $group->name, $text, $url);
+			$url = elgg_get_site_url() . "/groups/invitations/" . $user->username;
+			
+			$subject = elgg_echo("groups:invite:subject", array($user->name, $group->name));
+			$msg = elgg_echo("group_tools:groups:invite:body", array($user->name, $loggedin_user->name, $group->name, $text, $url));
 			
 			if(notify_user($user->getGUID(), $group->getOwner(), $subject, $msg)){
 				$result = true;
@@ -116,15 +114,15 @@
 	function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = ""){
 		$result = false;
 		
-		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = get_loggedin_user())){
+		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = elgg_get_logged_in_user_entity())){
 			if($group->join($user)){
 				// Remove any invite or join request flags
 				remove_entity_relationship($group->getGUID(), "invited", $user->getGUID());
 				remove_entity_relationship($user->getGUID(), "membership_request", $group->getGUID());
 					
 				// notify user
-				$subject = sprintf(elgg_echo("group_tools:groups:invite:add:subject"), $group->name);
-				$msg = sprintf(elgg_echo("group_tools:groups:invite:add:body"), $user->name, $loggedin_user->name, $group->name, $text, $group->getURL());
+				$subject = elgg_echo("group_tools:groups:invite:add:subject", array($group->name));
+				$msg = elgg_echo("group_tools:groups:invite:add:body", array($user->name, $loggedin_user->name, $group->name, $text, $group->getURL()));
 					
 				if(notify_user($user->getGUID(), $group->getOwner(), $subject, $msg)){
 					$result = true;
@@ -136,11 +134,9 @@
 	}
 	
 	function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend = false){
-		global $CONFIG;
-		
 		$result = false;
 
-		if(!empty($group) && ($group instanceof ElggGroup) && !empty($email) && is_email_address($email) && ($loggedin_user = get_loggedin_user())){
+		if(!empty($group) && ($group instanceof ElggGroup) && !empty($email) && is_email_address($email) && ($loggedin_user = elgg_get_logged_in_user_entity())){
 			// get site secret
 			$site_secret = get_site_secret();
 			
@@ -149,18 +145,19 @@
 			
 			if(!group_tools_check_group_email_invitation($invite_code, $group->getGUID()) || $resend){
 				// make site email
-				if(!empty($CONFIG->site->email)){
-					if(!empty($CONFIG->site->name)){
-						$site_from = $CONFIG->site->name . " <" . $CONFIG->site->email . ">";
+				$site = elgg_get_site_entity();
+				if(!empty($site->email)){
+					if(!empty($site->name)){
+						$site_from = $site->name . " <" . $site->email . ">";
 					} else {
-						$site_from = $CONFIG->site->email;
+						$site_from = $site->email;
 					}
 				} else {
 					// no site email, so make one up
-					if(!empty($CONFIG->site->name)){
-						$site_from = $CONFIG->site->name . " <noreply@" . get_site_domain($CONFIG->site_guid) . ">";
+					if(!empty($site->name)){
+						$site_from = $site->name . " <noreply@" . get_site_domain($site->getGUID()) . ">";
 					} else {
-						$site_from = "noreply@" . get_site_domain($CONFIG->site_guid);
+						$site_from = "noreply@" . get_site_domain($site->getGUID());
 					}
 				}
 				
@@ -170,20 +167,21 @@
 				}
 				
 				// make subject
-				$subject = sprintf(elgg_echo("group_tools:groups:invite:email:subject"), $group->name);
+				$subject = elgg_echo("group_tools:groups:invite:email:subject", array($group->name));
 				
 				// make body
-				$body = sprintf(elgg_echo("group_tools:groups:invite:email:body"),
+				$body = elgg_echo("group_tools:groups:invite:email:body", array(
 					$loggedin_user->name,
 					$group->name,
-					$CONFIG->site->name,
+					$site->name,
 					$text,
-					$CONFIG->site->name,
-					$CONFIG->wwwroot . "pg/register",
-					$CONFIG->wwwroot . "pg/groups/invitations/?invitecode=" . $invite_code,
-					$invite_code);
+					$site->name,
+					elgg_get_site_url() . "register",
+					elgg_get_site_url() . "groups/invitations/?invitecode=" . $invite_code,
+					$invite_code)
+				);
 				
-				if(is_plugin_enabled("html_email_handler") && (get_plugin_setting("notifications", "html_email_handler") == "yes")){
+				if(elgg_is_active_plugin("html_email_handler") && (elgg_get_plugin_setting("notifications", "html_email_handler") == "yes")){
 					// generate HTML mail body
 					$html_message = elgg_view("html_email_handler/notification/body", array("title" => $subject, "message" => parse_urls($body)));
 					if(defined("XML_DOCUMENT_NODE")){

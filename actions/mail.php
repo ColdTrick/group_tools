@@ -40,4 +40,3 @@
 	
 	forward($forward_url);
 	
-?>

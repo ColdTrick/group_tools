@@ -1,19 +1,5 @@
 <?php
 
-	function group_tools_add_user_acl_hook($hook, $type, $return_value, $params){
-		global $GROUP_TOOLS_ACL;
-	
-		$result = $return_value;
-	
-		if(!empty($GROUP_TOOLS_ACL) && is_array($result)){
-			if(!array_key_exists($GROUP_TOOLS_ACL, $result)){
-				$result[$GROUP_TOOLS_ACL] = "temp group";
-			}
-		}
-	
-		return $result;
-	}
-
 	function group_tools_multiple_admin_can_edit_hook($hook, $type, $return_value, $params){
 		$result = $return_value;
 	
@@ -74,6 +60,13 @@
 					set_input("group_guid", $page[1]);
 					
 					include(dirname(dirname(__FILE__)) . "/pages/groups/invite.php");
+					break;
+				case "mail":
+					$result = false;
+					
+					set_input("group_guid", $page[1]);
+						
+					include(dirname(dirname(__FILE__)) . "/pages/mail.php");
 					break;
 				case "group_invite_autocomplete":
 					$result = false;
