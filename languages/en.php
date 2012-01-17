@@ -16,7 +16,7 @@
 		
 		// menu
 		'group_tools:menu:mail' => "Mail Members",
-		'group_tools:menu:membership' => "Membership approval",
+		'group_tools:menu:invitations' => "Manage invitations",
 		
 		// plugin settings
 		'group_tools:settings:admin_transfer' => "Allow group owner transfer",
@@ -185,21 +185,10 @@ To visit the group please click on the following link:
 		'group_tools:action:mail:success' => "Message succesfully send",
 	
 		// group - invite - action
-		'group_tools:action:group:invite:success' => "Successfully invited %s users to join this group",
-		'group_tools:action:group:invite:success:other' => "Successfully invited %s users to join this group (%s were already a member, %s were already invited)",
-		'group_tools:action:group:invite:error:no_invites' => "No invitations send (%s were already a member, %s were already invited)",
-		
-		'group_tools:action:groups:invite:add:success' => "Successfully added %s users",
-		'group_tools:action:groups:invite:add:success:other' => "Successfully added %s users (%s were already a member)",
-		'group_tools:action:groups:invite:add:error:no_add' => "No users were added (%s were already a member)",
-		
-		'group_tools:action:group:invite:email:success' => "Successfully invited %s users by e-mail to join this group",
-		'group_tools:action:group:invite:email:success:other' => "Successfully invited %s users by e-mail to join this group (%s were already invited)",
-		'group_tools:action:group:invite:email:error:no_invites' => "No e-mail invitations send (%s were already invited)",
-		
-		'group_tools:action:group:invite:csv:error:no_invites' => "No invitations send from CSV (%s were already a member, %s were already invited)",
-		'group_tools:action:group:invite:success:other' => "Successfully invited %s users from CSV to join this group (%s were already a member, %s were already invited)",
-		'group_tools:action:group:invite:success' => "Successfully invited %s from CSV to join this group",
+		'group_tools:action:invite:error:invite'=> "No users were invited (%s already invited, %s already a member)",
+		'group_tools:action:invite:error:add'=> "No users were invited (%s already invited, %s already a member)",
+		'group_tools:action:invite:success:invite'=> "Successfully invited %s users (%s already invited and %s already a member)",
+		'group_tools:action:invite:success:add'=> "Successfully added %s users (%s already invited and %s already a member)",
 		
 		// group - invite - accept e-mail
 		'group_tools:action:groups:email_invitation:error:input' => "Please enter an invitation code",

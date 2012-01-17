@@ -6,8 +6,6 @@
 	 * @package ElggGroups
 	 */
 	
-	global $CONFIG;
-	
 	gatekeeper();
 	
 	$logged_in_user = elgg_get_logged_in_user_entity();
@@ -31,7 +29,10 @@
 		$resend = false;
 	}
 	
-	$submit = get_input("submit");
+	$adding = false;
+	if(get_input("submit") == elgg_echo("group_tools:add_users")){
+		$adding = true;
+	}
 	
 	if ((!empty($user_guids) || !empty($emails) || !empty($csv)) && ($group = get_entity($group_guid))){
 		if(($group instanceof ElggGroup) && $group->canEdit()){
@@ -39,21 +40,22 @@
 			$hidden = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
 			
+			// counters
+			$already_invited = 0;
+			$invited = 0;
+			$member = 0;
+			$join = 0;
+			
 			// invite existing users
 			if(!empty($user_guids)){
-				if($submit != elgg_echo("group_tools:add_users")){
+				if(!$adding){
 					// invite users
-					$already_invited = 0;
-					$new_invited = 0;
-					$member = 0;
-					
 					foreach ($user_guids as $u_id) {
-						
 						if ($user = get_user($u_id)) {
 							if(!$group->isMember($user)){
 								if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID())) {
 									if (group_tools_invite_user($group, $user, $text)) {
-										$new_invited++;
+										$invited++;
 									}
 								} else {
 									$already_invited++;
@@ -67,20 +69,7 @@
 							}
 						}
 					}
-					
-					if(!empty($new_invited)){
-						if(empty($already_invited) && empty($member)){
-							system_message(elgg_echo("group_tools:action:group:invite:success", array($new_invited)));
-						} else {
-							system_message(elgg_echo("group_tools:action:group:invite:success:other", arary($new_invited, $member, $already_invited)));
-						}
-					} else {
-						register_error(elgg_echo("group_tools:action:group:invite:error:no_invites", array($member, $already_invited)));
-					}
 				} else {
-					$join = 0;
-					$member = 0;
-					
 					// add users directly
 					foreach($user_guids as $u_id){
 						if($user = get_user($u_id)){
@@ -93,53 +82,24 @@
 							}
 						}
 					}
-					
-					if(!empty($join)){
-						if(empty($member)){
-							system_message(elgg_echo("group_tools:action:groups:invite:add:success", array($join)));
-						} else {
-							system_message(elgg_echo("group_tools:action:groups:invite:add:success:other", array($join, $member)));
-						}
-					} else {
-						register_error(elgg_echo("group_tools:action:groups:invite:add:error:no_add", array($member)));
-					}
 				}
 			}
 			
 			// Invite member by e-mail address
 			if(!empty($emails)){
-				$sent = 0;
-				$already = 0;
-				
 				foreach($emails as $email){
 					$invite_result = group_tools_invite_email($group, $email, $text, $resend);
 					if($invite_result === true){
-						$sent++;
+						$invited++;
 					} elseif($invite_result === null){
-						$already++;
+						$already_invited++;
 					}
-				}
-				
-				// system message
-				if(!empty($sent)){
-					if(empty($already)){
-						system_message(elgg_echo("group_tools:action:group:invite:email:success", array($sent)));
-					} else {
-						system_message(elgg_echo("group_tools:action:group:invite:email:success:other", array($sent, $already)));
-					}
-				} else {
-					register_error(elgg_echo("group_tools:action:group:invite:email:error:no_invites", array(count($emails), $already)));
 				}
 			}
 			
 			// invite from csv
 			if(!empty($csv)){
 				$file_location = $_FILES["csv"]["tmp_name"];
-				
-				$csv_added = 0;
-				$csv_invited = 0;
-				$csv_already_invited = 0;
-				$csv_already_member = 0;
 				
 				if($fh = fopen($file_location, "r")){
 					while(($data = fgetcsv($fh, 0, ";")) !== false){
@@ -159,14 +119,14 @@
 								$user = $users[0];
 								
 								if(!$group->isMember($user)){
-									if($submit != elgg_echo("group_tools:add_users")){
+									if(!$adding){
 										if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID())) {
 											// invite user
 											if(group_tools_invite_user($group, $user, $text)){
-												$csv_invited++;
+												$invited++;
 											}
 										} else {
-											$csv_already_invited++;
+											$already_invited++;
 											
 											if($resend){
 												group_tools_invite_user($group, $user, $text, $resend);
@@ -174,39 +134,44 @@
 										} 
 									} else {
 										if(group_tools_add_user($group, $user, $text)){
-											$csv_added++;
+											$join++;
 										}
 									}
 								} else {
-									$csv_already_member++;
+									$member++;
 								}
 							} else {
 								// user not found so invite based on email address
 								$invite_result = group_tools_invite_email($group, $email, $text, $resend);
 								
 								if($invite_result === true){
-									$csv_invited++;
+									$invited++;
 								} elseif($invite_result === null){
-									$csv_already_invited++;
+									$already_invited++;
 								}
 							}
 						}
 					}
 				}
-				
-				if(!empty($csv_added) || !empty($csv_invited)){
-					if(empty($csv_already_invited) && empty($csv_already_member)){
-						system_message(elgg_echo("group_tools:action:group:invite:success", array(($csv_added + $csv_invited))));
-					} else {
-						system_message(elgg_echo("group_tools:action:group:invite:success:other", array(($csv_added + $csv_invited), $csv_already_member, $csv_already_invited)));
-					}
-				} else {
-					register_error(elgg_echo("group_tools:action:group:invite:csv:error:no_invites", array($csv_already_member, $csv_already_invited)));
-				}
 			}
 			
 			// restore hidden users
 			access_show_hidden_entities($hidden);
+			
+			// which message to show
+			if(!empty($invited) && !empty($join)){
+				if(!$adding){
+					system_message(elgg_echo("group_tools:action:invite:success:invite", array($invited, $already_invited, $member)));
+				} else {
+					system_message(elgg_echo("group_tools:action:invite:success:add", array($invited, $already_invited, $member)));
+				}
+			} else {
+				if(!$adding){
+					register_error(elgg_echo("group_tools:action:invite:error:invite", array($already_invited, $member)));
+				} else {
+					register_error(elgg_echo("group_tools:action:invite:error:add", array($already_invited, $member)));
+				}
+			}
 		} else {
 			register_error(elgg_echo("group_tools:action:error:edit"));
 		}

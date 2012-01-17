@@ -11,10 +11,12 @@
 	$minChars = elgg_extract("minChars", $vars, 3);
 	
 	elgg_load_js('jquery.autocomplete.min');
+	elgg_load_js("group_tools.autocomplete");
+	elgg_load_css("group_tools.autocomplete");
 	
 ?>
 	
-	<input type="text" id="<?php echo $id; ?>_autocomplete" size="25" />
+	<input type="text" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
 	
 	<div id="<?php echo $destination; ?>"></div>
 	
@@ -26,6 +28,7 @@
 	
 		$(document).ready(function() {
 			$.ajaxSetup( { type: "POST" } );
+			
 			$("#<?php echo $id; ?>_autocomplete").autocomplete('<?php echo $vars["url"]; ?>groups/group_invite_autocomplete', {
 				width: 300,
 				minChars: <?php echo $minChars; ?>,
@@ -73,7 +76,7 @@
 				 $(this).val("");
 			 });
 			
-			 $('#<?php echo $destination; ?> .group_invite_autocomplete_remove').live("click", function(){
+			 $('#<?php echo $destination; ?> .elgg-icon-delete-alt').live("click", function(){
 				$(this).parent('div').remove();
 			 });	
 		});

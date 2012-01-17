@@ -48,9 +48,9 @@
 	}
 	
 	$params = array(
-			'content' => $content,
-			'title' => $title,
-			'filter' => '',
+		'content' => $content,
+		'title' => $title,
+		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
 	

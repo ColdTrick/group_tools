@@ -1,10 +1,9 @@
 <?php 
 
 ?>
-
-function group_tools_autocomplete_format_item(row) {
+function group_tools_autocomplete_format_item(row, pos, items, search) {
 	var result = "";
-
+	
 	if(row[0] == "user"){
 		if(row[3]){
 			result += "<img src='" + row[3] + "' />&nbsp;";
@@ -37,7 +36,7 @@ function group_tools_autocomplete_format_result(row, elem_id, input_name) {
 		result += row[1].replace(/(<.+?>)/gi, '');
 	}
 
-	result += "<div class='group_invite_autocomplete_remove'></div>";
+	result += "<span class='elgg-icon elgg-icon-delete-alt'></span>";
 	result += "</div>";
 
 	$('#' + elem_id + '_autocomplete_results').append(result);

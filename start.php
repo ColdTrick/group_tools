@@ -8,9 +8,15 @@
 		
 		// extend css & js
 		elgg_extend_view("css/elgg", "group_tools/css/site");
-		elgg_extend_view("js/elgg", "group_tools/js");
 		
+		// register JS and CSS libs
 		elgg_register_js("jquery.autocomplete.min", elgg_get_site_url() . "vendors/jquery/jquery.autocomplete.min.js");
+		
+		elgg_register_simplecache_view("js/group_tools/autocomplete");
+		elgg_register_js("group_tools.autocomplete", elgg_get_simplecache_url("js", "group_tools/autocomplete"));
+		
+		elgg_register_simplecache_view("css/group_tools/autocomplete");
+		elgg_register_css("group_tools.autocomplete", elgg_get_simplecache_url("css", "group_tools/autocomplete"));
 		
 		// extend groups page handler
 		elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
@@ -79,9 +85,8 @@
 		
 		$user = elgg_get_logged_in_user_entity();
 		$page_owner = elgg_get_page_owner_entity();
-		$context = elgg_get_context();
 		
-		if(($context == "groups") && ($page_owner instanceof ElggGroup)){
+		if(elgg_in_context("groups") && ($page_owner instanceof ElggGroup)){
 			
 			if(!empty($user)){
 				// check for admin transfer
@@ -114,14 +119,31 @@
 						"count" => true
 					);
 					
+					$invite_options = array(
+						"type" => "user",
+						"relationship" => "invited",
+						"relationship_guid" => $page_owner->getGUID(),
+						"count" => true
+					);
+					
+					$invited = elgg_get_entities_from_relationship($invite_options);
+					
 					if($requests = elgg_get_entities_from_relationship($request_options)){
 						$postfix = " [" . $requests . "]";
+					} elseif(!empty($invited)){
+						$postfix = " [" . ($invited + $email_invited) . "]";
 					}
 					
 					if(!$page_owner->isPublicMembership() || !empty($requests)){
 						elgg_register_menu_item('page', array(
 							'name' => 'membership_requests',
 							'text' => elgg_echo('groups:membershiprequests') . $postfix,
+							'href' => "groups/requests/" . $page_owner->getGUID(),
+						));
+					} elseif(!empty($invited)){
+						elgg_register_menu_item('page', array(
+							'name' => 'membership_requests',
+							'text' => elgg_echo('group_tools:menu:invitations') . $postfix,
 							'href' => "groups/requests/" . $page_owner->getGUID(),
 						));
 					}

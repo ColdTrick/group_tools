@@ -122,9 +122,9 @@
 	echo '<div class="elgg-foot">';
 	echo elgg_view('input/hidden', array('name' => 'forward_url', 'value' => $forward_url));
 	echo elgg_view('input/hidden', array('name' => 'group_guid', 'value' => $group->guid));
-	echo elgg_view('input/submit', array('value' => elgg_echo('invite')));
+	echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('invite')));
 	if(elgg_is_admin_logged_in()){
-		echo elgg_view("input/submit", array("value" => elgg_echo("group_tools:add_users"), "onclick" => "return confirm(\"" . elgg_echo("group_tools:group:invite:add:confirm") . "\");"));
+		echo elgg_view("input/submit", array('name' => 'submit', "value" => elgg_echo("group_tools:add_users"), "onclick" => "return confirm(\"" . elgg_echo("group_tools:group:invite:add:confirm") . "\");"));
 	}
 	echo '</div>';
 	

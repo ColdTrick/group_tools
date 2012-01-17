@@ -28,19 +28,12 @@
 	vertical-align: middle;
 }
 
-#group_tools_group_invite_users .group_tools_group_invite_autocomplete_result .group_invite_autocomplete_remove,
-#group_tools_group_invite_email .group_tools_group_invite_autocomplete_email_result .group_invite_autocomplete_remove {
+#group_tools_group_invite_users .group_tools_group_invite_autocomplete_result .elgg-icon,
+#group_tools_group_invite_email .group_tools_group_invite_autocomplete_email_result .elgg-icon {
 	vertical-align: text-top;
-}
-
-#group_tools_group_invite_users .group_invite_autocomplete_remove,
-#group_tools_group_invite_email .group_invite_autocomplete_remove {
-	background: url("<?php echo $vars["url"]; ?>_graphics/icon_customise_remove.png") no-repeat scroll left bottom transparent;
-	cursor: pointer;
-	display: none;
-	width: 15px;
-	height: 15px;
 	margin-left: 10px;
+	display: none;
+	cursor: pointer;
 }
 
 #group_tools_group_invite_users .group_tools_group_invite_autocomplete_result:hover,
@@ -48,8 +41,8 @@
 	border-color: #cecece;
 }
 
-#group_tools_group_invite_users .group_tools_group_invite_autocomplete_result:hover .group_invite_autocomplete_remove,
-#group_tools_group_invite_email .group_tools_group_invite_autocomplete_email_result:hover .group_invite_autocomplete_remove {
+#group_tools_group_invite_users .group_tools_group_invite_autocomplete_result:hover .elgg-icon,
+#group_tools_group_invite_email .group_tools_group_invite_autocomplete_email_result:hover .elgg-icon {
 	display: inline-block;
 }
 
