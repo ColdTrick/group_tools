@@ -82,6 +82,7 @@ To visit the group please click on the following link:
 		'group_tools:group:edit:other' => "Other options",
 
 		// admin transfer - form
+		'group_tools:admin_transfer:title' => "Transfer group ownership",
 		'group_tools:admin_transfer:transfer' => "Transfer group ownership to",
 		'group_tools:admin_transfer:myself' => "Myself",
 		'group_tools:admin_transfer:submit' => "Tranfser",

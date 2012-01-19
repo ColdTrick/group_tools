@@ -97,8 +97,9 @@
 		 		$result = elgg_echo("group_tools:admin_transfer:no_users");
 		 	}
 		
+		 	$result = "<h3 class='settings'>" . elgg_echo("group_tools:admin_transfer:title") . "</h3>" . $result;
+		 	
 		 	echo elgg_view("page_elements/contentwrapper", array("body" => $result));
-			
 		}
 	}
 

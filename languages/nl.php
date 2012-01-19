@@ -92,6 +92,7 @@ Als je al een account hebt of na registratie, klik op de onderstaande link om de
 
 Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende code invoeren:
 %s',
+  'group_tools:admin_transfer:title' => 'Draag groep eigendom over',
   'group_tools:admin_transfer:transfer' => 'Draag groep eigendom over naar',
   'group_tools:admin_transfer:myself' => 'Mijzelf',
   'group_tools:admin_transfer:submit' => 'Overdragen',
