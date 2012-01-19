@@ -4,6 +4,7 @@ x.x:
 - added: option to limit group sidebar menu
 - changed: title with group admin transfer
 - changed: title with group auto join
+- changed: moved run_once functions to own lib file
 
 1.9 (2011-12-05):
 
