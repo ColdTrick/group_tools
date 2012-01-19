@@ -10,7 +10,8 @@
 		'group_tools:remove' => "Remove",
 		'group_tools:clear_selection' => "Clear selection",
 		'group_tools:all_members' => "All members",
-		
+		'group_tools:explain' => "Explanation",
+	
 		// menu
 		'group_tools:menu:mail' => "Mail Members",
 		'group_tools:menu:membership' => "Membership approval",
@@ -94,6 +95,19 @@ To visit the group please click on the following link:
 		'group_tools:auto_join:add' => "%sAdd this group%s to the auto join groups. This will mean that new users are automaticly added to this group on registration.",
 		'group_tools:auto_join:remove' => "%sRemove this group%s from the auto join groups. This will mean that new users will no longer automaticly join this group on registration.",
 		'group_tools:auto_join:fix' => "To make all site members a member of this group, please %sclick here%s.",
+		
+		// cleanup options
+		'group_tools:cleanup:title' => "Group sidebar cleanup",
+		'group_tools:cleanup:owner_block' => "Limit the owner block",
+		'group_tools:cleanup:owner_block:explain' => "The owner block can be found at the top of the sidebar, some extra links can be posted in this area (example: RSS links).",
+		'group_tools:cleanup:actions' => "Do you want to allow users to join this group",
+		'group_tools:cleanup:actions:explain' => "Depending on your group setting, users can directly join the group of request membership.",
+		'group_tools:cleanup:menu' => "Hide side menu items",
+		'group_tools:cleanup:menu:explain' => "Hide the menu links to the different group tools. The users will only be able to get access to the group tools by using the group widgets.",
+		'group_tools:cleanup:members' => "Hide the group members",
+		'group_tools:cleanup:members:explain' => "On the group profile page a list of the group members can be found at the highlighted section. You can choose to hide this list.",
+		'group_tools:cleanup:featured' => "Show featured groups in the sidebar",
+		'group_tools:cleanup:featured:explain' => "You can choose to show a list of featured groups at the highlighted section on the group profile page",
 		
 		// group admins
 		'group_tools:multiple_admin:group_admins' => "Group admins",
@@ -216,6 +230,9 @@ To visit the group please click on the following link:
 		
 		// group fix auto_join
 		'group_tools:action:fix_auto_join:success' => "Group membership fixed: %s new members, %s were already a member and %s failures",
+		
+		// group cleanup options
+		'group_tools:actions:cleanup:success' => "The cleanup settings were saved successfully",
 		
 	);
 	

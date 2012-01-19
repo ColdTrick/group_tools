@@ -63,6 +63,9 @@
 			elgg_extend_view("owner_block/extend", "group_tools/owner_block");
 			// show group status in stats (on group profile)
 			elgg_extend_view("groups/groupprofile", "group_tools/group_stats");
+			
+			// advanced group cleanup actions
+			elgg_extend_view("forms/groups/edit", "group_tools/forms/cleanup", 450);
 		}
 		
 		if(isadminloggedin()){
@@ -138,6 +141,70 @@
 		
 	}
 	
+	function group_tools_cleanup_pagesetup(){
+		global $CONFIG;
+		global $autofeed;
+		
+		$page_owner = page_owner_entity();
+		$context = get_context();
+		
+		if($page_owner instanceof ElggGroup){
+			$prefix = "group_tools:cleanup:";
+			
+			// cleanup owner_block
+			if($page_owner->getPrivateSetting($prefix . "owner_block") == "yes"){
+				if(isset($CONFIG->views->extensions["page_elements/owner_block"])){
+					unset($CONFIG->views->extensions["page_elements/owner_block"]);
+				}
+				if(isset($CONFIG->views->extensions["owner_block/extend"])){
+					unset($CONFIG->views->extensions["owner_block/extend"]);
+				}
+				
+				elgg_extend_view("page_elements/owner_block", "group_tools/sidebar/owner_block", 400);
+			}
+			
+			// cleanup menu actions
+			if(!$page_owner->canEdit() && ($page_owner->getPrivateSetting($prefix . "actions") == "yes")){
+				if(isset($CONFIG->submenu["1groupsactions"])){
+					unset($CONFIG->submenu["1groupsactions"]);
+				}
+			}
+			
+			// cleanup menu items
+			if($page_owner->getPrivateSetting($prefix . "menu") == "yes"){
+				if(($context == "groups") && get_input("group_guid")){
+					if(isset($CONFIG->submenu)){
+						foreach($CONFIG->submenu as $section => $items){
+							if($section != "1groupsactions"){
+								unset($CONFIG->submenu[$section]);
+							}
+						}
+					}
+				}
+			}
+			
+			// cleanup members
+			if($page_owner->getPrivateSetting($prefix . "members") == "yes"){
+				if(isset($CONFIG->views->locations["default"]["groups/members"])){
+					unset($CONFIG->views->locations["default"]["groups/members"]);
+				}
+				
+				if(isset($CONFIG->views->extensions["groups/members"])){
+					unset($CONFIG->views->extensions["groups/members"]);
+				}
+			}
+			
+			// show featured groups
+			if((($featured = $page_owner->getPrivateSetting($prefix . "featured")) != "no") && ($featured > 0)){
+				if(elgg_view_exists("groups/members")){
+					elgg_extend_view("groups/members", "group_tools/sidebar/featured", 1000);
+				} else {
+					set_view_location("groups/members", dirname(__FILE__) . "/views_alt/");
+				}
+			}
+		}
+	}
+	
 	function group_tools_version_1_3(){
 		global $CONFIG, $GROUP_TOOLS_ACL;
 		
@@ -172,10 +239,12 @@
 	// default elgg event handlers
 	register_elgg_event_handler("init", "system", "group_tools_init");
 	register_elgg_event_handler("pagesetup", "system", "group_tools_pagesetup");
+	register_elgg_event_handler("pagesetup", "system", "group_tools_cleanup_pagesetup", 100000);
 
 	// actions
 	register_action("group_tools/admin_transfer", false, dirname(__FILE__) . "/actions/admin_transfer.php");
 	register_action("group_tools/toggle_admin", false, dirname(__FILE__) . "/actions/toggle_admin.php");
+	register_action("group_tools/cleanup", false, dirname(__FILE__) . "/actions/cleanup.php");
 	register_action("group_tools/kick", false, dirname(__FILE__) . "/actions/kick.php");
 	register_action("group_tools/mail", false, dirname(__FILE__) . "/actions/mail.php");
 	register_action("group_tools/profile_widgets", false, dirname(__FILE__) . "/actions/profile_widgets.php");

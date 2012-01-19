@@ -1,5 +1,18 @@
 <?php
 $language = array (
+  'group_tools:explain' => 'Uitleg',
+  'group_tools:cleanup:title' => 'Groep menu opschonen',
+  'group_tools:cleanup:owner_block' => 'Beperk het eigenaar blok',
+  'group_tools:cleanup:owner_block:explain' => 'Het eigenaar blok staat bovenaan het menu, hierin kunnen extra links worden getoond (bijvoorbeeld RSS links)',
+  'group_tools:cleanup:actions' => 'Wil je gebruikers toestaan lid te worden van de groep',
+  'group_tools:cleanup:actions:explain' => 'Afhankelijk van de groep instelling, kunnen gebruikers direct lid worden van de groep of lidmaatschap aanvragen.',
+  'group_tools:cleanup:menu' => 'Verberg overige menu items',
+  'group_tools:cleanup:menu:explain' => 'Verberg de overige menu links naar de verschillende groep functionaliteiten. De gebruikers kunnen alleen naar de verschillende functionaliteiten door gebruik te maken van de links in widgets.',
+  'group_tools:cleanup:members' => 'Verberg groep leden',
+  'group_tools:cleanup:members:explain' => 'Op de groep profiel pagina staat op de aangegeven plaats een lijst met leden van de groep. Je kunt deze verbergen.',
+  'group_tools:cleanup:featured' => 'Toon de aangereden groepen in het menu',
+  'group_tools:cleanup:featured:explain' => 'Je kunt ervoor kiezen om op de groep profiel pagina een lijst met aangeraden groepen te tonen op de aangegeven plaats.',
+  'group_tools:actions:cleanup:success' => 'De instellingen voor het opschonen zijn succesvol opgeslagen',
   'group_tools:profile_widgets:title' => 'Toon groep widgets aan niet leden',
   'group_tools:profile_widgets:description' => 'Dit is een besloten groep. Standaard worden er geen widgets getoond aan niet leden. Hier kan kan je deze instelling aanpassen',
   'group_tools:profile_widgets:option' => 'Mogen niet leden de widgets zien op de groep profiel pagina:',

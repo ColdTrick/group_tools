@@ -1,6 +1,7 @@
 = Version History =
 x.x:
 
+- added: option to limit group sidebar menu
 - changed: title with group admin transfer
 - changed: title with group auto join
 

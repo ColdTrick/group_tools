@@ -25,5 +25,3 @@
 		echo "<div class='clearfloat'></div>";
 		echo "</div>";
 	}
-
-?>

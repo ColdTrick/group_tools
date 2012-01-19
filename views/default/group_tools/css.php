@@ -1,6 +1,5 @@
 <?php 
 
-
 ?>
 #group_tools_multiple_admin_group_admins {
 	margin:10px;
@@ -97,4 +96,37 @@
 #group_tools_group_status.group_status_closed,
 #group_stats .group_status_closed {
 	color: orange;
+}
+
+.group_tools_explain {
+	float: right;
+	cursor: pointer;
+}
+
+.group_tools_highlight {
+	border: 1px solid red !important;
+}
+
+#group_tools_members_example,
+#group_tools_featured_example {
+	padding: 10px;
+}
+
+#group_tools_sidebar_featured {
+	margin: 10px;
+	background: white;
+	
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px;
+}
+#group_tools_sidebar_featured h2 {
+	color: #0054A7;
+	font-size: 1.25em;
+	line-height: 1.2em;
+	
+	padding: 5px;
+	margin: 0 0 5px 0;
+}
+#group_tools_sidebar_featured .search_listing {
+	margin: 0 0 5px 0;
 }
