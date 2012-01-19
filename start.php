@@ -169,6 +169,9 @@
 				if(isset($CONFIG->submenu["1groupsactions"])){
 					unset($CONFIG->submenu["1groupsactions"]);
 				}
+				
+				elgg_unextend_view("groups/groupprofile", "group_tools/group_stats");
+				elgg_extend_view("groups/groupprofile", "group_tools/group_unstats");
 			}
 			
 			// cleanup menu items
