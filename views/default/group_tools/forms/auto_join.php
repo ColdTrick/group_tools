@@ -39,7 +39,8 @@
 			$link_start = "<a href='" . elgg_add_action_tokens_to_url($vars["url"] . "action/group_tools/toggle_auto_join?group_guid=" . $group->getGUID()) . "'>";
 			$link_end = "</a>";
 			
-			$body = sprintf(elgg_echo($lang_key), $link_start, $link_end);
+			$body = "<h3 class='settings'>" . elgg_echo("group_tools:auto_join:title") . "</h3>";
+			$body .= sprintf(elgg_echo($lang_key), $link_start, $link_end);
 			$body .= $fix_members;
 			
 			echo elgg_view("page_elements/contentwrapper", array("body" => $body));

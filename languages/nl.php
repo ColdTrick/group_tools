@@ -23,6 +23,7 @@ $language = array (
   'group_tools:remove' => 'Verwijder',
   'group_tools:settings:auto_join' => 'Automatisch groepslidmaatschap',
   'group_tools:settings:auto_join:description' => 'Nieuwe gebruikers worden automatisch lid van de volgende groepen',
+  'group_tools:auto_join:title' => 'Automatisch lid worden instellingen',
   'group_tools:auto_join:add' => '%sVoeg deze groep toe%s om automatisch lid van te worden. Dit betekend dat nieuwe gebruikers automatisch lid worden van deze groep.',
   'group_tools:auto_join:remove' => '%sVerwijder deze groep%s uit de automatische lidmaatschappen. Dit betekend dat nieuwe gebruikers niet langer automatisch lid worden van deze groep.',
   'group_tools:action:toggle_auto_join:error:save' => 'Er is een fout opgetreden tijdens het opslaan van de instellingen',

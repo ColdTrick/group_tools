@@ -2,6 +2,7 @@
 x.x:
 
 - changed: title with group admin transfer
+- changed: title with group auto join
 
 1.9 (2011-12-05):
 

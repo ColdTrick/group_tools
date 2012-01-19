@@ -90,6 +90,7 @@ To visit the group please click on the following link:
 		'group_tools:admin_transfer:confirm' => "Are you sure you wish to transfer ownership?",
 		
 		// auto join form
+		'group_tools:auto_join:title' => "Auto join settings",
 		'group_tools:auto_join:add' => "%sAdd this group%s to the auto join groups. This will mean that new users are automaticly added to this group on registration.",
 		'group_tools:auto_join:remove' => "%sRemove this group%s from the auto join groups. This will mean that new users will no longer automaticly join this group on registration.",
 		'group_tools:auto_join:fix' => "To make all site members a member of this group, please %sclick here%s.",
