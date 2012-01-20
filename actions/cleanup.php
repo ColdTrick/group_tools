@@ -9,6 +9,7 @@
 	$menu = get_input("menu");
 	$members = get_input("members");
 	$featured = get_input("featured");
+	$featured_sorting = get_input("featured_sorting");
 	
 	$forward_url = REFERER;
 	
@@ -21,6 +22,7 @@
 			$group->setPrivateSetting($prefix . "menu", $menu);
 			$group->setPrivateSetting($prefix . "members", $members);
 			$group->setPrivateSetting($prefix . "featured", $featured);
+			$group->setPrivateSetting($prefix . "featured_sorting", $featured_sorting);
 			
 			
 			$forward_url = $group->getURL();

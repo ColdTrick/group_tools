@@ -108,6 +108,9 @@ To visit the group please click on the following link:
 		'group_tools:cleanup:members:explain' => "On the group profile page a list of the group members can be found at the highlighted section. You can choose to hide this list.",
 		'group_tools:cleanup:featured' => "Show featured groups in the sidebar",
 		'group_tools:cleanup:featured:explain' => "You can choose to show a list of featured groups at the highlighted section on the group profile page",
+		'group_tools:cleanup:featured_sorting' => "How to sort featured groups",
+		'group_tools:cleanup:featured_sorting:time_created' => "Newest first",
+		'group_tools:cleanup:featured_sorting:alphabetical' => "Alphabetical",
 		
 		// group admins
 		'group_tools:multiple_admin:group_admins' => "Group admins",

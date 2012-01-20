@@ -1,4 +1,8 @@
 = Version History =
+x.x:
+
+- changed: sorting of sidebar featured groups on group profile
+
 1.10 (2012-01-20):
 
 - added: option to limit group sidebar menu

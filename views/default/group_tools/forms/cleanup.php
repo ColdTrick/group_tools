@@ -26,6 +26,11 @@
 			25 => 25
 		);
 		
+		$featured_sorting = array(
+			"time_created" => elgg_echo("group_tools:cleanup:featured_sorting:time_created"),
+			"alphabetical" => elgg_echo("group_tools:cleanup:featured_sorting:alphabetical"),
+		);
+		
 		$prefix = "group_tools:cleanup:";
 		
 		// cleanup owner block
@@ -61,6 +66,11 @@
 		$form_body .= elgg_echo("group_tools:cleanup:featured");
 		$form_body .= ":&nbsp;" . elgg_view("input/pulldown", array("internalname" => "featured", "options_values" => $featured_options, "value" => $group->getPrivateSetting($prefix . "featured")));
 		$form_body .= "<img src='" . $vars["url"] . "_graphics/icon_customise_info.gif' class='group_tools_explain' alt='" . elgg_echo("group_tools:explain") . "' title='" . elgg_echo("group_tools:cleanup:featured:explain") . "' onmouseover='group_tools_cleanup_highlight(\"featured\");' onmouseout='group_tools_cleanup_unhighlight(\"featured\");' />";
+		$form_body .= "</div>";
+		
+		$form_body .= "<div>";
+		$form_body .= elgg_echo("group_tools:cleanup:featured_sorting");
+		$form_body .= ":&nbsp;" . elgg_view("input/pulldown", array("internalname" => "featured_sorting", "options_values" => $featured_sorting, "value" => $group->getPrivateSetting($prefix . "featured_sorting")));
 		$form_body .= "</div>";
 		
 		// buttons

@@ -1,5 +1,8 @@
 <?php
 $language = array (
+  'group_tools:cleanup:featured_sorting' => 'Hoe moeten aangeraden groepen worden getoond',
+  'group_tools:cleanup:featured_sorting:time_created' => 'Nieuwste eerst',
+  'group_tools:cleanup:featured_sorting:alphabetical' => 'Alfabetisch',
   'group_tools:explain' => 'Uitleg',
   'group_tools:cleanup:title' => 'Groep menu opschonen',
   'group_tools:cleanup:owner_block' => 'Beperk het eigenaar blok',
