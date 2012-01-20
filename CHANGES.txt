@@ -2,6 +2,7 @@
 x.x:
 
 - added: option to limit group sidebar menu
+- fixed: groups not showing correctly on invitations view in case of hidden groups
 - changed: title with group admin transfer
 - changed: title with group auto join
 - changed: moved run_once functions to own lib file

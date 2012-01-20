@@ -4,6 +4,9 @@
 	$user = get_loggedin_user();
 	
 	if (!empty($invitations) && is_array($invitations)) {
+		// ignore acces to show group correctly
+		$ia = elgg_get_ignore_access();
+		elgg_set_ignore_access(true);
 		
 		foreach($invitations as $group){
 			if ($group instanceof ElggGroup) {
@@ -19,6 +22,9 @@
 				echo elgg_view_listing($icon, $info);
 			}
 		}
+		
+		// restore access settings
+		elgg_set_ignore_access($ia);
 	} else {
 		echo elgg_view("page_elements/contentwrapper", array("body" => elgg_echo("groups:invitations:none")));
 	}
