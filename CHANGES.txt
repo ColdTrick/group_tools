@@ -1,5 +1,5 @@
 = Version History =
-x.x:
+1.10 (2012-01-20):
 
 - added: option to limit group sidebar menu
 - fixed: groups not showing correctly on invitations view in case of hidden groups
