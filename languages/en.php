@@ -156,7 +156,7 @@ To visit the group please click on the following link:
 		'group_tools:group:invitations:request:non_found' => "There are no outstanding membership requests at this time",
 	
 		// group listing
-		'group_tools:groups:sorting:alfabetical' => "Alfabetical",
+		'group_tools:groups:sorting:alphabetical' => "Alphabetical",
 		'group_tools:groups:sorting:open' => "Open",
 		'group_tools:groups:sorting:closed' => "Closed",
 	

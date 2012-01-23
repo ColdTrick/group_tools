@@ -19,7 +19,7 @@
 		"popular" => elgg_echo("groups:popular"),
 		"open" => elgg_echo("group_tools:groups:sorting:open"),
 		"closed" => elgg_echo("group_tools:groups:sorting:closed"),
-		"alfa" => elgg_echo("group_tools:groups:sorting:alfabetical"),
+		"alpha" => elgg_echo("group_tools:groups:sorting:alphabetical"),
 	);
 	
 	if($auto_joins = $plugin->auto_join){

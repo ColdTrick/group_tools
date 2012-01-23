@@ -29,7 +29,7 @@
 			);
 			
 			break;
-		case "alfa":
+		case "alpha":
 			$dbprefix = elgg_get_config("dbprefix");
 			
 			$group_options["joins"]	= array("JOIN " . $dbprefix . "groups_entity ge ON e.guid = ge.guid");

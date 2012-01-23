@@ -30,9 +30,9 @@
 			"href" => "groups/all?filter=closed",
 			"priority" => 600,
 		),
-		"alfa" => array(
-			"text" => elgg_echo("group_tools:groups:sorting:alfabetical"),
-			"href" => "groups/all?filter=alfa",
+		"alpha" => array(
+			"text" => elgg_echo("group_tools:groups:sorting:alphabetical"),
+			"href" => "groups/all?filter=alpha",
 			"priority" => 700,
 		),
 	);

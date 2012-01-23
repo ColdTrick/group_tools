@@ -1,4 +1,8 @@
 = Version History =
+x.x:
+
+- fixed: language error in group sorting (thanks to LeeUK)
+
 2.0 BETA 1 (2012-01-17):
 
 - changed: migrated the plugin to Elgg 1.8
