@@ -1,6 +1,7 @@
 = Version History =
 x.x:
 
+- fixed: performance of group_admins can_edit hook
 - changed: sorting of sidebar featured groups on group profile
 
 1.10 (2012-01-20):

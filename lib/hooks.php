@@ -15,6 +15,8 @@
 	}
 
 	function group_tools_multiple_admin_can_edit_hook($hook, $type, $return_value, $params){
+		static $group_admin_cache;
+		
 		$result = $return_value;
 	
 		if(!empty($params) && is_array($params) && !$result){
@@ -23,9 +25,23 @@
 				$user = $params["user"];
 	
 				if(($entity instanceof ElggGroup) && ($user instanceof ElggUser)){
-					if($entity->isMember($user) && check_entity_relationship($user->getGUID(), "group_admin", $entity->getGUID())){
-						$result = true;
+					if(!isset($group_admin_cache)){
+						$group_admin_cache = array();
 					}
+					
+					if(!isset($group_admin_cache[$user->getGUID()])){
+						$group_admin_cache[$user->getGUID()] = array();
+					}
+					
+					if(!isset($group_admin_cache[$user->getGUID()][$entity->getGUID()])){
+						if($entity->isMember($user) && check_entity_relationship($user->getGUID(), "group_admin", $entity->getGUID())){
+							$group_admin_cache[$user->getGUID()][$entity->getGUID()] = true;
+						} else {
+							$group_admin_cache[$user->getGUID()][$entity->getGUID()] = false;
+						}
+					}
+					
+					$result = $group_admin_cache[$user->getGUID()][$entity->getGUID()];
 				}
 			}
 		}
