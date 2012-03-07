@@ -12,7 +12,7 @@
 		"type" => "user",
 		"limit" => $count,
 		"relationship" => "member",
-		"relationship_guid" => $widget->getOwner(),
+		"relationship_guid" => $widget->getOwnerGUID(),
 		"inverse_relationship" => true,
 		"list_type" => "gallery",
 		"gallery_class" => "elgg-gallery-users",

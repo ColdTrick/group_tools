@@ -10,8 +10,8 @@
 	
 	if(!empty($group_guid) && !empty($owner_guid)){
 		if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup) && ($new_owner = get_user($owner_guid))){
-			if(($group->getOwner() == $loggedin_user->getGUID()) || $loggedin_user->isAdmin()){
-				if($group->getOwner() != $new_owner->getGUID()){
+			if(($group->getOwnerGUID() == $loggedin_user->getGUID()) || $loggedin_user->isAdmin()){
+				if($group->getOwnerGUID() != $new_owner->getGUID()){
 					$old_owner = $group->getOwnerEntity();
 					
 					// transfer ownership
@@ -34,7 +34,7 @@
 							$ofh->owner_guid = $old_owner->getGUID();
 							
 							$nfh = new ElggFile();
-							$nfh->owner_guid = $group->getOwner();
+							$nfh->owner_guid = $group->getOwnerGUID();
 							
 							foreach($sizes as $size){
 								// set correct file to handle

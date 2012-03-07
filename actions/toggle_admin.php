@@ -6,7 +6,7 @@
 	$user_guid = (int) get_input("user_guid");
 
 	if(($group = get_entity($group_guid)) && ($user = get_user($user_guid))){
-		if(($group instanceof ElggGroup) && $group->canEdit() && $group->isMember($user) && ($group->getOwner() != $user->getGUID())){
+		if(($group instanceof ElggGroup) && $group->canEdit() && $group->isMember($user) && ($group->getOwnerGUID() != $user->getGUID())){
 			if(!check_entity_relationship($user->getGUID(), "group_admin", $group->getGUID())){
 				// user is admin, so remove
 				if(add_entity_relationship($user->getGUID(), "group_admin", $group->getGUID())){

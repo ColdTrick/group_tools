@@ -38,6 +38,7 @@ Combines different group additions into one plugin
 - group listing
 	- latest activity in my groups
 	- my groups (and remove menu item)
+	- owned groups (and remove menu item)
 - group icon cron tool 
 - group invite
 	- preview message
@@ -47,3 +48,5 @@ Combines different group additions into one plugin
 	- better description of options
 - group widgets
 	- group listing on popular
+- group main for group members (group optional)
+- group discussions tools menu item (all discussions) (optional)

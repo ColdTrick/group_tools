@@ -16,7 +16,7 @@
 			$group_guid = array();
 		}
 	} else {
-		$group_guid = array($widget->getOwner());
+		$group_guid = array($widget->getOwnerGUID());
 	}
 	
 	$group_guid = array_map("sanitise_int", $group_guid);

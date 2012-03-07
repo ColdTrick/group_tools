@@ -38,7 +38,7 @@
 			$subject = elgg_echo("groups:invite:subject", array($user->name, $group->name));
 			$msg = elgg_echo("group_tools:groups:invite:body", array($user->name, $loggedin_user->name, $group->name, $text, $url));
 			
-			if(notify_user($user->getGUID(), $group->getOwner(), $subject, $msg)){
+			if(notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg)){
 				$result = true;
 			}
 		}
@@ -59,7 +59,7 @@
 				$subject = elgg_echo("group_tools:groups:invite:add:subject", array($group->name));
 				$msg = elgg_echo("group_tools:groups:invite:add:body", array($user->name, $loggedin_user->name, $group->name, $text, $group->getURL()));
 					
-				if(notify_user($user->getGUID(), $group->getOwner(), $subject, $msg)){
+				if(notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg)){
 					$result = true;
 				}
 			}

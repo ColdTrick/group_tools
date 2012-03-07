@@ -2,6 +2,7 @@
 x.x:
 
 - fixed: language error in group sorting (thanks to LeeUK)
+- fixed: depricated notice getOwner() => getOwnerGUID()
 
 2.0 BETA 1 (2012-01-17):
 
