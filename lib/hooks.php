@@ -73,6 +73,11 @@
 					
 					include(dirname(dirname(__FILE__)) . "/procedures/group_invite_autocomplete.php");
 					break;
+				case "add":
+					if(group_tools_is_group_creation_limited()){
+						admin_gatekeeper();
+					}
+					break;
 			}
 		}
 		
@@ -85,28 +90,39 @@
 		$page_owner = elgg_get_page_owner_entity();
 		$user = elgg_get_logged_in_user_entity();
 		
-		if(!empty($page_owner) && !empty($user) && ($page_owner instanceof ElggGroup) && elgg_in_context("groups")){
-			if(!empty($result) && is_array($result)){
-				foreach($result as $menu_item){
-					switch($menu_item->getText()){
-						case elgg_echo("groups:joinrequest"):
-							if(check_entity_relationship($user->getGUID(), "membership_request", $page_owner->getGUID())){
-								$menu_item->setText(elgg_echo("group_tools:joinrequest:already"));
-								$menu_item->setTooltip(elgg_echo("group_tools:joinrequest:already:tooltip"));
-								$menu_item->setHref(elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/groups/killrequest?user_guid=" . $user->getGUID() . "&group_guid=" . $page_owner->getGUID()));
-							}
-							
-							break;
-						case elgg_echo("groups:invite"):
-							$invite = elgg_get_plugin_setting("invite", "group_tools");
-							$invite_email = elgg_get_plugin_setting("invite_email", "group_tools");
-							$invite_csv = elgg_get_plugin_setting("invite_csv", "group_tools");
-							
-							if(in_array("yes", array($invite, $invite_csv, $invite_email))){
-								$menu_item->setText(elgg_echo("group_tools:groups:invite"));
-							}
-							
-							break;
+		if(!empty($result) && is_array($result)){
+			if(elgg_in_context("groups")){
+				// modify some group menu items
+				if(!empty($page_owner) && !empty($user) && ($page_owner instanceof ElggGroup)){
+					foreach($result as $menu_item){
+						switch($menu_item->getText()){
+							case elgg_echo("groups:joinrequest"):
+								if(check_entity_relationship($user->getGUID(), "membership_request", $page_owner->getGUID())){
+									$menu_item->setText(elgg_echo("group_tools:joinrequest:already"));
+									$menu_item->setTooltip(elgg_echo("group_tools:joinrequest:already:tooltip"));
+									$menu_item->setHref(elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/groups/killrequest?user_guid=" . $user->getGUID() . "&group_guid=" . $page_owner->getGUID()));
+								}
+								
+								break;
+							case elgg_echo("groups:invite"):
+								$invite = elgg_get_plugin_setting("invite", "group_tools");
+								$invite_email = elgg_get_plugin_setting("invite_email", "group_tools");
+								$invite_csv = elgg_get_plugin_setting("invite_csv", "group_tools");
+								
+								if(in_array("yes", array($invite, $invite_csv, $invite_email))){
+									$menu_item->setText(elgg_echo("group_tools:groups:invite"));
+								}
+								
+								break;
+						}
+					}
+				}
+				
+				if(!empty($user) && !$user->isAdmin() && group_tools_is_group_creation_limited()){
+					foreach($result as $index => $menu_item){
+						if($menu_item->getText() == elgg_echo("groups:add")){
+							unset($result[$index]);
+						}
 					}
 				}
 			}

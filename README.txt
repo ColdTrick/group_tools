@@ -46,7 +46,12 @@ Combines different group additions into one plugin
 	- invitation report
 		- per user what happend
 	- better description of options
+	- select all (friends/site members)
 - group widgets
 	- group listing on popular
-- group main for group members (group optional)
+- group mail for group members (group optional)
 - group discussions tools menu item (all discussions) (optional)
+- group notifications
+	- force group notification for all members (admin only)
+	- disable group notification for all members (admin only)
+- create group admin only

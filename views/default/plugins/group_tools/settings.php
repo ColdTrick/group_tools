@@ -29,6 +29,13 @@
 ?>
 <div>
 	<?php 
+		echo elgg_echo("group_tools:settings:admin_create");
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[admin_create]", "options_values" => $noyes_options, "value" => $plugin->admin_create));
+	?>
+	<div class="elgg-subtext"><?php echo elgg_echo("group_tools:settings:admin_create:description"); ?></div>
+</div>
+<div>
+	<?php 
 		echo elgg_echo("group_tools:settings:admin_transfer");
 		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[admin_transfer]", "options_values" => $admin_transfer_options, "value" => $plugin->admin_transfer));
 	?>

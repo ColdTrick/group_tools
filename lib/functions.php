@@ -191,3 +191,23 @@
 	function group_tools_guid_only_callback($row){
 		return $row->guid;
 	}
+	
+	/**
+	 * Check if group creation is limited to site administrators
+	 * Also this function caches the result
+	 * 
+	 * @return boolean
+	 */
+	function group_tools_is_group_creation_limited(){
+		static $result;
+		
+		if(!isset($result)){
+			$result = false;
+			
+			if(elgg_get_plugin_setting("admin_create", "group_tools") == "yes"){
+				$result = true;
+			}
+		}
+		
+		return $result;
+	}

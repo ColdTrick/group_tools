@@ -79,6 +79,11 @@
 		if(elgg_is_admin_logged_in()){
 			run_function_once("group_tools_version_1_3");
 		}
+		
+		// group creation can be limited to admins
+		if(!elgg_is_admin_logged_in() && group_tools_is_group_creation_limited()){
+			elgg_unregister_action("groups/edit");
+		}
 	}
 	
 	function group_tools_pagesetup(){

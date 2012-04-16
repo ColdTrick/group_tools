@@ -19,6 +19,9 @@
 		'group_tools:menu:invitations' => "Manage invitations",
 		
 		// plugin settings
+		'group_tools:settings:admin_create' => "Limit the creation of groups to Site administrators",
+		'group_tools:settings:admin_create:description' => "Setting this to 'Yes' will make the creation of a new group impossible for a normal user of your site.",
+		
 		'group_tools:settings:admin_transfer' => "Allow group owner transfer",
 		'group_tools:settings:admin_transfer:admin' => "Site admin only",
 		'group_tools:settings:admin_transfer:owner' => "Group owners and site admins",

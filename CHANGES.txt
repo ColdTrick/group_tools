@@ -1,6 +1,7 @@
 = Version History =
 x.x:
 
+- added: option to limit group creation to site administrators
 - fixed: language error in group sorting (thanks to LeeUK)
 - fixed: depricated notice getOwner() => getOwnerGUID()
 
