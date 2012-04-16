@@ -54,4 +54,3 @@ Combines different group additions into one plugin
 - group notifications
 	- force group notification for all members (admin only)
 	- disable group notification for all members (admin only)
-- create group admin only
