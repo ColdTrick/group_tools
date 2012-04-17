@@ -1,4 +1,8 @@
 = Version History =
+x.x:
+
+- fixed: outstanding invitations and membership request not always cleaned up
+
 2.1 (2012-04-16):
 
 - added: option to limit group creation to site administrators

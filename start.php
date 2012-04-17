@@ -55,11 +55,6 @@
 		// group invitation
 		elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
 		
-		// auto enable group notifications on group join
-		if(elgg_get_plugin_setting("auto_notification", "group_tools") == "yes"){
-			elgg_register_event_handler("join", "group", "group_tools_join_group_event");
-		}
-		
 		// manage auto join for groups
 		elgg_extend_view("groups/edit", "group_tools/forms/auto_join", 400);
 		elgg_register_event_handler("create", "member_of_site", "group_tools_join_site_handler");
@@ -204,6 +199,9 @@
 	elgg_register_event_handler("init", "system", "group_tools_init");
 	elgg_register_event_handler("pagesetup", "system", "group_tools_pagesetup", 550);
 
+	// register events
+	elgg_register_event_handler("join", "group", "group_tools_join_group_event");
+	
 	// actions
 	elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");
 	elgg_register_action("group_tools/toggle_admin", dirname(__FILE__) . "/actions/toggle_admin.php");

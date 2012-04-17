@@ -1,13 +1,23 @@
 <?php
 
 	function group_tools_join_group_event($event, $type, $params){
+		static $auto_notification;
+		
+		// only load plugin setting once
+		if(!isset($auto_notification)){
+			$auto_notification = false;
+			
+			if(elgg_get_plugin_setting("auto_notification", "group_tools") == "yes"){
+				$auto_notification = true;
+			}
+		}
 		
 		if(!empty($params) && is_array($params)){
-			if(!empty($params["group"]) && !empty($params["user"])){
-				$group = $params["group"];
-				$user = $params["user"];
-				
-				if(($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
+			$group = elgg_extract("group", $params);
+			$user = elgg_extract("user", $params);
+			
+			if(($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
+				if($auto_notification){
 					// enable email notification
 					add_entity_relationship($user->getGUID(), "notifyemail", $group->getGUID());
 					
@@ -15,6 +25,16 @@
 						// enable site/messages notification
 						add_entity_relationship($user->getGUID(), "notifysite", $group->getGUID());
 					}
+				}
+				
+				// cleanup invites 
+				if(check_entity_relationship($group->getGUID(), "invited", $user->getGUID())){
+					remove_entity_relationship($group->getGUID(), "invited", $user->getGUID());
+				}
+				
+				// and requests
+				if(check_entity_relationship($user->getGUID(), "membership_request", $group->getGUID())){
+					remove_entity_relationship($user->getGUID(), "membership_request", $group->getGUID());
 				}
 			}
 		}
