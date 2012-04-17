@@ -244,3 +244,10 @@ To visit the group please click on the following link:
   	
   	add_translation("en", $group_invitations_widget);
   	
+  	$index_discussions_widget = array(
+  		'widgets:index_discussions:description' => "Shows the latest group discussions",
+  		'widgets:index_discussions:more' => "View more discussions",
+  	);
+  	
+  	add_translation("en", $index_discussions_widget);
+  	

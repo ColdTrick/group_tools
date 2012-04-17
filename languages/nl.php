@@ -1,5 +1,7 @@
 <?php
 $language = array (
+  'widgets:index_discussions:description' => 'Toon de laatste groep discussies',
+  'widgets:index_discussions:more' => 'Bekijk meer discussies',
   'group_tools:joinrequest:already' => 'Lidmaatschap verzoek intrekken',
   'group_tools:joinrequest:already:tooltip' => 'Je hebt reeds verzocht lid te worden van deze groep, klik hier om dit verzoek in te trekken',
   'group_tools:menu:invitations' => 'Beheer uitnodigingen',

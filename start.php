@@ -79,6 +79,12 @@
 		if(!elgg_is_admin_logged_in() && group_tools_is_group_creation_limited()){
 			elgg_unregister_action("groups/edit");
 		}
+		
+		// register index widget to show latest discussions
+		elgg_register_widget_type("index_discussions", elgg_echo("discussion:latest"), elgg_echo("widgets:index_discussions:description"), "index", false);
+		if(is_callable("widget_manager_add_widget_title_link")){
+			widget_manager_add_widget_title_link("index_discussions", "[BASEURL]discussion/all");
+		}
 	}
 	
 	function group_tools_pagesetup(){
