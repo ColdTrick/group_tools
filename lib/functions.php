@@ -116,37 +116,7 @@
 					$invite_code)
 				);
 				
-				if(elgg_is_active_plugin("html_email_handler") && (elgg_get_plugin_setting("notifications", "html_email_handler") == "yes")){
-					// generate HTML mail body
-					$html_message = elgg_view("html_email_handler/notification/body", array("title" => $subject, "message" => parse_urls($body)));
-					if(defined("XML_DOCUMENT_NODE")){
-						if($transform = html_email_handler_css_inliner($html_message)){
-							$html_message = $transform;
-						}
-					}
-				
-					// set options for sending
-					$options = array(
-						"to" => $email,
-						"from" => $site_from,
-						"subject" => $subject,
-						"html_message" => $html_message,
-						"plaintext_message" => $body
-					);
-					
-					if(html_email_handler_send_email($options)){
-						$result = true;
-					}
-				} else {
-					// use plaintext mail
-					$headers = "From: " . $site_from . PHP_EOL;
-					$headers .= "X-Mailer: PHP/" . phpversion() . PHP_EOL;
-					$headers .= "Content-Type: text/plain; charset=\"utf-8\"" . PHP_EOL;
-						
-					if(mail($email, $subject, $body, $headers)){
-						$result = true;
-					}
-				}
+				$result = elgg_send_email($site_from, $email, $subject, $body);
 			} else {
 				$result = null;
 			}
