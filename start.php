@@ -43,7 +43,7 @@
 		// register group members widget
 		elgg_register_widget_type("group_members", elgg_echo("widgets:group_members:title"), elgg_echo("widgets:group_members:description"), "groups", false);
 		if(is_callable("widget_manager_add_widget_title_link")){
-			widget_manager_add_widget_title_link("group_members", "[BASEURL]groups/memberlist/[GUID]");
+			widget_manager_add_widget_title_link("group_members", "[BASEURL]groups/members/[GUID]");
 		}
 		
 		// register groups invitations widget

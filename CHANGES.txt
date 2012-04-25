@@ -3,6 +3,7 @@ x.x:
 
 - added: a index widget (for Widget Manager) to show the latest discussions
 - fixed: outstanding invitations and membership request not always cleaned up
+- fixed: incorrect widget title for group members
 - changed: sending of group invite e-mails to be more generic
 
 2.1 (2012-04-16):
