@@ -173,3 +173,29 @@
 		return $result;
 	}
 	
+	function group_tools_widget_url_handler($hook, $type, $return_value, $params){
+		$result = $return_value;
+		
+		if(!$result && !empty($params) && is_array($params)){
+			$widget = elgg_extract("entity", $params);
+			
+			if(!empty($widget) && elgg_instanceof($widget, "object", "widget")){
+				switch($widget->handler){
+					case "group_members":
+						$result = "/groups/members/" . $widget->getOwnerGUID();
+						break;
+					case "group_invitations":
+						if($user = elgg_get_logged_in_user_entity()){
+							$result = "/groups/invitations/" . $user->username;
+						}
+						break;
+					case "index_discussions":
+						$result = "/discussion/all";
+						break;
+				}
+			}
+		}
+		
+		return $result;
+	}
+	

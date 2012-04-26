@@ -42,15 +42,9 @@
 		
 		// register group members widget
 		elgg_register_widget_type("group_members", elgg_echo("widgets:group_members:title"), elgg_echo("widgets:group_members:description"), "groups", false);
-		if(is_callable("widget_manager_add_widget_title_link")){
-			widget_manager_add_widget_title_link("group_members", "[BASEURL]groups/members/[GUID]");
-		}
 		
 		// register groups invitations widget
 		elgg_register_widget_type("group_invitations", elgg_echo("widgets:group_invitations:title"), elgg_echo("widgets:group_invitations:description"), "index,dashboard", false);
-		if(is_callable("widget_manager_add_widget_title_link")){
-			widget_manager_add_widget_title_link("group_invitations", "[BASEURL]groups/invitations/[USERNAME]");
-		}
 		
 		// group invitation
 		elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
@@ -82,9 +76,6 @@
 		
 		// register index widget to show latest discussions
 		elgg_register_widget_type("index_discussions", elgg_echo("discussion:latest"), elgg_echo("widgets:index_discussions:description"), "index", false);
-		if(is_callable("widget_manager_add_widget_title_link")){
-			widget_manager_add_widget_title_link("index_discussions", "[BASEURL]discussion/all");
-		}
 	}
 	
 	function group_tools_pagesetup(){
@@ -207,6 +198,9 @@
 
 	// register events
 	elgg_register_event_handler("join", "group", "group_tools_join_group_event");
+	
+	// register plugin hooks
+	elgg_register_plugin_hook_handler("widget_url", "widget_manager", "group_tools_widget_url_handler");
 	
 	// actions
 	elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");
