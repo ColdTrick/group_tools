@@ -16,6 +16,7 @@
 		"inverse_relationship" => true,
 		"list_type" => "gallery",
 		"gallery_class" => "elgg-gallery-users",
+		"pagination" => false
 	);
 	
 	if(!($list = elgg_list_entities_from_relationship($options))){
