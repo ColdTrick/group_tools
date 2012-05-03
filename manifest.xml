@@ -24,6 +24,12 @@
 		<priority>after</priority>
 	</requires>
 	
+	<requires>
+		<type>priority</type>
+		<plugin>dashboard</plugin>
+		<priority>after</priority>
+	</requires>
+	
 	<suggests>
 		<type>plugin</type>
 		<name>widget_manager</name>

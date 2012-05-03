@@ -192,6 +192,19 @@
 					case "index_discussions":
 						$result = "/discussion/all";
 						break;
+					case "group_river_widget":
+						if($widget->context != "groups"){
+							$group_guid = (int) $widget->group_guid;
+						} else {
+							$group_guid = $widget->getOwnerGUID();
+						}
+						
+						if(!empty($group_guid) && ($group = get_entity($group_guid))){
+							if(elgg_instanceof($group, "group", null, "ElggGroup")){
+								$result = "/groups/activity/" . $group_guid;
+							}
+						}
+						break;
 				}
 			}
 		}

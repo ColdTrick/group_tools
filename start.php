@@ -37,8 +37,10 @@
 		}
 		
 		// register group activity widget
-		// 2011-12-21: temp disabled until widgets are fixed
-// 		elgg_register_widget_type("group_river_widget", elgg_echo("widgets:group_river_widget:title"), elgg_echo("widgets:group_river_widget:description"), "dashboard,profile,index,groups", true);
+		// 2012-05-03: restored limited functionality of group activity widget, will be fully restored if Elgg fixes widget settings
+		elgg_register_widget_type("group_river_widget", elgg_echo("widgets:group_river_widget:title"), elgg_echo("widgets:group_river_widget:description"), "dashboard,profile,index,groups", true);
+		// unregister dashboard widget
+		elgg_unregister_widget_type("group_activity");
 		
 		// register group members widget
 		elgg_register_widget_type("group_members", elgg_echo("widgets:group_members:title"), elgg_echo("widgets:group_members:description"), "groups", false);
