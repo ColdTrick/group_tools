@@ -1,5 +1,7 @@
 <?php
 $language = array (
+  'widgets:featured_groups:description' => 'Toont een lijst met willekeurig geselecteerde aangeraden groepen',
+  'widgets:featured_groups:edit:show_random_group' => 'Toon een willekeurige niet aangeraden groep',
   'widgets:index_discussions:description' => 'Toon de laatste groep discussies',
   'widgets:index_discussions:more' => 'Bekijk meer discussies',
   'group_tools:joinrequest:already' => 'Lidmaatschap verzoek intrekken',
