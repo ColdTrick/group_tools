@@ -20,8 +20,8 @@
 					"limit" => 1
 				);
 				
-				if(elgg_get_annotations($options)){
-					$annotation[0]->delete();
+				if($annotations = elgg_get_annotations($options)){
+					$annotations[0]->delete();
 				}
 				
 				$forward_url = $group->getURL();
