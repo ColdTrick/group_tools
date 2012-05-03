@@ -102,5 +102,5 @@
 			}
 		}
 		
-		echo elgg_view_module("info", $title, content);
+		echo elgg_view_module("info", $title, $content);
 	}
