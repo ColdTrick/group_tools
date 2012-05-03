@@ -206,7 +206,12 @@
 						}
 						break;
 					case "featured_groups":
-						$result = "groups/all";
+						$result = "/groups/all";
+						break;
+					case "a_user_groups":
+						if($owner = $widget->getOwnerEntity()){
+							$result = "/groups/member/" . $owner->username;
+						}
 						break;
 				}
 			}
