@@ -27,19 +27,19 @@
 		$result = false;
 		
 		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = elgg_get_logged_in_user_entity())){
-			if(!$resend){
-				// Create relationship
-				add_entity_relationship($group->getGUID(), "invited", $user->getGUID());
-			}
+			// Create relationship
+			$relationship = add_entity_relationship($group->getGUID(), "invited", $user->getGUID());
 			
-			// Send email
-			$url = elgg_get_site_url() . "/groups/invitations/" . $user->username;
-			
-			$subject = elgg_echo("groups:invite:subject", array($user->name, $group->name));
-			$msg = elgg_echo("group_tools:groups:invite:body", array($user->name, $loggedin_user->name, $group->name, $text, $url));
-			
-			if(notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg)){
-				$result = true;
+			if($relationship || $resend){
+				// Send email
+				$url = elgg_get_site_url() . "/groups/invitations/" . $user->username;
+				
+				$subject = elgg_echo("groups:invite:subject", array($user->name, $group->name));
+				$msg = elgg_echo("group_tools:groups:invite:body", array($user->name, $loggedin_user->name, $group->name, $text, $url));
+				
+				if($res = notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg)){
+					$result = true;
+				}
 			}
 		}
 		
@@ -159,7 +159,7 @@
 	}
 	
 	function group_tools_guid_only_callback($row){
-		return $row->guid;
+		return (int) $row->guid;
 	}
 	
 	/**
