@@ -38,7 +38,7 @@
 		);
 		
 		// invite friends
-		$form_data .= "<div id='group_tools_group_invite_friends'>";
+		$form_data = "<div id='group_tools_group_invite_friends'>";
 		$form_data .= $friendspicker;
 		$form_data .= "</div>";
 
@@ -103,7 +103,7 @@
 		
 	} else {
 		// only friends
-		$form_data .= $friendspicker;
+		$form_data = $friendspicker;
 	}
 	
 	// optional text

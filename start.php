@@ -128,12 +128,11 @@
 						"count" => true
 					);
 					
-					$invited = elgg_get_entities_from_relationship($invite_options);
-					
+					$postfix = "";
 					if($requests = elgg_get_entities_from_relationship($request_options)){
 						$postfix = " [" . $requests . "]";
-					} elseif(!empty($invited)){
-						$postfix = " [" . ($invited + $email_invited) . "]";
+					} elseif($invited = elgg_get_entities_from_relationship($invite_options)){
+						$postfix = " [" . $invited . "]";
 					}
 					
 					if(!$page_owner->isPublicMembership() || !empty($requests)){
