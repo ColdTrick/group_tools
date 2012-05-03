@@ -48,6 +48,9 @@
 		// register groups invitations widget
 		elgg_register_widget_type("group_invitations", elgg_echo("widgets:group_invitations:title"), elgg_echo("widgets:group_invitations:description"), "index,dashboard", false);
 		
+		// register featured groups widget
+		elgg_register_widget_type("featured_groups", elgg_echo("groups:featured"), elgg_echo("widgets:featured_groups:description"), "index");
+		
 		// group invitation
 		elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
 		

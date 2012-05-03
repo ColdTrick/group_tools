@@ -205,6 +205,9 @@
 							}
 						}
 						break;
+					case "featured_groups":
+						$result = "groups/all";
+						break;
 				}
 			}
 		}

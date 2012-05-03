@@ -251,3 +251,10 @@ To visit the group please click on the following link:
   	
   	add_translation("en", $index_discussions_widget);
   	
+  	$featured_groups_widget = array(
+  		'widgets:featured_groups:description' => "Shows a random list of featured groups",
+  		'widgets:featured_groups:edit:show_random_group' => "Show a random non-featured group",
+  	);
+  	
+  	add_translation("en", $featured_groups_widget);
+  	
