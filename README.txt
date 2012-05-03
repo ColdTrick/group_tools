@@ -9,7 +9,6 @@ Combines different group additions into one plugin
 == 1. Features ==
 - group admin transfer
 - group multiple admin
-- group kick
 - group activity (profile,dashboard,index,group widget)
 	- can show more than one group activity
 	- has support for river_comments and like
@@ -31,7 +30,6 @@ Combines different group additions into one plugin
 - group_admin_transfer
 - group_multiple_admin
 - group_mail
-- group_kick
 - groupriver
 
 == 3. ToDo ==
@@ -46,7 +44,6 @@ Combines different group additions into one plugin
 	- invitation report
 		- per user what happend
 	- better description of options
-	- select all (friends/site members)
 - group widgets
 	- group listing on popular
 - group mail for group members (group optional)
