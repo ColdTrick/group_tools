@@ -12,6 +12,7 @@
 				$auto_join_groups = array();
 			}
 			
+			$fix_members = "";
 			if(in_array($group->getGUID(), $auto_join_groups)){
 				$lang_key = "group_tools:auto_join:remove";
 				

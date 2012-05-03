@@ -46,7 +46,7 @@
 		 		}
 		 		
 		 		if(!empty($friends)){
-		 			$friends_block .= "<optgroup label='" . elgg_echo("friends") . "'>\n";
+		 			$friends_block = "<optgroup label='" . elgg_echo("friends") . "'>\n";
 			 		
 		 			foreach($friends as $friend){
 		 				if($group->getOwnerGUID() != $friend->getGUID()){
@@ -64,7 +64,7 @@
 		 		}
 		 		
 		 		if(!empty($members)){
-		 			$members_block .= "<optgroup label='" . elgg_echo("groups:members") . "'>\n";
+		 			$members_block = "<optgroup label='" . elgg_echo("groups:members") . "'>\n";
 			 		
 		 			foreach($members as $member){
 		 				if(($group->getOwnerGUID() != $member->getGUID()) && ($user->getGUID() != $member->getGUID())){
