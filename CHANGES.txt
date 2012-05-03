@@ -4,6 +4,7 @@ x.x:
 - added: featured group widget
 - added: a index widget (for Widget Manager) to show the latest discussions
 - added: widget title link for group membership (in combination with Widget Manager)
+- added: option to invite all friends or all site members (admin only)
 - fixed: outstanding invitations and membership request not always cleaned up
 - fixed: incorrect widget title for group members
 - fixed: deprecated notices in combination with widget_manager

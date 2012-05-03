@@ -14,6 +14,20 @@
 	if (!empty($user_guids) && !is_array($user_guids)){
 		$user_guids = array($user_guids);
 	}
+	
+	if(elgg_is_admin_logged_in()){
+		if(get_input("all_users") == "yes"){
+			$site = elgg_get_site_entity();
+			
+			$options = array(
+				"limit" => false,
+				"callback" => "group_tools_guid_only_callback"
+			);
+			
+			$user_guids = $site->getMembers($options);
+		}
+	}
+	
 	$group_guid = (int) get_input("group_guid");
 	$text = get_input("comment");
 	
@@ -159,11 +173,11 @@
 			access_show_hidden_entities($hidden);
 			
 			// which message to show
-			if(!empty($invited) && !empty($join)){
+			if(!empty($invited) || !empty($join)){
 				if(!$adding){
 					system_message(elgg_echo("group_tools:action:invite:success:invite", array($invited, $already_invited, $member)));
 				} else {
-					system_message(elgg_echo("group_tools:action:invite:success:add", array($invited, $already_invited, $member)));
+					system_message(elgg_echo("group_tools:action:invite:success:add", array($join, $already_invited, $member)));
 				}
 			} else {
 				if(!$adding){

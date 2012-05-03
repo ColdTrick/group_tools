@@ -15,6 +15,11 @@
 	
 	if ($friends = elgg_get_logged_in_user_entity()->getFriends("", false)) {
 		$friendspicker = elgg_view('input/friendspicker', array('entities' => $friends, 'name' => 'user_guid', 'highlight' => 'all'));
+		
+		$toggle_content = "<span>" . elgg_echo("group_tools:group:invite:friends:select_all") . "</span>";
+		$toggle_content .= "<span class='hidden'>" . elgg_echo("group_tools:group:invite:friends:deselect_all") . "</span>";
+		
+		$friendspicker .= elgg_view("output/url", array("text" => $toggle_content, "href" => "javascript:void(0);", "onclick" => "group_tools_toggle_all_friends();", "id" => "friends_toggle"));
 	} else {
 		$friendspicker = elgg_echo('groups:nofriendsatall');
 	}
@@ -53,6 +58,11 @@
 																				"id" => "group_tools_group_invite_autocomplete",
 																				"group_guid" => $group->getGUID(),
 																				"relationship" => "site"));
+			if(elgg_is_admin_logged_in()){
+				$form_data .= elgg_view("input/checkbox", array("name" => "all_users", "value" => "yes"));
+				$form_data .= elgg_echo("group_tools:group:invite:users:all");
+			}
+			
 			$form_data .= "</div>";
 		}
 		
@@ -165,5 +175,16 @@
 				$('#group_tools_group_invite_friends').show();
 				break;
 		}
+	}
+
+	function group_tools_toggle_all_friends(){
+
+		if($('#friends_toggle span:first').is(':visible')){
+			$('#friends-picker1 input[type="checkbox"]').attr("checked", "checked");
+		} else {
+			$('#friends-picker1 input[type="checkbox"]').removeAttr("checked");
+		}
+
+		$('#friends_toggle span').toggle();
 	}
 </script>

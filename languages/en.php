@@ -130,8 +130,12 @@ To visit the group please click on the following link:
 		'group_tools:groups:invite:title' => "Invite users to this group",
 		'group_tools:groups:invite' => "Invite users",
 		
+		'group_tools:group:invite:friends:select_all' => "Select all friends",
+		'group_tools:group:invite:friends:deselect_all' => "Deselect all friends",
+		
 		'group_tools:group:invite:users' => "Find user(s)",
-		'group_tools:group:invite:users:description' => "Enter a name or username of a member and select him/her from the list",
+		'group_tools:group:invite:users:description' => "Enter a name or username of a site member and select him/her from the list",
+		'group_tools:group:invite:users:all' => "Invite all site members to this group",
 		
 		'group_tools:group:invite:email' => "Using e-mail address",
 		'group_tools:group:invite:email:description' => "Enter a valid e-mail address and select it from the list",
