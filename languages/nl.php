@@ -1,5 +1,8 @@
 <?php
 $language = array (
+  'group_tools:group:invite:friends:select_all' => 'Selecteer alle vrienden',
+  'group_tools:group:invite:friends:deselect_all' => 'Deselecteer alle vrienden',
+  'group_tools:group:invite:users:all' => 'Nodig alle site gebruikers uit voor deze groep',
   'widgets:featured_groups:description' => 'Toont een lijst met willekeurig geselecteerde aangeraden groepen',
   'widgets:featured_groups:edit:show_random_group' => 'Toon een willekeurige niet aangeraden groep',
   'widgets:index_discussions:description' => 'Toon de laatste groep discussies',
@@ -122,7 +125,7 @@ Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende co
   'group_tools:mail:form:description' => 'Bericht',
   'group_tools:groups:invite' => 'Nodig gebruikers uit',
   'group_tools:group:invite:users' => 'Zoek gebruiker(s)',
-  'group_tools:group:invite:users:description' => 'Vul een naam of gebruikersnaam van een lid in en selecteer hem/haar uit de lijst',
+  'group_tools:group:invite:users:description' => 'Vul een naam of gebruikersnaam van een site gebruiker in en selecteer hem/haar uit de lijst',
   'group_tools:group:invite:email' => 'Obv e-mail adres',
   'group_tools:group:invite:email:description' => 'Geef een geldig e-mail adres op en selecteer het uit de lijst',
   'group_tools:group:invite:csv' => 'Obv CSV bestand',
