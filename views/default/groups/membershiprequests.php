@@ -69,7 +69,7 @@
 					'is_trusted' => true,
 			));
 	
-			$url = 'action/groups/delete_invite?user_guid=' . $user->guid . '&group_guid=' . $vars['entity']->guid;
+			$url = 'action/groups/killinvitation?user_guid=' . $user->guid . '&group_guid=' . $vars['entity']->guid;
 			$delete_button = elgg_view('output/confirmlink', array(
 						'href' => $url,
 						'confirm' => elgg_echo('group_tools:groups:membershipreq:invitations:revoke:confirm'),
