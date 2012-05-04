@@ -20,6 +20,7 @@
 	
 	$featured = elgg_list_entities_from_metadata($featured_options);
 	
+	$random = "";
 	if($show_random == "yes"){
 		$dbprefix = elgg_get_config("dbprefix");
 		$featured_id = add_metastring("featured_group");

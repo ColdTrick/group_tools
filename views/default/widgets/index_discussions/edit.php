@@ -1,6 +1,6 @@
 <?php
 
-	$widget = elgg_extract("entity");
+	$widget = elgg_extract("entity", $vars);
 	
 	$limit = (int) $widget->num_display;
 	if($limit < 1){
