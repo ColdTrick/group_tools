@@ -1,5 +1,5 @@
 = Version History =
-x.x:
+2.2 (2012-05-07):
 
 - added: featured group widget
 - added: a index widget (for Widget Manager) to show the latest discussions
