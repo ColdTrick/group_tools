@@ -107,7 +107,7 @@
 		if(elgg_get_plugin_setting("invite_email", "group_tools") == "yes"){
 			
 			$form_body = "<div>" . elgg_echo("group_tools:groups:invitation:code:description") . "</div>";
-			$form_body .= elgg_view("input/text", array("internalname" => "invitecode", "value" => get_input("invitecode")));
+			$form_body .= elgg_view("input/text", array("name" => "invitecode", "value" => get_input("invitecode")));
 		
 			$form_body .= "<div>";
 			$form_body .= elgg_view("input/submit", array("value" => elgg_echo("submit")));

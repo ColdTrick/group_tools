@@ -1,4 +1,8 @@
 = Version History =
+x.x:
+
+- fixed: depricated notice in invitations overview
+
 2.2 (2012-05-07):
 
 - added: featured group widget
