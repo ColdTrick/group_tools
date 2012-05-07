@@ -32,7 +32,7 @@
 			
 			if($relationship || $resend){
 				// Send email
-				$url = elgg_get_site_url() . "/groups/invitations/" . $user->username;
+				$url = elgg_get_site_url() . "groups/invitations/" . $user->username;
 				
 				$subject = elgg_echo("groups:invite:subject", array($user->name, $group->name));
 				$msg = elgg_echo("group_tools:groups:invite:body", array($user->name, $loggedin_user->name, $group->name, $text, $url));

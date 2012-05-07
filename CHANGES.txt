@@ -2,6 +2,7 @@
 x.x:
 
 - fixed: depricated notice in invitations overview
+- fixed: url error in invitation
 
 2.2 (2012-05-07):
 
