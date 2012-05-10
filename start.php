@@ -51,6 +51,9 @@
 		// register featured groups widget
 		elgg_register_widget_type("featured_groups", elgg_echo("groups:featured"), elgg_echo("widgets:featured_groups:description"), "index");
 		
+		// register index groups widget
+		elgg_register_widget_type("index_groups", elgg_echo("groups"), elgg_echo("widgets:index_groups:description"), "index", true);
+		
 		// group invitation
 		elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
 		
@@ -70,6 +73,12 @@
 		// show group status in stats (on group profile)
 		elgg_extend_view("groups/profile/summary", "group_tools/group_stats");
 		
+		if(elgg_is_active_plugin("blog")){
+			elgg_register_widget_type('group_news', elgg_echo('widgets:group_news:title'), elgg_echo('widgets:group_news:description'), "profile,index,dashboard", true);
+			elgg_extend_view("css/elgg", "widgets/group_news/css");
+			elgg_extend_view("js/elgg", "widgets/group_news/js");
+		}
+		
 		if(elgg_is_admin_logged_in()){
 			run_function_once("group_tools_version_1_3");
 		}
@@ -80,7 +89,9 @@
 		}
 		
 		// register index widget to show latest discussions
-		elgg_register_widget_type("index_discussions", elgg_echo("discussion:latest"), elgg_echo("widgets:index_discussions:description"), "index", false);
+		elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), "index,dashboard", true);
+		elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), "groups");
+		
 	}
 	
 	function group_tools_pagesetup(){
@@ -89,6 +100,10 @@
 		$page_owner = elgg_get_page_owner_entity();
 		
 		if(elgg_in_context("groups") && ($page_owner instanceof ElggGroup)){
+			if($page_owner->forum_enable == "no"){
+				// unset if not enabled for this plugin
+				elgg_unregister_widget_type("group_forum_topics");
+			}
 			
 			if(!empty($user)){
 				// check for admin transfer

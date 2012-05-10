@@ -189,9 +189,14 @@
 							$result = "/groups/invitations/" . $user->username;
 						}
 						break;
-					case "index_discussions":
+					case "discussion":
 						$result = "/discussion/all";
 						break;
+					case "group_forum_topics":
+						if(($page_owner = elgg_get_page_owner_entity()) && ($page_owner instanceof ElggGroup)){
+							$result = "/discussion/owner/" . $page_owner->getGUID();
+							break;
+						}
 					case "group_river_widget":
 						if($widget->context != "groups"){
 							$group_guid = (int) $widget->group_guid;
@@ -205,6 +210,7 @@
 							}
 						}
 						break;
+					case "index_groups":
 					case "featured_groups":
 						$result = "/groups/all";
 						break;

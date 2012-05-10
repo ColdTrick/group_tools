@@ -210,55 +210,60 @@ To visit the group please click on the following link:
 		// group fix auto_join
 		'group_tools:action:fix_auto_join:success' => "Group membership fixed: %s new members, %s were already a member and %s failures",
 		
-	);
-	
-	add_translation("en", $english);
-
-	$group_river_widget = array(
+		// Widgets
+		// Group River Widget
 		'widgets:group_river_widget:title' => "Group activity",
 	    'widgets:group_river_widget:description' => "Shows the activity of a group in a widget",
-	
+
 	    'widgets:group_river_widget:edit:num_display' => "Number of activities",
 		'widgets:group_river_widget:edit:group' => "Select a group",
 		'widgets:group_river_widget:edit:no_groups' => "You need to be a member of at least one group to use this widget",
 
 		'widgets:group_river_widget:view:not_configured' => "This widget is not yet configured",
-	
+
 		'widgets:group_river_widget:view:more' => "Activity in the '%s' group",
 		'widgets:group_river_widget:view:noactivity' => "We could not find any activity.",
-	
- 	);
-
-  	add_translation("en", $group_river_widget);
-  	
-  	$group_members_widget = array(
-  		'widgets:group_members:title' => "Group members",
+		
+		// Group Members
+		'widgets:group_members:title' => "Group members",
   		'widgets:group_members:description' => "Shows the members of this group",
-  		
+
   		'widgets:group_members:edit:num_display' => "How many members to show",
   		'widgets:group_members:view:no_members' => "No group members found",
-  	);
-  	
-  	add_translation("en", $group_members_widget);
+  		
+  		// Group Invitations
+		'widgets:group_invitations:title' => "Group invitations",
+	  	'widgets:group_invitations:description' => "Shows the outstanding group invitations for the current user",
+	  	
+	  	// Discussion
+		"widgets:discussion:settings:group_only" => "Only show discussions from groups you are member of",
+  		'widgets:discussion:more' => "View more discussions",
+  		"widgets:discussion:description" => "Shows the latest discussions",
+  		
+		// Forum topic widget
+		'widgets:group_forum_topics:description' => "Show the latest discussions",
+		
+		// index_groups
+		'widgets:index_groups:description' => "Show the latest groups on your community",
+		'widgets:index_groups:featured' => "Show only featured groups",
+		
+		// Featured Groups
+		'widgets:featured_groups:description' => "Shows a random list of featured groups",
+	  	'widgets:featured_groups:edit:show_random_group' => "Show a random non-featured group",
+	  	
+		// group_news widget
+		"widgets:group_news:title" => "Group News", 
+		"widgets:group_news:description" => "Shows latest 5 blogs from various groups", 
+		"widgets:group_news:no_projects" => "No groups configured", 
+		"widgets:group_news:no_news" => "No blogs for this group", 
+		"widgets:group_news:settings:project" => "Group", 
+		"widgets:group_news:settings:no_project" => "Select a group",
+		"widgets:group_news:settings:blog_count" => "Max number of blogs",
+		"widgets:group_news:settings:group_icon_size" => "Group icon size",
+		"widgets:group_news:settings:group_icon_size:small" => "Small",
+		"widgets:group_news:settings:group_icon_size:medium" => "Medium",
+		
+	);
 	
-  	$group_invitations_widget = array(
-  		'widgets:group_invitations:title' => "Group invitations",
-  		'widgets:group_invitations:description' => "Shows the outstanding group invitations for the current user",
-  	);
-  	
-  	add_translation("en", $group_invitations_widget);
-  	
-  	$index_discussions_widget = array(
-  		'widgets:index_discussions:description' => "Shows the latest group discussions",
-  		'widgets:index_discussions:more' => "View more discussions",
-  	);
-  	
-  	add_translation("en", $index_discussions_widget);
-  	
-  	$featured_groups_widget = array(
-  		'widgets:featured_groups:description' => "Shows a random list of featured groups",
-  		'widgets:featured_groups:edit:show_random_group' => "Show a random non-featured group",
-  	);
-  	
-  	add_translation("en", $featured_groups_widget);
+	add_translation("en", $english);
   	
