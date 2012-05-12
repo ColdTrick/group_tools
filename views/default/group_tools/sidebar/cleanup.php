@@ -3,13 +3,13 @@
 	$group = elgg_get_page_owner_entity();
 	
 	if(!empty($group)){
+		$prefix = "group_tools:cleanup:";
+		
 		if(!$group->canEdit()){
-			$prefix = "group_tools:cleanup:";
 			
 			$owner_block = $group->getPrivateSetting($prefix . "owner_block");
 			$actions = $group->getPrivateSetting($prefix . "actions");
 			$menu = $group->getPrivateSetting($prefix . "menu");
-			$featured = $group->getPrivateSetting($prefix . "featured");
 			
 			$css = "";
 			
@@ -37,6 +37,9 @@
 				echo "</style>";
 			}
 		}
+		
+		// show featured groups in the sidebar
+		$featured = $group->getPrivateSetting($prefix . "featured");
 		
 		if(!empty($featured) && ($featured != "no")){
 			$featured_sorting = $group->getPrivateSetting($prefix . "featured_sorting");

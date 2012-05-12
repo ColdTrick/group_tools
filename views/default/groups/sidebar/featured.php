@@ -17,7 +17,7 @@ $featured_groups_options = array(
 
 if(!empty($sort) && ($sort == "alphabetical")){
 	$featured_groups_options["joins"] = array("JOIN " . elgg_get_config("dbprefix") . "groups_entity ge ON e.guid = ge.guid");
-	$featured_groups_options["order_by"] = "ge.title ASC";
+	$featured_groups_options["order_by"] = "ge.name ASC";
 }
 
 if ($featured_groups = elgg_get_entities_from_metadata($featured_groups_options)) {
