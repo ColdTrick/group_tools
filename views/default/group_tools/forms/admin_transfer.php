@@ -1,8 +1,6 @@
 <?php 
 
-	global $CONFIG;
-
-	$group = $vars["entity"];
+	$group = elgg_extract("entity", $vars);
 	$user = elgg_get_logged_in_user_entity();
 	
 	if(!empty($group) && ($group instanceof ElggGroup) && !empty($user)){
@@ -104,12 +102,3 @@
 			
 		}
 	}
-
-?>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#group_tools_admin_transfer_form').submit(function(){
-			return confirm("<?php echo elgg_echo("group_tools:admin_transfer:confirm"); ?>");
-		});
-	});
-</script>
