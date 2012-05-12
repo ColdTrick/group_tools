@@ -175,5 +175,18 @@ Het formaat moet zijn: weergave naam;e-mail adres. Er mag geen kopregel zijn.',
   'group_tools:action:groups:email_invitation:error:code' => 'De opgegeven uitnodiginscode in niet meer geldig',
   'group_tools:action:groups:email_invitation:error:join' => 'Er is een onbekende fout opgetreden tijdens het lid worden van de groep %s, misschien ben je al lid',
   'group_tools:action:groups:email_invitation:success' => 'Je bent lid geworden van de groep',
+  'group_tools:cleanup:title' => 'Groep menu opschonen',
+  'group_tools:cleanup:description' => 'Hier kan het groep menu worden opgeschoond. Dit heeft geen effect voor groeps beheerders',
+  'group_tools:cleanup:owner_block' => 'Beperk het eigenaar blok',
+  'group_tools:cleanup:owner_block:explain' => 'Het eigenaar blok staat bovenaan het menu, hierin kunnen extra links worden getoond (bijvoorbeeld RSS links)',
+  'group_tools:cleanup:actions' => 'Wil je gebruikers toestaan lid te worden van de groep',
+  'group_tools:cleanup:actions:explain' => 'Afhankelijk van de groep instelling, kunnen gebruikers direct lid worden van de groep of lidmaatschap aanvragen.',
+  'group_tools:cleanup:menu' => 'Verberg overige menu items',
+  'group_tools:cleanup:menu:explain' => 'Verberg de overige menu links naar de verschillende groep functionaliteiten. De gebruikers kunnen alleen naar de verschillende functionaliteiten door gebruik te maken van de links in widgets.',
+  'group_tools:cleanup:members' => 'Verberg groep leden',
+  'group_tools:cleanup:members:explain' => 'Op de groep profiel pagina staat op de aangegeven plaats een lijst met leden van de groep. Je kunt deze verbergen.',
+  'group_tools:cleanup:featured' => 'Toon de aangereden groepen in het menu',
+  'group_tools:cleanup:featured:explain' => 'Je kunt ervoor kiezen om op de groep profiel pagina een lijst met aangeraden groepen te tonen op de aangegeven plaats.',
+
 );
 add_translation("nl", $language);

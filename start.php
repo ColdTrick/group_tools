@@ -8,6 +8,7 @@
 		
 		// extend css & js
 		elgg_extend_view("css/elgg", "group_tools/css/site");
+		elgg_extend_view("js/elgg", "group_tools/js/site");
 		
 		// register JS and CSS libs
 		elgg_register_js("jquery.autocomplete.min", elgg_get_site_url() . "vendors/jquery/jquery.autocomplete.min.js");
@@ -67,6 +68,9 @@
 		
 		// show group profile widgets - edit form
 		elgg_extend_view("groups/edit", "group_tools/forms/profile_widgets", 400);
+		
+		// cleanup group side menu
+		elgg_extend_view("groups/edit", "group_tools/forms/cleanup", 450);
 		
 		// show group status in owner block
 		elgg_extend_view("page/elements/owner_block/extend", "group_tools/owner_block");
@@ -183,6 +187,9 @@
 					elgg_extend_view("page/elements/head", "metatags/noindex");
 				}
 			}
+			
+			// cleanup sidebar
+			elgg_extend_view("page/elements/sidebar", "group_tools/sidebar/cleanup");
 		}
 		
 	}
@@ -226,6 +233,7 @@
 	elgg_register_action("group_tools/toggle_admin", dirname(__FILE__) . "/actions/toggle_admin.php");
 	elgg_register_action("group_tools/mail", dirname(__FILE__) . "/actions/mail.php");
 	elgg_register_action("group_tools/profile_widgets", dirname(__FILE__) . "/actions/profile_widgets.php");
+	elgg_register_action("group_tools/cleanup", dirname(__FILE__) . "/actions/cleanup.php");
 	
 	elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/toggle_auto_join.php", "admin");
 	elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/fix_auto_join.php", "admin");

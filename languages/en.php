@@ -10,6 +10,7 @@
 		'group_tools:remove' => "Remove",
 		'group_tools:clear_selection' => "Clear selection",
 		'group_tools:all_members' => "All members",
+		'group_tools:explain' => "Explanation",
 		
 		'group_tools:joinrequest:already' => "Revoke membership request",
 		'group_tools:joinrequest:already:tooltip' => "You already requested to join this group, click here to revoke this request",
@@ -108,6 +109,26 @@ To visit the group please click on the following link:
 	
 		'group_tools:multiple_admin:group_tool_option' => "Enable group admins to assign other group admins",
 
+		// cleanup options
+		'group_tools:cleanup:title' => "Group sidebar cleanup",
+		'group_tools:cleanup:description' => "Cleanup the sidebar of the group. This will have no effect for the group admins.",
+		'group_tools:cleanup:owner_block' => "Limit the owner block",
+		'group_tools:cleanup:owner_block:explain' => "The owner block can be found at the top of the sidebar, some extra links can be posted in this area (example: RSS links).",
+		'group_tools:cleanup:actions' => "Do you want to allow users to join this group",
+		'group_tools:cleanup:actions:explain' => "Depending on your group setting, users can directly join the group or request membership.",
+		'group_tools:cleanup:menu' => "Hide side menu items",
+		'group_tools:cleanup:menu:explain' => "Hide the menu links to the different group tools. The users will only be able to get access to the group tools by using the group widgets.",
+		'group_tools:cleanup:members' => "Hide the group members",
+		'group_tools:cleanup:members:explain' => "On the group profile page a list of the group members can be found at the highlighted section. You can choose to hide this list.",
+		'group_tools:cleanup:search' => "Hide the search in group",
+		'group_tools:cleanup:search:explain' => "On the group profile page a search box is available. You can choose to hide this.",
+		'group_tools:cleanup:featured' => "Show featured groups in the sidebar",
+		'group_tools:cleanup:featured:explain' => "You can choose to show a list of featured groups at the highlighted section on the group profile page",
+		'group_tools:cleanup:featured_sorting' => "How to sort featured groups",
+		'group_tools:cleanup:featured_sorting:time_created' => "Newest first",
+		'group_tools:cleanup:featured_sorting:alphabetical' => "Alphabetical",
+
+		
 		// group profile widgets
 		'group_tools:profile_widgets:title' => "Show group profile widgets to non members",
 		'group_tools:profile_widgets:description' => "This is a closed group. Default no widgets are shown to non members. Here you can configure if you whish to change that.",
@@ -209,6 +230,9 @@ To visit the group please click on the following link:
 		
 		// group fix auto_join
 		'group_tools:action:fix_auto_join:success' => "Group membership fixed: %s new members, %s were already a member and %s failures",
+		
+		// group cleanup
+		'group_tools:actions:cleanup:success' => "The cleanup settings were saved successfully",
 		
 		// Widgets
 		// Group River Widget

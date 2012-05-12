@@ -66,3 +66,7 @@
 #group_tools_status_closed {
 	color: orange;
 }
+
+.group-tools-highlight {
+	border: 1px solid red;
+}

@@ -19,8 +19,8 @@
 	$form_data .= "</div>";
 	
 	$form_data .= "<div id='group_tools_mail_member_options'>";
-	$form_data .= elgg_view("input/button", array("class" => "elgg-button-action", "value" => elgg_echo("group_tools:clear_selection"), "onclick" => "group_tools_mail_clear_members();"));
-	$form_data .= elgg_view("input/button", array("class" => "elgg-button-action", "value" => elgg_echo("group_tools:all_members"), "onclick" => "group_tools_mail_all_members();"));
+	$form_data .= elgg_view("input/button", array("class" => "elgg-button-action", "value" => elgg_echo("group_tools:clear_selection"), "onclick" => "elgg.group_tools.mail_clear_members();"));
+	$form_data .= elgg_view("input/button", array("class" => "elgg-button-action", "value" => elgg_echo("group_tools:all_members"), "onclick" => "elgg.group_tools.mail_all_members();"));
 	$form_data .= "<br />";
 	$form_data .= "</div>";
 	
@@ -45,56 +45,3 @@
 											"class" => "elgg-form-alt"));
 	
 	echo $form;
-
-?>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#group_tools_mail_form').submit(function(){
-			var result = false;
-			var error_msg = "";
-			var error_count = 0;
-
-			if($('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length == 0){
-				error_msg += "<?php echo elgg_echo("group_tools:mail:form:js:members"); ?>\n";
-				error_count++;
-			}
-			
-			if($(this).find('input[name="description"]').val() == ""){
-				error_msg += "<?php echo elgg_echo("group_tools:mail:form:js:description"); ?>\n";
-				error_count++;
-			}
-
-			if(error_count > 0){
-				alert(error_msg);
-			} else {
-				result = true;
-			}
-			
-			return result;
-		});
-
-		$('#group_tools_mail_member_selection input[type=checkbox]').live("change", group_tools_mail_update_recipients);
-	});
-
-	function group_tools_mail_clear_members(){
-		$('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').each(function(){
-			$(this).removeAttr('checked');
-		});
-
-		group_tools_mail_update_recipients();
-	}
-	
-	function group_tools_mail_all_members(){
-		$('#group_tools_mail_member_selection input[name="user_guids[]"]').each(function(){
-			$(this).attr('checked', 'checked');
-		});
-
-		group_tools_mail_update_recipients();
-	}
-
-	function group_tools_mail_update_recipients(){
-		var count = $('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length;
-
-		$('#group_tools_mail_recipients_count').html(count);
-	}
-</script>
