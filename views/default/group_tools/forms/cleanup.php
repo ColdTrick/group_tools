@@ -56,7 +56,7 @@
 		// hide group menu items
 		$form_body .= "<div>";
 		$form_body .= elgg_echo("group_tools:cleanup:menu");
-		$form_body .= ":&nbsp;" . elgg_view("input/pulldown", array("name" => "menu", "options_values" => $noyes_options, "value" => $group->getPrivateSetting($prefix . "menu")));
+		$form_body .= ":&nbsp;" . elgg_view("input/dropdown", array("name" => "menu", "options_values" => $noyes_options, "value" => $group->getPrivateSetting($prefix . "menu")));
 		$form_body .= "<span alt='" . elgg_echo("group_tools:explain") . "' title='" . elgg_echo("group_tools:cleanup:menu:explain") . "' onmouseover='elgg.group_tools.cleanup_highlight(\"menu\");' onmouseout='elgg.group_tools.cleanup_unhighlight(\"menu\");' class='float-alt'>";
 		$form_body .= elgg_view_icon("info");
 		$form_body .= "</span>";
