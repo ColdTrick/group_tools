@@ -14,9 +14,11 @@
 		}
 	} 
 	
-	$group_guid = array_map("sanitise_int", $group_guid);
-	if(($key = array_search(0, $group_guid)) !== false){
-		unset($group_guid[$key]);
+	if(!empty($group_guid)){
+		$group_guid = array_map("sanitise_int", $group_guid);
+		if(($key = array_search(0, $group_guid)) !== false){
+			unset($group_guid[$key]);
+		}
 	}
 	
 	if(!empty($group_guid)){
