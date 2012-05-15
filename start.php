@@ -40,8 +40,6 @@
 		// register group activity widget
 		// 2012-05-03: restored limited functionality of group activity widget, will be fully restored if Elgg fixes widget settings
 		elgg_register_widget_type("group_river_widget", elgg_echo("widgets:group_river_widget:title"), elgg_echo("widgets:group_river_widget:description"), "dashboard,profile,index,groups", true);
-		// unregister dashboard widget
-		elgg_unregister_widget_type("group_activity");
 		
 		// register group members widget
 		elgg_register_widget_type("group_members", elgg_echo("widgets:group_members:title"), elgg_echo("widgets:group_members:description"), "groups", false);
@@ -96,6 +94,11 @@
 		elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), "index,dashboard", true);
 		elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), "groups");
 		
+	}
+	
+	function group_tools_ready(){
+		// unregister dashboard widget group_activity
+		elgg_unregister_widget_type("group_activity");
 	}
 	
 	function group_tools_pagesetup(){
@@ -220,6 +223,7 @@
 	
 	// default elgg event handlers
 	elgg_register_event_handler("init", "system", "group_tools_init");
+	elgg_register_event_handler("ready", "system", "group_tools_ready");
 	elgg_register_event_handler("pagesetup", "system", "group_tools_pagesetup", 550);
 
 	// register events
