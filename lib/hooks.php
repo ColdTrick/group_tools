@@ -78,6 +78,15 @@
 						admin_gatekeeper();
 					}
 					break;
+				default:
+					// check if we have an old group profile link
+					if(isset($page[0]) && is_numeric($page[0])) {
+						if(($group = get_entity($page[0])) && elgg_instanceof($group, "group", null, "ElggGroup")){
+							register_error(elgg_echo("changebookmark"));
+							forward($group->getURL());
+						}
+					}
+					break;
 			}
 		}
 		

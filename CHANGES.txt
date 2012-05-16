@@ -6,6 +6,7 @@ x.x:
 - added: group_news widget from widget manager
 - added: index_groups widget from widget manager
 - added: group sidebar cleanup feature
+- added: group profile fallback handling (error on old gruop profile link & redirect)
 - removed: index_discussions widget
 - fixed: depricated notice in invitations overview
 - fixed: url error in invitation
