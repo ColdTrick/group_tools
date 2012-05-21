@@ -70,3 +70,7 @@
 .group-tools-highlight {
 	border: 1px solid red;
 }
+
+#friends_toggle {
+	z-index: 1;
+}
