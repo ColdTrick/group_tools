@@ -6,14 +6,9 @@
 	
 	$destination = $id . "_autocomplete_results";
 	
-	$multiple = elgg_extract("multiple", $vars, "true"); //should be string true or false
-	$max = elgg_extract("max", $vars, 50); 
 	$minChars = elgg_extract("minChars", $vars, 3);
 	
-	elgg_load_js('jquery.autocomplete.min');
-	elgg_load_js("group_tools.autocomplete");
 	elgg_load_css("group_tools.autocomplete");
-	
 ?>
 	
 	<input type="text" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
@@ -25,59 +20,88 @@
 	<div class="clearfloat"></div>
 	
 	<script type="text/javascript">
-	
 		$(document).ready(function() {
-			$.ajaxSetup( { type: "POST" } );
+
+			$("#<?php echo $id; ?>_autocomplete").each(function(){
+				$(this)
+				// don't navigate away from the field on tab when selecting an item
+				.bind( "keydown", function( event ) {
+					if ( event.keyCode === $.ui.keyCode.TAB &&
+							$( this ).data( "autocomplete" ).menu.active ) {
+						event.preventDefault();
+					}
+				})
+				.autocomplete({
+					source: function( request, response ) {
+						$.getJSON( "/groups/group_invite_autocomplete", {
+							q: request.term,
+							'user_guids': function() {
+								var result = "";
+								
+								$("#<?php echo $destination; ?> input[name='<?php echo $name; ?>[]']").each(function(index, elem){
+									if(result == ""){
+										result = $(this).val();
+									} else {
+										result += "," + $(this).val();
+									}
+								});
 			
-			$("#<?php echo $id; ?>_autocomplete").autocomplete('<?php echo $vars["url"]; ?>groups/group_invite_autocomplete', {
-				width: 300,
-				minChars: <?php echo $minChars; ?>,
-				cacheLength: 1,
-				max: <?php echo $max; ?>,
-				multiple: <?php echo $multiple; ?>,
-				matchContains: true,
-				formatItem: group_tools_autocomplete_format_item,
-				extraParams: {
-					'user_guids': function() {
+								return result;
+							},
+							'group_guid' : <?php echo $vars["group_guid"]; ?>
+							<?php 
+							if(!empty($relationship)){ 
+								echo ", 'relationship' : '" . $relationship . "'";
+							}
+							?>
+						}, response );
+					},
+					search: function() {
+						// custom minLength
+						var term = this.value;
+						if ( term.length < <?php echo $minChars; ?>){
+							return false;
+						}
+					},
+					focus: function() {
+						// prevent value inserted on focus
+						return false;
+					},
+					select: function( event, ui ) {
+						this.value = "";
 						var result = "";
 						
-						$("#<?php echo $destination; ?> input[name='<?php echo $name; ?>[]']").each(function(index, elem){
-							if(result == ""){
-								result = $(this).val();
-							} else {
-								result += "," + $(this).val();
-							}
-						});
-
-						return result;
-					},
-					'group_guid' : <?php echo $vars["group_guid"]; ?>
-					<?php 
-					if(!empty($relationship)){ 
-						echo ", 'relationship' : '" . $relationship . "'";
-					}
-					?>
-				}
-			}).result(function(event, data, formatted) {
-				if(data){
-					group_tools_autocomplete_format_result(data, '<?php echo $id; ?>', '<?php echo $name; ?>');
-			 		$(this).val("");
-				}
-			}).bind("keydown", function(event){
-				  // enter should not submit 
-				  if((event.keyCode || event.which || event.charCode || 0) == 13){
-					  event.preventDefault(); //stop event
-				  }
-
-				  return true;
-			 }).focus(function(){
-				 $(this).val("");
-			 }).blur(function(event){
-				 $(this).val("");
-			 });
+						result += "<div class='<?php echo $destination; ?>_result'>";
 			
-			 $('#<?php echo $destination; ?> .elgg-icon-delete-alt').live("click", function(){
+						if(ui.item.type == "user"){
+							result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>[]' />";
+						} else if(ui.item.type == "email"){
+							result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>_email[]' />";
+						}
+						result += ui.item.content;
+			
+						result += "<span class='elgg-icon elgg-icon-delete-alt'></span>";
+						result += "</div>";
+						
+						$('#<?php echo $destination; ?>').append(result);
+						return false;
+					},
+					autoFocus: true
+				}).data( "autocomplete" )._renderItem = function( ul, item ) {
+					var list_body = "";
+					list_body = item.content;
+					
+				
+					return $( "<li></li>" )
+					.data( "item.autocomplete", item )
+					.append( "<a>" + list_body + "</a>" )
+					.appendTo( ul );
+				};
+			});
+
+			$('#<?php echo $destination; ?> .elgg-icon-delete-alt').live("click", function(){
 				$(this).parent('div').remove();
-			 });	
+			});	
 		});
+		
 	</script>

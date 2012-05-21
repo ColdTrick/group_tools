@@ -10,12 +10,6 @@
 		elgg_extend_view("css/elgg", "group_tools/css/site");
 		elgg_extend_view("js/elgg", "group_tools/js/site");
 		
-		// register JS and CSS libs
-		elgg_register_js("jquery.autocomplete.min", elgg_get_site_url() . "vendors/jquery/jquery.autocomplete.min.js");
-		
-		elgg_register_simplecache_view("js/group_tools/autocomplete");
-		elgg_register_js("group_tools.autocomplete", elgg_get_simplecache_url("js", "group_tools/autocomplete"));
-		
 		elgg_register_simplecache_view("css/group_tools/autocomplete");
 		elgg_register_css("group_tools.autocomplete", elgg_get_simplecache_url("css", "group_tools/autocomplete"));
 		

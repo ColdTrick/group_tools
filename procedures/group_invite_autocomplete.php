@@ -12,7 +12,7 @@
 		$include_self = true;
 	}
 	
-	$result = "";
+	$result = array();
 	
 	if(($user = elgg_get_logged_in_user_entity()) && !empty($q) && !empty($group_guid)){
 		// show hidden (unvalidated) users
@@ -55,7 +55,7 @@
 			if($entities = elgg_get_entities_from_relationship($query_options)){
 				foreach($entities as $entity){
 					if(!check_entity_relationship($entity->getGUID(), "member", $group_guid)){
-						$result .= "user|" . $entity->getGUID() . "|" . $entity->name . "|" . $entity->getIconURL("tiny") . "\n";
+						$result[] = array("type" => "user", "value" => $entity->getGUID(),"content" => "<img src='" . $entity->getIconURL("tiny") . "' /> " . $entity->name, "name" => $entity->name);
 					}	
 				}
 			}
@@ -65,10 +65,12 @@
 			if(preg_match($regexpr, $q)){
 				if($users = get_user_by_email($q)){
 					foreach($users as $user){
-						$result .= "user|" . $user->getGUID() . "|" . $user->name . "|" . $user->getIconURL("tiny") . "\n";
+						// @todo check for group relationship
+						
+						$result[] = array("type" => "user", "value" => $user->getGUID(),"content" => "<img src='" . $user->getIconURL("tiny") . "' /> " . $user->name, "name" => $user->name);
 					}
 				} else {
-					$result .= "email|" . $q . "\n";
+					$result[] = array("type" => "email", "value" => $q, "content" => $q);
 				}
 			}
 		}
@@ -77,5 +79,7 @@
 		access_show_hidden_entities($hidden);
 	}
 	
-	echo $result;
+	header("Content-Type: application/json");
+	echo json_encode(array_values($result));
+	
 	exit();

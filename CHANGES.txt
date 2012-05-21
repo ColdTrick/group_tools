@@ -6,11 +6,12 @@ x.x:
 - added: group_news widget from widget manager
 - added: index_groups widget from widget manager
 - added: group sidebar cleanup feature
-- added: group profile fallback handling (error on old gruop profile link & redirect)
+- added: group profile fallback handling (error on old group profile link & redirect)
 - removed: index_discussions widget
-- fixed: depricated notice in invitations overview
+- fixed: deprecated notice in invitations overview
 - fixed: url error in invitation
-- fixed: PHP wanring in group_river_widget
+- fixed: PHP warning in group_river_widget
+- fixed: invite autocomplete not using default autocomplete features
 
 2.2 (2012-05-07):
 
