@@ -14,9 +14,7 @@
 	<input type="text" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
 	
 	<div id="<?php echo $destination; ?>"></div>
-	
-	<input type="hidden" name="user_guids" id="<?php echo $id; ?>_autocomplete_user_guids" />
-	
+		
 	<div class="clearfloat"></div>
 	
 	<script type="text/javascript">
