@@ -51,3 +51,7 @@ Combines different group additions into one plugin
 - group notifications
 	- force group notification for all members (admin only)
 	- disable group notification for all members (admin only)
+- default access in groups
+- group open/closed
+	- admin toggle
+	- better CSS (use class instead of id)
