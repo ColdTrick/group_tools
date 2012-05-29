@@ -10,7 +10,8 @@ x.x:
 - removed: index_discussions widget
 - fixed: deprecated notice in invitations overview
 - fixed: url error in invitation
-- fixed: PHP warning in group_river_widget
+- fixed: PHP wanring in group_river_widget
+- fixed: pagination in group members sidebar
 - fixed: invite autocomplete not using default autocomplete features
 
 2.2 (2012-05-07):

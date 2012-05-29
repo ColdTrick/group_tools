@@ -27,6 +27,7 @@ if(!empty($group) && elgg_instanceof($group, "group")){
 			'limit' => $limit,
 			'list_type' => 'gallery',
 			'gallery_class' => 'elgg-gallery-users',
+			'pagination' => false
 		));
 		
 		$body .= "<div class='center mts'>$all_link</div>";
