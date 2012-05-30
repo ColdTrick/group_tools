@@ -1,5 +1,21 @@
 <?php
 $language = array (
+  'group_tools:explain' => 'Uitleg',
+  'group_tools:default:access:group' => 'Alleen groepsleden',
+  'group_tools:settings:invite:title' => 'Groepsuitnodiging instellingen',
+  'group_tools:settings:management:title' => 'Algemene groepsinstellingen',
+  'group_tools:settings:default_access:title' => 'Standaard groep toegang',
+  'group_tools:settings:default_access' => 'Wat moet het standaard toegangsniveau zijn van nieuwe content in groepen op deze site',
+  'group_tools:settings:default_access:disclaimer' => '<b>LET OP:</b> dit werkt alleen indien je <a href="https://github.com/Elgg/Elgg/pull/253" target="_blank">https://github.com/Elgg/Elgg/pull/253</a> hebt toegepast op je Elgg installatie.',
+  'group_tools:cleanup:search' => 'Verberg het zoeken in de groep',
+  'group_tools:cleanup:search:explain' => 'Op de groepsprofiel pagina is een zoekveld beschikbaar. Je kunt ervoor kiezen deze te verbergen.',
+  'group_tools:cleanup:featured_sorting' => 'Hoe moeten de aangeraden groepen worden gesorteerd',
+  'group_tools:cleanup:featured_sorting:time_created' => 'Nieuwste eerst',
+  'group_tools:cleanup:featured_sorting:alphabetical' => 'Alfabetisch',
+  'group_tools:default_access:title' => 'Standaard groepstoegang',
+  'group_tools:default_access:description' => 'Hier kun je aangeven wat het standaard toegangsniveau moet zijn van nieuwe content in je groep.',
+  'group_tools:actions:cleanup:success' => 'De opschoon instellingen zijn succesvol opgeslagen',
+  'group_tools:actions:default_access:success' => 'Het standaard toegangsniveau voor de groep is succesvol opgeslagen',
   'widgets:discussion:settings:group_only' => 'Toon alleen discussies uit je eigen groepen',
   'widgets:discussion:more' => 'Bekijk meer discussies',
   'widgets:discussion:description' => 'Toont de laatste discussies',
@@ -187,6 +203,5 @@ Het formaat moet zijn: weergave naam;e-mail adres. Er mag geen kopregel zijn.',
   'group_tools:cleanup:members:explain' => 'Op de groep profiel pagina staat op de aangegeven plaats een lijst met leden van de groep. Je kunt deze verbergen.',
   'group_tools:cleanup:featured' => 'Toon de aangereden groepen in het menu',
   'group_tools:cleanup:featured:explain' => 'Je kunt ervoor kiezen om op de groep profiel pagina een lijst met aangeraden groepen te tonen op de aangegeven plaats.',
-
 );
 add_translation("nl", $language);
