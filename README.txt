@@ -5,6 +5,7 @@ Combines different group additions into one plugin
 1. Features
 2. Replaces
 3. ToDo
+4. Group default access
 
 == 1. Features ==
 - group admin transfer
@@ -51,7 +52,12 @@ Combines different group additions into one plugin
 - group notifications
 	- force group notification for all members (admin only)
 	- disable group notification for all members (admin only)
-- default access in groups
 - group open/closed
 	- admin toggle
 	- better CSS (use class instead of id)
+
+== 4. Group default access ==
+As of version 2.3 of this plugin we offer the ability to set a group default access level (like with Site and User), 
+this will however not work if you haven't applied https://github.com/Elgg/Elgg/pull/253 to your Elgg installation.
+
+Hopefully this will be integrated into Elgg core soon, so no modifications will be needed to the Elgg core files.

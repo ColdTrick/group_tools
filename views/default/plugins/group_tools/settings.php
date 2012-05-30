@@ -94,18 +94,59 @@
 	
 	echo elgg_view_module("inline", $title, $body);
 
+	// group default access settings
+	$title = elgg_echo("group_tools:settings:default_access:title");
+	
+	$body = "<div>";
+	$body .= elgg_echo("group_tools:settings:default_access");
+	
+	// set a context so we can do stuff
+	elgg_push_context("group_tools_default_access");
+	
+	$body .= "&nbsp;" . elgg_view("input/access", array("name" => "params[group_default_access]", "value" => $plugin->group_default_access));
+	
+	// restore context
+	elgg_pop_context();
+	
+	$body .= "</div>";
+	
+	// check if we need to set a disclaimer
+	global $GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED;
+	if(empty($GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED)){
+		$body .= "<pre>";
+		$body .= elgg_echo("group_tools:settings:default_access:disclaimer");
+		$body .= "</pre>";
+	}
+	
+	echo elgg_view_module("inline", $title, $body);
+	
 	// check group auto join settings
 	if(!empty($auto_joins)) { 
 		$title = elgg_echo("group_tools:settings:auto_join");
 		
 		$content = "<div>" . elgg_echo("group_tools:settings:auto_join:description") . "</div>";
 		
+		$content .= "<table class='elgg-table'>";
+		
+		$content .= "<tr>";
+		$content .= "<th colspan='2'>" . elgg_echo("groups:name") . "</th>";
+		$content .= "</tr>";
+		
 		foreach($auto_joins as $group_guid){
 			if($group = get_entity($group_guid)){
-				$content .= elgg_view("output/url", array("href" => $group->getURL(), "text" => $group->name));
-				$content .= "&nbsp;(" . elgg_view("output/confirmlink", array("href" => $vars["url"] . "action/group_tools/toggle_auto_join?group_guid=" . $group->getGUID(), "text" => elgg_echo("group_tools:remove"))) . ")<br />";
+				$content .= "<tr>";
+				$content .= "<td>" . elgg_view("output/url", array("href" => $group->getURL(), "text" => $group->name)) . "</td>";
+				$content .= "<td style='width: 25px'>";
+				$content .= elgg_view("output/confirmlink", array(
+					"href" => $vars["url"] . "action/group_tools/toggle_auto_join?group_guid=" . $group->getGUID(), 
+					"title" => elgg_echo("group_tools:remove"),
+					"text" => elgg_view_icon("delete")));
+				$content .= "</td>";
+				$content .= "</tr>";
 			}
 		}
+		
+		$content .= "</table>";
 		
 		echo elgg_view_module("inline", $title, $content);
 	}

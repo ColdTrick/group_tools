@@ -1,5 +1,8 @@
 <?php 
 
+	// define for default group access
+	define("GROUP_TOOLS_GROUP_ACCESS_DEFAULT", -10);
+
 	require_once(dirname(__FILE__) . "/lib/functions.php");
 	require_once(dirname(__FILE__) . "/lib/events.php");
 	require_once(dirname(__FILE__) . "/lib/hooks.php");
@@ -63,6 +66,9 @@
 		
 		// cleanup group side menu
 		elgg_extend_view("groups/edit", "group_tools/forms/cleanup", 450);
+		
+		// group default access
+		elgg_extend_view("groups/edit", "group_tools/forms/default_access");
 		
 		// show group status in owner block
 		elgg_extend_view("page/elements/owner_block/extend", "group_tools/owner_block");
@@ -225,6 +231,8 @@
 	
 	// register plugin hooks
 	elgg_register_plugin_hook_handler("widget_url", "widget_manager", "group_tools_widget_url_handler");
+	elgg_register_plugin_hook_handler("access:default", "user", "group_tools_access_default_handler");
+	elgg_register_plugin_hook_handler("access:collections:write", "user", "group_tools_access_write_handler");
 	
 	// actions
 	elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");
@@ -232,6 +240,7 @@
 	elgg_register_action("group_tools/mail", dirname(__FILE__) . "/actions/mail.php");
 	elgg_register_action("group_tools/profile_widgets", dirname(__FILE__) . "/actions/profile_widgets.php");
 	elgg_register_action("group_tools/cleanup", dirname(__FILE__) . "/actions/cleanup.php");
+	elgg_register_action("group_tools/default_access", dirname(__FILE__) . "/actions/default_access.php");
 	
 	elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/toggle_auto_join.php", "admin");
 	elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/fix_auto_join.php", "admin");

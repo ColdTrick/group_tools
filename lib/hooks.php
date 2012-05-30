@@ -235,3 +235,70 @@
 		return $result;
 	}
 	
+	/**
+	 * Allows the edit of default access
+	 * 
+	 * See:
+	 * @link http://trac.elgg.org/ticket/4415
+	 * @link https://github.com/Elgg/Elgg/pull/253
+	 * 
+	 * @param string $hook
+	 * @param string $type
+	 * @param int $return_value
+	 * @param array $params
+	 * @return int
+	 */
+	function group_tools_access_default_handler($hook, $type, $return_value, $params){
+		global $GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED;
+		$GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED = true;
+		
+		$result = $return_value;
+		
+		// check if the page owner is a group
+		if(($page_owner = elgg_get_page_owner_entity()) && elgg_instanceof($page_owner, "group", null, "ElggGroup")){
+			// check if the group as a default access set
+			if(($group_access = $page_owner->getPrivateSetting("elgg_default_access")) !== false){
+				$result = $group_access;
+			}
+			
+			// if the group hasn't set anything check if there is a site setting for groups
+			if($group_access === false){
+				if(($site_group_access = elgg_get_plugin_setting("group_default_access", "group_tools")) !== null){
+					switch($site_group_access){
+						case GROUP_TOOLS_GROUP_ACCESS_DEFAULT:
+							$result = $page_owner->group_acl;
+							break;
+						default:
+							$result = $site_group_access;
+							break; 
+					}
+				}
+			}
+		}
+		
+		return $result;
+	}
+	
+	function group_tools_access_write_handler($hook, $type, $return_value, $params){
+		$result = $return_value;
+		
+		if(elgg_in_context("group_tools_default_access") && !empty($result) && is_array($result)){
+			// unset ACCESS_PRIVATE & ACCESS_FRIENDS;
+			if(isset($result[ACCESS_PRIVATE])){
+				unset($result[ACCESS_PRIVATE]);
+			}
+			
+			if(isset($result[ACCESS_FRIENDS])){
+				unset($result[ACCESS_FRIENDS]);
+			}
+			
+			// reverse the array
+			$result = array_reverse($result, true);
+			
+			// add group option
+			$result[GROUP_TOOLS_GROUP_ACCESS_DEFAULT] = elgg_echo("group_tools:default:access:group");
+		}
+		
+		return $result;
+	}
+	

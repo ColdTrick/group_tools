@@ -12,6 +12,8 @@
 		'group_tools:all_members' => "All members",
 		'group_tools:explain' => "Explanation",
 		
+		'group_tools:default:access:group' => "Group members only",
+		
 		'group_tools:joinrequest:already' => "Revoke membership request",
 		'group_tools:joinrequest:already:tooltip' => "You already requested to join this group, click here to revoke this request",
 		
@@ -22,6 +24,7 @@
 		// plugin settings
 		'group_tools:settings:invite:title' => "Group invitation options",
 		'group_tools:settings:management:title' => "General group options",
+		'group_tools:settings:default_access:title' => "Default group access",
 	
 		'group_tools:settings:admin_create' => "Limit the creation of groups to Site administrators",
 		'group_tools:settings:admin_create:description' => "Setting this to 'Yes' will make the creation of a new group impossible for a normal user of your site.",
@@ -39,6 +42,9 @@
 		'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
 		
 		'group_tools:settings:listing' => "Default group listing tab",
+		
+		'group_tools:settings:default_access' => "What should be the default access for content in the groups of this site",
+		'group_tools:settings:default_access:disclaimer' => "<b>DISCLAIMER:</b> this will not work unless you have <a href='https://github.com/Elgg/Elgg/pull/253' target='_blank'>https://github.com/Elgg/Elgg/pull/253</a> applied to your Elgg installation.",
 		
 		'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 		'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
@@ -131,6 +137,9 @@ To visit the group please click on the following link:
 		'group_tools:cleanup:featured_sorting:time_created' => "Newest first",
 		'group_tools:cleanup:featured_sorting:alphabetical' => "Alphabetical",
 
+		// group default access
+		'group_tools:default_access:title' => "Group default access",
+		'group_tools:default_access:description' => "Here you can control what the default access of new content in your group should be.",
 		
 		// group profile widgets
 		'group_tools:profile_widgets:title' => "Show group profile widgets to non members",
@@ -236,6 +245,9 @@ To visit the group please click on the following link:
 		
 		// group cleanup
 		'group_tools:actions:cleanup:success' => "The cleanup settings were saved successfully",
+		
+		// group default access
+		'group_tools:actions:default_access:success' => "The default access for the group was saved successfully",
 		
 		// Widgets
 		// Group River Widget

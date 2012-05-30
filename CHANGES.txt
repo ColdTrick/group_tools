@@ -7,6 +7,7 @@ x.x:
 - added: index_groups widget from widget manager
 - added: group sidebar cleanup feature
 - added: group profile fallback handling (error on old group profile link & redirect)
+- added: group default access (if https://github.com/Elgg/Elgg/pull/253 is applied)
 - removed: index_discussions widget
 - fixed: deprecated notice in invitations overview
 - fixed: url error in invitation
