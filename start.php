@@ -54,7 +54,7 @@
 		elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
 		
 		// manage auto join for groups
-		elgg_extend_view("groups/edit", "group_tools/forms/auto_join", 400);
+		elgg_extend_view("groups/edit", "group_tools/forms/auto_join", 350);
 		elgg_register_event_handler("create", "member_of_site", "group_tools_join_site_handler");
 		
 		// show group edit as tabbed
@@ -69,6 +69,9 @@
 		
 		// group default access
 		elgg_extend_view("groups/edit", "group_tools/forms/default_access");
+		
+		// group notifications
+		elgg_extend_view("groups/edit", "group_tools/forms/notifications", 375);
 		
 		// show group status in owner block
 		elgg_extend_view("page/elements/owner_block/extend", "group_tools/owner_block");
@@ -244,6 +247,7 @@
 	
 	elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/toggle_auto_join.php", "admin");
 	elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/fix_auto_join.php", "admin");
+	elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/notifications.php", "admin");
 	
 	elgg_register_action("groups/email_invitation", dirname(__FILE__) . "/actions/groups/email_invitation.php");
 	

@@ -49,9 +49,6 @@ Combines different group additions into one plugin
 	- group listing on popular
 - group mail for group members (group optional)
 - group discussions tools menu item (all discussions) (optional)
-- group notifications
-	- force group notification for all members (admin only)
-	- disable group notification for all members (admin only)
 - group open/closed
 	- admin toggle
 	- better CSS (use class instead of id)

@@ -141,6 +141,13 @@ To visit the group please click on the following link:
 		'group_tools:default_access:title' => "Group default access",
 		'group_tools:default_access:description' => "Here you can control what the default access of new content in your group should be.",
 		
+		// group notification
+		'group_tools:notifications:title' => "Group notifications",
+		'group_tools:notifications:description' => "This group has %s members, of those %s have enabled notifications on activity in this group. Below you can change this for all users of the group.",
+		'group_tools:notifications:disclaimer' => "With large groups this could take a while.",
+		'group_tools:notifications:enable' => "Enable notifications for everyone",
+		'group_tools:notifications:disable' => "Disable notifications for everyone",
+		
 		// group profile widgets
 		'group_tools:profile_widgets:title' => "Show group profile widgets to non members",
 		'group_tools:profile_widgets:description' => "This is a closed group. Default no widgets are shown to non members. Here you can configure if you whish to change that.",
@@ -249,6 +256,11 @@ To visit the group please click on the following link:
 		// group default access
 		'group_tools:actions:default_access:success' => "The default access for the group was saved successfully",
 		
+		// group notifications
+		'group_tools:action:notifications:error:toggle' => "Invalid toggle option",
+		'group_tools:action:notifications:success:disable' => "Successfully disabled notifications for every member",
+		'group_tools:action:notifications:success:enable' => "Successfully enabled notifications for every member",
+	
 		// Widgets
 		// Group River Widget
 		'widgets:group_river_widget:title' => "Group activity",

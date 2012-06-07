@@ -8,6 +8,7 @@ x.x:
 - added: group sidebar cleanup feature
 - added: group profile fallback handling (error on old group profile link & redirect)
 - added: group default access (if https://github.com/Elgg/Elgg/pull/253 is applied)
+- added: admin action to enable/disable group notifications
 - removed: index_discussions widget
 - fixed: deprecated notice in invitations overview
 - fixed: url error in invitation
