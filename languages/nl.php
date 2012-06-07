@@ -1,5 +1,13 @@
 <?php
 $language = array (
+  'group_tools:notifications:title' => 'Groepnotificaties',
+  'group_tools:notifications:description' => 'Deze groep heeft %s leden, hiervan hebben %s notificaties op activiteit in deze groep ingeschakeld. Hieronder kun je dit aanpassen voor alle leden van de groep.',
+  'group_tools:notifications:disclaimer' => 'Met grote groepen kan dit enige tijd duren.',
+  'group_tools:notifications:enable' => 'Schakel notificaties voor iedereen in',
+  'group_tools:notifications:disable' => 'Schakel notificaties voor iedereen uit',
+  'group_tools:action:notifications:error:toggle' => 'Ongeldige schakel optie',
+  'group_tools:action:notifications:success:disable' => 'De notificaties zijn voor iedereen uitgeschakeld',
+  'group_tools:action:notifications:success:enable' => 'De notificaties zijn voor iedereen ingeschakeld',
   'group_tools:explain' => 'Uitleg',
   'group_tools:default:access:group' => 'Alleen groepsleden',
   'group_tools:settings:invite:title' => 'Groepsuitnodiging instellingen',
