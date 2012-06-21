@@ -15,6 +15,7 @@ x.x:
 - fixed: PHP wanring in group_river_widget
 - fixed: pagination in group members sidebar
 - fixed: invite autocomplete not using default autocomplete features
+- fixed: forum topics widget ordering
 - changed: plugin settings layout
 
 2.2 (2012-05-07):

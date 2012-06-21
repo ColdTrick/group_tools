@@ -11,6 +11,7 @@
 		'type' => 'object',
 		'subtype' => 'groupforumtopic',
 		'container_guid' => $group->getGUID(),
+		'order_by' => 'e.last_action desc',
 		'limit' => $topic_count,
 		'full_view' => false,
 		'pagination' => false,
