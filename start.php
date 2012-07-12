@@ -22,6 +22,7 @@
 		// hook on title menu
 		elgg_register_plugin_hook_handler("register", "menu:title", "group_tools_menu_title_handler");
 		elgg_register_plugin_hook_handler("register", "menu:user_hover", "group_tools_menu_user_hover_handler");
+		elgg_register_plugin_hook_handler("register", "menu:entity", "group_tools_menu_entity_handler");
 		
 		if(elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes"){
 			// add group tool option

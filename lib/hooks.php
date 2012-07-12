@@ -182,6 +182,24 @@
 		return $result;
 	}
 	
+	function group_tools_menu_entity_handler($hook, $type, $return_value, $params){
+		$entity = $params["entity"];
+		if(elgg_in_context("widgets_groups_show_members") && elgg_instanceof($entity, "group")){
+			// number of members
+			$num_members = get_group_members($entity->guid, 10, 0, 0, true);
+			$members_string = elgg_echo('groups:member');
+			$options = array(
+					'name' => 'members',
+					'text' => $num_members . ' ' . $members_string,
+					'href' => false,
+					'priority' => 200,
+			);
+			$return_value[] = ElggMenuItem::factory($options);
+			return $return_value;
+		}
+		
+	}
+	
 	function group_tools_widget_url_handler($hook, $type, $return_value, $params){
 		$result = $return_value;
 		

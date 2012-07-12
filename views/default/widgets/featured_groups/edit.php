@@ -18,6 +18,12 @@
 	echo "</div>";
 	
 	echo "<div>";
+	echo elgg_echo("widgets:index_groups:show_members");
+	echo "<br />";
+	echo elgg_view("input/dropdown", array("name" => "params[show_members]", "options_values" => $noyes_options, "value" => $widget->show_members)); 
+	echo "</div>";
+	
+	echo "<div>";
 	echo elgg_echo("widgets:featured_groups:edit:show_random_group");
 	echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_random]", "options_values" => $noyes_options, "value" => $widget->show_random));
 	echo "</div>";

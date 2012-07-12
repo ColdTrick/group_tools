@@ -296,6 +296,7 @@ To visit the group please click on the following link:
 		
 		// index_groups
 		'widgets:index_groups:description' => "Show the latest groups on your community",
+		'widgets:index_groups:show_members' => "Show members count",
 		'widgets:index_groups:featured' => "Show only featured groups",
 		
 		// Featured Groups

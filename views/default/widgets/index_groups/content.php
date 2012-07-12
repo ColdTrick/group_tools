@@ -20,8 +20,22 @@
 		$options["metadata_value"] = "yes";
 	}
 	
+	if($widget->show_members == "yes"){
+		$show_members = true;
+	} else {
+		$show_members = false;
+	}
+	
+	if($show_members){
+		elgg_push_context("widgets_groups_show_members");
+	}
+	
 	if($groups = elgg_list_entities_from_metadata($options)){
 		echo $groups;
 	} else {
 		echo elgg_echo("groups:none");
+	}
+	
+	if($show_members){
+		elgg_pop_context();
 	}
