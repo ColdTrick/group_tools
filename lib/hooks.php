@@ -140,7 +140,7 @@
 		return $result;
 	}
 	
-	function group_tools_menu_entity_handler($hook, $type, $return_value, $params){
+	function group_tools_menu_user_hover_handler($hook, $type, $return_value, $params){
 		$result = $return_value;
 		
 		$page_owner = elgg_get_page_owner_entity();
