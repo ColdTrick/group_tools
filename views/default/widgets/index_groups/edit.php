@@ -7,7 +7,7 @@
 		$count = 8;
 	}
 	
-	$featured_options_values = array(
+	$noyes_options = array(
 		"no" => elgg_echo("option:no"),
 		"yes" => elgg_echo("option:yes")
 	);
@@ -19,6 +19,11 @@
 </div>
 
 <div>
+	<?php echo elgg_echo("widgets:index_groups:show_members"); ?><br />
+	<?php echo elgg_view("input/dropdown", array("name" => "params[show_members]", "options_values" => $noyes_options, "value" => $widget->show_members)); ?>
+</div>
+
+<div>
 	<?php echo elgg_echo("widgets:index_groups:featured"); ?>
-	<?php echo elgg_view("input/dropdown", array("name" => "params[featured]", "options_values" => $featured_options_values, "value" => $widget->featured)); ?>
+	<?php echo elgg_view("input/dropdown", array("name" => "params[featured]", "options_values" => $noyes_options, "value" => $widget->featured)); ?>
 </div>

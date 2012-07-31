@@ -9,6 +9,7 @@
 - added: group profile fallback handling (error on old group profile link & redirect)
 - added: group default access (if https://github.com/Elgg/Elgg/pull/253 is applied)
 - added: admin action to enable/disable group notifications
+- added: option to show the group members in the group related index widgets
 - removed: index_discussions widget
 - fixed: deprecated notice in invitations overview
 - fixed: url error in invitation

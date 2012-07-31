@@ -18,7 +18,21 @@
 		"order_by" => "RAND()"
 	);
 	
+	if($widget->show_members == "yes"){
+		$show_members = true;
+	} else {
+		$show_members = false;
+	}
+	
+	if($show_members){
+		elgg_push_context("widgets_groups_show_members");
+	}
+	
 	$featured = elgg_list_entities_from_metadata($featured_options);
+	
+	if($show_members){
+		elgg_pop_context();
+	}
 	
 	$random = "";
 	if($show_random == "yes"){

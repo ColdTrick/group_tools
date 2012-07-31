@@ -28,6 +28,7 @@ $language = array (
   'widgets:discussion:more' => 'Bekijk meer discussies',
   'widgets:discussion:description' => 'Toont de laatste discussies',
   'widgets:index_groups:description' => 'Toon de laatste groepen uit de community',
+  'widgets:index_groups:show_members' => 'Toon aantal groepsleden',
   'widgets:index_groups:featured' => 'Toon enkel aangeraden groepen',
   'widgets:group_news:settings:group_icon_size' => 'Groep icoon grootte',
   'widgets:group_news:settings:group_icon_size:small' => 'Klein',
