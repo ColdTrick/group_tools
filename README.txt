@@ -47,11 +47,13 @@ Combines different group additions into one plugin
 	- better description of options
 - group widgets
 	- group listing on popular
+	- index widget show member count
 - group mail for group members (group optional)
 - group discussions tools menu item (all discussions) (optional)
 - group open/closed
 	- admin toggle
 	- better CSS (use class instead of id)
+- when group transfer remove group admin (if needed)
 
 == 4. Group default access ==
 As of version 2.3 of this plugin we offer the ability to set a group default access level (like with Site and User), 
