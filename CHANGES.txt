@@ -1,5 +1,5 @@
 = Version History =
-x.x:
+2.3 (2012-07-31):
 
 - added: discussion widget from widget manager
 - added: group_forum_topics widget from widget manager
