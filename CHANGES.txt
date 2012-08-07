@@ -1,4 +1,8 @@
 = Version History =
+x.x:
+
+- changed: group invitations (and add) no always goto mail
+
 2.3 (2012-07-31):
 
 - added: discussion widget from widget manager
