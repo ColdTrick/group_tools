@@ -67,16 +67,13 @@
 					foreach ($user_guids as $u_id) {
 						if ($user = get_user($u_id)) {
 							if(!$group->isMember($user)){
-								if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID())) {
-									if (group_tools_invite_user($group, $user, $text)) {
+								if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID()) || $resend) {
+									if (group_tools_invite_user($group, $user, $text, $resend)) {
 										$invited++;
 									}
 								} else {
+									// user was already invited
 									$already_invited++;
-									
-									if($resend){
-										group_tools_invite_user($group, $user, $text, $resend);
-									}
 								}
 							} else {
 								$member++;
@@ -134,17 +131,14 @@
 								
 								if(!$group->isMember($user)){
 									if(!$adding){
-										if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID())) {
+										if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID()) || $resend) {
 											// invite user
-											if(group_tools_invite_user($group, $user, $text)){
+											if(group_tools_invite_user($group, $user, $text, $resend)){
 												$invited++;
 											}
 										} else {
+											// user was already invited
 											$already_invited++;
-											
-											if($resend){
-												group_tools_invite_user($group, $user, $text, $resend);
-											}
 										} 
 									} else {
 										if(group_tools_add_user($group, $user, $text)){
