@@ -299,6 +299,10 @@ To visit the group please click on the following link:
 		'widgets:index_groups:show_members' => "Show members count",
 		'widgets:index_groups:featured' => "Show only featured groups",
 		
+		'widgets:index_group:filter:field' => "Filter groups based on group field",
+		'widgets:index_group:filter:value' => "with value",
+		'widgets:index_group:filter:no_filter' => "No filter",
+		
 		// Featured Groups
 		'widgets:featured_groups:description' => "Shows a random list of featured groups",
 	  	'widgets:featured_groups:edit:show_random_group' => "Show a random non-featured group",

@@ -1,6 +1,7 @@
 = Version History =
 x.x:
 
+- added: filter groups based on a tag field in index_group widget
 - changed: group invitations (and add) no always goto mail
 - changed: some logic when (re)inviting for better system messages to the users 
 
