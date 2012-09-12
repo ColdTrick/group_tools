@@ -1,5 +1,8 @@
 <?php
 $language = array (
+  'widgets:index_group:filter:field' => 'Filter de groepen obv een profielveld',
+  'widgets:index_group:filter:value' => 'met de waarde',
+  'widgets:index_group:filter:no_filter' => 'Geen filter',
   'group_tools:notifications:title' => 'Groepnotificaties',
   'group_tools:notifications:description' => 'Deze groep heeft %s leden, hiervan hebben %s notificaties op activiteit in deze groep ingeschakeld. Hieronder kun je dit aanpassen voor alle leden van de groep.',
   'group_tools:notifications:disclaimer' => 'Met grote groepen kan dit enige tijd duren.',
