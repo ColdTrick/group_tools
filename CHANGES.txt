@@ -4,6 +4,7 @@ x.x:
 - added: filter groups based on a tag field in index_group widget
 - changed: group invitations (and add) no always goto mail
 - changed: some logic when (re)inviting for better system messages to the users 
+- changed: discussion dasboard widget ordering to be inline with default Elgg
 
 2.3 (2012-07-31):
 

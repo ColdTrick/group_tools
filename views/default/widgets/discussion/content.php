@@ -10,6 +10,7 @@ $options = array(
 	"type" => "object",
 	"subtype" => "groupforumtopic",
 	"limit" => $discussion_count,
+	'order_by' => 'e.last_action desc',
 	"pagination" => false,
 	"full_view" => false
 ); 
