@@ -2,6 +2,7 @@
 x.x:
 
 - added: filter groups based on a tag field in index_group widget
+- fixed: problem with group invite autocomplete on subfolder Elgg installations (thanks to Bruno Grossmann http://community.elgg.org/profile/bruno)
 - changed: group invitations (and add) no always goto mail
 - changed: some logic when (re)inviting for better system messages to the users 
 - changed: discussion dasboard widget ordering to be inline with default Elgg

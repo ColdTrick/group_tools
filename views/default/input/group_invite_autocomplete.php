@@ -31,7 +31,7 @@
 				})
 				.autocomplete({
 					source: function( request, response ) {
-						$.getJSON( "/groups/group_invite_autocomplete", {
+						$.getJSON(elgg.get_site_url() + "groups/group_invite_autocomplete", {
 							q: request.term,
 							'user_guids': function() {
 								var result = "";
