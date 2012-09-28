@@ -7,6 +7,7 @@ x.x:
 - changed: group invitations (and add) no always goto mail
 - changed: some logic when (re)inviting for better system messages to the users 
 - changed: discussion dasboard widget ordering to be inline with default Elgg
+- changed: layout of start.php to be more inline with Elgg
 
 2.3 (2012-07-31):
 

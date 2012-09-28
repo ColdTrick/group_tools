@@ -96,6 +96,27 @@
 		elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), "index,dashboard", true);
 		elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), "groups");
 		
+		// register events
+		elgg_register_event_handler("join", "group", "group_tools_join_group_event");
+		
+		// register plugin hooks
+		elgg_register_plugin_hook_handler("widget_url", "widget_manager", "group_tools_widget_url_handler");
+		elgg_register_plugin_hook_handler("access:default", "user", "group_tools_access_default_handler");
+		elgg_register_plugin_hook_handler("access:collections:write", "user", "group_tools_access_write_handler");
+		
+		// actions
+		elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");
+		elgg_register_action("group_tools/toggle_admin", dirname(__FILE__) . "/actions/toggle_admin.php");
+		elgg_register_action("group_tools/mail", dirname(__FILE__) . "/actions/mail.php");
+		elgg_register_action("group_tools/profile_widgets", dirname(__FILE__) . "/actions/profile_widgets.php");
+		elgg_register_action("group_tools/cleanup", dirname(__FILE__) . "/actions/cleanup.php");
+		elgg_register_action("group_tools/default_access", dirname(__FILE__) . "/actions/default_access.php");
+		
+		elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/toggle_auto_join.php", "admin");
+		elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/fix_auto_join.php", "admin");
+		elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/notifications.php", "admin");
+		
+		elgg_register_action("groups/email_invitation", dirname(__FILE__) . "/actions/groups/email_invitation.php");
 	}
 	
 	function group_tools_ready(){
@@ -227,26 +248,3 @@
 	elgg_register_event_handler("init", "system", "group_tools_init");
 	elgg_register_event_handler("ready", "system", "group_tools_ready");
 	elgg_register_event_handler("pagesetup", "system", "group_tools_pagesetup", 550);
-
-	// register events
-	elgg_register_event_handler("join", "group", "group_tools_join_group_event");
-	
-	// register plugin hooks
-	elgg_register_plugin_hook_handler("widget_url", "widget_manager", "group_tools_widget_url_handler");
-	elgg_register_plugin_hook_handler("access:default", "user", "group_tools_access_default_handler");
-	elgg_register_plugin_hook_handler("access:collections:write", "user", "group_tools_access_write_handler");
-	
-	// actions
-	elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");
-	elgg_register_action("group_tools/toggle_admin", dirname(__FILE__) . "/actions/toggle_admin.php");
-	elgg_register_action("group_tools/mail", dirname(__FILE__) . "/actions/mail.php");
-	elgg_register_action("group_tools/profile_widgets", dirname(__FILE__) . "/actions/profile_widgets.php");
-	elgg_register_action("group_tools/cleanup", dirname(__FILE__) . "/actions/cleanup.php");
-	elgg_register_action("group_tools/default_access", dirname(__FILE__) . "/actions/default_access.php");
-	
-	elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/toggle_auto_join.php", "admin");
-	elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/fix_auto_join.php", "admin");
-	elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/notifications.php", "admin");
-	
-	elgg_register_action("groups/email_invitation", dirname(__FILE__) . "/actions/groups/email_invitation.php");
-	
