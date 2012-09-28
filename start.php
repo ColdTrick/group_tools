@@ -90,9 +90,7 @@
 		}
 		
 		// group creation can be limited to admins
-		if(!elgg_is_admin_logged_in() && group_tools_is_group_creation_limited()){
-			elgg_unregister_action("groups/edit");
-		}
+		elgg_register_plugin_hook_handler("action", "groups/edit", "group_tools_action_handler");
 		
 		// register index widget to show latest discussions
 		elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), "index,dashboard", true);
