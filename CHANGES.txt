@@ -1,5 +1,5 @@
 = Version History =
-x.x:
+2.4 (2012-11-06):
 
 - added: filter groups based on a tag field in index_group widget
 - fixed: problem with group invite autocomplete on subfolder Elgg installations (thanks to Bruno Grossmann http://community.elgg.org/profile/bruno)
