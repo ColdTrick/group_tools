@@ -1,6 +1,8 @@
 <?php
 
 	function group_tools_join_group_event($event, $type, $params){
+		global $NOTIFICATION_HANDLERS;
+		
 		static $auto_notification;
 		
 		// only load plugin setting once
@@ -17,25 +19,25 @@
 			$user = elgg_extract("user", $params);
 			
 			if(($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
-				if($auto_notification){
-					// enable email notification
-					add_entity_relationship($user->getGUID(), "notifyemail", $group->getGUID());
+				if($auto_notification && !empty($NOTIFICATION_HANDLERS) && is_array($NOTIFICATION_HANDLERS)){
+					// only auto subscribe to site and email notifications
+					$auto_notification_handlers = array(
+						"site",
+						"email"
+					);
 					
-					if(elgg_is_active_plugin("messages")){
-						// enable site/messages notification
-						add_entity_relationship($user->getGUID(), "notifysite", $group->getGUID());
+					foreach($NOTIFICATION_HANDLERS as $method => $dummy){
+						if(in_array($method, $auto_notification_handlers)){
+							add_entity_relationship($user->getGUID(), "notify" . $method, $group->getGUID());
+						}
 					}
 				}
 				
 				// cleanup invites 
-				if(check_entity_relationship($group->getGUID(), "invited", $user->getGUID())){
-					remove_entity_relationship($group->getGUID(), "invited", $user->getGUID());
-				}
+				remove_entity_relationship($group->getGUID(), "invited", $user->getGUID());
 				
 				// and requests
-				if(check_entity_relationship($user->getGUID(), "membership_request", $group->getGUID())){
-					remove_entity_relationship($user->getGUID(), "membership_request", $group->getGUID());
-				}
+				remove_entity_relationship($user->getGUID(), "membership_request", $group->getGUID());
 			}
 		}
 	}
@@ -50,8 +52,7 @@
 				$auto_joins = string_to_tag_array($auto_joins);
 				
 				// ignore access
-				$ia = elgg_get_ignore_access();
-				elgg_set_ignore_access(true);
+				$ia = elgg_set_ignore_access(true);
 				
 				foreach ($auto_joins as $group_guid) {
 					if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){

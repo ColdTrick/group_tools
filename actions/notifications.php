@@ -1,4 +1,6 @@
 <?php
+	
+	global $NOTIFICATION_HANDLERS;
 
 	$toggle = get_input("toggle");
 	$guid = (int) get_input("guid");
@@ -9,18 +11,19 @@
 		if(($group = get_entity($guid)) && elgg_instanceof($group, "group")){
 			// get group members
 			if($members = $group->getMembers(false)){
-				
-				// check if we need to do stuff with messages
-				$messages_enabled = elgg_is_active_plugin("messages");
-				
 				if($toggle == "enable"){
+					// fix notifications settings for site amd email
+					$auto_notification_handlers = array(
+						"site",
+						"email"
+					);
+					
 					// enable notification for everyone
 					foreach($members as $member){
-						// add email notification
-						add_entity_relationship($member->getGUID(), "notifyemail", $group->getGUID());
-						
-						if($messages_enabled){
-							add_entity_relationship($member->getGUID(), "notifysite", $group->getGUID());
+						foreach($NOTIFICATION_HANDLERS as $method => $dummy){
+							if(in_array($method, $auto_notification_handlers)){
+								add_entity_relationship($user->getGUID(), "notify" . $method, $group->getGUID());
+							}
 						}
 					}
 					
@@ -29,11 +32,8 @@
 				} elseif($toggle == "disable"){
 					// disable notification for everyone
 					foreach($members as $member){
-						// add email notification
-						remove_entity_relationship($member->getGUID(), "notifyemail", $group->getGUID());
-				
-						if($messages_enabled){
-							remove_entity_relationship($member->getGUID(), "notifysite", $group->getGUID());
+						foreach($NOTIFICATION_HANDLERS as $method => $dummy){
+							remove_entity_relationship($user->getGUID(), "notify" . $method, $group->getGUID());
 						}
 					}
 					
