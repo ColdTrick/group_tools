@@ -1,7 +1,5 @@
 <?php 
 
-	gatekeeper();
-
 	$group_guid = (int) get_input("group_guid");
 	$user_guid = (int) get_input("user_guid");
 

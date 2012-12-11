@@ -50,6 +50,9 @@
 		$result = false;
 		
 		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = elgg_get_logged_in_user_entity())){
+			// make sure all goes well
+			$ia = elgg_set_ignore_access(true);
+			
 			if($group->join($user)){
 				// Remove any invite or join request flags
 				remove_entity_relationship($group->getGUID(), "invited", $user->getGUID());
@@ -63,6 +66,9 @@
 					$result = true;
 				}
 			}
+			
+			// restore access
+			elgg_set_ignore_access($ia);
 		}
 		
 		return $result;

@@ -1,7 +1,5 @@
 <?php
 
-	admin_gatekeeper();
-	
 	// this could take a while ;)
 	set_time_limit(0);
 	

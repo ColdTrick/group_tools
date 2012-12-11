@@ -1,7 +1,5 @@
 <?php
 
-	admin_gatekeeper();
-	
 	$group_guid = (int) get_input("group_guid");
 	
 	if(!empty($group_guid)){

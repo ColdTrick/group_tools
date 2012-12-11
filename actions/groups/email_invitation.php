@@ -1,7 +1,5 @@
 <?php 
 
-	gatekeeper();
-	
 	$invitecode = get_input("invitecode");
 	
 	$user = elgg_get_logged_in_user_entity();
@@ -11,7 +9,7 @@
 		$forward_url = elgg_get_site_url() . "groups/invitations/" . $user->username;
 		
 		if($group = group_tools_check_group_email_invitation($invitecode)){
-			if($group->join($user)){
+			if(groups_join_group($group, $user)){
 				$options = array(
 					"guid" => $group->getGUID(),
 					"annotation_name" => "email_invitation",

@@ -1,7 +1,5 @@
 <?php 
 
-	gatekeeper();
-	
 	$group_guid = (int) get_input("group_guid", 0);
 	$user_guids = get_input("user_guids");
 	$subject = get_input("title");
@@ -16,10 +14,8 @@
 			if($group->canEdit()){
 				set_time_limit(0);
 				
-				$body .= "
-
-
-" . elgg_echo("group_tools:mail:message:from") . ": <a href='" . $group->getURL() . "'>" . $group->name . "</a>"; 
+				$body .= PHP_EOL . PHP_EOL;
+				$body .= elgg_echo("group_tools:mail:message:from") . ": " . $group->name . " [" . $group->getURL() . "]"; 
 					
 				foreach($user_guids as $guid){
 					notify_user($guid, $group->getGUID(), $subject, $body, NULL, "email"); 

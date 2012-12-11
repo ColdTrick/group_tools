@@ -6,8 +6,6 @@
 	 * @package ElggGroups
 	 */
 	
-	gatekeeper();
-	
 	$logged_in_user = elgg_get_logged_in_user_entity();
 	
 	$user_guids = get_input("user_guid");
@@ -15,7 +13,10 @@
 		$user_guids = array($user_guids);
 	}
 	
+	
+	$adding = false;
 	if(elgg_is_admin_logged_in()){
+		// add all users?
 		if(get_input("all_users") == "yes"){
 			$site = elgg_get_site_entity();
 			
@@ -25,6 +26,11 @@
 			);
 			
 			$user_guids = $site->getMembers($options);
+		}
+		
+		// add users directly?
+		if(get_input("submit") == elgg_echo("group_tools:add_users")){
+			$adding = true;
 		}
 	}
 	
@@ -41,11 +47,6 @@
 		$resend = true;
 	} else {
 		$resend = false;
-	}
-	
-	$adding = false;
-	if(get_input("submit") == elgg_echo("group_tools:add_users")){
-		$adding = true;
 	}
 	
 	if ((!empty($user_guids) || !empty($emails) || !empty($csv)) && ($group = get_entity($group_guid))){

@@ -1,7 +1,5 @@
 <?php
 
-	gatekeeper();
-	
 	$group_guid = (int) get_input("group_guid");
 	$profile_widgets = get_input("profile_widgets", "no");
 	

@@ -58,7 +58,7 @@
 					if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
 						if($group->site_guid == $site_guid){
 							// join the group
-							$group->join($user);
+							groups_join_group($group, $user);
 						}
 					}
 				}
