@@ -190,7 +190,7 @@ To visit the group please click on the following link:
 
 		'group_tools:groups:invitation:code:title' => "Group invitation by e-mail",
 		'group_tools:groups:invitation:code:description' => "If you have received an invitation to join a group by e-mail, you can enter the invitation code here to accept the invitation. If you click on the link in the invitation e-mail the code will be entered for you.",
-	
+		
 		// group membership requests
 		'group_tools:groups:membershipreq:requests' => "Membership requests",
 		'group_tools:groups:membershipreq:invitations' => "Outstanding invitations",
@@ -242,6 +242,9 @@ To visit the group please click on the following link:
 		'group_tools:action:groups:email_invitation:error:code' => "The entered invitation code is no longer valid",
 		'group_tools:action:groups:email_invitation:error:join' => "An unknown error occured while joining the group %s, maybe you're already a member",
 		'group_tools:action:groups:email_invitation:success' => "You've successfully joined the group",
+		
+		// group - invite - edcline e-mail
+		'group_tools:action:groups:decline_email_invitation:error:delete' => "An error occured while deleting the invitation",
 		
 		// group toggle auto join
 		'group_tools:action:toggle_auto_join:error:save' => "An error occured while saving the new settings",

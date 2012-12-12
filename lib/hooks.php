@@ -78,6 +78,14 @@
 						admin_gatekeeper();
 					}
 					break;
+				case "invitations":
+					$result = false;
+					if(isset($page[1])){
+						set_input("username", $page[1]);
+					}
+					
+					include(dirname(dirname(__FILE__)) . "/pages/groups/invitations.php");
+					break;
 				default:
 					// check if we have an old group profile link
 					if(isset($page[0]) && is_numeric($page[0])) {

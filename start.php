@@ -117,6 +117,7 @@
 		elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/notifications.php", "admin");
 		
 		elgg_register_action("groups/email_invitation", dirname(__FILE__) . "/actions/groups/email_invitation.php");
+		elgg_register_action("groups/decline_email_invitation", dirname(__FILE__) . "/actions/groups/decline_email_invitation.php");
 	}
 	
 	function group_tools_ready(){
@@ -136,6 +137,7 @@
 			}
 			
 			if(!empty($user)){
+				group_tools_get_invited_groups_by_email("jeabakker@coldtrick.com");
 				// check for admin transfer
 				$admin_transfer = elgg_get_plugin_setting("admin_transfer", "group_tools");
 				

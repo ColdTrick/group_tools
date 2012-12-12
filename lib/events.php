@@ -38,6 +38,15 @@
 				
 				// and requests
 				remove_entity_relationship($user->getGUID(), "membership_request", $group->getGUID());
+				
+				// cleanup email invitations
+				$options = array(
+					"annotation_name" => "email_invitation",
+					"annotation_value" => group_tools_generate_email_invite_code($group->getGUID(), $user->email),
+					"limit" => false
+				);
+				
+				elgg_delete_annotations($options);
 			}
 		}
 	}
@@ -48,23 +57,34 @@
 			$user_guid = $relationship->guid_one;
 			$site_guid = $relationship->guid_two;
 			
-			if(($user = get_user($user_guid)) && ($auto_joins = elgg_get_plugin_setting("auto_join", "group_tools"))){
-				$auto_joins = string_to_tag_array($auto_joins);
-				
-				// ignore access
-				$ia = elgg_set_ignore_access(true);
-				
-				foreach ($auto_joins as $group_guid) {
-					if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
-						if($group->site_guid == $site_guid){
-							// join the group
-							groups_join_group($group, $user);
+			if($user = get_user($user_guid)){
+				// add user to the auto join groups
+				if($auto_joins = elgg_get_plugin_setting("auto_join", "group_tools")){
+					$auto_joins = string_to_tag_array($auto_joins);
+					
+					// ignore access
+					$ia = elgg_set_ignore_access(true);
+					
+					foreach ($auto_joins as $group_guid) {
+						if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
+							if($group->site_guid == $site_guid){
+								// join the group
+								groups_join_group($group, $user);
+							}
 						}
 					}
+					
+					// restore access settings
+					elgg_set_ignore_access($ia);
 				}
 				
-				// restore access settings
-				elgg_set_ignore_access($ia);
+				// auto detect email invited groups
+				if($groups = group_tools_get_invited_groups_by_email($user->email, $site_guid)){
+					foreach($groups as $group){
+						// join the group
+						groups_join_group($group, $user);
+					}
+				}
 			}
 		}
 	}

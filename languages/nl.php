@@ -1,5 +1,6 @@
 <?php
 $language = array (
+  'group_tools:action:groups:decline_email_invitation:error:delete' => 'Er is een fout opgetreden tijdens het verwijderen van de uitnodiging',
   'widgets:index_group:filter:field' => 'Filter de groepen obv een profielveld',
   'widgets:index_group:filter:value' => 'met de waarde',
   'widgets:index_group:filter:no_filter' => 'Geen filter',

@@ -78,11 +78,8 @@
 		$result = false;
 
 		if(!empty($group) && ($group instanceof ElggGroup) && !empty($email) && is_email_address($email) && ($loggedin_user = elgg_get_logged_in_user_entity())){
-			// get site secret
-			$site_secret = get_site_secret();
-			
 			// generate invite code
-			$invite_code = md5($site_secret . $email . $group->getGUID());
+			$invite_code = group_tools_generate_email_invite_code($group->getGUID(), $email);
 			
 			if(!group_tools_check_group_email_invitation($invite_code, $group->getGUID()) || $resend){
 				// make site email
@@ -183,6 +180,61 @@
 			if(elgg_get_plugin_setting("admin_create", "group_tools") == "yes"){
 				$result = true;
 			}
+		}
+		
+		return $result;
+	}
+	
+	function group_tools_get_invited_groups_by_email($email, $site_guid = 0){
+		$result = false;
+		
+		if(!empty($email)){
+			$dbprefix = elgg_get_config("dbprefix");
+			$site_secret = get_site_secret();
+			$email = sanitise_string($email);
+			
+			$email_invitation_id = add_metastring("email_invitation");
+			
+			if($site_guid === 0){
+				$site_guid = elgg_get_site_entity()->getGUID();
+			}
+			
+			$options = array(
+				"type" => "group",
+				"limit" => false,
+				"site_guids" => $site_guid,
+				"joins" => array(
+					"JOIN " . $dbprefix . "annotations a ON a.owner_guid = e.guid",
+					"JOIN " . $dbprefix . "metastrings msv ON a.value_id = msv.id"
+				),
+				"wheres" => array(
+					"(a.name_id = " . $email_invitation_id . " AND msv.string = md5(CONCAT('" . $site_secret . $email . "', e.guid)))"
+				)
+			);
+			
+			// make sure we can see all groups
+			$ia = elgg_set_ignore_access(true);
+			
+			if($groups = elgg_get_entities($options)){
+				$result = $groups;
+			}
+			
+			// restore access
+			elgg_set_ignore_access($ia);
+		}
+		
+		return $result;
+	}
+	
+	function group_tools_generate_email_invite_code($group_guid, $email){
+		$result = false;
+		
+		if(!empty($group_guid) && !empty($email)){
+			// get site secret
+			$site_secret = get_site_secret();
+			
+			// generate code
+			$result = md5($site_secret . $email . $group_guid);
 		}
 		
 		return $result;
