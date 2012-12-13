@@ -164,7 +164,8 @@
 				"href" => "action/group_tools/fix_acl?fix=missing",
 				"text" => elgg_echo("group_tools:settings:fix_it"),
 				"class" => "elgg-button elgg-button-action",
-				"is_action" => true
+				"is_action" => true,
+				"style" => "white-space: nowrap;"
 			))
 		);
 	}
@@ -177,7 +178,8 @@
 				"href" => "action/group_tools/fix_acl?fix=excess",
 				"text" => elgg_echo("group_tools:settings:fix_it"),
 				"class" => "elgg-button elgg-button-action",
-				"is_action" => true
+				"is_action" => true,
+				"style" => "white-space: nowrap;"
 			))
 		);
 	}
@@ -190,7 +192,8 @@
 				"href" => "action/group_tools/fix_acl?fix=without",
 				"text" => elgg_echo("group_tools:settings:fix_it"),
 				"class" => "elgg-button elgg-button-action",
-				"is_action" => true
+				"is_action" => true,
+				"style" => "white-space: nowrap;"
 			))
 		);
 	}
@@ -203,7 +206,8 @@
 				"href" => "action/group_tools/fix_acl?fix=all",
 				"text" => elgg_echo("group_tools:settings:fix:all"),
 				"class" => "elgg-button elgg-button-action",
-				"is_action" => true
+				"is_action" => true,
+				"style" => "white-space: nowrap;"
 			))
 		);
 	}
