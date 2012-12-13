@@ -115,6 +115,7 @@
 		elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/admin/toggle_auto_join.php", "admin");
 		elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/admin/fix_auto_join.php", "admin");
 		elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/admin/notifications.php", "admin");
+		elgg_register_action("group_tools/fix_acl", dirname(__FILE__) . "/actions/admin/fix_acl.php", "admin");
 		
 		elgg_register_action("groups/email_invitation", dirname(__FILE__) . "/actions/groups/email_invitation.php");
 		elgg_register_action("groups/decline_email_invitation", dirname(__FILE__) . "/actions/groups/decline_email_invitation.php");

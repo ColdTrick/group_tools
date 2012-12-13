@@ -150,3 +150,76 @@
 		
 		echo elgg_view_module("inline", $title, $content);
 	}
+	
+	// fix some problems with groups
+	$title = elgg_echo("group_tools:settings:fix:title");
+	
+	$rows = array();
+	
+	// check missing acl members
+	if($missing_acl_members = group_tools_get_missing_acl_users()){
+		$rows[] = array(
+			elgg_echo("group_tools:settings:fix:missing", array(count($missing_acl_members))),
+			elgg_view("output/confirmlink", array(
+				"href" => "action/group_tools/fix_acl?fix=missing",
+				"text" => elgg_echo("group_tools:settings:fix_it"),
+				"class" => "elgg-button elgg-button-action",
+				"is_action" => true
+			))
+		);
+	}
+	
+	// check excess acl members
+	if($excess_acl_members = group_tools_get_excess_acl_users()){
+		$rows[] = array(
+			elgg_echo("group_tools:settings:fix:excess", array(count($excess_acl_members))),
+			elgg_view("output/confirmlink", array(
+				"href" => "action/group_tools/fix_acl?fix=excess",
+				"text" => elgg_echo("group_tools:settings:fix_it"),
+				"class" => "elgg-button elgg-button-action",
+				"is_action" => true
+			))
+		);
+	}
+	
+	// check groups without acl
+	if($wrong_groups = group_tools_get_groups_without_acl()){
+		$rows[] = array(
+			elgg_echo("group_tools:settings:fix:without", array(count($wrong_groups))),
+			elgg_view("output/confirmlink", array(
+				"href" => "action/group_tools/fix_acl?fix=without",
+				"text" => elgg_echo("group_tools:settings:fix_it"),
+				"class" => "elgg-button elgg-button-action",
+				"is_action" => true
+			))
+		);
+	}
+	
+	// fix everything at once
+	if(count($rows) > 1){
+		$rows[] = array(
+			elgg_echo("group_tools:settings:fix:all:description"),
+			elgg_view("output/confirmlink", array(
+				"href" => "action/group_tools/fix_acl?fix=all",
+				"text" => elgg_echo("group_tools:settings:fix:all"),
+				"class" => "elgg-button elgg-button-action",
+				"is_action" => true
+			))
+		);
+	}
+	
+	if(!empty($rows)){
+		$content = "<table class='elgg-table'>";
+		
+		foreach($rows as $row){
+			$content .= "<tr>";
+			$content .= "<td>" . implode("</td><td>", $row) . "</td>";
+			$content .= "</tr>";
+		}
+		
+		$content .= "</table>";
+	} else {
+		$content = elgg_echo("group_tools:settings:fix:nothing");
+	}
+	
+	echo elgg_view_module("inline", $title, $content);

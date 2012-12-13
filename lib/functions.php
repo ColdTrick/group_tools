@@ -239,3 +239,117 @@
 		
 		return $result;
 	}
+	
+	function group_tools_get_missing_acl_users($group_guid = 0){
+		$dbprefix = elgg_get_config("dbprefix");
+		$group_guid = sanitise_int($group_guid, false);
+		
+		$query = "SELECT ac.id AS acl_id, ac.owner_guid AS group_guid, er.guid_one AS user_guid";
+		$query .= " FROM " . $dbprefix . "access_collections ac";
+		$query .= " JOIN " . $dbprefix . "entities e ON e.guid = ac.owner_guid";
+		$query .= " JOIN " . $dbprefix . "entity_relationships er ON ac.owner_guid = er.guid_two";
+		$query .= " WHERE";
+		
+		if($group_guid > 0){
+			// limit to the provided group
+			$query .= " e.guid = " . $group_guid;
+		} else {
+			// all groups
+			$query .= " e.type = 'group'";
+		}
+		
+		$query .= " AND er.relationship = 'member'";
+		$query .= " AND er.guid_one NOT IN";
+		$query .= " (";
+		$query .= " SELECT acm.user_guid";
+		$query .= " FROM " . $dbprefix . "access_collections ac2";
+		$query .= " JOIN " . $dbprefix . "access_collection_membership acm ON ac2.id = acm.access_collection_id";
+		$query .= " WHERE ac2.owner_guid = ac.owner_guid";
+		$query .= " )";
+		
+		return get_data($query);
+	}
+	
+	function group_tools_get_excess_acl_users($group_guid = 0){
+		$dbprefix = elgg_get_config("dbprefix");
+		$group_guid = sanitise_int($group_guid, false);
+		
+		$query = "SELECT ac.id AS acl_id, ac.owner_guid AS group_guid, acm.user_guid AS user_guid";
+		$query .= " FROM " . $dbprefix . "access_collections ac";
+		$query .= " JOIN " . $dbprefix . "access_collection_membership acm ON ac.id = acm.access_collection_id";
+		$query .= " JOIN " . $dbprefix . "entities e ON ac.owner_guid = e.guid";
+		$query .= " WHERE";
+		
+		if($group_guid > 0){
+			// limit to the provided group
+			$query .= " e.guid = " . $group_guid;
+		} else {
+			// all groups
+			$query .= " e.type = 'group'";
+		}
+		
+		$query .= " AND acm.user_guid NOT IN";
+		$query .= " (";
+		$query .= " SELECT r.guid_one";
+		$query .= " FROM " . $dbprefix . "entity_relationships r";
+		$query .= " WHERE r.relationship = 'member'";
+		$query .= " AND r.guid_two = ac.owner_guid";
+		$query .= " )";
+		
+		return get_data($query);
+	}
+	
+	function group_tools_get_groups_without_acl(){
+		$dbprefix = elgg_get_config("dbprefix");
+		
+		$options = array(
+			"type" => "group",
+			"limit" => false,
+			"wheres" => array("e.guid NOT IN (
+				SELECT ac.owner_guid
+				FROM " . $dbprefix . "access_collections ac
+				JOIN " . $dbprefix . "entities e ON ac.owner_guid = e.guid
+				WHERE e.type = 'group'
+				)")
+		);
+		
+		return elgg_get_entities($options);
+	}
+	
+	/**
+	 * Remove a user from an access collection,
+	 * can't use remove_user_from_access_collection() because user might not exists any more 
+	 * 
+	 * @param int $user_guid
+	 * @param int $collection_id
+	 * @return boolean
+	 */
+	function group_tools_remove_user_from_access_collection($user_guid, $collection_id){
+		$collection_id = sanitise_int($collection_id, false);
+		$user_guid = sanitise_int($user_guid, false);
+		
+		$collection = get_access_collection($collection_id);
+	
+		if (empty($user_guid) || !$collection) {
+			return false;
+		}
+	
+		$params = array(
+			"collection_id" => $collection_id,
+			"user_guid" => $user_guid
+		);
+	
+		if (!elgg_trigger_plugin_hook("access:collections:remove_user", "collection", $params, true)) {
+			return false;
+		}
+	
+		$dbprefix = elgg_get_config("dbprefix");
+		
+		$query = "DELETE";
+		$query .= " FROM " . $dbprefix . "access_collection_membership";
+		$query .= " WHERE access_collection_id = " . $collection_id;
+		$query .= " AND user_guid = " . $user_guid;
+	
+		return (bool) delete_data($query);
+	}
+	

@@ -51,6 +51,15 @@
 		'group_tools:settings:auto_join' => "Auto join groups",
 		'group_tools:settings:auto_join:description' => "New users will automaticly join the following groups",
 		
+		'group_tools:settings:fix:title' => "Fix group access problems",
+		'group_tools:settings:fix:missing' => "There are %d users who are a member of a group but don't have access to the content shared with the group.",
+		'group_tools:settings:fix:excess' => "There are %d users who have access to group content of groups where they are no longer a member off.",
+		'group_tools:settings:fix:without' => "There are %d groups without the possibility to share content with their members.",
+		'group_tools:settings:fix:all:description' => "Fix all off the above problems at once.",
+		'group_tools:settings:fix_it' => "Fix this",
+		'group_tools:settings:fix:all' => "Fix all problems",
+		'group_tools:settings:fix:nothing' => "Nothing is wrong with the groups on your site!",
+		
 		// group invite message
 		'group_tools:groups:invite:body' => "Hi %s,
 
@@ -264,6 +273,16 @@ To visit the group please click on the following link:
 		'group_tools:action:notifications:success:disable' => "Successfully disabled notifications for every member",
 		'group_tools:action:notifications:success:enable' => "Successfully enabled notifications for every member",
 	
+		// fix group problems
+		'group_tools:action:fix_acl:error:input' => "Invalid option you can't fix: %s",
+		'group_tools:action:fix_acl:error:missing:nothing' => "No missing users found in the group ACLs",
+		'group_tools:action:fix_acl:error:excess:nothing' => "No excess users found in the groups ACLs",
+		'group_tools:action:fix_acl:error:without:nothing' => "No groups found without an ACL",
+		
+		'group_tools:action:fix_acl:success:missing' => "Successfully added %d users to group ACLs",
+		'group_tools:action:fix_acl:success:excess' => "Successfully removed %d users from group ACLs",
+		'group_tools:action:fix_acl:success:without' => "Successfully created %d group ACLs",
+		
 		// Widgets
 		// Group River Widget
 		'widgets:group_river_widget:title' => "Group activity",
