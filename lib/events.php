@@ -58,33 +58,33 @@
 			$site_guid = $relationship->guid_two;
 			
 			if($user = get_user($user_guid)){
+				// ignore access
+				$ia = elgg_set_ignore_access(true);
+				
 				// add user to the auto join groups
 				if($auto_joins = elgg_get_plugin_setting("auto_join", "group_tools")){
 					$auto_joins = string_to_tag_array($auto_joins);
-					
-					// ignore access
-					$ia = elgg_set_ignore_access(true);
 					
 					foreach ($auto_joins as $group_guid) {
 						if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
 							if($group->site_guid == $site_guid){
 								// join the group
-								groups_join_group($group, $user);
+								$group->join($user);
 							}
 						}
 					}
-					
-					// restore access settings
-					elgg_set_ignore_access($ia);
 				}
 				
 				// auto detect email invited groups
 				if($groups = group_tools_get_invited_groups_by_email($user->email, $site_guid)){
 					foreach($groups as $group){
 						// join the group
-						groups_join_group($group, $user);
+						$group->join($user);
 					}
 				}
+				
+				// restore access settings
+				elgg_set_ignore_access($ia);
 			}
 		}
 	}
