@@ -248,6 +248,7 @@
 		$query .= " FROM " . $dbprefix . "access_collections ac";
 		$query .= " JOIN " . $dbprefix . "entities e ON e.guid = ac.owner_guid";
 		$query .= " JOIN " . $dbprefix . "entity_relationships er ON ac.owner_guid = er.guid_two";
+		$query .= " JOIN " . $dbprefix . "entities e2 ON er.guid_one = e2.guid";
 		$query .= " WHERE";
 		
 		if($group_guid > 0){
@@ -258,6 +259,7 @@
 			$query .= " e.type = 'group'";
 		}
 		
+		$query .= " AND e2.type = 'user'";
 		$query .= " AND er.relationship = 'member'";
 		$query .= " AND er.guid_one NOT IN";
 		$query .= " (";
