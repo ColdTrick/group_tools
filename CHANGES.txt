@@ -4,6 +4,7 @@ x.x:
 - added: auto join groups based on email invitation when joining the site
 - changed: auto notifications now listen to $NOTIFICATION_HANDLERS
 - changed: handling of invitations page
+- changed: layout of actions
 
 2.4 (2012-11-06):
 

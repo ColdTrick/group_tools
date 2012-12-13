@@ -112,9 +112,9 @@
 		elgg_register_action("group_tools/cleanup", dirname(__FILE__) . "/actions/cleanup.php");
 		elgg_register_action("group_tools/default_access", dirname(__FILE__) . "/actions/default_access.php");
 		
-		elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/toggle_auto_join.php", "admin");
-		elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/fix_auto_join.php", "admin");
-		elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/notifications.php", "admin");
+		elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/admin/toggle_auto_join.php", "admin");
+		elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/admin/fix_auto_join.php", "admin");
+		elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/admin/notifications.php", "admin");
 		
 		elgg_register_action("groups/email_invitation", dirname(__FILE__) . "/actions/groups/email_invitation.php");
 		elgg_register_action("groups/decline_email_invitation", dirname(__FILE__) . "/actions/groups/decline_email_invitation.php");
