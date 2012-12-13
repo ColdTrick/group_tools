@@ -10,6 +10,10 @@
 		case "missing":
 			// users without access to group content
 			if($missing_users = group_tools_get_missing_acl_users()){
+				// make sure we can see all users
+				$hidden = access_get_show_hidden_status();
+				access_show_hidden_entities(true);
+				
 				foreach($missing_users as $user_data){
 					/**
 					 * $user_data = row stdClass
@@ -19,6 +23,9 @@
 					 */
 					add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
 				}
+				
+				// restore hidden settings
+				access_show_hidden_entities($hidden);
 				
 				system_message(elgg_echo("group_tools:action:fix_acl:success:missing", array(count($missing_users))));
 			} else {
@@ -53,6 +60,10 @@
 				
 				// now add the group members
 				if($missing_users = group_tools_get_missing_acl_users()){
+					// make sure we can see all users
+					$hidden = access_get_show_hidden_status();
+					access_show_hidden_entities(true);
+					
 					foreach($missing_users as $user_data){
 						/**
 						 * $user_data = row stdClass
@@ -62,6 +73,9 @@
 						 */
 						add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
 					}
+					
+					// restore hidden settings
+					access_show_hidden_entities($hidden);
 				}
 				
 				system_message(elgg_echo("group_tools:action:fix_acl:success:without", array(count($groups))));
@@ -84,6 +98,10 @@
 			
 			// now add the group members
 			if($missing_users = group_tools_get_missing_acl_users()){
+				// make sure we can see all users
+				$hidden = access_get_show_hidden_status();
+				access_show_hidden_entities(true);
+				
 				foreach($missing_users as $user_data){
 					/**
 					 * $user_data = row stdClass
@@ -93,6 +111,9 @@
 					 */
 					add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
 				}
+				
+				// restore hidden settings
+				access_show_hidden_entities($hidden);
 				
 				system_message(elgg_echo("group_tools:action:fix_acl:success:missing", array(count($missing_users))));
 			}
