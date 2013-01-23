@@ -22,7 +22,7 @@
 					foreach($members as $member){
 						foreach($NOTIFICATION_HANDLERS as $method => $dummy){
 							if(in_array($method, $auto_notification_handlers)){
-								add_entity_relationship($user->getGUID(), "notify" . $method, $group->getGUID());
+								add_entity_relationship($member->getGUID(), "notify" . $method, $group->getGUID());
 							}
 						}
 					}
@@ -33,7 +33,7 @@
 					// disable notification for everyone
 					foreach($members as $member){
 						foreach($NOTIFICATION_HANDLERS as $method => $dummy){
-							remove_entity_relationship($user->getGUID(), "notify" . $method, $group->getGUID());
+							remove_entity_relationship($member->getGUID(), "notify" . $method, $group->getGUID());
 						}
 					}
 					
