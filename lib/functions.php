@@ -87,7 +87,7 @@
 			// generate invite code
 			$invite_code = group_tools_generate_email_invite_code($group->getGUID(), $email);
 			
-			if(!group_tools_check_group_email_invitation($invite_code, $group->getGUID()) || $resend){
+			if(!($found_group = group_tools_check_group_email_invitation($invite_code, $group->getGUID())) || $resend){
 				// make site email
 				$site = elgg_get_site_entity();
 				if(!empty($site->email)){
@@ -105,7 +105,7 @@
 					}
 				}
 				
-				if(!$resend){
+				if(empty($found_group)){
 					// register invite with group
 					$group->annotate("email_invitation", $invite_code, ACCESS_LOGGED_IN, $group->getGUID());
 				}
