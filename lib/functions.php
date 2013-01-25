@@ -15,9 +15,15 @@
 				$options["annotation_owner_guids"] = array($group_guid);
 			}
 			
+			// find hidden groups
+			$ia = elgg_set_ignore_access(true);
+			
 			if($groups = elgg_get_entities_from_annotations($options)){
 				$result = $groups[0];
 			}
+			
+			// restore access
+			elgg_set_ignore_access($ia);
 		}
 		
 		return $result;
