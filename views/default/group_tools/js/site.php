@@ -93,6 +93,19 @@ elgg.group_tools.cleanup_unhighlight = function(section){
 	}
 }
 
+elgg.group_tools.order_groups = function(){
+	var ordered_ids = new Array();
+	$('.group-tools-list-ordered > li').each(function(){
+		group_id = $(this).attr("id").replace("elgg-group-", "");
+		ordered_ids.push(group_id);
+	});
+	elgg.action("group_tools/order_groups", {
+		data: {
+			guids: ordered_ids
+		}
+	});
+}
+
 elgg.group_tools.init = function(){
 	// admin tranfser
 	$('#group_tools_admin_transfer_form').submit(elgg.group_tools.admin_transfer_confirm);
@@ -100,7 +113,13 @@ elgg.group_tools.init = function(){
 	// group mail members
 	$('#group_tools_mail_member_selection input[type=checkbox]').live("change", elgg.group_tools.mail_update_recipients);
 	$('#group_tools_mail_form').submit(elgg.group_tools.mail_form_submit);
+
+	$('.group-tools-list-ordered').sortable({
+		update: elgg.group_tools.order_groups
+	});
 }
+
+
 
 //register init hook
 elgg.register_hook_handler("init", "system", elgg.group_tools.init);

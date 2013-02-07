@@ -41,7 +41,8 @@
 	
 		'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
 		
-		'group_tools:settings:listing' => "Default group listing tab",
+		'group_tools:settings:listing:default' => "Default group listing tab",
+		'group_tools:settings:listing:available' => "Available group listing tabs",
 		
 		'group_tools:settings:default_access' => "What should be the default access for content in the groups of this site",
 		'group_tools:settings:default_access:disclaimer' => "<b>DISCLAIMER:</b> this will not work unless you have <a href='https://github.com/Elgg/Elgg/pull/253' target='_blank'>https://github.com/Elgg/Elgg/pull/253</a> applied to your Elgg installation.",
@@ -215,6 +216,7 @@ To visit the group please click on the following link:
 		'group_tools:groups:sorting:alphabetical' => "Alphabetical",
 		'group_tools:groups:sorting:open' => "Open",
 		'group_tools:groups:sorting:closed' => "Closed",
+		'group_tools:groups:sorting:ordered' => "Ordered",
 	
 		// actions
 		'group_tools:action:error:input' => "Invalid input to perform this action",

@@ -39,7 +39,7 @@
 						set_input("filter", $default_filter);
 					}
 					
-					if(in_array($filter, array("open", "closed", "alpha"))){
+					if(in_array($filter, array("open", "closed", "alpha", "ordered"))){
 						// we will handle the output
 						$result = false;
 						

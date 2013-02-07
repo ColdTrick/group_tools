@@ -35,16 +35,33 @@
 			"href" => "groups/all?filter=alpha",
 			"priority" => 700,
 		),
+		"ordered" => array(
+			"text" => elgg_echo("group_tools:groups:sorting:ordered"),
+			"href" => "groups/all?filter=ordered",
+			"priority" => 800,
+		),
 	);
 	
 	foreach ($tabs as $name => $tab) {
-		$tab["name"] = $name;
-		
-		if($vars["selected"] == $name){
-			$tab["selected"] = true;
+		$show_tab = false;
+		$show_tab_setting = elgg_get_plugin_setting("group_listing_" . $name . "_available", "group_tools");
+		if($name == "ordered"){
+			if($show_tab_setting == "1"){
+				$show_tab = true;
+			}
+		} elseif($show_tab_setting !== "0"){
+			$show_tab = true;
 		}
-	
-		elgg_register_menu_item("filter", $tab);
+		
+		if($show_tab){
+			$tab["name"] = $name;
+			
+			if($vars["selected"] == $name){
+				$tab["selected"] = true;
+			}
+		
+			elgg_register_menu_item("filter", $tab);
+		}
 	}
 	
 	echo elgg_view_menu("filter", array("sort_by" => "priority", "class" => "elgg-menu-hz"));

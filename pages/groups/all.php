@@ -13,7 +13,25 @@
 		"full_view" => false,
 	);
 	
+	$dbprefix = elgg_get_config("dbprefix");
+	
 	switch ($selected_tab) {
+		case "ordered":
+			
+			$order_id = add_metastring("order");
+			
+			$group_options["limit"] = false;
+			$group_options["selects"] = array(
+				"IFNULL((SELECT order_ms.string as order_val FROM " . $dbprefix . "metadata mo JOIN " . $dbprefix . "metastrings order_ms ON mo.value_id = order_ms.id WHERE e.guid = mo.entity_guid AND mo.name_id = " . $order_id . "), 99999) AS order_val"
+			);
+			
+			$group_options["order_by"] = "order_val ASC, e.time_created DESC";
+			
+			if(elgg_is_admin_logged_in()){
+				$group_options["list_class"] = "group-tools-list-ordered";
+			}
+			
+			break;
 		case "open":
 			$group_options["metadata_name_value_pairs"] = array(
 				"name" => "membership",
@@ -30,8 +48,6 @@
 			
 			break;
 		case "alpha":
-			$dbprefix = elgg_get_config("dbprefix");
-			
 			$group_options["joins"]	= array("JOIN " . $dbprefix . "groups_entity ge ON e.guid = ge.guid");
 			$group_options["order_by"] = "ge.name ASC";
 			
