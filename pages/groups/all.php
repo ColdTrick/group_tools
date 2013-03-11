@@ -21,6 +21,7 @@
 			$order_id = add_metastring("order");
 			
 			$group_options["limit"] = false;
+			$group_options["pagination"] = false;
 			$group_options["selects"] = array(
 				"IFNULL((SELECT order_ms.string as order_val FROM " . $dbprefix . "metadata mo JOIN " . $dbprefix . "metastrings order_ms ON mo.value_id = order_ms.id WHERE e.guid = mo.entity_guid AND mo.name_id = " . $order_id . "), 99999) AS order_val"
 			);
