@@ -137,7 +137,6 @@
 			}
 			
 			if(!empty($user)){
-				group_tools_get_invited_groups_by_email("jeabakker@coldtrick.com");
 				// check for admin transfer
 				$admin_transfer = elgg_get_plugin_setting("admin_transfer", "group_tools");
 				
