@@ -8,6 +8,7 @@ x.x:
 - changed: auto notifications now listen to $NOTIFICATION_HANDLERS
 - changed: handling of invitations page
 - changed: layout of actions
+- removed: group creation limited to admins (Elgg core now offers this option)
 
 2.4 (2012-11-06):
 

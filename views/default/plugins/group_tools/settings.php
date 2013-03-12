@@ -33,12 +33,6 @@
 	$title = elgg_echo("group_tools:settings:management:title");
 	
 	$body = "<div>";
-	$body .= elgg_echo("group_tools:settings:admin_create");
-	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[admin_create]", "options_values" => $noyes_options, "value" => $plugin->admin_create));
-	$body .= "<div class='elgg-subtext'>" . elgg_echo("group_tools:settings:admin_create:description") . "</div>";
-	$body .= "</div>";
-	
-	$body .= "<div>";
 	$body .= elgg_echo("group_tools:settings:admin_transfer");
 	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[admin_transfer]", "options_values" => $admin_transfer_options, "value" => $plugin->admin_transfer));
 	$body .= "</div>";

@@ -89,9 +89,6 @@
 			run_function_once("group_tools_version_1_3");
 		}
 		
-		// group creation can be limited to admins
-		elgg_register_plugin_hook_handler("action", "groups/edit", "group_tools_action_handler");
-		
 		// register index widget to show latest discussions
 		elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), "index,dashboard", true);
 		elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), "groups");
