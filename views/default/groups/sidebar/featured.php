@@ -12,7 +12,7 @@ $featured_groups_options = array(
 	'metadata_name' => 'featured_group',
 	'metadata_value' => 'yes',
 	'types' => 'group',
-	'limit' => 10,
+	'limit' => $limit,
 );
 
 if(!empty($sort) && ($sort == "alphabetical")){
