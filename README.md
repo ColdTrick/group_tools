@@ -1,14 +1,16 @@
-= Group Tools =
+Group Tools
+===========
 Combines different group additions into one plugin
 
-== Contents ==
+Contents
+--------
 1. Features
 2. Replaces
 3. ToDo
 4. Group default access
 
-== 1. Features ==
-- group admin transfer
+1. Features
+-----------
 - group multiple admin
 - group activity (profile,dashboard,index,group widget)
 	- can show more than one group activity
@@ -27,13 +29,14 @@ Combines different group additions into one plugin
 - group listing
 	- alfabetical
 	
-== 2. Replaces ==
-- group_admin_transfer
+2. Replaces
+-----------
 - group_multiple_admin
 - group_mail
 - groupriver
 
-== 3. ToDo ==
+3. ToDo
+-------
 - group listing
 	- latest activity in my groups
 	- my groups (and remove menu item)
@@ -55,7 +58,8 @@ Combines different group additions into one plugin
 	- better CSS (use class instead of id)
 - when group transfer remove group admin (if needed)
 
-== 4. Group default access ==
+4. Group default access
+-----------------------
 As of version 2.3 of this plugin we offer the ability to set a group default access level (like with Site and User), 
 this will however not work if you haven't applied https://github.com/Elgg/Elgg/pull/253 to your Elgg installation.
 
