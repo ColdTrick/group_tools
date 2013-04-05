@@ -1,5 +1,5 @@
 = Version History =
-x.x:
+2.5 (2013-04-05):
 
 - added: auto join groups based on email invitation when joining the site
 - added: different group ACL fixes
