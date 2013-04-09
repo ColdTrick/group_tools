@@ -47,6 +47,18 @@
 		}
 	}
 	
+	// check if groups should respect ordering
+	if($widget->apply_sorting == "yes"){
+		$dbprefix = elgg_get_config("dbprefix");
+		$order_id = add_metastring("order");
+		
+		$options["selects"] = array(
+			"IFNULL((SELECT order_ms.string as order_val FROM " . $dbprefix . "metadata mo JOIN " . $dbprefix . "metastrings order_ms ON mo.value_id = order_ms.id WHERE e.guid = mo.entity_guid AND mo.name_id = " . $order_id . "), 99999) AS order_val"
+		);
+			
+		$options["order_by"] = "CAST(order_val AS SIGNED) ASC, e.time_created DESC";
+	}
+	
 	// show group member count
 	if($widget->show_members == "yes"){
 		$show_members = true;
