@@ -2,6 +2,7 @@
 x.x:
 
 - added: option to hide the My Status sidebar
+- changed: index groups widget now optionally respects group ordering
 
 2.5 (2013-04-05):
 
