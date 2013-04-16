@@ -1,5 +1,7 @@
 <?php
 $language = array (
+  'group_tools:cleanup:my_status' => 'Verberg de Mijn Status zijbalk',
+  'group_tools:cleanup:my_status:explain' => 'In de zijbalk op de groepsprofiel pagina is er een item welke je informatie toont over je groepslidmaatschap. Tevens wordt hier andere status informatie getoond. Je kunt deze zijbalk verbergen.',
   'group_tools:settings:fix:title' => 'Los problemen met groep toegang op',
   'group_tools:settings:fix:missing' => 'Er zijn %d gebruikers die lid zijn van een groep maar geen toegang hebben tot de content die gedeeld wordt met de groep.',
   'group_tools:settings:fix:excess' => 'Er zijn %d gebruikers dit toegang hebben tot content van een groep waar ze geen lid meer van zijn.',
@@ -68,8 +70,6 @@ $language = array (
   'group_tools:joinrequest:already' => 'Lidmaatschap verzoek intrekken',
   'group_tools:joinrequest:already:tooltip' => 'Je hebt reeds verzocht lid te worden van deze groep, klik hier om dit verzoek in te trekken',
   'group_tools:menu:invitations' => 'Beheer uitnodigingen',
-  'group_tools:settings:admin_create' => 'Alleen Site beheerders mogen groepen aanmaken',
-  'group_tools:settings:admin_create:description' => 'Als deze instelling op \'Ja\' wordt gezet kunnen gewone gebruikers geen groepen meer aanmaken',
   'group_tools:admin_transfer:title' => 'Draag het beheer van deze groep over',
   'group_tools:auto_join:title' => 'Automatisch lid worden opties',
   'group_tools:groups:invite:title' => 'Nodig gebruikers uit voor deze groep',
@@ -137,7 +137,7 @@ Om de groep te bezoeken klik op onderstaande link:
   'group_tools:settings:invite_csv' => 'Nodig gebruikers uit op basis van een CSV-bestand',
   'group_tools:settings:mail' => 'Groep beheerders mogen alle leden een e-mail sturen',
   'group_tools:settings:listing:default' => 'Standaard groep overzicht tab',
-  'group_tools:settings:listing:available' => "Beschikbare groepsoverzicht tabs",
+  'group_tools:settings:listing:available' => 'Beschikbare groepsoverzicht tabs',
   'group_tools:settings:search_index' => 'Mogen besloten groepen worden ge&iuml;ndexeerd door zoekmachines',
   'group_tools:settings:auto_notification' => 'Schakel groeps notificaties automatisch in bij het lid worden van een groep',
   'group_tools:groups:invite:body' => 'Beste %s,
