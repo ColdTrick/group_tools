@@ -321,10 +321,11 @@ To visit the group please click on the following link:
 		'widgets:index_groups:description' => "Show the latest groups on your community",
 		'widgets:index_groups:show_members' => "Show members count",
 		'widgets:index_groups:featured' => "Show only featured groups",
+		'widgets:index_groups:apply_sorting' => "Apply sorting if available",
 		
-		'widgets:index_group:filter:field' => "Filter groups based on group field",
-		'widgets:index_group:filter:value' => "with value",
-		'widgets:index_group:filter:no_filter' => "No filter",
+		'widgets:index_groups:filter:field' => "Filter groups based on group field",
+		'widgets:index_groups:filter:value' => "with value",
+		'widgets:index_groups:filter:no_filter' => "No filter",
 		
 		// Featured Groups
 		'widgets:featured_groups:description' => "Shows a random list of featured groups",

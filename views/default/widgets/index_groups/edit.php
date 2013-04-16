@@ -51,16 +51,22 @@
 <div>
 	<?php 
 		$tag_fields = array_reverse($tag_fields);
-		$tag_fields[""] = elgg_echo("widgets:index_group:filter:no_filter");
+		$tag_fields[""] = elgg_echo("widgets:index_groups:filter:no_filter");
 		$tag_fields = array_reverse($tag_fields);
 	
-		echo elgg_echo("widgets:index_group:filter:field");
+		echo elgg_echo("widgets:index_groups:filter:field");
 		echo "&nbsp" . elgg_view("input/dropdown", array("name" => "params[filter_name]", "value" => $widget->filter_name, "options_values" => $tag_fields));
 		echo "<br />";
 		
-		echo elgg_echo("widgets:index_group:filter:value");
+		echo elgg_echo("widgets:index_groups:filter:value");
 		echo elgg_view("input/tags", array("name" => "params[filter_value]", "value" => $widget->filter_value));
 		
 	?>
 </div>
-<?php }
+<?php } ?>
+<div>
+	<?php 
+		echo elgg_echo("widgets:index_groups:apply_sorting");
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[apply_sorting]", "options_values" => $noyes_options, "value" => $widget->apply_sorting));
+	?>
+</div>
