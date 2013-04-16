@@ -9,6 +9,7 @@
 	$search = get_input("search");
 	$featured = get_input("featured");
 	$featured_sorting = get_input("featured_sorting");
+	$my_status = get_input("my_status");
 	
 	$forward_url = REFERER;
 	
@@ -23,6 +24,7 @@
 			$group->setPrivateSetting($prefix . "search", $search);
 			$group->setPrivateSetting($prefix . "featured", $featured);
 			$group->setPrivateSetting($prefix . "featured_sorting", $featured_sorting);
+			$group->setPrivateSetting($prefix . "my_status", $my_status);
 			
 			
 			$forward_url = $group->getURL();

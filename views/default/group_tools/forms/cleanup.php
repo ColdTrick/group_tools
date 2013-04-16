@@ -94,6 +94,15 @@
 		$form_body .= ":&nbsp;" . elgg_view("input/dropdown", array("name" => "featured_sorting", "options_values" => $featured_sorting, "value" => $group->getPrivateSetting($prefix . "featured_sorting")));
 		$form_body .= "</div>";
 		
+		// hide my status
+		$form_body .= "<div>";
+		$form_body .= elgg_echo("group_tools:cleanup:my_status");
+		$form_body .= ":&nbsp;" . elgg_view("input/dropdown", array("name" => "my_status", "options_values" => $noyes_options, "value" => $group->getPrivateSetting($prefix . "my_status")));
+		$form_body .= "<span alt='" . elgg_echo("group_tools:explain") . "' title='" . elgg_echo("group_tools:cleanup:my_status:explain") . "' onmouseover='elgg.group_tools.cleanup_highlight(\"my_status\");' onmouseout='elgg.group_tools.cleanup_unhighlight(\"my_status\");' class='float-alt'>";
+		$form_body .= elgg_view_icon("info");
+		$form_body .= "</span>";
+		$form_body .= "</div>";
+		
 		// buttons
 		$form_body .= "<div>";
 		$form_body .= elgg_view("input/hidden", array("name" => "group_guid", "value" => $group->getGUID()));

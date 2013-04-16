@@ -70,6 +70,9 @@ elgg.group_tools.cleanup_highlight = function(section){
 		case "featured":
 			$('div.elgg-sidebar').append('<div id="group_tools_featured_example" class="group-tools-highlight">' + elgg.echo('groups:featured') + '</div>');
 			break;
+		case "my_status":
+			$('div.elgg-sidebar').append('<div id="group_tools_my_status_example" class="group-tools-highlight">' + elgg.echo('groups:my_status') + '</div>');
+			break;
 	}
 }
 
@@ -89,6 +92,9 @@ elgg.group_tools.cleanup_unhighlight = function(section){
 			break;
 		case "featured":
 			$('#group_tools_featured_example').remove();
+			break;
+		case "my_status":
+			$('#group_tools_my_status_example').remove();
 			break;
 	}
 }
