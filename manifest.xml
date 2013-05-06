@@ -10,7 +10,7 @@
  	
  	<requires>
 		<type>elgg_release</type>
-		<version>1.8.13</version>
+		<version>1.8.15</version>
 	</requires>
 	
 	<requires>

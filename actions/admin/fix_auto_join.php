@@ -35,7 +35,7 @@
 					}
 					
 					// cleanup cache, to be sure
-					invalidate_cache_for_entity($user_guid);
+					_elgg_invalidate_cache_for_entity($user_guid);
 				}
 			}
 			
