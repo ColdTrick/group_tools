@@ -37,6 +37,9 @@
 					if(empty($filter) && ($default_filter = elgg_get_plugin_setting("group_listing", "group_tools"))){
 						$filter = $default_filter;
 						set_input("filter", $default_filter);
+					} elseif(empty($filter)) {
+						$filter = "newest";
+						set_input("filter", $filter);
 					}
 					
 					if(in_array($filter, array("open", "closed", "alpha", "ordered"))){
@@ -263,11 +266,11 @@
 	
 	/**
 	 * Allows the edit of default access
-	 * 
+	 *
 	 * See:
 	 * @link http://trac.elgg.org/ticket/4415
 	 * @link https://github.com/Elgg/Elgg/pull/253
-	 * 
+	 *
 	 * @param string $hook
 	 * @param string $type
 	 * @param int $return_value
@@ -296,7 +299,7 @@
 							break;
 						default:
 							$result = $site_group_access;
-							break; 
+							break;
 					}
 				}
 			}
