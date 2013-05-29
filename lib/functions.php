@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	function group_tools_check_group_email_invitation($invite_code, $group_guid = 0){
 		$result = false;
@@ -174,7 +174,7 @@
 	/**
 	 * Check if group creation is limited to site administrators
 	 * Also this function caches the result
-	 * 
+	 *
 	 * @return boolean
 	 */
 	function group_tools_is_group_creation_limited(){
@@ -326,8 +326,8 @@
 	
 	/**
 	 * Remove a user from an access collection,
-	 * can't use remove_user_from_access_collection() because user might not exists any more 
-	 * 
+	 * can't use remove_user_from_access_collection() because user might not exists any more
+	 *
 	 * @param int $user_guid
 	 * @param int $collection_id
 	 * @return boolean
@@ -359,5 +359,18 @@
 		$query .= " AND user_guid = " . $user_guid;
 	
 		return (bool) delete_data($query);
+	}
+	
+	/**
+	 * Custom callback to save memory and queries for group admin transfer
+	 *
+	 * @param stdClass $row from elgg_get_* function
+	 * @return array
+	 */
+	function group_tool_admin_transfer_callback($row) {
+		return array(
+			"guid" => (int) $row->guid,
+			"name" => $row->name
+		);
 	}
 	
