@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	$group_guid = (int) get_input("group_guid", 0);
 	$owner_guid = (int) get_input("owner_guid", 0);
@@ -10,6 +10,9 @@
 		if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup) && ($new_owner = get_user($owner_guid))){
 			if(($group->getOwnerGUID() == $loggedin_user->getGUID()) || $loggedin_user->isAdmin()){
 				if($group->getOwnerGUID() != $new_owner->getGUID()){
+					// register plugin hook to make sure transfer can complete
+					elgg_register_plugin_hook_handler("permissions_check", "group", "group_tools_admin_transfer_permissions_hook");
+					
 					$old_owner = $group->getOwnerEntity();
 					
 					// transfer ownership
@@ -59,7 +62,7 @@
 						
 						// move metadata of the group to the new owner
 						$options = array(
-							"guid" => $group->getGUID(), 
+							"guid" => $group->getGUID(),
 							"limit" => false
 						);
 						if($metadata = elgg_get_metadata($options)){
@@ -88,6 +91,9 @@
 					} else {
 						register_error(elgg_echo("group_tools:action:admin_transfer:error:save"));
 					}
+					
+					// unregister plugin hook for permissions
+					elgg_unregister_plugin_hook_handler("permissions_check", "group", "group_tools_admin_transfer_permissions_hook");
 				} else {
 					register_error(elgg_echo("group_tools:action:admin_transfer:error:self"));
 				}

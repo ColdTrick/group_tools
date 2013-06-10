@@ -331,3 +331,15 @@
 		return $result;
 	}
 	
+	function group_tools_admin_transfer_permissions_hook($hook, $type, $return_value, $params) {
+		$result = $return_value;
+	
+		if (!$result && !empty($params) && is_array($params)) {
+			if (($group = elgg_extract("entity", $params)) && elgg_instanceof($group, "group")) {
+				$result = true;
+			}
+		}
+	
+		return $result;
+	}
+	
