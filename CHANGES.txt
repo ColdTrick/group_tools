@@ -2,6 +2,7 @@
 x.x:
 
 - added: status icon when discussion is closed and fast action to close/open a topic
+- added: a widget to quickly start a discussion (index, dashboard and group context)
 - fixed: no tab selected in group listing when group_tools is first activated
 - fixed: group admin transfer no longer working for non admins
 - changed: performance improvement in group admin transfer

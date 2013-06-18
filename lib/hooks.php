@@ -278,6 +278,11 @@
 							$result = "/groups/member/" . $owner->username;
 						}
 						break;
+					case "start_discussion":
+						if (($owner = $widget->getOwnerEntity()) && elgg_instanceof($owner, "group")) {
+							$result = "/discussion/add/" . $owner->getGUID();
+						}
+						break;
 				}
 			}
 		}

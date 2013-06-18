@@ -123,6 +123,21 @@ elgg.group_tools.init = function(){
 	$('.group-tools-list-ordered').sortable({
 		update: elgg.group_tools.order_groups
 	});
+
+	// discussion start widget
+	if ($('#group-tools-start-discussion-widget-form').length) {
+		$('#group-tools-start-discussion-widget-form').submit(function() {
+			console.log($('#group-tools-discussion-quick-start-group').val());
+			var selected_group = $('#group-tools-discussion-quick-start-group').val();
+
+			$('#group-tools-discussion-quick-start-access_id option').removeAttr("selected");
+			$('#group-tools-discussion-quick-start-access_id option').each(function(index, elem) {
+				if ($(elem).html() == selected_group) {
+					$(elem).attr("selected", "selected");
+				}
+			});
+		});
+	}
 }
 
 
