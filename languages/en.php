@@ -217,6 +217,10 @@ To visit the group please click on the following link:
 		'group_tools:groups:sorting:closed' => "Closed",
 		'group_tools:groups:sorting:ordered' => "Ordered",
 	
+		// discussion status
+		'group_tools:discussion:confirm:open' => "Are you sure you wish to reopen this topic?",
+		'group_tools:discussion:confirm:close' => "Are you sure you wish to close this topic?",
+		
 		// actions
 		'group_tools:action:error:input' => "Invalid input to perform this action",
 		'group_tools:action:error:entities' => "The given GUIDs didn't result in the correct entities",
@@ -283,6 +287,10 @@ To visit the group please click on the following link:
 		'group_tools:action:fix_acl:success:missing' => "Successfully added %d users to group ACLs",
 		'group_tools:action:fix_acl:success:excess' => "Successfully removed %d users from group ACLs",
 		'group_tools:action:fix_acl:success:without' => "Successfully created %d group ACLs",
+		
+		// discussion toggle status
+		'group_tools:action:discussion:toggle_status:success:open' => "The topic was successfully reopened",
+		'group_tools:action:discussion:toggle_status:success:close' => "The topic was successfully closed",
 		
 		// Widgets
 		// Group River Widget

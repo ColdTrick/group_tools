@@ -1,5 +1,9 @@
 <?php
 $language = array (
+  'group_tools:discussion:confirm:open' => 'Weet je zeker dat je deze discussie wilt heropenen?',
+  'group_tools:discussion:confirm:close' => 'Weet je zeker dat je deze discussie wilt sluiten?',
+  'group_tools:action:discussion:toggle_status:success:open' => 'De discussie is succesvol heropent',
+  'group_tools:action:discussion:toggle_status:success:close' => 'De discussie is succesvol gesloten',
   'group_tools:cleanup:my_status' => 'Verberg de Mijn Status zijbalk',
   'group_tools:cleanup:my_status:explain' => 'In de zijbalk op de groepsprofiel pagina is er een item welke je informatie toont over je groepslidmaatschap. Tevens wordt hier andere status informatie getoond. Je kunt deze zijbalk verbergen.',
   'group_tools:settings:fix:title' => 'Los problemen met groep toegang op',
@@ -21,7 +25,7 @@ $language = array (
   'widgets:index_groups:filter:field' => 'Filter de groepen obv een profielveld',
   'widgets:index_groups:filter:value' => 'met de waarde',
   'widgets:index_groups:filter:no_filter' => 'Geen filter',
-  'widgets:index_groups:apply_sorting' => "Pas eventuele sortering toe",
+  'widgets:index_groups:apply_sorting' => 'Pas eventuele sortering toe',
   'group_tools:notifications:title' => 'Groepnotificaties',
   'group_tools:notifications:description' => 'Deze groep heeft %s leden, hiervan hebben %s notificaties op activiteit in deze groep ingeschakeld. Hieronder kun je dit aanpassen voor alle leden van de groep.',
   'group_tools:notifications:disclaimer' => 'Met grote groepen kan dit enige tijd duren.',

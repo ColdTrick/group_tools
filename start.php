@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	// define for default group access
 	define("GROUP_TOOLS_GROUP_ACCESS_DEFAULT", -10);
@@ -118,6 +118,8 @@
 		elgg_register_action("groups/decline_email_invitation", dirname(__FILE__) . "/actions/groups/decline_email_invitation.php");
 
 		elgg_register_action("group_tools/order_groups", dirname(__FILE__) . "/actions/order_groups.php", "admin");
+		
+		elgg_register_action("discussion/toggle_status", dirname(__FILE__) . "/actions/discussion/toggle_status.php");
 	}
 	
 	function group_tools_ready(){
@@ -161,9 +163,9 @@
 				if($page_owner->canEdit()){
 					$request_options = array(
 						"type" => "user",
-						"relationship" => "membership_request", 
-						"relationship_guid" => $page_owner->getGUID(), 
-						"inverse_relationship" => true, 
+						"relationship" => "membership_request",
+						"relationship_guid" => $page_owner->getGUID(),
+						"inverse_relationship" => true,
 						"count" => true
 					);
 					
@@ -204,7 +206,7 @@
 						'href' => "groups/mail/" . $page_owner->getGUID(),
 					));
 				}
-			}	
+			}
 		}
 		
 		if($page_owner instanceof ElggGroup){
@@ -230,7 +232,7 @@
 			JOIN {$dbprefix}entity_relationships er ON ac.owner_guid = er.guid_two
 			WHERE e.type = 'group'
 			AND er.relationship = 'member'
-			AND er.guid_one NOT IN 
+			AND er.guid_one NOT IN
 			(
 			SELECT acm.user_guid
 			FROM {$dbprefix}access_collections ac2

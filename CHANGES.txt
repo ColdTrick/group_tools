@@ -1,9 +1,11 @@
 = Version History =
 x.x:
 
+- added: status icon when discussion is closed and fast action to close/open a topic
 - fixed: no tab selected in group listing when group_tools is first activated
 - fixed: group admin transfer no longer working for non admins
 - changed: performance improvement in group admin transfer
+- changed: discussion list now shows in which group the discussion takes place (if not already clear)
 
 2.6 (2013-05-06):
 

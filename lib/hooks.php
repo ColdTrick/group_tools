@@ -193,22 +193,43 @@
 		return $result;
 	}
 	
-	function group_tools_menu_entity_handler($hook, $type, $return_value, $params){
-		$entity = $params["entity"];
-		if(elgg_in_context("widgets_groups_show_members") && elgg_instanceof($entity, "group")){
-			// number of members
-			$num_members = get_group_members($entity->guid, 10, 0, 0, true);
-			$members_string = elgg_echo('groups:member');
-			$options = array(
-					'name' => 'members',
-					'text' => $num_members . ' ' . $members_string,
-					'href' => false,
-					'priority' => 200,
-			);
-			$return_value[] = ElggMenuItem::factory($options);
-			return $return_value;
+	function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
+		$result = $return_value;
+		
+		if (!empty($params) && is_array($params)) {
+			
+			$entity = elgg_extract("entity", $params);
+			
+			if (elgg_in_context("widgets_groups_show_members") && elgg_instanceof($entity, "group")) {
+				// number of members
+				$num_members = $entity->getMembers(10, 0, true);
+				
+				$result[] = ElggMenuItem::factory(array(
+					"name" => "members",
+					"text" => $num_members . " " . elgg_echo("groups:member"),
+					"href" => false,
+					"priority" => 200,
+				));
+			} elseif (elgg_instanceof($entity, "object", "groupforumtopic") && $entity->canEdit()) {
+				$text = elgg_echo("close");
+				$confirm = elgg_echo("group_tools:discussion:confirm:close");
+				if ($entity->status == "closed") {
+					$text = elgg_echo("open");
+					$confirm = elgg_echo("group_tools:discussion:confirm:open");
+				}
+				
+				$result[] = ElggMenuItem::factory(array(
+					"name" => "status_change",
+					"text" => $text,
+					"confirm" => $confirm,
+					"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
+					"is_trusted" => true,
+					"priority" => 200
+				));
+			}
 		}
 		
+		return $result;
 	}
 	
 	function group_tools_widget_url_handler($hook, $type, $return_value, $params){
