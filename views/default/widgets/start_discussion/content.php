@@ -1,6 +1,7 @@
 <?php
 
 	$widget = elgg_extract("entity", $vars);
+	$embed = elgg_extract("embed", $vars, false);
 	
 	// check if logged if
 	if ($user = elgg_get_logged_in_user_entity()) {
@@ -34,7 +35,7 @@
 			);
 			
 			echo elgg_view_form("discussion/quick_start",  $form_vars, $body_vars);
-		} else {
+		} elseif (!$embed) {
 			// you must join a group in order to use this widget
 			$link_start = "<a href='" . elgg_get_site_url() . "/groups/all'>";
 			$link_end = "</a>";
@@ -42,7 +43,7 @@
 			$text = elgg_echo("group_tools:widgets:start_discussion:membership_required", array($link_start, $link_end));
 			echo elgg_view("output/longtext", array("value" => $text));
 		}
-	} else {
+	} elseif (!$embed) {
 		// you have to be logged in in order to use this widget
 		echo elgg_view("output/longtext", array("value" => elgg_echo("group_tools:widgets:start_discussion:login_required")));
 	}

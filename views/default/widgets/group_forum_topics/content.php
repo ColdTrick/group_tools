@@ -17,16 +17,14 @@
 		'pagination' => false,
 	);
 	
-	if($content = elgg_list_entities($options)){
-		echo $content;
-	} else {
-		echo elgg_echo("discussion:none");
+	// prepend a quick start form
+	$params = $vars;
+	$params["embed"] = true;
+	echo elgg_view("widgets/start_discussion/content", $params);
+	
+	// show discussion listing
+	if(!($content = elgg_list_entities($options))){
+		$content = elgg_echo("discussion:none");
 	}
-	    
-    $new_link = elgg_view('output/url', array(
-    	'href' => "discussion/add/" . $group->getGUID(),
-    	'text' => elgg_echo('groups:addtopic'),
-    	'is_trusted' => true,
-    ));
-    
-    echo "<div>" . $new_link . "</div>";
+	
+	echo $content;

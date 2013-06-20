@@ -4,6 +4,25 @@
 	$group_access_options = elgg_extract("access", $vars);
 	$selected_group = elgg_extract("container_guid", $vars, ELGG_ENTITIES_ANY_VALUE);
 	
+	global $form_count;
+	if (empty($form_count)) {
+		$form_count = 1;
+	} else {
+		$form_count++;
+	}
+	
+	// show a button to expend the form
+	echo elgg_view("output/url", array(
+		"text" => elgg_echo("discussion:add"),
+		"href" => "#group-tools-discussion-quick-start-wrapper-" . $form_count,
+		"is_trusted" => true,
+		"rel" => "toggle",
+		"class" => "elgg-button elgg-button-action"
+	));
+	
+	// start the form
+	echo "<div id='group-tools-discussion-quick-start-wrapper-" . $form_count . "' class='hidden'>";
+	
 	echo "<div>";
 	echo "<label for='group-tools-discussion-quick-start-group'>" . elgg_echo("group_tools:forms:discussion:quick_start:group") . "</label>";
 	echo "<br />";
@@ -31,3 +50,4 @@
 	echo elgg_view("input/submit", array("value" => elgg_echo("save")));
 	echo "</div>";
 	
+	echo "</div>"; // end wrapper

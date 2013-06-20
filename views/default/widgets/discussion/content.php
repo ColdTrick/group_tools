@@ -13,7 +13,7 @@ $options = array(
 	'order_by' => 'e.last_action desc',
 	"pagination" => false,
 	"full_view" => false
-); 
+);
 
 if($widget->group_only == "yes"){
 	$owner =  $widget->getOwnerEntity();
@@ -24,7 +24,7 @@ if($widget->group_only == "yes"){
 		$group_guids = array();
 		foreach($groups as $group){
 			$groups_guids[] = $group->getGUID();
-		} 	
+		}
 		$options["container_guids"] = $groups_guids;
 	}
 }
@@ -37,4 +37,10 @@ if(!($content = elgg_list_entities($options))){
 	$content .= "</div>";
 }
 
+// prepend a quick start form
+$params = $vars;
+$params["embed"] = true;
+echo elgg_view("widgets/start_discussion/content", $params);
+
+// view listing of discussions
 echo $content;
