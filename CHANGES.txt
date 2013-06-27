@@ -1,5 +1,5 @@
 = Version History =
-x.x:
+2.7 (2013-06-27):
 
 - added: status icon when discussion is closed and fast action to close/open a topic
 - added: a widget to quickly start a discussion (index, dashboard and group context)
