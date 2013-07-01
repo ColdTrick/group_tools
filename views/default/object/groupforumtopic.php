@@ -25,10 +25,12 @@ $poster_link = elgg_view('output/url', array(
 $poster_text = elgg_echo('groups:started', array($poster->name));
 $container_text = "";
 if (!elgg_get_page_owner_guid() || (elgg_get_page_owner_guid() != $group->getGUID())) {
+	if ($group instanceof ElggGroup) {
 		$container_text = elgg_echo("groups:ingroup") . " " . elgg_view("output/url", array(
 			"text" => $group->name,
 			"href" => $group->getURL(),
 			"is_trusted" => true));
+	}
 }
 
 
@@ -47,7 +49,7 @@ if ($num_replies != 0) {
 	$poster = $last_reply[0]->getOwnerEntity();
 	$reply_time = elgg_view_friendly_time($last_reply[0]->time_created);
 	$reply_text = elgg_echo('groups:updated', array($poster->name, $reply_time));
-	
+
 	$replies_link = elgg_view('output/url', array(
 		'href' => $topic->getURL() . '#group-replies',
 		'text' => elgg_echo('group:replies') . " ($num_replies)",
@@ -104,7 +106,7 @@ HTML;
 		"href" => $topic->getURL(),
 		"is_trusted" => true
 	));
-	
+
 	$subtitle = "$poster_text $container_text $date $replies_link <span class=\"groups-latest-reply\">$reply_text</span>";
 
 	$params = array(
