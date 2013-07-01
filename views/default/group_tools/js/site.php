@@ -12,7 +12,7 @@ elgg.group_tools.mail_form_submit = function(){
 		error_msg += elgg.echo("group_tools:mail:form:js:members") + '\n';
 		error_count++;
 	}
-	
+
 	if($(this).find('input[name="description"]').val() == ""){
 		error_msg += elgg.echo("group_tools:mail:form:js:description") + '\n';
 		error_count++;
@@ -23,7 +23,7 @@ elgg.group_tools.mail_form_submit = function(){
 	} else {
 		result = true;
 	}
-	
+
 	return result;
 }
 
@@ -127,7 +127,6 @@ elgg.group_tools.init = function(){
 	// discussion start widget
 	if ($('#group-tools-start-discussion-widget-form').length) {
 		$('#group-tools-start-discussion-widget-form').submit(function() {
-			console.log($('#group-tools-discussion-quick-start-group').val());
 			var selected_group = $('#group-tools-discussion-quick-start-group').val();
 
 			$('#group-tools-discussion-quick-start-access_id option').removeAttr("selected");
