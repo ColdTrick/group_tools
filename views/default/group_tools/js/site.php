@@ -128,13 +128,17 @@ elgg.group_tools.init = function(){
 	if ($('#group-tools-start-discussion-widget-form').length) {
 		$('#group-tools-start-discussion-widget-form').submit(function() {
 			var selected_group = $('#group-tools-discussion-quick-start-group').val();
-
-			$('#group-tools-discussion-quick-start-access_id option').removeAttr("selected");
-			$('#group-tools-discussion-quick-start-access_id option').each(function(index, elem) {
-				if ($(elem).html() == selected_group) {
-					$(elem).attr("selected", "selected");
-				}
-			});
+			if (selected_group !== "0") {
+				$('#group-tools-discussion-quick-start-access_id option').removeAttr("selected");
+				$('#group-tools-discussion-quick-start-access_id option').each(function(index, elem) {
+					if ($(elem).html() == selected_group) {
+						$(elem).attr("selected", "selected");
+					}
+				});
+			} else {
+				elgg.register_error(elgg.echo("group_tools:forms:discussion:quick_start:group:required"));
+				return false;
+			}
 		});
 	}
 }
