@@ -1,11 +1,17 @@
 <?php
 $language = array (
+  'group_tools:settings:invite_members' => 'Mogen groepsleden andere gebruikers uitnodigen',
+  'group_tools:settings:invite_members:default_off' => 'Ja, standaard uit',
+  'group_tools:settings:invite_members:default_on' => 'Ja, standaard aan',
+  'group_tools:settings:invite_members:description' => 'Groep eigenaren/beheerders kunnen dit aan- / uitzetten foor hun groep',
+  'group_tools:invite_members:title' => 'Groepsleden mogen uitnodigen',
+  'group_tools:invite_members:description' => 'Mogen de leden van deze groep nieuwe leden uitnodigen',
   'group_tools:widgets:start_discussion:title' => 'Begin een discussie',
   'group_tools:widgets:start_discussion:description' => 'Begin snel een discussie in de geselecteerde groep',
   'group_tools:widgets:start_discussion:login_required' => 'Om gebruik te kunnen maken van deze widget moet je zijn aangemeld',
   'group_tools:widgets:start_discussion:membership_required' => 'Je moet van ten minste één groep lid zijn om gebruik te kunnen maken. %sHier%s kun je interessante groepen vinden.',
   'group_tools:forms:discussion:quick_start:group' => 'Selecteer een groep voor deze discussie',
-  'group_tools:forms:discussion:quick_start:group:required' => "Selecteer een groep",
+  'group_tools:forms:discussion:quick_start:group:required' => 'Selecteer een groep',
   'group_tools:discussion:confirm:open' => 'Weet je zeker dat je deze discussie wilt heropenen?',
   'group_tools:discussion:confirm:close' => 'Weet je zeker dat je deze discussie wilt sluiten?',
   'group_tools:action:discussion:toggle_status:success:open' => 'De discussie is succesvol heropent',

@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * Elgg groups plugin
-	 * 
+	 *
 	 * @package ElggGroups
 	 */
 
@@ -18,7 +18,7 @@
 		$toggle_content .= "<span class='hidden'>" . elgg_echo("group_tools:group:invite:friends:deselect_all") . "</span>";
 		
 		$friendspicker = elgg_view("output/url", array("text" => $toggle_content, "href" => "javascript:void(0);", "onclick" => "group_tools_toggle_all_friends();", "id" => "friends_toggle", "class" => "float-alt elgg-button elgg-button-action"));
-		$friendspicker .= elgg_view('input/friendspicker', array('entities' => $friends, 'name' => 'user_guid', 'highlight' => 'all'));	
+		$friendspicker .= elgg_view('input/friendspicker', array('entities' => $friends, 'name' => 'user_guid', 'highlight' => 'all'));
 	} else {
 		$friendspicker = elgg_echo('groups:nofriendsatall');
 	}
@@ -53,7 +53,7 @@
 			
 			$form_data .= "<div id='group_tools_group_invite_users'>";
 			$form_data .= "<div>" . elgg_echo("group_tools:group:invite:users:description") . "</div>";
-			$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid", 
+			$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
 																				"id" => "group_tools_group_invite_autocomplete",
 																				"group_guid" => $group->getGUID(),
 																				"relationship" => "site"));
@@ -77,7 +77,7 @@
 			
 			$form_data .= "<div id='group_tools_group_invite_email'>";
 			$form_data .= "<div>" . elgg_echo("group_tools:group:invite:email:description") . "</div>";
-			$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid", 
+			$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
 																				"id" => "group_tools_group_invite_autocomplete_email",
 																				"group_guid" => $group->getGUID(),
 																				"relationship" => "email"));
@@ -109,10 +109,12 @@
 	$form_data .= elgg_view_module("aside", elgg_echo("group_tools:group:invite:text"), elgg_view("input/longtext", array("name" => "comment")));
 	
 	// renotify existing invites
-	$form_data .= "<div>";
-	$form_data .= "<input type='checkbox' name='resend' value='yes' />";
-	$form_data .= "&nbsp;" . elgg_echo("group_tools:group:invite:resend");
-	$form_data .= "</div>";
+	if ($group->canEdit()) {
+		$form_data .= "<div>";
+		$form_data .= "<input type='checkbox' name='resend' value='yes' />";
+		$form_data .= "&nbsp;" . elgg_echo("group_tools:group:invite:resend");
+		$form_data .= "</div>";
+	}
 	
 	// build tabs
 	if(!empty($tabs)){

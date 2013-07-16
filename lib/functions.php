@@ -374,3 +374,29 @@
 		);
 	}
 	
+	function group_tools_allow_members_invite(ElggGroup $group) {
+		$result = false;
+		
+		if (!empty($group) && elgg_instanceof($group, "group")) {
+			// only for group members
+			if ($group->isMember(elgg_get_logged_in_user_entity())) {
+				// is this even allowed
+				if (($setting = elgg_get_plugin_setting("invite_members", "group_tools")) && in_array($setting, array("yes_off", "yes_on"))) {
+					$invite_members = $group->invite_members;
+					if (empty($invite_members)) {
+						$invite_members = "no";
+						if ($setting == "yes_on") {
+							$invite_members = "yes";
+						}
+					}
+					
+					if ($invite_members == "yes") {
+						$result = true;
+					}
+				}
+			}
+		}
+		
+		return $result;
+	}
+	

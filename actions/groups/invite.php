@@ -49,8 +49,8 @@
 		$resend = false;
 	}
 	
-	if ((!empty($user_guids) || !empty($emails) || !empty($csv)) && ($group = get_entity($group_guid))){
-		if(($group instanceof ElggGroup) && $group->canEdit()){
+	if ((!empty($user_guids) || !empty($emails) || !empty($csv)) && ($group = get_entity($group_guid))) {
+		if (($group instanceof ElggGroup) && ($group->canEdit() || group_tools_allow_members_invite($group))) {
 			// show hidden (unvalidated) users
 			$hidden = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
@@ -62,12 +62,12 @@
 			$join = 0;
 			
 			// invite existing users
-			if(!empty($user_guids)){
-				if(!$adding){
+			if (!empty($user_guids)) {
+				if (!$adding) {
 					// invite users
 					foreach ($user_guids as $u_id) {
 						if ($user = get_user($u_id)) {
-							if(!$group->isMember($user)){
+							if (!$group->isMember($user)) {
 								if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID()) || $resend) {
 									if (group_tools_invite_user($group, $user, $text, $resend)) {
 										$invited++;
@@ -83,10 +83,10 @@
 					}
 				} else {
 					// add users directly
-					foreach($user_guids as $u_id){
-						if($user = get_user($u_id)){
-							if(!$group->isMember($user)){
-								if(group_tools_add_user($group, $user, $text)){
+					foreach ($user_guids as $u_id) {
+						if ($user = get_user($u_id)) {
+							if (!$group->isMember($user)) {
+								if (group_tools_add_user($group, $user, $text)) {
 									$join++;
 								}
 							} else {
@@ -98,51 +98,51 @@
 			}
 			
 			// Invite member by e-mail address
-			if(!empty($emails)){
-				foreach($emails as $email){
+			if (!empty($emails)) {
+				foreach ($emails as $email) {
 					$invite_result = group_tools_invite_email($group, $email, $text, $resend);
-					if($invite_result === true){
+					if ($invite_result === true) {
 						$invited++;
-					} elseif($invite_result === null){
+					} elseif ($invite_result === null) {
 						$already_invited++;
 					}
 				}
 			}
 			
 			// invite from csv
-			if(!empty($csv)){
+			if (!empty($csv)) {
 				$file_location = $_FILES["csv"]["tmp_name"];
 				
-				if($fh = fopen($file_location, "r")){
-					while(($data = fgetcsv($fh, 0, ";")) !== false){
+				if ($fh = fopen($file_location, "r")) {
+					while (($data = fgetcsv($fh, 0, ";")) !== false) {
 						/*
 						 * data structure
 						 * data[0] => displayname
 						 * data[1] => e-mail address
 						 */
 						$email = "";
-						if(isset($data[1])){
+						if (isset($data[1])) {
 							$email = trim($data[1]);
 						}
 						
-						if(!empty($email) && is_email_address($email)){
-							if($users = get_user_by_email($email)){
+						if (!empty($email) && is_email_address($email)) {
+							if ($users = get_user_by_email($email)) {
 								// found a user with this email on the site, so invite (or add)
 								$user = $users[0];
 								
-								if(!$group->isMember($user)){
-									if(!$adding){
+								if (!$group->isMember($user)) {
+									if (!$adding) {
 										if (!check_entity_relationship($group->getGUID(), "invited", $user->getGUID()) || $resend) {
 											// invite user
-											if(group_tools_invite_user($group, $user, $text, $resend)){
+											if (group_tools_invite_user($group, $user, $text, $resend)) {
 												$invited++;
 											}
 										} else {
 											// user was already invited
 											$already_invited++;
-										} 
+										}
 									} else {
-										if(group_tools_add_user($group, $user, $text)){
+										if (group_tools_add_user($group, $user, $text)) {
 											$join++;
 										}
 									}
@@ -153,9 +153,9 @@
 								// user not found so invite based on email address
 								$invite_result = group_tools_invite_email($group, $email, $text, $resend);
 								
-								if($invite_result === true){
+								if ($invite_result === true) {
 									$invited++;
-								} elseif($invite_result === null){
+								} elseif ($invite_result === null) {
 									$already_invited++;
 								}
 							}
@@ -168,14 +168,14 @@
 			access_show_hidden_entities($hidden);
 			
 			// which message to show
-			if(!empty($invited) || !empty($join)){
-				if(!$adding){
+			if (!empty($invited) || !empty($join)) {
+				if (!$adding) {
 					system_message(elgg_echo("group_tools:action:invite:success:invite", array($invited, $already_invited, $member)));
 				} else {
 					system_message(elgg_echo("group_tools:action:invite:success:add", array($join, $already_invited, $member)));
 				}
 			} else {
-				if(!$adding){
+				if (!$adding) {
 					register_error(elgg_echo("group_tools:action:invite:error:invite", array($already_invited, $member)));
 				} else {
 					register_error(elgg_echo("group_tools:action:invite:error:add", array($already_invited, $member)));

@@ -1,4 +1,9 @@
 = Version History =
+
+x.x:
+
+- added: option to allow group members to invite more members
+
 2.7 (2013-06-27):
 
 - added: status icon when discussion is closed and fast action to close/open a topic

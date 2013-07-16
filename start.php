@@ -77,6 +77,9 @@
 		// group notifications
 		elgg_extend_view("groups/edit", "group_tools/forms/notifications", 375);
 		
+		// allow group members to invite new members
+		elgg_extend_view("groups/edit", "group_tools/forms/invite_members", 475);
+		
 		// show group status in owner block
 		elgg_extend_view("page/elements/owner_block/extend", "group_tools/owner_block");
 		// show group status in stats (on group profile)
@@ -111,6 +114,7 @@
 		elgg_register_action("group_tools/profile_widgets", dirname(__FILE__) . "/actions/profile_widgets.php");
 		elgg_register_action("group_tools/cleanup", dirname(__FILE__) . "/actions/cleanup.php");
 		elgg_register_action("group_tools/default_access", dirname(__FILE__) . "/actions/default_access.php");
+		elgg_register_action("group_tools/invite_members", dirname(__FILE__) . "/actions/invite_members.php");
 		
 		elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/admin/toggle_auto_join.php", "admin");
 		elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/admin/fix_auto_join.php", "admin");

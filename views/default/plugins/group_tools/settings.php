@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	$plugin = $vars["entity"];
 	
@@ -11,6 +11,12 @@
 	$noyes_options = array(
 		"no" => elgg_echo("option:no"),
 		"yes" => elgg_echo("option:yes")
+	);
+	
+	$noyes3_options = array(
+		"no" => elgg_echo("option:no"),
+		"yes_off" => elgg_echo("group_tools:settings:invite_members:default_off"),
+		"yes_on" => elgg_echo("group_tools:settings:invite_members:default_on")
 	);
 	
 	$listing_options = array(
@@ -74,7 +80,7 @@
 	foreach($listing_options as $tab => $tab_title){
 		$tab_setting_name = "group_listing_" . $tab . "_available";
 		$checkbox_options = array(
-				"name" => "params[" . $tab_setting_name . "]", 
+				"name" => "params[" . $tab_setting_name . "]",
 				"value" => 1
 				);
 		$tab_value = $plugin->$tab_setting_name;
@@ -113,6 +119,12 @@
 	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[invite_csv]", "options_values" => $noyes_options, "value" => $plugin->invite_csv));
 	$body .= "</div>";
 	
+	$body .= "<div>";
+	$body .= elgg_echo("group_tools:settings:invite_members");
+	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[invite_members]", "options_values" => $noyes3_options, "value" => $plugin->invite_members));
+	$body .= "<div class='plm elgg-subtext'>" . elgg_echo("group_tools:settings:invite_members:description") . "</div>";
+	$body .= "</div>";
+	
 	echo elgg_view_module("inline", $title, $body);
 
 	// group default access settings
@@ -142,7 +154,7 @@
 	echo elgg_view_module("inline", $title, $body);
 	
 	// check group auto join settings
-	if(!empty($auto_joins)) { 
+	if(!empty($auto_joins)) {
 		$title = elgg_echo("group_tools:settings:auto_join");
 		
 		$content = "<div>" . elgg_echo("group_tools:settings:auto_join:description") . "</div>";
@@ -159,7 +171,7 @@
 				$content .= "<td>" . elgg_view("output/url", array("href" => $group->getURL(), "text" => $group->name)) . "</td>";
 				$content .= "<td style='width: 25px'>";
 				$content .= elgg_view("output/confirmlink", array(
-					"href" => $vars["url"] . "action/group_tools/toggle_auto_join?group_guid=" . $group->getGUID(), 
+					"href" => $vars["url"] . "action/group_tools/toggle_auto_join?group_guid=" . $group->getGUID(),
 					"title" => elgg_echo("group_tools:remove"),
 					"text" => elgg_view_icon("delete")));
 				$content .= "</td>";

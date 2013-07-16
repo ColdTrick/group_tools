@@ -35,6 +35,10 @@
 		'group_tools:settings:invite' => "Allow all users to be invited (not just friends)",
 		'group_tools:settings:invite_email' => "Allow all users to be invited by e-mail address",
 		'group_tools:settings:invite_csv' => "Allow all users to be invited by CSV-file",
+		'group_tools:settings:invite_members' => "Allow group members to invite new users",
+		'group_tools:settings:invite_members:default_off' => "Yes, default off",
+		'group_tools:settings:invite_members:default_on' => "Yes, default on",
+		'group_tools:settings:invite_members:description' => "Group owners/admins can enable/disable this for their group",
 
 		'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
 
@@ -220,6 +224,10 @@ To visit the group please click on the following link:
 		// discussion status
 		'group_tools:discussion:confirm:open' => "Are you sure you wish to reopen this topic?",
 		'group_tools:discussion:confirm:close' => "Are you sure you wish to close this topic?",
+		
+		// allow group members to invite
+		'group_tools:invite_members:title' => "Group members can invite",
+		'group_tools:invite_members:description' => "Allow the members of this group to invite new members",
 
 		// actions
 		'group_tools:action:error:input' => "Invalid input to perform this action",
@@ -291,7 +299,7 @@ To visit the group please click on the following link:
 		// discussion toggle status
 		'group_tools:action:discussion:toggle_status:success:open' => "The topic was successfully reopened",
 		'group_tools:action:discussion:toggle_status:success:close' => "The topic was successfully closed",
-
+		
 		// Widgets
 		// Group River Widget
 		'widgets:group_river_widget:title' => "Group activity",
