@@ -4,6 +4,7 @@ $language = array (
   'group_tools:settings:invite_members:default_off' => 'Ja, standaard uit',
   'group_tools:settings:invite_members:default_on' => 'Ja, standaard aan',
   'group_tools:settings:invite_members:description' => 'Groep eigenaren/beheerders kunnen dit aan- / uitzetten foor hun groep',
+  'group_tools:settings:show_membership_mode' => "Toon open/gesloten lidmaatschap status op het profiel van een groep en in de zijbalk",
   'group_tools:invite_members:title' => 'Groepsleden mogen uitnodigen',
   'group_tools:invite_members:description' => 'Mogen de leden van deze groep nieuwe leden uitnodigen',
   'group_tools:widgets:start_discussion:title' => 'Begin een discussie',

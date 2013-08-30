@@ -13,6 +13,8 @@
 		"yes" => elgg_echo("option:yes")
 	);
 	
+	$yesno_options = array_reverse($noyes_options);
+	
 	$noyes3_options = array(
 		"no" => elgg_echo("option:no"),
 		"yes_off" => elgg_echo("group_tools:settings:invite_members:default_off"),
@@ -28,9 +30,7 @@
 		"alpha" => elgg_echo("group_tools:groups:sorting:alphabetical"),
 		"ordered" => elgg_echo("group_tools:groups:sorting:ordered"),
 	);
-	
-	
-	
+		
 	if($auto_joins = $plugin->auto_join){
 		$auto_joins = string_to_tag_array($auto_joins);
 	}
@@ -53,6 +53,11 @@
 	$body .= "<div>";
 	$body .= elgg_echo("group_tools:settings:auto_notification");
 	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[auto_notification]", "options_values" => $noyes_options, "value" => $plugin->auto_notification));
+	$body .= "</div>";
+	
+	$body .= "<div>";
+	$body .= elgg_echo("group_tools:settings:show_membership_mode");
+	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_membership_mode]", "options_values" => $yesno_options, "value" => $plugin->show_membership_mode));
 	$body .= "</div>";
 	
 	$body .= "<br />";

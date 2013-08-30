@@ -50,6 +50,7 @@
 
 		'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 		'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
+		'group_tools:settings:show_membership_mode' => "Show open/closed membership status on group profile and owner block",
 		'group_tools:settings:auto_join' => "Auto join groups",
 		'group_tools:settings:auto_join:description' => "New users will automaticly join the following groups",
 
