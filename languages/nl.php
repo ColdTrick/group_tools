@@ -191,7 +191,7 @@ Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende co
   'group_tools:admin_transfer:myself' => 'Mijzelf',
   'group_tools:admin_transfer:submit' => 'Overdragen',
   'group_tools:admin_transfer:no_users' => 'Geen leden of vrienden om eigendom naar over te dragen',
-  'group_tools:admin_transfer:confirm' => 'Weet je zeken dat je het eigendom wilt overdragen?',
+  'group_tools:admin_transfer:confirm' => 'Weet je zeker dat je het eigendom wilt overdragen?',
   'group_tools:multiple_admin:group_admins' => 'Groep beheerders',
   'group_tools:multiple_admin:profile_actions:remove' => 'Verwijder groep beheerder',
   'group_tools:multiple_admin:profile_actions:add' => 'Maak groep beheerder',
