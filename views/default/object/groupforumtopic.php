@@ -24,8 +24,8 @@ $poster_link = elgg_view('output/url', array(
 ));
 $poster_text = elgg_echo('groups:started', array($poster->name));
 $container_text = "";
-if (!elgg_get_page_owner_guid() || (elgg_get_page_owner_guid() != $group->getGUID())) {
-	if ($group instanceof ElggGroup) {
+if ($group instanceof ElggGroup) {
+	if (!elgg_get_page_owner_guid() || (elgg_get_page_owner_guid() != $group->getGUID())) {
 		$container_text = elgg_echo("groups:ingroup") . " " . elgg_view("output/url", array(
 			"text" => $group->name,
 			"href" => $group->getURL(),
