@@ -400,3 +400,21 @@
 		return $result;
 	}
 	
+	/**
+	 * Custom annotations delete function because logged out users can't delete annotations
+	 *
+	 * @param array $annotations
+	 */
+	function group_tools_delete_annotations($annotations) {
+	
+		if (!empty($annotations) && is_array($annotations)) {
+			$dbprefix = elgg_get_config("dbprefix");
+				
+			foreach ($annotations as $annotation) {
+				if (elgg_trigger_event("delete", "annotation", $annotation)) {
+					delete_data("DELETE from {$dbprefix}annotations where id=" . $annotation->id);
+				}
+			}
+		}
+	}
+	
