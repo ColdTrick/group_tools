@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * Edit the widget
-	 * 
+	 *
 	 */
 
 	$widget = $vars["entity"];
@@ -35,7 +35,7 @@
 	
 	$filter_selector = elgg_view("input/dropdown", array("name" => "params[activity_filter]", "value" => $widget->activity_filter, "options_values" => $filter_contents));
 	
-	if($widget->context != "groups"){
+	if ($widget->context != "groups") {
 	    //the user of the widget
 		$owner = $widget->getOwnerEntity();
 	      
@@ -45,7 +45,7 @@
 			"limit" => false
 		);
 		
-		if($widget->context != "index"){
+		if (elgg_instanceof($owner, "user")) {
 			$options["relationship"] = "member";
 			$options["relationship_guid"] = $owner->getGUID();
 		}
@@ -62,7 +62,7 @@
 			
 			// make options
 			echo "<div>";
-			echo elgg_echo('widgets:group_river_widget:edit:num_display'); 
+			echo elgg_echo('widgets:group_river_widget:edit:num_display');
 			echo " " . elgg_view("input/dropdown", array("options" => range(5, 25, 5), "value" => $num_display, "name" => "params[num_display]"));
 			echo "</div>";
 			
@@ -80,7 +80,7 @@
 	    }
 	} else {
 		echo "<div>";
-		echo elgg_echo('widgets:group_river_widget:edit:num_display'); 
+		echo elgg_echo('widgets:group_river_widget:edit:num_display');
 		echo " " . elgg_view("input/dropdown", array("options" => range(5, 25, 5), "value" => $num_display, "name" => "params[num_display]"));
 		echo "</div>";
 		
