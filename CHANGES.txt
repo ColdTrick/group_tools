@@ -4,6 +4,7 @@ x.x:
 
 - added: option to allow group members to invite more members
 - fixed: crash when listing a forum topic of a hidden group
+- fixed: email invites are not cleaned up on register
 
 2.7 (2013-06-27):
 

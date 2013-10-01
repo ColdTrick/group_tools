@@ -33,7 +33,7 @@
 					}
 				}
 				
-				// cleanup invites 
+				// cleanup invites
 				remove_entity_relationship($group->getGUID(), "invited", $user->getGUID());
 				
 				// and requests
@@ -46,7 +46,11 @@
 					"limit" => false
 				);
 				
-				elgg_delete_annotations($options);
+				if (elgg_is_logged_in()) {
+					elgg_delete_annotations($options);
+				} elseif ($annotations = elgg_get_annotations($options)) {
+					group_tools_delete_annotations($annotations);
+				}
 			}
 		}
 	}
