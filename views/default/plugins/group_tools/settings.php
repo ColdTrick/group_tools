@@ -29,6 +29,7 @@
 		"closed" => elgg_echo("group_tools:groups:sorting:closed"),
 		"alpha" => elgg_echo("group_tools:groups:sorting:alphabetical"),
 		"ordered" => elgg_echo("group_tools:groups:sorting:ordered"),
+		"suggested" => elgg_echo("group_tools:groups:sorting:suggested"),
 	);
 		
 	if ($auto_joins = $plugin->auto_join) {
@@ -58,6 +59,11 @@
 	$body .= "<div>";
 	$body .= elgg_echo("group_tools:settings:show_membership_mode");
 	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_membership_mode]", "options_values" => $yesno_options, "value" => $plugin->show_membership_mode));
+	$body .= "</div>";
+
+	$body .= "<div>";
+	$body .= elgg_echo("group_tools:settings:auto_suggest_groups");
+	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[auto_suggest_groups]", "options_values" => $yesno_options, "value" => $plugin->auto_suggest_groups));
 	$body .= "</div>";
 	
 	$body .= "<br />";

@@ -42,7 +42,7 @@
 						set_input("filter", $filter);
 					}
 					
-					if(in_array($filter, array("open", "closed", "alpha", "ordered"))){
+					if(in_array($filter, array("open", "closed", "alpha", "ordered", "suggested"))){
 						// we will handle the output
 						$result = false;
 						
