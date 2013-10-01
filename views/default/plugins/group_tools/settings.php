@@ -190,7 +190,6 @@
 	}
 	
 	// fix some problems with groups
-	$title = elgg_echo("group_tools:settings:fix:title");
 	
 	$rows = array();
 	
@@ -260,8 +259,8 @@
 		}
 		
 		$content .= "</table>";
-	} else {
-		$content = elgg_echo("group_tools:settings:fix:nothing");
+		
+		echo elgg_view_module("inline", elgg_echo("group_tools:settings:fix:title"), $content);
 	}
 	
-	echo elgg_view_module("inline", $title, $content);
+	
