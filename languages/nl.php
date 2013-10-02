@@ -1,5 +1,6 @@
 <?php
 $language = array (
+  'group_tools:suggested_groups:info' => 'De volgende groepen zijn mogelijk interessant voor je. Klik op "Wordt lid" om direct lid te worden, of klik op de naam van de groep om meer informatie te zien.',
   'group_tools:settings:auto_suggest_groups' => 'Automatisch groepen voorstellen op de "Voorgesteld" pagina gebaseerd op profiel informatie. De lijst zal worden aangevuld met de voorgedefinieerde lijst van voorgestelde groepen. Als dit op "Nee" staat zullen alleen de voorgedefinieerde groepen worden getoond (als die er zijn)',
   'group_tools:settings:special_states' => 'Groepen met een speciale status',
   'group_tools:settings:special_states:featured' => 'Aangeraden',
