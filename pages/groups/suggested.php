@@ -1,17 +1,18 @@
 <?php
 
 // for consistency with other tabs
-elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('groups'));
 
 elgg_register_title_button();
 
 $selected_tab = "suggested";
 
-$groups = group_tools_get_suggested_groups();
+// limit to 9 so we can have a nice 3 x 3 grid
+$groups = group_tools_get_suggested_groups(elgg_get_logged_in_user_entity(), 9);
 if ($groups) {
 	// list suggested groups
-	$content = elgg_view_entity_list($groups, array("full_view" => false, "pagination" => false));
+	$content = elgg_view("output/text", array("value" => elgg_echo("group_tools:suggested_groups:info")));
+	$content .= elgg_view("group_tools/suggested", array("groups" => $groups));
 } else {
 	$content = elgg_echo("group_tools:suggested_groups:none");
 }

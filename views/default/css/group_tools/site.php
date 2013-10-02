@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 ?>
 
@@ -73,4 +73,20 @@
 
 #friends_toggle {
 	z-index: 1;
+}
+
+.group-tools-suggested-groups .elgg-item {
+	width: 33%;
+	text-align: center;
+}
+
+.group-tools-suggested-groups .elgg-item:hover {
+	background: #EFEFEF;
+}
+
+.group-tools-suggested-groups .elgg-item h3 {
+	padding-bottom: 5px;
+}
+.group-tools-suggested-groups .elgg-item > div {
+	padding: 10px;
 }

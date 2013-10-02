@@ -165,6 +165,16 @@ elgg.group_tools.init = function(){
 			}
 		});
 	}
+
+	// suggested groups join clicks
+	$(".group-tools-suggested-groups .elgg-button-action").live("click", function(){
+
+		elgg.action($(this).attr("href"));
+
+		$(this).css("visibility", "hidden");
+		
+		return false;
+	});
 }
 
 
