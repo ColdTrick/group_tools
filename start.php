@@ -11,7 +11,7 @@
 		
 		// extend css & js
 		elgg_extend_view("css/elgg", "group_tools/css/site");
-		elgg_extend_view("js/elgg", "group_tools/js/site");
+		elgg_extend_view("js/elgg", "js/group_tools/site");
 		
 		elgg_register_simplecache_view("css/group_tools/autocomplete");
 		elgg_register_css("group_tools.autocomplete", elgg_get_simplecache_url("css", "group_tools/autocomplete"));
@@ -58,7 +58,7 @@
 		elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
 		
 		// manage auto join for groups
-		elgg_extend_view("groups/edit", "group_tools/forms/auto_join", 350);
+		elgg_extend_view("groups/edit", "group_tools/forms/special_states", 350);
 		elgg_register_event_handler("create", "member_of_site", "group_tools_join_site_handler");
 		
 		// show group edit as tabbed
@@ -116,7 +116,7 @@
 		elgg_register_action("group_tools/default_access", dirname(__FILE__) . "/actions/default_access.php");
 		elgg_register_action("group_tools/invite_members", dirname(__FILE__) . "/actions/invite_members.php");
 		
-		elgg_register_action("group_tools/toggle_auto_join", dirname(__FILE__) . "/actions/admin/toggle_auto_join.php", "admin");
+		elgg_register_action("group_tools/toggle_special_state", dirname(__FILE__) . "/actions/admin/toggle_special_state.php", "admin");
 		elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/admin/fix_auto_join.php", "admin");
 		elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/admin/notifications.php", "admin");
 		elgg_register_action("group_tools/fix_acl", dirname(__FILE__) . "/actions/admin/fix_acl.php", "admin");

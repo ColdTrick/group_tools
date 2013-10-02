@@ -117,12 +117,14 @@ To visit the group please click on the following link:
 		'group_tools:admin_transfer:no_users' => "No members or friends to transfer ownership to.",
 		'group_tools:admin_transfer:confirm' => "Are you sure you wish to transfer ownership?",
 
-		// auto join form
-		'group_tools:auto_join:title' => "Auto join options",
-		'group_tools:auto_join:add' => "%sAdd this group%s to the auto join groups. This will mean that new users are automaticly added to this group on registration.",
-		'group_tools:auto_join:remove' => "%sRemove this group%s from the auto join groups. This will mean that new users will no longer automaticly join this group on registration.",
-		'group_tools:auto_join:fix' => "To make all site members a member of this group, please %sclick here%s.",
-
+		// special states form
+		'group_tools:special_states:title' => "Group special states",
+		'group_tools:special_states:description' => "A group can have several special states, here is an overview of the special states and their current value.",
+		'group_tools:special_states:featured' => "Is this group featured",
+		'group_tools:special_states:auto_join' => "Will users automaticly join this group",
+		'group_tools:special_states:auto_join:fix' => "To make all site members a member of this group, please %sclick here%s.",
+		'group_tools:special_states:suggested' => "Is this group suggested to (new) users",
+		
 		// group admins
 		'group_tools:multiple_admin:group_admins' => "Group admins",
 		'group_tools:multiple_admin:profile_actions:remove' => "Remove group admin",
@@ -270,9 +272,12 @@ To visit the group please click on the following link:
 		'group_tools:action:groups:decline_email_invitation:error:delete' => "An error occured while deleting the invitation",
 
 		// group toggle auto join
-		'group_tools:action:toggle_auto_join:error:save' => "An error occured while saving the new settings",
-		'group_tools:action:toggle_auto_join:success' => "The new settings were saved successfully",
-
+		'group_tools:action:toggle_special_state:error:auto_join' => "An error occured while saving the new auto join settings",
+		'group_tools:action:toggle_special_state:error:suggested' => "An error occured while saving the new suggested settings",
+		'group_tools:action:toggle_special_state:error:state' => "Invalid state provided",
+		'group_tools:action:toggle_special_state:auto_join' => "The new auto join settings were saved successfully",
+		'group_tools:action:toggle_special_state:suggested' => "The new suggested settings were saved successfully",
+		
 		// group fix auto_join
 		'group_tools:action:fix_auto_join:success' => "Group membership fixed: %s new members, %s were already a member and %s failures",
 

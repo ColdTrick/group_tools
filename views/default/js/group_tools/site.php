@@ -112,6 +112,30 @@ elgg.group_tools.order_groups = function(){
 	});
 }
 
+elgg.group_tools.toggle_featured = function(group_guid, element) {
+	var action_type = "";
+
+	if ($(element).val() == "yes") {
+		action_type = "feature";
+	}
+
+	elgg.action("action/groups/featured", {
+		data : {
+			group_guid: group_guid,
+			action_type: action_type
+		}
+	});
+}
+
+elgg.group_tools.toggle_special_state = function(state, group_guid) {
+	elgg.action("action/group_tools/toggle_special_state", {
+		data : {
+			group_guid: group_guid,
+			state: state
+		}
+	});
+}
+
 elgg.group_tools.init = function(){
 	// admin tranfser
 	$('#group_tools_admin_transfer_form').submit(elgg.group_tools.admin_transfer_confirm);
