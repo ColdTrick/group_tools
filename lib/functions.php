@@ -437,7 +437,7 @@
 		if ($user && ($limit > 0)) {
 			
 			$dbprefix = elgg_get_config("dbprefix");
-			$group_membership_where = "e.guid NOT IN (SELECT er.guid_two FROM {$dbprefix}entity_relationships er where er.guid_one = {$user->getGUID()} and er.relationship = 'member')";
+			$group_membership_where = "e.guid NOT IN (SELECT er.guid_two FROM {$dbprefix}entity_relationships er where er.guid_one = {$user->getGUID()} and er.relationship IN ('member', 'membership_request'))";
 
 			if (elgg_get_plugin_setting("auto_suggest_groups","group_tools") !== "no") {
 				$tag_names = elgg_get_registered_tag_metadata_names();
