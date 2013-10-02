@@ -469,6 +469,7 @@
 						$groups = elgg_get_entities_from_metadata($group_options);
 						foreach ($groups as $group) {
 							$result[$group->getGUID()] = $group;
+							$limit--;
 						}
 					}
 				}
@@ -476,13 +477,11 @@
 			
 			// get admin defined suggested groups
 			$group_guids = string_to_tag_array(elgg_get_plugin_setting("suggested_groups","group_tools"));
-			if (!empty($group_guids)) {
+			if (!empty($group_guids) && ($limit > 0)) {
 				$group_options = array(
 						"guids" => $group_guids,
 						"type" => "group",
 						"wheres" => array($group_membership_where),
-						"group_by" => "e.guid",
-						"order_by" => "count(msn.id) DESC",
 						"limit" => $limit
 				);
 				
