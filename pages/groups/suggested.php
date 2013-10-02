@@ -29,4 +29,4 @@ $params = array(
 
 $body = elgg_view_layout('content', $params);
 
-echo elgg_view_page(elgg_echo('groups:all'), $body);
+echo elgg_view_page(elgg_echo('group_tools:groups:sorting:suggested'), $body);
