@@ -422,10 +422,81 @@
 	 * Returns suggested groups
 	 *
 	 */
-	function group_tools_get_suggested_groups($user = null) {
-		$result = false;
+	function group_tools_get_suggested_groups($user = null, $limit = null) {
+		$result = array();
 		
-		// placeholder
+		if (!elgg_instanceof($user, "user")) {
+			$user = elgg_get_logged_in_user_entity();
+		}
+		
+		if (is_null($limit)) {
+			$limit = get_input("limit", 10);
+		}
+		$limit = sanitize_int($limit, false);
+		
+		if ($user && ($limit > 0)) {
+			
+			$dbprefix = elgg_get_config("dbprefix");
+			$group_membership_where = "e.guid NOT IN (SELECT er.guid_two FROM {$dbprefix}entity_relationships er where er.guid_one = {$user->getGUID()} and er.relationship = 'member')";
+
+			if (elgg_get_plugin_setting("auto_suggest_groups","group_tools") !== "no") {
+				$tag_names = elgg_get_registered_tag_metadata_names();
+				if (!empty($tag_names)) {
+					$user_metadata_options = array(
+							"guid" => $user->getGUID(),
+							"limit" => false,
+							"metadata_names" => $tag_names
+						);
+					
+					// get metadata
+					$user_values = elgg_get_metadata($user_metadata_options);
+					
+					if (!empty($user_values)) {
+						// transform to values
+						$user_values = metadata_array_to_values($user_values);
+						
+						// find group with these metadatavalues
+						$group_options = array(
+							"type" => "group",
+							"metadata_names" => $tag_names,
+							"metadata_values" => $user_values,
+							"wheres" => $group_membership_where,
+							"group_by" => "e.guid",
+							"order_by" => "count(msn.id) DESC",
+							"limit" => $limit
+						);
+						
+						$groups = elgg_get_entities_from_metadata($group_options);
+						foreach ($groups as $group) {
+							$result[$group->getGUID()] = $group;
+						}
+					}
+				}
+			}
+			
+			// get admin defined suggested groups
+			$group_guids = string_to_tag_array(elgg_get_plugin_setting("suggested_groups","group_tools"));
+			if (!empty($group_guids)) {
+				$group_options = array(
+						"guids" => $group_guids,
+						"type" => "group",
+						"wheres" => array($group_membership_where),
+						"group_by" => "e.guid",
+						"order_by" => "count(msn.id) DESC",
+						"limit" => $limit
+				);
+				
+				if (!empty($result)) {
+					$suggested_guids = array_keys($result);
+					$group_options["wheres"][] = "e.guid NOT IN (" . implode(",", $suggested_guids) . ")";
+				}
+				
+				$groups = elgg_get_entities($group_options);
+				foreach ($groups as $group) {
+					$result[$group->getGUID()] = $group;
+				}
+			}
+		}
 		
 		return $result;
 	}

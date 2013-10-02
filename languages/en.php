@@ -268,9 +268,12 @@ To visit the group please click on the following link:
 		'group_tools:action:groups:email_invitation:error:join' => "An unknown error occured while joining the group %s, maybe you're already a member",
 		'group_tools:action:groups:email_invitation:success' => "You've successfully joined the group",
 
-		// group - invite - edcline e-mail
+		// group - invite - decline e-mail
 		'group_tools:action:groups:decline_email_invitation:error:delete' => "An error occured while deleting the invitation",
 
+		// suggested groups
+		'group_tools:suggested_groups:none' => "We can't suggest a group for you. This can happen if we have to little information about you, or that you are already a member of the groups we like you to join. Use the search to find more groups.",
+			
 		// group toggle auto join
 		'group_tools:action:toggle_auto_join:error:save' => "An error occured while saving the new settings",
 		'group_tools:action:toggle_auto_join:success' => "The new settings were saved successfully",
