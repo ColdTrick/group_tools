@@ -52,8 +52,14 @@
 		'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 		'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
 		'group_tools:settings:show_membership_mode' => "Show open/closed membership status on group profile and owner block",
-		'group_tools:settings:auto_join' => "Auto join groups",
-		'group_tools:settings:auto_join:description' => "New users will automaticly join the following groups",
+		
+		'group_tools:settings:special_states' => "Groups with a special state",
+		'group_tools:settings:special_states:featured' => "Featured",
+		'group_tools:settings:special_states:featured:description' => "You have chosen to feature the following groups.",
+		'group_tools:settings:special_states:auto_join' => "Auto join",
+		'group_tools:settings:special_states:auto_join:description' => "New users will automaticly join the following groups.",
+		'group_tools:settings:special_states:suggested' => "Suggested",
+		'group_tools:settings:special_states:suggested:description' => "The following groups are suggested to (new) users. It is possible to auto suggest groups, if no groups are automaticly detected or too few, the list will be appended by these groups.",
 
 		'group_tools:settings:fix:title' => "Fix group access problems",
 		'group_tools:settings:fix:missing' => "There are %d users who are a member of a group but don't have access to the content shared with the group.",
