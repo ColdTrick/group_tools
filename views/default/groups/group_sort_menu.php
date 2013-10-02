@@ -42,7 +42,7 @@
 		),
 		"suggested" => array(
 			"text" => elgg_echo("group_tools:groups:sorting:suggested"),
-			"href" => "groups/all?filter=suggested",
+			"href" => "groups/suggested",
 			"priority" => 900,
 		),
 	);

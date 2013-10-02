@@ -50,6 +50,11 @@
 					}
 					
 					break;
+				case "suggested":
+					$result = false;
+					
+					include(dirname(dirname(__FILE__)) . "/pages/groups/suggested.php");
+					break;
 				case "requests":
 					$result = false;
 					
