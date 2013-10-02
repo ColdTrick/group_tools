@@ -10,7 +10,7 @@ if (!empty($groups)) {
 		
 		$join_url = "action/groups/join?group_guid={$group->getGUID()}";
 		
-		if ($group->isPublicMembership()) {
+		if ($group->isPublicMembership() || $group->canEdit()) {
 			$join_text = elgg_echo("groups:join");
 		} else {
 			// request membership
