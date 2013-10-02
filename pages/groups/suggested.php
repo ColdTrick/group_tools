@@ -1,5 +1,7 @@
 <?php
 
+gatekeeper();
+
 // for consistency with other tabs
 elgg_push_breadcrumb(elgg_echo('groups'));
 
