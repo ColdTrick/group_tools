@@ -55,7 +55,7 @@
 		
 		'group_tools:settings:special_states' => "Groups with a special state",
 		'group_tools:settings:special_states:featured' => "Featured",
-		'group_tools:settings:special_states:featured:description' => "You have chosen to feature the following groups.",
+		'group_tools:settings:special_states:featured:description' => "The site administrators have chosen to feature the following groups.",
 		'group_tools:settings:special_states:auto_join' => "Auto join",
 		'group_tools:settings:special_states:auto_join:description' => "New users will automaticly join the following groups.",
 		'group_tools:settings:special_states:suggested' => "Suggested",
