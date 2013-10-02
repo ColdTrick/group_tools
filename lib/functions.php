@@ -417,4 +417,16 @@
 			}
 		}
 	}
+
+	/**
+	 * Returns suggested groups
+	 *
+	 */
+	function group_tools_get_suggested_groups($user = null) {
+		$result = false;
+		
+		// placeholder
+		
+		return $result;
+	}
 	

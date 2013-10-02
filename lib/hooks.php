@@ -42,13 +42,18 @@
 						set_input("filter", $filter);
 					}
 					
-					if(in_array($filter, array("open", "closed", "alpha", "ordered"))){
+					if(in_array($filter, array("open", "closed", "alpha", "ordered", "suggested"))){
 						// we will handle the output
 						$result = false;
 						
 						include(dirname(dirname(__FILE__)) . "/pages/groups/all.php");
 					}
 					
+					break;
+				case "suggested":
+					$result = false;
+					
+					include(dirname(dirname(__FILE__)) . "/pages/groups/suggested.php");
 					break;
 				case "requests":
 					$result = false;

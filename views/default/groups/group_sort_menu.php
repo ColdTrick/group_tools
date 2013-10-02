@@ -40,6 +40,11 @@
 			"href" => "groups/all?filter=ordered",
 			"priority" => 800,
 		),
+		"suggested" => array(
+			"text" => elgg_echo("group_tools:groups:sorting:suggested"),
+			"href" => "groups/suggested",
+			"priority" => 900,
+		),
 	);
 	
 	foreach ($tabs as $name => $tab) {

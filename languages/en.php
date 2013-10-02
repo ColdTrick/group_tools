@@ -31,6 +31,7 @@
 		'group_tools:settings:admin_transfer:owner' => "Group owners and site admins",
 
 		'group_tools:settings:multiple_admin' => "Allow multiple group admins",
+		'group_tools:settings:auto_suggest_groups' => "Auto suggest groups on the 'Suggested' groups page based on profile information. Will be completed with the predefined suggested groups. Setting this to 'No' will only show the predefined suggested groups (if there are any).",
 
 		'group_tools:settings:invite' => "Allow all users to be invited (not just friends)",
 		'group_tools:settings:invite_email' => "Allow all users to be invited by e-mail address",
@@ -223,6 +224,7 @@ To visit the group please click on the following link:
 		'group_tools:groups:sorting:open' => "Open",
 		'group_tools:groups:sorting:closed' => "Closed",
 		'group_tools:groups:sorting:ordered' => "Ordered",
+		'group_tools:groups:sorting:suggested' => "Suggested",
 
 		// discussion status
 		'group_tools:discussion:confirm:open' => "Are you sure you wish to reopen this topic?",

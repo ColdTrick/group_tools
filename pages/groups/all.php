@@ -1,4 +1,4 @@
-<?php 
+<?php
 	// all groups doesn't get link to self
 	elgg_pop_breadcrumb();
 	elgg_push_breadcrumb(elgg_echo('groups'));
@@ -9,7 +9,7 @@
 
 	// default group options
 	$group_options = array(
-		"type" => "group", 
+		"type" => "group",
 		"full_view" => false,
 	);
 	

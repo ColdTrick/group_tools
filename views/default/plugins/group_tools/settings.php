@@ -29,9 +29,10 @@
 		"closed" => elgg_echo("group_tools:groups:sorting:closed"),
 		"alpha" => elgg_echo("group_tools:groups:sorting:alphabetical"),
 		"ordered" => elgg_echo("group_tools:groups:sorting:ordered"),
+		"suggested" => elgg_echo("group_tools:groups:sorting:suggested"),
 	);
 		
-	if($auto_joins = $plugin->auto_join){
+	if ($auto_joins = $plugin->auto_join) {
 		$auto_joins = string_to_tag_array($auto_joins);
 	}
 	
@@ -59,6 +60,11 @@
 	$body .= elgg_echo("group_tools:settings:show_membership_mode");
 	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_membership_mode]", "options_values" => $yesno_options, "value" => $plugin->show_membership_mode));
 	$body .= "</div>";
+
+	$body .= "<div>";
+	$body .= elgg_echo("group_tools:settings:auto_suggest_groups");
+	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[auto_suggest_groups]", "options_values" => $yesno_options, "value" => $plugin->auto_suggest_groups));
+	$body .= "</div>";
 	
 	$body .= "<br />";
 	
@@ -82,17 +88,18 @@
 	$body .= "<div>";
 	$body .= elgg_echo("group_tools:settings:listing:available");
 	$body .= "<ul class='mll'>";
-	foreach($listing_options as $tab => $tab_title){
+	
+	foreach ($listing_options as $tab => $tab_title) {
 		$tab_setting_name = "group_listing_" . $tab . "_available";
 		$checkbox_options = array(
 				"name" => "params[" . $tab_setting_name . "]",
 				"value" => 1
 				);
 		$tab_value = $plugin->$tab_setting_name;
-		if(($tab_value !== "0")){
-			if($tab == "ordered"){
+		if (($tab_value !== "0")) {
+			if ($tab == "ordered") {
 				// ordered tab is default disabled
-				if($tab_value !== null){
+				if ($tab_value !== null) {
 					$checkbox_options["checked"] = "checked";
 				}
 			} else {
@@ -150,7 +157,7 @@
 	
 	// check if we need to set a disclaimer
 	global $GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED;
-	if(empty($GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED)){
+	if (empty($GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED)) {
 		$body .= "<pre>";
 		$body .= elgg_echo("group_tools:settings:default_access:disclaimer");
 		$body .= "</pre>";
@@ -159,8 +166,7 @@
 	echo elgg_view_module("inline", $title, $body);
 	
 	// check group auto join settings
-	if(!empty($auto_joins)) {
-		$title = elgg_echo("group_tools:settings:auto_join");
+	if (!empty($auto_joins)) {
 		
 		$content = "<div>" . elgg_echo("group_tools:settings:auto_join:description") . "</div>";
 		
@@ -170,8 +176,8 @@
 		$content .= "<th colspan='2'>" . elgg_echo("groups:name") . "</th>";
 		$content .= "</tr>";
 		
-		foreach($auto_joins as $group_guid){
-			if($group = get_entity($group_guid)){
+		foreach ($auto_joins as $group_guid) {
+			if ($group = get_entity($group_guid)) {
 				$content .= "<tr>";
 				$content .= "<td>" . elgg_view("output/url", array("href" => $group->getURL(), "text" => $group->name)) . "</td>";
 				$content .= "<td style='width: 25px'>";
@@ -186,16 +192,15 @@
 		
 		$content .= "</table>";
 		
-		echo elgg_view_module("inline", $title, $content);
+		echo elgg_view_module("inline", elgg_echo("group_tools:settings:auto_join"), $content);
 	}
 	
 	// fix some problems with groups
-	$title = elgg_echo("group_tools:settings:fix:title");
 	
 	$rows = array();
 	
 	// check missing acl members
-	if($missing_acl_members = group_tools_get_missing_acl_users()){
+	if ($missing_acl_members = group_tools_get_missing_acl_users()) {
 		$rows[] = array(
 			elgg_echo("group_tools:settings:fix:missing", array(count($missing_acl_members))),
 			elgg_view("output/confirmlink", array(
@@ -209,7 +214,7 @@
 	}
 	
 	// check excess acl members
-	if($excess_acl_members = group_tools_get_excess_acl_users()){
+	if ($excess_acl_members = group_tools_get_excess_acl_users()) {
 		$rows[] = array(
 			elgg_echo("group_tools:settings:fix:excess", array(count($excess_acl_members))),
 			elgg_view("output/confirmlink", array(
@@ -223,7 +228,7 @@
 	}
 	
 	// check groups without acl
-	if($wrong_groups = group_tools_get_groups_without_acl()){
+	if ($wrong_groups = group_tools_get_groups_without_acl()) {
 		$rows[] = array(
 			elgg_echo("group_tools:settings:fix:without", array(count($wrong_groups))),
 			elgg_view("output/confirmlink", array(
@@ -237,7 +242,7 @@
 	}
 	
 	// fix everything at once
-	if(count($rows) > 1){
+	if (count($rows) > 1) {
 		$rows[] = array(
 			elgg_echo("group_tools:settings:fix:all:description"),
 			elgg_view("output/confirmlink", array(
@@ -250,18 +255,16 @@
 		);
 	}
 	
-	if(!empty($rows)){
+	if (!empty($rows)) {
 		$content = "<table class='elgg-table'>";
 		
 		foreach($rows as $row){
-			$content .= "<tr>";
-			$content .= "<td>" . implode("</td><td>", $row) . "</td>";
-			$content .= "</tr>";
+			$content .= "<tr><td>" . implode("</td><td>", $row) . "</td></tr>";
 		}
 		
 		$content .= "</table>";
-	} else {
-		$content = elgg_echo("group_tools:settings:fix:nothing");
+		
+		echo elgg_view_module("inline", elgg_echo("group_tools:settings:fix:title"), $content);
 	}
 	
-	echo elgg_view_module("inline", $title, $content);
+	
