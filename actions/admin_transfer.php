@@ -21,9 +21,12 @@
 					
 					// make sure user is added to the group
 					$group->join($new_owner);
-					
+									
 					if($group->save()){
 						$forward_url = $group->getURL();
+						
+						// remove existing group administrator role for new owner
+						remove_entity_relationship($new_owner->getGUID(), "group_admin", $group->getGUID());
 						
 						// check for group icon
 						if(!empty($group->icontime)){
