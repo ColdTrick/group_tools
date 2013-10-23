@@ -35,8 +35,8 @@
 			// register on group leave
 			elgg_register_event_handler("leave", "group", "group_tools_multiple_admin_group_leave");
             
-            //notify admin on membership request
-            elgg_register_event_handler('create', 'membership_request', 'group_tools_membership_request');
+			//notify admin on membership request
+			elgg_register_event_handler('create', 'membership_request', 'group_tools_membership_request');
 		}
 		
 		// register group activity widget
