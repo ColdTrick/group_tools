@@ -5,8 +5,10 @@
 	<version>2.7</version>
 	<description>Combines different group additions into one plugin.</description>
 	<website>http://www.coldtrick.com/</website>
-	<copyright>(C) ColdTrick IT Solutions 2009 - 2013</copyright>
-	<license>GNU Public License version 2</license>
+	<repository>https://github.com/ColdTrick/group_tools</repository>
+	<bugtracker>https://github.com/ColdTrick/group_tools/issues</bugtracker>
+	<copyright>(C) ColdTrick IT Solutions 2011 - 2013</copyright>
+	<license>GNU General Public License version 2</license>
  	
  	<requires>
 		<type>elgg_release</type>
