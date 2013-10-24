@@ -122,20 +122,12 @@
 			return;
 		}
 
-		// Notify group owner
-		$url = elgg_get_site_url() . "groups/requests/$group->guid";
-		$subject = elgg_echo('groups:request:subject', array(
-			$user->name,
-			$group->name,
-		));
-		$body = elgg_echo('groups:request:body', array(
-			$group->getOwnerEntity()->name,
-			$user->name,
-			$group->name,
-			$user->getURL(),
-			$url,
-		));
-
+		// only send a message if group admins are allowed
+		if (elgg_get_plugin_setting("multiple_admin", "group_tools") != "yes") {
+			return;
+		}
+		
+		// Notify group admins
 		$options = array(
 			"relationship" => "group_admin",
 			"relationship_guid" => $group->getGUID(),
@@ -148,12 +140,23 @@
 
 		$admins = elgg_get_entities_from_relationship($options);
 
-		$guids = array();
-		foreach ($admins as $a) {
-			$guids[] = $a->guid;
-		}
-
-		if ($guids) {
-			notify_user($guids, $user->getGUID(), $subject, $body);
+		$url = elgg_get_site_url() . "groups/requests/" . $group->getGUID();
+		$subject = elgg_echo("groups:request:subject", array(
+			$user->name,
+			$group->name,
+		));
+		
+		if (!empty($admins)) {
+			foreach ($admins as $a) {
+				$body = elgg_echo("groups:request:body", array(
+					$a->name,
+					$user->name,
+					$group->name,
+					$user->getURL(),
+					$url,
+				));
+				
+				notify_user($a->getGUID(), $user->getGUID(), $subject, $body);
+			}
 		}
 	}
