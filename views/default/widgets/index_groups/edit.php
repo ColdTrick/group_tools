@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	$widget = $vars["entity"];
 	
@@ -28,6 +28,17 @@
 		}
 	}
 	
+	$sorting_options = array(
+			"newest" => elgg_echo("groups:newest"),
+			"popular" => elgg_echo("groups:popular"),
+			"ordered" => elgg_echo("group_tools:groups:sorting:ordered")
+		);
+	
+	$sorting_value = $widget->sorting;
+	if (empty($sorting_value) && ($widget->apply_sorting == "yes")) {
+		$sorting_value = "ordered";
+	}
+	
 ?>
 <div>
 	<?php echo elgg_echo("widget:numbertodisplay"); ?><br />
@@ -35,21 +46,21 @@
 </div>
 
 <div>
-	<?php 
+	<?php
 		echo elgg_echo("widgets:index_groups:show_members");
 		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_members]", "options_values" => $noyes_options, "value" => $widget->show_members));
 	?>
 </div>
 
 <div>
-	<?php 
+	<?php
 		echo elgg_echo("widgets:index_groups:featured");
 		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[featured]", "options_values" => $noyes_options, "value" => $widget->featured));
 	?>
 </div>
 <?php if(!empty($tag_fields)) { ?>
 <div>
-	<?php 
+	<?php
 		$tag_fields = array_reverse($tag_fields);
 		$tag_fields[""] = elgg_echo("widgets:index_groups:filter:no_filter");
 		$tag_fields = array_reverse($tag_fields);
@@ -65,8 +76,8 @@
 </div>
 <?php } ?>
 <div>
-	<?php 
-		echo elgg_echo("widgets:index_groups:apply_sorting");
-		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[apply_sorting]", "options_values" => $noyes_options, "value" => $widget->apply_sorting));
+	<?php
+		echo elgg_echo("widgets:index_groups:sorting");
+		echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[sorting]", "options_values" => $sorting_options, "value" => $sorting_value));
 	?>
 </div>

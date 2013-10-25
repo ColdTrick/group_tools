@@ -352,10 +352,10 @@ To visit the group please click on the following link:
 		'widgets:group_forum_topics:description' => "Show the latest discussions",
 
 		// index_groups
-		'widgets:index_groups:description' => "Show the latest groups on your community",
+		'widgets:index_groups:description' => "List groups from your community",
 		'widgets:index_groups:show_members' => "Show members count",
 		'widgets:index_groups:featured' => "Show only featured groups",
-		'widgets:index_groups:apply_sorting' => "Apply sorting if available",
+		'widgets:index_groups:sorting' => "How to sort the groups",
 
 		'widgets:index_groups:filter:field' => "Filter groups based on group field",
 		'widgets:index_groups:filter:value' => "with value",
