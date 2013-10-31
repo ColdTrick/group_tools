@@ -1,11 +1,18 @@
 = Version History =
 
-x.x:
+2.8 (2013-10-31):
 
 - added: option to allow group members to invite more members
 - added: Portuguese-Brazilian translation (thanks to brunovb)
+- added: tags to quickstart discussion widget
+- added: suggested groups (based on profile information)
+- added: group admins are notified upon membership request #31 (thanks to Matt Beckett)
 - fixed: crash when listing a forum topic of a hidden group
 - fixed: email invites are not cleaned up on register
+- fixed: group owner should not be group admin #26
+- changed: better group selection in quickstart discussion widget
+- changed: showing group status (open/closed) is a plugin setting #3
+- changed: group index widget to include popular groups option #28
 
 2.7 (2013-06-27):
 
