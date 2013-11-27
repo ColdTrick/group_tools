@@ -67,6 +67,14 @@
 				// notify user
 				$subject = elgg_echo("group_tools:groups:invite:add:subject", array($group->name));
 				$msg = elgg_echo("group_tools:groups:invite:add:body", array($user->name, $loggedin_user->name, $group->name, $text, $group->getURL()));
+				
+				$params = array(
+					'group' => $group,
+					'inviter' => $loggedin_user,
+					'invitee' => $user
+				);
+				$msg = elgg_trigger_plugin_hook('invite_notification', 'group_tools', $params, $msg);
+
 					
 				if(notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, null, "email")){
 					$result = true;
@@ -124,6 +132,13 @@
 					elgg_get_site_url() . "groups/invitations/?invitecode=" . $invite_code,
 					$invite_code)
 				);
+				
+				$params = array(
+					'group' => $group,
+					'inviter' => $loggedin_user,
+					'invitee' => $email
+				);
+				$body = elgg_trigger_plugin_hook('invite_notification', 'group_tools', $params, $body);
 				
 				$result = elgg_send_email($site_from, $email, $subject, $body);
 			} else {
