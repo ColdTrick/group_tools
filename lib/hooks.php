@@ -55,6 +55,11 @@
 					
 					include(dirname(dirname(__FILE__)) . "/pages/groups/suggested.php");
 					break;
+				case "search":
+					$result = false;
+						
+					include(dirname(dirname(__FILE__)) . "/pages/groups/search.php");
+					break;
 				case "requests":
 					$result = false;
 					

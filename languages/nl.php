@@ -265,5 +265,8 @@ Het formaat moet zijn: weergave naam;e-mail adres. Er mag geen kopregel zijn.',
   'group_tools:cleanup:members:explain' => 'Op de groep profiel pagina staat op de aangegeven plaats een lijst met leden van de groep. Je kunt deze verbergen.',
   'group_tools:cleanup:featured' => 'Toon de aangereden groepen in het menu',
   'group_tools:cleanup:featured:explain' => 'Je kunt ervoor kiezen om op de groep profiel pagina een lijst met aangeraden groepen te tonen op de aangegeven plaats.',
+  'groups:search:tags' => "zoeken",
+  'groups:search:title' => "Zoek naar groepen met '%s'",
+  'groups:searchtag' => "Zoek naar groepen",
 );
 add_translation("nl", $language);
