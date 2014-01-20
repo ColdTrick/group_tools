@@ -90,3 +90,8 @@
 .group-tools-suggested-groups .elgg-item > div {
 	padding: 10px;
 }
+
+.elgg-icon-invisible-group {
+	background: transparent url(<?php echo elgg_get_site_url(); ?>mod/group_tools/_graphics/invisible_group2.png) no-repeat left;
+	vertical-align: top;
+}

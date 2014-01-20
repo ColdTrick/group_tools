@@ -1,5 +1,7 @@
 <?php
 $language = array (
+  'group_tools:settings:show_hidden_group_indicator' => 'Toon een icoon als een groep verborgen is',
+  'widgets:index_groups:sorting' => 'Hoe moeten de groepen worden gesorteerd',
   'group_tools:suggested_groups:info' => 'De volgende groepen zijn mogelijk interessant voor je. Klik op "Wordt lid" om direct lid te worden, of klik op de naam van de groep om meer informatie te zien.',
   'group_tools:settings:auto_suggest_groups' => 'Automatisch groepen voorstellen op de "Voorgesteld" pagina gebaseerd op profiel informatie. De lijst zal worden aangevuld met de voorgedefinieerde lijst van voorgestelde groepen. Als dit op "Nee" staat zullen alleen de voorgedefinieerde groepen worden getoond (als die er zijn)',
   'group_tools:settings:special_states' => 'Groepen met een speciale status',
@@ -60,7 +62,6 @@ $language = array (
   'widgets:index_groups:filter:field' => 'Filter de groepen obv een profielveld',
   'widgets:index_groups:filter:value' => 'met de waarde',
   'widgets:index_groups:filter:no_filter' => 'Geen filter',
-  'widgets:index_groups:apply_sorting' => 'Pas eventuele sortering toe',
   'group_tools:notifications:title' => 'Groepnotificaties',
   'group_tools:notifications:description' => 'Deze groep heeft %s leden, hiervan hebben %s notificaties op activiteit in deze groep ingeschakeld. Hieronder kun je dit aanpassen voor alle leden van de groep.',
   'group_tools:notifications:disclaimer' => 'Met grote groepen kan dit enige tijd duren.',
@@ -265,8 +266,8 @@ Het formaat moet zijn: weergave naam;e-mail adres. Er mag geen kopregel zijn.',
   'group_tools:cleanup:members:explain' => 'Op de groep profiel pagina staat op de aangegeven plaats een lijst met leden van de groep. Je kunt deze verbergen.',
   'group_tools:cleanup:featured' => 'Toon de aangereden groepen in het menu',
   'group_tools:cleanup:featured:explain' => 'Je kunt ervoor kiezen om op de groep profiel pagina een lijst met aangeraden groepen te tonen op de aangegeven plaats.',
-  'groups:search:tags' => "zoeken",
-  'groups:search:title' => "Zoek naar groepen met '%s'",
-  'groups:searchtag' => "Zoek naar groepen",
+  'groups:search:tags' => 'zoeken',
+  'groups:search:title' => 'Zoek naar groepen met \'%s\'',
+  'groups:searchtag' => 'Zoek naar groepen',
 );
 add_translation("nl", $language);

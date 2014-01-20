@@ -64,6 +64,11 @@
 	$body .= elgg_echo("group_tools:settings:show_membership_mode");
 	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_membership_mode]", "options_values" => $yesno_options, "value" => $plugin->show_membership_mode));
 	$body .= "</div>";
+	
+	$body .= "<div>";
+	$body .= elgg_echo("group_tools:settings:show_hidden_group_indicator");
+	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_hidden_group_indicator]", "options_values" => $noyes_options, "value" => $plugin->show_hidden_group_indicator));
+	$body .= "</div>";
 
 	$body .= "<div>";
 	$body .= elgg_echo("group_tools:settings:auto_suggest_groups");
