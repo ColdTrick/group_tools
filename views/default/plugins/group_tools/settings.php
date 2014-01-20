@@ -162,9 +162,9 @@
 	// check if we need to set a disclaimer
 	global $GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED;
 	if (empty($GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED)) {
-		$body .= "<pre>";
-		$body .= elgg_echo("group_tools:settings:default_access:disclaimer");
-		$body .= "</pre>";
+		$body .= "<div class='elgg-admin-notices mtm pbn'>";
+		$body .= "<p class='mbn'>" . elgg_echo("group_tools:settings:default_access:disclaimer") . "</p>";
+		$body .= "</div>";
 	}
 	
 	echo elgg_view_module("inline", $title, $body);

@@ -1,5 +1,9 @@
 = Version History =
 
+x.x:
+
+- fixed: layout issue in plugin settings
+
 2.8 (2013-10-31):
 
 - added: option to allow group members to invite more members
