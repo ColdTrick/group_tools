@@ -31,6 +31,12 @@
 		"ordered" => elgg_echo("group_tools:groups:sorting:ordered"),
 		"suggested" => elgg_echo("group_tools:groups:sorting:suggested"),
 	);
+	
+	$hidden_indicator_options = array(
+		"no" => elgg_echo("option:no"),
+		"group_acl" => elgg_echo("group_tools:settings:show_hidden_group_indicator:group_acl"),
+		"logged_in" => elgg_echo("group_tools:settings:show_hidden_group_indicator:logged_in"),
+	);
 		
 	if ($auto_joins = $plugin->auto_join) {
 		$auto_joins = string_to_tag_array($auto_joins);
@@ -67,7 +73,7 @@
 	
 	$body .= "<div>";
 	$body .= elgg_echo("group_tools:settings:show_hidden_group_indicator");
-	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_hidden_group_indicator]", "options_values" => $noyes_options, "value" => $plugin->show_hidden_group_indicator));
+	$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_hidden_group_indicator]", "options_values" => $hidden_indicator_options, "value" => $plugin->show_hidden_group_indicator));
 	$body .= "</div>";
 
 	$body .= "<div>";

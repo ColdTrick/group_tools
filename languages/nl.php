@@ -1,5 +1,7 @@
 <?php
 $language = array (
+  'group_tools:settings:show_hidden_group_indicator:group_acl' => 'Ja, als de groep alleen voor leden is',
+  'group_tools:settings:show_hidden_group_indicator:logged_in' => 'Ja, als de groep niet publiek is',
   'group_tools:settings:show_hidden_group_indicator' => 'Toon een icoon als een groep verborgen is',
   'widgets:index_groups:sorting' => 'Hoe moeten de groepen worden gesorteerd',
   'group_tools:suggested_groups:info' => 'De volgende groepen zijn mogelijk interessant voor je. Klik op "Wordt lid" om direct lid te worden, of klik op de naam van de groep om meer informatie te zien.',

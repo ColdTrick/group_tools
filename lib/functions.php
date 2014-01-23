@@ -530,14 +530,23 @@ function group_tools_show_hidden_indicator(ElggGroup $group) {
 		$groups_setting = elgg_get_plugin_setting("hidden_groups", "groups");
 		$setting = elgg_get_plugin_setting("show_hidden_group_indicator", "group_tools");
 		
-		if (($groups_setting == "yes") && ($setting == "yes")) {
-			$check_required = true;
+		if (($groups_setting == "yes") && !empty($setting) && ($setting != "no")) {
+			$check_required = $setting;
 		}
 	}
 	
-	if ($check_required) {
-		if ($group->access_id != ACCESS_PUBLIC) {
-			$result = true;
+	if ($check_required !== false) {
+		// when to show
+		if ($check_required == "group_acl") {
+			// only if group is limited to members
+			if (($group->access_id != ACCESS_PUBLIC) && ($group->access_id != ACCESS_LOGGED_IN)) {
+				$result = true;
+			}
+		} else {
+			// for all non public groups
+			if ($group->access_id != ACCESS_PUBLIC) {
+				$result = true;
+			}
 		}
 	}
 	
