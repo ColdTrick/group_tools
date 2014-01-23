@@ -279,7 +279,7 @@
 					"is_trusted" => true,
 					"priority" => 200
 				));
-			} elseif (elgg_instanceof($entity, "group") & group_tools_show_hidden_indicator($entity)) {
+			} elseif (elgg_instanceof($entity, "group") && group_tools_show_hidden_indicator($entity)) {
 				$access_id_string = get_readable_access_level($entity->access_id);
 				$access_id_string = htmlspecialchars($access_id_string, ENT_QUOTES, "UTF-8", false);
 				
