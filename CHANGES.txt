@@ -4,6 +4,7 @@ x.x:
 
 - added: plugin setting to indicate if a group is hidden
 - fixed: layout issue in plugin settings
+- fixed: you can no join groups you were invited for on the group profile page
 
 2.8 (2013-10-31):
 

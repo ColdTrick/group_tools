@@ -16,6 +16,7 @@ $english = array(
 
 	'group_tools:joinrequest:already' => "Revoke membership request",
 	'group_tools:joinrequest:already:tooltip' => "You already requested to join this group, click here to revoke this request",
+	'group_tools:join:already:tooltip' => "You were invited to this group so you can join right now.",
 
 	// menu
 	'group_tools:menu:mail' => "Mail Members",

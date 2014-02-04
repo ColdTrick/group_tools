@@ -146,26 +146,33 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params){
  *
  * @return array a list of menu items
  */
-function group_tools_menu_title_handler($hook, $type, $return_value, $params){
+function group_tools_menu_title_handler($hook, $type, $return_value, $params) {
 	$result = $return_value;
 	
 	$page_owner = elgg_get_page_owner_entity();
 	$user = elgg_get_logged_in_user_entity();
 	
-	if(!empty($result) && is_array($result)){
-		if(elgg_in_context("groups")){
+	if (!empty($result) && is_array($result)) {
+		if (elgg_in_context("groups")) {
 			// modify some group menu items
-			if(!empty($page_owner) && !empty($user) && ($page_owner instanceof ElggGroup)){
+			if (!empty($page_owner) && !empty($user) && ($page_owner instanceof ElggGroup)) {
 				$invite_found = false;
 				
-				foreach($result as $menu_item){
+				foreach ($result as $menu_item) {
 					
-					switch($menu_item->getName()){
+					switch ($menu_item->getName()) {
 						case "groups:joinrequest":
-							if(check_entity_relationship($user->getGUID(), "membership_request", $page_owner->getGUID())){
+							if (check_entity_relationship($user->getGUID(), "membership_request", $page_owner->getGUID())) {
+								// user already requested to join this group
 								$menu_item->setText(elgg_echo("group_tools:joinrequest:already"));
 								$menu_item->setTooltip(elgg_echo("group_tools:joinrequest:already:tooltip"));
 								$menu_item->setHref(elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/groups/killrequest?user_guid=" . $user->getGUID() . "&group_guid=" . $page_owner->getGUID()));
+							} elseif (check_entity_relationship($page_owner->getGUID(), "invited", $user->getGUID())) {
+								// the user was invited, so let him/her join
+								$menu_item->setName("groups:join");
+								$menu_item->setText(elgg_echo("groups:join"));
+								$menu_item->setTooltip(elgg_echo("group_tools:join:already:tooltip"));
+								$menu_item->setHref(elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/groups/join?user_guid=" . $user->getGUID() . "&group_guid=" . $page_owner->getGUID()));
 							}
 							
 							break;
@@ -176,7 +183,7 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params){
 							$invite_email = elgg_get_plugin_setting("invite_email", "group_tools");
 							$invite_csv = elgg_get_plugin_setting("invite_csv", "group_tools");
 							
-							if(in_array("yes", array($invite, $invite_csv, $invite_email))){
+							if (in_array("yes", array($invite, $invite_csv, $invite_email))) {
 								$menu_item->setText(elgg_echo("group_tools:groups:invite"));
 							}
 							
@@ -190,7 +197,8 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params){
 					if ($page_owner->isMember($user)) {
 						// we're on a group profile page, but haven't found the invite button yet
 						// so check if it should be here
-						if (($setting = elgg_get_plugin_setting("invite_members", "group_tools")) && in_array($setting, array("yes_off", "yes_on"))) {
+						$setting = elgg_get_plugin_setting("invite_members", "group_tools");
+						if (in_array($setting, array("yes_off", "yes_on"))) {
 							$invite_members = $page_owner->invite_members;
 							if (empty($invite_members)) {
 								$invite_members = "no";
@@ -223,9 +231,10 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params){
 				}
 			}
 			
-			if(!empty($user) && !$user->isAdmin() && group_tools_is_group_creation_limited()){
-				foreach($result as $index => $menu_item){
-					if($menu_item->getName() == "add"){
+			// check if we need to remove the group add button
+			if (!empty($user) && !$user->isAdmin() && group_tools_is_group_creation_limited()) {
+				foreach ($result as $index => $menu_item) {
+					if ($menu_item->getName() == "add") {
 						unset($result[$index]);
 					}
 				}
