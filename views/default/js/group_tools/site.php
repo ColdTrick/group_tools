@@ -1,24 +1,27 @@
 <?php
+/**
+ * Extend the global site JS
+ */
 ?>
 //<script>
 elgg.provide("elgg.group_tools");
 
-elgg.group_tools.mail_form_submit = function(){
+elgg.group_tools.mail_form_submit = function() {
 	var result = false;
 	var error_msg = "";
 	var error_count = 0;
 
-	if($('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length == 0){
+	if ($('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length == 0) {
 		error_msg += elgg.echo("group_tools:mail:form:js:members") + '\n';
 		error_count++;
 	}
 
-	if($(this).find('input[name="description"]').val() == ""){
+	if ($(this).find('input[name="description"]').val() == "") {
 		error_msg += elgg.echo("group_tools:mail:form:js:description") + '\n';
 		error_count++;
 	}
 
-	if(error_count > 0){
+	if (error_count > 0) {
 		alert(error_msg);
 	} else {
 		result = true;
@@ -27,34 +30,34 @@ elgg.group_tools.mail_form_submit = function(){
 	return result;
 }
 
-elgg.group_tools.mail_clear_members = function(){
-	$('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').each(function(){
+elgg.group_tools.mail_clear_members = function() {
+	$('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').each(function() {
 		$(this).removeAttr('checked');
 	});
 
 	elgg.group_tools.mail_update_recipients();
 }
 
-elgg.group_tools.mail_all_members = function(){
-	$('#group_tools_mail_member_selection input[name="user_guids[]"]').each(function(){
+elgg.group_tools.mail_all_members = function() {
+	$('#group_tools_mail_member_selection input[name="user_guids[]"]').each(function() {
 		$(this).attr('checked', 'checked');
 	});
 
 	elgg.group_tools.mail_update_recipients();
 }
 
-elgg.group_tools.mail_update_recipients = function(){
+elgg.group_tools.mail_update_recipients = function() {
 	var count = $('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length;
 
 	$('#group_tools_mail_recipients_count').html(count);
 }
 
-elgg.group_tools.admin_transfer_confirm = function(){
+elgg.group_tools.admin_transfer_confirm = function() {
 	return confirm(elgg.echo("group_tools:admin_transfer:confirm"));
 }
 
-elgg.group_tools.cleanup_highlight = function(section){
-	switch(section){
+elgg.group_tools.cleanup_highlight = function(section) {
+	switch (section) {
 		case "owner_block":
 			$('div.elgg-sidebar ul.elgg-menu-extras').addClass('group-tools-highlight');
 			break;
@@ -76,8 +79,8 @@ elgg.group_tools.cleanup_highlight = function(section){
 	}
 }
 
-elgg.group_tools.cleanup_unhighlight = function(section){
-	switch(section){
+elgg.group_tools.cleanup_unhighlight = function(section) {
+	switch (section) {
 		case "owner_block":
 			$('div.elgg-sidebar ul.elgg-menu-extras').removeClass('group-tools-highlight');
 			break;
@@ -99,9 +102,9 @@ elgg.group_tools.cleanup_unhighlight = function(section){
 	}
 }
 
-elgg.group_tools.order_groups = function(){
+elgg.group_tools.order_groups = function() {
 	var ordered_ids = new Array();
-	$('.group-tools-list-ordered > li').each(function(){
+	$('.group-tools-list-ordered > li').each(function() {
 		group_id = $(this).attr("id").replace("elgg-group-", "");
 		ordered_ids.push(group_id);
 	});
@@ -136,7 +139,7 @@ elgg.group_tools.toggle_special_state = function(state, group_guid) {
 	});
 }
 
-elgg.group_tools.init = function(){
+elgg.group_tools.init = function() {
 	// admin tranfser
 	$('#group_tools_admin_transfer_form').submit(elgg.group_tools.admin_transfer_confirm);
 
@@ -167,7 +170,7 @@ elgg.group_tools.init = function(){
 	}
 
 	// suggested groups join clicks
-	$(".group-tools-suggested-groups .elgg-button-action").live("click", function(){
+	$(".group-tools-suggested-groups .elgg-button-action").live("click", function() {
 
 		elgg.action($(this).attr("href"));
 
@@ -176,8 +179,6 @@ elgg.group_tools.init = function(){
 		return false;
 	});
 }
-
-
 
 //register init hook
 elgg.register_hook_handler("init", "system", elgg.group_tools.init);

@@ -1,9 +1,12 @@
 <?php
+/**
+ * List suggested groups
+ */
 
 gatekeeper();
 
 // for consistency with other tabs
-elgg_push_breadcrumb(elgg_echo('groups'));
+elgg_push_breadcrumb(elgg_echo("groups"));
 
 elgg_register_title_button();
 
@@ -19,17 +22,17 @@ if ($groups) {
 	$content = elgg_echo("group_tools:suggested_groups:none");
 }
 
-$filter = elgg_view('groups/group_sort_menu', array('selected' => $selected_tab));
+$filter = elgg_view("groups/group_sort_menu", array("selected" => $selected_tab));
 
-$sidebar = elgg_view('groups/sidebar/find');
-$sidebar .= elgg_view('groups/sidebar/featured');
+$sidebar = elgg_view("groups/sidebar/find");
+$sidebar .= elgg_view("groups/sidebar/featured");
 
 $params = array(
-		'content' => $content,
-		'sidebar' => $sidebar,
-		'filter' => $filter,
+	"content" => $content,
+	"sidebar" => $sidebar,
+	"filter" => $filter,
 );
 
-$body = elgg_view_layout('content', $params);
+$body = elgg_view_layout("content", $params);
 
-echo elgg_view_page(elgg_echo('group_tools:groups:sorting:suggested'), $body);
+echo elgg_view_page(elgg_echo("group_tools:groups:sorting:suggested"), $body);

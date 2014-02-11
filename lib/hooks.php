@@ -8,23 +8,23 @@
 /**
  * Allow group admins (not owners) to also edit group content
  *
- * @param string $hook the 'permissions_check' hook
- * @param string $type for the 'group' type
- * @param bool $return_value the current value
- * @param array $params supplied params to help change the outcome
+ * @param string $hook         the 'permissions_check' hook
+ * @param string $type         for the 'group' type
+ * @param bool   $return_value the current value
+ * @param array  $params       supplied params to help change the outcome
  *
  * @return bool true if can edit, false otherwise
  */
-function group_tools_multiple_admin_can_edit_hook($hook, $type, $return_value, $params){
+function group_tools_multiple_admin_can_edit_hook($hook, $type, $return_value, $params) {
 	$result = $return_value;
 
-	if(!empty($params) && is_array($params) && !$result){
-		if(array_key_exists("entity", $params) && array_key_exists("user", $params)){
+	if (!empty($params) && is_array($params) && !$result) {
+		if (array_key_exists("entity", $params) && array_key_exists("user", $params)) {
 			$entity = $params["entity"];
 			$user = $params["user"];
 
-			if(($entity instanceof ElggGroup) && ($user instanceof ElggUser)){
-				if($entity->isMember($user) && check_entity_relationship($user->getGUID(), "group_admin", $entity->getGUID())){
+			if (($entity instanceof ElggGroup) && ($user instanceof ElggUser)) {
+				if ($entity->isMember($user) && check_entity_relationship($user->getGUID(), "group_admin", $entity->getGUID())) {
 					$result = true;
 				}
 			}
@@ -37,34 +37,35 @@ function group_tools_multiple_admin_can_edit_hook($hook, $type, $return_value, $
 /**
  * Take over the groups page handler in some cases
  *
- * @param string $hook the 'route' hook
- * @param string $type for the 'groups' page handler
- * @param bool $return_value tells which page is handled, contains:
- * $return_value['handler'] => requested handler
- * $return_value['segments'] => url parts ($page)
- * @param null $params no params provided
+ * @param string $hook         the 'route' hook
+ * @param string $type         for the 'groups' page handler
+ * @param bool   $return_value tells which page is handled, contains:
+ *    $return_value['handler'] => requested handler
+ *    $return_value['segments'] => url parts ($page)
+ * @param null   $params       no params provided
  *
  * @return bool false if we take over the page handler
  */
-function group_tools_route_groups_handler($hook, $type, $return_value, $params){
+function group_tools_route_groups_handler($hook, $type, $return_value, $params) {
 	$result = $return_value;
 	
-	if(!empty($return_value) && is_array($return_value)){
+	if (!empty($return_value) && is_array($return_value)) {
 		$page = $return_value['segments'];
 		
-		switch($page[0]){
+		switch ($page[0]) {
 			case "all":
 				$filter = get_input("filter");
+				$default_filter = elgg_get_plugin_setting("group_listing", "group_tools");
 				
-				if(empty($filter) && ($default_filter = elgg_get_plugin_setting("group_listing", "group_tools"))){
+				if (empty($filter) && !empty($default_filter)) {
 					$filter = $default_filter;
 					set_input("filter", $default_filter);
-				} elseif(empty($filter)) {
+				} elseif (empty($filter)) {
 					$filter = "newest";
 					set_input("filter", $filter);
 				}
 				
-				if(in_array($filter, array("open", "closed", "alpha", "ordered", "suggested"))){
+				if (in_array($filter, array("open", "closed", "alpha", "ordered", "suggested"))) {
 					// we will handle the output
 					$result = false;
 					
@@ -109,13 +110,13 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params){
 				include(dirname(dirname(__FILE__)) . "/procedures/group_invite_autocomplete.php");
 				break;
 			case "add":
-				if(group_tools_is_group_creation_limited()){
+				if (group_tools_is_group_creation_limited()) {
 					admin_gatekeeper();
 				}
 				break;
 			case "invitations":
 				$result = false;
-				if(isset($page[1])){
+				if (isset($page[1])) {
 					set_input("username", $page[1]);
 				}
 				
@@ -123,8 +124,9 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params){
 				break;
 			default:
 				// check if we have an old group profile link
-				if(isset($page[0]) && is_numeric($page[0])) {
-					if(($group = get_entity($page[0])) && elgg_instanceof($group, "group", null, "ElggGroup")){
+				if (isset($page[0]) && is_numeric($page[0])) {
+					$group = get_entity($page[0]);
+					if (!empty($group) && elgg_instanceof($group, "group", null, "ElggGroup")) {
 						register_error(elgg_echo("changebookmark"));
 						forward($group->getURL());
 					}
@@ -139,12 +141,12 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params){
 /**
  * Modify the title menu in the groups context.
  *
- * @param string $hook the 'register' hook
- * @param string $type for the 'menu:title' menu
- * @param array $return_value the menu items to show
- * @param arary $params params to help extend the menu items
+ * @param string $hook         the 'register' hook
+ * @param string $type         for the 'menu:title' menu
+ * @param array  $return_value the menu items to show
+ * @param arary  $params       params to help extend the menu items
  *
- * @return array a list of menu items
+ * @return ElggMenuItem[] a list of menu items
  */
 function group_tools_menu_title_handler($hook, $type, $return_value, $params) {
 	$result = $return_value;
@@ -213,7 +215,7 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params) {
 								$invite_email = elgg_get_plugin_setting("invite_email", "group_tools");
 								$invite_csv = elgg_get_plugin_setting("invite_csv", "group_tools");
 								
-								if(in_array("yes", array($invite, $invite_csv, $invite_email))){
+								if (in_array("yes", array($invite, $invite_csv, $invite_email))) {
 									$text = elgg_echo("group_tools:groups:invite");
 								} else {
 									$text = elgg_echo("groups:invite");
@@ -248,34 +250,34 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params) {
 /**
  * Modify the user hover menu.
  *
- * @param string $hook the 'register' hook
- * @param string $type for the 'menu:user_hover' menu
- * @param array $return_value the menu items to show
- * @param arary $params params to help extend the menu items
+ * @param string $hook         the 'register' hook
+ * @param string $type         for the 'menu:user_hover' menu
+ * @param array  $return_value the menu items to show
+ * @param arary  $params       params to help extend the menu items
  *
- * @return array a list of menu items
+ * @return ElggMenuItem[] a list of menu items
  */
-function group_tools_menu_user_hover_handler($hook, $type, $return_value, $params){
+function group_tools_menu_user_hover_handler($hook, $type, $return_value, $params) {
 	$result = $return_value;
 	
 	$page_owner = elgg_get_page_owner_entity();
 	$loggedin_user = elgg_get_logged_in_user_entity();
 	
-	if(!empty($page_owner) && ($page_owner instanceof ElggGroup) && !empty($loggedin_user)){
+	if (!empty($page_owner) && ($page_owner instanceof ElggGroup) && !empty($loggedin_user)) {
 		// are multiple admins allowed
-		if(elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes"){
-			if(!empty($params) && is_array($params)){
+		if (elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes") {
+			if (!empty($params) && is_array($params)) {
 				$user = $params["entity"];
 				
 				// do we have a user
-				if(!empty($user) && ($user instanceof ElggUser)){
+				if (!empty($user) && ($user instanceof ElggUser)) {
 					// is the user not the owner of the group and noet the current user
-					if($page_owner->getOwnerGUID() != $user->getGUID() && $user->getGUID() != $loggedin_user->getGUID()){
+					if (($page_owner->getOwnerGUID() != $user->getGUID()) && ($user->getGUID() != $loggedin_user->getGUID())) {
 						// is the user a member od this group
-						if($page_owner->isMember($user)){
+						if ($page_owner->isMember($user)) {
 							// can we add/remove an admin
-							if(($page_owner->getOwnerGUID() == $loggedin_user->getGUID()) || ($page_owner->group_multiple_admin_allow_enable == "yes" && $page_owner->canEdit()) || $loggedin_user->isAdmin()){
-								if(check_entity_relationship($user->getGUID(), "group_admin", $page_owner->getGUID())){
+							if (($page_owner->getOwnerGUID() == $loggedin_user->getGUID()) || ($page_owner->group_multiple_admin_allow_enable == "yes" && $page_owner->canEdit()) || $loggedin_user->isAdmin()) {
+								if (check_entity_relationship($user->getGUID(), "group_admin", $page_owner->getGUID())) {
 									$text = elgg_echo("group_tools:multiple_admin:profile_actions:remove");
 								} else {
 									$text = elgg_echo("group_tools:multiple_admin:profile_actions:add");
@@ -300,12 +302,12 @@ function group_tools_menu_user_hover_handler($hook, $type, $return_value, $param
 /**
  * Modify the entity menu.
  *
- * @param string $hook the 'register' hook
- * @param string $type for the 'menu:entity' menu
- * @param array $return_value the menu items to show
- * @param arary $params params to help extend the menu items
+ * @param string $hook         the 'register' hook
+ * @param string $type         for the 'menu:entity' menu
+ * @param array  $return_value the menu items to show
+ * @param array  $params       params to help extend the menu items
  *
- * @return array a list of menu items
+ * @return ElggMenuItem[] a list of menu items
  */
 function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 	$result = $return_value;
@@ -359,63 +361,69 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 }
 
 /**
+ * return an url to be used by Widget Manager
  *
- * @param string $hook the 'widget_url' hook
- * @param string $type for 'widget_manager'
+ * @param string $hook         the 'widget_url' hook
+ * @param string $type         for 'widget_manager'
  * @param string $return_value the default return value
- * @param array $params params to help set a correct url
+ * @param array  $params       params to help set a correct url
  *
  * @return string the widger url
  */
-function group_tools_widget_url_handler($hook, $type, $return_value, $params){
+function group_tools_widget_url_handler($hook, $type, $return_value, $params) {
 	$result = $return_value;
 	
-	if(!$result && !empty($params) && is_array($params)){
+	if (!$result && !empty($params) && is_array($params)) {
 		$widget = elgg_extract("entity", $params);
 		
-		if(!empty($widget) && elgg_instanceof($widget, "object", "widget")){
-			switch($widget->handler){
+		if (!empty($widget) && elgg_instanceof($widget, "object", "widget")) {
+			switch ($widget->handler) {
 				case "group_members":
-					$result = "/groups/members/" . $widget->getOwnerGUID();
+					$result = "groups/members/" . $widget->getOwnerGUID();
 					break;
 				case "group_invitations":
-					if($user = elgg_get_logged_in_user_entity()){
-						$result = "/groups/invitations/" . $user->username;
+					$user = elgg_get_logged_in_user_entity();
+					if (!empty($user)) {
+						$result = "groups/invitations/" . $user->username;
 					}
 					break;
 				case "discussion":
-					$result = "/discussion/all";
+					$result = "discussion/all";
 					break;
 				case "group_forum_topics":
-					if(($page_owner = elgg_get_page_owner_entity()) && ($page_owner instanceof ElggGroup)){
-						$result = "/discussion/owner/" . $page_owner->getGUID();
+					$page_owner = elgg_get_page_owner_entity();
+					if (!empty($page_owner) && ($page_owner instanceof ElggGroup)) {
+						$result = "discussion/owner/" . $page_owner->getGUID();
 						break;
 					}
 				case "group_river_widget":
-					if($widget->context != "groups"){
+					if ($widget->context != "groups") {
 						$group_guid = (int) $widget->group_guid;
 					} else {
 						$group_guid = $widget->getOwnerGUID();
 					}
 					
-					if(!empty($group_guid) && ($group = get_entity($group_guid))){
-						if(elgg_instanceof($group, "group", null, "ElggGroup")){
-							$result = "/groups/activity/" . $group_guid;
+					if (!empty($group_guid)) {
+						$group = get_entity($group_guid);
+						if (!empty($group) && elgg_instanceof($group, "group", null, "ElggGroup")) {
+							$result = "groups/activity/" . $group_guid;
 						}
 					}
 					break;
 				case "index_groups":
 				case "featured_groups":
-					$result = "/groups/all";
+					$result = "groups/all";
 					break;
 				case "a_user_groups":
-					if($owner = $widget->getOwnerEntity()){
-						$result = "/groups/member/" . $owner->username;
+					$owner = $widget->getOwnerEntity();
+					if (!empty($owner) && elgg_instanceof($owner, "user")) {
+						$result = "groups/member/" . $owner->username;
 					}
 					break;
 				case "start_discussion":
-					if (($owner = $widget->getOwnerEntity()) && elgg_instanceof($owner, "group")) {
-						$result = "/discussion/add/" . $owner->getGUID();
+					$owner = $widget->getOwnerEntity();
+					if (!empty($owner) && elgg_instanceof($owner, "group")) {
+						$result = "discussion/add/" . $owner->getGUID();
 					}
 					break;
 			}
@@ -432,30 +440,33 @@ function group_tools_widget_url_handler($hook, $type, $return_value, $params){
  * @link http://trac.elgg.org/ticket/4415
  * @link https://github.com/Elgg/Elgg/pull/253
  *
- * @param string $hook the 'access:default' hook
- * @param string $type for the 'user' type
- * @param int $return_value the default access for this user
- * @param array $params params to help change the value
+ * @param string $hook         the 'access:default' hook
+ * @param string $type         for the 'user' type
+ * @param int    $return_value the default access for this user
+ * @param array  $params       params to help change the value
  *
  * @return int the access_id to use as default
  */
-function group_tools_access_default_handler($hook, $type, $return_value, $params){
+function group_tools_access_default_handler($hook, $type, $return_value, $params) {
 	global $GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED;
 	$GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED = true;
 	
 	$result = $return_value;
 	
 	// check if the page owner is a group
-	if(($page_owner = elgg_get_page_owner_entity()) && elgg_instanceof($page_owner, "group", null, "ElggGroup")){
+	$page_owner = elgg_get_page_owner_entity();
+	if (!empty($page_owner) && elgg_instanceof($page_owner, "group", null, "ElggGroup")) {
 		// check if the group as a default access set
-		if(($group_access = $page_owner->getPrivateSetting("elgg_default_access")) !== false){
-			$result = $group_access;
+		$group_access = $page_owner->getPrivateSetting("elgg_default_access");
+		if ($group_access !== false) {
+			$result = (int) $group_access;
 		}
 		
 		// if the group hasn't set anything check if there is a site setting for groups
-		if($group_access === false){
-			if(($site_group_access = elgg_get_plugin_setting("group_default_access", "group_tools")) !== null){
-				switch($site_group_access){
+		if ($group_access === false) {
+			$site_group_access = elgg_get_plugin_setting("group_default_access", "group_tools");
+			if ($site_group_access !== null) {
+				switch ($site_group_access) {
 					case GROUP_TOOLS_GROUP_ACCESS_DEFAULT:
 						$result = $page_owner->group_acl;
 						break;
@@ -473,23 +484,23 @@ function group_tools_access_default_handler($hook, $type, $return_value, $params
 /**
  * Changed the content of an input/access
  *
- * @param string $hook the 'access:collections:write' hook
- * @param string $type for the 'user' type
- * @param array $return_value the default values
- * @param array $params params to help change the values
+ * @param string $hook         the 'access:collections:write' hook
+ * @param string $type         for the 'user' type
+ * @param array  $return_value the default values
+ * @param array  $params       params to help change the values
  *
  * @return array the new access options
  */
-function group_tools_access_write_handler($hook, $type, $return_value, $params){
+function group_tools_access_write_handler($hook, $type, $return_value, $params) {
 	$result = $return_value;
 	
-	if(elgg_in_context("group_tools_default_access") && !empty($result) && is_array($result)){
+	if (elgg_in_context("group_tools_default_access") && !empty($result) && is_array($result)) {
 		// unset ACCESS_PRIVATE & ACCESS_FRIENDS;
-		if(isset($result[ACCESS_PRIVATE])){
+		if (isset($result[ACCESS_PRIVATE])) {
 			unset($result[ACCESS_PRIVATE]);
 		}
 		
-		if(isset($result[ACCESS_FRIENDS])){
+		if (isset($result[ACCESS_FRIENDS])) {
 			unset($result[ACCESS_FRIENDS]);
 		}
 		
@@ -506,10 +517,10 @@ function group_tools_access_write_handler($hook, $type, $return_value, $params){
 /**
  * Allow a group to be transfered by the correct user
  *
- * @param string $hook the 'permissions_check' hook
- * @param string $type for the 'group' type
- * @param bool $return_value is the current user allowed to perform the action
- * @param array $params params to help chnage the return value
+ * @param string $hook         the 'permissions_check' hook
+ * @param string $type         for the 'group' type
+ * @param bool   $return_value is the current user allowed to perform the action
+ * @param array  $params       params to help chnage the return value
  *
  * @return bool true if we allow admin transfer
  */
@@ -517,7 +528,8 @@ function group_tools_admin_transfer_permissions_hook($hook, $type, $return_value
 	$result = $return_value;
 
 	if (!$result && !empty($params) && is_array($params)) {
-		if (($group = elgg_extract("entity", $params)) && elgg_instanceof($group, "group")) {
+		$group = elgg_extract("entity", $params);
+		if (!empty($group) && elgg_instanceof($group, "group")) {
 			$result = true;
 		}
 	}

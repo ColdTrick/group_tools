@@ -1,4 +1,8 @@
-<?php ?>
+<?php
+/**
+ * extend the global JS on the admin side
+ */
+?>
 //<script>
 elgg.provide("elgg.group_tools_admin");
 

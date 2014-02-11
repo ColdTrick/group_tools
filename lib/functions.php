@@ -5,10 +5,18 @@
  * @package group_tools
  */
 
-function group_tools_check_group_email_invitation($invite_code, $group_guid = 0){
+/**
+ * Check if a invitation code results in a group
+ *
+ * @param string $invite_code the invite code
+ * @param int    $group_guid  (optional) the group to check
+ *
+ * @return boolean|ElggGroup a group for the invitation of false
+ */
+function group_tools_check_group_email_invitation($invite_code, $group_guid = 0) {
 	$result = false;
 	
-	if(!empty($invite_code)){
+	if (!empty($invite_code)) {
 		$options = array(
 			"type" => "group",
 			"limit" => 1,
@@ -16,14 +24,15 @@ function group_tools_check_group_email_invitation($invite_code, $group_guid = 0)
 			"annotation_name_value_pairs" => array("email_invitation" => $invite_code)
 		);
 		
-		if(!empty($group_guid)){
+		if (!empty($group_guid)) {
 			$options["annotation_owner_guids"] = array($group_guid);
 		}
 		
 		// find hidden groups
 		$ia = elgg_set_ignore_access(true);
+		$groups = elgg_get_entities_from_annotations($options);
 		
-		if($groups = elgg_get_entities_from_annotations($options)){
+		if (!empty($groups)) {
 			$result = $groups[0];
 		}
 		
@@ -34,21 +43,42 @@ function group_tools_check_group_email_invitation($invite_code, $group_guid = 0)
 	return $result;
 }
 
-function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $resend = false){
+/**
+ * Invite a user to a group
+ *
+ * @param ElggGroup $group  the group to be invited for
+ * @param ElggUser  $user   the user to be invited
+ * @param string    $text   (optional) extra text in the invitation
+ * @param boolean   $resend should existing invitations be resend
+ *
+ * @return boolean true if the invitation was send
+ */
+function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $resend = false) {
 	$result = false;
 	
-	if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = elgg_get_logged_in_user_entity())){
+	$loggedin_user = elgg_get_logged_in_user_entity();
+	
+	if (!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && !empty($loggedin_user)) {
 		// Create relationship
 		$relationship = add_entity_relationship($group->getGUID(), "invited", $user->getGUID());
 		
-		if($relationship || $resend){
+		if ($relationship || $resend) {
 			// Send email
 			$url = elgg_get_site_url() . "groups/invitations/" . $user->username;
 			
-			$subject = elgg_echo("groups:invite:subject", array($user->name, $group->name));
-			$msg = elgg_echo("group_tools:groups:invite:body", array($user->name, $loggedin_user->name, $group->name, $text, $url));
+			$subject = elgg_echo("groups:invite:subject", array(
+				$user->name,
+				$group->name
+			));
+			$msg = elgg_echo("group_tools:groups:invite:body", array(
+				$user->name,
+				$loggedin_user->name,
+				$group->name,
+				$text,
+				$url
+			));
 			
-			if($res = notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, null, "email")){
+			if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, null, "email")) {
 				$result = true;
 			}
 		}
@@ -57,31 +87,47 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 	return $result;
 }
 
-function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = ""){
+/**
+ * Add a user to a group
+ *
+ * @param ElggGroup $group the group to add the user to
+ * @param ElggUser  $user  the user to be added
+ * @param string    $text  (optional) extra text for the notification
+ *
+ * @return boolean 	true if successfull
+ */
+function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = "") {
 	$result = false;
 	
-	if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = elgg_get_logged_in_user_entity())){
+	$loggedin_user = elgg_get_logged_in_user_entity();
+	
+	if (!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && !empty($loggedin_user)) {
 		// make sure all goes well
 		$ia = elgg_set_ignore_access(true);
 		
-		if($group->join($user)){
+		if ($group->join($user)) {
 			// Remove any invite or join request flags
 			remove_entity_relationship($group->getGUID(), "invited", $user->getGUID());
 			remove_entity_relationship($user->getGUID(), "membership_request", $group->getGUID());
 				
 			// notify user
 			$subject = elgg_echo("group_tools:groups:invite:add:subject", array($group->name));
-			$msg = elgg_echo("group_tools:groups:invite:add:body", array($user->name, $loggedin_user->name, $group->name, $text, $group->getURL()));
+			$msg = elgg_echo("group_tools:groups:invite:add:body", array(
+				$user->name,
+				$loggedin_user->name,
+				$group->name,
+				$text,
+				$group->getURL()
+			));
 			
 			$params = array(
-				'group' => $group,
-				'inviter' => $loggedin_user,
-				'invitee' => $user
+				"group" => $group,
+				"inviter" => $loggedin_user,
+				"invitee" => $user
 			);
-			$msg = elgg_trigger_plugin_hook('invite_notification', 'group_tools', $params, $msg);
-
+			$msg = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $msg);
 				
-			if(notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, null, "email")){
+			if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, null, "email")) {
 				$result = true;
 			}
 		}
@@ -93,76 +139,99 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = ""){
 	return $result;
 }
 
-function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend = false){
+/**
+ * Invite a new user by email to a group
+ *
+ * @param ElggGroup $group  the group to be invited for
+ * @param string    $email  the email address to be invited
+ * @param string    $text   (optional) extra text in the invitation
+ * @param boolean   $resend should existing invitations be resend
+ *
+ * @return boolean|NULL true is invited, false on failure, null when already send
+ */
+function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend = false) {
 	$result = false;
-
-	if(!empty($group) && ($group instanceof ElggGroup) && !empty($email) && is_email_address($email) && ($loggedin_user = elgg_get_logged_in_user_entity())){
+	
+	$loggedin_user = elgg_get_logged_in_user_entity();
+	if (!empty($group) && ($group instanceof ElggGroup) && !empty($email) && is_email_address($email) && !empty($loggedin_user)) {
 		// generate invite code
 		$invite_code = group_tools_generate_email_invite_code($group->getGUID(), $email);
 		
-		if(!($found_group = group_tools_check_group_email_invitation($invite_code, $group->getGUID())) || $resend){
-			// make site email
-			$site = elgg_get_site_entity();
-			if(!empty($site->email)){
-				if(!empty($site->name)){
-					$site_from = $site->name . " <" . $site->email . ">";
+		if (!empty($invite_code)) {
+			$found_group = group_tools_check_group_email_invitation($invite_code, $group->getGUID());
+			if (empty($found_group) || $resend) {
+				// make site email
+				$site = elgg_get_site_entity();
+				if (!empty($site->email)) {
+					if (!empty($site->name)) {
+						$site_from = $site->name . " <" . $site->email . ">";
+					} else {
+						$site_from = $site->email;
+					}
 				} else {
-					$site_from = $site->email;
+					// no site email, so make one up
+					if (!empty($site->name)) {
+						$site_from = $site->name . " <noreply@" . get_site_domain($site->getGUID()) . ">";
+					} else {
+						$site_from = "noreply@" . get_site_domain($site->getGUID());
+					}
 				}
+				
+				if (empty($found_group)) {
+					// register invite with group
+					$group->annotate("email_invitation", $invite_code, ACCESS_LOGGED_IN, $group->getGUID());
+				}
+				
+				// make subject
+				$subject = elgg_echo("group_tools:groups:invite:email:subject", array($group->name));
+				
+				// make body
+				$body = elgg_echo("group_tools:groups:invite:email:body", array(
+					$loggedin_user->name,
+					$group->name,
+					$site->name,
+					$text,
+					$site->name,
+					elgg_get_site_url() . "register",
+					elgg_get_site_url() . "groups/invitations/?invitecode=" . $invite_code,
+					$invite_code
+				));
+				
+				$params = array(
+					"group" => $group,
+					"inviter" => $loggedin_user,
+					"invitee" => $email
+				);
+				$body = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $body);
+				
+				$result = elgg_send_email($site_from, $email, $subject, $body);
 			} else {
-				// no site email, so make one up
-				if(!empty($site->name)){
-					$site_from = $site->name . " <noreply@" . get_site_domain($site->getGUID()) . ">";
-				} else {
-					$site_from = "noreply@" . get_site_domain($site->getGUID());
-				}
+				$result = null;
 			}
-			
-			if(empty($found_group)){
-				// register invite with group
-				$group->annotate("email_invitation", $invite_code, ACCESS_LOGGED_IN, $group->getGUID());
-			}
-			
-			// make subject
-			$subject = elgg_echo("group_tools:groups:invite:email:subject", array($group->name));
-			
-			// make body
-			$body = elgg_echo("group_tools:groups:invite:email:body", array(
-				$loggedin_user->name,
-				$group->name,
-				$site->name,
-				$text,
-				$site->name,
-				elgg_get_site_url() . "register",
-				elgg_get_site_url() . "groups/invitations/?invitecode=" . $invite_code,
-				$invite_code)
-			);
-			
-			$params = array(
-				'group' => $group,
-				'inviter' => $loggedin_user,
-				'invitee' => $email
-			);
-			$body = elgg_trigger_plugin_hook('invite_notification', 'group_tools', $params, $body);
-			
-			$result = elgg_send_email($site_from, $email, $subject, $body);
-		} else {
-			$result = null;
 		}
 	}
 	
 	return $result;
 }
 
-function group_tools_verify_group_members($group_guid, $user_guids){
+/**
+ * Verify that all supplied user_guids are a member of the group
+ *
+ * @param int   $group_guid the GUID of the group
+ * @param array $user_guids an array of user GUIDs to check
+ *
+ * @return boolean|int[] returns all user_guids that are a member
+ */
+function group_tools_verify_group_members($group_guid, $user_guids) {
 	$result = false;
 	
-	if(!empty($group_guid) && !empty($user_guids)){
-		if(!is_array($user_guids)){
+	if (!empty($group_guid) && !empty($user_guids)) {
+		if (!is_array($user_guids)) {
 			$user_guids = array($user_guids);
 		}
 		
-		if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
+		$group = get_entity($group_guid);
+		if (!empty($group) && ($group instanceof ElggGroup)) {
 			$options = array(
 				"type" => "user",
 				"limit" => false,
@@ -172,11 +241,12 @@ function group_tools_verify_group_members($group_guid, $user_guids){
 				"callback" => "group_tools_guid_only_callback"
 			);
 			
-			if($member_guids = elgg_get_entities_from_relationship($options)){
+			$member_guids = elgg_get_entities_from_relationship($options);
+			if (!empty($member_guids)) {
 				$result = array();
 				
-				foreach($user_guids as $user_guid){
-					if(in_array($user_guid, $member_guids)){
+				foreach ($user_guids as $user_guid) {
+					if (in_array($user_guid, $member_guids)) {
 						$result[] = $user_guid;
 					}
 				}
@@ -187,7 +257,14 @@ function group_tools_verify_group_members($group_guid, $user_guids){
 	return $result;
 }
 
-function group_tools_guid_only_callback($row){
+/**
+ * Custom callback function to only return the GUID from a database row
+ *
+ * @param stdClass $row the database row
+ *
+ * @return int the GUID
+ */
+function group_tools_guid_only_callback($row) {
 	return (int) $row->guid;
 }
 
@@ -195,15 +272,15 @@ function group_tools_guid_only_callback($row){
  * Check if group creation is limited to site administrators
  * Also this function caches the result
  *
- * @return boolean
+ * @return boolean true if limited
  */
-function group_tools_is_group_creation_limited(){
+function group_tools_is_group_creation_limited() {
 	static $result;
 	
-	if(!isset($result)){
+	if (!isset($result)) {
 		$result = false;
 		
-		if(elgg_get_plugin_setting("admin_create", "group_tools") == "yes"){
+		if (elgg_get_plugin_setting("admin_create", "group_tools") == "yes") {
 			$result = true;
 		}
 	}
@@ -211,17 +288,25 @@ function group_tools_is_group_creation_limited(){
 	return $result;
 }
 
-function group_tools_get_invited_groups_by_email($email, $site_guid = 0){
+/**
+ * Get all the groups this email address is invited for
+ *
+ * @param string $email     the email address
+ * @param int    $site_guid (optional) site_guid
+ *
+ * @return boolean|ElggGroup[] array of groups or false on failure
+ */
+function group_tools_get_invited_groups_by_email($email, $site_guid = 0) {
 	$result = false;
 	
-	if(!empty($email)){
+	if (!empty($email)) {
 		$dbprefix = elgg_get_config("dbprefix");
 		$site_secret = get_site_secret();
 		$email = sanitise_string($email);
 		
 		$email_invitation_id = add_metastring("email_invitation");
 		
-		if($site_guid === 0){
+		if ($site_guid === 0) {
 			$site_guid = elgg_get_site_entity()->getGUID();
 		}
 		
@@ -241,7 +326,8 @@ function group_tools_get_invited_groups_by_email($email, $site_guid = 0){
 		// make sure we can see all groups
 		$ia = elgg_set_ignore_access(true);
 		
-		if($groups = elgg_get_entities($options)){
+		$groups = elgg_get_entities($options);
+		if (!empty($groups)) {
 			$result = $groups;
 		}
 		
@@ -252,10 +338,18 @@ function group_tools_get_invited_groups_by_email($email, $site_guid = 0){
 	return $result;
 }
 
-function group_tools_generate_email_invite_code($group_guid, $email){
+/**
+ * Generate a unique code to be used in email invitations
+ *
+ * @param int    $group_guid the group GUID
+ * @param string $email      the email address
+ *
+ * @return boolean|string the invite code, or false on failure
+ */
+function group_tools_generate_email_invite_code($group_guid, $email) {
 	$result = false;
 	
-	if(!empty($group_guid) && !empty($email)){
+	if (!empty($group_guid) && !empty($email)) {
 		// get site secret
 		$site_secret = get_site_secret();
 		
@@ -266,7 +360,14 @@ function group_tools_generate_email_invite_code($group_guid, $email){
 	return $result;
 }
 
-function group_tools_get_missing_acl_users($group_guid = 0){
+/**
+ * Get all the users who are missing from the ACLs of their groups
+ *
+ * @param int $group_guid (optional) a group GUID to check, otherwise all groups will be checked
+ *
+ * @return stdClass[] all the found database rows
+ */
+function group_tools_get_missing_acl_users($group_guid = 0) {
 	$dbprefix = elgg_get_config("dbprefix");
 	$group_guid = sanitise_int($group_guid, false);
 	
@@ -277,7 +378,7 @@ function group_tools_get_missing_acl_users($group_guid = 0){
 	$query .= " JOIN " . $dbprefix . "entities e2 ON er.guid_one = e2.guid";
 	$query .= " WHERE";
 	
-	if($group_guid > 0){
+	if ($group_guid > 0) {
 		// limit to the provided group
 		$query .= " e.guid = " . $group_guid;
 	} else {
@@ -287,8 +388,7 @@ function group_tools_get_missing_acl_users($group_guid = 0){
 	
 	$query .= " AND e2.type = 'user'";
 	$query .= " AND er.relationship = 'member'";
-	$query .= " AND er.guid_one NOT IN";
-	$query .= " (";
+	$query .= " AND er.guid_one NOT IN (";
 	$query .= " SELECT acm.user_guid";
 	$query .= " FROM " . $dbprefix . "access_collections ac2";
 	$query .= " JOIN " . $dbprefix . "access_collection_membership acm ON ac2.id = acm.access_collection_id";
@@ -298,7 +398,14 @@ function group_tools_get_missing_acl_users($group_guid = 0){
 	return get_data($query);
 }
 
-function group_tools_get_excess_acl_users($group_guid = 0){
+/**
+ * Get all users who are in a group ACL but no longer member of the group
+ *
+ * @param int $group_guid (optional) a group GUID to check, otherwise all groups will be checked
+ *
+ * @return stdClass[] all the found database rows
+ */
+function group_tools_get_excess_acl_users($group_guid = 0) {
 	$dbprefix = elgg_get_config("dbprefix");
 	$group_guid = sanitise_int($group_guid, false);
 	
@@ -308,7 +415,7 @@ function group_tools_get_excess_acl_users($group_guid = 0){
 	$query .= " JOIN " . $dbprefix . "entities e ON ac.owner_guid = e.guid";
 	$query .= " WHERE";
 	
-	if($group_guid > 0){
+	if ($group_guid > 0) {
 		// limit to the provided group
 		$query .= " e.guid = " . $group_guid;
 	} else {
@@ -316,8 +423,7 @@ function group_tools_get_excess_acl_users($group_guid = 0){
 		$query .= " e.type = 'group'";
 	}
 	
-	$query .= " AND acm.user_guid NOT IN";
-	$query .= " (";
+	$query .= " AND acm.user_guid NOT IN (";
 	$query .= " SELECT r.guid_one";
 	$query .= " FROM " . $dbprefix . "entity_relationships r";
 	$query .= " WHERE r.relationship = 'member'";
@@ -327,7 +433,12 @@ function group_tools_get_excess_acl_users($group_guid = 0){
 	return get_data($query);
 }
 
-function group_tools_get_groups_without_acl(){
+/**
+ * Get all groups that don't have an ACL
+ *
+ * @return ElggGroup[] an array of all the found groups
+ */
+function group_tools_get_groups_without_acl() {
 	$dbprefix = elgg_get_config("dbprefix");
 	
 	$options = array(
@@ -348,11 +459,12 @@ function group_tools_get_groups_without_acl(){
  * Remove a user from an access collection,
  * can't use remove_user_from_access_collection() because user might not exists any more
  *
- * @param int $user_guid
- * @param int $collection_id
- * @return boolean
+ * @param int $user_guid     the user GUID to remove
+ * @param int $collection_id the ID of the ACL to be removed from
+ *
+ * @return boolean true on success
  */
-function group_tools_remove_user_from_access_collection($user_guid, $collection_id){
+function group_tools_remove_user_from_access_collection($user_guid, $collection_id) {
 	$collection_id = sanitise_int($collection_id, false);
 	$user_guid = sanitise_int($user_guid, false);
 	
@@ -385,6 +497,7 @@ function group_tools_remove_user_from_access_collection($user_guid, $collection_
  * Custom callback to save memory and queries for group admin transfer
  *
  * @param stdClass $row from elgg_get_* function
+ *
  * @return array
  */
 function group_tool_admin_transfer_callback($row) {
@@ -394,6 +507,13 @@ function group_tool_admin_transfer_callback($row) {
 	);
 }
 
+/**
+ * Are group members allowed to invite new members to the group
+ *
+ * @param ElggGroup $group The group to check the settings
+ *
+ * @return boolean true is allowed
+ */
 function group_tools_allow_members_invite(ElggGroup $group) {
 	$result = false;
 	
@@ -401,7 +521,8 @@ function group_tools_allow_members_invite(ElggGroup $group) {
 		// only for group members
 		if ($group->isMember(elgg_get_logged_in_user_entity())) {
 			// is this even allowed
-			if (($setting = elgg_get_plugin_setting("invite_members", "group_tools")) && in_array($setting, array("yes_off", "yes_on"))) {
+			$setting = elgg_get_plugin_setting("invite_members", "group_tools");
+			if (!empty($setting) && in_array($setting, array("yes_off", "yes_on"))) {
 				$invite_members = $group->invite_members;
 				if (empty($invite_members)) {
 					$invite_members = "no";
@@ -423,7 +544,9 @@ function group_tools_allow_members_invite(ElggGroup $group) {
 /**
  * Custom annotations delete function because logged out users can't delete annotations
  *
- * @param array $annotations
+ * @param array $annotations annotations to delete
+ *
+ * @return void
  */
 function group_tools_delete_annotations($annotations) {
 
@@ -441,6 +564,10 @@ function group_tools_delete_annotations($annotations) {
 /**
  * Returns suggested groups
  *
+ * @param ElggUser $user  (optional) the user to get the groups for, defaults to the current user
+ * @param int      $limit (optional) the number of suggested groups to return, default = 10
+ *
+ * @return ElggGroup[] all the suggested groups
  */
 function group_tools_get_suggested_groups($user = null, $limit = null) {
 	$result = array();
@@ -463,10 +590,10 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 			$tag_names = elgg_get_registered_tag_metadata_names();
 			if (!empty($tag_names)) {
 				$user_metadata_options = array(
-						"guid" => $user->getGUID(),
-						"limit" => false,
-						"metadata_names" => $tag_names
-					);
+					"guid" => $user->getGUID(),
+					"limit" => false,
+					"metadata_names" => $tag_names
+				);
 				
 				// get metadata
 				$user_values = elgg_get_metadata($user_metadata_options);
@@ -487,9 +614,11 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 					);
 					
 					$groups = elgg_get_entities_from_metadata($group_options);
-					foreach ($groups as $group) {
-						$result[$group->getGUID()] = $group;
-						$limit--;
+					if (!empty($groups)) {
+						foreach ($groups as $group) {
+							$result[$group->getGUID()] = $group;
+							$limit--;
+						}
 					}
 				}
 			}
@@ -499,10 +628,10 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 		$group_guids = string_to_tag_array(elgg_get_plugin_setting("suggested_groups","group_tools"));
 		if (!empty($group_guids) && ($limit > 0)) {
 			$group_options = array(
-					"guids" => $group_guids,
-					"type" => "group",
-					"wheres" => array($group_membership_where),
-					"limit" => $limit
+				"guids" => $group_guids,
+				"type" => "group",
+				"wheres" => array($group_membership_where),
+				"limit" => $limit
 			);
 			
 			if (!empty($result)) {
@@ -511,8 +640,10 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 			}
 			
 			$groups = elgg_get_entities($group_options);
-			foreach ($groups as $group) {
-				$result[$group->getGUID()] = $group;
+			if (!empty($groups)) {
+				foreach ($groups as $group) {
+					$result[$group->getGUID()] = $group;
+				}
 			}
 		}
 	}
@@ -520,6 +651,13 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 	return $result;
 }
 
+/**
+ * Show an indicator if the group is hidden
+ *
+ * @param ElggGroup $group The group to check
+ *
+ * @return boolean true if an indicator should be shown
+ */
 function group_tools_show_hidden_indicator(ElggGroup $group) {
 	static $check_required;
 	$result = false;
