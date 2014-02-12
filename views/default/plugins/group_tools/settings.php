@@ -65,7 +65,22 @@ $body .= "</div>";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:auto_notification");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[auto_notification]", "options_values" => $noyes_options, "value" => $plugin->auto_notification));
+if ($plugin->auto_notification == "yes") { // Backwards compatibility
+	$body .= elgg_view("input/hidden", array("name" => "params[auto_notification]", "value" => "0"));
+	$plugin->auto_notification_site = "1";
+	$plugin->auto_notification_email = "1";
+}
+$body .= "<ul class='mll'>";
+global $NOTIFICATION_HANDLERS;
+foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+	$name = "auto_notification_" . $method;
+	$checkbox_options = array("name" => "params[" . $name . "]", "value" => "1");
+	if ($plugin->$name == "1") {
+		$checkbox_options["checked"] = "checked";
+	}
+	$body .= "<li>" . elgg_view("input/checkbox", $checkbox_options) . " " . elgg_echo('notification:method:' . $method) . "</li>";
+}
+$body .= "</ul>";
 $body .= "</div>";
 
 $body .= "<div>";

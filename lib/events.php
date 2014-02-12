@@ -19,10 +19,18 @@ function group_tools_join_group_event($event, $type, $params) {
 	
 	// only load plugin setting once
 	if (!isset($auto_notification)) {
-		$auto_notification = false;
-		
-		if (elgg_get_plugin_setting("auto_notification", "group_tools") == "yes") {
-			$auto_notification = true;
+		$auto_notification = array();
+
+		if (isset($NOTIFICATION_HANDLERS) && is_array($NOTIFICATION_HANDLERS)) {
+			if (elgg_get_plugin_setting("auto_notification", "group_tools") == "yes") { // Backwards compatibility
+				$auto_notification = array("email", "site");
+			}
+
+			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+				if (elgg_get_plugin_setting("auto_notification_" . $method, "group_tools") == "1") {
+					$auto_notification[] = $method;
+				}
+			}
 		}
 	}
 	
@@ -31,15 +39,9 @@ function group_tools_join_group_event($event, $type, $params) {
 		$user = elgg_extract("user", $params);
 		
 		if (($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
-			if ($auto_notification && !empty($NOTIFICATION_HANDLERS) && is_array($NOTIFICATION_HANDLERS)) {
-				// only auto subscribe to site and email notifications
-				$auto_notification_handlers = array(
-					"site",
-					"email"
-				);
-				
+			if (!empty($NOTIFICATION_HANDLERS) && is_array($NOTIFICATION_HANDLERS)) {
 				foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
-					if (in_array($method, $auto_notification_handlers)) {
+					if (in_array($method, $auto_notification)) {
 						add_entity_relationship($user->getGUID(), "notify" . $method, $group->getGUID());
 					}
 				}
