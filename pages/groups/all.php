@@ -37,6 +37,12 @@ switch ($selected_tab) {
 		}
 		
 		break;
+	case "yours":
+		$group_options["relationship"] = "member";
+		$group_options["relationship_guid"] = elgg_get_logged_in_user_guid();
+		$group_options["inverse_relationship"] = false;
+
+		break;
 	case "open":
 		$group_options["metadata_name_value_pairs"] = array(
 			"name" => "membership",
@@ -59,7 +65,11 @@ switch ($selected_tab) {
 		break;
 }
 
-$content = elgg_list_entities_from_metadata($group_options);
+if (isset($group_options["relationship"])) {
+	$content = elgg_list_entities_from_relationship($group_options);
+} else {
+	$content = elgg_list_entities_from_metadata($group_options);
+}
 if (empty($content)) {
 	$content = elgg_echo("groups:none");
 }

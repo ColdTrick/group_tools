@@ -10,6 +10,11 @@ $tabs = array(
 		"href" => "groups/all?filter=newest",
 		"priority" => 200,
 	),
+	"yours" => array(
+		"text" => elgg_echo("groups:yours"),
+		"href" => "groups/all?filter=yours",
+		"priority" => 250,
+	),
 	"popular" => array(
 		"text" => elgg_echo("groups:popular"),
 		"href" => "groups/all?filter=popular",
