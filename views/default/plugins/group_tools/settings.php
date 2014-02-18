@@ -25,6 +25,7 @@ $noyes3_options = array(
 
 $listing_options = array(
 	"discussion" => elgg_echo("groups:latestdiscussion"),
+	"yours" => elgg_echo("groups:yours"),
 	"newest" => elgg_echo("groups:newest"),
 	"popular" => elgg_echo("groups:popular"),
 	"open" => elgg_echo("group_tools:groups:sorting:open"),

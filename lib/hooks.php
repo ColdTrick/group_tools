@@ -65,7 +65,7 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 					set_input("filter", $filter);
 				}
 				
-				if (in_array($filter, array("open", "closed", "alpha", "ordered", "suggested"))) {
+				if (in_array($filter, array("yours", "open", "closed", "alpha", "ordered", "suggested"))) {
 					// we will handle the output
 					$result = false;
 					
