@@ -16,7 +16,8 @@ $options = array(
 	"limit" => $count,
 	"full_view" => false,
 	"pagination" => false,
-	"metadata_name_value_pairs" => array()
+	"metadata_name_value_pairs" => array(),
+	"metadata_case_sensitive" => false
 );
 
 // limit to featured groups?
