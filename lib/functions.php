@@ -21,7 +21,18 @@ function group_tools_check_group_email_invitation($invite_code, $group_guid = 0)
 			"type" => "group",
 			"limit" => 1,
 			"site_guids" => false,
-			"annotation_name_value_pairs" => array("email_invitation" => $invite_code)
+			"annotation_name_value_pairs" => array(
+				array(
+					"name" => "email_invitation",
+					"value" => $invite_code
+				),
+				array(
+					"name" => "email_invitation",
+					"value" => $invite_code . "|%",
+					"operand" => "LIKE"
+				)
+			),
+			"annotation_name_value_pairs_operator" => "OR"
 		);
 		
 		if (!empty($group_guid)) {
@@ -30,6 +41,7 @@ function group_tools_check_group_email_invitation($invite_code, $group_guid = 0)
 		
 		// find hidden groups
 		$ia = elgg_set_ignore_access(true);
+		
 		$groups = elgg_get_entities_from_annotations($options);
 		
 		if (!empty($groups)) {
@@ -179,7 +191,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 				
 				if (empty($found_group)) {
 					// register invite with group
-					$group->annotate("email_invitation", $invite_code, ACCESS_LOGGED_IN, $group->getGUID());
+					$group->annotate("email_invitation", $invite_code . "|" . $email, ACCESS_LOGGED_IN, $group->getGUID());
 				}
 				
 				// make subject
@@ -196,6 +208,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 					elgg_get_site_url() . "groups/invitations/?invitecode=" . $invite_code,
 					$invite_code
 				));
+				register_error($invite_code);
 				
 				$params = array(
 					"group" => $group,
@@ -319,7 +332,11 @@ function group_tools_get_invited_groups_by_email($email, $site_guid = 0) {
 				"JOIN " . $dbprefix . "metastrings msv ON a.value_id = msv.id"
 			),
 			"wheres" => array(
-				"(a.name_id = " . $email_invitation_id . " AND msv.string = md5(CONCAT('" . $site_secret . $email . "', e.guid)))"
+				"(a.name_id = " . $email_invitation_id . " AND
+					(msv.string = md5(CONCAT('" . $site_secret . $email . "', e.guid))
+					OR msv.string LIKE CONCAT(md5(CONCAT('" . $site_secret . $email . "', e.guid)), '|%')
+					)
+				)"
 			)
 		);
 		

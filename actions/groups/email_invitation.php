@@ -14,16 +14,25 @@ if (!empty($invitecode)) {
 	
 	if (!empty($group)) {
 		if (groups_join_group($group, $user)) {
+			$invitecode = sanitise_string($invitecode);
+			
 			$options = array(
 				"guid" => $group->getGUID(),
 				"annotation_name" => "email_invitation",
-				"annotation_value" => $invitecode,
+				"wheres" => array("(v.string = '" . $invitecode . "' OR v.string LIKE '" . $invitecode . "|%')"),
 				"annotation_owner_guid" => $group->getGUID(),
 				"limit" => 1
 			);
 			
-			if ($annotations = elgg_get_annotations($options)) {
+			$annotations = elgg_get_annotations($options);
+			if (!empty($annotations)) {
+				// ignore access in order to cleanup the invitation
+				$ia = elgg_set_ignore_access(true);
+				
 				$annotations[0]->delete();
+				
+				// restore access
+				elgg_set_ignore_access($ia);
 			}
 			
 			$forward_url = $group->getURL();

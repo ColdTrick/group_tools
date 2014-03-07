@@ -220,8 +220,10 @@ To visit the group please click on the following link:
 
 	// group membership requests
 	'group_tools:groups:membershipreq:requests' => "Membership requests",
-	'group_tools:groups:membershipreq:invitations' => "Outstanding invitations",
-	'group_tools:groups:membershipreq:invitations:none' => "No outstanding invitations",
+	'group_tools:groups:membershipreq:invitations' => "Invited users",
+	'group_tools:groups:membershipreq:invitations:none' => "No pending user invitations",
+	'group_tools:groups:membershipreq:email_invitations' => "Invited e-mail addresses",
+	'group_tools:groups:membershipreq:email_invitations:none' => "No pending e-mail invitations",
 	'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Are you sure you wish to revoke this invitation",
 
 	// group invitations
@@ -406,7 +408,10 @@ To visit the group please click on the following link:
 	'group_tools:action:welcome_message:success' => "The welcome message was saved",
 	
 	'group_tools:welcome_message:subject' => "Welcome to %s",
-	'' => "",
+	
+	// email invitations
+	'group_tools:action:revoke_email_invitation:error' => "An error occured while revoking the invitation, please try again",
+	'group_tools:action:revoke_email_invitation:success' => "The invitation was revoked",
 );
 
 add_translation("en", $english);

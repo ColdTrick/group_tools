@@ -139,6 +139,7 @@ function group_tools_init() {
 	
 	elgg_register_action("groups/email_invitation", dirname(__FILE__) . "/actions/groups/email_invitation.php");
 	elgg_register_action("groups/decline_email_invitation", dirname(__FILE__) . "/actions/groups/decline_email_invitation.php");
+	elgg_register_action("group_tools/revoke_email_invitation", dirname(__FILE__) . "/actions/groups/revoke_email_invitation.php");
 
 	elgg_register_action("group_tools/order_groups", dirname(__FILE__) . "/actions/order_groups.php", "admin");
 	
@@ -202,27 +203,20 @@ function group_tools_pagesetup() {
 					"count" => true
 				);
 				
-				$invite_options = array(
-					"type" => "user",
-					"relationship" => "invited",
-					"relationship_guid" => $page_owner->getGUID(),
-					"count" => true
-				);
+				$requests = elgg_get_entities_from_relationship($request_options);
 				
 				$postfix = "";
-				if ($requests = elgg_get_entities_from_relationship($request_options)) {
+				if (!empty($requests)) {
 					$postfix = " [" . $requests . "]";
-				} elseif ($invited = elgg_get_entities_from_relationship($invite_options)) {
-					$postfix = " [" . $invited . "]";
 				}
 				
-				if (!$page_owner->isPublicMembership() || !empty($requests)) {
+				if (!$page_owner->isPublicMembership()) {
 					elgg_register_menu_item("page", array(
 						"name" => "membership_requests",
 						"text" => elgg_echo("groups:membershiprequests") . $postfix,
 						"href" => "groups/requests/" . $page_owner->getGUID(),
 					));
-				} elseif (!empty($invited)) {
+				} else {
 					elgg_register_menu_item("page", array(
 						"name" => "membership_requests",
 						"text" => elgg_echo("group_tools:menu:invitations") . $postfix,

@@ -1,5 +1,18 @@
 <?php
 $language = array (
+  'group_tools:join:already:tooltip' => 'Je bent uitgenodigd voor deze groep, dus je kunt direct lid worden.',
+  'group_tools:groups:membershipreq:email_invitations' => 'Uitgenodigde e-mail adressen',
+  'group_tools:groups:membershipreq:email_invitations:none' => 'Geen uitstaande e-mail uitnodigingen',
+  'group_tools:welcome_message:title' => 'Groep welkom bericht',
+  'group_tools:welcome_message:description' => 'Je kunt een welkomstbericht configureren welke wordt verzonden aan nieuwe leden van de groep zodra ze lid worden. Als je geen bericht wilt versturen moet je dit veld leeg laten.',
+  'group_tools:welcome_message:explain' => 'Om het bericht te personaliseren kun je gebruik maken van de volgende plaatsaanduidingen:
+[name]: de naam van de nieuwe gebruiker (bijv. %s)
+[group_name]: de naam van deze groep (bijv. %s)
+[group_url]: de URL naar deze groep (bijv. %s)',
+  'group_tools:action:welcome_message:success' => 'Het welkomstbericht is opgeslagen',
+  'group_tools:welcome_message:subject' => 'Welkom bij %s',
+  'group_tools:action:revoke_email_invitation:error' => 'Er is een fout opgetreden tijdens het intrekken van de uitnodiging, probeer het nogmaals',
+  'group_tools:action:revoke_email_invitation:success' => 'De uitnodiging is ingetrokken',
   'group_tools:settings:show_hidden_group_indicator:group_acl' => 'Ja, als de groep alleen voor leden is',
   'group_tools:settings:show_hidden_group_indicator:logged_in' => 'Ja, als de groep niet publiek is',
   'group_tools:settings:show_hidden_group_indicator' => 'Toon een icoon als een groep verborgen is',
