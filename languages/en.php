@@ -148,7 +148,7 @@ To visit the group please click on the following link:
 	'group_tools:cleanup:description' => "Cleanup the sidebar of the group. This will have no effect for the group admins.",
 	'group_tools:cleanup:owner_block' => "Limit the owner block",
 	'group_tools:cleanup:owner_block:explain' => "The owner block can be found at the top of the sidebar, some extra links can be posted in this area (example: RSS links).",
-	'group_tools:cleanup:actions' => "Do you want to allow users to join this group",
+	'group_tools:cleanup:actions' => "Hide the Join group/Request membership button",
 	'group_tools:cleanup:actions:explain' => "Depending on your group setting, users can directly join the group or request membership.",
 	'group_tools:cleanup:menu' => "Hide side menu items",
 	'group_tools:cleanup:menu:explain' => "Hide the menu links to the different group tools. The users will only be able to get access to the group tools by using the group widgets.",
