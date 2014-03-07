@@ -394,6 +394,19 @@ To visit the group please click on the following link:
 	'groups:search:tags' => "search",
 	'groups:search:title' => "Search for groups matching '%s'",
 	'groups:searchtag' => "Search for groups",
+	
+	// welcome message
+	'group_tools:welcome_message:title' => "Group welcome message",
+	'group_tools:welcome_message:description' => "You can configure a welcome message for new users who join this group. If you don't want to send a welcome message leave this field blank.",
+	'group_tools:welcome_message:explain' => "In order to personalize the message you can use the following placeholders:
+[name]: the name of the new user (eg. %s)
+[group_name]: the name of this group (eg. %s)
+[group_url]: the URL to this group (eg. %s)",
+	
+	'group_tools:action:welcome_message:success' => "The welcome message was saved",
+	
+	'group_tools:welcome_message:subject' => "Welcome to %s",
+	'' => "",
 );
 
 add_translation("en", $english);

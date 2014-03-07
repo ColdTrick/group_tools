@@ -39,6 +39,7 @@ function group_tools_join_group_event($event, $type, $params) {
 		$user = elgg_extract("user", $params);
 		
 		if (($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
+			// check for the auto notification settings
 			if (!empty($NOTIFICATION_HANDLERS) && is_array($NOTIFICATION_HANDLERS)) {
 				foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
 					if (in_array($method, $auto_notification)) {
@@ -64,6 +65,19 @@ function group_tools_join_group_event($event, $type, $params) {
 				elgg_delete_annotations($options);
 			} elseif ($annotations = elgg_get_annotations($options)) {
 				group_tools_delete_annotations($annotations);
+			}
+			
+			// welcome message
+			$welcome_message = $group->getPrivateSetting("group_tools:welcome_message");
+			$check_message = trim(strip_tags($welcome_message));
+			if (!empty($check_message)) {
+				// replace the place holders
+				$welcome_message = str_ireplace("[name]", $user->name, $welcome_message);
+				$welcome_message = str_ireplace("[group_name]", $group->name, $welcome_message);
+				$welcome_message = str_ireplace("[group_url]", $group->getURL(), $welcome_message);
+				
+				// notify the user
+				notify_user($user->getGUID(), $group->getGUID(), elgg_echo("group_tools:welcome_message:subject", array($group->name)), $welcome_message);
 			}
 		}
 	}
