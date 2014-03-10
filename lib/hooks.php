@@ -175,6 +175,12 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params) {
 								$menu_item->setText(elgg_echo("groups:join"));
 								$menu_item->setTooltip(elgg_echo("group_tools:join:already:tooltip"));
 								$menu_item->setHref(elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/groups/join?user_guid=" . $user->getGUID() . "&group_guid=" . $page_owner->getGUID()));
+							} elseif (group_tools_check_domain_based_group($page_owner, $user)) {
+								// user has a matching email domain
+								$menu_item->setName("groups:join");
+								$menu_item->setText(elgg_echo("groups:join"));
+								$menu_item->setTooltip(elgg_echo("group_tools:join:domain_based:tooltip"));
+								$menu_item->setHref(elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/groups/join?user_guid=" . $user->getGUID() . "&group_guid=" . $page_owner->getGUID()));
 							}
 							
 							break;
@@ -534,5 +540,54 @@ function group_tools_admin_transfer_permissions_hook($hook, $type, $return_value
 		}
 	}
 
+	return $result;
+}
+
+/**
+ * A prepend hook to the groups/join action
+ *
+ * @param string $hook         'action'
+ * @param string $type         'groups/join'
+ * @param bool   $return_value true, return false to stop the action
+ * @param null   $params       passed on params
+ *
+ * @return bool
+ */
+function group_tools_join_group_action_handler($hook, $type, $return_value, $params) {
+	// hacky way around a short comming of Elgg core to allow users to join a group
+	if (group_tools_domain_based_groups_enabled()) {
+		elgg_register_plugin_hook_handler("permissions_check", "group", "group_tools_permissions_check_groups_join_hook");
+	}
+}
+
+/**
+ * A hook on the ->canEdit() of a group. This is done to allow e-mail domain users to join a group
+ *
+ * Note: this is a very hacky way arround a short comming of Elgg core
+ *
+ * @param string $hook         'permissions_check'
+ * @param string $type         'group'
+ * @param bool   $return_value is the current user allowed to edit the group
+ * @param mixed  $params       passed on params
+ *
+ * @return bool
+ */
+function group_tools_permissions_check_groups_join_hook($hook, $type, $return_value, $params) {
+	$result = $return_value;
+	
+	if (!$result && group_tools_domain_based_groups_enabled()) {
+		// domain based groups are enabled, lets check if this user is allowed to join based on that
+		if (!empty($params) && is_array($params)) {
+			$group = elgg_extract("entity", $params);
+			$user = elgg_extract("user", $params);
+			
+			if (!empty($group) && elgg_instanceof($group, "group") && !empty($user) && elgg_instanceof($user ,"user")) {
+				if (group_tools_check_domain_based_group($group, $user)) {
+					$result = true;
+				}
+			}
+		}
+	}
+	
 	return $result;
 }

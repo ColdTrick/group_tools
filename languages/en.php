@@ -41,6 +41,8 @@ $english = array(
 	'group_tools:settings:invite_members:default_off' => "Yes, default off",
 	'group_tools:settings:invite_members:default_on' => "Yes, default on",
 	'group_tools:settings:invite_members:description' => "Group owners/admins can enable/disable this for their group",
+	'group_tools:settings:domain_based' => "Enable domain based groups",
+	'group_tools:settings:domain_based:description' => "Users can join a group based on their e-mail domain. During registration they will auto join groups based on their e-mail domain.",
 
 	'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
 
@@ -412,6 +414,15 @@ To visit the group please click on the following link:
 	// email invitations
 	'group_tools:action:revoke_email_invitation:error' => "An error occured while revoking the invitation, please try again",
 	'group_tools:action:revoke_email_invitation:success' => "The invitation was revoked",
+	
+	// domain based groups
+	'group_tools:join:domain_based:tooltip' => "Because of a matching e-mail domain, you can join this group.",
+	
+	'group_tools:domain_based:title' => "Configure e-mail domains",
+	'group_tools:domain_based:description' => "When you configure one (or more) e-mail domains, users with that e-mail domain will automaticly join your group upon registration. Also if you have a closed group user with a matching e-mail domain can join without requesting membership. You can configure multipe domains by using a comma. Don't include the @ sign",
+	
+	'group_tools:action:domain_based:success' => "The new e-mail domains were saved",
+	
 );
 
 add_translation("en", $english);

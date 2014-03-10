@@ -54,14 +54,14 @@ $title = elgg_echo("group_tools:settings:management:title");
 
 $body = "<div>";
 $body .= elgg_echo("group_tools:settings:admin_transfer");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[admin_transfer]", "options_values" => $admin_transfer_options, "value" => $plugin->admin_transfer));
+$body .= elgg_view("input/dropdown", array("name" => "params[admin_transfer]", "options_values" => $admin_transfer_options, "value" => $plugin->admin_transfer, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<br />";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:search_index");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[search_index]", "options_values" => $noyes_options, "value" => $plugin->search_index));
+$body .= elgg_view("input/dropdown", array("name" => "params[search_index]", "options_values" => $noyes_options, "value" => $plugin->search_index, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<div>";
@@ -86,36 +86,36 @@ $body .= "</div>";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:show_membership_mode");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_membership_mode]", "options_values" => $yesno_options, "value" => $plugin->show_membership_mode));
+$body .= elgg_view("input/dropdown", array("name" => "params[show_membership_mode]", "options_values" => $yesno_options, "value" => $plugin->show_membership_mode, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:show_hidden_group_indicator");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[show_hidden_group_indicator]", "options_values" => $hidden_indicator_options, "value" => $plugin->show_hidden_group_indicator));
+$body .= elgg_view("input/dropdown", array("name" => "params[show_hidden_group_indicator]", "options_values" => $hidden_indicator_options, "value" => $plugin->show_hidden_group_indicator, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:auto_suggest_groups");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[auto_suggest_groups]", "options_values" => $yesno_options, "value" => $plugin->auto_suggest_groups));
+$body .= elgg_view("input/dropdown", array("name" => "params[auto_suggest_groups]", "options_values" => $yesno_options, "value" => $plugin->auto_suggest_groups, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<br />";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:multiple_admin");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[multiple_admin]", "options_values" => $noyes_options, "value" => $plugin->multiple_admin));
+$body .= elgg_view("input/dropdown", array("name" => "params[multiple_admin]", "options_values" => $noyes_options, "value" => $plugin->multiple_admin, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:mail");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[mail]", "options_values" => $noyes_options, "value" => $plugin->mail));
+$body .= elgg_view("input/dropdown", array("name" => "params[mail]", "options_values" => $noyes_options, "value" => $plugin->mail, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<br />";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:listing:default");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[group_listing]", "options_values" => $listing_options, "value" => $plugin->group_listing));
+$body .= elgg_view("input/dropdown", array("name" => "params[group_listing]", "options_values" => $listing_options, "value" => $plugin->group_listing, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<div>";
@@ -151,23 +151,29 @@ $title = elgg_echo("group_tools:settings:invite:title");
 
 $body = "<div>";
 $body .= elgg_echo("group_tools:settings:invite");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[invite]", "options_values" => $noyes_options, "value" => $plugin->invite));
+$body .= elgg_view("input/dropdown", array("name" => "params[invite]", "options_values" => $noyes_options, "value" => $plugin->invite, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:invite_email");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[invite_email]", "options_values" => $noyes_options, "value" => $plugin->invite_email));
+$body .= elgg_view("input/dropdown", array("name" => "params[invite_email]", "options_values" => $noyes_options, "value" => $plugin->invite_email, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:invite_csv");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[invite_csv]", "options_values" => $noyes_options, "value" => $plugin->invite_csv));
+$body .= elgg_view("input/dropdown", array("name" => "params[invite_csv]", "options_values" => $noyes_options, "value" => $plugin->invite_csv, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:invite_members");
-$body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[invite_members]", "options_values" => $noyes3_options, "value" => $plugin->invite_members));
+$body .= elgg_view("input/dropdown", array("name" => "params[invite_members]", "options_values" => $noyes3_options, "value" => $plugin->invite_members, "class" => "mls"));
 $body .= "<div class='plm elgg-subtext'>" . elgg_echo("group_tools:settings:invite_members:description") . "</div>";
+$body .= "</div>";
+
+$body .= "<div>";
+$body .= elgg_echo("group_tools:settings:domain_based");
+$body .= elgg_view("input/dropdown", array("name" => "params[domain_based]", "options_values" => $noyes_options, "value" => $plugin->domain_based, "class" => "mls"));
+$body .= "<div class='plm elgg-subtext'>" . elgg_echo("group_tools:settings:domain_based:description") . "</div>";
 $body .= "</div>";
 
 echo elgg_view_module("inline", $title, $body);

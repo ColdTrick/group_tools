@@ -128,6 +128,15 @@ function group_tools_join_site_handler($event, $type, $relationship) {
 				}
 			}
 			
+			// find domain based groups
+			$groups = group_tools_get_domain_based_groups($user, $site_guid);
+			if (!empty($groups)) {
+				foreach ($groups as $group) {
+					// join the group
+					$group->join($user);
+				}
+			}
+			
 			// restore access settings
 			elgg_set_ignore_access($ia);
 		}

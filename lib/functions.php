@@ -707,3 +707,97 @@ function group_tools_show_hidden_indicator(ElggGroup $group) {
 	
 	return $result;
 }
+
+/**
+ * Check the plugin setting which enables domain based groups
+ *
+ * @return boolean
+ */
+function group_tools_domain_based_groups_enabled() {
+	static $result;
+	
+	if (!isset($result)) {
+		$result = false;
+		
+		$setting = elgg_get_plugin_setting("domain_based", "group_tools");
+		if ($setting == "yes") {
+			$result = true;
+		}
+	}
+	
+	return $result;
+}
+
+/**
+ * Check if the domain based settings for this group match the user
+ *
+ * @param ElggGroup $group the group to match to
+ * @param ElggUser  $user  the user to check (defaults to current user)
+ *
+ * @return boolean true if the domain of the user is found in the group settings
+ */
+function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user = null) {
+	$result = false;
+	
+	if (group_tools_domain_based_groups_enabled()) {
+		if (empty($user)) {
+			$user = elgg_get_logged_in_user_entity();
+		}
+		
+		if (!empty($group) && elgg_instanceof($group, "group") && !empty($user) && elgg_instanceof($user, "user")) {
+			$domains = $group->getPrivateSetting("domain_based");
+			
+			if (!empty($domains)) {
+				$domains = explode("|", trim($domains, "|"));
+				
+				list(,$domain) = explode("@", $user->email);
+				
+				if (in_array($domain, $domains)) {
+					$result = true;
+				}
+			}
+		}
+	}
+	
+	return $result;
+}
+
+/**
+ * Get all groups based on the email domain of the user from the group settings
+ *
+ * @param ElggUser $user      The user used to base the search
+ * @param int      $site_guid (optional) the site guid to limit the search to, defaults to current site
+ *
+ * @return bool|ElggGroup[] false or an array of found groups
+ */
+function group_tools_get_domain_based_groups(ElggUser $user, $site_guid = 0) {
+	$result = false;
+	
+	if (group_tools_domain_based_groups_enabled()) {
+		if (empty($site_guid)) {
+			$site_guid = elgg_get_site_entity()->getGUID();
+		}
+		
+		if (!empty($user) && elgg_instanceof($user, "user")) {
+			list(, $domain) = explode("@", $user->email);
+			
+			$options = array(
+				"type" => "group",
+				"limit" => false,
+				"site_guids" => $site_guid,
+				"private_setting_name_value_pairs" => array(
+					"name" => "domain_based",
+					"value" => "%|" . $domain . "|%",
+					"operand" => "LIKE"
+				)
+			);
+			$groups = elgg_get_entities_from_private_settings($options);
+			if (!empty($groups)) {
+				$result = $groups;
+			}
+		}
+	}
+	
+	return $result;
+}
+

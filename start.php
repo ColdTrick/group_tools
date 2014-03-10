@@ -95,6 +95,9 @@ function group_tools_init() {
 	// configure a group welcome message
 	elgg_extend_view("groups/edit", "group_tools/forms/welcome_message");
 	
+	// configure domain based group join
+	elgg_extend_view("groups/edit", "group_tools/forms/domain_based");
+	
 	// show group status in owner block
 	elgg_extend_view("page/elements/owner_block/extend", "group_tools/owner_block");
 	// show group status in stats (on group profile)
@@ -121,6 +124,7 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler("widget_url", "widget_manager", "group_tools_widget_url_handler");
 	elgg_register_plugin_hook_handler("access:default", "user", "group_tools_access_default_handler");
 	elgg_register_plugin_hook_handler("access:collections:write", "user", "group_tools_access_write_handler");
+	elgg_register_plugin_hook_handler("action", "groups/join", "group_tools_join_group_action_handler");
 	
 	// actions
 	elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");
@@ -131,6 +135,7 @@ function group_tools_init() {
 	elgg_register_action("group_tools/default_access", dirname(__FILE__) . "/actions/default_access.php");
 	elgg_register_action("group_tools/invite_members", dirname(__FILE__) . "/actions/invite_members.php");
 	elgg_register_action("group_tools/welcome_message", dirname(__FILE__) . "/actions/welcome_message.php");
+	elgg_register_action("group_tools/domain_based", dirname(__FILE__) . "/actions/domain_based.php");
 	
 	elgg_register_action("group_tools/toggle_special_state", dirname(__FILE__) . "/actions/admin/toggle_special_state.php", "admin");
 	elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/admin/fix_auto_join.php", "admin");
