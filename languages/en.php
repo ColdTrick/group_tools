@@ -423,6 +423,33 @@ To visit the group please click on the following link:
 	
 	'group_tools:action:domain_based:success' => "The new e-mail domains were saved",
 	
+	// related groups
+	'groups_tools:related_groups:tool_option' => "Show related groups",
+	
+	'groups_tools:related_groups:widget:title' => "Related groups",
+	'groups_tools:related_groups:widget:description' => "Display a list of groups you added as related to this group.",
+	
+	'groups_tools:related_groups:none' => "No related groups found.",
+	'group_tools:related_groups:title' => "Related groups",
+	
+	'group_tools:related_groups:form:placeholder' => "Search for a new related group",
+	'group_tools:related_groups:form:description' => "You can search for a new related group, select it from the list and click Add.",
+	
+	'group_tools:action:related_groups:error:same' => "You can't related this group to itself",
+	'group_tools:action:related_groups:error:already' => "The selected group is already related",
+	'group_tools:action:related_groups:error:add' => "An unknown error occured while adding the relationship, please try again",
+	'group_tools:action:related_groups:success' => "The group is now related",
+	
+	'group_tools:related_groups:notify:owner:subject' => "A new related group was added",
+	'group_tools:related_groups:notify:owner:message' => "Hi %s,
+	
+%s added your group %s as a related group to %s.",
+	
+	'group_tools:related_groups:entity:remove' => "Remove related group",
+	
+	'group_tools:action:remove_related_groups:error:not_related' => "The group is not related",
+	'group_tools:action:remove_related_groups:error:remove' => "An unknown error occured while removing the relationship, please try again",
+	'group_tools:action:remove_related_groups:success' => "The group is no longer related",
 );
 
 add_translation("en", $english);

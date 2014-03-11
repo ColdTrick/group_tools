@@ -113,6 +113,11 @@ function group_tools_init() {
 		run_function_once("group_tools_version_1_3");
 	}
 	
+	// related groups
+	add_group_tool_option("related_groups", elgg_echo("groups_tools:related_groups:tool_option"), false);
+	elgg_extend_view("groups/tool_latest", "group_tools/modules/related_groups");
+	elgg_register_widget_type("group_related", elgg_echo("groups_tools:related_groups:widget:title"), elgg_echo("groups_tools:related_groups:widget:description"), "groups");
+	
 	// register index widget to show latest discussions
 	elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), "index,dashboard", true);
 	elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), "groups");
@@ -125,6 +130,7 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler("access:default", "user", "group_tools_access_default_handler");
 	elgg_register_plugin_hook_handler("access:collections:write", "user", "group_tools_access_write_handler");
 	elgg_register_plugin_hook_handler("action", "groups/join", "group_tools_join_group_action_handler");
+	elgg_register_plugin_hook_handler("register", "menu:owner_block", "group_tools_register_owner_block_menu_handler");
 	
 	// actions
 	elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");
@@ -136,6 +142,8 @@ function group_tools_init() {
 	elgg_register_action("group_tools/invite_members", dirname(__FILE__) . "/actions/invite_members.php");
 	elgg_register_action("group_tools/welcome_message", dirname(__FILE__) . "/actions/welcome_message.php");
 	elgg_register_action("group_tools/domain_based", dirname(__FILE__) . "/actions/domain_based.php");
+	elgg_register_action("group_tools/related_groups", dirname(__FILE__) . "/actions/related_groups.php");
+	elgg_register_action("group_tools/remove_related_groups", dirname(__FILE__) . "/actions/remove_related_groups.php");
 	
 	elgg_register_action("group_tools/toggle_special_state", dirname(__FILE__) . "/actions/admin/toggle_special_state.php", "admin");
 	elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/admin/fix_auto_join.php", "admin");

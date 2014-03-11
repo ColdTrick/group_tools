@@ -122,6 +122,15 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 				
 				include(dirname(dirname(__FILE__)) . "/pages/groups/invitations.php");
 				break;
+			case "related":
+				$result = false;
+				
+				if (isset($page[1])) {
+					set_input("group_guid", $page[1]);
+				}
+				
+				include(dirname(dirname(__FILE__)) . "/pages/groups/related.php");
+				break;
 			default:
 				// check if we have an old group profile link
 				if (isset($page[0]) && is_numeric($page[0])) {
@@ -321,8 +330,17 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 	if (!empty($params) && is_array($params)) {
 		
 		$entity = elgg_extract("entity", $params);
+		$page_owner = elgg_get_page_owner_entity();
 		
-		if (elgg_in_context("widgets_groups_show_members") && elgg_instanceof($entity, "group")) {
+		if (elgg_in_context("group_tools_related_groups") && !empty($page_owner) && elgg_instanceof($page_owner, "group") && $page_owner->canEdit() && elgg_instanceof($entity, "group")) {
+			// remove relatede group
+			$result[] = ElggMenuItem::factory(array(
+				"name" => "related_group",
+				"text" => elgg_echo("group_tools:related_groups:entity:remove"),
+				"href" => "action/group_tools/remove_related_groups?group_guid=" . $page_owner->getGUID() . "&guid=" . $entity->getGUID(),
+				"confirm" => elgg_echo("question:areyousure")
+			));
+		} elseif (elgg_in_context("widgets_groups_show_members") && elgg_instanceof($entity, "group")) {
 			// number of members
 			$num_members = $entity->getMembers(10, 0, true);
 			
@@ -431,6 +449,9 @@ function group_tools_widget_url_handler($hook, $type, $return_value, $params) {
 					if (!empty($owner) && elgg_instanceof($owner, "group")) {
 						$result = "discussion/add/" . $owner->getGUID();
 					}
+					break;
+				case "group_related":
+					$result = "groups/related/" . $widget->getOwnerGUID();
 					break;
 			}
 		}
@@ -585,6 +606,37 @@ function group_tools_permissions_check_groups_join_hook($hook, $type, $return_va
 				if (group_tools_check_domain_based_group($group, $user)) {
 					$result = true;
 				}
+			}
+		}
+	}
+	
+	return $result;
+}
+
+/**
+ * A hook to extend the owner block of groups
+ *
+ * @param string         $hook         'register'
+ * @param string         $type         'menu:owner_block'
+ * @param ElggMenuItem[] $return_value the current menu items
+ * @param mixed          $params       passed on params
+ *
+ * @return ElggMenuItem[]
+ */
+function group_tools_register_owner_block_menu_handler($hook, $type, $return_value, $params) {
+	$result = $return_value;
+	
+	if (!empty($params) && is_array($params)) {
+		$entity = elgg_extract("entity", $params);
+		
+		if (!empty($entity) && elgg_instanceof($entity, "group")) {
+			if ($entity->related_groups_enable == "yes") {
+				$result[] = ElggMenuItem::factory(array(
+					"name" => "related_groups",
+					"text" => elgg_echo("group_tools:related_groups:title"),
+					"href" => "groups/related/" . $entity->getGUID(),
+					"is_trusted" => true
+				));
 			}
 		}
 	}

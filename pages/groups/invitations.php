@@ -24,7 +24,9 @@ $request_options = array(
 	"type" => "group",
 	"relationship" => "membership_request",
 	"relationship_guid" => $user->getGUID(),
-	"limit" => false
+	"limit" => false,
+	"full_view" => false,
+	"pagination" => false
 );
 $requests = elgg_get_entities_from_relationship($request_options);
 

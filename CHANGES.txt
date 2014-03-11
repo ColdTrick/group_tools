@@ -6,6 +6,7 @@ x.x:
 - added: option to configure a group welcome message (#41)
 - added: listing of the email invitations for groups (#42)
 - added: option to join groups based on email domain (#43)
+- added: option to relate groups (#44)
 - fixed: layout issue in plugin settings
 - fixed: you can no join groups you were invited for on the group profile page
 - fixed: misleading translation for a group cleanup setting (#22)
