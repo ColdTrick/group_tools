@@ -1,6 +1,6 @@
 = Version History =
 
-x.x:
+2.9 (2014-03-11):
 
 - added: plugin setting to indicate if a group is hidden
 - added: option to configure a group welcome message (#41)
