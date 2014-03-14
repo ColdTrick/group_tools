@@ -208,7 +208,6 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 					elgg_get_site_url() . "groups/invitations/?invitecode=" . $invite_code,
 					$invite_code
 				));
-				register_error($invite_code);
 				
 				$params = array(
 					"group" => $group,
