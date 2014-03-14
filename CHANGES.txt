@@ -1,5 +1,9 @@
 = Version History =
 
+2.9.1 (2014-3-14):
+
+- removed: debug code which caused errors to appear on screen
+
 2.9 (2014-03-11):
 
 - added: plugin setting to indicate if a group is hidden
