@@ -117,7 +117,7 @@ if (elgg_get_context() == "groups") {
 				"is_trusted" => true,
 			));
 			
-			$url = "action/groups/delete_request?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
+			$url = "action/groups/killrequest?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
 			$delete_button = elgg_view("output/confirmlink", array(
 				"href" => $url,
 				"confirm" => elgg_echo("group_tools:group:invitations:request:revoke:confirm"),
