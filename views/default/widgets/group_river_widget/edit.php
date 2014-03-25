@@ -52,6 +52,7 @@ if ($widget->context != "groups") {
 	}
 	
 	$batch = new ElggBatch("elgg_get_entities_from_relationship", $options);
+	$batch->rewind(); // needed so the next call succeeds
 	if ($batch->valid()) {
 		
 		// get groups

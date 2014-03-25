@@ -1,5 +1,9 @@
 = Version History =
 
+x.x:
+
+- fixed: no groups to select in groups_river_widget 
+
 2.9.1 (2014-3-14):
 
 - removed: debug code which caused errors to appear on screen
