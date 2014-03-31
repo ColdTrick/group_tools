@@ -8,7 +8,7 @@ $state = get_input("state");
 
 if (!empty($group_guid)) {
 	$group = get_entity($group_guid);
-	if (!empty($gorup) && ($group instanceof ElggGroup)) {
+	if (!empty($group) && ($group instanceof ElggGroup)) {
 		$result = false;
 		
 		switch ($state) {
