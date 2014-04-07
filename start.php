@@ -118,6 +118,9 @@ function group_tools_init() {
 	elgg_extend_view("groups/tool_latest", "group_tools/modules/related_groups");
 	elgg_register_widget_type("group_related", elgg_echo("groups_tools:related_groups:widget:title"), elgg_echo("groups_tools:related_groups:widget:description"), "groups");
 	
+	// registration
+	elgg_extend_view("register/extend", "group_tools/register_extend");
+	
 	// register index widget to show latest discussions
 	elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), "index,dashboard", true);
 	elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), "groups");
@@ -131,6 +134,8 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler("access:collections:write", "user", "group_tools_access_write_handler");
 	elgg_register_plugin_hook_handler("action", "groups/join", "group_tools_join_group_action_handler");
 	elgg_register_plugin_hook_handler("register", "menu:owner_block", "group_tools_register_owner_block_menu_handler");
+	elgg_register_plugin_hook_handler("route", "register", "group_tools_route_register_handler");
+	elgg_register_plugin_hook_handler("action", "register", "group_tools_action_register_handler");
 	
 	// actions
 	elgg_register_action("group_tools/admin_transfer", dirname(__FILE__) . "/actions/admin_transfer.php");

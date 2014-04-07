@@ -128,6 +128,35 @@ function group_tools_join_site_handler($event, $type, $relationship) {
 				}
 			}
 			
+			// check for manual email invited groups
+			$group_invitecode = get_input("group_invitecode");
+			if (!empty($group_invitecode)) {
+				$group = group_tools_check_group_email_invitation($group_invitecode);
+				if (!empty($group)) {
+					// join the group
+					$group->join($user);
+					
+					// cleanup the invite code
+					$group_invitecode = sanitise_string($group_invitecode);
+					
+					$options = array(
+						"guid" => $group->getGUID(),
+						"annotation_name" => "email_invitation",
+						"wheres" => array("(v.string = '" . $group_invitecode . "' OR v.string LIKE '" . $group_invitecode . "|%')"),
+						"annotation_owner_guid" => $group->getGUID(),
+						"limit" => 1
+					);
+					
+					// ignore access in order to cleanup the invitation
+					$ia = elgg_set_ignore_access(true);
+					
+					elgg_delete_annotations($options);
+					
+					// restore access
+					elgg_set_ignore_access($ia);
+				}
+			}
+			
 			// find domain based groups
 			$groups = group_tools_get_domain_based_groups($user, $site_guid);
 			if (!empty($groups)) {

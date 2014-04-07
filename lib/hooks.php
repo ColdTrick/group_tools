@@ -643,3 +643,39 @@ function group_tools_register_owner_block_menu_handler($hook, $type, $return_val
 	
 	return $result;
 }
+
+/**
+ * Check if registration is disabled, if so check for a valid group invite code and allow registration
+ *
+ * This will allow access to the registration page
+ *
+ * @param string $hook         'route'
+ * @param string $type         'register'
+ * @param array  $return_value the current page_handler settings
+ * @param null   $params       null
+ *
+ * @return void
+ */
+function group_tools_route_register_handler($hook, $type, $return_value, $params) {
+	
+	// enable registration if disabled
+	group_tools_enable_registration();
+}
+
+/**
+ * Check if registration is disabled, if so check for a valid group invite code and allow registration
+ *
+ * This will allow access to the registration page
+ *
+ * @param string $hook         'action'
+ * @param string $type         'register'
+ * @param bool   $return_value true is the action is allowed to procceed
+ * @param null   $params       null
+ *
+ * @return void
+ */
+function group_tools_action_register_handler($hook, $type, $return_value, $params) {
+	
+	// enable registration if disabled
+	group_tools_enable_registration();
+}

@@ -2,6 +2,7 @@
 
 x.x:
 
+- added: users can register if registration is disabled but they have a valid group invite code
 - fixed: no groups to select in groups_river_widget
 - fixed: error during saving of special states 
 

@@ -11,7 +11,7 @@
  * @param string $invite_code the invite code
  * @param int    $group_guid  (optional) the group to check
  *
- * @return boolean|ElggGroup a group for the invitation of false
+ * @return boolean|ElggGroup a group for the invitation or false
  */
 function group_tools_check_group_email_invitation($invite_code, $group_guid = 0) {
 	$result = false;
@@ -204,7 +204,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 					$site->name,
 					$text,
 					$site->name,
-					elgg_get_site_url() . "register",
+					elgg_get_site_url() . "register?group_invitecode=" . $invite_code,
 					elgg_get_site_url() . "groups/invitations/?invitecode=" . $invite_code,
 					$invite_code
 				));
@@ -800,3 +800,23 @@ function group_tools_get_domain_based_groups(ElggUser $user, $site_guid = 0) {
 	return $result;
 }
 
+/**
+ * Enable registration on the site if disabled and a valid group invite code in provided
+ *
+ * @return void
+ */
+function group_tools_enable_registration() {
+	
+	$registration_allowed = (bool) elgg_get_config("allow_registration");
+	if (!$registration_allowed) {
+		// check for a group invite code
+		$group_invitecode = get_input("group_invitecode");
+		if (!empty($group_invitecode)) {
+			// check if the code is valid
+			if (group_tools_check_group_email_invitation($group_invitecode)) {
+				// we have a valid code, so allow registration
+				elgg_set_config("allow_registration", true);
+			}
+		}
+	}
+}
