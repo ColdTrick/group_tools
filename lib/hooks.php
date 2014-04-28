@@ -131,6 +131,30 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 				
 				include(dirname(dirname(__FILE__)) . "/pages/groups/related.php");
 				break;
+			case "profile":
+				if (isset($page[1]) && is_numeric($page[1])) {
+					$group = get_entity($page[1]);
+					if (empty($group)) {
+						// is this a hidden group
+						$ia = elgg_set_ignore_access(true);
+						
+						$group = get_entity($page[1]);
+						if (!empty($group) && elgg_instanceof($group, "group")) {
+							// report to the user
+							if (!elgg_is_logged_in()) {
+								$_SESSION["last_forward_from"] = current_page_url();
+								
+								register_error(elgg_echo("loggedinrequired"));
+							} else {
+								register_error(elgg_echo("membershiprequired"));
+							}
+						}
+						
+						// restore access
+						elgg_set_ignore_access($ia);
+					}
+				}
+				break;
 			default:
 				// check if we have an old group profile link
 				if (isset($page[0]) && is_numeric($page[0])) {
