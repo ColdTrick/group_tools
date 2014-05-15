@@ -140,9 +140,6 @@ elgg.group_tools.toggle_special_state = function(state, group_guid) {
 }
 
 elgg.group_tools.init = function() {
-	// admin tranfser
-	$('#group_tools_admin_transfer_form').submit(elgg.group_tools.admin_transfer_confirm);
-
 	// group mail members
 	$('#group_tools_mail_member_selection input[type=checkbox]').live("change", elgg.group_tools.mail_update_recipients);
 	$('#group_tools_mail_form').submit(elgg.group_tools.mail_form_submit);

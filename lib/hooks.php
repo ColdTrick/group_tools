@@ -499,9 +499,6 @@ function group_tools_widget_url_handler($hook, $type, $return_value, $params) {
  * @return int the access_id to use as default
  */
 function group_tools_access_default_handler($hook, $type, $return_value, $params) {
-	global $GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED;
-	$GROUP_TOOLS_GROUP_DEFAULT_ACCESS_ENABLED = true;
-	
 	$result = $return_value;
 	
 	// check if the page owner is a group

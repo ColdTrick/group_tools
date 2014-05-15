@@ -63,6 +63,7 @@ if (!empty($user) && !empty($q) && !empty($group_guid)) {
 					$result[] = array(
 						"type" => "user",
 						"value" => $entity->getGUID(),
+						"label" => $entity->name,
 						"content" => "<img src='" . $entity->getIconURL("tiny") . "' /> " . $entity->name,
 						"name" => $entity->name
 					);
@@ -80,6 +81,7 @@ if (!empty($user) && !empty($q) && !empty($group_guid)) {
 					$result[] = array(
 						"type" => "user",
 						"value" => $user->getGUID(),
+						"label" => $user->name,
 						"content" => "<img src='" . $user->getIconURL("tiny") . "' /> " . $user->name,
 						"name" => $user->name
 					);
@@ -88,6 +90,7 @@ if (!empty($user) && !empty($q) && !empty($group_guid)) {
 				$result[] = array(
 					"type" => "email",
 					"value" => $q,
+					"label" => $q,
 					"content" => $q
 				);
 			}

@@ -9,7 +9,7 @@ if (!empty($user) && $user->isAdmin()) {
 	
 	if (!empty($group) && elgg_instanceof($group, "group")) {
 		// count members
-		$member_count = $group->getMembers(0, 0, true);
+		$member_count = $group->getMembers(array("count" => true));
 		
 		// count how manyu members are notified by email
 		$notification_options = array(

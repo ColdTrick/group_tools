@@ -114,7 +114,7 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	
 	// make body
 	$title = elgg_echo("group_tools:cleanup:title");
-	$body = elgg_view("input/form", array("action" => $vars["url"] . "action/group_tools/cleanup",
+	$body = elgg_view("input/form", array("action" => "action/group_tools/cleanup",
 											"body" => $form_body));
 	
 	// show body

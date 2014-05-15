@@ -22,7 +22,7 @@ $poster_link = elgg_view("output/url", array(
 	"text" => $poster->name,
 	"is_trusted" => true,
 ));
-$poster_text = elgg_echo("groups:started", array($poster->name));
+$poster_text = elgg_echo("groups:started", array($poster_link));
 $container_text = "";
 if ($group instanceof ElggGroup) {
 	if (!elgg_get_page_owner_guid() || (elgg_get_page_owner_guid() != $group->getGUID())) {
@@ -39,16 +39,30 @@ $date = elgg_view_friendly_time($topic->time_created);
 
 $replies_link = "";
 $reply_text = "";
-$num_replies = elgg_get_annotations(array(
-	"annotation_name" => "group_topic_post",
-	"guid" => $topic->getGUID(),
+$num_replies = elgg_get_entities(array(
+	"type" => "object",
+	"subtype" => "discussion_reply",
+	"container_guid" => $topic->getGUID(),
 	"count" => true,
 ));
+
 if ($num_replies != 0) {
-	$last_reply = $topic->getAnnotations("group_topic_post", 1, 0, "desc");
-	$poster = $last_reply[0]->getOwnerEntity();
-	$reply_time = elgg_view_friendly_time($last_reply[0]->time_created);
-	$reply_text = elgg_echo("groups:updated", array($poster->name, $reply_time));
+	$last_reply = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => 'discussion_reply',
+		'container_guid' => $topic->getGUID(),
+		'limit' => 1,
+	));
+	$last_reply = $last_reply[0];
+	
+	$reply_poster = $last_reply->getOwnerEntity();
+	$reply_time = elgg_view_friendly_time($last_reply->time_created);
+	$reply_link = elgg_view("output/url", array(
+		"text" => $reply_poster->name,
+		"href" => $reply_poster->getURL(),
+		"is_trusted" => true
+	));
+	$reply_text = elgg_echo("groups:updated", array($reply_link, $reply_time));
 
 	$replies_link = elgg_view("output/url", array(
 		"href" => $topic->getURL() . "#group-replies",
@@ -84,14 +98,17 @@ if ($full) {
 		"tags" => $tags,
 	);
 	$params = $params + $vars;
-	$list_body = elgg_view("object/elements/summary", $params);
-
-	$info = elgg_view_image_block($poster_icon, $list_body);
+	$summary = elgg_view("object/elements/summary", $params);
 
 	$body = elgg_view("output/longtext", array("value" => $topic->description));
 
-	echo $info . $body;
-
+	echo elgg_view("object/elements/full", array(
+		"entity" => $topic,
+		"icon" => $poster_icon,
+		"summary" => $summary,
+		"body" => $body
+	));
+	
 } else {
 	// brief view
 	$title = "";

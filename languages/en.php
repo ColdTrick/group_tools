@@ -119,17 +119,16 @@ To visit the group please click on the following link:
 %s",
 
 	// group edit tabbed
-	'group_tools:group:edit:profile' => "Group profile / tools",
+	'group_tools:group:edit:profile' => "Profile",
+	'group_tools:group:edit:access' => "Access",
+	'group_tools:group:edit:tools' => "Tools",
 	'group_tools:group:edit:other' => "Other options",
 
 	// admin transfer - form
-	'group_tools:admin_transfer:title' => "Transfer the ownership of this group",
-	'group_tools:admin_transfer:transfer' => "Transfer group ownership to",
+	'group_tools:admin_transfer:current' => "Keep current owner: %s",
 	'group_tools:admin_transfer:myself' => "Myself",
 	'group_tools:admin_transfer:submit' => "Transfer",
-	'group_tools:admin_transfer:no_users' => "No members or friends to transfer ownership to.",
-	'group_tools:admin_transfer:confirm' => "Are you sure you wish to transfer ownership?",
-
+	
 	// special states form
 	'group_tools:special_states:title' => "Group special states",
 	'group_tools:special_states:description' => "A group can have several special states, here is an overview of the special states and their current value.",

@@ -62,7 +62,7 @@ elgg_load_css("group_tools.autocomplete");
 						return false;
 					}
 				},
-				focus: function() {
+				focus: function(event) {
 					// prevent value inserted on focus
 					return false;
 				},
@@ -86,7 +86,7 @@ elgg_load_css("group_tools.autocomplete");
 					return false;
 				},
 				autoFocus: true
-			}).data("autocomplete")._renderItem = function(ul, item) {
+			}).data("ui-autocomplete")._renderItem = function(ul, item) {
 				var list_body = "";
 				list_body = item.content;
 				

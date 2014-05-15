@@ -2,7 +2,7 @@
 /**
  * Enable or disable group notifications for all members
  */
-global $NOTIFICATION_HANDLERS;
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
 
 $toggle = get_input("toggle");
 $guid = (int) get_input("guid");
@@ -13,8 +13,17 @@ if (!empty($guid) && !empty($toggle)) {
 	$group = get_entity($guid);
 	if (!empty($group) && elgg_instanceof($group, "group")) {
 		// get group members
-		$members = $group->getMembers(false);
+		$members = $group->getMembers(array("count" => true));
 		if (!empty($members)) {
+			$options = array(
+				"type" => "user",
+				"relationship" => "member",
+				"relationship_guid" => $group->getGUID(),
+				"inverse_relationship" => true,
+				"limit" => false,
+			);
+			$members = new ElggBatch("elgg_get_entities_from_relationship", $options);
+			
 			if ($toggle == "enable") {
 				// fix notifications settings for site amd email
 				$auto_notification_handlers = array(

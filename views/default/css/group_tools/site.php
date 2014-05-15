@@ -99,3 +99,7 @@
 #group-tools-related-groups-form input.elgg-input-autocomplete {
 	width: 80%;
 }
+
+.group-tools-group-edit-section > div {
+	margin-bottom: 15px;
+}
