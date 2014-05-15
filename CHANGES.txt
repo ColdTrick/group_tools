@@ -5,7 +5,8 @@
 - added: users can register if registration is disabled but they have a valid group invite code
 - fixed: no groups to select in groups_river_widget
 - fixed: error during saving of special states
-- fixed: if trying to access a hidden group when logged out, correctly forward after login 
+- fixed: if trying to access a hidden group when logged out, correctly forward after login
+- fixed: the action URL for user membership killrequest (#57)
 
 2.9.1 (2014-03-14):
 
