@@ -38,7 +38,7 @@ if (!empty($group) && elgg_instanceof($group, "group")) {
 			elgg_register_menu_item("groups:my_status", array(
 				"name" => "membership_status",
 				"text" => elgg_echo("groups:join"),
-				"href" => "/action/groups/join?group_guid={$group->getGUID()}",
+				"href" => "action/groups/join?group_guid={$group->getGUID()}",
 				"is_action" => true
 			));
 		}

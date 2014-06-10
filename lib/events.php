@@ -13,7 +13,7 @@
  * @return void
  */
 function group_tools_join_group_event($event, $type, $params) {
-	global $NOTIFICATION_HANDLERS;
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
 	
 	static $auto_notification;
 	

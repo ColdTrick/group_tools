@@ -126,7 +126,7 @@ if ($entity) {
 	} elseif (($admin_transfer == "owner") && (($entity->getOwnerGUID() == elgg_get_logged_in_user_guid()) || elgg_is_admin_logged_in())) {
 		$transfer_allowed = true;
 	}
-
+	
 	if ($transfer_allowed) {
 		echo elgg_view("group_tools/forms/admin_transfer", array("entity" => $entity));
 	}

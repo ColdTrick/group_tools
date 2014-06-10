@@ -54,7 +54,7 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 			"onclick" => "group_tools_group_invite_switch_tab(\"users\");"
 		);
 		
-		$form_data .= "<div id='group_tools_group_invite_users'>";
+		$form_data .= "<div id='group_tools_group_invite_users' class='hidden mbm'>";
 		$form_data .= "<div>" . elgg_echo("group_tools:group:invite:users:description") . "</div>";
 		$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
 																			"id" => "group_tools_group_invite_autocomplete",
@@ -78,7 +78,7 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 			"onclick" => "group_tools_group_invite_switch_tab(\"email\");"
 		);
 		
-		$form_data .= "<div id='group_tools_group_invite_email'>";
+		$form_data .= "<div id='group_tools_group_invite_email' class='hidden mbm'>";
 		$form_data .= "<div>" . elgg_echo("group_tools:group:invite:email:description") . "</div>";
 		$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
 																			"id" => "group_tools_group_invite_autocomplete_email",
@@ -97,7 +97,7 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 			"onclick" => "group_tools_group_invite_switch_tab(\"csv\");"
 		);
 		
-		$form_data .= "<div id='group_tools_group_invite_csv'>";
+		$form_data .= "<div id='group_tools_group_invite_csv' class='hidden mbm'>";
 		$form_data .= "<div>" . elgg_echo("group_tools:group:invite:csv:description") . "</div>";
 		$form_data .= elgg_view("input/file", array("name" => "csv"));
 		$form_data .= "</div>";

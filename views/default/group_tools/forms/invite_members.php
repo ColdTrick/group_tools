@@ -25,7 +25,12 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 		$title = elgg_echo("group_tools:invite_members:title");
 		
 		$content = elgg_echo("group_tools:invite_members:description");
-		$content .= elgg_view("input/dropdown", array("name" => "invite_members", "value" => $invite_members, "options_values" => $noyes_options, "class" => "mls"));
+		$content .= elgg_view("input/dropdown", array(
+			"name" => "invite_members", 
+			"value" => $invite_members, 
+			"options_values" => $noyes_options, 
+			"class" => "mls"
+		));
 		
 		$content .= "<div class='mtm'>";
 		$content .= elgg_view("input/hidden", array("name" => "group_guid", "value" => $group->getGUID()));

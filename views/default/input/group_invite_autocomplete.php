@@ -8,15 +8,15 @@ $relationship = elgg_extract("relationship", $vars);
 
 $destination = $id . "_autocomplete_results";
 
-$minChars = elgg_extract("minChars", $vars, 3);
+$minChars = (int) elgg_extract("minChars", $vars, 3);
+if ($minChars < 1) {
+	$minChars = 3;
+}
 
-elgg_load_css("group_tools.autocomplete");
 ?>
 <input type="text" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
 
-<div id="<?php echo $destination; ?>"></div>
-
-<div class="clearfloat"></div>
+<div id="<?php echo $destination; ?>" class="mtm clearfloat"></div>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -70,22 +70,26 @@ elgg_load_css("group_tools.autocomplete");
 					this.value = "";
 					var result = "";
 					
-					result += "<div class='<?php echo $destination; ?>_result'>";
-		
+					result += "<div class='group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover'>";
+					
 					if (ui.item.type == "user") {
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>[]' />";
 					} else if (ui.item.type == "email") {
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>_email[]' />";
 					}
 					result += ui.item.content;
-		
-					result += "<span class='elgg-icon elgg-icon-delete-alt'></span>";
+					
+					result += "<span class='elgg-icon elgg-icon-delete-alt elgg-discoverable float-alt'></span>";
 					result += "</div>";
 					
 					$('#<?php echo $destination; ?>').append(result);
 					return false;
 				},
-				autoFocus: true
+				autoFocus: true,
+				messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
 			}).data("ui-autocomplete")._renderItem = function(ul, item) {
 				var list_body = "";
 				list_body = item.content;

@@ -27,9 +27,6 @@ function group_tools_init() {
 	elgg_extend_view("js/elgg", "js/group_tools/site");
 	elgg_extend_view("js/admin", "js/group_tools/admin");
 	
-	elgg_register_simplecache_view("css/group_tools/autocomplete");
-	elgg_register_css("group_tools.autocomplete", elgg_get_simplecache_url("css", "group_tools/autocomplete"));
-	
 	// extend groups page handler
 	elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
 	

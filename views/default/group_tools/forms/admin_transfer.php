@@ -7,7 +7,9 @@ $group = elgg_extract("entity", $vars);
 $user = elgg_get_logged_in_user_entity();
 
 if (!empty($group) && ($group instanceof ElggGroup) && !empty($user)) {
+	
 	if (($group->getOwnerGUID() == $user->getGUID()) || $user->isAdmin()) {
+		
 		$dbprefix = elgg_get_config("dbprefix");
 		
 		$friends_options = array(
@@ -20,7 +22,6 @@ if (!empty($group) && ($group instanceof ElggGroup) && !empty($user)) {
 			"wheres" => array("(e.guid <> " . $group->getOwnerGUID() . ")"),
 			"order_by" => "ue.name",
 			"selects" => array("ue.name"),
-			"callback" => "group_tool_admin_transfer_callback"
 		);
 		
 		$member_options = array(
@@ -34,13 +35,13 @@ if (!empty($group) && ($group instanceof ElggGroup) && !empty($user)) {
 			"wheres" => array("(e.guid NOT IN (" . $group->getOwnerGUID() . ", " . $user->getGUID() . "))"),
 			"order_by" => "ue.name",
 			"selects" => array("ue.name"),
-			"callback" => "group_tool_admin_transfer_callback"
 		);
 		
 		$friends = elgg_get_entities_from_relationship($friends_options);
 		$members = elgg_get_entities_from_relationship($member_options);
 		
 		if (!empty($friends) || !empty($members)) {
+			
 			$add_myself = false;
 			$add_friends = false;
 			$add_members = false;
@@ -56,6 +57,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && !empty($user)) {
 			
 			if (!empty($friends)) {
 				unset($friends_options["count"]);
+				$friends_options["callback"] = "group_tool_admin_transfer_callback";
+				
 				$friends = new ElggBatch("elgg_get_entities_from_relationship", $friends_options);
 				
 				$add_friends = true;
@@ -67,13 +70,14 @@ if (!empty($group) && ($group instanceof ElggGroup) && !empty($user)) {
 				
 				$friends_block .= "</optgroup>";
 				
-				if ($add_friends) {
-					$result .= $friends_block;
-				}
+				// add friends to the select
+				$result .= $friends_block;
 			}
 			
 			if (!empty($members)) {
 				unset($member_options["count"]);
+				$member_options["callback"] = "group_tool_admin_transfer_callback";
+				
 				$members = new ElggBatch("elgg_get_entities_from_relationship", $member_options);
 				
 				$add_members = true;
@@ -85,9 +89,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && !empty($user)) {
 				
 				$members_block .= "</optgroup>";
 				
-				if ($add_members) {
-					$result .= $members_block;
-				}
+				// add group members to the select
+				$result .= $members_block;
 			}
 			
 			$result .= "</select>";

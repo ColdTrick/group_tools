@@ -19,13 +19,23 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	elgg_push_breadcrumb(elgg_echo("group_tools:menu:mail"));
 	
 	// get members
-	$members = $group->getMembers(false);
+	$members = $group->getMembers(array(
+		"limit" => false
+	));
 	
 	// build page elements
 	$title_text = elgg_echo("group_tools:mail:title");
 	$title = elgg_view_title($title_text);
 	
-	$form = elgg_view("group_tools/forms/mail", array("entity" => $group, "members" => $members));
+	$form_vars = array(
+		"id" => "group_tools_mail_form",
+		"class" => "elgg-form-alt"
+	);
+	$body_vars = array(
+		"entity" => $group, 
+		"members" => $members
+	);
+	$form = elgg_view_form("group_tools/mail", $form_vars, $body_vars);
 	
 	$body = elgg_view_layout("content", array(
 		"entity" => $group,

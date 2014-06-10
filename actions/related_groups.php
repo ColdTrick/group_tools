@@ -28,7 +28,7 @@ if (!empty($group_guid) && !empty($guid)) {
 								$group->name
 							));
 							
-							notify_user($related->getOwnerGUID(), $group->getObjectOwnerGUID(), $subject, $message);
+							notify_user($related->getOwnerGUID(), $group->getOwnerGUID(), $subject, $message);
 						}
 						
 						system_message(elgg_echo("group_tools:action:related_groups:success"));

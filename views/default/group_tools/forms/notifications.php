@@ -44,7 +44,8 @@ if (!empty($user) && $user->isAdmin()) {
 			$content .= elgg_view("output/confirmlink", array(
 				"href" => "action/group_tools/notifications?toggle=enable&guid=" . $group->getGUID(),
 				"text" => elgg_echo("group_tools:notifications:enable"),
-				"class" => "elgg-button elgg-button-submit mrm"));
+				"class" => "elgg-button elgg-button-submit mrm"
+			));
 		}
 		
 		// disable notification
@@ -52,7 +53,8 @@ if (!empty($user) && $user->isAdmin()) {
 			$content .= elgg_view("output/confirmlink", array(
 				"href" => "action/group_tools/notifications?toggle=disable&guid=" . $group->getGUID(),
 				"text" => elgg_echo("group_tools:notifications:disable"),
-				"class" => "elgg-button elgg-button-submit"));
+				"class" => "elgg-button elgg-button-submit"
+			));
 		}
 		
 		// disclaimer about timing

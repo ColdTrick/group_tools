@@ -20,15 +20,16 @@ if (!empty($sort) && ($sort == "alphabetical")) {
 	$featured_groups_options["order_by"] = "ge.name ASC";
 }
 
-$featured_groups = elgg_get_entities_from_metadata($featured_groups_options);
-if (!empty($featured_groups)) {
+elgg_push_context("widgets");
+$body = "";
 
-	elgg_push_context("widgets");
-	$body = "";
-	foreach ($featured_groups as $group) {
-		$body .= elgg_view_entity($group, array("full_view" => false));
-	}
-	elgg_pop_context();
+$featured_groups = new ElggBatch("elgg_get_entities_from_metadata", $featured_groups_options);
+foreach ($featured_groups as $group) {
+	$body .= elgg_view_entity($group, array("full_view" => false));
+}
 
+elgg_pop_context();
+
+if (!empty($body)) {
 	echo elgg_view_module("aside", elgg_echo("groups:featured"), $body);
 }

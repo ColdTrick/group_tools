@@ -19,7 +19,12 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 		
 		$form_body .= "<div>";
 		$form_body .= elgg_echo("group_tools:profile_widgets:option");
-		$form_body .= "&nbsp;" . elgg_view("input/dropdown", array("name" => "profile_widgets", "options_values" => $noyes_options, "value" => $group->profile_widgets));
+		$form_body .= elgg_view("input/dropdown", array(
+			"name" => "profile_widgets", 
+			"options_values" => $noyes_options, 
+			"value" => $group->profile_widgets,
+			"class" => "mls"
+		));
 		$form_body .= "</div>";
 		
 		$form_body .= "<div>";
@@ -28,7 +33,7 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 		$form_body .= "</div>";
 		
 		$form = elgg_view("input/form", array("body" => $form_body,
-												"action" => $vars["url"] . "action/group_tools/profile_widgets"));
+												"action" => "action/group_tools/profile_widgets"));
 		
 		echo elgg_view_module("info", $title, $form);
 	}

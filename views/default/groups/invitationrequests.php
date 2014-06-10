@@ -146,14 +146,20 @@ if (elgg_get_context() == "groups") {
 	if (elgg_extract("invite_email", $vars, false)) {
 		// make the form for the email invitations
 		$form_body = "<div>" . elgg_echo("group_tools:groups:invitation:code:description") . "</div>";
-		$form_body .= elgg_view("input/text", array("name" => "invitecode", "value" => get_input("invitecode"), "class" => "mbm"));
+		$form_body .= elgg_view("input/text", array(
+			"name" => "invitecode", 
+			"value" => get_input("invitecode"), 
+			"class" => "mbm"
+		));
 	
 		$form_body .= "<div>";
 		$form_body .= elgg_view("input/submit", array("value" => elgg_echo("submit")));
 		$form_body .= "</div>";
 		
-		$form = elgg_view("input/form", array("body" => $form_body,
-												"action" => $vars["url"] . "action/groups/email_invitation"));
+		$form = elgg_view("input/form", array(
+			"body" => $form_body,
+			"action" => "action/groups/email_invitation"
+		));
 	
 		echo elgg_view_module("info", elgg_echo("group_tools:groups:invitation:code:title"), $form);
 	}
