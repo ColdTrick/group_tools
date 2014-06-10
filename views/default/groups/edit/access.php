@@ -108,7 +108,7 @@ if ($entity && ($default_access === ACCESS_DEFAULT)) {
 			$entity->setContentAccessMode($ga);
 		}
 		
-		echo "<span class='elgg-text-help'>". elgg_echo("group_tools:default_access:description") . "</span>";
+		echo "<span class='elgg-text-help'>" . elgg_echo("group_tools:default_access:description") . "</span>";
 	?>
 </div>
 

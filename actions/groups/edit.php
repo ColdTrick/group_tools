@@ -9,6 +9,10 @@ elgg_make_sticky_form('groups');
 
 /**
  * wrapper for recursive array walk decoding
+ * 
+ * @param string $v value
+ * 
+ * @return string
  */
 function profile_array_decoder(&$v) {
 	$v = _elgg_html_decode($v);
@@ -53,7 +57,7 @@ if ($group_guid && !$group->canEdit()) {
 
 // Assume we can edit or this is a new group
 if (sizeof($input) > 0) {
-	foreach($input as $shortname => $value) {
+	foreach ($input as $shortname => $value) {
 		// update access collection name if group name changes
 		if (!$is_new_group && $shortname == 'name' && $value != $group->name) {
 			$group_name = html_entity_decode($value, ENT_QUOTES, 'UTF-8');

@@ -824,8 +824,8 @@ function group_tools_enable_registration() {
 /**
  * Helper function to transfer the ownership of a group to a new user
  * 
- * @param ElggGroup $group
- * @param ElggUser $new_owner
+ * @param ElggGroup $group     the group to transfer
+ * @param ElggUser  $new_owner the new owner
  * 
  * @return boolean
  */
@@ -855,8 +855,6 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	$group->join($new_owner);
 	
 	if ($group->save()) {
-		$forward_url = $group->getURL();
-			
 		// remove existing group administrator role for new owner
 		remove_entity_relationship($new_owner->getGUID(), "group_admin", $group->getGUID());
 			
