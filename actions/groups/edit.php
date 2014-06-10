@@ -10,7 +10,7 @@ elgg_make_sticky_form('groups');
 /**
  * wrapper for recursive array walk decoding
  * 
- * @param string $v value
+ * @param string &$v value
  * 
  * @return string
  */
