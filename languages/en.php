@@ -247,6 +247,10 @@ To visit the group please click on the following link:
 	'group_tools:invite_members:title' => "Group members can invite",
 	'group_tools:invite_members:description' => "Allow the members of this group to invite new members",
 
+	// group tool option descriptions
+	'activity:group_tool_option:description' => "Show an activity feed about group related content.",
+	'forum:group_tool_option:description' => "Allow the group members to start a discussion in a simple forum format.",
+	
 	// actions
 	'group_tools:action:error:input' => "Invalid input to perform this action",
 	'group_tools:action:error:entities' => "The given GUIDs didn't result in the correct entities",
