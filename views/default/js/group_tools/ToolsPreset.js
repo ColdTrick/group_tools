@@ -2,63 +2,55 @@
  * Support file for group tool presets
  */
 
-define(["jquery", "elgg"], function($, elgg){
+define(["jquery", "elgg"], function($, elgg) {
 	
 	function ToolsPreset(wrapper) {
-		this.$wrapper = $(wrapper);
-		this.$links = $("#group-tools-preset-selector a", wrapper);
+		var self = this;
 		
-		this.$links.on("click", function() {
+		$("#group-tools-preset-selector a", wrapper).on("click", function() {
 			self.changePreset(this);
+			
+			return false;
 		});
 		
-	};
+	}
 	
 	ToolsPreset.prototype = {
 		changePreset : function(elem) {
+			
+			var rel = $(elem).attr("rel");
+			
+			$("#group-tools-preset-descriptions div").hide();
+			$("#group-tools-preset-description-" + rel).show();
+			
 			this.resetTools();
+			this.presetTools(rel);
 			
-			$.each(GROUP_TOOLS_PRESETS, function (index, data) {
-				if (data.title == $(elem).innerHTML) {
-					$("#group-tools-preset-description").html(data.description);
-					
-					
-					$.each(data.tools)
-					
-					return false;
-				}
-			});
+			$("#group-tools-preset-more").hide();
+			$("#group-tools-preset-active").show();
 			
-			return false;
 		},
 		resetTools : function() {
-			$.each("#group-tools-preset-active ul.elgg-input-radios", function(index, elm) {
-				var $parent = $(elm).parent();
+			$("#group-tools-preset-active ul.elgg-input-radios").each(function(index, elm) {
+				var $tool_parent = $(elm).parent();
 				
-				$parent.appendTo("#group-tools-preset-more div.elgg-body");
+				$tool_parent.appendTo("#group-tools-preset-more div.elgg-body");
 			});
 			
-			$radios = $("#group-tools-preset-more :input[value='no']").not(":checked");
-			console.log($radios);
-			
-			$.each($radios, function(index, elm) {
-				console.log(elm);
-				//$(elm).click();
+			$("#group-tools-preset-more .elgg-input-radio[value='no']").not(":checked").click();
+		},
+		presetTools : function(preset_id) {
+			$("#group-tools-preset-more .group-tools-preset-" + preset_id).each(function(index, elm) {
+				
+				$(this).prependTo("#group-tools-preset-active div.elgg-body");
 			});
+			
+			$("#group-tools-preset-active .elgg-input-radio[value='yes']").not(":checked").click();
 		}
 	};
 	
 	ToolsPreset.init = function(selector) {
-		
-		elgg.register_hook_handler("init", "system", function () {
-			$(selector).each(function () {
-				// we only want to wrap once
-				if (!$(this).data("initialized")) {
-					new ToolsPreset(this);
-					$(this).data("initialized", 1);
-				}
-			});
-		});
+		new ToolsPreset(selector);
 	};
 	
 	return ToolsPreset;
