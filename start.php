@@ -24,6 +24,7 @@ function group_tools_init() {
 	
 	// extend css & js
 	elgg_extend_view("css/elgg", "css/group_tools/site");
+	elgg_extend_view("css/admin", "css/group_tools/admin");
 	elgg_extend_view("js/elgg", "js/group_tools/site");
 	elgg_extend_view("js/admin", "js/group_tools/admin");
 	
@@ -147,6 +148,7 @@ function group_tools_init() {
 	elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/admin/fix_auto_join.php", "admin");
 	elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/admin/notifications.php", "admin");
 	elgg_register_action("group_tools/fix_acl", dirname(__FILE__) . "/actions/admin/fix_acl.php", "admin");
+	elgg_register_action("group_tools/group_tool_presets", dirname(__FILE__) . "/actions/admin/group_tool_presets.php", "admin");
 	
 	elgg_register_action("groups/email_invitation", dirname(__FILE__) . "/actions/groups/email_invitation.php");
 	elgg_register_action("groups/decline_email_invitation", dirname(__FILE__) . "/actions/groups/decline_email_invitation.php");
@@ -177,6 +179,9 @@ function group_tools_pagesetup() {
 	
 	$user = elgg_get_logged_in_user_entity();
 	$page_owner = elgg_get_page_owner_entity();
+	
+	// admin menu item
+	elgg_register_admin_menu_item("configure", "group_tool_presets", "appearance");
 	
 	if (elgg_in_context("groups") && ($page_owner instanceof ElggGroup)) {
 		if ($page_owner->forum_enable == "no") {

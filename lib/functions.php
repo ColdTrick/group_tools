@@ -929,3 +929,14 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	
 	return $result;
 }
+
+function group_tools_get_tool_presets() {
+	$result = false;
+	
+	$presets = elgg_get_plugin_setting("group_tool_presets", "group_tools");
+	if (!empty($presets)) {
+		$result = json_decode($presets, true);
+	}
+	
+	return $result;
+}

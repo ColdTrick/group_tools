@@ -22,6 +22,8 @@ $english = array(
 	'group_tools:menu:mail' => "Mail Members",
 	'group_tools:menu:invitations' => "Manage invitations",
 
+	'admin:appearance:group_tool_presets' => "Group tool presets",
+	
 	// plugin settings
 	'group_tools:settings:invite:title' => "Group invitation options",
 	'group_tools:settings:management:title' => "General group options",
@@ -76,6 +78,15 @@ $english = array(
 	'group_tools:settings:fix:all' => "Fix all problems",
 	'group_tools:settings:fix:nothing' => "Nothing is wrong with the groups on your site!",
 
+	// group tool presets
+	'group_tools:admin:group_tool_presets:description' => "Here you can configure group tool presets. 
+When a user creates a group he/she gets to choose one of the presets in order to quickly get the correct tools. A blank option is also offered to the user to allow his/her own choices.",
+	'group_tools:admin:group_tool_presets:header' => "Existing presets",
+
+	'group_tools:create_group:tool_presets:description' => "FILL IN",
+	'' => "",
+	'' => "",
+	
 	// group invite message
 	'group_tools:groups:invite:body' => "Hi %s,
 
@@ -453,6 +464,8 @@ To visit the group please click on the following link:
 	'group_tools:action:remove_related_groups:error:not_related' => "The group is not related",
 	'group_tools:action:remove_related_groups:error:remove' => "An unknown error occured while removing the relationship, please try again",
 	'group_tools:action:remove_related_groups:success' => "The group is no longer related",
+	
+	'group_tools:action:group_tool:presets:saved' => "New group tool presets saved",
 );
 
 add_translation("en", $english);
