@@ -231,7 +231,6 @@ function group_tools_membership_request($event, $type, $relationship) {
 		"type" => "user",
 		"limit" => false,
 		"wheres" => array("e.guid <> " . $group->owner_guid),
-		"callback" => false
 	);
 	
 	$admins = elgg_get_entities_from_relationship($options);

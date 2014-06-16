@@ -1,5 +1,9 @@
 = Version History =
 
+x.x:
+
+- fixed: PHP fatal exceptions when using group admins on group join
+
 2.10 (2014-05-15):
 
 - added: users can register if registration is disabled but they have a valid group invite code
