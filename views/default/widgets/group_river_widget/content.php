@@ -62,7 +62,7 @@ if (!empty($group_guid)) {
 	$sql .= " ORDER BY {$dbprefix}river.posted DESC";
 	$sql .= " LIMIT {$offset},{$limit}";
 	
-	$items = get_data($sql, "elgg_row_to_elgg_river_item");
+	$items = get_data($sql, "_elgg_row_to_elgg_river_item");
 	
 	if (!empty($items)) {
 		$options = array(
