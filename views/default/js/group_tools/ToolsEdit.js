@@ -14,7 +14,7 @@ define(["jquery", "elgg"], function($, elgg){
 		$(".elgg-input-radio:checked", wrapper).each(function() {
 			$(this).parent().parent().addClass("elgg-state-selected");
 		});
-	};
+	}
 	
 	ToolsEdit.prototype = {
 		toggleTool : function() {

@@ -823,10 +823,10 @@ function group_tools_enable_registration() {
 
 /**
  * Helper function to transfer the ownership of a group to a new user
- * 
+ *
  * @param ElggGroup $group     the group to transfer
  * @param ElggUser  $new_owner the new owner
- * 
+ *
  * @return boolean
  */
 function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_owner) {
@@ -930,6 +930,11 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	return $result;
 }
 
+/**
+ * Get the tool presets from the plugin settings
+ *
+ * @return bool|array
+ */
 function group_tools_get_tool_presets() {
 	$result = false;
 	
