@@ -76,6 +76,9 @@ $english = array(
 	'group_tools:settings:fix:all' => "Fix all problems",
 	'group_tools:settings:fix:nothing' => "Nothing is wrong with the groups on your site!",
 
+	'group_tools:settings:member_export' => "Allow group admins to export member information",
+	'group_tools:settings:member_export:description' => "This includes the name, username and email address of the user.",
+	
 	// group invite message
 	'group_tools:groups:invite:body' => "Hi %s,
 
@@ -450,6 +453,9 @@ To visit the group please click on the following link:
 	'group_tools:action:remove_related_groups:error:not_related' => "The group is not related",
 	'group_tools:action:remove_related_groups:error:remove' => "An unknown error occured while removing the relationship, please try again",
 	'group_tools:action:remove_related_groups:success' => "The group is no longer related",
+	
+	// group member export
+	'group_tools:member_export:title_button' => "Export members",
 );
 
 add_translation("en", $english);

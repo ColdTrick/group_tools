@@ -1,5 +1,11 @@
 <?php
 $language = array (
+  'group_tools:settings:member_export' => 'Groep beheerder mogen leden informatie exporteren',
+  'group_tools:settings:member_export:description' => 'Dit bevat onder andere de naam, gebruikersnaam en email adres van de gebruiker',
+  'group_tools:member_export:title_button' => 'Exporteer leden',
+  'groups:search:title' => 'Zoek naar groepen met de tag \'%s\'',
+  'groups:search:tags' => 'tag',
+  'groups:searchtag' => 'Zoek naar groepen op tag',
   'group_tools:settings:domain_based' => 'Activeer domein gebaseerde groepen',
   'group_tools:settings:domain_based:description' => 'Gebruikers kunnen lid worden van een groep gebaseerd op hun e-mail domein. Gedurende de registratie zullen ze automatisch lid worden van groepen met een overeenkomend e-mail domein.',
   'group_tools:join:domain_based:tooltip' => 'Je mag lid worden van deze groep vanwege je e-mail domein.',
@@ -306,8 +312,5 @@ Het formaat moet zijn: weergave naam;e-mail adres. Er mag geen kopregel zijn.',
   'group_tools:cleanup:members:explain' => 'Op de groep profiel pagina staat op de aangegeven plaats een lijst met leden van de groep. Je kunt deze verbergen.',
   'group_tools:cleanup:featured' => 'Toon de aangeraden groepen in het menu',
   'group_tools:cleanup:featured:explain' => 'Je kunt ervoor kiezen om op de groep profiel pagina een lijst met aangeraden groepen te tonen op de aangegeven plaats.',
-  'groups:search:tags' => 'zoeken',
-  'groups:search:title' => 'Zoek naar groepen met \'%s\'',
-  'groups:searchtag' => 'Zoek naar groepen',
 );
 add_translation("nl", $language);

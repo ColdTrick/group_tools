@@ -187,11 +187,12 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params) {
 	$page_owner = elgg_get_page_owner_entity();
 	$user = elgg_get_logged_in_user_entity();
 	
-	if (!empty($result) && is_array($result)) {
-		if (elgg_in_context("groups")) {
-			// modify some group menu items
-			if (!empty($page_owner) && !empty($user) && ($page_owner instanceof ElggGroup)) {
-				$invite_found = false;
+	if (elgg_in_context("groups")) {
+		// modify some group menu items
+		if (!empty($page_owner) && !empty($user) && ($page_owner instanceof ElggGroup)) {
+			$invite_found = false;
+			
+			if (!empty($result) && is_array($result)) {
 				
 				foreach ($result as $menu_item) {
 					
@@ -232,54 +233,67 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params) {
 					}
 				}
 				
-				// maybe allow normal users to invite new members
-				if (elgg_in_context("group_profile") && !$invite_found) {
-					// this is only allowed for group members
-					if ($page_owner->isMember($user)) {
-						// we're on a group profile page, but haven't found the invite button yet
-						// so check if it should be here
-						$setting = elgg_get_plugin_setting("invite_members", "group_tools");
-						if (in_array($setting, array("yes_off", "yes_on"))) {
-							$invite_members = $page_owner->invite_members;
-							if (empty($invite_members)) {
-								$invite_members = "no";
-								if ($setting == "yes_on") {
-									$invite_members = "yes";
-								}
+				// check if we need to remove the group add button
+				if (!empty($user) && !$user->isAdmin() && group_tools_is_group_creation_limited()) {
+					foreach ($result as $index => $menu_item) {
+						if ($menu_item->getName() == "add") {
+							unset($result[$index]);
+						}
+					}
+				}
+			}
+				
+			// maybe allow normal users to invite new members
+			if (elgg_in_context("group_profile") && !$invite_found) {
+				// this is only allowed for group members
+				if ($page_owner->isMember($user)) {
+					// we're on a group profile page, but haven't found the invite button yet
+					// so check if it should be here
+					$setting = elgg_get_plugin_setting("invite_members", "group_tools");
+					if (in_array($setting, array("yes_off", "yes_on"))) {
+						$invite_members = $page_owner->invite_members;
+						if (empty($invite_members)) {
+							$invite_members = "no";
+							if ($setting == "yes_on") {
+								$invite_members = "yes";
+							}
+						}
+						
+						if ($invite_members == "yes") {
+							// normal users are allowed to invite users
+							$invite = elgg_get_plugin_setting("invite", "group_tools");
+							$invite_email = elgg_get_plugin_setting("invite_email", "group_tools");
+							$invite_csv = elgg_get_plugin_setting("invite_csv", "group_tools");
+							
+							if (in_array("yes", array($invite, $invite_csv, $invite_email))) {
+								$text = elgg_echo("group_tools:groups:invite");
+							} else {
+								$text = elgg_echo("groups:invite");
 							}
 							
-							if ($invite_members == "yes") {
-								// normal users are allowed to invite users
-								$invite = elgg_get_plugin_setting("invite", "group_tools");
-								$invite_email = elgg_get_plugin_setting("invite_email", "group_tools");
-								$invite_csv = elgg_get_plugin_setting("invite_csv", "group_tools");
-								
-								if (in_array("yes", array($invite, $invite_csv, $invite_email))) {
-									$text = elgg_echo("group_tools:groups:invite");
-								} else {
-									$text = elgg_echo("groups:invite");
-								}
-								
-								$result[] = ElggMenuItem::factory(array(
-									"name" => "groups:invite",
-									"href" => "groups/invite/" . $page_owner->getGUID(),
-									"text" => $text,
-									"link_class" => "elgg-button elgg-button-action",
-								));
-							}
+							$result[] = ElggMenuItem::factory(array(
+								"name" => "groups:invite",
+								"href" => "groups/invite/" . $page_owner->getGUID(),
+								"text" => $text,
+								"link_class" => "elgg-button elgg-button-action",
+							));
 						}
 					}
 				}
 			}
 			
-			// check if we need to remove the group add button
-			if (!empty($user) && !$user->isAdmin() && group_tools_is_group_creation_limited()) {
-				foreach ($result as $index => $menu_item) {
-					if ($menu_item->getName() == "add") {
-						unset($result[$index]);
-					}
+			if (current_page_url() == elgg_normalize_url("groups/members/" . $page_owner->getGUID())) {
+				if ($page_owner->canEdit() && (elgg_get_plugin_setting("member_export", "group_tools") == "yes")) {
+					$result[] = ElggMenuItem::factory(array(
+						"name" => "member_export",
+						"text" => elgg_echo("group_tools:member_export:title_button"),
+						"href" => "action/group_tools/member_export?group_guid=" . $page_owner->getGUID(),
+						"is_action" => true,
+						"class" => "elgg-button elgg-button-action"
+					));
 				}
 			}
+			
 		}
 	}
 	

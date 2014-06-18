@@ -2,6 +2,7 @@
 
 x.x:
 
+- added: option for group admins to export the members to CSV (admin enabled option)
 - fixed: PHP fatal exceptions when using group admins on group join
 
 2.10 (2014-05-15):

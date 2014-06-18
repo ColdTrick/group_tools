@@ -820,3 +820,30 @@ function group_tools_enable_registration() {
 		}
 	}
 }
+
+/**
+ * Get the time_created from the group membership relation
+ *
+ * @param ElggUser  $user  the user to check
+ * @param ElggGroup $group the group to check
+ *
+ * @return int
+ */
+function group_tools_get_membership_information(ElggUser $user, ElggGroup $group) {
+	$result = 0;
+	
+	if (!empty($user) && !empty($group)) {
+		$query = "SELECT *";
+		$query .= " FROM " . elgg_get_config("dbprefix") . "entity_relationships";
+		$query .= " WHERE guid_one = " . $user->getGUID();
+		$query .= " AND guid_two = " . $group->getGUID();
+		$query .= " AND relationship = 'member'";
+		
+		$row = get_data_row($query);
+		if (!empty($row)) {
+			$result = $row->time_created;
+		}
+	}
+	
+	return $result;
+}
