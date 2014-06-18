@@ -17,35 +17,37 @@ function group_tools_check_group_email_invitation($invite_code, $group_guid = 0)
 	$result = false;
 	
 	if (!empty($invite_code)) {
+			
+		// note not using elgg_get_entities_from_annotations
+		// due to performance issues with LIKE wildcard search
+		// prefetch metastring ids for use in lighter joins instead
+		$name_id = add_metastring('email_invitation');
+		$code_id = add_metastring($invite_code);
+		$sanitized_invite_code = sanitize_string($invite_code);
 		$options = array(
-			"type" => "group",
-			"limit" => 1,
-			"site_guids" => false,
-			"annotation_name_value_pairs" => array(
-				array(
-					"name" => "email_invitation",
-					"value" => $invite_code
-				),
-				array(
-					"name" => "email_invitation",
-					"value" => $invite_code . "|%",
-					"operand" => "LIKE"
-				)
-			),
-			"annotation_name_value_pairs_operator" => "OR"
+			'limit' => 1,
+			'wheres' => array(
+				"n_table.name_id = {$name_id} AND (n_table.value_id = {$code_id} OR v.string LIKE '{$sanitized_invite_code}|%')"
+			)
 		);
 		
 		if (!empty($group_guid)) {
 			$options["annotation_owner_guids"] = array($group_guid);
 		}
 		
+		$annotations = elgg_get_annotations($options);
+				
+		if (!$annotations) {
+			return $result;
+		}
+		
 		// find hidden groups
 		$ia = elgg_set_ignore_access(true);
 		
-		$groups = elgg_get_entities_from_annotations($options);
+		$group = $annotations[0]->getEntity();
 		
-		if (!empty($groups)) {
-			$result = $groups[0];
+		if ($group) {
+			$result = $group;
 		}
 		
 		// restore access
