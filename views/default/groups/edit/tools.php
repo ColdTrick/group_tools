@@ -39,12 +39,21 @@ if ($tools) {
 			
 			$preset_descriptions .= "<div id='group-tools-preset-description-" . $index . "' class='hidden'>" . elgg_extract("description", $values) . "</div>";
 		}
+		// blank preset
+		$preset_selectors .= elgg_view("output/url", array(
+			"text" => elgg_echo("group_tools:create_group:tool_presets:blank:title"),
+			"href" => "#",
+			"class" => "elgg-button elgg-button-action mrm",
+			"rel" => "blank"
+		));
+		$preset_descriptions .= "<div id='group-tools-preset-description-blank' class='hidden'>" . elgg_echo("group_tools:create_group:tool_presets:blank:description") . "</div>";
 		
+		echo "<label class='mbs'>" . elgg_echo("group_tools:create_group:tool_presets:select") . ":</label>";
 		echo "<div id='group-tools-preset-selector'>" . $preset_selectors . "</div>";
 		echo "<div id='group-tools-preset-descriptions'>" . $preset_descriptions . "</div>";
 		
 		$more_link = elgg_view("output/url", array(
-			"text" => elgg_echo("more"),
+			"text" => elgg_echo("group_tools:create_group:tool_presets:show_more"),
 			"href" => "#group-tools-preset-more",
 			"rel" => "toggle",
 			"class" => "float-alt"
@@ -57,7 +66,7 @@ if ($tools) {
 			$value = "no";
 			
 			$options = array(
-				"group_tool" => $group_option, 
+				"group_tool" => $group_option,
 				"value" => $value,
 				"class" => "mbm"
 			);
@@ -77,7 +86,7 @@ if ($tools) {
 				ToolsPreset.init("#group-tools-group-edit-tools");
 			});
 		</script>
-		<?php 
+		<?php
 	} else {
 	
 		usort($tools, create_function('$a, $b', 'return strcmp($a->label, $b->label);'));
@@ -96,5 +105,5 @@ if ($tools) {
 			ToolsEdit.init("#group-tools-group-edit-tools");
 		});
 	</script>
-	<?php 
+	<?php
 }

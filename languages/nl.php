@@ -1,5 +1,27 @@
 <?php
+/**
+ * This file was created by Translation Editor v2.0
+ * On 2014-06-18 14:14
+ */
+
 $language = array (
+  'admin:appearance:group_tool_presets' => 'Groep tool set',
+  'group_tools:admin:group_tool_presets:description' => 'Hier kun je sets van groep tools definiëren.
+Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de vooraf gedefinieerde sets om zo snel en eenvoudig de juiste tools te krijgen. Er is automatisch een keuze voor een lege groep zodat de gebruiker een eigen keuze kan maken',
+  'group_tools:admin:group_tool_presets:header' => 'Bestaande tool sets',
+  'group_tools:create_group:tool_presets:description' => 'Hier kun je een vooraf gedefinieerde set aan groep tools selecteren. Als je dit doen krijg je een standaard set aan tools voor dit type groep. Je kunt altijd nog tool extra aan of uitzetten.',
+  'group_tools:create_group:tool_presets:active_header' => 'Tools voor deze set',
+  'group_tools:create_group:tool_presets:more_header' => 'Extra tools',
+  'group_tools:create_group:tool_presets:select' => 'Selecteer een groep type',
+  'group_tools:create_group:tool_presets:show_more' => 'Meer tools',
+  'group_tools:create_group:tool_presets:blank:title' => 'Lege groep',
+  'group_tools:create_group:tool_presets:blank:description' => 'Kies dit type groep indien je zelf de tools wilt bepalen.',
+  'group_tools:group:edit:access' => 'Toegang',
+  'group_tools:group:edit:tools' => 'Tools',
+  'group_tools:admin_transfer:current' => 'Behoud huidige eigenaar: %s',
+  'activity:group_tool_option:description' => 'Toon een activiteiten stroom van groep gerelateerde content.',
+  'forum:group_tool_option:description' => 'Geef de groepsleden de mogelijkheid een discussie te starten in een eenvoudig forum formaat.',
+  'group_tools:action:group_tool:presets:saved' => 'Groep tool sets opgeslagen',
   'group_tools:settings:domain_based' => 'Activeer domein gebaseerde groepen',
   'group_tools:settings:domain_based:description' => 'Gebruikers kunnen lid worden van een groep gebaseerd op hun e-mail domein. Gedurende de registratie zullen ze automatisch lid worden van groepen met een overeenkomend e-mail domein.',
   'group_tools:join:domain_based:tooltip' => 'Je mag lid worden van deze groep vanwege je e-mail domein.',
@@ -151,7 +173,6 @@ $language = array (
   'group_tools:joinrequest:already' => 'Lidmaatschap verzoek intrekken',
   'group_tools:joinrequest:already:tooltip' => 'Je hebt reeds verzocht lid te worden van deze groep, klik hier om dit verzoek in te trekken',
   'group_tools:menu:invitations' => 'Beheer uitnodigingen',
-  'group_tools:admin_transfer:title' => 'Draag het beheer van deze groep over',
   'group_tools:groups:invite:title' => 'Nodig gebruikers uit voor deze groep',
   'group_tools:action:invite:error:invite' => 'Er zijn geen gebruikers uitgenodigd (%s waren al uitgenodigd, %s waren al lid)',
   'group_tools:action:invite:error:add' => 'Er zijn geen gebruikers uitgenodigd (%s waren al uitgenodigd, %s waren al lid)',
@@ -242,11 +263,8 @@ Als je al een account hebt of na registratie, klik op de onderstaande link om de
 
 Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende code invoeren:
 %s',
-  'group_tools:admin_transfer:transfer' => 'Draag groep eigendom over naar',
   'group_tools:admin_transfer:myself' => 'Mijzelf',
   'group_tools:admin_transfer:submit' => 'Overdragen',
-  'group_tools:admin_transfer:no_users' => 'Geen leden of vrienden om eigendom naar over te dragen',
-  'group_tools:admin_transfer:confirm' => 'Weet je zeker dat je het eigendom wilt overdragen?',
   'group_tools:multiple_admin:group_admins' => 'Groep beheerders',
   'group_tools:multiple_admin:profile_actions:remove' => 'Verwijder groep beheerder',
   'group_tools:multiple_admin:profile_actions:add' => 'Maak groep beheerder',

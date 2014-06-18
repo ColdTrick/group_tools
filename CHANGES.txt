@@ -4,6 +4,7 @@ Version History
 x.x:
 
 - changes for Elgg 1.9
+- added: group tool presets
 
 x.x:
 

@@ -38,14 +38,26 @@ define(["jquery", "elgg"], function($, elgg) {
 			});
 			
 			$("#group-tools-preset-more .elgg-input-radio[value='no']").not(":checked").click();
+			$("#group-tools-preset-active .elgg-body > a").show();
 		},
 		presetTools : function(preset_id) {
-			$("#group-tools-preset-more .group-tools-preset-" + preset_id).each(function(index, elm) {
+			if (preset_id == "blank") {
+				$("#group-tools-preset-more .elgg-body > div").each(function(index, elm) {
+					
+					$(this).prependTo("#group-tools-preset-active div.elgg-body");
+				});
+			} else {
+				$("#group-tools-preset-more .group-tools-preset-" + preset_id).each(function(index, elm) {
+					
+					$(this).prependTo("#group-tools-preset-active div.elgg-body");
+				});
 				
-				$(this).prependTo("#group-tools-preset-active div.elgg-body");
-			});
+				$("#group-tools-preset-active .elgg-input-radio[value='yes']").not(":checked").click();
+			}
 			
-			$("#group-tools-preset-active .elgg-input-radio[value='yes']").not(":checked").click();
+			if ($("#group-tools-preset-more .elgg-body > div").length == 0) {
+				$("#group-tools-preset-active .elgg-body > a").hide();
+			}
 		}
 	};
 	
