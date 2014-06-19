@@ -1,10 +1,13 @@
 <?php
 /**
  * This file was created by Translation Editor v2.0
- * On 2014-06-18 14:14
+ * On 2014-06-19 09:29
  */
 
 $language = array (
+  'group_tools:settings:member_export' => 'Groep beheerder mogen leden informatie exporteren',
+  'group_tools:settings:member_export:description' => 'Dit bevat onder andere de naam, gebruikersnaam en email adres van de gebruiker',
+  'group_tools:member_export:title_button' => 'Exporteer leden',
   'admin:appearance:group_tool_presets' => 'Groep tool set',
   'group_tools:admin:group_tool_presets:description' => 'Hier kun je sets van groep tools definiëren.
 Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de vooraf gedefinieerde sets om zo snel en eenvoudig de juiste tools te krijgen. Er is automatisch een keuze voor een lege groep zodat de gebruiker een eigen keuze kan maken',

@@ -66,7 +66,7 @@ $body .= "</div>";
 
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:auto_notification");
-if ($plugin->auto_notification == "yes") { 
+if ($plugin->auto_notification == "yes") {
 	// Backwards compatibility
 	$body .= elgg_view("input/hidden", array("name" => "params[auto_notification]", "value" => "0"));
 	$plugin->auto_notification_site = "1";
@@ -110,6 +110,12 @@ $body .= "</div>";
 $body .= "<div>";
 $body .= elgg_echo("group_tools:settings:mail");
 $body .= elgg_view("input/dropdown", array("name" => "params[mail]", "options_values" => $noyes_options, "value" => $plugin->mail, "class" => "mls"));
+$body .= "</div>";
+
+$body .= "<div>";
+$body .= elgg_echo("group_tools:settings:member_export");
+$body .= elgg_view("input/dropdown", array("name" => "params[member_export]", "options_values" => $noyes_options, "value" => $plugin->member_export, "class" => "mls"));
+$body .= "<div class='elgg-subtext'>" . elgg_echo("group_tools:settings:member_export:description") . "</div>";
 $body .= "</div>";
 
 $body .= "<br />";

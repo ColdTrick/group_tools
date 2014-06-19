@@ -78,6 +78,9 @@ $english = array(
 	'group_tools:settings:fix:all' => "Fix all problems",
 	'group_tools:settings:fix:nothing' => "Nothing is wrong with the groups on your site!",
 
+	'group_tools:settings:member_export' => "Allow group admins to export member information",
+	'group_tools:settings:member_export:description' => "This includes the name, username and email address of the user.",
+	
 	// group tool presets
 	'group_tools:admin:group_tool_presets:description' => "Here you can configure group tool presets.
 When a user creates a group he/she gets to choose one of the presets in order to quickly get the correct tools. A blank option is also offered to the user to allow his/her own choices.",
@@ -470,6 +473,9 @@ To visit the group please click on the following link:
 	'group_tools:action:remove_related_groups:success' => "The group is no longer related",
 	
 	'group_tools:action:group_tool:presets:saved' => "New group tool presets saved",
+	
+	// group member export
+	'group_tools:member_export:title_button' => "Export members",
 );
 
 add_translation("en", $english);

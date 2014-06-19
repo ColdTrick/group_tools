@@ -143,6 +143,7 @@ function group_tools_init() {
 	elgg_register_action("group_tools/domain_based", dirname(__FILE__) . "/actions/domain_based.php");
 	elgg_register_action("group_tools/related_groups", dirname(__FILE__) . "/actions/related_groups.php");
 	elgg_register_action("group_tools/remove_related_groups", dirname(__FILE__) . "/actions/remove_related_groups.php");
+	elgg_register_action("group_tools/member_export", dirname(__FILE__) . "/actions/member_export.php");
 	
 	elgg_register_action("group_tools/toggle_special_state", dirname(__FILE__) . "/actions/admin/toggle_special_state.php", "admin");
 	elgg_register_action("group_tools/fix_auto_join", dirname(__FILE__) . "/actions/admin/fix_auto_join.php", "admin");
