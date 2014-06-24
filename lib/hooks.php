@@ -714,3 +714,99 @@ function group_tools_action_register_handler($hook, $type, $return_value, $param
 	// enable registration if disabled
 	group_tools_enable_registration();
 }
+
+/**
+ * Take over the livesearch pagehandler in case of group search
+ *
+ * @param string $hook         'route'
+ * @param string $type         'livessearch'
+ * @param array  $return_value the current params for the pagehandler
+ * @param null   $params       null
+ *
+ * @return bool|void
+ */
+function group_tools_route_livesearch_handler($hook, $type, $return_value, $params) {
+	
+	// only return results to logged in users.
+	if (!$user = elgg_get_logged_in_user_entity()) {
+		exit;
+	}
+	
+	if (!$q = get_input("term", get_input("q"))) {
+		exit;
+	}
+	
+	$input_name = get_input("name", "groups");
+	
+	$q = sanitise_string($q);
+	
+	// replace mysql vars with escaped strings
+	$q = str_replace(array("_", "%"), array("\_", "\%"), $q);
+	
+	$match_on = get_input("match_on", "all");
+	
+	if (!is_array($match_on)) {
+		$match_on = array($match_on);
+	}
+	
+	// only take over groups search
+	if (count($match_on) > 1 || !in_array("groups", $match_on)) {
+		return $return_value;
+	}
+	
+	if (get_input("match_owner", false)) {
+		$owner_guid = $user->getGUID();
+	} else {
+		$owner_guid = ELGG_ENTITIES_ANY_VALUE;
+	}
+	
+	$limit = sanitise_int(get_input("limit", 10));
+	
+	// grab a list of entities and send them in json.
+	$results = array();
+	
+	$options = array(
+		"type" => "group",
+		"limit" => $limit,
+		"owner_guid" => $owner_guid,
+		"joins" => array("JOIN " . elgg_get_config("dbprefix") . "groups_entity ge ON e.guid = ge.guid"),
+		"wheres" => array("(ge.name LIKE '%" . $q . "%' OR ge.description LIKE '%" . $q . "%')")
+	);
+	
+	$entities = elgg_get_entities($options);
+	if (!empty($entities)) {
+		foreach ($entities as $entity) {
+			$output = elgg_view_list_item($entity, array(
+				"use_hover" => false,
+				"class" => "elgg-autocomplete-item",
+				"full_view" => false,
+			));
+			
+			$icon = elgg_view_entity_icon($entity, "tiny", array(
+				"use_hover" => false,
+			));
+			
+			$result = array(
+				"type" => "group",
+				"name" => $entity->name,
+				"desc" => $entity->description,
+				"guid" => $entity->getGUID(),
+				"label" => $output,
+				"value" => $entity->getGUID(),
+				"icon" => $icon,
+				"url" => $entity->getURL(),
+				"html" => elgg_view("input/grouppicker/item", array(
+					"entity" => $entity,
+					"input_name" => $input_name,
+				)),
+			);
+			
+			$results[$entity->name . rand(1, 100)] = $result;
+		}
+	}
+	
+	ksort($results);
+	header("Content-Type: application/json");
+	echo json_encode(array_values($results));
+	exit;
+}

@@ -28,8 +28,9 @@ function group_tools_init() {
 	elgg_extend_view("js/elgg", "js/group_tools/site");
 	elgg_extend_view("js/admin", "js/group_tools/admin");
 	
-	// extend groups page handler
+	// extend page handlers
 	elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
+	elgg_register_plugin_hook_handler("route", "livesearch", "group_tools_route_livesearch_handler");
 	
 	// hook on title menu
 	elgg_register_plugin_hook_handler("register", "menu:title", "group_tools_menu_title_handler");
@@ -116,6 +117,9 @@ function group_tools_init() {
 	
 	// registration
 	elgg_extend_view("register/extend", "group_tools/register_extend");
+	
+	// theme sandbox
+	elgg_extend_view("theme_sandbox/forms", "group_tools/theme_sandbox/grouppicker");
 	
 	// register index widget to show latest discussions
 	elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), array("index", "dashboard"), true);
