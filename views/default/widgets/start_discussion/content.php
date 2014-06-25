@@ -11,7 +11,8 @@ $user = elgg_get_logged_in_user_entity();
 if (!empty($user)) {
 	$owner = $widget->getOwnerEntity();
 
-	if ($group_membership = get_users_membership($user->getGUID())) {
+	$group_membership = $user->getGroups(array("limit" => false));
+	if (!empty($group_membership)) {
 		$selected_group = ELGG_ENTITIES_ANY_VALUE;
 		if (elgg_instanceof($owner, "group")) {
 			// preselect the current group
