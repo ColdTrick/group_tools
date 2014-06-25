@@ -136,6 +136,7 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler("register", "menu:owner_block", "group_tools_register_owner_block_menu_handler");
 	elgg_register_plugin_hook_handler("route", "register", "group_tools_route_register_handler");
 	elgg_register_plugin_hook_handler("action", "register", "group_tools_action_register_handler");
+	elgg_register_plugin_hook_handler("group_tool_widgets", "widget_manager", "group_tools_tool_widgets_handler");
 	
 	// actions
 	elgg_register_action("group_tools/toggle_admin", dirname(__FILE__) . "/actions/toggle_admin.php");

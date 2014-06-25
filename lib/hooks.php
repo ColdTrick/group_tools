@@ -810,3 +810,55 @@ function group_tools_route_livesearch_handler($hook, $type, $return_value, $para
 	echo json_encode(array_values($results));
 	exit;
 }
+
+/**
+ * Add or remove widgets based on the group tool option
+ *
+ * @param string $hook         'group_tool_widgets'
+ * @param string $type         'widget_manager'
+ * @param array  $return_value current enable/disable widget handlers
+ * @param array  $params       supplied params
+ *
+ * @return array
+ */
+function group_tools_tool_widgets_handler($hook, $type, $return_value, $params) {
+	
+	if (!empty($params) && is_array($params)) {
+		$entity = elgg_extract("entity", $params);
+		
+		if (!empty($entity) && elgg_instanceof($entity, "group")) {
+			if (!is_array($return_value)) {
+				$return_value = array();
+			}
+			
+			if (!isset($return_value["enable"])) {
+				$return_value["enable"] = array();
+			}
+			if (!isset($return_value["disable"])) {
+				$return_value["disable"] = array();
+			}
+			
+			// check different group tools for which we supply widgets
+			if ($entity->forum_enable == "yes") {
+				$return_value["enable"][] = "group_forum_topics";
+			} else {
+				$return_value["disable"][] = "group_forum_topics";
+				$return_value["disable"][] = "start_discussion";
+			}
+			
+			if ($entity->related_groups_enable == "yes") {
+				$return_value["enable"][] = "group_related";
+			} else {
+				$return_value["disable"][] = "group_related";
+			}
+			
+			if ($entity->activity_enable == "yes") {
+				$return_value["enable"][] = "group_river_widget";
+			} else {
+				$return_value["disable"][] = "group_river_widget";
+			}
+		}
+	}
+		
+	return $return_value;
+}
