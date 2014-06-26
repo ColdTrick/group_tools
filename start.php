@@ -129,7 +129,7 @@ function group_tools_init() {
 	elgg_register_event_handler("join", "group", "group_tools_join_group_event");
 	
 	// register plugin hooks
-	elgg_register_plugin_hook_handler("widget_url", "widget_manager", "group_tools_widget_url_handler");
+	elgg_register_plugin_hook_handler("entity:url", "object", "group_tools_widget_url_handler");
 	elgg_register_plugin_hook_handler("default", "access", "group_tools_access_default_handler");
 	elgg_register_plugin_hook_handler("access:collections:write", "user", "group_tools_access_write_handler");
 	elgg_register_plugin_hook_handler("action", "groups/join", "group_tools_join_group_action_handler");
