@@ -40,6 +40,8 @@ if (!empty($profile_fields)) {
 			$header = $metadata_name;
 		}
 		
+		$header = html_entity_decode($header);
+		$header = str_ireplace("\"", "\"\"", str_ireplace(PHP_EOL, "", $header));
 		$headers[] = $header;
 	}
 }
@@ -68,11 +70,16 @@ foreach ($members as $member) {
 	
 	if (!empty($profile_fields)) {
 		foreach ($profile_fields as $metadata_name => $type) {
+			
 			if ($type == "tags") {
-				$info[] = implode(", ", $member->$metadata_name);
+				$value = implode(", ", $member->$metadata_name);
 			} else {
-				$info[] = $member->$metadata_name;
+				$value = $member->$metadata_name;
 			}
+			
+			$value = html_entity_decode($value);
+			$value = str_ireplace("\"", "\"\"", str_ireplace(PHP_EOL, "", $value));
+			$info[] = $value;
 		}
 	}
 	
