@@ -34,15 +34,21 @@ $default_access = elgg_extract("group_default_access", $vars, ACCESS_DEFAULT);
 <?php if (elgg_get_plugin_setting("hidden_groups", "groups") == "yes"): ?>
 	<div>
 		<label for="groups-vis"><?php echo elgg_echo("groups:visibility"); ?></label><br />
-		<?php echo elgg_view("input/access", array(
+		<?php
+		$vis_options = array(
+			ACCESS_PRIVATE => elgg_echo("groups:access:group"),
+			ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
+			ACCESS_PUBLIC => elgg_echo("PUBLIC"),
+		);
+		if (elgg_get_config("walled_garden")) {
+			unset($vis_options[ACCESS_PUBLIC]);
+		}
+		
+		echo elgg_view("input/access", array(
 			"name" => "vis",
 			"id" => "groups-vis",
 			"value" => $visibility,
-			"options_values" => array(
-				ACCESS_PRIVATE => elgg_echo("groups:access:group"),
-				ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
-				ACCESS_PUBLIC => elgg_echo("PUBLIC"),
-			)
+			"options_values" => $vis_options
 		));
 		?>
 	</div>
@@ -112,7 +118,7 @@ if ($entity && ($default_access === ACCESS_DEFAULT)) {
 	?>
 </div>
 
-<?php 
+<?php
 
 // transfer owner
 if ($entity) {
