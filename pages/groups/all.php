@@ -41,6 +41,8 @@ switch ($selected_tab) {
 		
 		break;
 	case "yours":
+		elgg_gatekeeper();
+		
 		$group_options["relationship"] = "member";
 		$group_options["relationship_guid"] = elgg_get_logged_in_user_guid();
 		$group_options["inverse_relationship"] = false;

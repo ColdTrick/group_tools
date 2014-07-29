@@ -6,10 +6,8 @@ x.x:
 - changes for Elgg 1.9
 - added: group tool presets
 - added: grouppicker autocomplete
-
-x.x:
-
 - fixed: PHP fatal exceptions when using group admins on group join
+- fixed: problem with some tabs shown when logged out
 
 2.10 (2014-05-15):
 

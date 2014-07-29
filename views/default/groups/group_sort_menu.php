@@ -63,6 +63,10 @@ foreach ($tabs as $name => $tab) {
 		$show_tab = true;
 	}
 	
+	if ($show_tab && in_array($name, array("yours", "suggested")) && !elgg_is_logged_in()) {
+		$show_tab = false;
+	}
+	
 	if ($show_tab) {
 		$tab["name"] = $name;
 		
