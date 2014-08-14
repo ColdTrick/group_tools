@@ -219,7 +219,7 @@ function group_tools_membership_request($event, $type, $relationship) {
 	}
 	
 	// only send a message if group admins are allowed
-	if (elgg_get_plugin_setting("multiple_admin", "group_tools") != "yes") {
+	if (!group_tools_multiple_admin_enabled()) {
 		return;
 	}
 	
