@@ -37,7 +37,7 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler("register", "menu:user_hover", "group_tools_menu_user_hover_handler");
 	elgg_register_plugin_hook_handler("register", "menu:entity", "group_tools_menu_entity_handler");
 	
-	if (elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes") {
+	if (group_tools_multiple_admin_enabled()) {
 		// add group tool option
 		add_group_tool_option("group_multiple_admin_allow", elgg_echo("group_tools:multiple_admin:group_tool_option"), false);
 		
