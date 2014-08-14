@@ -30,6 +30,10 @@ echo elgg_view("widgets/start_discussion/content", $params);
 $content = elgg_list_entities($options);
 if (empty($content)) {
 	$content = elgg_echo("discussion:none");
+} else {
+	$content .= "<div class='elgg-widget-more'>";
+	$content .= elgg_view("output/url", array("text" => elgg_echo("widgets:discussion:more"), "href" => "discussion/owner/" . $group->getGUID()));
+	$content .= "</div>";
 }
 
 echo $content;
