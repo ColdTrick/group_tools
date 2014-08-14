@@ -316,37 +316,55 @@ function group_tools_menu_user_hover_handler($hook, $type, $return_value, $param
 	$page_owner = elgg_get_page_owner_entity();
 	$loggedin_user = elgg_get_logged_in_user_entity();
 	
-	if (!empty($page_owner) && ($page_owner instanceof ElggGroup) && !empty($loggedin_user)) {
-		// are multiple admins allowed
-		if (elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes") {
-			if (!empty($params) && is_array($params)) {
-				$user = $params["entity"];
-				
-				// do we have a user
-				if (!empty($user) && ($user instanceof ElggUser)) {
-					// is the user not the owner of the group and noet the current user
-					if (($page_owner->getOwnerGUID() != $user->getGUID()) && ($user->getGUID() != $loggedin_user->getGUID())) {
-						// is the user a member od this group
-						if ($page_owner->isMember($user)) {
-							// can we add/remove an admin
-							if (($page_owner->getOwnerGUID() == $loggedin_user->getGUID()) || ($page_owner->group_multiple_admin_allow_enable == "yes" && $page_owner->canEdit()) || $loggedin_user->isAdmin()) {
-								if (check_entity_relationship($user->getGUID(), "group_admin", $page_owner->getGUID())) {
-									$text = elgg_echo("group_tools:multiple_admin:profile_actions:remove");
-								} else {
-									$text = elgg_echo("group_tools:multiple_admin:profile_actions:add");
-								}
-								
-								$result[] = ElggMenuItem::factory(array(
-									"text" => $text,
-									"name" => "group_admin",
-									"href" => elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/group_tools/toggle_admin?group_guid=" . $page_owner->getGUID() . "&user_guid=" . $user->getGUID())
-								));
-							}
-						}
-					}
-				}
-			}
-		}
+	if (empty($page_owner) || !elgg_instanceof($page_owner, "group") || empty($loggedin_user)) {
+		// not a group or logged in
+		return $result;
+	}
+	
+	if (!$page_owner->canEdit()) {
+		// can't edit the group
+		return $result;
+	}
+	
+	if (empty($params) || !is_array($params)) {
+		// wrong params
+		return $result;
+	}
+	
+	$user = elgg_extract("entity", $params);
+	if (empty($user) || !elgg_instanceof($user, "user")) {
+		// not a user menu
+		return $result;
+	}
+	
+	if (($page_owner->getOwnerGUID() == $user->getGUID()) || ($loggedin_user->getGUID() == $user->getGUID())) {
+		// group owner or current user
+		return $result;
+	}
+	
+	if (!$page_owner->isMember($user)) {
+		// user is not a member of the group
+		return $result;
+	}
+	
+	if (group_tools_group_multiple_admin_enabled($page_owner)) {
+		$is_admin = check_entity_relationship($user->getGUID(), "group_admin", $page_owner->getGUID());
+		
+		$result[] = ElggMenuItem::factory(array(
+			"name" => "group_admin",
+			"text" => elgg_echo("group_tools:multiple_admin:profile_actions:add"),
+			"href" => "action/group_tools/toggle_admin?group_guid=" . $page_owner->getGUID() . "&user_guid=" . $user->getGUID(),
+			"is_action" => true,
+			"item_class" => $is_admin ? "hidden" : ""
+		));
+		
+		$result[] = ElggMenuItem::factory(array(
+			"name" => "group_admin_remove",
+			"text" => elgg_echo("group_tools:multiple_admin:profile_actions:remove"),
+			"href" => "action/group_tools/toggle_admin?group_guid=" . $page_owner->getGUID() . "&user_guid=" . $user->getGUID(),
+			"is_action" => true,
+			"item_class" => $is_admin ? "" : "hidden"
+		));
 	}
 	
 	return $result;
@@ -371,7 +389,7 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 		$page_owner = elgg_get_page_owner_entity();
 		
 		if (elgg_in_context("group_tools_related_groups") && !empty($page_owner) && elgg_instanceof($page_owner, "group") && $page_owner->canEdit() && elgg_instanceof($entity, "group")) {
-			// remove relatede group
+			// remove related group
 			$result[] = ElggMenuItem::factory(array(
 				"name" => "related_group",
 				"text" => elgg_echo("group_tools:related_groups:entity:remove"),
@@ -416,6 +434,41 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 				"href" => false,
 				"priority" => 1
 			));
+		} elseif(!elgg_in_context("widgets") && !empty($page_owner) && elgg_instanceof($page_owner, "group") && $page_owner->canEdit() && elgg_instanceof($entity, "user")) {
+			// user listing in a group
+			if (($page_owner->getOwnerGUID() != $entity->getGUID()) && ($entity->getGUID() != elgg_get_logged_in_user_guid()) && $page_owner->isMember($entity)) {
+				// remove user from group
+				$result[] = ElggMenuItem::factory(array(
+					"name" => "removeuser",
+					"text" => elgg_echo('groups:removeuser'),
+					"href" => "action/groups/remove?user_guid=" . $entity->getGUID() . "&group_guid=" . $page_owner->getGUID(),
+					"confirm" => elgg_echo("question:areyousure"),
+					"priority" => 900
+				));
+				
+				// add/remove group admins
+				if (group_tools_group_multiple_admin_enabled($page_owner)) {
+					$is_admin = check_entity_relationship($entity->getGUID(), "group_admin", $page_owner->getGUID());
+					
+					$result[] = ElggMenuItem::factory(array(
+						"name" => "group_admin",
+						"text" => elgg_echo("group_tools:multiple_admin:profile_actions:add"),
+						"href" => "action/group_tools/toggle_admin?group_guid=" . $page_owner->getGUID() . "&user_guid=" . $entity->getGUID(),
+						"is_action" => true,
+						"priority" => 800,
+						"item_class" => $is_admin ? "hidden" : ""
+					));
+					
+					$result[] = ElggMenuItem::factory(array(
+						"name" => "group_admin_remove",
+						"text" => elgg_echo("group_tools:multiple_admin:profile_actions:remove"),
+						"href" => "action/group_tools/toggle_admin?group_guid=" . $page_owner->getGUID() . "&user_guid=" . $entity->getGUID(),
+						"is_action" => true,
+						"priority" => 801,
+						"item_class" => $is_admin ? "" : "hidden"
+					));
+				}
+			}
 		}
 	}
 	

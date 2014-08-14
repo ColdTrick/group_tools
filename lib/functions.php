@@ -974,3 +974,59 @@ function group_tools_get_membership_information(ElggUser $user, ElggGroup $group
 
 	return $result;
 }
+
+/**
+ * Check the plugin setting to allow multiple group admins
+ *
+ * @return bool
+ */
+function group_tools_multiple_admin_enabled() {
+	static $result;
+	
+	if (!isset($result)) {
+		$result = false;
+		
+		if (elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes") {
+			$result = true;
+		}
+	}
+	
+	return $result;
+}
+
+/**
+ * Check if the group allows multiple admins
+ *
+ * @param ElggGroup $group     the group to check
+ * @param int       $user_guid the user to check with
+ *
+ * @return bool
+ */
+function group_tools_group_multiple_admin_enabled(ElggGroup $group, $user_guid = 0) {
+	$result = false;
+	
+	if (empty($group) || !elgg_instanceof($group, "group")) {
+		return $result;
+	}
+	
+	$user_guid = sanitise_int($user_guid, false);
+	if (empty($user_guid)) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+	
+	if (empty($user_guid)) {
+		return $result;
+	}
+	
+	if (!group_tools_multiple_admin_enabled()) {
+		return $result;
+	}
+	
+	if (($group->getOwnerGUID() == $user_guid) || elgg_is_admin_logged_in()) {
+		$result = true;
+	} elseif (($group->group_multiple_admin_allow_enable == "yes") && $group->canEdit($user_guid)) {
+		$result = true;
+	}
+	
+	return $result;
+}

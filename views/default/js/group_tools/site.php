@@ -175,6 +175,9 @@ elgg.group_tools.init = function() {
 		
 		return false;
 	});
+
+	// make group admin menu toggle
+	elgg.ui.registerTogglableMenuItems("group-admin", "group-admin-remove");
 }
 
 //register init hook
