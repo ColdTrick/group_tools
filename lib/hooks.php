@@ -434,7 +434,7 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 				"href" => false,
 				"priority" => 1
 			));
-		} elseif(!elgg_in_context("widgets") && !empty($page_owner) && elgg_instanceof($page_owner, "group") && $page_owner->canEdit() && elgg_instanceof($entity, "user")) {
+		} elseif (!elgg_in_context("widgets") && !empty($page_owner) && elgg_instanceof($page_owner, "group") && $page_owner->canEdit() && elgg_instanceof($entity, "user")) {
 			// user listing in a group
 			if (($page_owner->getOwnerGUID() != $entity->getGUID()) && ($entity->getGUID() != elgg_get_logged_in_user_guid()) && $page_owner->isMember($entity)) {
 				// remove user from group
