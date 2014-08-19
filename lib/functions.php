@@ -316,7 +316,7 @@ function group_tools_get_invited_groups_by_email($email, $site_guid = 0) {
 	if (!empty($email)) {
 		$dbprefix = elgg_get_config("dbprefix");
 		$site_secret = get_site_secret();
-		$email = sanitise_string($email);
+		$email = sanitise_string(strtolower($email));
 		
 		$email_invitation_id = add_metastring("email_invitation");
 		
@@ -372,7 +372,7 @@ function group_tools_generate_email_invite_code($group_guid, $email) {
 		$site_secret = get_site_secret();
 		
 		// generate code
-		$result = md5($site_secret . $email . $group_guid);
+		$result = md5($site_secret . strtolower($email) . $group_guid);
 	}
 	
 	return $result;
@@ -749,9 +749,9 @@ function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user =
 			$domains = $group->getPrivateSetting("domain_based");
 			
 			if (!empty($domains)) {
-				$domains = explode("|", trim($domains, "|"));
+				$domains = explode("|", strtolower(trim($domains, "|")));
 				
-				list(,$domain) = explode("@", $user->email);
+				list(,$domain) = explode("@", strtolower($user->email));
 				
 				if (in_array($domain, $domains)) {
 					$result = true;
@@ -780,7 +780,7 @@ function group_tools_get_domain_based_groups(ElggUser $user, $site_guid = 0) {
 		}
 		
 		if (!empty($user) && elgg_instanceof($user, "user")) {
-			list(, $domain) = explode("@", $user->email);
+			list(, $domain) = explode("@", strtolower($user->email));
 			
 			$options = array(
 				"type" => "group",
