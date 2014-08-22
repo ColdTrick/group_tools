@@ -44,10 +44,12 @@ if (!empty($group) && elgg_instanceof($group, "group") && $group->canEdit()) {
 	
 	// invited emails
 	$emails = elgg_get_annotations(array(
+		"selects" => array("SUBSTRING_INDEX(v.string, '|', -1) AS invited_email"),
 		"annotation_name" => "email_invitation",
 		"annotation_owner_guid" => $group->getGUID(),
 		"wheres" => array("(v.string LIKE '%|%')"),
-		"limit" => false
+		"limit" => false,
+		"order_by" => "invited_email ASC"
 	));
 		
 	$content = elgg_view("groups/membershiprequests", array(
