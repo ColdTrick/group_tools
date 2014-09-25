@@ -25,29 +25,37 @@ if (!empty($group) && elgg_instanceof($group, "group") && $group->canEdit()) {
 	elgg_push_breadcrumb($group->name, $group->getURL());
 	elgg_push_breadcrumb($title);
 
+	$dbprefix = elgg_get_config("dbprefix");
+	
 	// membership requests
 	$requests = elgg_get_entities_from_relationship(array(
+		"joins" => array("JOIN " . $dbprefix . "users_entity ue ON e.guid = ue.guid"),
 		"type" => "user",
 		"relationship" => "membership_request",
 		"relationship_guid" => $guid,
 		"inverse_relationship" => true,
 		"limit" => false,
+		"order_by" => "ue.name ASC"
 	));
 	
 	// invited users
 	$invitations = elgg_get_entities_from_relationship(array(
+		"joins" => array("JOIN " . $dbprefix . "users_entity ue ON e.guid = ue.guid"),
 		"type" => "user",
 		"relationship" => "invited",
 		"relationship_guid" => $guid,
-		"limit" => false
+		"limit" => false,
+		"order_by" => "ue.name ASC"
 	));
 	
 	// invited emails
 	$emails = elgg_get_annotations(array(
+		"selects" => array("SUBSTRING_INDEX(v.string, '|', -1) AS invited_email"),
 		"annotation_name" => "email_invitation",
 		"annotation_owner_guid" => $group->getGUID(),
 		"wheres" => array("(v.string LIKE '%|%')"),
-		"limit" => false
+		"limit" => false,
+		"order_by" => "invited_email ASC"
 	));
 		
 	$content = elgg_view("groups/membershiprequests", array(

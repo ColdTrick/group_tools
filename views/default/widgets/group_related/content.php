@@ -10,13 +10,17 @@ if ($num_display < 1) {
 	$num_display = 4;
 }
 
+$dbprefix = elgg_get_config("dbprefix");
+
 $options = array(
 	"type" => "group",
 	"limit" => $num_display,
 	"relationship" => "related_group",
 	"relationship_guid" => $widget->getOwnerGUID(),
 	"full_view" => false,
-	"pagination" => false
+	"pagination" => false,
+	"joins" => array("JOIN " . $dbprefix . "groups_entity ge ON e.guid = ge.guid"),
+	"order_by" => "ge.name ASC"
 );
 
 $content = elgg_list_entities_from_relationship($options);

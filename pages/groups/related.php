@@ -27,11 +27,15 @@ if ($group->canEdit()) {
 	$content .= elgg_view_form("group_tools/related_groups", array("class" => "mbm"), array("entity" => $group));
 }
 
+$dbprefix = elgg_get_config("dbprefix");
+
 $options = array(
 	"type" => "group",
 	"relationship" => "related_group",
 	"relationship_guid" => $group->getGUID(),
 	"full_view" => false,
+	"joins" => array("JOIN " . $dbprefix . "groups_entity ge ON e.guid = ge.guid"),
+	"order_by" => "ge.name ASC"
 );
 
 // helper context for entity menu
