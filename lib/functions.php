@@ -92,7 +92,7 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 				$url
 			));
 			
-			if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, null, "email")) {
+			if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, array(), "email")) {
 				$result = true;
 			}
 		}
@@ -141,7 +141,7 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = "") {
 			);
 			$msg = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $msg);
 				
-			if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, null, "email")) {
+			if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, array(), "email")) {
 				$result = true;
 			}
 		}
