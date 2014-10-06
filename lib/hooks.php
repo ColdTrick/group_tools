@@ -155,6 +155,15 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 					}
 				}
 				break;
+			case "activity":
+				$result = false;
+				
+				if (isset($page[1])) {
+					set_input("guid", $page[1]);
+				}
+				
+				include(dirname(dirname(__FILE__)) . "/pages/groups/river.php");
+				break;
 			default:
 				// check if we have an old group profile link
 				if (isset($page[0]) && is_numeric($page[0])) {
@@ -177,7 +186,7 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
  * @param string $hook         the 'register' hook
  * @param string $type         for the 'menu:title' menu
  * @param array  $return_value the menu items to show
- * @param arary  $params       params to help extend the menu items
+ * @param array  $params       params to help extend the menu items
  *
  * @return ElggMenuItem[] a list of menu items
  */
@@ -306,7 +315,7 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params) {
  * @param string $hook         the 'register' hook
  * @param string $type         for the 'menu:user_hover' menu
  * @param array  $return_value the menu items to show
- * @param arary  $params       params to help extend the menu items
+ * @param array  $params       params to help extend the menu items
  *
  * @return ElggMenuItem[] a list of menu items
  */
