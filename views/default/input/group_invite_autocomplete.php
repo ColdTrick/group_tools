@@ -79,7 +79,7 @@ if ($minChars < 1) {
 					}
 					result += ui.item.content;
 					
-					result += "<span class='elgg-icon elgg-icon-delete-alt elgg-discoverable float-alt'></span>";
+					result += "<?php echo addslashes(elgg_view_icon("delete-alt", "elgg-discoverable float-alt")); ?>";
 					result += "</div>";
 					
 					$('#<?php echo $destination; ?>').append(result);

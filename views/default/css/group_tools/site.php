@@ -29,6 +29,10 @@
 	vertical-align: middle;
 }
 
+.group_tools_group_invite_autocomplete_autocomplete_result .elgg-icon-delete-alt {
+	cursor: pointer;
+}
+
 #group_tools_status_open {
 	color: green;
 }
