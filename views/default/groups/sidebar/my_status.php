@@ -35,12 +35,14 @@ if (!empty($group) && elgg_instanceof($group, "group")) {
 				"href" => "#"
 			));
 		} else {
-			elgg_register_menu_item("groups:my_status", array(
-				"name" => "membership_status",
-				"text" => elgg_echo("groups:join"),
-				"href" => "action/groups/join?group_guid={$group->getGUID()}",
-				"is_action" => true
-			));
+			if ($group->getPrivateSetting("group_tools:cleanup:actions") != "yes") {
+				elgg_register_menu_item("groups:my_status", array(
+					"name" => "membership_status",
+					"text" => elgg_echo("groups:join"),
+					"href" => "action/groups/join?group_guid=" . $group->getGUID(),
+					"is_action" => true
+				));
+			}
 		}
 		
 		// notification info
@@ -61,6 +63,8 @@ if (!empty($group) && elgg_instanceof($group, "group")) {
 		}
 		
 		$body = elgg_view_menu("groups:my_status");
-		echo elgg_view_module("aside", elgg_echo("groups:my_status"), $body);
+		if (!empty($body)) {
+			echo elgg_view_module("aside", elgg_echo("groups:my_status"), $body);
+		}
 	}
 }
