@@ -929,12 +929,14 @@ function group_tools_tool_widgets_handler($hook, $type, $return_value, $params) 
 }
 
 /**
+ * make a filter menu on the membership request page
  *
+ * @param string         $hook         name of the hook
+ * @param string         $type         type of the hook
+ * @param ElggMenuItem[] $return_value current menu items
+ * @param array          $params       supplied params
  *
- * @param unknown $hook
- * @param unknown $type
- * @param unknown $return_value
- * @param unknown $params
+ * @return ElggMenuItem[]
  */
 function group_tools_menu_filter_handler($hook, $type, $return_value, $params) {
 	
