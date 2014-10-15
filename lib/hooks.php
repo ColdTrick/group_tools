@@ -87,6 +87,9 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 				$result = false;
 				
 				set_input("group_guid", $page[1]);
+				if (isset($page[2])) {
+					set_input("subpage", $page[2]);
+				}
 				
 				include(dirname(dirname(__FILE__)) . "/pages/groups/membershipreq.php");
 				break;
@@ -922,5 +925,55 @@ function group_tools_tool_widgets_handler($hook, $type, $return_value, $params) 
 		}
 	}
 		
+	return $return_value;
+}
+
+/**
+ *
+ *
+ * @param unknown $hook
+ * @param unknown $type
+ * @param unknown $return_value
+ * @param unknown $params
+ */
+function group_tools_menu_filter_handler($hook, $type, $return_value, $params) {
+	
+	if (!elgg_in_context("group_membershipreq")) {
+		return $return_value;
+	}
+	
+	if (empty($params) || !is_array($params)) {
+		return $return_value;
+	}
+	
+	$entity = elgg_extract("entity", $params);
+	if (empty($entity) || !elgg_instanceof($entity, "group")) {
+		return $return_value;
+	}
+	
+	$return_value = array();
+	
+	$return_value[] = ElggMenuItem::factory(array(
+		"name" => "membershipreq",
+		"text" => elgg_echo("group_tools:groups:membershipreq:requests"),
+		"href" => "groups/requests/" . $entity->getGUID(),
+		"is_trusted" => true,
+		"priority" => 100
+	));
+	$return_value[] = ElggMenuItem::factory(array(
+		"name" => "invites",
+		"text" => elgg_echo("group_tools:groups:membershipreq:invitations"),
+		"href" => "groups/requests/" . $entity->getGUID() . "/invites",
+		"is_trusted" => true,
+		"priority" => 200
+	));
+	$return_value[] = ElggMenuItem::factory(array(
+		"name" => "email_invites",
+		"text" => elgg_echo("group_tools:groups:membershipreq:email_invitations"),
+		"href" => "groups/requests/" . $entity->getGUID() . "/email_invites",
+		"is_trusted" => true,
+		"priority" => 300
+	));
+	
 	return $return_value;
 }

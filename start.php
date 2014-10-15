@@ -36,6 +36,7 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler("register", "menu:title", "group_tools_menu_title_handler");
 	elgg_register_plugin_hook_handler("register", "menu:user_hover", "group_tools_menu_user_hover_handler");
 	elgg_register_plugin_hook_handler("register", "menu:entity", "group_tools_menu_entity_handler");
+	elgg_register_plugin_hook_handler("register", "menu:filter", "group_tools_menu_filter_handler");
 	
 	if (group_tools_multiple_admin_enabled()) {
 		// add group tool option
