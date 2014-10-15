@@ -9,6 +9,8 @@ x.x:
 - added: filter to group activity page
 - fixed: PHP fatal exceptions when using group admins on group join
 - fixed: problem with some tabs shown when logged out
+- fixed: adding pagination to prevent long loading times with large lists #71
+- fixed: hide my status join link depending on cleanup setting #60 
 
 2.10 (2014-05-15):
 
