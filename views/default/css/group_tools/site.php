@@ -77,3 +77,7 @@
 .group-tools-group-edit-section > div {
 	margin-bottom: 15px;
 }
+
+.group-tools-group-edit-section .elgg-input-radios {
+	white-space: nowrap;
+}
