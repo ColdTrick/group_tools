@@ -979,3 +979,44 @@ function group_tools_menu_filter_handler($hook, $type, $return_value, $params) {
 	
 	return $return_value;
 }
+
+/**
+ * Set the correct url for group thumbnails
+ *
+ * @param string $hook         name of the hook
+ * @param string $type         type of the hook
+ * @param string $return_value current return value
+ * @param array  $params       supplied params
+ *
+ * @return string
+ */
+function groups_tools_group_icon_url_handler($hook, $type, $return_value, $params) {
+	
+	if (empty($params) || !is_array($params)) {
+		return $return_value;
+	}
+	
+	$group = elgg_extract("entity", $params);
+	if (empty($group) || !elgg_instanceof($group, "group")) {
+		return $return_value;
+	}
+	
+	$icontime = (int) $group->icontime;
+	if (empty($icontime)) {
+		return $return_value;
+	}
+	
+	$size = elgg_extract("size", $params, "medium");
+	$iconsizes = elgg_get_config("icon_sizes");
+	if (empty($size) || empty($iconsizes) || !array_key_exists($size, $iconsizes)) {
+		return $return_value;
+	}
+	
+	$params = array(
+		"group_guid" => $group->getGUID(),
+		"guid" => $group->getOwnerGUID(),
+		"size" => $size,
+		"icontime" => $icontime
+	);
+	return elgg_http_add_url_query_elements("mod/group_tools/pages/groups/thumbnail.php", $params);
+}
