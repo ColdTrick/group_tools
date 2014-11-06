@@ -15,10 +15,13 @@ $guid = (int) $_GET["guid"];
 $group_guid = (int) $_GET["group_guid"];
 
 // If is the same ETag, content didn"t changed.
-$etag = $icontime . $size . $group_guid . $guid;
-if (isset($_SERVER["HTTP_IF_NONE_MATCH"]) && trim($_SERVER["HTTP_IF_NONE_MATCH"]) == "\"$etag\"") {
-	header("HTTP/1.1 304 Not Modified");
-	exit;
+$etag = md5($icontime . $size . $group_guid . $guid);
+if (isset($_SERVER["HTTP_IF_NONE_MATCH"])) {
+	list ($etag_header) = explode("-", trim($_SERVER["HTTP_IF_NONE_MATCH"], "\""));
+	if ($etag_header === $etag) {
+		header("HTTP/1.1 304 Not Modified");
+		exit;
+	}
 }
 
 $engine_dir = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . "/engine/";
