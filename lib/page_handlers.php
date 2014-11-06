@@ -6,7 +6,7 @@
 /**
  * Take over the groupicon page handler for fallback
  *
- * @param array $page
+ * @param array $page the url elements
  *
  * @return void
  */
