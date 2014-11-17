@@ -1,16 +1,23 @@
 Version History
 ===============
 
-x.x:
+3.0 (2014-11-17):
 
 - changes for Elgg 1.9
 - added: group tool presets
 - added: grouppicker autocomplete
 - added: filter to group activity page
+- added: option for group admins to export the members to CSV (admin enabled option)
+- added: support for widget_manager group tool based widgets
+- added: user menu items in group member listing
 - fixed: PHP fatal exceptions when using group admins on group join
 - fixed: problem with some tabs shown when logged out
 - fixed: adding pagination to prevent long loading times with large lists #71
 - fixed: hide my status join link depending on cleanup setting #60 
+- fixed: group visibility options in walled garden
+- fixed: problem with some tabs shown when logged out
+- changed: more efficient annotation query for email invitations (thanks to Matt Beckett)
+- changed: improved group thumbnail loading
 
 2.10 (2014-05-15):
 
