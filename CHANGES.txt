@@ -1,6 +1,10 @@
 Version History
 ===============
 
+x.x:
+
+- fixed: group invite registration failed when site registration is disabled (#72)
+
 3.0 (2014-11-17):
 
 - changes for Elgg 1.9
