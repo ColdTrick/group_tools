@@ -1,11 +1,15 @@
 <?php
 $language = array (
-  'group_tools:settings:member_export' => 'Groep beheerder mogen leden informatie exporteren',
-  'group_tools:settings:member_export:description' => 'Dit bevat onder andere de naam, gebruikersnaam en email adres van de gebruiker',
-  'group_tools:member_export:title_button' => 'Exporteer leden',
+  'group_tools:delete_selected' => 'Verwijder selectie',
+  'admin:administer_utilities:group_bulk_delete' => 'Bulk groep verwijderen',
+  'group_tools:action:bulk_delete:success' => 'De geselecteerde groepen zijn verwijderd',
+  'group_tools:action:bulk_delete:error' => 'Er is een fout opgetreden tijdens het verwijderen van de groepen, probeer het nogmaals',
   'groups:search:title' => 'Zoek naar groepen met de tag \'%s\'',
   'groups:search:tags' => 'tag',
   'groups:searchtag' => 'Zoek naar groepen op tag',
+  'group_tools:settings:member_export' => 'Groep beheerder mogen leden informatie exporteren',
+  'group_tools:settings:member_export:description' => 'Dit bevat onder andere de naam, gebruikersnaam en email adres van de gebruiker',
+  'group_tools:member_export:title_button' => 'Exporteer leden',
   'group_tools:settings:domain_based' => 'Activeer domein gebaseerde groepen',
   'group_tools:settings:domain_based:description' => 'Gebruikers kunnen lid worden van een groep gebaseerd op hun e-mail domein. Gedurende de registratie zullen ze automatisch lid worden van groepen met een overeenkomend e-mail domein.',
   'group_tools:join:domain_based:tooltip' => 'Je mag lid worden van deze groep vanwege je e-mail domein.',

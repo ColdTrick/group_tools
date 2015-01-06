@@ -30,6 +30,17 @@ elgg.group_tools_admin.init = function() {
 		
 		return false;
 	});
+
+	$("#group-tools-admin-bulk-delete input[name='checkall'][type='checkbox']").live("change", function() {
+
+		if ($(this).is(":checked")) {
+			// check
+			$("#group-tools-admin-bulk-delete input[name='group_guids[]']").attr("checked", "checked");
+		} else {
+			// uncheck
+			$("#group-tools-admin-bulk-delete input[name='group_guids[]']").removeAttr("checked");
+		}
+	});
 }
 
 //register init hook

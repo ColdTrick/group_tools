@@ -3,6 +3,7 @@
 x.x:
 
 - added: option for group admins to export the members to CSV (admin enabled option)
+- added: bulk group delete admin page
 - fixed: PHP fatal exceptions when using group admins on group join
 - fixed: problem with some tabs shown when logged out
 - fixed: email/domain case sensitivity in invites (thanks to Matt Backett)
