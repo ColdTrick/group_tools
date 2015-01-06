@@ -160,6 +160,7 @@ function group_tools_init() {
 	elgg_register_action("group_tools/notifications", dirname(__FILE__) . "/actions/admin/notifications.php", "admin");
 	elgg_register_action("group_tools/fix_acl", dirname(__FILE__) . "/actions/admin/fix_acl.php", "admin");
 	elgg_register_action("group_tools/group_tool_presets", dirname(__FILE__) . "/actions/admin/group_tool_presets.php", "admin");
+	elgg_register_action("group_tools/admin/bulk_delete", dirname(__FILE__) . "/actions/admin/bulk_delete.php", "admin");
 	
 	elgg_register_action("groups/email_invitation", dirname(__FILE__) . "/actions/groups/email_invitation.php");
 	elgg_register_action("groups/decline_email_invitation", dirname(__FILE__) . "/actions/groups/decline_email_invitation.php");
@@ -193,6 +194,7 @@ function group_tools_pagesetup() {
 	
 	// admin menu item
 	elgg_register_admin_menu_item("configure", "group_tool_presets", "appearance");
+	elgg_register_admin_menu_item("administer", "group_bulk_delete", "administer_utilities");
 	
 	if (elgg_in_context("groups") && ($page_owner instanceof ElggGroup)) {
 		if ($page_owner->forum_enable == "no") {

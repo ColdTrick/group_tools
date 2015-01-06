@@ -3,6 +3,7 @@ Version History
 
 x.x:
 
+- added: bulk group delete admin page
 - fixed: group invite registration failed when site registration is disabled (#72)
 
 3.0 (2014-11-17):

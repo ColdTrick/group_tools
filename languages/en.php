@@ -8,6 +8,7 @@ $english = array(
 	'group_tools:add_users' => "Add users",
 	'group_tools:in' => "in",
 	'group_tools:remove' => "Remove",
+	'group_tools:delete_selected' => "Delete selected",
 	'group_tools:clear_selection' => "Clear selection",
 	'group_tools:all_members' => "All members",
 	'group_tools:explain' => "Explanation",
@@ -21,6 +22,7 @@ $english = array(
 	// menu
 	'group_tools:menu:mail' => "Mail Members",
 	'group_tools:menu:invitations' => "Manage invitations",
+	'admin:administer_utilities:group_bulk_delete' => "Group bulk delete",
 
 	'admin:appearance:group_tool_presets' => "Group tool presets",
 	
@@ -476,6 +478,10 @@ To visit the group please click on the following link:
 	
 	// group member export
 	'group_tools:member_export:title_button' => "Export members",
+	
+	// group bulk delete
+	'group_tools:action:bulk_delete:success' => "The selected groups were deleted",
+	'group_tools:action:bulk_delete:error' => "An error occured while deleting the groups, please try again",
 );
 
 add_translation("en", $english);
