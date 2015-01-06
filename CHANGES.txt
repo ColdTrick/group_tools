@@ -5,6 +5,8 @@ x.x:
 - added: option for group admins to export the members to CSV (admin enabled option)
 - fixed: PHP fatal exceptions when using group admins on group join
 - fixed: problem with some tabs shown when logged out
+- fixed: email/domain case sensitivity in invites (thanks to Matt Backett)
+- changed: more efficient annotation query for email invitations  (thanks to Matt Backett)
 
 2.10 (2014-05-15):
 
