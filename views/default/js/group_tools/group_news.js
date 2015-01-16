@@ -1,10 +1,3 @@
-<?php
-/**
- * extra JS for the global site JS, to support group news widget
- */
-?>
-//<script>
-
 elgg.provide("elgg.widgets.group_news");
 
 elgg.widgets.group_news.init = function() {
