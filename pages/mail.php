@@ -9,6 +9,8 @@ $group_guid = (int) get_input("group_guid", 0);
 $group = get_entity($group_guid);
 
 if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
+	elgg_require_js("group_tools/mail");
+	
 	// set page owner
 	elgg_set_page_owner_guid($group->getGUID());
 	elgg_set_context("groups");

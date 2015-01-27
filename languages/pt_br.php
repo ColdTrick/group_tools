@@ -102,7 +102,6 @@ Para visualizar a comunidade, clique neste link:
 	'group_tools:admin_transfer:myself' => "Eu",
 	'group_tools:admin_transfer:submit' => "Transferir",
 	'group_tools:admin_transfer:no_users' => "Nenhum membro ou amigo para transferir a comunidade.",
-	'group_tools:admin_transfer:confirm' => "Tem certeza que deseja transferir a propriedade desta comunidade?",
 	
 	// auto join form
 	'group_tools:auto_join:title' => "Opções de comunidades padrão",

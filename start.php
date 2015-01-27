@@ -112,7 +112,6 @@ function group_tools_init() {
 	if (elgg_is_active_plugin("blog")) {
 		elgg_register_widget_type("group_news", elgg_echo("widgets:group_news:title"), elgg_echo("widgets:group_news:description"), array("profile", "index", "dashboard"), true);
 		elgg_extend_view("css/elgg", "widgets/group_news/css");
-		elgg_extend_view("js/elgg", "widgets/group_news/js");
 	}
 	
 	// related groups

@@ -6,6 +6,7 @@
 $group = elgg_extract("entity", $vars);
 
 if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
+	elgg_require_js("group_tools/group_edit");
 	
 	$noyes_options = array(
 		"no" => elgg_echo("option:no"),

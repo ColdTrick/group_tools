@@ -14,6 +14,8 @@ if (!empty($user) && $user->isAdmin()) {
 	$group = elgg_extract("entity", $vars);
 	
 	if (!empty($group) && elgg_instanceof($group, "group", null, "ElggGroup")) {
+		elgg_require_js("group_tools/group_edit");
+		
 		$noyes_options = array(
 			"no" => elgg_echo("option:no"),
 			"yes" => elgg_echo("option:yes")

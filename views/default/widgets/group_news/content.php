@@ -18,6 +18,12 @@ for ($i = 1; $i < 6; $i++) {
 
 if (!empty($configured_projects)) {
 
+	if (elgg_is_xhr()) {
+		echo "<script type='text/javascript'>require(['group_tools/group_news']);</script>";
+	} else {
+		elgg_require_js("group_tools/group_news");
+	}
+	
 	$blog_count = sanitise_int($widget->blog_count);
 	if ($blog_count < 1) {
 		$blog_count = 5;
