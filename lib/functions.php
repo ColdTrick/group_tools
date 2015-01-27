@@ -190,9 +190,9 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 				} else {
 					// no site email, so make one up
 					if (!empty($site->name)) {
-						$site_from = $site->name . " <noreply@" . get_site_domain($site->getGUID()) . ">";
+						$site_from = $site->name . " <noreply@" . $site->getDomain() . ">";
 					} else {
-						$site_from = "noreply@" . get_site_domain($site->getGUID());
+						$site_from = "noreply@" . $site->getDomain();
 					}
 				}
 				
@@ -323,7 +323,7 @@ function group_tools_get_invited_groups_by_email($email, $site_guid = 0) {
 		$site_secret = get_site_secret();
 		$email = sanitise_string(strtolower($email));
 		
-		$email_invitation_id = add_metastring("email_invitation");
+		$email_invitation_id = elgg_get_metastring_id("email_invitation");
 		
 		if ($site_guid === 0) {
 			$site_guid = elgg_get_site_entity()->getGUID();

@@ -40,8 +40,8 @@ if ($show_members) {
 $random = "";
 if ($show_random == "yes") {
 	$dbprefix = elgg_get_config("dbprefix");
-	$featured_id = add_metastring("featured_group");
-	$yes_id = add_metastring("yes");
+	$featured_id = elgg_get_metastring_id("featured_group");
+	$yes_id = elgg_get_metastring_id("yes");
 	
 	$random_options = array(
 		"type" => "group",

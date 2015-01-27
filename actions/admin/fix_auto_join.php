@@ -23,25 +23,18 @@ if (!empty($group_guid)) {
 			"relationship_guid" => elgg_get_site_entity()->getGUID(),
 			"inverse_relationship" => true,
 			"limit" => false,
-			"callback" => "group_tools_guid_only_callback"
 		);
 		
-		$user_guids = elgg_get_entities_from_relationship($options);
-		if (!empty($user_guids)) {
-			
-			foreach ($user_guids as $user_guid) {
-				if (!is_group_member($group->getGUID(), $user_guid)) {
-					if (join_group($group->getGUID(), $user_guid)) {
-						$new++;
-					} else {
-						$failure++;
-					}
+		$users = new ElggBatch("elgg_get_entities_from_relationship", $options);
+		foreach ($users as $user) {
+			if (!$group->isMember($user)) {
+				if ($group->join($user)) {
+					$new++;
 				} else {
-					$already++;
+					$failure++;
 				}
-				
-				// cleanup cache, to be sure
-				_elgg_invalidate_cache_for_entity($user_guid);
+			} else {
+				$already++;
 			}
 		}
 		

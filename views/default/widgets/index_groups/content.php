@@ -64,7 +64,7 @@ $getter = "elgg_get_entities_from_metadata";
 switch ($sorting_value) {
 	case "ordered":
 		$dbprefix = elgg_get_config("dbprefix");
-		$order_id = add_metastring("order");
+		$order_id = elgg_get_metastring_id("order");
 		
 		$options["selects"] = array(
 			"IFNULL((

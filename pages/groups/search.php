@@ -43,7 +43,7 @@ if (!empty($query)) {
 	
 		$tag_name_ids = array();
 		foreach ($profile_fields as $field) {
-			$tag_name_ids[] = add_metastring($field);
+			$tag_name_ids[] = elgg_get_metastring_id($field);
 		}
 	
 		$md_where = "((md.name_id IN (" . implode(",", $tag_name_ids) . ")) AND (msv.string LIKE '%$query%'))";

@@ -25,7 +25,7 @@ $dbprefix = elgg_get_config("dbprefix");
 switch ($selected_tab) {
 	case "ordered":
 		
-		$order_id = add_metastring("order");
+		$order_id = elgg_get_metastring_id("order");
 		
 		$group_options["limit"] = false;
 		$group_options["pagination"] = false;
