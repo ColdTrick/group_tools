@@ -1,10 +1,13 @@
 Version History
 ===============
 
-x.x:
+3.1 (2014-02-18):
 
 - added: bulk group delete admin page
 - fixed: group invite registration failed when site registration is disabled (#72)
+- fixed: deprecated function usage
+- changed: moved some functions to amd loaded components
+- changed: moved group news to amd loaded module
 
 3.0 (2014-11-17):
 
