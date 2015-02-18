@@ -24,10 +24,11 @@ if (isset($_SERVER["HTTP_IF_NONE_MATCH"])) {
 	}
 }
 
-$engine_dir = dirname(dirname(dirname(dirname(dirname(__FILE__))))) . "/engine/";
+$base_dir = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 
 // Get DB settings
-require_once $engine_dir . "settings.php";
+require_once $base_dir . '/engine/settings.php';
+require_once $base_dir . '/vendor/autoload.php';
 
 global $CONFIG;
 
@@ -36,15 +37,23 @@ if (isset($CONFIG->dataroot)) {
 }
 
 if (!isset($data_root)) {
-	$mysql_dblink = @mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true);
+	$db_config = new \Elgg\Database\Config($CONFIG);
+	if ($db_config->isDatabaseSplit()) {
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
+	} else {
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+	}
+	
+	$mysql_dblink = @mysql_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], true);
 	if ($mysql_dblink) {
-		if (@mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
-			$q = "SELECT name, value FROM {$CONFIG->dbprefix}datalists WHERE name = 'dataroot'";
+		if (@mysql_select_db($read_settings["database"], $mysql_dblink)) {
+			$q = "SELECT name, value FROM {$db_config->getTablePrefix()}datalists WHERE name = 'dataroot'";
+			
 			$result = mysql_query($q, $mysql_dblink);
 			if ($result) {
 				$row = mysql_fetch_object($result);
 				while ($row) {
-					if ($row->name == "dataroot") {
+					if ($row->name == 'dataroot') {
 						$data_root = $row->value;
 					}
 	
@@ -58,9 +67,8 @@ if (!isset($data_root)) {
 }
 
 if (isset($data_root)) {
-	require_once $engine_dir . "classes/Elgg/EntityDirLocator.php";
-
-	$locator = new Elgg_EntityDirLocator($guid);
+	
+	$locator = new \Elgg\EntityDirLocator($guid);
 	$entity_path = $data_root . $locator->getPath();
 	
 	$filename = $entity_path . "groups/{$group_guid}{$size}.jpg";

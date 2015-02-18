@@ -1,6 +1,10 @@
 Version History
 ===============
 
+x.x:
+
+- fixed: group thumbnails not loading in Elgg 1.10 #78
+
 3.1 (2014-02-18):
 
 - added: bulk group delete admin page
