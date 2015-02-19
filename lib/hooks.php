@@ -578,34 +578,33 @@ function group_tools_widget_url_handler($hook, $type, $return_value, $params) {
  * @return int the access_id to use as default
  */
 function group_tools_access_default_handler($hook, $type, $return_value, $params) {
-	$result = $return_value;
 	
 	// check if the page owner is a group
 	$page_owner = elgg_get_page_owner_entity();
-	if (!empty($page_owner) && elgg_instanceof($page_owner, "group", null, "ElggGroup")) {
-		// check if the group as a default access set
-		$group_access = $page_owner->getPrivateSetting("elgg_default_access");
-		if ($group_access !== false) {
-			$result = (int) $group_access;
-		}
-		
+	if (empty($page_owner) || !elgg_instanceof($page_owner, "group")) {
+		return $return_value;
+	}
+	
+	// check if the group as a default access set
+	$group_access = $page_owner->getPrivateSetting("elgg_default_access");
+	if ($group_access !== null) {
+		$return_value = (int) $group_access;
+	} else {
 		// if the group hasn't set anything check if there is a site setting for groups
-		if ($group_access === false) {
-			$site_group_access = elgg_get_plugin_setting("group_default_access", "group_tools");
-			if ($site_group_access !== null) {
-				switch ($site_group_access) {
-					case GROUP_TOOLS_GROUP_ACCESS_DEFAULT:
-						$result = $page_owner->group_acl;
-						break;
-					default:
-						$result = $site_group_access;
-						break;
-				}
+		$site_group_access = elgg_get_plugin_setting("group_default_access", "group_tools");
+		if ($site_group_access !== null) {
+			switch ($site_group_access) {
+				case GROUP_TOOLS_GROUP_ACCESS_DEFAULT:
+					$return_value = (int) $page_owner->group_acl;
+					break;
+				default:
+					$return_value = (int) $site_group_access;
+					break;
 			}
 		}
 	}
 	
-	return $result;
+	return $return_value;
 }
 
 /**

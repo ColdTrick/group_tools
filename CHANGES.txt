@@ -1,6 +1,10 @@
 Version History
 ===============
 
+x.x:
+
+- fixed: wrong checks on group default access (thanks to https://community.elgg.org/profile/Josh.Henly)
+
 3.1 (2014-02-18):
 
 - added: bulk group delete admin page

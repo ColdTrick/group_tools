@@ -94,8 +94,8 @@ if ($entity) {
 // default group access
 if ($entity && ($default_access === ACCESS_DEFAULT)) {
 	$new_default_access = $entity->getPrivateSetting("elgg_default_access");
-	if ($new_default_access !== false) {
-		$default_access = $new_default_access;
+	if ($new_default_access !== null) {
+		$default_access = (int) $new_default_access;
 	}
 }
 
