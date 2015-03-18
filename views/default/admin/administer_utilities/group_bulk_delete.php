@@ -71,7 +71,7 @@ foreach ($batch as $group) {
 		"text" => elgg_view_icon("settings-alt"),
 		"title" => elgg_echo("edit"),
 		"href" => "groups/edit/" . $group->getGUID())) . "</td>";
-	$form_data .= "<td class='center'>" . elgg_view("output/confirmlink", array(
+	$form_data .= "<td class='center'>" . elgg_view("output/url", array(
 		"text" => elgg_view_icon("delete-alt"),
 		"title" => elgg_echo("delete"),
 		"confirm" => elgg_echo("deleteconfirm"),

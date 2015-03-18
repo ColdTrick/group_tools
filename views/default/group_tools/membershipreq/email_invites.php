@@ -13,7 +13,7 @@ if (!empty($emails)) {
 		$email_title = elgg_view("output/email", array("value" => $email));
 
 		$url = "action/group_tools/revoke_email_invitation?annotation_id=" . $annotation->id . "&group_guid=" . $group->getGUID();
-		$delete_button = elgg_view("output/confirmlink", array(
+		$delete_button = elgg_view("output/url", array(
 			"href" => $url,
 			"confirm" => elgg_echo("group_tools:groups:membershipreq:invitations:revoke:confirm"),
 			"text" => elgg_echo("group_tools:revoke"),

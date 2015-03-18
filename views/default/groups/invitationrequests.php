@@ -35,7 +35,7 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 				));
 	
 				$url = "action/groups/killinvitation?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
-				$delete_button = elgg_view("output/confirmlink", array(
+				$delete_button = elgg_view("output/url", array(
 					"href" => $url,
 					"confirm" => elgg_echo("groups:invite:remove:check"),
 					"text" => elgg_echo("delete"),
@@ -75,7 +75,7 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 			));
 			
 			$url = "action/groups/decline_email_invitation?invitecode=" . group_tools_generate_email_invite_code($group->getGUID(), $user->email);
-			$delete_button = elgg_view("output/confirmlink", array(
+			$delete_button = elgg_view("output/url", array(
 				"href" => $url,
 				"confirm" => elgg_echo("groups:invite:remove:check"),
 				"text" => elgg_echo("delete"),
@@ -118,7 +118,7 @@ if (elgg_get_context() == "groups") {
 			));
 			
 			$url = "action/groups/killrequest?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
-			$delete_button = elgg_view("output/confirmlink", array(
+			$delete_button = elgg_view("output/url", array(
 				"href" => $url,
 				"confirm" => elgg_echo("group_tools:group:invitations:request:revoke:confirm"),
 				"text" => elgg_echo("group_tools:revoke"),
