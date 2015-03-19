@@ -32,7 +32,7 @@ if (!empty($requests) && is_array($requests)) {
 		));
 
 		$url = "action/groups/killrequest?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
-		$delete_button = elgg_view("output/confirmlink", array(
+		$delete_button = elgg_view("output/url", array(
 			"href" => $url,
 			"confirm" => elgg_echo("groups:joinrequest:remove:check"),
 			"text" => elgg_echo("delete"),

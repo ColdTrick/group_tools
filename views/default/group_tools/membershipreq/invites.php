@@ -17,7 +17,7 @@ if (!empty($invitations) && is_array($invitations)) {
 		));
 
 		$url = "action/groups/killinvitation?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
-		$delete_button = elgg_view("output/confirmlink", array(
+		$delete_button = elgg_view("output/url", array(
 			"href" => $url,
 			"confirm" => elgg_echo("group_tools:groups:membershipreq:invitations:revoke:confirm"),
 			"text" => elgg_echo("group_tools:revoke"),

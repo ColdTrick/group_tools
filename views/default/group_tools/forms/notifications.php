@@ -41,19 +41,21 @@ if (!empty($user) && $user->isAdmin()) {
 		
 		// enable notification for everyone
 		if ($member_count > $notification_count) {
-			$content .= elgg_view("output/confirmlink", array(
+			$content .= elgg_view("output/url", array(
 				"href" => "action/group_tools/notifications?toggle=enable&guid=" . $group->getGUID(),
 				"text" => elgg_echo("group_tools:notifications:enable"),
-				"class" => "elgg-button elgg-button-submit mrm"
+				"class" => "elgg-button elgg-button-submit mrm",
+				"confirm" => true
 			));
 		}
 		
 		// disable notification
 		if ($notification_count > 0) {
-			$content .= elgg_view("output/confirmlink", array(
+			$content .= elgg_view("output/url", array(
 				"href" => "action/group_tools/notifications?toggle=disable&guid=" . $group->getGUID(),
 				"text" => elgg_echo("group_tools:notifications:disable"),
-				"class" => "elgg-button elgg-button-submit"
+				"class" => "elgg-button elgg-button-submit",
+				"confirm" => true
 			));
 		}
 		
