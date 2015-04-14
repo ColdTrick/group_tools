@@ -1000,14 +1000,29 @@ function groups_tools_group_icon_url_handler($hook, $type, $return_value, $param
 		return $return_value;
 	}
 	
-	$icontime = (int) $group->icontime;
-	if (empty($icontime)) {
-		return $return_value;
-	}
-	
 	$size = elgg_extract("size", $params, "medium");
 	$iconsizes = elgg_get_config("icon_sizes");
 	if (empty($size) || empty($iconsizes) || !array_key_exists($size, $iconsizes)) {
+		return $return_value;
+	}
+	
+	$icontime = $group->icontime;
+	if (is_null($icontime)) {
+		$icontime = 0;
+		
+		// handle missing metadata (pre 1.7 installations)
+		// @see groups_icon_url_override()
+		$fh = new ElggFile();
+		$fh->owner_guid = $group->getOwnerGUID();
+		$fh->setFilename("groups/{$group->getGUID()}large.jpg");
+		
+		if ($fh->exists()) {
+			$icontime = time();
+		}
+		
+		create_metadata($group->getGUID(), "icontime", $icontime, "integer", $group->getOwnerGUID(), ACCESS_PUBLIC);
+	}
+	if (empty($icontime)) {
 		return $return_value;
 	}
 	
