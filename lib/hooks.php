@@ -419,20 +419,23 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 				"priority" => 200,
 			));
 		} elseif (elgg_instanceof($entity, "object", "groupforumtopic") && $entity->canEdit()) {
-			$text = elgg_echo("close");
-			$confirm = elgg_echo("group_tools:discussion:confirm:close");
-			if ($entity->status == "closed") {
-				$text = elgg_echo("open");
-				$confirm = elgg_echo("group_tools:discussion:confirm:open");
-			}
-			
 			$result[] = ElggMenuItem::factory(array(
-				"name" => "status_change",
-				"text" => $text,
-				"confirm" => $confirm,
+				"name" => "status_change_open",
+				"text" => elgg_echo("open"),
+				"confirm" => elgg_echo("group_tools:discussion:confirm:open"),
 				"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 				"is_trusted" => true,
-				"priority" => 200
+				"priority" => 200,
+				"item_class" => ($entity->status == "closed") ? "" : "hidden"
+			));
+			$result[] = ElggMenuItem::factory(array(
+				"name" => "status_change_close",
+				"text" => elgg_echo("close"),
+				"confirm" => elgg_echo("group_tools:discussion:confirm:close"),
+				"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
+				"is_trusted" => true,
+				"priority" => 201,
+				"item_class" => ($entity->status == "closed") ? "hidden" : ""
 			));
 		} elseif (elgg_instanceof($entity, "group") && group_tools_show_hidden_indicator($entity)) {
 			$access_id_string = get_readable_access_level($entity->access_id);
