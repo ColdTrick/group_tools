@@ -1,7 +1,11 @@
 Version History
 ===============
 
-x.x:
+5.0:
+
+- changes for Elgg 1.11
+
+4.0:
 
 - fixed: group thumbnails not loading in Elgg 1.10 #78
 - fixed: wrong checks on group default access (thanks to https://community.elgg.org/profile/Josh.Henly)
