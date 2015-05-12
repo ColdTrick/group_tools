@@ -21,7 +21,9 @@ elgg.group_tools_admin.add_tool_preset = function() {
 	
 	var $inputs = $clone.find(":input");
 	$.each($inputs, function(index, object) {
+		console.log(object);
 		var name = $(object).attr("name");
+		console.log(name);
 		name = name.replace("params[i]", "params[" + counter + "]");
 		
 		$(object).attr("name", name);
