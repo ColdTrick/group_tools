@@ -15,7 +15,7 @@ $forward_url = $group->getURL();
 
 $tabs = false;
 
-$friends = elgg_get_logged_in_user_entity()->getFriends("", false);
+$friends = elgg_get_logged_in_user_entity()->getFriends(array("limit" => false));
 if (!empty($friends)) {
 	$toggle_content = "<span>" . elgg_echo("group_tools:group:invite:friends:select_all") . "</span>";
 	$toggle_content .= "<span class='hidden'>" . elgg_echo("group_tools:group:invite:friends:deselect_all") . "</span>";
