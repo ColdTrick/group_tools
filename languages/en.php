@@ -49,6 +49,8 @@ $english = array(
 	'group_tools:settings:domain_based:description' => "Users can join a group based on their e-mail domain. During registration they will auto join groups based on their e-mail domain.",
 
 	'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
+	'group_tools:settings:mail:members' => "Allow group admins to enable group mail for their members",
+	'group_tools:settings:mail:members:description' => "This requires group mail to be enabled",
 
 	'group_tools:settings:listing:default' => "Default group listing tab",
 	'group_tools:settings:listing:available' => "Available group listing tabs",
@@ -202,6 +204,9 @@ To visit the group please click on the following link:
 	'group_tools:profile_widgets:option' => "Allow non members to view widgets on the group profile page:",
 
 	// group mail
+	'group_tools:tools:mail_members' => "Allow group members to mail other group members",
+	'mail_members:group_tool_option:description' => "This will allow normal group members to send an e-mail to other group members. By default this is limited to group admins.",
+	
 	'group_tools:mail:message:from' => "From group",
 
 	'group_tools:mail:title' => "Send a mail to the group members",

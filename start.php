@@ -129,6 +129,11 @@ function group_tools_init() {
 	elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), array("index", "dashboard"), true);
 	elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), array("groups"));
 	
+	// group mail
+	if (group_tools_group_mail_members_enabled()) {
+		add_group_tool_option('mail_members', elgg_echo('group_tools:tools:mail_members'), false);
+	}
+	
 	// register events
 	elgg_register_event_handler("join", "group", "group_tools_join_group_event");
 	
@@ -246,7 +251,7 @@ function group_tools_pagesetup() {
 			}
 			
 			// group mail options
-			if ($page_owner->canEdit() && (elgg_get_plugin_setting("mail", "group_tools") == "yes")) {
+			if (group_tools_group_mail_enabled($page_owner) || group_tools_group_mail_members_enabled($page_owner)) {
 				elgg_register_menu_item("page", array(
 					"name" => "mail",
 					"text" => elgg_echo("group_tools:menu:mail"),

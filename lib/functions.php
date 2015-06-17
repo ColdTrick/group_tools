@@ -234,49 +234,6 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 }
 
 /**
- * Verify that all supplied user_guids are a member of the group
- *
- * @param int   $group_guid the GUID of the group
- * @param array $user_guids an array of user GUIDs to check
- *
- * @return boolean|int[] returns all user_guids that are a member
- */
-function group_tools_verify_group_members($group_guid, $user_guids) {
-	$result = false;
-	
-	if (!empty($group_guid) && !empty($user_guids)) {
-		if (!is_array($user_guids)) {
-			$user_guids = array($user_guids);
-		}
-		
-		$group = get_entity($group_guid);
-		if (!empty($group) && ($group instanceof ElggGroup)) {
-			$options = array(
-				"type" => "user",
-				"limit" => false,
-				"relationship" => "member",
-				"relationship_guid" => $group->getGUID(),
-				"inverse_relationship" => true,
-				"callback" => "group_tools_guid_only_callback"
-			);
-			
-			$member_guids = elgg_get_entities_from_relationship($options);
-			if (!empty($member_guids)) {
-				$result = array();
-				
-				foreach ($user_guids as $user_guid) {
-					if (in_array($user_guid, $member_guids)) {
-						$result[] = $user_guid;
-					}
-				}
-			}
-		}
-	}
-	
-	return $result;
-}
-
-/**
  * Custom callback function to only return the GUID from a database row
  *
  * @param stdClass $row the database row
@@ -1034,4 +991,84 @@ function group_tools_group_multiple_admin_enabled(ElggGroup $group, $user_guid =
 	}
 	
 	return $result;
+}
+
+/**
+ * Check if group mail is allowed
+ *
+ * @param ElggGroup $group the group to check
+ *
+ * @return bool
+ */
+function group_tools_group_mail_enabled(ElggGroup $group = null) {
+	static $mail_enabled;
+	
+	if (!isset($mail_enabled)) {
+		$mail_enabled = false;
+		
+		$setting = elgg_get_plugin_setting('mail', 'group_tools');
+		if ($setting === 'yes') {
+			$mail_enabled = true;
+		}
+	}
+	
+	// quick return if plugin setting says no
+	if (!$mail_enabled) {
+		return false;
+	}
+	
+	if (empty($group) || !($group instanceof ElggGroup)) {
+		return true;
+	}
+	
+	if ($group->canEdit()) {
+		// group owners and admin can mail
+		return true;
+	}
+	
+	return false;
+}
+
+/**
+ * Check if group mail is enabled for members
+ *
+ * @param ElggGroup $group The group to check (can be empty to check plugin setting)
+ *
+ * @return bool
+ */
+function group_tools_group_mail_members_enabled(ElggGroup $group = null) {
+	static $mail_members_enabled;
+	
+	if (!isset($mail_members_enabled)) {
+		$mail_members_enabled = false;
+	
+		$setting = elgg_get_plugin_setting('mail_members', 'group_tools');
+		if ($setting === 'yes') {
+			$mail_members_enabled = true;
+		}
+	}
+	
+	// quick return if mail members is not allowed
+	if (!group_tools_group_mail_enabled()) {
+		return false;
+	}
+	
+	if (!$mail_members_enabled) {
+		return false;
+	}
+	
+	if (empty($group) || !($group instanceof ElggGroup)) {
+		return true;
+	}
+	
+	if ($group->canEdit()) {
+		// group owners and admin can mail
+		return true;
+	}
+	
+	if ($group->isMember() && ($group->mail_members_enable === 'yes')) {
+		return true;
+	}
+	
+	return false;
 }
