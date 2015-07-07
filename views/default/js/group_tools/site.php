@@ -19,6 +19,46 @@ elgg.group_tools.order_groups = function() {
 	});
 }
 
+elgg.group_tools.kill_request = function() {
+
+	var reason = prompt(elgg.echo('group_tools:groups:membershipreq:kill_request:prompt'));
+	if (reason === null) {
+		// user clicked cancel
+		return false;
+	}
+	var guid = $(this).attr('rel');
+	
+	elgg.action($(this).attr('href'), {
+		data: {
+			reason: reason,
+		},
+		success: function() {
+			var $wrapper = $('li.elgg-item[data-guid="' + guid + '"]');
+			if ($wrapper.length) {
+				$wrapper.remove();
+			}
+		}
+	});
+	
+	return false;
+};
+
+elgg.group_tools.accept_request = function() {
+
+	var guid = $(this).attr('rel');
+	
+	elgg.action($(this).attr('href'), {
+		success: function() {
+			var $wrapper = $('li.elgg-item[data-guid="' + guid + '"]');
+			if ($wrapper.length) {
+				$wrapper.remove();
+			}
+		}
+	});
+	
+	return false;
+};
+
 elgg.group_tools.init = function() {
 	$('.group-tools-list-ordered').sortable({
 		update: elgg.group_tools.order_groups
@@ -56,6 +96,10 @@ elgg.group_tools.init = function() {
 	elgg.ui.registerTogglableMenuItems("group-admin", "group-admin-remove");
 	// make discussion open/close menu toggle
 	elgg.ui.registerTogglableMenuItems("status-change-open", "status-change-close");
+
+	// prompt on kill group join request
+	$('a.group-tools-kill-request-prompt').on('click', elgg.group_tools.kill_request);
+	$('a.group-tools-accept-request').on('click', elgg.group_tools.accept_request);
 }
 
 //register init hook

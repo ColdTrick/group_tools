@@ -131,6 +131,7 @@ function group_tools_init() {
 	
 	// register events
 	elgg_register_event_handler("join", "group", "group_tools_join_group_event");
+	elgg_register_event_handler("delete", "relationship", array('ColdTrick\GroupTools\Membership', 'deleteRequest'));
 	
 	// register plugin hooks
 	elgg_register_plugin_hook_handler("entity:url", "object", "group_tools_widget_url_handler");

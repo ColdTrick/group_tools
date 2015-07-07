@@ -27,24 +27,29 @@ if (!empty($requests) && is_array($requests)) {
 		$accept_button = elgg_view("output/url", array(
 			"href" => $url,
 			"text" => elgg_echo("accept"),
-			"class" => "elgg-button elgg-button-submit",
-			"is_trusted" => true,
+			"class" => "elgg-button elgg-button-submit group-tools-accept-request",
+			"rel" => $user->getGUID(),
 		));
 
 		$url = "action/groups/killrequest?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
 		$delete_button = elgg_view("output/url", array(
 			"href" => $url,
-			"confirm" => elgg_echo("groups:joinrequest:remove:check"),
-			"text" => elgg_echo("delete"),
-			"class" => "elgg-button elgg-button-delete mlm",
+			"text" => elgg_echo("decline"),
+			"class" => "elgg-button elgg-button-delete mlm group-tools-kill-request-prompt",
+			"rel" => $user->getGUID(),
 		));
 
 		$body = "<h4>$user_title</h4>";
 		$alt = $accept_button . $delete_button;
 
-		$content .= "<li class='elgg-item'>";
-		$content .= elgg_view_image_block($icon, $body, array("image_alt" => $alt));
-		$content .= "</li>";
+		// build output
+		$user_listing = elgg_view_image_block($icon, $body, array("image_alt" => $alt));
+		
+		$attr = array(
+			'class' => 'elgg-item',
+			'data-guid' => $user->getGUID(),
+		);
+		$content .= elgg_format_element('li', $attr, $user_listing);
 	}
 	
 	$content .= "</ul>";

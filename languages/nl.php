@@ -1,10 +1,26 @@
 <?php
 /**
- * This file was created by Translation Editor v2.0
- * On 2014-06-19 09:29
+ * This file was created by Translation Editor v4.0
+ * On 2015-07-07 14:07
  */
 
-$language = array (
+return array (
+  'group_tools:notify:membership:declined:subject' => 'Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen',
+  'group_tools:notify:membership:declined:message' => 'Hallo %s,
+
+Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen.
+
+De groep kun je hier vinden:
+%s',
+  'group_tools:notify:membership:declined:message:reason' => 'Hallo %s,
+
+Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen, met als reden:
+
+%s
+
+De groep kun je hier vinden:
+%s',
+  'group_tools:groups:membershipreq:kill_request:prompt' => 'Weet je zeker dat je dit lidmaatschap verzoek wilt afwijzen? Optioneel kun je een reden opgeven voor het afwijzen.',
   'group_tools:settings:member_export' => 'Groep beheerder mogen leden informatie exporteren',
   'group_tools:settings:member_export:description' => 'Dit bevat onder andere de naam, gebruikersnaam en email adres van de gebruiker',
   'group_tools:member_export:title_button' => 'Exporteer leden',
@@ -29,12 +45,9 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'admin:administer_utilities:group_bulk_delete' => 'Bulk groep verwijderen',
   'group_tools:action:bulk_delete:success' => 'De geselecteerde groepen zijn verwijderd',
   'group_tools:action:bulk_delete:error' => 'Er is een fout opgetreden tijdens het verwijderen van de groepen, probeer het nogmaals',
-  'groups:search:title' => 'Zoek naar groepen met de tag \'%s\'',
-  'groups:search:tags' => 'tag',
-  'groups:searchtag' => 'Zoek naar groepen op tag',
-  'group_tools:settings:member_export' => 'Groep beheerder mogen leden informatie exporteren',
-  'group_tools:settings:member_export:description' => 'Dit bevat onder andere de naam, gebruikersnaam en email adres van de gebruiker',
-  'group_tools:member_export:title_button' => 'Exporteer leden',
+  'groups:search:title' => 'Zoek naar groepen met \'%s\'',
+  'groups:search:tags' => 'zoeken',
+  'groups:searchtag' => 'Zoek naar groepen',
   'group_tools:settings:domain_based' => 'Activeer domein gebaseerde groepen',
   'group_tools:settings:domain_based:description' => 'Gebruikers kunnen lid worden van een groep gebaseerd op hun e-mail domein. Gedurende de registratie zullen ze automatisch lid worden van groepen met een overeenkomend e-mail domein.',
   'group_tools:join:domain_based:tooltip' => 'Je mag lid worden van deze groep vanwege je e-mail domein.',
@@ -337,8 +350,4 @@ Het formaat moet zijn: weergave naam;e-mail adres. Er mag geen kopregel zijn.',
   'group_tools:cleanup:members:explain' => 'Op de groep profiel pagina staat op de aangegeven plaats een lijst met leden van de groep. Je kunt deze verbergen.',
   'group_tools:cleanup:featured' => 'Toon de aangeraden groepen in het menu',
   'group_tools:cleanup:featured:explain' => 'Je kunt ervoor kiezen om op de groep profiel pagina een lijst met aangeraden groepen te tonen op de aangegeven plaats.',
-  'groups:search:tags' => 'zoeken',
-  'groups:search:title' => 'Zoek naar groepen met \'%s\'',
-  'groups:searchtag' => 'Zoek naar groepen',
 );
-add_translation("nl", $language);

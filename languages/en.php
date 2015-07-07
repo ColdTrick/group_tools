@@ -137,6 +137,23 @@ You can also go to All site groups -> Group invitations and enter the following 
 
 To visit the group please click on the following link:
 %s",
+	
+	// deline membeship request notification
+	'group_tools:notify:membership:declined:subject' => "Your membership request for '%s' was declined",
+	'group_tools:notify:membership:declined:message' => "Hi %s,
+
+Your membership request for the group '%s' was declined.
+
+You can find the group here:
+%s",
+	'group_tools:notify:membership:declined:message:reason' => "Hi %s,
+
+Your membership request for the group '%s' was declined, because of:
+
+%s
+
+You can find the group here:
+%s",
 
 	// group edit tabbed
 	'group_tools:group:edit:profile' => "Profile",
@@ -246,6 +263,7 @@ To visit the group please click on the following link:
 	'group_tools:groups:membershipreq:email_invitations' => "Invited e-mail addresses",
 	'group_tools:groups:membershipreq:email_invitations:none' => "No pending e-mail invitations",
 	'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Are you sure you wish to revoke this invitation",
+	'group_tools:groups:membershipreq:kill_request:prompt' => "Are you sure you wish to decline this membership request? Optionaly you can tell the user why you declined the request.",
 
 	// group invitations
 	'group_tools:group:invitations:request' => "Outstanding membership requests",
