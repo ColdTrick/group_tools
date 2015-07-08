@@ -1,14 +1,20 @@
 Version History
 ===============
 
-5.0:
+5.0 (2015-07-08):
 
 - changes for Elgg 1.11
+- added: option to give a reason for declining group membership request
+- fixed: group tool presets lost on failed save #73
 
-4.0:
+4.0 (2015-07-08):
 
+- added: composer support
 - fixed: group thumbnails not loading in Elgg 1.10 #78
 - fixed: wrong checks on group default access (thanks to https://community.elgg.org/profile/Josh.Henly)
+- fixed: using output/url instead of output/confirmlink (deprecated) #83
+- fixed: deprecated message for editing a group #84
+- fixed: group icons not showing for older groups #82
 
 3.1 (2014-02-18):
 
