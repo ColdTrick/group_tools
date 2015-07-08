@@ -1,9 +1,12 @@
 Version History
 ===============
 
-x.x:
+3.2 (2015-07-08):
 
+- added: composer support
+- added: option to allow group members to mail other members
 - fixed: wrong checks on group default access (thanks to https://community.elgg.org/profile/Josh.Henly)
+- fixed: group icons not showing for older groups #82
 
 3.1 (2014-02-18):
 
