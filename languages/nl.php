@@ -20,7 +20,7 @@ Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen, met als reden:
 
 De groep kun je hier vinden:
 %s',
-  'group_tools:groups:membershipreq:kill_request:prompt' => 'Weet je zeker dat je dit lidmaatschap verzoek wilt afwijzen? Optioneel kun je een reden opgeven voor het afwijzen.',
+  'group_tools:groups:membershipreq:kill_request:prompt' => 'Optioneel kun je een reden opgeven voor het afwijzen.',
   'group_tools:settings:member_export' => 'Groep beheerder mogen leden informatie exporteren',
   'group_tools:settings:member_export:description' => 'Dit bevat onder andere de naam, gebruikersnaam en email adres van de gebruiker',
   'group_tools:member_export:title_button' => 'Exporteer leden',

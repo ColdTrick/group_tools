@@ -263,7 +263,7 @@ You can find the group here:
 	'group_tools:groups:membershipreq:email_invitations' => "Invited e-mail addresses",
 	'group_tools:groups:membershipreq:email_invitations:none' => "No pending e-mail invitations",
 	'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Are you sure you wish to revoke this invitation",
-	'group_tools:groups:membershipreq:kill_request:prompt' => "Are you sure you wish to decline this membership request? Optionaly you can tell the user why you declined the request.",
+	'group_tools:groups:membershipreq:kill_request:prompt' => "Optionaly you can tell the user why you declined the request.",
 
 	// group invitations
 	'group_tools:group:invitations:request' => "Outstanding membership requests",

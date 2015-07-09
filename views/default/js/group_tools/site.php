@@ -21,17 +21,11 @@ elgg.group_tools.order_groups = function() {
 
 elgg.group_tools.kill_request = function() {
 
-	var reason = prompt(elgg.echo('group_tools:groups:membershipreq:kill_request:prompt'));
-	if (reason === null) {
-		// user clicked cancel
-		return false;
-	}
-	var guid = $(this).attr('rel');
+	$.colorbox.close();
+	var guid = $(this).data('guid');
 	
-	elgg.action($(this).attr('href'), {
-		data: {
-			reason: reason,
-		},
+	elgg.action($(this).attr('action'), {
+		data: $(this).serialize(),
 		success: function() {
 			var $wrapper = $('li.elgg-item[data-guid="' + guid + '"]');
 			if ($wrapper.length) {
@@ -98,7 +92,7 @@ elgg.group_tools.init = function() {
 	elgg.ui.registerTogglableMenuItems("status-change-open", "status-change-close");
 
 	// prompt on kill group join request
-	$('a.group-tools-kill-request-prompt').on('click', elgg.group_tools.kill_request);
+	$('form.elgg-form-groups-killrequest').on('submit', elgg.group_tools.kill_request);
 	$('a.group-tools-accept-request').on('click', elgg.group_tools.accept_request);
 }
 

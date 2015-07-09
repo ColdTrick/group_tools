@@ -11,6 +11,9 @@ $group = elgg_extract("entity", $vars);
 $requests = elgg_extract("requests", $vars);
 
 if (!empty($requests) && is_array($requests)) {
+	elgg_load_js('lightbox');
+	elgg_load_css('lightbox');
+	
 	$content = "<ul class='elgg-list'>";
 	
 	foreach ($requests as $user) {
@@ -23,21 +26,38 @@ if (!empty($requests) && is_array($requests)) {
 		));
 
 		$url = "action/groups/addtogroup?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
-		$url = elgg_add_action_tokens_to_url($url);
 		$accept_button = elgg_view("output/url", array(
 			"href" => $url,
 			"text" => elgg_echo("accept"),
 			"class" => "elgg-button elgg-button-submit group-tools-accept-request",
 			"rel" => $user->getGUID(),
+			"is_action" => true
 		));
 
-		$url = "action/groups/killrequest?user_guid=" . $user->getGUID() . "&group_guid=" . $group->getGUID();
-		$delete_button = elgg_view("output/url", array(
-			"href" => $url,
+		$form_vars = array(
+			'id' => "group-kill-request-{$user->getGUID()}",
+			'data-guid' => $user->getGUID(),
+		);
+		$body_vars = array(
+			'group' => $group,
+			'user' => $user,
+		);
+		$decline_form = elgg_view_form('groups/killrequest', $form_vars, $body_vars);
+		
+		$delete_button = elgg_format_element('div', array('class' => 'hidden'), $decline_form);
+		$delete_button .= elgg_view("output/url", array(
+			"href" => false,
 			"text" => elgg_echo("decline"),
-			"class" => "elgg-button elgg-button-delete mlm group-tools-kill-request-prompt",
+			"class" => "elgg-button elgg-button-delete mlm elgg-lightbox",
 			"rel" => $user->getGUID(),
+			"data-colorbox-opts" => json_encode(array(
+				'inline' => true,
+				'href' => "#group-kill-request-{$user->getGUID()}",
+				'width' => '600px',
+				'closeButton' => false
+			)),
 		));
+		
 
 		$body = "<h4>$user_title</h4>";
 		$alt = $accept_button . $delete_button;
