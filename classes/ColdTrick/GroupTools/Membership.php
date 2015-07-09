@@ -37,6 +37,11 @@ class Membership {
 			return;
 		}
 		
+		if ($user->getGUID() === elgg_get_logged_in_user_guid()) {
+			// user kills own request
+			return;
+		}
+		
 		$reason = get_input('reason');
 		if (empty($reason)) {
 			$body = elgg_echo('group_tools:notify:membership:declined:message', array(
