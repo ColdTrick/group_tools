@@ -48,6 +48,12 @@ switch ($selected_tab) {
 		$group_options["inverse_relationship"] = false;
 
 		break;
+	case "featured":
+		$group_options["metadata_names"] = array(
+			"name" => "featured"
+		);
+		
+		break;
 	case "open":
 		$group_options["metadata_name_value_pairs"] = array(
 			"name" => "membership",

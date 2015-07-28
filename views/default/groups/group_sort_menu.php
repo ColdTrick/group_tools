@@ -45,6 +45,11 @@ $tabs = array(
 		"href" => "groups/all?filter=ordered",
 		"priority" => 800,
 	),
+	"featured" => array(
+		"text" => elgg_echo("group_tools:groups:sorting:featured"),
+		"href" => "groups/all?filter=featured",
+		"priority" => 850,
+	),
 	"suggested" => array(
 		"text" => elgg_echo("group_tools:groups:sorting:suggested"),
 		"href" => "groups/suggested",
@@ -55,7 +60,7 @@ $tabs = array(
 foreach ($tabs as $name => $tab) {
 	$show_tab = false;
 	$show_tab_setting = elgg_get_plugin_setting("group_listing_" . $name . "_available", "group_tools");
-	if ($name == "ordered") {
+	if (in_array($name, ['ordered', 'featured'])) {
 		if ($show_tab_setting == "1") {
 			$show_tab = true;
 		}

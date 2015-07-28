@@ -32,6 +32,7 @@ $listing_options = array(
 	"closed" => elgg_echo("group_tools:groups:sorting:closed"),
 	"alpha" => elgg_echo("group_tools:groups:sorting:alphabetical"),
 	"ordered" => elgg_echo("group_tools:groups:sorting:ordered"),
+	"featured" => elgg_echo("group_tools:groups:sorting:featured"),
 	"suggested" => elgg_echo("group_tools:groups:sorting:suggested"),
 );
 
@@ -137,8 +138,8 @@ foreach ($listing_options as $tab => $tab_title) {
 			);
 	$tab_value = $plugin->$tab_setting_name;
 	if ($tab_value !== "0") {
-		if ($tab == "ordered") {
-			// ordered tab is default disabled
+		if (in_array($tab, ['ordered', 'featured'])) {
+			// these tabs are default disabled
 			if ($tab_value !== null) {
 				$checkbox_options["checked"] = "checked";
 			}

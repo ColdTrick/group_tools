@@ -542,7 +542,7 @@ function group_tools_widget_url_handler($hook, $type, $return_value, $params) {
 					break;
 				case "index_groups":
 				case "featured_groups":
-					$result = "groups/all";
+					$result = "groups/all?filter=featured";
 					break;
 				case "a_user_groups":
 					$owner = $widget->getOwnerEntity();

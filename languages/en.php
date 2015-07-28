@@ -276,6 +276,7 @@ You can find the group here:
 	'group_tools:groups:sorting:closed' => "Closed",
 	'group_tools:groups:sorting:ordered' => "Ordered",
 	'group_tools:groups:sorting:suggested' => "Suggested",
+	'group_tools:groups:sorting:featured' => "Featured",
 
 	// discussion status
 	'group_tools:discussion:confirm:open' => "Are you sure you wish to reopen this topic?",
