@@ -39,7 +39,8 @@ if (empty($entity) && !empty($presets)) {
 			"text" => elgg_extract("title", $values),
 			"href" => "#",
 			"class" => "elgg-button elgg-button-action mrm",
-			"rel" => $index
+			"rel" => $index,
+			"title" => elgg_strip_tags(elgg_extract("description", $values)),
 		));
 		
 		$preset_tools = elgg_extract("tools", $values);
