@@ -9,9 +9,9 @@ elgg_make_sticky_form('groups');
 
 /**
  * wrapper for recursive array walk decoding
- * 
+ *
  * @param string &$v value
- * 
+ *
  * @return string
  */
 function profile_array_decoder(&$v) {
@@ -66,7 +66,7 @@ if (sizeof($input) > 0) {
 			if ($acl) {
 				// @todo Elgg api does not support updating access collection name
 				$db_prefix = elgg_get_config('dbprefix');
-				$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name' 
+				$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name'
 					WHERE id = $group->group_acl";
 				update_data($query);
 			}
@@ -97,17 +97,12 @@ if ($tool_options) {
 $is_public_membership = (get_input('membership') == ACCESS_PUBLIC);
 $group->membership = $is_public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
 
-$group->setContentAccessMode(get_input('content_access_mode'));
+$content_access_mode = get_input('content_access_mode');
+$group->setContentAccessMode($content_access_mode);
 
 if ($is_new_group) {
 	$group->access_id = ACCESS_PUBLIC;
-}
 
-// default access
-$default_access = (int) get_input('group_default_access');
-$group->setPrivateSetting("elgg_default_access", $default_access);
-
-if ($is_new_group) {
 	// if new group, we need to save so group acl gets set in event handler
 	$group->save();
 }
@@ -133,6 +128,15 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 }
 
 $group->save();
+
+// default access
+$default_access = (int) get_input('group_default_access');
+if (($group->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) && (($default_access === ACCESS_PUBLIC) || ($default_access === ACCESS_LOGGED_IN))) {
+	system_message(elgg_echo('group_tools:action:group:edit:error:default_access'));
+	$default_access = (int) $group->group_acl;
+}
+$group->setPrivateSetting("elgg_default_access", $default_access);
+
 
 // group saved so clear sticky form
 elgg_clear_sticky_form('groups');

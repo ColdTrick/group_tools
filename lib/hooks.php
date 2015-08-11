@@ -578,14 +578,14 @@ function group_tools_widget_url_handler($hook, $type, $return_value, $params) {
  * @param int    $return_value the default access for this user
  * @param array  $params       params to help change the value
  *
- * @return int the access_id to use as default
+ * @return void|int
  */
 function group_tools_access_default_handler($hook, $type, $return_value, $params) {
 	
 	// check if the page owner is a group
 	$page_owner = elgg_get_page_owner_entity();
 	if (empty($page_owner) || !elgg_instanceof($page_owner, "group")) {
-		return $return_value;
+		return;
 	}
 	
 	// check if the group as a default access set
@@ -595,16 +595,26 @@ function group_tools_access_default_handler($hook, $type, $return_value, $params
 	} else {
 		// if the group hasn't set anything check if there is a site setting for groups
 		$site_group_access = elgg_get_plugin_setting("group_default_access", "group_tools");
-		if ($site_group_access !== null) {
-			switch ($site_group_access) {
-				case GROUP_TOOLS_GROUP_ACCESS_DEFAULT:
-					$return_value = (int) $page_owner->group_acl;
-					break;
-				default:
-					$return_value = (int) $site_group_access;
-					break;
-			}
+		if ($site_group_access === null) {
+			// no site setting and no group, so leave default
+			return;
 		}
+		
+		switch ($site_group_access) {
+			case GROUP_TOOLS_GROUP_ACCESS_DEFAULT:
+				$return_value = (int) $page_owner->group_acl;
+				break;
+			default:
+				$return_value = (int) $site_group_access;
+				break;
+		}
+	}
+	
+	if (($page_owner->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) && ($return_value === ACCESS_PUBLIC || $return_value === ACCESS_LOGGED_IN)) {
+		// default access is higher than content access level, so lower
+		$return_value = (int) $page_owner->group_acl;
+		
+		elgg_log("Default access for the group {$page_owner->name} is set more public than the content access level", 'NOTICE');
 	}
 	
 	return $return_value;

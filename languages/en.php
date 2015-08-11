@@ -298,6 +298,9 @@ You can find the group here:
 	'group_tools:action:error:save' => "There was an error while saving the settings",
 	'group_tools:action:success' => "The settings where saved successfully",
 
+	// group edit
+	'group_tools:action:group:edit:error:default_access' => "The chosen default access level was more public than the group content access, therefore default access has been lowered to group members.",
+	
 	// admin transfer - action
 	'group_tools:action:admin_transfer:error:access' => "You're not allowed to transfer ownership of this group",
 	'group_tools:action:admin_transfer:error:self' => "You can't transfer onwership to yourself, you're already the owner",
