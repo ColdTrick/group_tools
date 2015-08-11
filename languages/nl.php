@@ -1,10 +1,11 @@
 <?php
 /**
  * This file was created by Translation Editor v4.0
- * On 2015-07-07 14:07
+ * On 2015-08-11 11:46
  */
 
 return array (
+  'group_tools:action:group:edit:error:default_access' => 'Het gekozen standaard toegangsniveau is meer publiek dan de groep content toegang, daarom is het standaard toegangsniveau verlaagd naar groepsleden.',
   'group_tools:notify:membership:declined:subject' => 'Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen',
   'group_tools:notify:membership:declined:message' => 'Hallo %s,
 
