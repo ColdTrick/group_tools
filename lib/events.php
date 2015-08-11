@@ -77,7 +77,8 @@ function group_tools_join_group_event($event, $type, $params) {
 				$welcome_message = str_ireplace("[group_url]", $group->getURL(), $welcome_message);
 				
 				// notify the user
-				notify_user($user->getGUID(), $group->getGUID(), elgg_echo("group_tools:welcome_message:subject", array($group->name)), $welcome_message);
+				$group_name = html_entity_decode($group->name, ENT_QUOTES);
+				notify_user($user->getGUID(), $group->getGUID(), elgg_echo("group_tools:welcome_message:subject", array($group_name)), $welcome_message);
 			}
 		}
 	}
