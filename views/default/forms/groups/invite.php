@@ -5,6 +5,9 @@
  * @package ElggGroups
  */
 
+$comment = elgg_get_sticky_value('group_invite', 'comment');
+elgg_clear_sticky_form('group_invite');
+
 $group = elgg_extract("entity", $vars, elgg_get_page_owner_entity());
 $invite_site_members = elgg_extract("invite", $vars, "no");
 $invite_email = elgg_extract("invite_email", $vars, "no");;
@@ -109,7 +112,7 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 }
 
 // optional text
-$form_data .= elgg_view_module("aside", elgg_echo("group_tools:group:invite:text"), elgg_view("input/longtext", array("name" => "comment")));
+$form_data .= elgg_view_module("aside", elgg_echo("group_tools:group:invite:text"), elgg_view("input/longtext", array("name" => "comment", 'value' => $comment)));
 
 // renotify existing invites
 if ($group->canEdit()) {

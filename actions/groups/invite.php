@@ -5,6 +5,8 @@
  * @package ElggGroups
  */
 
+elgg_make_sticky_form('group_invite');
+
 $logged_in_user = elgg_get_logged_in_user_entity();
 
 $user_guids = get_input("user_guid");
@@ -172,6 +174,8 @@ if ((!empty($user_guids) || !empty($emails) || !empty($csv)) && !empty($group)) 
 		
 		// which message to show
 		if (!empty($invited) || !empty($join)) {
+			elgg_clear_sticky_form('group_invite');
+			
 			if (!$adding) {
 				system_message(elgg_echo("group_tools:action:invite:success:invite", array($invited, $already_invited, $member)));
 			} else {
