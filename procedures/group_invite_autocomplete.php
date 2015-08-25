@@ -16,92 +16,97 @@ if (!empty($include_self)) {
 }
 
 $user = elgg_get_logged_in_user_entity();
-$result = array();
+$result = [];
 
-if (!empty($user) && !empty($q) && !empty($group_guid)) {
-	// show hidden (unvalidated) users
-	$hidden = access_get_show_hidden_status();
-	access_show_hidden_entities(true);
+header("Content-Type: application/json");
+
+if (empty($user) || empty($q) || empty($group_guid)) {
+	echo json_encode(array_values($result));
+	exit();
+}
+
+$users_found = [];
+
+// show hidden (unvalidated) users
+$hidden = access_show_hidden_entities(true);
+
+if ($relationship != "email") {
+	$dbprefix = elgg_get_config("dbprefix");
 	
-	if ($relationship != "email") {
-		$dbprefix = elgg_get_config("dbprefix");
-		
-		// find existing users
-		$query_options = array(
-			"type" => "user",
-			"limit" => $limit,
-			"joins" => array("JOIN {$dbprefix}users_entity u ON e.guid = u.guid"),
-			"wheres" => array("(u.name LIKE '%{$q}%' OR u.username LIKE '%{$q}%')", "u.banned = 'no'"),
-			"order_by" => "u.name asc"
-		);
-		
-		if (!$include_self) {
-			if (empty($current_users)) {
-				$current_users = $user->getGUID();
-			} else {
-				$current_users .= "," . $user->getGUID();
-			}
-		}
-		
-		if (!empty($current_users)) {
-			$query_options["wheres"][] = "e.guid NOT IN (" . $current_users . ")";
-		}
-		
-		if ($relationship == "friends") {
-			$query_options["relationship"] = "friend";
-			$query_options["relationship_guid"] = $user->getGUID();
-		} elseif ($relationship == "site") {
-			$query_options["relationship"] = "member_of_site";
-			$query_options["relationship_guid"] = elgg_get_site_entity()->getGUID();
-			$query_options["inverse_relationship"] = true;
-		}
-		
-		$entities = elgg_get_entities_from_relationship($query_options);
-		if (!empty($entities)) {
-			foreach ($entities as $entity) {
-				if (!check_entity_relationship($entity->getGUID(), "member", $group_guid)) {
-					$result[] = array(
-						"type" => "user",
-						"value" => $entity->getGUID(),
-						"label" => $entity->name,
-						"content" => "<img src='" . $entity->getIconURL("tiny") . "' /> " . $entity->name,
-						"name" => $entity->name
-					);
-				}
-			}
-		}
-	} else {
-		// invite by email
-		$regexpr = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/";
-		if (preg_match($regexpr, $q)) {
-			$users = get_user_by_email($q);
-			if (!empty($users)) {
-				foreach ($users as $user) {
-					// @todo check for group relationship
-					$result[] = array(
-						"type" => "user",
-						"value" => $user->getGUID(),
-						"label" => $user->name,
-						"content" => "<img src='" . $user->getIconURL("tiny") . "' /> " . $user->name,
-						"name" => $user->name
-					);
-				}
-			} else {
-				$result[] = array(
-					"type" => "email",
-					"value" => $q,
-					"label" => $q,
-					"content" => $q
-				);
-			}
+	// find existing users
+	$query_options = [
+		"type" => "user",
+		"limit" => $limit,
+		"joins" => [
+			"JOIN {$dbprefix}users_entity u ON e.guid = u.guid"
+		],
+		"wheres" => [
+			"(u.name LIKE '%{$q}%' OR u.username LIKE '%{$q}%')", "u.banned = 'no'"
+		],
+		"order_by" => "u.name asc"
+	];
+	
+	if (!$include_self) {
+		if (empty($current_users)) {
+			$current_users = $user->getGUID();
+		} else {
+			$current_users .= "," . $user->getGUID();
 		}
 	}
 	
-	// restore hidden users
-	access_show_hidden_entities($hidden);
+	if (!empty($current_users)) {
+		$query_options["wheres"][] = "e.guid NOT IN (" . $current_users . ")";
+	}
+	
+	if ($relationship == "friends") {
+		$query_options["relationship"] = "friend";
+		$query_options["relationship_guid"] = $user->getGUID();
+	} elseif ($relationship == "site") {
+		$query_options["relationship"] = "member_of_site";
+		$query_options["relationship_guid"] = elgg_get_site_entity()->getGUID();
+		$query_options["inverse_relationship"] = true;
+	}
+	
+	$users_found = elgg_get_entities_from_relationship($query_options);
+} else {
+	// invite by email
+	$regexpr = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/";
+	if (preg_match($regexpr, $q)) {
+		// only start matching if $q is an emailaddress
+		
+		$users_found = get_user_by_email($q);
+		if (empty($users_found)) {
+			$result[] = [
+				"type" => "email",
+				"value" => $q,
+				"label" => $q,
+				"content" => $q
+			];
+		}
+	}
 }
 
-header("Content-Type: application/json");
+foreach ($users_found as $user) {
+	$content = "<img src='" . $user->getIconURL("tiny") . "' /> " . $user->name;
+	$is_member = false;
+	if (check_entity_relationship($user->getGUID(), "member", $group_guid)) {
+		$is_member = true;
+		$content .= ' - ' . elgg_format_element('span', ['class' => 'elgg-subtext'], elgg_echo('group_tools:groups:invite:user_already_member'));
+	}
+	
+	$result[] = [
+		"type" => 'user',
+		'member' => $is_member,
+		"value" => $user->getGUID(),
+		"label" => $user->name,
+		"content" => $content,
+		"name" => $user->name
+	];			
+}
+
+// restore hidden users
+access_show_hidden_entities($hidden);
+
 echo json_encode(array_values($result));
 
 exit();

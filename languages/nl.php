@@ -202,6 +202,7 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:joinrequest:already:tooltip' => 'Je hebt reeds verzocht lid te worden van deze groep, klik hier om dit verzoek in te trekken',
   'group_tools:menu:invitations' => 'Beheer uitnodigingen',
   'group_tools:groups:invite:title' => 'Nodig gebruikers uit voor deze groep',
+  'group_tools:groups:invite:user_already_member' => 'Gebruiker is al lid van de groep',
   'group_tools:action:invite:error:invite' => 'Er zijn geen gebruikers uitgenodigd (%s waren al uitgenodigd, %s waren al lid)',
   'group_tools:action:invite:error:add' => 'Er zijn geen gebruikers uitgenodigd (%s waren al uitgenodigd, %s waren al lid)',
   'group_tools:action:invite:success:invite' => 'Er zijn %s gebruikers uitgenodigd (%s waren al uitgenodigd, %s waren al lid)',

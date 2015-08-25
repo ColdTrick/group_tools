@@ -13,11 +13,13 @@ if ($minChars < 1) {
 	$minChars = 3;
 }
 
+echo elgg_view('input/text', [
+	'id' => $id . '_autocomplete',
+	'class' => 'elgg-input-autocomplete'	
+]);
+
+echo elgg_format_element('div', ['id' => $destination, 'class' => 'mtm clearfloat']);
 ?>
-<input type="text" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
-
-<div id="<?php echo $destination; ?>" class="mtm clearfloat"></div>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -71,7 +73,6 @@ if ($minChars < 1) {
 					var result = "";
 					
 					result += "<div class='group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover'>";
-					
 					if (ui.item.type == "user") {
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>[]' />";
 					} else if (ui.item.type == "email") {

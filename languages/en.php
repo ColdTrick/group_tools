@@ -234,6 +234,7 @@ You can find the group here:
 	// group invite
 	'group_tools:groups:invite:title' => "Invite users to this group",
 	'group_tools:groups:invite' => "Invite users",
+	'group_tools:groups:invite:user_already_member' => "User is already a member of the group",
 
 	'group_tools:group:invite:friends:select_all' => "Select all friends",
 	'group_tools:group:invite:friends:deselect_all' => "Deselect all friends",
