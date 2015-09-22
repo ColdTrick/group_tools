@@ -499,6 +499,8 @@ You can find the group here:
 	
 	'group_tools:action:group_tool:presets:saved' => "New group tool presets saved",
 	
+	'group_tools:forms:members_search:members_search:placeholder' => "Enter the name or username of the user to search for",
+	
 	// group member export
 	'group_tools:member_export:title_button' => "Export members",
 	

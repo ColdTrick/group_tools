@@ -110,6 +110,13 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 				
 			include(dirname(dirname(__FILE__)) . "/pages/mail.php");
 			break;
+		case 'members':
+			$result = false;
+			
+			set_input('group_guid', $page[1]);
+				
+			include(dirname(dirname(__FILE__)) . "/pages/groups/members.php");
+			break;
 		case "group_invite_autocomplete":
 			$result = false;
 			
