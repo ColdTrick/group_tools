@@ -309,7 +309,7 @@ function group_tools_menu_title_handler($hook, $type, $return_value, $params) {
 				"text" => elgg_echo("group_tools:member_export:title_button"),
 				"href" => "action/group_tools/member_export?group_guid=" . $page_owner->getGUID(),
 				"is_action" => true,
-				"class" => "elgg-button elgg-button-action"
+				"link_class" => "elgg-button elgg-button-action"
 			));
 		}
 	}
