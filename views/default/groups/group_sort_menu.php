@@ -1,9 +1,9 @@
 <?php
+
 /**
  * All groups listing page navigation
  *
  */
-
 $tabs = array(
 	"newest" => array(
 		"text" => elgg_echo("sort:newest"),
@@ -19,11 +19,6 @@ $tabs = array(
 		"text" => elgg_echo("sort:popular"),
 		"href" => "groups/all?filter=popular",
 		"priority" => 300,
-	),
-	"discussion" => array(
-		"text" => elgg_echo("groups:latestdiscussion"),
-		"href" => "groups/all?filter=discussion",
-		"priority" => 400,
 	),
 	"open" => array(
 		"text" => elgg_echo("group_tools:groups:sorting:open"),
@@ -57,6 +52,14 @@ $tabs = array(
 	),
 );
 
+if (elgg_is_active_plugin('discussions')) {
+	$tabs["discussion"] = array(
+		"text" => elgg_echo("groups:latestdiscussion"),
+		"href" => "groups/all?filter=discussion",
+		"priority" => 400,
+	);
+}
+
 foreach ($tabs as $name => $tab) {
 	$show_tab = false;
 	$show_tab_setting = elgg_get_plugin_setting("group_listing_" . $name . "_available", "group_tools");
@@ -67,18 +70,18 @@ foreach ($tabs as $name => $tab) {
 	} elseif ($show_tab_setting !== "0") {
 		$show_tab = true;
 	}
-	
+
 	if ($show_tab && in_array($name, array("yours", "suggested")) && !elgg_is_logged_in()) {
 		$show_tab = false;
 	}
-	
+
 	if ($show_tab) {
 		$tab["name"] = $name;
-		
+
 		if ($vars["selected"] == $name) {
 			$tab["selected"] = true;
 		}
-	
+
 		elgg_register_menu_item("filter", $tab);
 	}
 }
