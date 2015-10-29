@@ -358,6 +358,7 @@ if (!empty($suggested_groups)) {
 if (!empty($tabs)) {
 	$navigation = "";
 	if (count($tabs) > 1) {
+		elgg_require_js('plugins/group_tools/settings');
 		$navigation = elgg_view("navigation/tabs", array("tabs" => $tabs, "id" => "group-tools-special-states-tabs"));
 	}
 	

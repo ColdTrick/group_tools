@@ -59,3 +59,7 @@ if (!empty($user)) {
 	// you have to be logged in in order to use this widget
 	echo elgg_view("output/longtext", array("value" => elgg_echo("group_tools:widgets:start_discussion:login_required")));
 }
+?>
+<script>
+	require(['widgets/start_discussion/content.js']);
+</script>

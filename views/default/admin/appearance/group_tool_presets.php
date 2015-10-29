@@ -9,8 +9,7 @@ $title = elgg_echo("group_tools:admin:group_tool_presets:header");
 $add_button = elgg_view("output/url", array(
 	"text" => elgg_echo("add"),
 	"href" => "#", 
-	"onclick" => "return elgg.group_tools_admin.add_tool_preset();",
-	"class" => "elgg-button elgg-button-action float-alt"
+	"class" => "elgg-button elgg-button-action float-alt group-tools-admin-add-tool-preset"
 ));
 
 

@@ -31,3 +31,5 @@ if (!empty($groups)) {
 		
 	echo "</ul>";
 }
+
+elgg_require_js('group_tools/suggested');

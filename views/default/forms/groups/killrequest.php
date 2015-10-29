@@ -33,3 +33,7 @@ $content .= elgg_view('input/submit', array(
 $content .= '</div>';
 
 echo elgg_view_module('info', elgg_echo('groups:joinrequest:remove:check'), $content);
+?>
+<script>
+	require(['forms/groups/killrequest']);
+</script>
