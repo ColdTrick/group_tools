@@ -73,8 +73,9 @@ function group_tools_init() {
 	elgg_register_widget_type("index_groups", elgg_echo("groups"), elgg_echo("widgets:index_groups:description"), array("index"), true);
 	
 	// quick start discussion
-	elgg_register_widget_type("start_discussion", elgg_echo("group_tools:widgets:start_discussion:title"), elgg_echo("group_tools:widgets:start_discussion:description"), array("index", "dashboard", "groups"));
-	
+	if (elgg_is_active_plugin('discussions')) {
+		elgg_register_widget_type("start_discussion", elgg_echo("group_tools:widgets:start_discussion:title"), elgg_echo("group_tools:widgets:start_discussion:description"), array("index", "dashboard", "groups"));
+	}
 	// group invitation
 	elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
 	
@@ -126,9 +127,10 @@ function group_tools_init() {
 	elgg_extend_view("theme_sandbox/forms", "group_tools/theme_sandbox/grouppicker");
 	
 	// register index widget to show latest discussions
-	elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), array("index", "dashboard"), true);
-	elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), array("groups"));
-	
+	if (elgg_is_active_plugin('discussions')) {
+		elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), array("index", "dashboard"), true);
+		elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), array("groups"));
+	}
 	// register events
 	elgg_register_event_handler("join", "group", "group_tools_join_group_event");
 	elgg_register_event_handler("delete", "relationship", array('ColdTrick\GroupTools\Membership', 'deleteRequest'));
