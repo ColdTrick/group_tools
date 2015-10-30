@@ -25,7 +25,7 @@ $english = array(
 	'admin:administer_utilities:group_bulk_delete' => "Group bulk delete",
 
 	'admin:appearance:group_tool_presets' => "Group tool presets",
-	
+
 	// plugin settings
 	'group_tools:settings:invite:title' => "Group invitation options",
 	'group_tools:settings:management:title' => "General group options",
@@ -62,7 +62,7 @@ $english = array(
 	'group_tools:settings:show_hidden_group_indicator' => "Show an indicator if a group is hidden",
 	'group_tools:settings:show_hidden_group_indicator:group_acl' => "Yes, if group is members only",
 	'group_tools:settings:show_hidden_group_indicator:logged_in' => "Yes, for all non public groups",
-	
+
 	'group_tools:settings:special_states' => "Groups with a special state",
 	'group_tools:settings:special_states:featured' => "Featured",
 	'group_tools:settings:special_states:featured:description' => "The site administrators have chosen to feature the following groups.",
@@ -82,7 +82,7 @@ $english = array(
 
 	'group_tools:settings:member_export' => "Allow group admins to export member information",
 	'group_tools:settings:member_export:description' => "This includes the name, username and email address of the user.",
-	
+
 	// group tool presets
 	'group_tools:admin:group_tool_presets:description' => "Here you can configure group tool presets.
 When a user creates a group he/she gets to choose one of the presets in order to quickly get the correct tools. A blank option is also offered to the user to allow his/her own choices.",
@@ -94,8 +94,8 @@ When a user creates a group he/she gets to choose one of the presets in order to
 	'group_tools:create_group:tool_presets:show_more' => "More tools",
 	'group_tools:create_group:tool_presets:blank:title' => "Blank group",
 	'group_tools:create_group:tool_presets:blank:description' => "Choose this group to select your own tools.",
-	
-	
+
+
 	// group invite message
 	'group_tools:groups:invite:body' => "Hi %s,
 
@@ -137,7 +137,7 @@ You can also go to All site groups -> Group invitations and enter the following 
 
 To visit the group please click on the following link:
 %s",
-	
+
 	// deline membeship request notification
 	'group_tools:notify:membership:declined:subject' => "Your membership request for '%s' was declined",
 	'group_tools:notify:membership:declined:message' => "Hi %s,
@@ -165,7 +165,7 @@ You can find the group here:
 	'group_tools:admin_transfer:current' => "Keep current owner: %s",
 	'group_tools:admin_transfer:myself' => "Myself",
 	'group_tools:admin_transfer:submit' => "Transfer",
-	
+
 	// special states form
 	'group_tools:special_states:title' => "Group special states",
 	'group_tools:special_states:description' => "A group can have several special states, here is an overview of the special states and their current value.",
@@ -173,7 +173,7 @@ You can find the group here:
 	'group_tools:special_states:auto_join' => "Will users automaticly join this group",
 	'group_tools:special_states:auto_join:fix' => "To make all site members a member of this group, please %sclick here%s.",
 	'group_tools:special_states:suggested' => "Is this group suggested to (new) users",
-	
+
 	// group admins
 	'group_tools:multiple_admin:group_admins' => "Group admins",
 	'group_tools:multiple_admin:profile_actions:remove' => "Remove group admin",
@@ -236,18 +236,22 @@ You can find the group here:
 	'group_tools:groups:invite' => "Invite users",
 	'group_tools:groups:invite:user_already_member' => "User is already a member of the group",
 
-	'group_tools:group:invite:friends:select_all' => "Select all friends",
-	'group_tools:group:invite:friends:deselect_all' => "Deselect all friends",
+	'group_tools:group:invite:friends' => "Friends",
+	'group_tools:group:invite:friends:label' => "Friends to invite",
+	'group_tools:group:invite:friends:toggle' => 'Toggle all friends',
 
-	'group_tools:group:invite:users' => "Find user(s)",
+	'group_tools:group:invite:users' => "Find users",
+	'group_tools:group:invite:users:label' => "Users to invite",
 	'group_tools:group:invite:users:description' => "Enter a name or username of a site member and select him/her from the list",
 	'group_tools:group:invite:users:all' => "Invite all site members to this group",
 
-	'group_tools:group:invite:email' => "Using e-mail address",
-	'group_tools:group:invite:email:description' => "Enter a valid e-mail address and select it from the list",
+	'group_tools:group:invite:email' => "Using email address",
+	'group_tools:group:invite:email:label' => "Email addresses",
+	'group_tools:group:invite:email:description' => "Enter a list of emails, one per line",
 
 	'group_tools:group:invite:csv' => "Using CSV upload",
-	'group_tools:group:invite:csv:description' => "You can upload a CSV file with users to invite.<br />The format must be: displayname;e-mail address. There shouldn't be a header line.",
+	'group_tools:group:invite:csv:label' => "Upload a file",
+	'group_tools:group:invite:csv:description' => "You can upload a CSV file with users to invite. The format must be: displayname;e-mail address. There shouldn't be a header line.",
 
 	'group_tools:group:invite:text' => "Personal note (optional)",
 	'group_tools:group:invite:add:confirm' => "Are you sure you wish to add these users directly?",
@@ -282,7 +286,7 @@ You can find the group here:
 	// discussion status
 	'group_tools:discussion:confirm:open' => "Are you sure you wish to reopen this topic?",
 	'group_tools:discussion:confirm:close' => "Are you sure you wish to close this topic?",
-	
+
 	// allow group members to invite
 	'group_tools:invite_members:title' => "Group members can invite",
 	'group_tools:invite_members:description' => "Allow the members of this group to invite new members",
@@ -290,7 +294,7 @@ You can find the group here:
 	// group tool option descriptions
 	'activity:group_tool_option:description' => "Show an activity feed about group related content.",
 	'forum:group_tool_option:description' => "Allow the group members to start a discussion in a simple forum format.",
-	
+
 	// actions
 	'group_tools:action:error:input' => "Invalid input to perform this action",
 	'group_tools:action:error:entities' => "The given GUIDs didn't result in the correct entities",
@@ -301,7 +305,7 @@ You can find the group here:
 
 	// group edit
 	'group_tools:action:group:edit:error:default_access' => "The chosen default access level was more public than the group content access, therefore default access has been lowered to group members.",
-	
+
 	// admin transfer - action
 	'group_tools:action:admin_transfer:error:access' => "You're not allowed to transfer ownership of this group",
 	'group_tools:action:admin_transfer:error:self' => "You can't transfer onwership to yourself, you're already the owner",
@@ -336,14 +340,14 @@ You can find the group here:
 	// suggested groups
 	'group_tools:suggested_groups:info' => "The following groups might be interesting for you. Click the join buttons to join them immediately or click the title to view more information about the group.",
 	'group_tools:suggested_groups:none' => "We can't suggest a group for you. This can happen if we have to little information about you, or that you are already a member of the groups we like you to join. Use the search to find more groups.",
-		
+
 	// group toggle auto join
 	'group_tools:action:toggle_special_state:error:auto_join' => "An error occured while saving the new auto join settings",
 	'group_tools:action:toggle_special_state:error:suggested' => "An error occured while saving the new suggested settings",
 	'group_tools:action:toggle_special_state:error:state' => "Invalid state provided",
 	'group_tools:action:toggle_special_state:auto_join' => "The new auto join settings were saved successfully",
 	'group_tools:action:toggle_special_state:suggested' => "The new suggested settings were saved successfully",
-	
+
 	// group fix auto_join
 	'group_tools:action:fix_auto_join:success' => "Group membership fixed: %s new members, %s were already a member and %s failures",
 
@@ -371,7 +375,7 @@ You can find the group here:
 	// discussion toggle status
 	'group_tools:action:discussion:toggle_status:success:open' => "The topic was successfully reopened",
 	'group_tools:action:discussion:toggle_status:success:close' => "The topic was successfully closed",
-		
+
 	// Widgets
 	// Group River Widget
 	'widgets:group_river_widget:title' => "Group activity",
@@ -440,11 +444,11 @@ You can find the group here:
 
 	'group_tools:forms:discussion:quick_start:group' => "Select a group for this discussion",
 	'group_tools:forms:discussion:quick_start:group:required' => "Please select a group",
-	
+
 	'groups:search:tags' => "search",
 	'groups:search:title' => "Search for groups matching '%s'",
 	'groups:searchtag' => "Search for groups",
-	
+
 	// welcome message
 	'group_tools:welcome_message:title' => "Group welcome message",
 	'group_tools:welcome_message:description' => "You can configure a welcome message for new users who join this group. If you don't want to send a welcome message leave this field blank.",
@@ -452,61 +456,63 @@ You can find the group here:
 [name]: the name of the new user (eg. %s)
 [group_name]: the name of this group (eg. %s)
 [group_url]: the URL to this group (eg. %s)",
-	
+
 	'group_tools:action:welcome_message:success' => "The welcome message was saved",
-	
+
 	'group_tools:welcome_message:subject' => "Welcome to %s",
-	
+
 	// email invitations
 	'group_tools:action:revoke_email_invitation:error' => "An error occured while revoking the invitation, please try again",
 	'group_tools:action:revoke_email_invitation:success' => "The invitation was revoked",
-	
+
 	// domain based groups
 	'group_tools:join:domain_based:tooltip' => "Because of a matching e-mail domain, you can join this group.",
-	
+
 	'group_tools:domain_based:title' => "Configure e-mail domains",
 	'group_tools:domain_based:description' => "When you configure one (or more) e-mail domains, users with that e-mail domain will automaticly join your group upon registration. Also if you have a closed group user with a matching e-mail domain can join without requesting membership. You can configure multipe domains by using a comma. Don't include the @ sign",
-	
+
 	'group_tools:action:domain_based:success' => "The new e-mail domains were saved",
-	
+
 	// related groups
 	'groups_tools:related_groups:tool_option' => "Show related groups",
-	
+
 	'groups_tools:related_groups:widget:title' => "Related groups",
 	'groups_tools:related_groups:widget:description' => "Display a list of groups you added as related to this group.",
-	
+
 	'groups_tools:related_groups:none' => "No related groups found.",
 	'group_tools:related_groups:title' => "Related groups",
-	
+
 	'group_tools:related_groups:form:placeholder' => "Search for a new related group",
 	'group_tools:related_groups:form:description' => "You can search for a new related group, select it from the list and click Add.",
-	
+
 	'group_tools:action:related_groups:error:same' => "You can't related this group to itself",
 	'group_tools:action:related_groups:error:already' => "The selected group is already related",
 	'group_tools:action:related_groups:error:add' => "An unknown error occured while adding the relationship, please try again",
 	'group_tools:action:related_groups:success' => "The group is now related",
-	
+
 	'group_tools:related_groups:notify:owner:subject' => "A new related group was added",
 	'group_tools:related_groups:notify:owner:message' => "Hi %s,
-	
+
 %s added your group %s as a related group to %s.",
-	
+
 	'group_tools:related_groups:entity:remove' => "Remove related group",
-	
+
 	'group_tools:action:remove_related_groups:error:not_related' => "The group is not related",
 	'group_tools:action:remove_related_groups:error:remove' => "An unknown error occured while removing the relationship, please try again",
 	'group_tools:action:remove_related_groups:success' => "The group is no longer related",
-	
+
 	'group_tools:action:group_tool:presets:saved' => "New group tool presets saved",
-	
+
 	'group_tools:forms:members_search:members_search:placeholder' => "Enter the name or username of the user to search for",
-	
+
 	// group member export
 	'group_tools:member_export:title_button' => "Export members",
-	
+
 	// group bulk delete
 	'group_tools:action:bulk_delete:success' => "The selected groups were deleted",
 	'group_tools:action:bulk_delete:error' => "An error occured while deleting the groups, please try again",
+	'group_tools:invite:action:invite' => 'Send out invitations',
+	'group_tools:invite:action:add' => 'Add users to group without an invitation',
 );
 
 add_translation("en", $english);
