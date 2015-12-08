@@ -717,3 +717,110 @@ function group_tools_action_register_handler($hook, $type, $return_value, $param
 	// enable registration if disabled
 	group_tools_enable_registration();
 }
+
+/**
+ * Take over the discussion page handler in some cases
+ *
+ * @param string $hook         the 'route' hook
+ * @param string $type         for the 'discussion' page handler
+ * @param mixed  $return_value current return value
+ * @param null   $params       no params provided
+ *
+ * @return void|false
+ */
+function group_tools_route_discussion_handler($hook, $type, $return_value, $params) {
+	
+	if (empty($return_value) || !is_array($return_value)) {
+		// somebody else already took over the page
+		return;
+	}
+	
+	$page = elgg_extract('segments', $return_value);
+	if (empty($page) || !is_array($page)) {
+		return;
+	}
+	
+	$include_file = false;
+	$pages_path = elgg_get_plugins_path() . 'group_tools/pages/';
+	
+	switch ($page[0]) {
+		case 'owner':
+			
+			if (isset($page[1])) {
+				set_input('guid', $page[1]);
+			}
+			
+			if (isset($page[2])) {
+				set_input('status', $page[2]);
+			}
+			
+			$include_file = "{$pages_path}discussion/owner.php";
+			break;
+		case 'all':
+			
+			if (isset($page[1])) {
+				set_input('status', $page[1]);
+			}
+				
+			$include_file = "{$pages_path}discussion/all.php";
+			break;
+	}
+	
+	// did we take over a page
+	if (!empty($include_file)) {
+		include($include_file);
+		return false;
+	}
+}
+
+/**
+ * Change some tabs in the filter menu
+ *
+ * @param string         $hook         the name of the hook
+ * @param string         $type         the type of the hook
+ * @param ElggMenuItem[] $return_value current return value
+ * @param array          $params       supplied params
+ *
+ * @return void|ElggMenuItem[]
+ */
+function group_tools_menu_discussion_filter_handler($hook, $type, $return_value, $params) {
+	
+	if (!elgg_in_context('discussion')) {
+		return;
+	}
+	
+	if (empty($return_value) || !is_array($return_value)) {
+		return;
+	}
+	
+	$base_href = 'discussion/all';
+	
+	$page_owner = elgg_get_page_owner_entity();
+	if ($page_owner instanceof ElggGroup) {
+		$base_href = "discussion/owner/{$page_owner->getGUID()}";
+	}
+	
+	$return_value = array();
+	
+	// add new items
+	$return_value[] = ElggMenuItem::factory(array(
+		'name' => 'all',
+		'text' => elgg_echo('all'),
+		'href' => $base_href,
+		'priority' => 100,
+	));
+	$return_value[] = ElggMenuItem::factory(array(
+		'name' => 'open',
+		'text' => elgg_echo('groups:topicopen'),
+		'href' => "$base_href/open",
+		'priority' => 200,
+	));
+	$return_value[] = ElggMenuItem::factory(array(
+		'name' => 'closed',
+		'text' => elgg_echo('groups:topicclosed'),
+		'href' => "$base_href/closed",
+		'priority' => 300,
+	));
+	
+	return $return_value;
+}

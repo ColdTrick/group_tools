@@ -27,11 +27,13 @@ function group_tools_init() {
 	
 	// extend groups page handler
 	elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
+	elgg_register_plugin_hook_handler("route", "discussion", "group_tools_route_discussion_handler");
 	
 	// hook on title menu
 	elgg_register_plugin_hook_handler("register", "menu:title", "group_tools_menu_title_handler");
 	elgg_register_plugin_hook_handler("register", "menu:user_hover", "group_tools_menu_user_hover_handler");
 	elgg_register_plugin_hook_handler("register", "menu:entity", "group_tools_menu_entity_handler");
+	elgg_register_plugin_hook_handler("register", "menu:filter", "group_tools_menu_discussion_filter_handler");
 	
 	if (elgg_get_plugin_setting("multiple_admin", "group_tools") == "yes") {
 		// add group tool option
@@ -123,7 +125,7 @@ function group_tools_init() {
 	
 	// register index widget to show latest discussions
 	elgg_register_widget_type("discussion", elgg_echo("discussion:latest"), elgg_echo("widgets:discussion:description"), "index,dashboard", true);
-	elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), "groups");
+	elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), "groups", true);
 	
 	// register events
 	elgg_register_event_handler("join", "group", "group_tools_join_group_event");

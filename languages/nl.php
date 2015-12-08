@@ -1,5 +1,6 @@
 <?php
 $language = array (
+  'widgets:discussion:status' => 'Welke discussies moeten worden getoond',
   'group_tools:delete_selected' => 'Verwijder selectie',
   'admin:administer_utilities:group_bulk_delete' => 'Bulk groep verwijderen',
   'group_tools:action:bulk_delete:success' => 'De geselecteerde groepen zijn verwijderd',

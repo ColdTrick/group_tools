@@ -358,6 +358,7 @@ To visit the group please click on the following link:
 
 	// Discussion
 	"widgets:discussion:settings:group_only" => "Only show discussions from groups you are member of",
+	"widgets:discussion:status" => "Which discussions to show",
   	'widgets:discussion:more' => "View more discussions",
   	"widgets:discussion:description" => "Shows the latest discussions",
 

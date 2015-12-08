@@ -2,12 +2,18 @@
 /**
  * widget settings for the discussions widget
  */
-$widget = $vars["entity"];
+$widget = elgg_extract('entity', $vars);
 
 $discussion_count = sanitise_int($widget->discussion_count, false);
 if (empty($discussion_count)) {
 	$discussion_count = 5;
 }
+
+$status_options = array(
+	'' => elgg_echo('all'),
+	'open' => elgg_echo('groups:topicopen'),
+	'closed' => elgg_echo('groups:topicclosed'),
+);
 
 if (elgg_in_context("dashboard")) {
 	
@@ -18,12 +24,33 @@ if (elgg_in_context("dashboard")) {
 	
 	echo "<div>";
 	echo elgg_echo("widgets:discussion:settings:group_only");
-	echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[group_only]", "value" => $widget->group_only, "options_values" => $noyes_options));
+	echo elgg_view("input/dropdown", array(
+		"name" => "params[group_only]",
+		"value" => $widget->group_only,
+		"options_values" => $noyes_options,
+		"class" => "mls",
+	));
 	echo "</div>";
 	
 }
 
 echo "<div>";
 echo elgg_echo("widget:numbertodisplay");
-echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[discussion_count]", "value" => $discussion_count, "options" => range(1, 10)));
+echo elgg_view("input/dropdown", array(
+	"name" => "params[discussion_count]",
+	"value" => $discussion_count,
+	"options" => range(1, 10),
+	"class" => "mls",
+));
 echo "</div>";
+
+echo "<div>";
+echo elgg_echo("widgets:discussion:status");
+echo elgg_view("input/dropdown", array(
+	"name" => "params[discussion_status]",
+	"value" => $widget->discussion_status,
+	"options_values" => $status_options,
+	"class" => "mls",
+));
+echo "</div>";
+
