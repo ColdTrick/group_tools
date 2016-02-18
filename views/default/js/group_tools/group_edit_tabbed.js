@@ -11,12 +11,9 @@ define(function (require) {
 		$(this).addClass("elgg-state-selected");
 
 		// hide everything
-		$("#group-tools-group-edit-tabbed").nextAll("form").hide();
-		$("#group-tools-group-edit-profile").hide();
-		$("#group-tools-group-edit-access").hide();
-		$("#group-tools-group-edit-tools").hide();
-		$("#group-tools-group-edit-tabbed").nextAll("div").hide();
-
+		$("#group-tools-group-edit-tabbed").nextAll("form, div").hide();
+		$(".group-tools-group-edit-section").hide();
+		
 		var link = $(this).children("a").attr("href");
 		switch (link) {
 			case "#group-tools-group-edit-profile":
@@ -40,6 +37,4 @@ define(function (require) {
 		}
 
 	});
-
-	$("#group-tools-group-edit-tabbed li:first").trigger('click');
 })

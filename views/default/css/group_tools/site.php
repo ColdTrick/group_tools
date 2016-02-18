@@ -74,6 +74,10 @@
 	width: 80%;
 }
 
+#group-tools-group-edit-tabbed ~ div {
+	display: none;
+}
+
 .group-tools-group-edit-section > div {
 	margin-bottom: 15px;
 }
