@@ -23,8 +23,18 @@ if (!empty($friends)) {
 	$toggle_content = "<span>" . elgg_echo("group_tools:group:invite:friends:select_all") . "</span>";
 	$toggle_content .= "<span class='hidden'>" . elgg_echo("group_tools:group:invite:friends:deselect_all") . "</span>";
 	
-	$friendspicker = elgg_view("output/url", array("text" => $toggle_content, "href" => "javascript:void(0);", "onclick" => "group_tools_toggle_all_friends();", "id" => "friends_toggle", "class" => "float-alt elgg-button elgg-button-action"));
-	$friendspicker .= elgg_view('input/friendspicker', array('entities' => $friends, 'name' => 'user_guid', 'highlight' => 'all'));
+	$friendspicker = elgg_view('input/friendspicker', [
+		'entities' => $friends,
+		'name' => 'user_guid',
+		'highlight' => 'all',
+	]);
+	$friendspicker .= elgg_view("output/url", [
+		"text" => $toggle_content,
+		"href" => "javascript:void(0);",
+		"onclick" => "group_tools_toggle_all_friends();",
+		"id" => "friends_toggle",
+		"class" => "elgg-button elgg-button-action",
+	]);
 } else {
 	$friendspicker = elgg_echo('groups:nofriendsatall');
 }
