@@ -239,38 +239,42 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
  * @param int   $group_guid the GUID of the group
  * @param array $user_guids an array of user GUIDs to check
  *
- * @return boolean|int[] returns all user_guids that are a member
+ * @return false|int[] returns all user_guids that are a member
  */
 function group_tools_verify_group_members($group_guid, $user_guids) {
-	$result = false;
 	
-	if (!empty($group_guid) && !empty($user_guids)) {
-		if (!is_array($user_guids)) {
-			$user_guids = array($user_guids);
+	if (empty($group_guid) || empty($user_guids)) {
+		return false;
+	}
+	
+	if (!is_array($user_guids)) {
+		$user_guids = array($user_guids);
+	}
+	
+	$group = get_entity($group_guid);
+	if (!($group instanceof ElggGroup)) {
+		return false;
+	}
+	
+	$options = [
+		'type' => 'user',
+		'limit' => false,
+		'relationship' => 'member',
+		'relationship_guid' => $group->getGUID(),
+		'inverse_relationship' => true,
+		'callback' => 'group_tools_guid_only_callback',
+	];
+	
+	$result = [];
+	$member_guids = new ElggBatch('elgg_get_entities_from_relationship', $options);
+	foreach ($user_guids as $user_guid) {
+		if (in_array($user_guid, $member_guids)) {
+			$result[] = (int) $user_guid;
 		}
-		
-		$group = get_entity($group_guid);
-		if (!empty($group) && ($group instanceof ElggGroup)) {
-			$options = array(
-				"type" => "user",
-				"limit" => false,
-				"relationship" => "member",
-				"relationship_guid" => $group->getGUID(),
-				"inverse_relationship" => true,
-				"callback" => "group_tools_guid_only_callback"
-			);
-			
-			$member_guids = elgg_get_entities_from_relationship($options);
-			if (!empty($member_guids)) {
-				$result = array();
-				
-				foreach ($user_guids as $user_guid) {
-					if (in_array($user_guid, $member_guids)) {
-						$result[] = $user_guid;
-					}
-				}
-			}
-		}
+	}
+	
+	if (empty($result)) {
+		return false;
 	}
 	
 	return $result;

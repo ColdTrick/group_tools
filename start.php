@@ -130,6 +130,14 @@ function group_tools_init() {
 	// register events
 	elgg_register_event_handler("join", "group", "group_tools_join_group_event");
 	elgg_register_event_handler("delete", "relationship", array('ColdTrick\GroupTools\Membership', 'deleteRequest'));
+	elgg_register_event_handler("upgrade", "system", '\ColdTrick\GroupTools\Upgrade::setGroupMailClassHandler');
+	
+	// group mail option
+	elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\GroupTools\GroupMail::pageMenu');
+	elgg_register_notification_event('object', GroupMail::SUBTYPE, ['enqueue']);
+	elgg_register_plugin_hook_handler('prepare', 'notification:enqueue:object:' . GroupMail::SUBTYPE, '\ColdTrick\GroupTools\GroupMail::prepareNotification');
+	elgg_register_plugin_hook_handler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupMail::getSubscribers');
+	elgg_register_plugin_hook_handler('send:after', 'notifications', '\ColdTrick\GroupTools\GroupMail::cleanup');
 	
 	// register plugin hooks
 	elgg_register_plugin_hook_handler("entity:url", "object", "group_tools_widget_url_handler");
@@ -242,15 +250,6 @@ function group_tools_pagesetup() {
 						"href" => "groups/requests/" . $page_owner->getGUID(),
 					));
 				}
-			}
-			
-			// group mail options
-			if ($page_owner->canEdit() && (elgg_get_plugin_setting("mail", "group_tools") == "yes")) {
-				elgg_register_menu_item("page", array(
-					"name" => "mail",
-					"text" => elgg_echo("group_tools:menu:mail"),
-					"href" => "groups/mail/" . $page_owner->getGUID(),
-				));
 			}
 		}
 	}
