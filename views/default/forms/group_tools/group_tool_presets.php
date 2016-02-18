@@ -1,7 +1,7 @@
 <?php
 /**
  * Configure group tool presets
- * 
+ *
  * @uses $vars['group_tool_presets'] the current group tool presets (if any)
  */
 $presets = elgg_extract("group_tool_presets", $vars);
@@ -85,5 +85,5 @@ echo elgg_view("input/submit", array("value" => elgg_echo("save")));
 echo "</div>";
 ?>
 <script>
-	require(['forms/group_tools/group_tool_presets']);
+	require(['group_tools/group_tool_presets']);
 </script>

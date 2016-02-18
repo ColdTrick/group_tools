@@ -82,5 +82,5 @@ if (!empty($requests) && is_array($requests)) {
 echo $content;
 ?>
 <script>
-	require(['groups/membershiprequests']);
+	require(['group_tools/membershiprequests']);
 </script>

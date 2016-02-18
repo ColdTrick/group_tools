@@ -61,5 +61,5 @@ if (!empty($user)) {
 }
 ?>
 <script>
-	require(['widgets/start_discussion/content.js']);
+	require(['group_tools/start_discussion']);
 </script>

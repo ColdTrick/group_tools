@@ -26,7 +26,7 @@ function group_tools_init() {
 	// extend css & js
 	elgg_extend_view("css/elgg", "css/group_tools/site");
 	elgg_extend_view("css/admin", "css/group_tools/admin");
-	elgg_extend_view("elgg.js", "js/group_tools/site.js");
+	elgg_extend_view("js/elgg", "js/group_tools/site.js");
 	
 	// extend page handlers
 	elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
