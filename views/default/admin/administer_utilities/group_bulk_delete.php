@@ -97,3 +97,4 @@ echo elgg_view("input/form", array(
 	"action" => "action/group_tools/admin/bulk_delete",
 	"body" => $form_data
 ));
+elgg_require_js('admin/administer_utilities/group_bulk_delete');

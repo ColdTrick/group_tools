@@ -26,8 +26,7 @@ function group_tools_init() {
 	// extend css & js
 	elgg_extend_view("css/elgg", "css/group_tools/site");
 	elgg_extend_view("css/admin", "css/group_tools/admin");
-	elgg_extend_view("js/elgg", "js/group_tools/site");
-	elgg_extend_view("js/admin", "js/group_tools/admin");
+	elgg_extend_view("elgg.js", "js/group_tools/site.js");
 	
 	// extend page handlers
 	elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
@@ -84,7 +83,6 @@ function group_tools_init() {
 	
 	// show group edit as tabbed
 	elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed", 1);
-	elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed_js", 999999999);
 	
 	// show group profile widgets - edit form
 	elgg_extend_view("groups/edit", "group_tools/forms/profile_widgets", 400);

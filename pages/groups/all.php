@@ -36,6 +36,7 @@ switch ($selected_tab) {
 		$group_options["order_by"] = "CAST(order_val AS SIGNED) ASC, e.time_created DESC";
 		
 		if (elgg_is_admin_logged_in()) {
+			elgg_require_js('group_tools/ordered_list');
 			$group_options["list_class"] = "group-tools-list-ordered";
 		}
 		

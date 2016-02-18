@@ -2,7 +2,6 @@
 /**
  * Show tabs on the group edit form
  */
-
 $tabs = array(
 	"profile" => array(
 		"text" => elgg_echo("group_tools:group:edit:profile"),
@@ -32,10 +31,14 @@ if (!empty($vars["entity"])) {
 
 foreach ($tabs as $name => $tab) {
 	$tab["name"] = $name;
-	
+
 	elgg_register_menu_item("filter", $tab);
 }
 
 echo "<div id='group-tools-group-edit-tabbed'>";
 echo elgg_view_menu("filter", array("sort_by" => "priority", "class" => "elgg-menu-hz"));
 echo "</div>";
+?>
+<script>
+	require(['group_tools/group_edit_tabbed']);
+</script>
