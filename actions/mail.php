@@ -11,18 +11,16 @@ $body = get_input('description');
 $user_guids = group_tools_verify_group_members($group_guid, $user_guids);
 
 if (empty($group_guid) || empty($body) || empty($user_guids)) {
-	register_error(elgg_echo('group_tools:action:error:input'));
+	register_error(elgg_echo('error:missing_data'));
 	forward(REFERER);
 }
 
+elgg_entity_gatekeeper($group_guid, 'group');
 $group = get_entity($group_guid);
-if (!($group instanceof ElggGroup)) {
-	register_error(elgg_echo('group_tools:action:error:entity'));
-	forward(REFERER);
-}
 
 if (!$group->canEdit()) {
-	register_error(elgg_echo('group_tools:action:error:edit'));
+	register_error(elgg_echo('actionunauthorized'));
+	forward(REFERER);
 }
 
 $group_mail = new GroupMail();
