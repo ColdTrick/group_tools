@@ -33,8 +33,8 @@ if (!empty($profile_fields)) {
 }
 
 $sorting_options = array(
-	"newest" => elgg_echo("groups:newest"),
-	"popular" => elgg_echo("groups:popular"),
+	"newest" => elgg_echo("sort:newest"),
+	"popular" => elgg_echo("sort:popular"),
 	"ordered" => elgg_echo("group_tools:groups:sorting:ordered")
 );
 

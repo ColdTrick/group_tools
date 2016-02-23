@@ -32,7 +32,7 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	
 	$featured_sorting = array(
 		"time_created" => elgg_echo("group_tools:cleanup:featured_sorting:time_created"),
-		"alphabetical" => elgg_echo("group_tools:cleanup:featured_sorting:alphabetical"),
+		"alphabetical" => elgg_echo("sort:alpha"),
 	);
 	
 	$prefix = "group_tools:cleanup:";
@@ -43,8 +43,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo("group_tools:cleanup:owner_block");
 	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "owner_block", 
-		"options_values" => $noyes_options, 
+		"name" => "owner_block",
+		"options_values" => $noyes_options,
 		"value" => $group->getPrivateSetting($prefix . "owner_block"),
 		"class" => "mls"
 	));
@@ -57,8 +57,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo("group_tools:cleanup:actions");
 	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "actions", 
-		"options_values" => $noyes_options, 
+		"name" => "actions",
+		"options_values" => $noyes_options,
 		"value" => $group->getPrivateSetting($prefix . "actions"),
 		"class" => "mls"
 	));
@@ -71,8 +71,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo("group_tools:cleanup:menu");
 	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "menu", 
-		"options_values" => $noyes_options, 
+		"name" => "menu",
+		"options_values" => $noyes_options,
 		"value" => $group->getPrivateSetting($prefix . "menu"),
 		"class" => "mls"
 	));
@@ -85,8 +85,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo("group_tools:cleanup:search");
 	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "search", 
-		"options_values" => $noyes_options, 
+		"name" => "search",
+		"options_values" => $noyes_options,
 		"value" => $group->getPrivateSetting($prefix . "search"),
 		"class" => "mls"
 	));
@@ -99,8 +99,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo("group_tools:cleanup:members");
 	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "members", 
-		"options_values" => $noyes_options, 
+		"name" => "members",
+		"options_values" => $noyes_options,
 		"value" => $group->getPrivateSetting($prefix . "members"),
 		"class" => "mls"
 	));
@@ -113,8 +113,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo("group_tools:cleanup:featured");
 	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "featured", 
-		"options_values" => $featured_options, 
+		"name" => "featured",
+		"options_values" => $featured_options,
 		"value" => $group->getPrivateSetting($prefix . "featured"),
 		"class" => "mls"
 	));
@@ -126,8 +126,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo("group_tools:cleanup:featured_sorting");
 	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "featured_sorting", 
-		"options_values" => $featured_sorting, 
+		"name" => "featured_sorting",
+		"options_values" => $featured_sorting,
 		"value" => $group->getPrivateSetting($prefix . "featured_sorting"),
 		"class" => "mls"
 	));
@@ -137,8 +137,8 @@ if (!empty($group) && ($group instanceof ElggGroup) && $group->canEdit()) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo("group_tools:cleanup:my_status");
 	$form_body .= ":" . elgg_view("input/dropdown", array(
-		"name" => "my_status", 
-		"options_values" => $noyes_options, 
+		"name" => "my_status",
+		"options_values" => $noyes_options,
 		"value" => $group->getPrivateSetting($prefix . "my_status"),
 		"class" => "mls"
 	));

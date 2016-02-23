@@ -30,9 +30,9 @@ $listing_options = array(
 	"popular" => elgg_echo("sort:popular"),
 	"open" => elgg_echo("group_tools:groups:sorting:open"),
 	"closed" => elgg_echo("group_tools:groups:sorting:closed"),
-	"alpha" => elgg_echo("group_tools:groups:sorting:alphabetical"),
+	"alpha" => elgg_echo("sort:alpha"),
 	"ordered" => elgg_echo("group_tools:groups:sorting:ordered"),
-	"featured" => elgg_echo("group_tools:groups:sorting:featured"),
+	"featured" => elgg_echo("status:featured"),
 	"suggested" => elgg_echo("group_tools:groups:sorting:suggested"),
 );
 
@@ -220,7 +220,7 @@ $options = array(
 
 if ($featured_groups = elgg_get_entities_from_metadata($options)) {
 	$tabs[] = array(
-		"text" => elgg_echo("group_tools:settings:special_states:featured"),
+		"text" => elgg_echo("status:featured"),
 		"href" => "#group-tools-special-states-featured",
 		"selected" => true
 	);
@@ -240,7 +240,7 @@ if ($featured_groups = elgg_get_entities_from_metadata($options)) {
 		$content .= "<td style='width: 25px'>";
 		$content .= elgg_view("output/url", array(
 			"href" => "action/groups/featured?group_guid=" . $group->getGUID(),
-			"title" => elgg_echo("group_tools:remove"),
+			"title" => elgg_echo("remove"),
 			"text" => elgg_view_icon("delete"),
 			"confirm" => true
 		));
@@ -290,7 +290,7 @@ if (!empty($auto_joins)) {
 			$content .= "<td style='width: 25px'>";
 			$content .= elgg_view("output/url", array(
 				"href" => "action/group_tools/toggle_special_state?group_guid=" . $group->getGUID() . "&state=auto_join",
-				"title" => elgg_echo("group_tools:remove"),
+				"title" => elgg_echo("remove"),
 				"text" => elgg_view_icon("delete"),
 				"confirm" => true
 			));
@@ -342,7 +342,7 @@ if (!empty($suggested_groups)) {
 			$content .= "<td style='width: 25px'>";
 			$content .= elgg_view("output/url", array(
 				"href" => "action/group_tools/toggle_special_state?group_guid=" . $group->getGUID() . "&state=suggested",
-				"title" => elgg_echo("group_tools:remove"),
+				"title" => elgg_echo("remove"),
 				"text" => elgg_view_icon("delete"),
 				"confirm" => true
 			));

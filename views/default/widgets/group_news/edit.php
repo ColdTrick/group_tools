@@ -38,5 +38,12 @@ echo "</div>";
 
 echo "<div>";
 echo elgg_echo("widgets:group_news:settings:group_icon_size") . " ";
-echo elgg_view("input/dropdown", array("options_values" => array("medium" => elgg_echo("widgets:group_news:settings:group_icon_size:medium"), "small" => elgg_echo("widgets:group_news:settings:group_icon_size:small")), "name" => "params[group_icon_size]", "value" => $widget->group_icon_size));
+echo elgg_view("input/dropdown", array(
+	"options_values" => array(
+		"medium" => elgg_echo("icon:size:medium"),
+		"small" => elgg_echo("icon:size:small"),
+	),
+	"name" => "params[group_icon_size]",
+	"value" => $widget->group_icon_size),
+);
 echo "</div>";

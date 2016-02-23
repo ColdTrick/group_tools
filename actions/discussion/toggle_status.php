@@ -3,29 +3,27 @@
  * Quickly open/close a discussion
  */
 
-$guid = (int) get_input("guid");
+$guid = (int) get_input('guid');
+if (empty($guid)) {
+	register_error(elgg_echo('error:missing_data'));
+	forward(REFERER);
+}
 
-if (!empty($guid)) {
-	$entity = get_entity($guid);
-	if (!empty($entity) && $entity->canEdit()) {
-		if (elgg_instanceof($entity, "object", "groupforumtopic")) {
-			if ($entity->status == "closed") {
-				$entity->status = "open";
-				
-				system_message(elgg_echo("group_tools:action:discussion:toggle_status:success:open"));
-			} else {
-				$entity->status = "closed";
-				
-				system_message(elgg_echo("group_tools:action:discussion:toggle_status:success:close"));
-			}
-		} else {
-			register_error(elgg_echo("ClassException:ClassnameNotClass", array($guid, elgg_echo("item:object:groupforumtopic"))));
-		}
-	} else {
-		register_error(elgg_echo("InvalidParameterException:NoEntityFound"));
-	}
+elgg_entity_gatekeeper($guid, 'object', 'groupforumtopic');
+$entity = get_entity($guid);
+if (!$entity->canEdit()) {
+	register_error(elgg_echo('actionunauthorized'));
+	forward(REFERER);
+}
+
+if ($entity->status === 'closed') {
+	$entity->status = 'open';
+	
+	system_message(elgg_echo('group_tools:action:discussion:toggle_status:success:open'));
 } else {
-	register_error(elgg_echo("InvalidParameterException:MissingParameter"));
+	$entity->status = 'closed';
+	
+	system_message(elgg_echo('group_tools:action:discussion:toggle_status:success:close'));
 }
 
 forward(REFERER);

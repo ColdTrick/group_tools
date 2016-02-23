@@ -16,7 +16,7 @@ if (!empty($emails)) {
 		$delete_button = elgg_view("output/url", array(
 			"href" => $url,
 			"confirm" => elgg_echo("group_tools:groups:membershipreq:invitations:revoke:confirm"),
-			"text" => elgg_echo("group_tools:revoke"),
+			"text" => elgg_echo("revoke"),
 			"class" => "elgg-button elgg-button-delete mlm",
 		));
 

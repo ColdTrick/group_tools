@@ -121,7 +121,7 @@ if (elgg_get_context() == "groups") {
 			$delete_button = elgg_view("output/url", array(
 				"href" => $url,
 				"confirm" => elgg_echo("group_tools:group:invitations:request:revoke:confirm"),
-				"text" => elgg_echo("group_tools:revoke"),
+				"text" => elgg_echo("revoke"),
 				"class" => "elgg-button elgg-button-delete mlm",
 			));
 			
@@ -147,8 +147,8 @@ if (elgg_get_context() == "groups") {
 		// make the form for the email invitations
 		$form_body = "<div>" . elgg_echo("group_tools:groups:invitation:code:description") . "</div>";
 		$form_body .= elgg_view("input/text", array(
-			"name" => "invitecode", 
-			"value" => get_input("invitecode"), 
+			"name" => "invitecode",
+			"value" => get_input("invitecode"),
 			"class" => "mbm"
 		));
 	

@@ -36,7 +36,7 @@ $tabs = array(
 		"priority" => 600,
 	),
 	"alpha" => array(
-		"text" => elgg_echo("group_tools:groups:sorting:alphabetical"),
+		"text" => elgg_echo("sort:alpha"),
 		"href" => "groups/all?filter=alpha",
 		"priority" => 700,
 	),
@@ -46,7 +46,7 @@ $tabs = array(
 		"priority" => 800,
 	),
 	"featured" => array(
-		"text" => elgg_echo("group_tools:groups:sorting:featured"),
+		"text" => elgg_echo("status:featured"),
 		"href" => "groups/all?filter=featured",
 		"priority" => 850,
 	),

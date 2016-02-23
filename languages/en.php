@@ -3,11 +3,7 @@
 $english = array(
 
 	// general
-	'group_tools:decline' => "Decline",
-	'group_tools:revoke' => "Revoke",
 	'group_tools:add_users' => "Add users",
-	'group_tools:in' => "in",
-	'group_tools:remove' => "Remove",
 	'group_tools:delete_selected' => "Delete selected",
 	'group_tools:clear_selection' => "Clear selection",
 	'group_tools:all_members' => "All members",
@@ -56,8 +52,7 @@ $english = array(
 	'group_tools:settings:listing:available' => "Available group listing tabs",
 
 	'group_tools:settings:default_access' => "What should be the default access for content in the groups of this site",
-	'group_tools:settings:default_access:disclaimer' => "<b>DISCLAIMER:</b> this will not work unless you have <a href='https://github.com/Elgg/Elgg/pull/253' target='_blank'>https://github.com/Elgg/Elgg/pull/253</a> applied to your Elgg installation.",
-
+	
 	'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 	'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
 	'group_tools:settings:show_membership_mode' => "Show open/closed membership status on group profile and owner block",
@@ -66,7 +61,6 @@ $english = array(
 	'group_tools:settings:show_hidden_group_indicator:logged_in' => "Yes, for all non public groups",
 	
 	'group_tools:settings:special_states' => "Groups with a special state",
-	'group_tools:settings:special_states:featured' => "Featured",
 	'group_tools:settings:special_states:featured:description' => "The site administrators have chosen to feature the following groups.",
 	'group_tools:settings:special_states:auto_join' => "Auto join",
 	'group_tools:settings:special_states:auto_join:description' => "New users will automaticly join the following groups.",
@@ -80,8 +74,7 @@ $english = array(
 	'group_tools:settings:fix:all:description' => "Fix all off the above problems at once.",
 	'group_tools:settings:fix_it' => "Fix this",
 	'group_tools:settings:fix:all' => "Fix all problems",
-	'group_tools:settings:fix:nothing' => "Nothing is wrong with the groups on your site!",
-
+	
 	'group_tools:settings:member_export' => "Allow group admins to export member information",
 	'group_tools:settings:member_export:description' => "This includes the name, username and email address of the user.",
 	
@@ -166,7 +159,6 @@ You can find the group here:
 	// admin transfer - form
 	'group_tools:admin_transfer:current' => "Keep current owner: %s",
 	'group_tools:admin_transfer:myself' => "Myself",
-	'group_tools:admin_transfer:submit' => "Transfer",
 	
 	// special states form
 	'group_tools:special_states:title' => "Group special states",
@@ -200,7 +192,6 @@ You can find the group here:
 	'group_tools:cleanup:featured:explain' => "You can choose to show a list of featured groups at the highlighted section on the group profile page",
 	'group_tools:cleanup:featured_sorting' => "How to sort featured groups",
 	'group_tools:cleanup:featured_sorting:time_created' => "Newest first",
-	'group_tools:cleanup:featured_sorting:alphabetical' => "Alphabetical",
 	'group_tools:cleanup:my_status' => "Hide the My Status sidebar",
 	'group_tools:cleanup:my_status:explain' => "In the sidebar on the group profile page there is an item which shows you your current membership status and some other status information. You can choose to hide this.",
 
@@ -274,13 +265,11 @@ You can find the group here:
 	'group_tools:group:invitations:request:non_found' => "There are no outstanding membership requests at this time",
 
 	// group listing
-	'group_tools:groups:sorting:alphabetical' => "Alphabetical",
 	'group_tools:groups:sorting:open' => "Open",
 	'group_tools:groups:sorting:closed' => "Closed",
 	'group_tools:groups:sorting:ordered' => "Ordered",
 	'group_tools:groups:sorting:suggested' => "Suggested",
-	'group_tools:groups:sorting:featured' => "Featured",
-
+	
 	// discussion status
 	'group_tools:discussion:confirm:open' => "Are you sure you wish to reopen this topic?",
 	'group_tools:discussion:confirm:close' => "Are you sure you wish to close this topic?",
@@ -295,7 +284,6 @@ You can find the group here:
 	
 	// actions
 	'group_tools:action:error:input' => "Invalid input to perform this action",
-	'group_tools:action:error:entities' => "The given GUIDs didn't result in the correct entities",
 	'group_tools:action:error:entity' => "The given GUID didn't result in a correct entity",
 	'group_tools:action:error:edit' => "You don't have access to the given entity",
 	'group_tools:action:error:save' => "There was an error while saving the settings",
@@ -304,12 +292,6 @@ You can find the group here:
 	// group edit
 	'group_tools:action:group:edit:error:default_access' => "The chosen default access level was more public than the group content access, therefore default access has been lowered to group members.",
 	
-	// admin transfer - action
-	'group_tools:action:admin_transfer:error:access' => "You're not allowed to transfer ownership of this group",
-	'group_tools:action:admin_transfer:error:self' => "You can't transfer onwership to yourself, you're already the owner",
-	'group_tools:action:admin_transfer:error:save' => "An unknown error occured while saving the group, please try again",
-	'group_tools:action:admin_transfer:success' => "Group ownership was successfully transfered to %s",
-
 	// group admins - action
 	'group_tools:action:toggle_admin:error:group' => "The given input doesn't result in a group or you can't edit this group or the user is not a member",
 	'group_tools:action:toggle_admin:error:remove' => "An unknown error occured while removing the user as a group admin",
@@ -352,9 +334,6 @@ You can find the group here:
 	// group cleanup
 	'group_tools:actions:cleanup:success' => "The cleanup settings were saved successfully",
 
-	// group default access
-	'group_tools:actions:default_access:success' => "The default access for the group was saved successfully",
-
 	// group notifications
 	'group_tools:action:notifications:error:toggle' => "Invalid toggle option",
 	'group_tools:action:notifications:success:disable' => "Successfully disabled notifications for every member",
@@ -385,15 +364,13 @@ You can find the group here:
 
 	'widgets:group_river_widget:view:not_configured' => "This widget is not yet configured",
 
-	'widgets:group_river_widget:view:more' => "Activity in the '%s' group",
 	'widgets:group_river_widget:view:noactivity' => "We could not find any activity.",
 
 	// Group Members
 	'widgets:group_members:title' => "Group members",
   	'widgets:group_members:description' => "Shows the members of this group",
 
-	'widgets:group_members:edit:num_display' => "How many members to show",
-  	'widgets:group_members:view:no_members' => "No group members found",
+	'widgets:group_members:view:no_members' => "No group members found",
 
   	// Group Invitations
 	'widgets:group_invitations:title' => "Group invitations",
@@ -430,9 +407,7 @@ You can find the group here:
 	"widgets:group_news:settings:no_project" => "Select a group",
 	"widgets:group_news:settings:blog_count" => "Max number of blogs",
 	"widgets:group_news:settings:group_icon_size" => "Group icon size",
-	"widgets:group_news:settings:group_icon_size:small" => "Small",
-	"widgets:group_news:settings:group_icon_size:medium" => "Medium",
-
+	
 	// quick start discussion
 	'group_tools:widgets:start_discussion:title' => "Start a discussion",
 	'group_tools:widgets:start_discussion:description' => "Quickly start a discussion is a selected group",
@@ -443,9 +418,7 @@ You can find the group here:
 	'group_tools:forms:discussion:quick_start:group' => "Select a group for this discussion",
 	'group_tools:forms:discussion:quick_start:group:required' => "Please select a group",
 	
-	'groups:search:tags' => "search",
 	'groups:search:title' => "Search for groups matching '%s'",
-	'groups:searchtag' => "Search for groups",
 	
 	// welcome message
 	'group_tools:welcome_message:title' => "Group welcome message",
