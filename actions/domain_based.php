@@ -11,7 +11,7 @@ if (empty($group_guid)) {
 	forward(REFERER);
 }
 
-elgg_entity_gatekeeper($group_guid, 'group')
+elgg_entity_gatekeeper($group_guid, 'group');
 $group = get_entity($group_guid);
 if (!$group->canEdit()) {
 	register_error(elgg_echo('actionunauthorized'));

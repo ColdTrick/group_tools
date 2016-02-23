@@ -44,6 +44,6 @@ echo elgg_view("input/dropdown", array(
 		"small" => elgg_echo("icon:size:small"),
 	),
 	"name" => "params[group_icon_size]",
-	"value" => $widget->group_icon_size),
-);
+	"value" => $widget->group_icon_size,
+));
 echo "</div>";
