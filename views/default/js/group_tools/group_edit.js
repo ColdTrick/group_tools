@@ -13,7 +13,7 @@ elgg.group_tools.toggle_featured = function(group_guid, element) {
 			action_type: action_type
 		}
 	});
-}
+};
 
 elgg.group_tools.toggle_special_state = function(state, group_guid) {
 	elgg.action("action/group_tools/toggle_special_state", {
@@ -22,7 +22,7 @@ elgg.group_tools.toggle_special_state = function(state, group_guid) {
 			state: state
 		}
 	});
-}
+};
 
 elgg.group_tools.cleanup_highlight = function(section) {
 	switch (section) {
@@ -45,7 +45,7 @@ elgg.group_tools.cleanup_highlight = function(section) {
 			$('div.elgg-sidebar').append('<div id="group_tools_my_status_example" class="group-tools-highlight">' + elgg.echo('groups:my_status') + '</div>');
 			break;
 	}
-}
+};
 
 elgg.group_tools.cleanup_unhighlight = function(section) {
 	switch (section) {
@@ -68,4 +68,4 @@ elgg.group_tools.cleanup_unhighlight = function(section) {
 			$('#group_tools_my_status_example').remove();
 			break;
 	}
-}
+};

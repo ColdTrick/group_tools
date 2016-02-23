@@ -37,4 +37,4 @@ define(function (require) {
 		}
 
 	});
-})
+});

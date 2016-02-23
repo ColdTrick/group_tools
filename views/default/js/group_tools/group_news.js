@@ -22,7 +22,7 @@ elgg.widgets.group_news.rotate = function() {
 			elgg.widgets.group_news.rotate_content($(this).find(".active").next());
 		}
 	});
-}
+};
 
 elgg.widgets.group_news.rotate_content = function(elem) {
 	$(elem).parent().find("span.active").removeClass("active");
@@ -31,6 +31,6 @@ elgg.widgets.group_news.rotate_content = function(elem) {
 	$(elem).parent().prev().find("> div").hide();
 	var active = $(elem).attr("rel");
 	$(elem).parent().parent().find("." + active).show();
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.widgets.group_news.init);

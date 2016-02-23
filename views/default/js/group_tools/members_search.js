@@ -43,7 +43,7 @@ elgg.group_tools.init_members_search = function() {
 		
 		event.preventDefault();
 	});
-}
+};
 
 //register init hook
 elgg.register_hook_handler('init', 'system', elgg.group_tools.init_members_search);
