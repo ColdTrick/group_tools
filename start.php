@@ -7,7 +7,6 @@
 define("GROUP_TOOLS_GROUP_ACCESS_DEFAULT", -10);
 
 require_once(dirname(__FILE__) . "/lib/functions.php");
-require_once(dirname(__FILE__) . "/lib/events.php");
 require_once(dirname(__FILE__) . "/lib/hooks.php");
 require_once(dirname(__FILE__) . "/lib/page_handlers.php");
 
@@ -29,31 +28,32 @@ function group_tools_init() {
 	elgg_extend_view("js/elgg", "js/group_tools/site.js");
 	
 	// extend page handlers
-	elgg_register_plugin_hook_handler("route", "groups", "group_tools_route_groups_handler");
+	elgg_register_plugin_hook_handler('route', 'groups', '\ColdTrick\GroupTools\Router::groups');
 	elgg_register_plugin_hook_handler("route", "livesearch", "group_tools_route_livesearch_handler");
 	
 	elgg_register_page_handler("groupicon", "group_tools_groupicon_page_handler");
 	elgg_register_plugin_hook_handler("entity:icon:url", "group", "groups_tools_group_icon_url_handler");
 	
 	// hook on title menu
-	elgg_register_plugin_hook_handler("register", "menu:title", "group_tools_menu_title_handler");
+	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupMembership');
+	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupInvite');
+	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::exportGroupMembers');
 	elgg_register_plugin_hook_handler("register", "menu:user_hover", "group_tools_menu_user_hover_handler");
 	elgg_register_plugin_hook_handler("register", "menu:entity", "group_tools_menu_entity_handler");
 	elgg_register_plugin_hook_handler("register", "menu:filter", "group_tools_menu_filter_handler");
 	
+	// group admins
 	if (group_tools_multiple_admin_enabled()) {
 		// add group tool option
 		add_group_tool_option("group_multiple_admin_allow", elgg_echo("group_tools:multiple_admin:group_tool_option"), false);
-		
-		// register permissions check hook
-		elgg_register_plugin_hook_handler("permissions_check", "group", "group_tools_multiple_admin_can_edit_hook");
-		
-		// register on group leave
-		elgg_register_event_handler("leave", "group", "group_tools_multiple_admin_group_leave");
-		
-		//notify admin on membership request
-		elgg_register_event_handler("create", "membership_request", "group_tools_membership_request");
 	}
+	
+	// notify admin on membership request
+	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\GroupAdmins::membershipRequest');
+	// register on group leave
+	elgg_register_event_handler('leave', 'group', '\ColdTrick\GroupTools\GroupAdmins::groupLeave');
+	// register permissions check hook
+	elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\GroupAdmins::permissionsCheck');
 		
 	// register group activity widget
 	// 2012-05-03: restored limited functionality of group activity widget, will be fully restored if Elgg fixes widget settings
@@ -79,7 +79,7 @@ function group_tools_init() {
 	
 	// manage auto join for groups
 	elgg_extend_view("groups/edit", "group_tools/forms/special_states", 350);
-	elgg_register_event_handler("create", "member_of_site", "group_tools_join_site_handler");
+	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoin');
 	
 	// show group edit as tabbed
 	elgg_extend_view("groups/edit", "group_tools/group_edit_tabbed", 1);
@@ -128,9 +128,9 @@ function group_tools_init() {
 	elgg_register_widget_type("group_forum_topics", elgg_echo("discussion:group"), elgg_echo("widgets:group_forum_topics:description"), array("groups"));
 	
 	// register events
-	elgg_register_event_handler("join", "group", "group_tools_join_group_event");
-	elgg_register_event_handler("delete", "relationship", array('ColdTrick\GroupTools\Membership', 'deleteRequest'));
-	elgg_register_event_handler("upgrade", "system", '\ColdTrick\GroupTools\Upgrade::setGroupMailClassHandler');
+	elgg_register_event_handler('join', 'group', '\ColdTrick\GroupTools\Membership::groupJoin');
+	elgg_register_event_handler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\GroupTools\Upgrade::setGroupMailClassHandler');
 	
 	// group mail option
 	elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\GroupTools\GroupMail::pageMenu');
