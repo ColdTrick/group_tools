@@ -7,8 +7,6 @@
 define("GROUP_TOOLS_GROUP_ACCESS_DEFAULT", -10);
 
 require_once(dirname(__FILE__) . "/lib/functions.php");
-require_once(dirname(__FILE__) . "/lib/hooks.php");
-require_once(dirname(__FILE__) . "/lib/page_handlers.php");
 
 // default elgg event handlers
 elgg_register_event_handler("init", "system", "group_tools_init");
@@ -29,18 +27,23 @@ function group_tools_init() {
 	
 	// extend page handlers
 	elgg_register_plugin_hook_handler('route', 'groups', '\ColdTrick\GroupTools\Router::groups');
-	elgg_register_plugin_hook_handler("route", "livesearch", "group_tools_route_livesearch_handler");
+	elgg_register_plugin_hook_handler('route', 'livesearch', '\ColdTrick\GroupTools\Router::livesearch');
 	
-	elgg_register_page_handler("groupicon", "group_tools_groupicon_page_handler");
-	elgg_register_plugin_hook_handler("entity:icon:url", "group", "groups_tools_group_icon_url_handler");
+	elgg_register_page_handler("groupicon", "\ColdTrick\GroupTools\GroupIcon::pageHandler");
+	elgg_register_plugin_hook_handler('entity:icon:url', 'group', '\ColdTrick\GroupTools\GroupIcon::getIconURL');
 	
 	// hook on title menu
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupMembership');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupInvite');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::exportGroupMembers');
-	elgg_register_plugin_hook_handler("register", "menu:user_hover", "group_tools_menu_user_hover_handler");
-	elgg_register_plugin_hook_handler("register", "menu:entity", "group_tools_menu_entity_handler");
-	elgg_register_plugin_hook_handler("register", "menu:filter", "group_tools_menu_filter_handler");
+	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::relatedGroup');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showMemberCount');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::discussionStatus');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showGroupHiddenIndicator');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup');
+	elgg_register_plugin_hook_handler("register", "menu:filter", "\ColdTrick\GroupTools\Membership::filterMenu");
 	
 	// group admins
 	if (group_tools_multiple_admin_enabled()) {
@@ -140,14 +143,15 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('send:after', 'notifications', '\ColdTrick\GroupTools\GroupMail::cleanup');
 	
 	// register plugin hooks
-	elgg_register_plugin_hook_handler("entity:url", "object", "group_tools_widget_url_handler");
-	elgg_register_plugin_hook_handler("default", "access", "group_tools_access_default_handler");
-	elgg_register_plugin_hook_handler("access:collections:write", "user", "group_tools_access_write_handler");
-	elgg_register_plugin_hook_handler("action", "groups/join", "group_tools_join_group_action_handler");
-	elgg_register_plugin_hook_handler("register", "menu:owner_block", "group_tools_register_owner_block_menu_handler");
-	elgg_register_plugin_hook_handler("route", "register", "group_tools_route_register_handler");
-	elgg_register_plugin_hook_handler("action", "register", "group_tools_action_register_handler");
-	elgg_register_plugin_hook_handler("group_tool_widgets", "widget_manager", "group_tools_tool_widgets_handler");
+	elgg_register_plugin_hook_handler('entity:url', 'object', '\ColdTrick\GroupTools\WidgetManager::widgetURL');
+	elgg_register_plugin_hook_handler('default', 'access', '\ColdTrick\GroupTools\Access::setGroupDefaultAccess');
+	elgg_register_plugin_hook_handler('default', 'access', '\ColdTrick\GroupTools\Access::validateGroupDefaultAccess', 999999);
+	elgg_register_plugin_hook_handler('access:collections:write', 'user', '\ColdTrick\GroupTools\Access::defaultAccessOptions');
+	elgg_register_plugin_hook_handler('action', 'groups/join', '\ColdTrick\GroupTools\Membership::groupJoinAction');
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', '\ColdTrick\GroupTools\OwnerBlockMenu::relatedGroups');
+	elgg_register_plugin_hook_handler('route', 'register', '\ColdTrick\GroupTools\Router::allowRegistration');
+	elgg_register_plugin_hook_handler('action', 'register', '\ColdTrick\GroupTools\Router::allowRegistration');
+	elgg_register_plugin_hook_handler('group_tool_widgets', 'widget_manager', '\ColdTrick\GroupTools\WidgetManager::groupToolWidgets');
 	
 	// actions
 	elgg_register_action("group_tools/toggle_admin", dirname(__FILE__) . "/actions/toggle_admin.php");

@@ -272,4 +272,109 @@ class Membership {
 		// restore access settings
 		elgg_set_ignore_access($ia);
 	}
+	
+	/**
+	 * Register a plugin hook, only during the group/join action
+	 *
+	 * @param string $hook         the name of the hook
+	 * @param string $type         the type of the hook
+	 * @param bool   $return_value current return value
+	 * @param null   $params       supplied params
+	 *
+	 * @return void
+	 */
+	public static function groupJoinAction($hook, $type, $return_value, $params) {
+		
+		// hacky way around a short comming of Elgg core to allow users to join a group
+		if (!group_tools_domain_based_groups_enabled()) {
+			return;
+		}
+		
+		elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Membership::groupJoinPermission');
+	}
+	
+	/**
+	 * A hook on the ->canEdit() of a group. This is done to allow e-mail domain users to join a group
+	 *
+	 * Note: this is a very hacky way arround a short comming of Elgg core
+	 *
+	 * @param string $hook         the name of the hook
+	 * @param string $type         the type of the hook
+	 * @param bool   $return_value current return value
+	 * @param null   $params       supplied params
+	 *
+	 * @return void|true
+	 */
+	public static function groupJoinPermission($hook, $type, $return_value, $params) {
+		
+		if (!empty($return_value)) {
+			// already allowed
+			return;
+		}
+		
+		if (!group_tools_domain_based_groups_enabled()) {
+			return;
+		}
+		
+		// domain based groups are enabled, lets check if this user is allowed to join based on that
+		$group = elgg_extract('entity', $params);
+		$user = elgg_extract('user', $params);
+		if (!($group instanceof \ElggGroup) || !($user instanceof \ElggUser)) {
+			return;
+		}
+		
+		if (!group_tools_check_domain_based_group($group, $user)) {
+			return;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Make a filter menu on the membership request page
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return vaue
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function filterMenu($hook, $type, $return_value, $params) {
+		
+		if (!elgg_in_context('group_membershipreq')) {
+			return;
+		}
+		
+		$entity = elgg_extract('entity', $params);
+		if (!($entity instanceof \ElggGroup)) {
+			return;
+		}
+		
+		$return_value = [];
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'membershipreq',
+			'text' => elgg_echo('group_tools:groups:membershipreq:requests'),
+			'href' => "groups/requests/{$entity->getGUID()}",
+			'is_trusted' => true,
+			'priority' => 100,
+		]);
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'invites',
+			'text' => elgg_echo('group_tools:groups:membershipreq:invitations'),
+			'href' => "groups/requests/{$entity->getGUID()}/invites",
+			'is_trusted' => true,
+			'priority' => 200,
+		]);
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'email_invites',
+			'text' => elgg_echo('group_tools:groups:membershipreq:email_invitations'),
+			'href' => "groups/requests/{$entity->getGUID()}/email_invites",
+			'is_trusted' => true,
+			'priority' => 300,
+		]);
+		
+		return $return_value;
+	}
 }

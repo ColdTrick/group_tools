@@ -924,7 +924,7 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	$loggedin_user = elgg_get_logged_in_user_entity();
 	
 	// register plugin hook to make sure transfer can complete
-	elgg_register_plugin_hook_handler('permissions_check', 'group', 'group_tools_admin_transfer_permissions_hook');
+	elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Access::allowGroupOwnerTransfer');
 	
 	$old_owner = $group->getOwnerEntity();
 	
@@ -1012,7 +1012,7 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	}
 	
 	// unregister plugin hook to make sure transfer can complete
-	elgg_unregister_plugin_hook_handler('permissions_check', 'group', 'group_tools_admin_transfer_permissions_hook');
+	elgg_unregister_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Access::allowGroupOwnerTransfer');
 	
 	return true;
 }
