@@ -21,8 +21,7 @@ elgg_register_event_handler("pagesetup", "system", "group_tools_pagesetup", 550)
 function group_tools_init() {
 	
 	// extend css & js
-	elgg_extend_view("css/elgg", "css/group_tools/site");
-	elgg_extend_view("css/admin", "css/group_tools/admin");
+	elgg_extend_view("css/elgg", "css/group_tools/site.css");
 	elgg_extend_view("js/elgg", "js/group_tools/site.js");
 	
 	// extend page handlers

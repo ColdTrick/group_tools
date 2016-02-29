@@ -13,7 +13,10 @@ if (!empty($members)) {
 	}
 }
 
-$form_data = '<label>' . elgg_echo('group_tools:mail:form:recipients') . ': <span id="group_tools_mail_recipients_count">' . count($friendpicker_value) . '</span></label>';
+$form_data = '<label>';
+$form_data .= elgg_echo('group_tools:mail:form:recipients');
+$form_data .= ': ' . elgg_format_element('span', ['id' => 'group_tools_mail_recipients_count'], count($friendpicker_value));
+$form_data .= '</label>';
 $form_data .= '<br />';
 $form_data .= elgg_view('output/url', [
 	'text' => elgg_echo('group_tools:mail:form:members:selection'),
