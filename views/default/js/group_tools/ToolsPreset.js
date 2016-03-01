@@ -55,7 +55,7 @@ define(["jquery", "elgg"], function($, elgg) {
 				$("#group-tools-preset-active .elgg-input-checkbox[value='yes']").not(":checked").click();
 			}
 			
-			if ($("#group-tools-preset-more .elgg-body > div").length == 0) {
+			if ($("#group-tools-preset-more .elgg-body > div").length === 0) {
 				$("#group-tools-preset-active .elgg-body > a").hide();
 			}
 		}

@@ -5,12 +5,12 @@ elgg.group_tools.mail_form_submit = function() {
 	var error_msg = "";
 	var error_count = 0;
 
-	if ($('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length == 0) {
+	if ($('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length === 0) {
 		error_msg += elgg.echo("group_tools:mail:form:js:members") + '\n';
 		error_count++;
 	}
 
-	if ($(this).find('input[name="description"]').val() == "") {
+	if ($(this).find('input[name="description"]').val() === "") {
 		error_msg += elgg.echo("group_tools:mail:form:js:description") + '\n';
 		error_count++;
 	}

@@ -18,7 +18,7 @@ $selected_tab = 'suggested';
 // build page elements
 // limit to 9 so we can have a nice 3 x 3 grid
 $groups = group_tools_get_suggested_groups(elgg_get_logged_in_user_entity(), 9);
-if ($groups) {
+if (!empty($groups)) {
 	// list suggested groups
 	$content = elgg_view('output/text', [
 		'value' => elgg_echo('group_tools:suggested_groups:info'),

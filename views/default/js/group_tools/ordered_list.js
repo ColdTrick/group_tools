@@ -6,7 +6,7 @@ define(function (require) {
 	
 	$('.group-tools-list-ordered').sortable({
 		update: function () {
-			var ordered_ids = new Array();
+			var ordered_ids = [];
 			$('.group-tools-list-ordered > li').each(function () {
 				var group_id = $(this).attr("id").replace("elgg-group-", "");
 				ordered_ids.push(group_id);
