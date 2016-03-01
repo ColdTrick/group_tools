@@ -89,7 +89,7 @@ switch ($subpage) {
 		// invited emails
 		$options = [
 			'selects' => [
-				'SUBSTRING_INDEX(v.string, '|', -1) AS invited_email',
+				'SUBSTRING_INDEX(v.string, "|", -1) AS invited_email',
 			],
 			'annotation_name' => 'email_invitation',
 			'annotation_owner_guid' => $group->getGUID(),

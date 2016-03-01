@@ -4,6 +4,10 @@
  *
  * @uses $vars['group_tool_presets'] the current group tool presets (if any)
  */
+
+// load js
+elgg_require_js('group_tools/group_tool_presets');
+
 $presets = elgg_extract('group_tool_presets', $vars);
 $group_tools = elgg_get_config('group_tool_options');
 
@@ -106,8 +110,3 @@ echo '</div>';
 echo '<div class="elgg-footer">';
 echo elgg_view('input/submit', ['value' => elgg_echo('save')]);
 echo '</div>';
-
-?>
-<script>
-	require(['group_tools/group_tool_presets']);
-</script>

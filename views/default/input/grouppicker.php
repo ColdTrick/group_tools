@@ -25,12 +25,12 @@ if (empty($vars['name'])) {
 $name = $vars['name'];
 $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 
-$guids = (array)elgg_extract('values', $vars, array());
+$guids = (array) elgg_extract('values', $vars, []);
 
 $handler = elgg_extract('handler', $vars, 'livesearch');
 $handler = htmlspecialchars($handler, ENT_QUOTES, 'UTF-8');
 
-$limit = (int)elgg_extract('limit', $vars, 0);
+$limit = (int) elgg_extract('limit', $vars, 0);
 
 ?>
 <div class="elgg-group-picker ui-front" data-limit="<?php echo $limit ?>" data-name="<?php echo $name ?>" data-handler="<?php echo $handler ?>">
@@ -40,10 +40,10 @@ $limit = (int)elgg_extract('limit', $vars, 0);
 		foreach ($guids as $guid) {
 			$entity = get_entity($guid);
 			if ($entity) {
-				echo elgg_view('input/grouppicker/item', array(
+				echo elgg_view('input/grouppicker/item', [
 					'entity' => $entity,
 					'input_name' => $vars['name'],
-				));
+				]);
 			}
 		}
 		?>
