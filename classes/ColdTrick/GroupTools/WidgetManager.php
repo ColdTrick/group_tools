@@ -71,12 +71,6 @@ class WidgetManager {
 					$return_value = "groups/member/{$owner->username}";
 				}
 				break;
-			case 'start_discussion':
-				$owner = $widget->getOwnerEntity();
-				if ($owner instanceof \ElggGroup) {
-					$return_value = "discussion/add/{$owner->getGUID()}";
-				}
-				break;
 			case 'group_related':
 				$return_value = "groups/related/{$widget->getOwnerGUID()}";
 				break;
@@ -111,7 +105,6 @@ class WidgetManager {
 			$return_value['enable'][] = 'group_forum_topics';
 		} else {
 			$return_value['disable'][] = 'group_forum_topics';
-			$return_value['disable'][] = 'start_discussion';
 		}
 			
 		if ($entity->related_groups_enable === 'yes') {

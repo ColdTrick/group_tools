@@ -72,9 +72,6 @@ function group_tools_init() {
 	// register index groups widget
 	elgg_register_widget_type('index_groups', elgg_echo('groups'), elgg_echo('widgets:index_groups:description'), ['index'], true);
 	
-	// quick start discussion
-	elgg_register_widget_type('start_discussion', elgg_echo('group_tools:widgets:start_discussion:title'), elgg_echo('group_tools:widgets:start_discussion:description'), ['index', 'dashboard', 'groups']);
-	
 	// group invitation
 	elgg_register_action('groups/invite', dirname(__FILE__) . '/actions/groups/invite.php');
 	

@@ -388,16 +388,6 @@ You can find the group here:
 	"widgets:group_news:settings:blog_count" => "Max number of blogs",
 	"widgets:group_news:settings:group_icon_size" => "Group icon size",
 	
-	// quick start discussion
-	'group_tools:widgets:start_discussion:title' => "Start a discussion",
-	'group_tools:widgets:start_discussion:description' => "Quickly start a discussion is a selected group",
-
-	'group_tools:widgets:start_discussion:login_required' => "In order to use this widget you need to be logged in",
-	'group_tools:widgets:start_discussion:membership_required' => "You must be a member of at least one group in order to use this widget. You can find interesting groups %shere%s.",
-
-	'group_tools:forms:discussion:quick_start:group' => "Select a group for this discussion",
-	'group_tools:forms:discussion:quick_start:group:required' => "Please select a group",
-	
 	'groups:search:title' => "Search for groups matching '%s'",
 	
 	// welcome message
