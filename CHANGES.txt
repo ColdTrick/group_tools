@@ -1,6 +1,29 @@
 Version History
 ===============
 
+6.0 (2016-03-02):
+
+- added: featured groups can now be selected as a filter tab
+- added: you can now search for group members on the group members page
+- changed: always return user in group invite autocomplete
+- changed: group membership decline from prompt to lightbox
+- changed: offloaded group mail sending #65
+- changed: tool preset button has title
+- fixed: deprecated use of class var in menuitem factory
+- fixed: group default access can be more public than content access
+- fixed: group edit visual flickering on load
+- fixed: group invite all friends button styling
+- fixed: group invite text is now sticky
+- fixed: index widget for groups used wrong url
+- fixed: js module not loading
+- fixed: language key usage
+- fixed: not using variable for group check
+- fixed: syntax errors
+- fixed: user gets notification when removing own group membership request
+- js: refactors a lot of js into amd
+- removed: show widgets on closed groups
+- removed: unused language keys
+
 5.0 (2015-07-08):
 
 - changes for Elgg 1.11
