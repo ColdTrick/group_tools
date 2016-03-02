@@ -265,10 +265,6 @@ You can find the group here:
 	'group_tools:groups:sorting:ordered' => "Ordered",
 	'group_tools:groups:sorting:suggested' => "Suggested",
 	
-	// discussion status
-	'group_tools:discussion:confirm:open' => "Are you sure you wish to reopen this topic?",
-	'group_tools:discussion:confirm:close' => "Are you sure you wish to close this topic?",
-	
 	// allow group members to invite
 	'group_tools:invite_members:title' => "Group members can invite",
 	'group_tools:invite_members:description' => "Allow the members of this group to invite new members",
@@ -337,10 +333,6 @@ You can find the group here:
 	'group_tools:action:fix_acl:success:excess' => "Successfully removed %d users from group ACLs",
 	'group_tools:action:fix_acl:success:without' => "Successfully created %d group ACLs",
 
-	// discussion toggle status
-	'group_tools:action:discussion:toggle_status:success:open' => "The topic was successfully reopened",
-	'group_tools:action:discussion:toggle_status:success:close' => "The topic was successfully closed",
-		
 	// Widgets
 	// Group River Widget
 	'widgets:group_river_widget:title' => "Group activity",

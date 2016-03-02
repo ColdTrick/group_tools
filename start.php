@@ -39,7 +39,6 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::relatedGroup');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showMemberCount');
-	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::discussionStatus');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showGroupHiddenIndicator');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup');
 	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\Membership::filterMenu');
@@ -173,8 +172,6 @@ function group_tools_init() {
 	elgg_register_action('groups/edit', dirname(__FILE__) . '/actions/groups/edit.php');
 	
 	elgg_register_action('group_tools/order_groups', dirname(__FILE__) . '/actions/order_groups.php', 'admin');
-	
-	elgg_register_action('discussion/toggle_status', dirname(__FILE__) . '/actions/discussion/toggle_status.php');
 }
 
 /**
