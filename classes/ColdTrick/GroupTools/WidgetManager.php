@@ -60,6 +60,8 @@ class WidgetManager {
 				}
 				break;
 			case 'index_groups':
+				$return_value = 'groups/all';
+				break;
 			case 'featured_groups':
 				$return_value = 'groups/all?filter=featured';
 				break;
