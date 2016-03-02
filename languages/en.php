@@ -278,12 +278,6 @@ You can find the group here:
 	'forum:group_tool_option:description' => "Allow the group members to start a discussion in a simple forum format.",
 	
 	// actions
-	'group_tools:action:error:input' => "Invalid input to perform this action",
-	'group_tools:action:error:entity' => "The given GUID didn't result in a correct entity",
-	'group_tools:action:error:edit' => "You don't have access to the given entity",
-	'group_tools:action:error:save' => "There was an error while saving the settings",
-	'group_tools:action:success' => "The settings where saved successfully",
-
 	// group edit
 	'group_tools:action:group:edit:error:default_access' => "The chosen default access level was more public than the group content access, therefore default access has been lowered to group members.",
 	
@@ -304,7 +298,6 @@ You can find the group here:
 	'group_tools:action:invite:success:add'=> "Successfully added %s users (%s already invited and %s already a member)",
 
 	// group - invite - accept e-mail
-	'group_tools:action:groups:email_invitation:error:input' => "Please enter an invitation code",
 	'group_tools:action:groups:email_invitation:error:code' => "The entered invitation code is no longer valid",
 	'group_tools:action:groups:email_invitation:error:join' => "An unknown error occured while joining the group %s, maybe you're already a member",
 	'group_tools:action:groups:email_invitation:success' => "You've successfully joined the group",

@@ -21,6 +21,6 @@ if (!$group->canEdit()) {
 
 $group->invite_members = $invite_members;
 
-system_message(elgg_echo('group_tools:action:success'));
+system_message(elgg_echo('admin:configuration:success'));
 
 forward($group->getURL());
