@@ -36,9 +36,6 @@ class WidgetManager {
 					$return_value = "groups/invitations/{$user->username}";
 				}
 				break;
-			case 'discussion':
-				$return_value = 'discussion/all';
-				break;
 			case 'group_forum_topics':
 				$page_owner = elgg_get_page_owner_entity();
 				if (($page_owner instanceof \ElggGroup)) {

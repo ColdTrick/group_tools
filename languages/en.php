@@ -356,11 +356,6 @@ You can find the group here:
 	'widgets:group_invitations:title' => "Group invitations",
   	'widgets:group_invitations:description' => "Shows the outstanding group invitations for the current user",
 
-	// Discussion
-	"widgets:discussion:settings:group_only" => "Only show discussions from groups you are member of",
-  	'widgets:discussion:more' => "View more discussions",
-  	"widgets:discussion:description" => "Shows the latest discussions",
-
 	// Forum topic widget
 	'widgets:group_forum_topics:description' => "Show the latest discussions",
 
