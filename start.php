@@ -86,9 +86,6 @@ function group_tools_init() {
 	// show group edit as tabbed
 	elgg_extend_view('groups/edit', 'group_tools/group_edit_tabbed', 1);
 	
-	// show group profile widgets - edit form
-	elgg_extend_view('groups/edit', 'group_tools/forms/profile_widgets', 400);
-	
 	// cleanup group side menu
 	elgg_extend_view('groups/edit', 'group_tools/forms/cleanup', 450);
 	
@@ -155,7 +152,6 @@ function group_tools_init() {
 	// actions
 	elgg_register_action('group_tools/toggle_admin', dirname(__FILE__) . '/actions/toggle_admin.php');
 	elgg_register_action('group_tools/mail', dirname(__FILE__) . '/actions/mail.php');
-	elgg_register_action('group_tools/profile_widgets', dirname(__FILE__) . '/actions/profile_widgets.php');
 	elgg_register_action('group_tools/cleanup', dirname(__FILE__) . '/actions/cleanup.php');
 	elgg_register_action('group_tools/invite_members', dirname(__FILE__) . '/actions/invite_members.php');
 	elgg_register_action('group_tools/welcome_message', dirname(__FILE__) . '/actions/welcome_message.php');

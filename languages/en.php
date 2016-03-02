@@ -206,11 +206,6 @@ You can find the group here:
 	'group_tools:notifications:enable' => "Enable notifications for everyone",
 	'group_tools:notifications:disable' => "Disable notifications for everyone",
 
-	// group profile widgets
-	'group_tools:profile_widgets:title' => "Show group profile widgets to non members",
-	'group_tools:profile_widgets:description' => "This is a closed group. Default no widgets are shown to non members. Here you can configure if you whish to change that.",
-	'group_tools:profile_widgets:option' => "Allow non members to view widgets on the group profile page:",
-
 	// group mail
 	'group_tools:mail:message:from' => "From group",
 
