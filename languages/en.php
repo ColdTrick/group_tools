@@ -271,7 +271,6 @@ You can find the group here:
 
 	// group tool option descriptions
 	'activity:group_tool_option:description' => "Show an activity feed about group related content.",
-	'forum:group_tool_option:description' => "Allow the group members to start a discussion in a simple forum format.",
 	
 	// actions
 	// group edit
