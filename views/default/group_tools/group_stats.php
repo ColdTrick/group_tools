@@ -11,15 +11,15 @@ if (!($group instanceof ElggGroup) || (elgg_get_plugin_setting('show_membership_
 
 if ($group->isPublicMembership()) {
 	$status = elgg_echo('groups:open');
-	$id = 'group_tools_status_open';
+	$class = 'group-tools-status-open';
 } else {
 	$status = elgg_echo('groups:closed');
-	$id = 'group_tools_status_closed';
+	$class = 'group-tools-status-closed';
 }
 
 $status = ucfirst($status);
 
 ?>
 <script type='text/javascript'>
-	$('div.groups-stats').append('<p id="<?php echo $id; ?>"><?php echo $status;?></p>');
+	$('div.groups-stats').append('<p class="<?php echo $class; ?>"><?php echo $status;?></p>');
 </script>
