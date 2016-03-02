@@ -355,9 +355,6 @@ You can find the group here:
 	'widgets:group_invitations:title' => "Group invitations",
   	'widgets:group_invitations:description' => "Shows the outstanding group invitations for the current user",
 
-	// Forum topic widget
-	'widgets:group_forum_topics:description' => "Show the latest discussions",
-
 	// index_groups
 	'widgets:index_groups:description' => "List groups from your community",
 	'widgets:index_groups:show_members' => "Show members count",

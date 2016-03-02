@@ -118,9 +118,6 @@ function group_tools_init() {
 	// theme sandbox
 	elgg_extend_view('theme_sandbox/forms', 'group_tools/theme_sandbox/grouppicker');
 	
-	// register index widget to show latest discussions
-	elgg_register_widget_type('group_forum_topics', elgg_echo('discussion:group'), elgg_echo('widgets:group_forum_topics:description'), ['groups']);
-	
 	// register events
 	elgg_register_event_handler('join', 'group', '\ColdTrick\GroupTools\Membership::groupJoin');
 	elgg_register_event_handler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
@@ -195,11 +192,6 @@ function group_tools_pagesetup() {
 	elgg_register_admin_menu_item('administer', 'group_bulk_delete', 'administer_utilities');
 	
 	if (elgg_in_context('groups') && ($page_owner instanceof ElggGroup)) {
-		if ($page_owner->forum_enable == 'no') {
-			// unset if not enabled for this plugin
-			elgg_unregister_widget_type('group_forum_topics');
-		}
-		
 		if (!empty($user)) {
 			// check multiple admin
 			if (elgg_get_plugin_setting('multiple_admin', 'group_tools') == 'yes') {

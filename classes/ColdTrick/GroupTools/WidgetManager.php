@@ -36,12 +36,6 @@ class WidgetManager {
 					$return_value = "groups/invitations/{$user->username}";
 				}
 				break;
-			case 'group_forum_topics':
-				$page_owner = elgg_get_page_owner_entity();
-				if (($page_owner instanceof \ElggGroup)) {
-					$return_value = "discussion/owner/{$page_owner->getGUID()}";
-				}
-				break;
 			case 'group_river_widget':
 				if ($widget->context !== 'groups') {
 					$group_guid = (int) $widget->group_guid;
@@ -98,12 +92,6 @@ class WidgetManager {
 		}
 		
 		// check different group tools for which we supply widgets
-		if ($entity->forum_enable === 'yes') {
-			$return_value['enable'][] = 'group_forum_topics';
-		} else {
-			$return_value['disable'][] = 'group_forum_topics';
-		}
-			
 		if ($entity->related_groups_enable === 'yes') {
 			$return_value['enable'][] = 'group_related';
 		} else {
