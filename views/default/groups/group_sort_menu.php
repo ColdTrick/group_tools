@@ -20,11 +20,6 @@ $tabs = [
 		'href' => 'groups/all?filter=popular',
 		'priority' => 300,
 	],
-	'discussion' => [
-		'text' => elgg_echo('groups:latestdiscussion'),
-		'href' => 'groups/all?filter=discussion',
-		'priority' => 400,
-	],
 	'open' => [
 		'text' => elgg_echo('group_tools:groups:sorting:open'),
 		'href' => 'groups/all?filter=open',
@@ -56,6 +51,14 @@ $tabs = [
 		'priority' => 900,
 	],
 ];
+
+if (elgg_is_active_plugin('discussions')) {
+	$tabs['discussion'] = [
+		'text' => elgg_echo('discussion:latest'),
+		'href' => 'groups/all?filter=discussion',
+		'priority' => 400,
+	];
+}
 
 foreach ($tabs as $name => $tab) {
 	$show_tab = false;

@@ -25,9 +25,8 @@ $noyes3_options = [
 ];
 
 $listing_options = [
-	'discussion' => elgg_echo('groups:latestdiscussion'),
-	'yours' => elgg_echo('groups:yours'),
 	'newest' => elgg_echo('sort:newest'),
+	'yours' => elgg_echo('groups:yours'),
 	'popular' => elgg_echo('sort:popular'),
 	'open' => elgg_echo('group_tools:groups:sorting:open'),
 	'closed' => elgg_echo('group_tools:groups:sorting:closed'),
@@ -36,6 +35,9 @@ $listing_options = [
 	'featured' => elgg_echo('status:featured'),
 	'suggested' => elgg_echo('group_tools:groups:sorting:suggested'),
 ];
+if (elgg_is_active_plugin('discussions')) {
+	$listing_options['discussion'] = elgg_echo('discussion:latest');
+}
 
 $hidden_indicator_options = [
 	'no' => elgg_echo('option:no'),
