@@ -71,7 +71,9 @@ class Router {
 				$resource_loaded = true;
 				break;
 			case 'group_invite_autocomplete':
-				$include_file = "{$pages_path}group_invite_autocomplete.php";
+				
+				echo elgg_view_resource('group_tools/groups/group_invite_autocomplete');
+				$resource_loaded = true;
 				break;
 			case 'add':
 				if (group_tools_is_group_creation_limited()) {
