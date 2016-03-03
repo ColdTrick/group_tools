@@ -1,6 +1,12 @@
 Version History
 ===============
 
+6.0.1 (2016-03-03):
+
+- fixed: group decline membership request lightbox error
+- fixed: group members search not working
+- fixed: group status indicator in owner_block
+
 6.0 (2016-03-02):
 
 - added: featured groups can now be selected as a filter tab
