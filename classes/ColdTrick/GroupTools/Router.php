@@ -79,13 +79,6 @@ class Router {
 					elgg_admin_gatekeeper();
 				}
 				break;
-			case 'invitations':
-				if (isset($page[1])) {
-					set_input('username', $page[1]);
-				}
-					
-				$include_file = "{$pages_path}groups/invitations.php";
-				break;
 			case 'related':
 				if (isset($page[1])) {
 					set_input('group_guid', $page[1]);

@@ -377,4 +377,83 @@ class Membership {
 		
 		return $return_value;
 	}
+	
+	/**
+	 * add menu items to the membershiprequest listing
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return vaue
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function membershiprequestMenu($hook, $type, $return_value, $params) {
+		
+		$user = elgg_extract('user', $params);
+		$group = elgg_extract('entity', $params);
+		
+		if (!($user instanceof \ElggUser) || !$user->canEdit()) {
+			return;
+		}
+		
+		if (!($group instanceof \ElggGroup)) {
+			return;
+		}
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'killrequest',
+			'text' => elgg_echo('revoke'),
+			'confirm' => elgg_echo('group_tools:group:invitations:request:revoke:confirm'),
+			'href' => "action/groups/killrequest?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
+			'is_action' => true,
+			'link_class' => 'elgg-button elgg-button-delete',
+		]);
+		
+		return $return_value;
+	}
+	
+	/**
+	 * add menu items to the emailinvitation listing
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return vaue
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function emailinvitationMenu($hook, $type, $return_value, $params) {
+		
+		$user = elgg_extract('user', $params);
+		$group = elgg_extract('entity', $params);
+		
+		if (!($user instanceof \ElggUser) || !$user->canEdit()) {
+			return;
+		}
+		
+		if (!($group instanceof \ElggGroup)) {
+			return;
+		}
+		
+		$invitecode = group_tools_generate_email_invite_code($group->getGUID(), $user->email);
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'accept',
+			'text' => elgg_echo('accept'),
+			'href' => "action/groups/email_invitation?invitecode={$invitecode}",
+			'link_class' => 'elgg-button elgg-button-submit',
+			'is_action' => true,
+		]);
+			
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'decline',
+			'text' => elgg_echo('delete'),
+			'href' => "action/groups/decline_email_invitation?invitecode={$invitecode}",
+			'confirm' => elgg_echo('groups:invite:remove:check'),
+			'is_action' => true,
+			'link_class' => 'elgg-button elgg-button-delete mlm',
+		]);
+		
+		return $return_value;
+	}
 }

@@ -42,6 +42,8 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showGroupHiddenIndicator');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup');
 	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\Membership::filterMenu');
+	elgg_register_plugin_hook_handler('register', 'menu:membershiprequest', '\ColdTrick\GroupTools\Membership::membershiprequestMenu');
+	elgg_register_plugin_hook_handler('register', 'menu:emailinvitation', '\ColdTrick\GroupTools\Membership::emailinvitationMenu');
 	
 	// group admins
 	if (group_tools_multiple_admin_enabled()) {
@@ -118,6 +120,11 @@ function group_tools_init() {
 	// theme sandbox
 	elgg_extend_view('theme_sandbox/forms', 'group_tools/theme_sandbox/grouppicker');
 	
+	// group invitations
+	elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinvitations');
+	elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/membershiprequests');
+	elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinviteform');
+	
 	// register events
 	elgg_register_event_handler('join', 'group', '\ColdTrick\GroupTools\Membership::groupJoin');
 	elgg_register_event_handler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
@@ -159,7 +166,7 @@ function group_tools_init() {
 	elgg_register_action('group_tools/group_tool_presets', dirname(__FILE__) . '/actions/admin/group_tool_presets.php', 'admin');
 	elgg_register_action('group_tools/admin/bulk_delete', dirname(__FILE__) . '/actions/admin/bulk_delete.php', 'admin');
 	
-	elgg_register_action('groups/email_invitation', dirname(__FILE__) . '/actions/groups/email_invitation.php');
+	elgg_register_action('group_tools/email_invitation', dirname(__FILE__) . '/actions/membership/email_invitation.php');
 	elgg_register_action('groups/decline_email_invitation', dirname(__FILE__) . '/actions/groups/decline_email_invitation.php');
 	elgg_register_action('group_tools/revoke_email_invitation', dirname(__FILE__) . '/actions/groups/revoke_email_invitation.php');
 	elgg_register_action('groups/edit', dirname(__FILE__) . '/actions/groups/edit.php');
