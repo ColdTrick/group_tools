@@ -3,7 +3,7 @@
  * A page to show (and add) related groups
  */
 
-$group_guid = (int) get_input('group_guid');
+$group_guid = (int) elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($group_guid, 'group');
 $group = get_entity($group_guid);

@@ -21,6 +21,7 @@ class Router {
 		}
 		
 		$include_file = false;
+		$resource_loaded = false;
 		$pages_path = elgg_get_plugins_path() . 'group_tools/pages/';
 		
 		$page = elgg_extract('segments', $return_value);
@@ -61,7 +62,7 @@ class Router {
 					echo elgg_view_resource("groups/requests/{$subpage}", [
 						'guid' => $guid,
 					]);
-					return false;
+					$resource_loaded = true;
 				}
 				break;
 			case 'mail':
@@ -78,11 +79,12 @@ class Router {
 				}
 				break;
 			case 'related':
-				if (isset($page[1])) {
-					set_input('group_guid', $page[1]);
-				}
-					
-				$include_file = "{$pages_path}groups/related.php";
+				$guid = elgg_extract('1', $page);
+				
+				echo elgg_view_resource('group_tools/groups/related', [
+					'guid' => $guid,
+				]);
+				$resource_loaded = true;
 				break;
 			case 'activity':
 				if (isset($page[1])) {
@@ -104,7 +106,11 @@ class Router {
 		}
 		
 		// did we want this page?
-		if (!empty($include_file)) {
+		if ($resource_loaded) {
+			// done by resource view
+			return false;
+		} elseif (!empty($include_file)) {
+			// we included a file
 			include($include_file);
 			return false;
 		}
