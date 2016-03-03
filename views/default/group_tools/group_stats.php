@@ -21,5 +21,7 @@ $status = ucfirst($status);
 
 ?>
 <script type='text/javascript'>
-	$('div.groups-stats').append('<p class="<?php echo $class; ?>"><?php echo $status;?></p>');
+	require(['jquery'], function($) {
+		$('div.groups-stats').append('<p class="<?php echo $class; ?>"><?php echo $status;?></p>');
+	});
 </script>
