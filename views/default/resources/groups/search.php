@@ -3,13 +3,14 @@
  * Overrule to group search page
  */
 
-elgg_push_breadcrumb(elgg_echo('groups'), 'groups/all');
 elgg_push_breadcrumb(elgg_echo('search'));
 
 $db_prefix = elgg_get_config('dbprefix');
-$query = sanitise_string(get_input('tag'));
+$tag = get_input("tag");
+$display_query = _elgg_get_display_query($tag);
+$query = sanitise_string($tag);
 
-$title = elgg_echo('groups:search:title', [$query]);
+$title = elgg_echo('groups:search:title', [$display_query]);
 $content = false;
 
 if (!empty($query)) {
@@ -42,7 +43,7 @@ if (!empty($query)) {
 		// 		));
 	
 		// 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
-	
+		
 		$tag_name_ids = [];
 		foreach ($profile_fields as $field) {
 			$tag_name_ids[] = elgg_get_metastring_id($field);

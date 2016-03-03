@@ -46,9 +46,6 @@ class Router {
 			case 'suggested':
 				$include_file = "{$pages_path}groups/suggested.php";
 				break;
-			case 'search':
-				$include_file = "{$pages_path}groups/search.php";
-				break;
 			case 'requests':
 				$subpage = elgg_extract('2', $page);
 				if (empty($subpage)) {
