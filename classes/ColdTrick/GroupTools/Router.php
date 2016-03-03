@@ -44,7 +44,8 @@ class Router {
 				
 				break;
 			case 'suggested':
-				$include_file = "{$pages_path}groups/suggested.php";
+				echo elgg_view_resource('group_tools/groups/suggested');
+				$resource_loaded = true;
 				break;
 			case 'requests':
 				$subpage = elgg_extract('2', $page);
