@@ -59,7 +59,7 @@ foreach ($requests as $user) {
 		'rel' => $user->getGUID(),
 		'data-colorbox-opts' => json_encode([
 			'inline' => true,
-			'href' => '#group-kill-request-{$user->getGUID()}',
+			'href' => "#group-kill-request-{$user->getGUID()}",
 			'width' => '600px',
 			'closeButton' => false,
 		]),
