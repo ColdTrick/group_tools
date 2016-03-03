@@ -46,7 +46,7 @@ if (elgg_is_xhr()) {
 }
 
 $content = elgg_view_form('group_tools/members_search', [
-	'action' => 'groups/members/{$guid}',
+	'action' => "groups/members/{$guid}",
 	'disable_security' => true,
 ]);
 $content .= $user_list;
