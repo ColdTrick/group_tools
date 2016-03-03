@@ -5,7 +5,7 @@
 
 elgg_gatekeeper();
 
-$group_guid = (int) get_input('group_guid', 0);
+$group_guid = (int) elgg_extract('group_guid', $vars);
 
 $group = get_entity($group_guid);
 if (!($group instanceof ElggGroup) || !$group->canEdit()) {
@@ -52,4 +52,3 @@ $body = elgg_view_layout('content', [
 
 // draw page
 echo elgg_view_page($title_text, $body);
-

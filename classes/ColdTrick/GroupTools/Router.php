@@ -64,9 +64,11 @@ class Router {
 				}
 				break;
 			case 'mail':
-				set_input('group_guid', $page[1]);
-		
-				$include_file = "{$pages_path}mail.php";
+				
+				echo elgg_view_resource('group_tools/groups/mail', [
+					'group_guid' => (int) elgg_extract('1', $page),
+				]);
+				$resource_loaded = true;
 				break;
 			case 'group_invite_autocomplete':
 				$include_file = "{$pages_path}group_invite_autocomplete.php";
