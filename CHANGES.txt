@@ -1,6 +1,33 @@
 Version History
 ===============
 
+7.0-rc.1 (2016-03-03):
+
+- changed: Elgg requirement to 2.0
+- changed: moved all group extend to resource view
+- changed: moved gorup_invite_autocomplete to resource view
+- changed: moved group mail page to resource view
+- changed: moved membership request management to resource views
+- changed: moved overrle of group activity page to resource view
+- changed: moved overrule of group search page to resource view
+- changed: moved related groups to resource view
+- changed: moved suggested groups to resource view
+- changed: overrule group invite page by resource view
+- changed: overrule group members page by resource
+- changed: user group invitations page
+- fixed: duplicate breadcrumb
+- fixed: group autocomplete javascript not working
+- fixed: group icon not loading
+- fixed: group listing filter menu
+- fixed: group status indicator javascript errors
+- fixed: styling issue on group invite results
+- removed: discussion object view
+- removed: discussions quick status toggle
+- removed: discussions tool option description
+- removed: discussions widget
+- removed: group_forum_topic widget
+- removed: start_discussion widget
+
 6.0 (2016-03-02):
 
 - added: featured groups can now be selected as a filter tab
