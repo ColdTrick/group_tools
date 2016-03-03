@@ -86,13 +86,6 @@ class Router {
 				]);
 				$resource_loaded = true;
 				break;
-			case 'activity':
-				if (isset($page[1])) {
-					set_input('guid', $page[1]);
-				}
-					
-				$include_file = "{$pages_path}groups/river.php";
-				break;
 			default:
 				// check if we have an old group profile link
 				if (isset($page[0]) && is_numeric($page[0])) {

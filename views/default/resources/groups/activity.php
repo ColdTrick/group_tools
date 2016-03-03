@@ -5,8 +5,7 @@
  * @todo remove when Elgg core supports this
  */
 
-$guid = (int) get_input('guid');
-
+$guid = (int) elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid, 'group');
 
 elgg_set_page_owner_guid($guid);
