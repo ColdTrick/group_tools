@@ -32,14 +32,14 @@ class Router {
 				
 				if (empty($filter) && !empty($default_filter)) {
 					$filter = $default_filter;
-					set_input('filter', $default_filter);
-				} elseif (empty($filter)) {
-					$filter = 'newest';
 					set_input('filter', $filter);
 				}
-					
+				
 				if (in_array($filter, ['yours', 'open', 'closed', 'alpha', 'ordered', 'suggested'])) {
-					$include_file = "{$pages_path}groups/all.php";
+					echo elgg_view_resource('group_tools/groups/all', [
+						'filter' => $filter,
+					]);
+					$resource_loaded = true;
 				}
 				
 				break;

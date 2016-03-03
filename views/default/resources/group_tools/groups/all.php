@@ -3,16 +3,12 @@
  * Extra tabs for the all groups page
  */
 
-// all groups doesn't get link to self
-elgg_pop_breadcrumb();
-elgg_push_breadcrumb(elgg_echo('groups'));
-
 // only register title button if allowed
 if ((elgg_get_plugin_setting('limited_groups', 'groups') != 'yes') || elgg_is_admin_logged_in()) {
 	elgg_register_title_button();
 }
 
-$selected_tab = get_input('filter');
+$selected_tab = elgg_extract('filter', $vars);
 
 // default group options
 $group_options = [
