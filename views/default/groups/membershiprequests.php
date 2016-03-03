@@ -18,69 +18,11 @@ if (empty($requests) || !is_array($requests)) {
 	return;
 }
 
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
-
-$content = '<ul class="elgg-list">';
-
-foreach ($requests as $user) {
-	$icon = elgg_view_entity_icon($user, 'tiny', ['use_hover' => true]);
-	
-	$user_title = elgg_view('output/url', [
-		'href' => $user->getURL(),
-		'text' => $user->name,
-		'is_trusted' => true,
-	]);
-	
-	$url = "action/groups/addtogroup?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}";
-	$accept_button = elgg_view('output/url', [
-		'href' => $url,
-		'text' => elgg_echo('accept'),
-		'class' => 'elgg-button elgg-button-submit group-tools-accept-request',
-		'rel' => $user->getGUID(),
-		'is_action' => true,
-	]);
-	
-	$form_vars = [
-		'id' => "group-kill-request-{$user->getGUID()}",
-		'data-guid' => $user->getGUID(),
-	];
-	$body_vars = [
-		'group' => $group,
-		'user' => $user,
-	];
-	$decline_form = elgg_view_form('groups/killrequest', $form_vars, $body_vars);
-	
-	$delete_button = elgg_format_element('div', ['class' => 'hidden'], $decline_form);
-	$delete_button .= elgg_view('output/url', [
-		'href' => false,
-		'text' => elgg_echo('decline'),
-		'class' => 'elgg-button elgg-button-delete mlm elgg-lightbox',
-		'rel' => $user->getGUID(),
-		'data-colorbox-opts' => json_encode([
-			'inline' => true,
-			'href' => '#group-kill-request-{$user->getGUID()}',
-			'width' => '600px',
-			'closeButton' => false,
-		]),
-	]);
-	
-	$body = elgg_format_element('h4', [], $user_title);
-	$alt = $accept_button . $delete_button;
-	
-	// build output
-	$user_listing = elgg_view_image_block($icon, $body, array('image_alt' => $alt));
-
-	$attr = [
-		'class' => 'elgg-item',
-		'data-guid' => $user->getGUID(),
-	];
-	$content .= elgg_format_element('li', $attr, $user_listing);
-}
-
-$content .= '</ul>';
-
-// pagination
-$content .= elgg_view('navigation/pagination', $vars);
-
-echo $content;
+$params = [
+	'items' => $requests,
+	'count' => count($requests),
+	'limit' => false,
+	'offset' => 0,
+	'item_view' => 'group_tools/format/group/membershiprequest',
+];
+echo elgg_view('page/components/list', $params);

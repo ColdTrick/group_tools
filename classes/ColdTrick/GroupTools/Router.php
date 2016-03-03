@@ -49,12 +49,20 @@ class Router {
 				$include_file = "{$pages_path}groups/search.php";
 				break;
 			case 'requests':
-				set_input('group_guid', $page[1]);
-				if (isset($page[2])) {
-					set_input('subpage', $page[2]);
+				$subpage = elgg_extract('2', $page);
+				if (empty($subpage)) {
+					break;
 				}
+				$guid = elgg_extract('1', $page);
+				if (elgg_view_exists("resources/groups/requests/{$subpage}")) {
 					
-				$include_file = "{$pages_path}groups/membershipreq.php";
+					elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+					
+					echo elgg_view_resource("groups/requests/{$subpage}", [
+						'guid' => $guid,
+					]);
+					return false;
+				}
 				break;
 			case 'mail':
 				set_input('group_guid', $page[1]);

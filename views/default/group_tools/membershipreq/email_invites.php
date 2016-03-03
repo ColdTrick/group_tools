@@ -10,6 +10,14 @@ if (empty($emails) || !is_array($emails)) {
 	return;
 }
 
+unset($vars['entity']);
+unset($vars['emails']);
+$vars['items'] = $emails;
+$vars['item_view'] = 'group_tools/format/group/email_invitation';
+
+echo elgg_view('page/components/list', $vars);
+return;
+
 $lis = [];
 foreach ($emails as $annotation) {
 	

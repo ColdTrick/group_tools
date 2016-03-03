@@ -331,54 +331,6 @@ class Membership {
 	}
 	
 	/**
-	 * Make a filter menu on the membership request page
-	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return vaue
-	 * @param array           $params       supplied params
-	 *
-	 * @return void|\ElggMenuItem[]
-	 */
-	public static function filterMenu($hook, $type, $return_value, $params) {
-		
-		if (!elgg_in_context('group_membershipreq')) {
-			return;
-		}
-		
-		$entity = elgg_extract('entity', $params);
-		if (!($entity instanceof \ElggGroup)) {
-			return;
-		}
-		
-		$return_value = [];
-		
-		$return_value[] = \ElggMenuItem::factory([
-			'name' => 'membershipreq',
-			'text' => elgg_echo('group_tools:groups:membershipreq:requests'),
-			'href' => "groups/requests/{$entity->getGUID()}",
-			'is_trusted' => true,
-			'priority' => 100,
-		]);
-		$return_value[] = \ElggMenuItem::factory([
-			'name' => 'invites',
-			'text' => elgg_echo('group_tools:groups:membershipreq:invitations'),
-			'href' => "groups/requests/{$entity->getGUID()}/invites",
-			'is_trusted' => true,
-			'priority' => 200,
-		]);
-		$return_value[] = \ElggMenuItem::factory([
-			'name' => 'email_invites',
-			'text' => elgg_echo('group_tools:groups:membershipreq:email_invitations'),
-			'href' => "groups/requests/{$entity->getGUID()}/email_invites",
-			'is_trusted' => true,
-			'priority' => 300,
-		]);
-		
-		return $return_value;
-	}
-	
-	/**
 	 * add menu items to the membershiprequest listing
 	 *
 	 * @param string          $hook         the name of the hook
@@ -452,6 +404,213 @@ class Membership {
 			'confirm' => elgg_echo('groups:invite:remove:check'),
 			'is_action' => true,
 			'link_class' => 'elgg-button elgg-button-delete mlm',
+		]);
+		
+		return $return_value;
+	}
+	
+	/**
+	 * add menu items to the group memberships page
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return vaue
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function groupMembershiprequests($hook, $type, $return_value, $params) {
+		
+		$group = elgg_extract('entity', $params);
+		if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
+			return;
+		}
+		
+		// add default membership request
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'membershipreq',
+			'text' => elgg_echo('group_tools:groups:membershipreq:requests'),
+			'href' => "groups/requests/{$group->getGUID()}",
+			'is_trusted' => true,
+			'priority' => 100,
+		]);
+		// invited users
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'invites',
+			'text' => elgg_echo('group_tools:groups:membershipreq:invitations'),
+			'href' => "groups/requests/{$group->getGUID()}/invites",
+			'is_trusted' => true,
+			'priority' => 200,
+		]);
+		// invited emails
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'email_invites',
+			'text' => elgg_echo('group_tools:groups:membershipreq:email_invitations'),
+			'href' => "groups/requests/{$group->getGUID()}/email_invites",
+			'is_trusted' => true,
+			'priority' => 300,
+		]);
+		
+		return $return_value;
+	}
+	
+	/**
+	 * add menu items to the membershiprequest for group admins
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return vaue
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function groupMembershiprequest($hook, $type, $return_value, $params) {
+		
+		$user = elgg_extract('entity', $params);
+		if (!($user instanceof \ElggUser)) {
+			return;
+		}
+		
+		$group = elgg_extract('group', $params);
+		if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
+			return;
+		}
+		
+		// accept button
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'accept',
+			'href' => "action/groups/addtogroup?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
+			'text' => elgg_echo('accept'),
+			'link_class' => 'elgg-button elgg-button-submit group-tools-accept-request',
+			'rel' => $user->getGUID(),
+			'is_action' => true,
+		]);
+		
+		// decline button
+		elgg_load_js('lightbox');
+		elgg_load_css('lightbox');
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'decline',
+			'href' => '#',
+			'text' => elgg_echo('decline'),
+			'link_class' => 'elgg-button elgg-button-delete mlm elgg-lightbox',
+			'rel' => $user->getGUID(),
+			'data-colorbox-opts' => json_encode([
+				'inline' => true,
+				'href' => "#group-kill-request-{$user->getGUID()}",
+				'width' => '600px',
+				'closeButton' => false,
+			]),
+		]);
+		
+		return $return_value;
+	}
+	
+	/**
+	 * add menu items to the user invitation for group admins
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return vaue
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function groupInvitation($hook, $type, $return_value, $params) {
+		
+		$user = elgg_extract('entity', $params);
+		if (!($user instanceof \ElggUser)) {
+			return;
+		}
+		
+		$group = elgg_extract('group', $params);
+		if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
+			return;
+		}
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'revoke',
+			'href' => "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
+			'confirm' => elgg_echo('group_tools:groups:membershipreq:invitations:revoke:confirm'),
+			'text' => elgg_echo('revoke'),
+			'link_class' => 'elgg-button elgg-button-delete mlm',
+		]);
+		
+		return $return_value;
+	}
+	
+	/**
+	 * add menu items to the email invitation for group admins
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return vaue
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function groupEmailInvitation($hook, $type, $return_value, $params) {
+		
+		$annotation = elgg_extract('annotation', $params);
+		if (!($annotation instanceof \ElggAnnotation)) {
+			return;
+		}
+		
+		$group = elgg_extract('group', $params);
+		if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
+			return;
+		}
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'revoke',
+			'href' => "action/group_tools/revoke_email_invitation?annotation_id={$annotation->id}&group_guid={$group->getGUID()}",
+			'confirm' => elgg_echo('group_tools:groups:membershipreq:invitations:revoke:confirm'),
+			'text' => elgg_echo('revoke'),
+			'link_class' => 'elgg-button elgg-button-delete mlm',
+		]);
+		
+		return $return_value;
+	}
+	
+	/**
+	 * add menu item to the page menu on the gruop profile page
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return vaue
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function groupProfileSidebar($hook, $type, $return_value, $params) {
+		
+		if (!elgg_in_context('group_profile')) {
+			return;
+		}
+		
+		$group = elgg_get_page_owner_entity();
+		if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
+			return;
+		}
+		
+		$requests_found = false;
+		foreach ($return_value as $menu_item) {
+			if ($menu_item->getName() === 'membership_requests') {
+				$requests_found = true;
+				break;
+			}
+		}
+		
+		if ($requests_found) {
+			return;
+		}
+		
+		// add link to the manage invitations page
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'membership_requests',
+			'text' => elgg_echo('group_tools:menu:invitations'),
+			'href' => "groups/requests/{$group->getGUID()}/invites",
 		]);
 		
 		return $return_value;

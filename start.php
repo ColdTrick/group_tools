@@ -41,9 +41,13 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showMemberCount');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showGroupHiddenIndicator');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup');
-	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\Membership::filterMenu');
 	elgg_register_plugin_hook_handler('register', 'menu:membershiprequest', '\ColdTrick\GroupTools\Membership::membershiprequestMenu');
 	elgg_register_plugin_hook_handler('register', 'menu:emailinvitation', '\ColdTrick\GroupTools\Membership::emailinvitationMenu');
+	elgg_register_plugin_hook_handler('register', 'menu:group:membershiprequests', '\ColdTrick\GroupTools\Membership::groupMembershiprequests');
+	elgg_register_plugin_hook_handler('register', 'menu:group:membershiprequest', '\ColdTrick\GroupTools\Membership::groupMembershiprequest');
+	elgg_register_plugin_hook_handler('register', 'menu:group:invitation', '\ColdTrick\GroupTools\Membership::groupInvitation');
+	elgg_register_plugin_hook_handler('register', 'menu:group:email_invitation', '\ColdTrick\GroupTools\Membership::groupEmailInvitation');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\GroupTools\Membership::groupProfileSidebar');
 	
 	// group admins
 	if (group_tools_multiple_admin_enabled()) {
@@ -208,38 +212,6 @@ function group_tools_pagesetup() {
 				// remove group tool options for group admins
 				if (($page_owner->getOwnerGUID() != $user->getGUID()) && !$user->isAdmin()) {
 					remove_group_tool_option('group_multiple_admin_allow');
-				}
-			}
-			
-			// invitation management
-			if ($page_owner->canEdit()) {
-				$request_options = [
-					'type' => 'user',
-					'relationship' => 'membership_request',
-					'relationship_guid' => $page_owner->getGUID(),
-					'inverse_relationship' => true,
-					'count' => true
-				];
-				
-				$requests = elgg_get_entities_from_relationship($request_options);
-				
-				$postfix = '';
-				if (!empty($requests)) {
-					$postfix = ' [' . $requests . ']';
-				}
-				
-				if (!$page_owner->isPublicMembership()) {
-					elgg_register_menu_item('page', [
-						'name' => 'membership_requests',
-						'text' => elgg_echo('groups:membershiprequests') . $postfix,
-						'href' => "groups/requests/{$page_owner->getGUID()}",
-					]);
-				} else {
-					elgg_register_menu_item('page', [
-						'name' => 'membership_requests',
-						'text' => elgg_echo('group_tools:menu:invitations') . $postfix,
-						'href' => "groups/requests/{$page_owner->getGUID()}",
-					]);
 				}
 			}
 		}
