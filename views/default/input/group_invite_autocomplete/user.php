@@ -21,6 +21,6 @@ if (check_entity_relationship($user->getGUID(), 'member', $group_guid)) {
 <div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover clearfix">
 	<input type="hidden" value="<?php echo $user->getGUID(); ?>" name="<?php echo $name; ?>" />
 	
-	<?php echo $content; ?>
 	<?php echo elgg_view_icon('delete-alt', 'elgg-discoverable float-alt'); ?>
+	<?php echo $content; ?>
 </div>
