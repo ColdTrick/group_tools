@@ -8,6 +8,7 @@ $current_users = sanitize_string(get_input('user_guids'));
 $limit = (int) get_input('limit', 50);
 $group_guid = (int) get_input('group_guid', 0);
 $relationship = sanitize_string(get_input('relationship', 'none'));
+$inputname = get_input('inputname');
 
 $include_self = get_input('include_self', false);
 if (!empty($include_self)) {
@@ -80,23 +81,19 @@ if ($relationship != 'email') {
 				'type' => 'email',
 				'value' => $q,
 				'label' => $q,
-				'content' => $q,
+				'html' => elgg_view('input/group_invite_autocomplete/email', [
+					'inputname' => $inputname,
+					'value' => $q,
+				]),
 			];
 		}
 	}
 }
 
 foreach ($users_found as $user) {
-	$content = elgg_view('output/img', [
-		'src' => $user->getIconURL('tiny'),
-		'alt' => $user->name,
-		'class' => 'mrs',
-	]);
-	$content .= $user->name;
 	$is_member = false;
 	if (check_entity_relationship($user->getGUID(), 'member', $group_guid)) {
 		$is_member = true;
-		$content .= ' - ' . elgg_format_element('span', ['class' => 'elgg-subtext'], elgg_echo('group_tools:groups:invite:user_already_member'));
 	}
 	
 	$result[] = [
@@ -104,8 +101,12 @@ foreach ($users_found as $user) {
 		'member' => $is_member,
 		'value' => $user->getGUID(),
 		'label' => $user->name,
-		'content' => $content,
 		'name' => $user->name,
+		'html' => elgg_view('input/group_invite_autocomplete/user', [
+			'inputname' => $inputname,
+			'user' => $user,
+			'group_guid' => $group_guid,
+		]),
 	];
 }
 
