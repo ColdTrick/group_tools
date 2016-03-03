@@ -77,6 +77,7 @@ if (elgg_is_admin_logged_in()) {
 		'name' => 'submit',
 		'value' => elgg_echo('group_tools:add_users'),
 		'onclick' => 'return confirm("' . elgg_echo('group_tools:group:invite:add:confirm') . '");',
+		'class' => 'mls',
 	]);
 }
 echo '</div>';

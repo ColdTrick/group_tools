@@ -56,11 +56,6 @@ class Router {
 					
 				$include_file = "{$pages_path}groups/membershipreq.php";
 				break;
-			case 'invite':
-				set_input('group_guid', $page[1]);
-					
-				$include_file = "{$pages_path}groups/invite.php";
-				break;
 			case 'mail':
 				set_input('group_guid', $page[1]);
 		

@@ -1,17 +1,11 @@
 <?php
-/**
- * Invite users to groups
- *
- * @package ElggGroups
- */
 
 elgg_gatekeeper();
 
-$guid = (int) get_input('group_guid');
-
+$guid = elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid, 'group');
-$group = get_entity($guid);
 
+$group = get_entity($guid);
 if (!$group->canEdit() && !group_tools_allow_members_invite($group)) {
 	register_error(elgg_echo('groups:noaccess'));
 	forward(REFERER);
@@ -23,7 +17,7 @@ elgg_set_page_owner_guid($guid);
 $invite = elgg_get_plugin_setting('invite', 'group_tools');
 $invite_email = elgg_get_plugin_setting('invite_email', 'group_tools');
 $invite_csv = elgg_get_plugin_setting('invite_csv', 'group_tools');
-	
+
 if (in_array('yes', [$invite, $invite_csv, $invite_email])) {
 	$title = elgg_echo('group_tools:groups:invite:title');
 	$breadcrumb = elgg_echo('group_tools:groups:invite');
@@ -32,27 +26,30 @@ if (in_array('yes', [$invite, $invite_csv, $invite_email])) {
 	$breadcrumb = elgg_echo('groups:invite');
 }
 
+// breadcrumb
 elgg_push_breadcrumb(elgg_echo('groups'), 'groups/all');
 elgg_push_breadcrumb($group->name, $group->getURL());
 elgg_push_breadcrumb($breadcrumb);
 
-$content = elgg_view_form('groups/invite', [
+
+$content = elgg_view_form('groups/invite', array(
 	'id' => 'invite_to_group',
 	'class' => 'elgg-form-alt mtm',
-	'enctype' => 'multipart/form-data',
-], [
+	'enctype' => 'multipart/form-data', // to allow csv upload
+), array(
 	'entity' => $group,
 	'invite' => $invite,
 	'invite_email' => $invite_email,
 	'invite_csv' => $invite_csv,
-]);
+));
 
 // build page
-$body = elgg_view_layout('content', [
+$params = array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-]);
+);
+$body = elgg_view_layout('content', $params);
 
 // draw page
 echo elgg_view_page($title, $body);
