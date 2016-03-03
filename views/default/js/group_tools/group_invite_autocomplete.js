@@ -25,7 +25,7 @@ define(function (require) {
 								var result = '';
 								
 								$('#' + data.destination + ' input[name="' + data.name + '[]"]').each(function(index, elem) {
-									if (result == '') {
+									if (result === '') {
 										result = $(this).val();
 									} else {
 										result += ',' + $(this).val();
