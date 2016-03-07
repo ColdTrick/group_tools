@@ -26,6 +26,9 @@ if (!$group->canEdit()) {
 $group_mail = new GroupMail();
 $group_mail->container_guid = $group_guid;
 
+$group_mail->title = $subject;
+$group_mail->description = $body;
+
 $group_mail->setRecipients($user_guids);
 
 $group_mail->enqueue();
