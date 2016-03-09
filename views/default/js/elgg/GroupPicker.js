@@ -56,7 +56,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			}
 		});
 
-		$('.elgg-group-picker-remove', this.$wrapper).live('click', function(event) {
+		this.$wrapper.on('click', '.elgg-group-picker-remove', function(event) {
 			self.removeGroup(event);
 		});
 
