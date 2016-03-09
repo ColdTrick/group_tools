@@ -87,7 +87,7 @@ if (isset($data_root)) {
 		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime('+6 months')), true);
 		header('Pragma: public');
 		header('Cache-Control: public');
-		header('Content-Length: $filesize');
+		header("Content-Length: {$filesize}");
 		header("ETag: \"{$etag}\"");
 		
 		echo $filecontents;
