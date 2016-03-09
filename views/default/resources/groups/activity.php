@@ -1,8 +1,11 @@
 <?php
 /**
- * Add a filter to the river page of a group
+ * the river page of a group
  *
- * @todo remove when Elgg core supports this
+ * Reasons for override
+ * - add type/subtype filter
+ * - don't use distinct in river query (for small performance increase)
+ *
  */
 
 $guid = (int) elgg_extract('guid', $vars);
@@ -28,6 +31,7 @@ if ($subtype) {
 // set river options
 $db_prefix = elgg_get_config('dbprefix');
 $options = [
+	'distinct' => false,
 	'joins' => [
 		"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
 		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
