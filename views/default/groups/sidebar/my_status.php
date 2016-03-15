@@ -11,7 +11,7 @@ $group = elgg_extract('entity', $vars);
 $user = elgg_get_logged_in_user_entity();
 $subscribed = elgg_extract('subscribed', $vars);
 
-if (!empty($user)) {
+if (empty($user)) {
 	return true;
 }
 
