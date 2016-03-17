@@ -1,5 +1,12 @@
-Version History
+Version history
 ===============
+
+6.0.2 (2016-03-17):
+
+- fixed: correctly check for logged in user
+- fixed: group admins can't edit group
+- fixed: group mail now saves subject and body
+- fixed: incorrect header in group thumbnail
 
 6.0.1 (2016-03-03):
 
