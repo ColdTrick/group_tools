@@ -1,5 +1,14 @@
-Version History
+Version history
 ===============
+
+7.0-rc.2 (2016-03-17):
+
+- changed: don't use distinct in river query
+- fixed: correctly check for logged in user
+- fixed: group admins can't edit group
+- fixed: group mail now saves subject and body
+- fixed: incorrect header in group thumbnail
+- fixed: replaced .live jquery usage with .on
 
 7.0-rc.1 (2016-03-03):
 
