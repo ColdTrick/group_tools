@@ -110,7 +110,7 @@ class GroupAdmins {
 		$entity = elgg_extract('entity', $params);
 		$user = elgg_extract('user', $params);
 
-		if (!($entity instanceof ElggGroup) || !($user instanceof ElggUser)) {
+		if (!($entity instanceof \ElggGroup) || !($user instanceof \ElggUser)) {
 			return;
 		}
 		
