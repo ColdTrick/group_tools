@@ -26,7 +26,7 @@ elgg.group_tools.mail_form_submit = function() {
 
 elgg.group_tools.mail_clear_members = function() {
 	$('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').each(function() {
-		$(this).removeAttr('checked');
+		$(this).prop('checked', false);
 	});
 
 	elgg.group_tools.mail_update_recipients();
@@ -34,7 +34,7 @@ elgg.group_tools.mail_clear_members = function() {
 
 elgg.group_tools.mail_all_members = function() {
 	$('#group_tools_mail_member_selection input[name="user_guids[]"]').each(function() {
-		$(this).attr('checked', 'checked');
+		$(this).prop('checked', true);
 	});
 
 	elgg.group_tools.mail_update_recipients();
@@ -48,7 +48,7 @@ elgg.group_tools.mail_update_recipients = function() {
 
 elgg.group_tools.init_mail = function() {
 	// group mail members
-	$('#group_tools_mail_member_selection input[type=checkbox]').live("change", elgg.group_tools.mail_update_recipients);
+	$(document).on("change", '#group_tools_mail_member_selection input[type=checkbox]', elgg.group_tools.mail_update_recipients);
 	$('#group_tools_mail_form').submit(elgg.group_tools.mail_form_submit);
 };
 
