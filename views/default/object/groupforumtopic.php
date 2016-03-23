@@ -66,7 +66,7 @@ if ($num_replies != 0) {
 
 	$replies_link = elgg_view('output/url', [
 		'href' => $topic->getURL() . '#group-replies',
-		'text' => elgg_echo('group:replies') . ' ($num_replies)',
+		'text' => elgg_echo('group:replies') . " ($num_replies)",
 		'is_trusted' => true,
 	]);
 }
