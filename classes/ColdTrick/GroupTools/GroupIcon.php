@@ -33,7 +33,7 @@ class GroupIcon {
 			
 			// handle missing metadata (pre 1.7 installations)
 			// @see groups_icon_url_override()
-			$fh = new ElggFile();
+			$fh = new \ElggFile();
 			$fh->owner_guid = $group->getOwnerGUID();
 			$fh->setFilename("groups/{$group->getGUID()}large.jpg");
 		
