@@ -7,20 +7,30 @@ $name = elgg_extract('inputname', $vars);
 $user = elgg_extract('user', $vars);
 $group_guid = (int) elgg_extract('group_guid', $vars);
 
-$content = elgg_view_entity_icon($user, 'tiny', [
+// user icon
+$icon = elgg_view_entity_icon($user, 'tiny', [
 	'use_hover' => false,
-	'class' => 'mrs float',
+	'use_link' => false,
 ]);
 
-$content .= $user->name;
+// body
+$body = elgg_view('input/hidden', [
+	'name' => "{$name}[]",
+	'value' => $user->getGUID(),
+]);
+$body .= elgg_view_icon('delete-alt', 'elgg-discoverable float-alt');
+$body .= elgg_format_element('h3', [], $user->name);
 if (check_entity_relationship($user->getGUID(), 'member', $group_guid)) {
-	$content .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:groups:invite:user_already_member'));
+	$body .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:groups:invite:user_already_member'));
 }
 
-?>
-<div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover clearfix">
-	<input type="hidden" value="<?php echo $user->getGUID(); ?>" name="<?php echo $name; ?>" />
-	
-	<?php echo elgg_view_icon('delete-alt', 'elgg-discoverable float-alt'); ?>
-	<?php echo $content; ?>
-</div>
+// build wrapper
+$wrapper_attr = [
+	'class' => [
+		'group_tools_group_invite_autocomplete_autocomplete_result',
+		'elgg-discover',
+		'clearfix',
+	],
+];
+
+echo elgg_format_element('div', $wrapper_attr, elgg_view_image_block($icon, $body));

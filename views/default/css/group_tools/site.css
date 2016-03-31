@@ -3,18 +3,21 @@
 	display: none;
 }
 
-#invite_to_group .group_tools_group_invite_autocomplete_autocomplete_result {
+#group_tools_group_invite_autocomplete_autocomplete_results .group_tools_group_invite_autocomplete_autocomplete_result {
 	border: 1px solid transparent;
 	border-radius: 5px;
-	padding: 3px;
 }
 
-#invite_to_group .group_tools_group_invite_autocomplete_autocomplete_result:hover {
+#group_tools_group_invite_autocomplete_autocomplete_results .group_tools_group_invite_autocomplete_autocomplete_result:hover {
 	border: 1px solid #CCCCCC;
 }
 
-#invite_to_group .group_tools_group_invite_autocomplete_autocomplete_result img {
-	vertical-align: middle;
+#group_tools_group_invite_autocomplete_autocomplete_results .elgg-avatar {
+	position: static;
+}
+
+.ui-autocomplete .group_tools_group_invite_autocomplete_autocomplete_result .elgg-icon-delete-alt.elgg-discoverable {
+	display: none;
 }
 
 .group_tools_group_invite_autocomplete_autocomplete_result .elgg-icon-delete-alt {

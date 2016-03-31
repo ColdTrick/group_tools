@@ -66,18 +66,15 @@ define(function (require) {
 				        results: function() {}
 				    }
 				}).data('ui-autocomplete')._renderItem = function(ul, item) {
-					var list_body = '';
-					list_body = item.html;
-					
 					return $('<li></li>')
 						.data('item.autocomplete', item)
-						.append('<a>' + list_body + '</a>')
+						.append(item.html)
 						.appendTo(ul);
 				};
 			});
 			
 			$(document).on('click', '#' + data.destination + ' .elgg-icon-delete-alt', function() {
-				$(this).parent('div').remove();
+				$(this).closest('.group_tools_group_invite_autocomplete_autocomplete_result').remove();
 			});
 		}
 	};
