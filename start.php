@@ -11,7 +11,6 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 // default elgg event handlers
 elgg_register_event_handler('init', 'system', 'group_tools_init');
 elgg_register_event_handler('ready', 'system', 'group_tools_ready');
-elgg_register_event_handler('pagesetup', 'system', 'group_tools_pagesetup', 550);
 
 /**
  * called when the Elgg system get initialized
@@ -30,6 +29,10 @@ function group_tools_init() {
 	
 	elgg_register_page_handler('groupicon', '\ColdTrick\GroupTools\GroupIcon::pageHandler');
 	elgg_register_plugin_hook_handler('entity:icon:url', 'group', '\ColdTrick\GroupTools\GroupIcon::getIconURL');
+	
+	// admin menu item
+	elgg_register_admin_menu_item('configure', 'group_tool_presets', 'appearance');
+	elgg_register_admin_menu_item('administer', 'group_bulk_delete', 'administer_utilities');
 	
 	// hook on title menu
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupMembership');
@@ -53,6 +56,12 @@ function group_tools_init() {
 	if (group_tools_multiple_admin_enabled()) {
 		// add group tool option
 		add_group_tool_option('group_multiple_admin_allow', elgg_echo('group_tools:multiple_admin:group_tool_option'), false);
+		
+		// extend group members sidebar list
+		elgg_extend_view('groups/sidebar/members', 'group_tools/group_admins', 400);
+		
+		// cleanup for group admins
+		elgg_extend_view('groups/edit/tools', 'group_tools/extends/groups/edit/tools/group_admins', 400);
 	}
 	
 	// notify admin on membership request
@@ -124,6 +133,12 @@ function group_tools_init() {
 	// theme sandbox
 	elgg_extend_view('theme_sandbox/forms', 'group_tools/theme_sandbox/grouppicker');
 	
+	// closed groups shouldn't be indexed by search engines
+	elgg_register_plugin_hook_handler('head', 'page', '\ColdTrick\GroupTools\PageLayout::noIndexClosedGroups');
+	
+	// cleanup sidebar
+	elgg_extend_view('page/elements/sidebar', 'group_tools/sidebar/cleanup');
+	
 	// group invitations
 	elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinvitations');
 	elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/membershiprequests');
@@ -186,46 +201,4 @@ function group_tools_init() {
 function group_tools_ready() {
 	// unregister dashboard widget group_activity
 	elgg_unregister_widget_type('group_activity');
-}
-
-/**
- * called just before a page starts with output
- *
- * @return void
- */
-function group_tools_pagesetup() {
-	
-	$user = elgg_get_logged_in_user_entity();
-	$page_owner = elgg_get_page_owner_entity();
-	
-	// admin menu item
-	elgg_register_admin_menu_item('configure', 'group_tool_presets', 'appearance');
-	elgg_register_admin_menu_item('administer', 'group_bulk_delete', 'administer_utilities');
-	
-	if (elgg_in_context('groups') && ($page_owner instanceof ElggGroup)) {
-		if (!empty($user)) {
-			// check multiple admin
-			if (elgg_get_plugin_setting('multiple_admin', 'group_tools') == 'yes') {
-				// extend group members sidebar list
-				elgg_extend_view('groups/sidebar/members', 'group_tools/group_admins', 400);
-				
-				// remove group tool options for group admins
-				if (($page_owner->getOwnerGUID() != $user->getGUID()) && !$user->isAdmin()) {
-					remove_group_tool_option('group_multiple_admin_allow');
-				}
-			}
-		}
-	}
-	
-	if ($page_owner instanceof ElggGroup) {
-		if (!$page_owner->isPublicMembership()) {
-			if (elgg_get_plugin_setting('search_index', 'group_tools') != 'yes') {
-				// closed groups should be indexed by search engines
-				elgg_extend_view('page/elements/head', 'metatags/noindex');
-			}
-		}
-		
-		// cleanup sidebar
-		elgg_extend_view('page/elements/sidebar', 'group_tools/sidebar/cleanup');
-	}
 }

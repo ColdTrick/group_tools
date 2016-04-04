@@ -4,8 +4,11 @@
  */
 
 $group = elgg_extract('entity', $vars);
-
 if (!($group instanceof ElggGroup)) {
+	return;
+}
+
+if (!group_tools_multiple_admin_enabled()) {
 	return;
 }
 
