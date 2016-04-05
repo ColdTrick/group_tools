@@ -7,27 +7,25 @@
 
 elgg_make_sticky_form('groups');
 
-/**
- * wrapper for recursive array walk decoding
- *
- * @param string &$v value
- *
- * @return string
- */
-function profile_array_decoder(&$v) {
-	$v = _elgg_html_decode($v);
-}
-
 // Get group fields
 $input = array();
 foreach (elgg_get_config('group') as $shortname => $valuetype) {
-	$input[$shortname] = get_input($shortname);
+	$value = get_input($shortname);
+
+	if ($value === null) {
+		// only submitted fields should be updated
+		continue;
+	}
+
+	$input[$shortname] = $value;
 
 	// @todo treat profile fields as unescaped: don't filter, encode on output
 	if (is_array($input[$shortname])) {
-		array_walk_recursive($input[$shortname], 'profile_array_decoder');
+		array_walk_recursive($input[$shortname], function (&$v) {
+			$v = elgg_html_decode($v);
+		});
 	} else {
-		$input[$shortname] = _elgg_html_decode($input[$shortname]);
+		$input[$shortname] = elgg_html_decode($input[$shortname]);
 	}
 
 	if ($valuetype == 'tags') {
@@ -35,7 +33,11 @@ foreach (elgg_get_config('group') as $shortname => $valuetype) {
 	}
 }
 
-$input['name'] = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
+// only set if submitted
+$name = get_input('name', null, false);
+if ($name !== null) {
+	$input['name'] = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+}
 
 $user = elgg_get_logged_in_user_entity();
 
