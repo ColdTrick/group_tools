@@ -37,11 +37,11 @@ if (!empty($profile_fields)) {
 		}
 		
 		$header = html_entity_decode($header);
-		$header = str_ireplace("\"", "\"\"", str_ireplace(PHP_EOL, "", $header));
+		$header = str_ireplace("\"", " ", str_ireplace(PHP_EOL, "", $header));
 		$headers[] = $header;
 	}
 }
-fwrite($fh, "\"" . implode("\";\"", $headers) . "\"" . PHP_EOL);
+fputcsv($fh, $headers, ';');
 
 // get members
 $options = [
@@ -67,19 +67,18 @@ foreach ($members as $member) {
 	if (!empty($profile_fields)) {
 		foreach ($profile_fields as $metadata_name => $type) {
 			
-			if ($type == 'tags') {
-				$value = implode(', ', $member->$metadata_name);
-			} else {
-				$value = $member->$metadata_name;
+			$value = $member->$metadata_name;
+			if (is_array($value)) {
+				$value = implode(', ', $value);
 			}
 			
 			$value = html_entity_decode($value);
-			$value = str_ireplace("\"", "\"\"", str_ireplace(PHP_EOL, "", $value));
+			$value = str_ireplace("\"", " ", str_ireplace(PHP_EOL, "", $value));
 			$info[] = $value;
 		}
 	}
 	
-	fwrite($fh, "\"" . implode("\";\"", $info) . "\"" . PHP_EOL);
+	fputcsv($fh, $info, ';');
 }
 
 // read the csv in to a var before output
