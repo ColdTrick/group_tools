@@ -39,11 +39,11 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupInvite');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::exportGroupMembers');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
-	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin', 501);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::relatedGroup');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showMemberCount');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showGroupHiddenIndicator');
-	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup', 501);
 	elgg_register_plugin_hook_handler('register', 'menu:membershiprequest', '\ColdTrick\GroupTools\Membership::membershiprequestMenu');
 	elgg_register_plugin_hook_handler('register', 'menu:emailinvitation', '\ColdTrick\GroupTools\Membership::emailinvitationMenu');
 	elgg_register_plugin_hook_handler('register', 'menu:group:membershiprequests', '\ColdTrick\GroupTools\Membership::groupMembershiprequests');
