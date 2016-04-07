@@ -13,7 +13,7 @@ if ($minChars < 1) {
 	$minChars = 3;
 }
 
-echo elgg_format_element('div', ['class' => 'ui-front'], elgg_view('input/text', [
+echo elgg_view('input/text', [
 	'id' => $id . '_autocomplete',
 	'class' => 'elgg-input-autocomplete',
 	'data-group-guid' => elgg_extract('group_guid', $vars),
@@ -21,7 +21,7 @@ echo elgg_format_element('div', ['class' => 'ui-front'], elgg_view('input/text',
 	'data-relationship' => $relationship,
 	'data-min-chars' => $minChars,
 	'data-destination' => $destination,
-]));
+]);
 
 echo elgg_format_element('div', ['id' => $destination, 'class' => 'mtm clearfloat']);
 ?>

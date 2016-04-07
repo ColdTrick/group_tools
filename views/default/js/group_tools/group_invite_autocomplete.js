@@ -65,11 +65,18 @@ define(function (require) {
 				        noResults: '',
 				        results: function() {}
 				    }
-				}).data('ui-autocomplete')._renderItem = function(ul, item) {
+				});
+				
+				$(this).data('ui-autocomplete')._renderItem = function(ul, item) {
 					return $('<li></li>')
 						.data('item.autocomplete', item)
 						.append(item.html)
 						.appendTo(ul);
+				};
+				
+				$(this).data('ui-autocomplete')._resizeMenu = function() {
+					var autocomplete = this.element[0];
+					this.menu.element.outerWidth( $(autocomplete).outerWidth() );
 				};
 			});
 			
