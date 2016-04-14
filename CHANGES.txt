@@ -1,6 +1,17 @@
 Version history
 ===============
 
+7.0 (2016-04-14):
+
+- changed: layout of group invite autocomplete results
+- changed: moved pagesetup logic to views/hooks
+- fixed: call to private Elgg function
+- fixed: group invites submitted to much data
+- fixed: incorrect namespaced class
+- fixed: php warning in member export
+- fixed: unable to select/unselect all group members on mail page
+- fixed: user actions don't show up in group member listing
+
 7.0-rc.2 (2016-03-17):
 
 - changed: don't use distinct in river query
