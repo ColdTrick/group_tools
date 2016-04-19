@@ -4,7 +4,19 @@ namespace ColdTrick\GroupTools;
 
 class Membership {
 	
+	/**
+	 * Auto notification plugin settings
+	 *
+	 * @var string[]
+	 */
 	protected static $AUTO_NOTIFICATIONS;
+	
+	/**
+	 * Show notification settings on group join
+	 *
+	 * @var bool
+	 */
+	protected static $NOTIFICATIONS_TOGGLE;
 	
 	/**
 	 * Load the plugin settings for notification settings on group join
@@ -126,6 +138,9 @@ class Membership {
 		// set notification settings
 		self::setGroupNotificationSettings($user, $group);
 		
+		// allow user to change notification settings
+		self::notificationsToggle($user, $group);
+		
 		// cleanup invites and membershiprequests
 		self::cleanupGroupInvites($user, $group);
 		
@@ -155,13 +170,73 @@ class Membership {
 		}
 		
 		// subscribe the user to the group
-		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
+		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 		foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
 			if (!in_array($method, self::$AUTO_NOTIFICATIONS)) {
 				continue;
 			}
 	
-			add_entity_relationship($user->getGUID(), "notify{$method}", $group->getGUID());
+			elgg_add_subscription($user->getGUID(), $method, $group->getGUID());
+		}
+	}
+	
+	/**
+	 * Allow a user to change the group notification settings when joined to a group
+	 *
+	 * @param \ElggUser  $user  the user joining
+	 * @param \ElggGroup $group the group joined
+	 *
+	 * @return void
+	 */
+	protected static function notificationsToggle(\ElggUser $user, \ElggGroup $group) {
+		static $register_once;
+		
+		if (!($user instanceof \ElggUser) || !($group instanceof \ElggGroup)) {
+			return;
+		}
+		
+		if (!isset(self::$NOTIFICATIONS_TOGGLE)) {
+			self::$NOTIFICATIONS_TOGGLE = false;
+			
+			$plugin_settings = elgg_get_plugin_setting('notification_toggle', 'group_tools');
+			if ($plugin_settings === 'yes' && elgg_is_active_plugin('notifications')) {
+				self::$NOTIFICATIONS_TOGGLE = true;
+			}
+		}
+		
+		if (!self::$NOTIFICATIONS_TOGGLE) {
+			return;
+		}
+		
+		$logged_in_user = elgg_get_logged_in_user_entity();
+		if (!empty($logged_in_user) && ($logged_in_user->getGUID() === $user->getGUID())) {
+			// user joined group on own action (join public group, accept invite, etc)
+			$notifications_enabled = self::notificationsEnabledForGroup($user, $group);
+			
+			$link_text = elgg_echo('group_tools:notifications:toggle:site:disabled:link');
+			$text_key = 'group_tools:notifications:toggle:site:disabled';
+			if ($notifications_enabled) {
+				$link_text = elgg_echo('group_tools:notifications:toggle:site:enabled:link');
+				$text_key = 'group_tools:notifications:toggle:site:enabled';
+			}
+			
+			$link = elgg_view('output/url', [
+				'text' => $link_text,
+				'href' => "action/group_tools/toggle_notifications?group_guid={$group->getGUID()}",
+				'is_action' => true,
+			]);
+			
+			system_message(elgg_echo($text_key, [$link]));
+		} else {
+			// user was joined by other means (group admin accepted request, added user, etc)
+			if (!empty($register_once)) {
+				return;
+			}
+			
+			$register_once = true;
+			
+			elgg_register_plugin_hook_handler('invite_notification', 'group_tools', '\ColdTrick\GroupTools\Membership::notificationAddedGroup');
+			elgg_register_plugin_hook_handler('email', 'system', '\ColdTrick\GroupTools\Membership::notificationEmail', 400);
 		}
 	}
 	
@@ -672,5 +747,126 @@ class Membership {
 		]);
 		
 		return $return_value;
+	}
+	
+	/**
+	 * Add a link to the notifications page so a user can change the group notification settings
+	 *
+	 * @param string $hook         the name of the hook
+	 * @param string $type         the type of the hook
+	 * @param string $return_value current return value
+	 * @param array  $params       supplied params
+	 *
+	 * @return void|string
+	 */
+	public static function notificationAddedGroup($hook, $type, $return_value, $params) {
+		
+		$group = elgg_extract('group', $params);
+		$user = elgg_extract('invitee', $params);
+		if (!($user instanceof \ElggUser) || !($group instanceof \ElggGroup)) {
+			return;
+		}
+		
+		$notifications_enabled = self::notificationsEnabledForGroup($user, $group);
+		$additional_msg = self::generateEmailNotificationText($user, $notifications_enabled);
+		
+		$return_value .= PHP_EOL . PHP_EOL . $additional_msg;
+		
+		return $return_value;
+	}
+	
+	/**
+	 * add menu item to the page menu on the gruop profile page
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return vaue
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function notificationEmail($hook, $type, $return_value, $params) {
+		
+		if (!is_array($return_value)) {
+			// someone already send the email
+			return;
+		}
+		
+		$mail_params = elgg_extract('params', $return_value);
+		if (!is_array($mail_params)) {
+			return;
+		}
+		
+		$action = elgg_extract('action', $mail_params);
+		$group = elgg_extract('object', $mail_params);
+		if (($action !== 'add_membership') || !($group instanceof \ElggGroup)) {
+			return;
+		}
+		
+		$notification = elgg_extract('notification', $mail_params);
+		if (!($notification instanceof \Elgg\Notifications\Notification)) {
+			return;
+		}
+		
+		$user = $notification->getRecipient();
+		if (!($user instanceof \ElggUser)) {
+			return;
+		}
+		
+		$notifications_enabled = self::notificationsEnabledForGroup($user, $group);
+		$additional_msg = self::generateEmailNotificationText($user, $notifications_enabled);
+		
+		$return_value['body'] .= PHP_EOL . PHP_EOL . $additional_msg;
+		
+		return $return_value;
+	}
+	
+	/**
+	 * Check if the user is receiving notifications from the group
+	 *
+	 * @param \ElggUser  $user  the user to check
+	 * @param \ElggGroup $group the group to check for
+	 *
+	 * @return bool
+	 */
+	public static function notificationsEnabledForGroup(\ElggUser $user, \ElggGroup $group) {
+		
+		if (!($user instanceof \ElggUser) || !($group instanceof \ElggGroup)) {
+			return false;
+		}
+		
+		$subscriptions = elgg_get_subscriptions_for_container($group->getGUID());
+		if (!is_array($subscriptions)) {
+			return false;
+		}
+		
+		if (!empty($subscriptions[$user->getGUID()])) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Generate text to append to an email notification with a link to the group notification settings
+	 *
+	 * @param \ElggUser $user    the user to generate for
+	 * @param bool      $enabled notifications enabled or not
+	 *
+	 * @return string
+	 */
+	protected static function generateEmailNotificationText(\ElggUser $user, $enabled) {
+		$enabled = (bool) $enabled;
+		
+		if (!($user instanceof \ElggUser)) {
+			return '';
+		}
+		
+		$notifications_url = elgg_normalize_url("notifications/group/{$user->username}");
+		if ($enabled) {
+			return elgg_echo('group_tools:notifications:toggle:email:enabled', [$notifications_url], $user->language);
+		}
+		
+		return elgg_echo('group_tools:notifications:toggle:email:disabled', [$notifications_url], $user->language);
 	}
 }

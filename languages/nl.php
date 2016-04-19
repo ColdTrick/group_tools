@@ -1,10 +1,19 @@
 <?php
 /**
- * This file was created by Translation Editor v4.0.1
- * On 2016-03-02 10:24
+ * This file was created by Translation Editor v5.1
+ * On 2016-04-19 15:49
  */
 
 return array (
+  'group_tools:settings:notifications:title' => 'Groep notificatie instellingen',
+  'group_tools:settings:notifications:notification_toggle' => 'Toon notificatie instelling bij het lid worden van een groep',
+  'group_tools:settings:notifications:notification_toggle:description' => 'Dit zal een systeem bericht tonen waarmee de gebruiker de notificatie instellingen kan aanpassen en in de e-mail notificaties over het groepslidmaatschap zal een link worden toegevoegd naar de notificatie instellingen voor de groep.',
+  'group_tools:notifications:toggle:email:enabled' => 'Op dit moment ontvang je notificaties over activiteit in deze groep. Als je geen notificaties wilt ontvangen verander dan hier %s de instellingen',
+  'group_tools:notifications:toggle:email:disabled' => 'Op dit moment ontvang je geen notificaties over activiteit in deze groep. Als je notificaties wilt ontvangen verander dan hier %s de instellingen.',
+  'group_tools:notifications:toggle:site:enabled' => 'Op dit moment ontvang je notificaties over activiteit in deze groep. Als je geen notificaties wilt ontvangen klik dan hier: %s',
+  'group_tools:notifications:toggle:site:enabled:link' => 'notificaties uitschakelen',
+  'group_tools:notifications:toggle:site:disabled' => 'Op dit moment ontvang je geen notificaties over activiteit in deze groep. Als je notificaties wilt ontvangen klik dan hier: %s',
+  'group_tools:notifications:toggle:site:disabled:link' => 'notificaties inschakelen',
   'item:object:group_tools_group_mail' => 'Groepmail',
   'group_tools:forms:members_search:members_search:placeholder' => 'Type de naam of gebruikersnaam van een gebruiker om te zoeken',
   'group_tools:action:group:edit:error:default_access' => 'Het gekozen standaard toegangsniveau is meer publiek dan de groep content toegang, daarom is het standaard toegangsniveau verlaagd naar groepsleden.',
@@ -42,7 +51,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:group:edit:tools' => 'Tools',
   'group_tools:admin_transfer:current' => 'Behoud huidige eigenaar: %s',
   'activity:group_tool_option:description' => 'Toon een activiteiten stroom van groep gerelateerde content.',
-  'forum:group_tool_option:description' => 'Geef de groepsleden de mogelijkheid een discussie te starten in een eenvoudig forum formaat.',
   'group_tools:action:group_tool:presets:saved' => 'Groep tool sets opgeslagen',
   'group_tools:delete_selected' => 'Verwijder selectie',
   'admin:administer_utilities:group_bulk_delete' => 'Bulk groep verwijderen',
@@ -119,16 +127,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:settings:show_membership_mode' => 'Toon open/gesloten lidmaatschap status op het profiel van een groep en in de zijbalk',
   'group_tools:invite_members:title' => 'Groepsleden mogen uitnodigen',
   'group_tools:invite_members:description' => 'Mogen de leden van deze groep nieuwe leden uitnodigen',
-  'group_tools:widgets:start_discussion:title' => 'Begin een discussie',
-  'group_tools:widgets:start_discussion:description' => 'Begin snel een discussie in de geselecteerde groep',
-  'group_tools:widgets:start_discussion:login_required' => 'Om gebruik te kunnen maken van deze widget moet je zijn aangemeld',
-  'group_tools:widgets:start_discussion:membership_required' => 'Je moet van ten minste één groep lid zijn om gebruik te kunnen maken. %sHier%s kun je interessante groepen vinden.',
-  'group_tools:forms:discussion:quick_start:group' => 'Selecteer een groep voor deze discussie',
-  'group_tools:forms:discussion:quick_start:group:required' => 'Selecteer een groep',
-  'group_tools:discussion:confirm:open' => 'Weet je zeker dat je deze discussie wilt heropenen?',
-  'group_tools:discussion:confirm:close' => 'Weet je zeker dat je deze discussie wilt sluiten?',
-  'group_tools:action:discussion:toggle_status:success:open' => 'De discussie is succesvol heropent',
-  'group_tools:action:discussion:toggle_status:success:close' => 'De discussie is succesvol gesloten',
   'group_tools:cleanup:my_status' => 'Verberg de Mijn Status zijbalk',
   'group_tools:cleanup:my_status:explain' => 'In de zijbalk op de groepsprofiel pagina is er een item welke je informatie toont over je groepslidmaatschap. Tevens wordt hier andere status informatie getoond. Je kunt deze zijbalk verbergen.',
   'group_tools:settings:fix:title' => 'Los problemen met groep toegang op',
@@ -170,15 +168,11 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:default_access:title' => 'Standaard groepstoegang',
   'group_tools:default_access:description' => 'Hier kun je aangeven wat het standaard toegangsniveau moet zijn van nieuwe content in je groep.',
   'group_tools:actions:cleanup:success' => 'De opschoon instellingen zijn succesvol opgeslagen',
-  'widgets:discussion:settings:group_only' => 'Toon alleen discussies uit je eigen groepen',
-  'widgets:discussion:more' => 'Bekijk meer discussies',
-  'widgets:discussion:description' => 'Toont de laatste discussies',
   'widgets:index_groups:description' => 'Toont groepen uit de community',
   'widgets:index_groups:show_members' => 'Toon aantal groepsleden',
   'widgets:index_groups:featured' => 'Toon enkel aangeraden groepen',
   'widgets:group_news:settings:group_icon_size' => 'Groep icoon grootte',
   'widgets:group_news:title' => 'Groep nieuws',
-  'widgets:group_forum_topics:description' => 'Toon de laatste discussies',
   'widgets:group_news:description' => 'Toont de laatste 5 blogs van verschillende groepen',
   'widgets:group_news:no_projects' => 'Geen groepen geconfigureerd',
   'widgets:group_news:no_news' => 'Geen blogs voor deze groep',

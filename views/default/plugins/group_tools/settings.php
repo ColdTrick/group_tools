@@ -81,34 +81,6 @@ $body .= elgg_view('input/select', [
 $body .= '</div>';
 
 $body .= '<div>';
-$body .= elgg_echo('group_tools:settings:auto_notification');
-if ($plugin->auto_notification == 'yes') {
-	// Backwards compatibility
-	$body .= elgg_view('input/hidden', [
-		'name' => 'params[auto_notification]',
-		'value' => '0',
-	]);
-	$plugin->auto_notification_site = '1';
-	$plugin->auto_notification_email = '1';
-}
-$body .= '<ul class="mll">';
-$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
-foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-	$name = "auto_notification_{$method}";
-	$checkbox_options = [
-		'name' => "params[{$name}]",
-		'value' => '1',
-		'label' => elgg_echo("notification:method:{$method}"),
-	];
-	if ($plugin->$name == '1') {
-		$checkbox_options['checked'] = 'checked';
-	}
-	$body .= elgg_format_element('li', [], elgg_view('input/checkbox', $checkbox_options));
-}
-$body .= '</ul>';
-$body .= '</div>';
-
-$body .= '<div>';
 $body .= elgg_echo('group_tools:settings:show_membership_mode');
 $body .= elgg_view('input/select', [
 	'name' => 'params[show_membership_mode]',
@@ -209,6 +181,53 @@ foreach ($listing_options as $tab => $tab_title) {
 }
 $body .= '</ul>';
 $body .= '</div>';
+
+echo elgg_view_module('inline', $title, $body);
+
+// notifications
+$title = elgg_echo('group_tools:settings:notifications:title');
+$body = '';
+
+// auto set notifications
+$auto_notifications = elgg_echo('group_tools:settings:auto_notification');
+if ($plugin->auto_notification == 'yes') {
+	// Backwards compatibility
+	$auto_notifications .= elgg_view('input/hidden', [
+		'name' => 'params[auto_notification]',
+		'value' => '0',
+	]);
+	$plugin->auto_notification_site = '1';
+	$plugin->auto_notification_email = '1';
+}
+$auto_notifications_lis = [];
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
+foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+	$name = "auto_notification_{$method}";
+	$checkbox_options = [
+		'name' => "params[{$name}]",
+		'value' => '1',
+		'label' => elgg_echo("notification:method:{$method}"),
+	];
+	if ($plugin->$name == '1') {
+		$checkbox_options['checked'] = 'checked';
+	}
+	$auto_notifications_lis[] = elgg_format_element('li', [], elgg_view('input/checkbox', $checkbox_options));
+}
+$auto_notifications .= elgg_format_element('ul', ['class' => 'mll'], implode('', $auto_notifications_lis));
+
+$body .= elgg_format_element('div', [], $auto_notifications);
+
+// show toggle for group notification settings
+$notification_toggle = elgg_echo('group_tools:settings:notifications:notification_toggle');
+$notification_toggle .= elgg_view('input/select', [
+	'name' => 'params[notification_toggle]',
+	'value' => $plugin->notification_toggle,
+	'options_values' => $noyes_options,
+	'class' => 'mls',
+]);
+$notification_toggle .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:settings:notifications:notification_toggle:description'));
+
+$body .= elgg_format_element('div', [], $notification_toggle);
 
 echo elgg_view_module('inline', $title, $body);
 

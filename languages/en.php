@@ -35,7 +35,11 @@ $english = array(
 
 	'group_tools:settings:multiple_admin' => "Allow multiple group admins",
 	'group_tools:settings:auto_suggest_groups' => "Auto suggest groups on the 'Suggested' groups page based on profile information. Will be completed with the predefined suggested groups. Setting this to 'No' will only show the predefined suggested groups (if there are any).",
-
+	
+	'group_tools:settings:notifications:title' => "Group notification settings",
+	'group_tools:settings:notifications:notification_toggle' => "Show notification settings on group join",
+	'group_tools:settings:notifications:notification_toggle:description' => "This will show a system message where to user can toggle the notification settings, and add a link in the e-mail notification to the group notification settings.",
+	
 	'group_tools:settings:invite' => "Allow all users to be invited (not just friends)",
 	'group_tools:settings:invite_email' => "Allow all users to be invited by e-mail address",
 	'group_tools:settings:invite_csv' => "Allow all users to be invited by CSV-file",
@@ -206,6 +210,14 @@ You can find the group here:
 	'group_tools:notifications:enable' => "Enable notifications for everyone",
 	'group_tools:notifications:disable' => "Disable notifications for everyone",
 
+	'group_tools:notifications:toggle:email:enabled' => "Currently you are receiving notifications about activity in this group. If you don't want to receive notifications, change the settings here %s",
+	'group_tools:notifications:toggle:email:disabled' => "Currently you are not receiving notifications about activity in this group. If you want to receive notifications, change the settings here %s",
+	
+	'group_tools:notifications:toggle:site:enabled' => "Currently you are receiving notifications about activity in this group. If you don't want to receive notifications, click here %s",
+	'group_tools:notifications:toggle:site:enabled:link' => "disable notifications",
+	'group_tools:notifications:toggle:site:disabled' => "Currently you are not receiving notifications about activity in this group. If you want to receive notifications, click here %s",
+	'group_tools:notifications:toggle:site:disabled:link' => "enable notifications",
+	
 	// group mail
 	'group_tools:mail:message:from' => "From group",
 
