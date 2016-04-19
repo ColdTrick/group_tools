@@ -123,19 +123,60 @@ class Membership {
 			return;
 		}
 		
+		// set notification settings
+		self::setGroupNotificationSettings($user, $group);
+		
+		// cleanup invites and membershiprequests
+		self::cleanupGroupInvites($user, $group);
+		
+		// welcome message
+		self::sendWelcomeMessage($user, $group);
+	}
+	
+	/**
+	 * Set the user's notification settings for the group
+	 *
+	 * @param \ElggUser  $user  user to set settings for
+	 * @param \ElggGroup $group group to set settings for
+	 *
+	 * @return void
+	 */
+	protected static function setGroupNotificationSettings(\ElggUser $user, \ElggGroup $group) {
+		
+		if (!($user instanceof \ElggUser) || !($group instanceof \ElggGroup)) {
+			return;
+		}
+		
 		// load notification settings
 		self::loadAutoNotifications();
 		
-		if (!empty(self::$AUTO_NOTIFICATIONS)) {
-			// subscribe the user to the group
-			$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
-			foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
-				if (!in_array($method, self::$AUTO_NOTIFICATIONS)) {
-					continue;
-				}
-				
-				add_entity_relationship($user->getGUID(), "notify{$method}", $group->getGUID());
+		if (empty(self::$AUTO_NOTIFICATIONS)) {
+			return;
+		}
+		
+		// subscribe the user to the group
+		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
+		foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
+			if (!in_array($method, self::$AUTO_NOTIFICATIONS)) {
+				continue;
 			}
+	
+			add_entity_relationship($user->getGUID(), "notify{$method}", $group->getGUID());
+		}
+	}
+	
+	/**
+	 * Cleanup group invitations and membershiprequests
+	 *
+	 * @param \ElggUser  $user  the user to cleanup for
+	 * @param \ElggGroup $group the group to cleanup on
+	 *
+	 * @return void
+	 */
+	protected static function cleanupGroupInvites(\ElggUser $user, \ElggGroup $group) {
+		
+		if (!($user instanceof \ElggUser) || !($group instanceof \ElggGroup)) {
+			return;
 		}
 		
 		// cleanup invites
@@ -156,22 +197,39 @@ class Membership {
 		} elseif ($annotations = elgg_get_annotations($options)) {
 			group_tools_delete_annotations($annotations);
 		}
+	}
+	
+	/**
+	 * Send a welcome message to the new user of the group
+	 *
+	 * @param \ElggUser  $recipient the new user
+	 * @param \ElggGroup $group     the group
+	 *
+	 * @return void
+	 */
+	protected static function sendWelcomeMessage(\ElggUser $recipient, \ElggGroup $group) {
 		
-		// welcome message
+		if (!($recipient instanceof \ElggUser) || !($group instanceof \ElggGroup)) {
+			return;
+		}
+		
+		// get welcome messgae
 		$welcome_message = $group->getPrivateSetting('group_tools:welcome_message');
 		$check_message = trim(strip_tags($welcome_message));
-		if (!empty($check_message)) {
-			// replace the place holders
-			$welcome_message = str_ireplace('[name]', $user->name, $welcome_message);
-			$welcome_message = str_ireplace('[group_name]', $group->name, $welcome_message);
-			$welcome_message = str_ireplace('[group_url]', $group->getURL(), $welcome_message);
-			
-			// subject
-			$subject = elgg_echo('group_tools:welcome_message:subject', [$group->name]);
-			
-			// notify the user
-			notify_user($user->getGUID(), $group->getGUID(), $subject, $welcome_message);
+		if (empty($check_message)) {
+			return;
 		}
+		
+		// replace the place holders
+		$welcome_message = str_ireplace('[name]', $recipient->name, $welcome_message);
+		$welcome_message = str_ireplace('[group_name]', $group->name, $welcome_message);
+		$welcome_message = str_ireplace('[group_url]', $group->getURL(), $welcome_message);
+			
+		// subject
+		$subject = elgg_echo('group_tools:welcome_message:subject', [$group->name]);
+			
+		// notify the user
+		notify_user($recipient->getGUID(), $group->getGUID(), $subject, $welcome_message);
 	}
 	
 	/**
