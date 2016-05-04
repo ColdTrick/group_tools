@@ -455,6 +455,10 @@ You can find the group here:
 	// group bulk delete
 	'group_tools:action:bulk_delete:success' => "The selected groups were deleted",
 	'group_tools:action:bulk_delete:error' => "An error occured while deleting the groups, please try again",
+	
+	// group toggle notifications
+	'group_tools:action:toggle_notifications:disabled' => "The notifications for the group '%s' have been disabled",
+	'group_tools:action:toggle_notifications:enabled' => "The notfications for the group '%s' have been enabled",
 );
 
 add_translation("en", $english);

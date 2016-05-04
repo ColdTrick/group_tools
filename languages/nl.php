@@ -1,10 +1,12 @@
 <?php
 /**
  * This file was created by Translation Editor v5.1
- * On 2016-04-19 15:49
+ * On 2016-05-04 10:42
  */
 
 return array (
+  'group_tools:action:toggle_notifications:disabled' => 'De notificaties voor de groep \'%s\' zijn uitgeschakeld',
+  'group_tools:action:toggle_notifications:enabled' => 'De notificaties voor de groep \'%s\' zijn ingeschakeld',
   'group_tools:settings:notifications:title' => 'Groep notificatie instellingen',
   'group_tools:settings:notifications:notification_toggle' => 'Toon notificatie instelling bij het lid worden van een groep',
   'group_tools:settings:notifications:notification_toggle:description' => 'Dit zal een systeem bericht tonen waarmee de gebruiker de notificatie instellingen kan aanpassen en in de e-mail notificaties over het groepslidmaatschap zal een link worden toegevoegd naar de notificatie instellingen voor de groep.',

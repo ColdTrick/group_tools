@@ -17,6 +17,8 @@ if ($notifications_enabled) {
 	foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
 		elgg_remove_subscription($user->getGUID(), $method, $group->getGUID());
 	}
+	
+	system_message(elgg_echo('group_tools:action:toggle_notifications:disabled', [$group->name]));
 } else {
 	// user has no notification settings for this group and wishes to enable this
 	$user_settings = get_user_notification_settings($user->getGUID());
@@ -45,7 +47,8 @@ if ($notifications_enabled) {
 	foreach ($found as $method) {
 		elgg_add_subscription($user->getGUID(), $method, $group->getGUID());
 	}
+	
+	system_message(elgg_echo('group_tools:action:toggle_notifications:enabled', [$group->name]));
 }
 
-system_message(elgg_echo('save:success'));
 forward(REFERER);
