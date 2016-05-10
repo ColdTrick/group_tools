@@ -36,7 +36,7 @@ elgg_push_context('group_sort_menu');
 
 echo elgg_view_menu('filter', [
 	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
+	'class' => 'elgg-menu-hz group-tools-group-sort-menu',
 	'handler' => 'groups',
 	'selected' => elgg_extract('selected', $vars),
 ]);

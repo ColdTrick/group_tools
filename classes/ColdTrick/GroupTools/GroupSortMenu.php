@@ -95,7 +95,7 @@ class GroupSortMenu {
 			'text' => elgg_view_icon('sort'),
 			'title' => elgg_echo('sort'),
 			'href' => '#',
-			'priority' => 9000,
+			'priority' => -1, // needs to be first
 		]);
 		
 		// add sorting options
@@ -108,6 +108,7 @@ class GroupSortMenu {
 			]),
 			'priority' => 100,
 			'parent_name' => 'sorting',
+			'selected' => get_input('sort') === 'newest',
 		]);
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'alpha',
@@ -118,6 +119,7 @@ class GroupSortMenu {
 			]),
 			'priority' => 200,
 			'parent_name' => 'sorting',
+			'selected' => get_input('sort') === 'alpha',
 		]);
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'popular',
@@ -128,6 +130,7 @@ class GroupSortMenu {
 			]),
 			'priority' => 300,
 			'parent_name' => 'sorting',
+			'selected' => get_input('sort') === 'popular',
 		]);
 		
 		return $return_value;

@@ -1137,10 +1137,8 @@ function group_tools_prepare_listing_settings() {
 			$filter = 'all';
 			break;
 		default:
-			$sorting = elgg_get_plugin_setting("group_listing_{$filter}_sorting", 'group_tools');
-			if (!empty($sorting)) {
-				set_input('sort', get_input('sort', $sorting));
-			}
+			$sorting = elgg_get_plugin_setting("group_listing_{$filter}_sorting", 'group_tools', 'newest');
+			set_input('sort', get_input('sort', $sorting));
 			break;
 	}
 	
