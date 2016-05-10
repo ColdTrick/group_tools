@@ -52,6 +52,10 @@ $english = array(
 
 	'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
 
+	'group_tools:settings:listing:title' => "Group listing settings",
+	'group_tools:settings:listing:description' => "Here you can configure which tabs will be visible on the group listing page, which tab will be the default landing page and what the default sorting will be per tab.",
+	'group_tools:settings:listing:enabled' => "Enabled",
+	'group_tools:settings:listing:default_short' => "Default tab",
 	'group_tools:settings:listing:default' => "Default group listing tab",
 	'group_tools:settings:listing:available' => "Available group listing tabs",
 

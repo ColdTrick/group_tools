@@ -20,28 +20,13 @@ class Router {
 			return;
 		}
 		
-		$include_file = false;
 		$resource_loaded = false;
-		$pages_path = elgg_get_plugins_path() . 'group_tools/pages/';
 		
 		$page = elgg_extract('segments', $return_value);
 		switch ($page[0]) {
 			case 'all':
-				$filter = get_input('filter');
-				$default_filter = elgg_get_plugin_setting('group_listing', 'group_tools');
-				
-				if (empty($filter) && !empty($default_filter)) {
-					$filter = $default_filter;
-					set_input('filter', $filter);
-				}
-				
-				if (in_array($filter, ['yours', 'open', 'closed', 'alpha', 'ordered', 'suggested'])) {
-					echo elgg_view_resource('group_tools/groups/all', [
-						'filter' => $filter,
-					]);
-					$resource_loaded = true;
-				}
-				
+				// prepare tab listing settings
+				group_tools_prepare_listing_settings();
 				break;
 			case 'suggested':
 				echo elgg_view_resource('group_tools/groups/suggested');
@@ -103,10 +88,6 @@ class Router {
 		// did we want this page?
 		if ($resource_loaded) {
 			// done by resource view
-			return false;
-		} elseif (!empty($include_file)) {
-			// we included a file
-			include($include_file);
 			return false;
 		}
 	}

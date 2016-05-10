@@ -1,10 +1,13 @@
 <?php
 /**
  * This file was created by Translation Editor v5.1
- * On 2016-05-04 10:42
+ * On 2016-05-10 09:37
  */
 
 return array (
+  'group_tools:settings:listing:description' => 'Hier kun je instellen welke tabs beschikbaar zijn op de groeplijstweergave pagina, welke tab de standaard tab is en per tab welke sortering er standaard wordt toegepast.',
+  'group_tools:settings:listing:enabled' => 'Ingeschakeld',
+  'group_tools:settings:listing:default_short' => 'Standaard tab',
   'group_tools:action:toggle_notifications:disabled' => 'De notificaties voor de groep \'%s\' zijn uitgeschakeld',
   'group_tools:action:toggle_notifications:enabled' => 'De notificaties voor de groep \'%s\' zijn ingeschakeld',
   'group_tools:settings:notifications:title' => 'Groep notificatie instellingen',
