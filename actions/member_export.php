@@ -17,6 +17,23 @@ if (!$group->canEdit() || (elgg_get_plugin_setting('member_export', 'group_tools
 	forward(REFERER);
 }
 
+$group_admins = [];
+if (group_tools_multiple_admin_enabled()) {
+	$group_admins = elgg_get_entities_from_relationship([
+		'type' => 'user',
+		'limit' => false,
+		'relationship' => 'group_admin',
+		'relationship_guid' => $group->getGUID(),
+		'inverse_relationship' => true,
+		'wheres' => [
+			"e.guid <> {$group->getOwnerGUID()}",
+		],
+		'callback' => function($row) {
+			return (int) $row->guid;
+		},
+	]);
+}
+
 // create temp file
 $fh = tmpfile();
 
@@ -25,8 +42,10 @@ $headers = [
 	'displayname',
 	'username',
 	'email',
+	'banned',
 	'member since (unix)',
 	'member since (YYYY-MM-DD HH:MM:SS)',
+	'role',
 ];
 $profile_fields = elgg_get_config('profile_fields');
 if (!empty($profile_fields)) {
@@ -54,17 +73,32 @@ $options = [
 ];
 
 $members = new ElggBatch('elgg_get_entities_from_relationship', $options);
+/* @var $member ElggUser */
 foreach ($members as $member) {
+	// basic user information
 	$info = [
 		$member->name,
 		$member->username,
-		$member->email
+		$member->email,
+		$member->banned,
 	];
 	
+	// member since
 	$member_since = group_tools_get_membership_information($member, $group);
 	$info[] = $member_since;
 	$info[] = date('Y-m-d G:i:s', $member_since);
 	
+	// role
+	if ($group->getOwnerGUID() === $member->getGUID()) {
+		// owner
+		$info[] = 'owner';
+	} elseif (in_array($member->getGUID(), $group_admins)) {
+		$info[] = 'group admin';
+	} else {
+		$info[] = 'member';
+	}
+	
+	// profile fields
 	if (!empty($profile_fields)) {
 		foreach ($profile_fields as $metadata_name => $type) {
 			
