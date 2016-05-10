@@ -22,6 +22,7 @@ $fh = tmpfile();
 
 // write header line
 $headers = [
+	'displayname',
 	'username',
 	'email',
 	'member since (unix)',
