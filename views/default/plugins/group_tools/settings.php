@@ -25,12 +25,10 @@ $noyes3_options = [
 ];
 
 $listing_options = [
-	'newest' => elgg_echo('sort:newest'),
+	'all' => elgg_echo('groups:all'),
 	'yours' => elgg_echo('groups:yours'),
-	'popular' => elgg_echo('sort:popular'),
 	'open' => elgg_echo('group_tools:groups:sorting:open'),
 	'closed' => elgg_echo('group_tools:groups:sorting:closed'),
-	'alpha' => elgg_echo('sort:alpha'),
 	'ordered' => elgg_echo('group_tools:groups:sorting:ordered'),
 	'featured' => elgg_echo('status:featured'),
 	'suggested' => elgg_echo('group_tools:groups:sorting:suggested'),
@@ -38,6 +36,18 @@ $listing_options = [
 if (elgg_is_active_plugin('discussions')) {
 	$listing_options['discussion'] = elgg_echo('discussion:latest');
 }
+$listing_sorting_options = [
+	'newest' => elgg_echo('sort:newest'),
+	'alpha' => elgg_echo('sort:alpha'),
+	'popular' => elgg_echo('sort:popular'),
+];
+$listing_supported_sorting = [
+	'all',
+	'yours',
+	'open',
+	'closed',
+	'featured',
+];
 
 $hidden_indicator_options = [
 	'no' => elgg_echo('option:no'),
@@ -143,28 +153,37 @@ $body .= elgg_view('input/select', [
 $body .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:settings:member_export:description'));
 $body .= '</div>';
 
-$body .= '<br />';
+echo elgg_view_module('inline', $title, $body);
 
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:listing:default');
-$body .= elgg_view('input/select', [
-	'name' => 'params[group_listing]',
-	'options_values' => $listing_options,
-	'value' => $plugin->group_listing,
-	'class' => 'mls',
-]);
-$body .= '</div>';
+$title = elgg_echo('group_tools:settings:listing:title');
+$body = elgg_echo('group_tools:settings:listing:description');
 
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:listing:available');
-$body .= '<ul class="mll">';
+$listing_tab_rows = [];
+// header rows
+$cells = [];
+$cells[] = elgg_format_element('th', ['rowspan' => 2], '&nbsp;');
+$cells[] = elgg_format_element('th', ['rowspan' => 2, 'class' => 'center'], elgg_echo('group_tools:settings:listing:enabled'));
+$cells[] = elgg_format_element('th', ['rowspan' => 2, 'class' => 'center'], elgg_echo('group_tools:settings:listing:default_short'));
+$cells[] = elgg_format_element('th', ['colspan' => 3, 'class' => 'center'], elgg_echo('sort'));
+$listing_tab_rows[] = elgg_format_element('tr', [], implode('', $cells));
+
+$cells = [];
+foreach ($listing_sorting_options as $label) {
+	$cells[] = elgg_format_element('th', ['class' => 'center'], $label);
+}
+$listing_tab_rows[] = elgg_format_element('tr', [], implode('', $cells));
 
 foreach ($listing_options as $tab => $tab_title) {
+	$cells = [];
+	
+	// tab name
+	$cells[] = elgg_format_element('td', [], $tab_title);
+	
+	// tab enabled
 	$tab_setting_name = "group_listing_{$tab}_available";
 	$checkbox_options = [
 		'name' => "params[{$tab_setting_name}]",
 		'value' => 1,
-		'label' => $tab_title,
 	];
 	$tab_value = $plugin->$tab_setting_name;
 	if ($tab_value !== '0') {
@@ -177,10 +196,45 @@ foreach ($listing_options as $tab => $tab_title) {
 			$checkbox_options['checked'] = true;
 		}
 	}
-	$body .= elgg_format_element('li', [], elgg_view('input/checkbox', $checkbox_options));
+	$cells[] = elgg_format_element('td', [
+		'class' => 'center',
+		'title' => elgg_echo('group_tools:settings:listing:available'),
+	], elgg_view('input/checkbox', $checkbox_options));
+	
+	// default tab
+	$cells[] = elgg_format_element('td', [
+		'class' => 'center',
+		'title' => elgg_echo('group_tools:settings:listing:default'),
+	], elgg_view('input/radio', [
+		'name' => 'params[group_listing]',
+		'value' => $plugin->group_listing,
+		'options' => [
+			'' => $tab,
+		],
+	]));
+	
+	// sorting options
+	if (in_array($tab, $listing_supported_sorting)) {
+		$sorting_name = "group_listing_{$tab}_sorting";
+		$sorting_options = [
+			'name' => "params[{$sorting_name}]",
+			'value' => !empty($plugin->$sorting_name) ? $plugin->$sorting_name : 'newest',
+		];
+		foreach ($listing_sorting_options as $sort => $translation) {
+			$sorting_options['options'] = [
+				'' => $sort,
+			];
+			
+			$cells[] = elgg_format_element('td', ['class' => 'center',], elgg_view('input/radio', $sorting_options));
+		}
+	} else {
+		$cells[] = elgg_format_element('td', ['colspan' => 3], '&nbsp;');
+	}
+	
+	// add to table rows
+	$listing_tab_rows[] = elgg_format_element('tr', [], implode('', $cells));
 }
-$body .= '</ul>';
-$body .= '</div>';
+$body .= elgg_format_element('table', ['class' => 'elgg-table-alt'], implode('', $listing_tab_rows));
 
 echo elgg_view_module('inline', $title, $body);
 

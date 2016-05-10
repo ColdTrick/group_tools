@@ -1111,3 +1111,36 @@ function group_tools_can_assign_group_admin(ElggGroup $group) {
 	
 	return false;
 }
+
+/**
+ * Prepare the group listing settings
+ *
+ * @return void
+ */
+function group_tools_prepare_listing_settings() {
+	
+	$default_filter = elgg_get_plugin_setting('group_listing', 'group_tools');
+	$filter = get_input('filter', $default_filter);
+	
+	// support for 'old' tabs
+	switch ($filter) {
+		case 'newest':
+			set_input('sort', get_input('sort', 'newest'));
+			$filter = 'all';
+			break;
+		case 'popular':
+			set_input('sort', get_input('sort', 'popular'));
+			$filter = 'all';
+			break;
+		case 'alpha':
+			set_input('sort', get_input('sort', 'alpha'));
+			$filter = 'all';
+			break;
+		default:
+			$sorting = elgg_get_plugin_setting("group_listing_{$filter}_sorting", 'group_tools', 'newest');
+			set_input('sort', get_input('sort', $sorting));
+			break;
+	}
+	
+	set_input('filter', $filter);
+}

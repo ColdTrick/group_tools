@@ -36,6 +36,9 @@ elgg.group_tools.init_members_search = function() {
 					$parents = $elem.parents('.elgg-main');
 					$parents.find('> .elgg-list, > .elgg-pagination').remove();
 					$parents.append(html);
+					$('html, body').animate({
+						scrollTop: $parents.find('> .elgg-head').offset().top
+					}, 500);
 				}
 			});
 			

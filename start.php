@@ -51,6 +51,10 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:group:invitation', '\ColdTrick\GroupTools\Membership::groupInvitation');
 	elgg_register_plugin_hook_handler('register', 'menu:group:email_invitation', '\ColdTrick\GroupTools\Membership::groupEmailInvitation');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\GroupTools\Membership::groupProfileSidebar');
+	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addTabs');
+	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addSorting');
+	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::cleanupTabs', 900);
+	elgg_register_plugin_hook_handler('prepare', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::setSelected');
 	
 	// group admins
 	if (group_tools_multiple_admin_enabled()) {
@@ -148,6 +152,7 @@ function group_tools_init() {
 	elgg_register_event_handler('join', 'group', '\ColdTrick\GroupTools\Membership::groupJoin');
 	elgg_register_event_handler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
 	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\GroupTools\Upgrade::setGroupMailClassHandler');
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\GroupTools\Upgrade::migrateListingSettings');
 	
 	// group mail option
 	elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\GroupTools\GroupMail::pageMenu');
