@@ -212,7 +212,7 @@ class GroupSortMenu {
 		}
 		
 		$selected_tab = elgg_extract('selected', $params, 'all');
-		if (!empty($selected_item)) {
+		if (empty($selected_tab)) {
 			return;
 		}
 		
