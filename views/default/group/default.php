@@ -9,15 +9,15 @@ $group = $vars['entity'];
 
 $icon = elgg_view_entity_icon($group, 'tiny');
 
-$metadata = elgg_view_menu('entity', [
-	'entity' => $group,
-	'handler' => 'groups',
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-]);
-
-if ((elgg_in_context('owner_block') || elgg_in_context('widgets')) && !elgg_in_context('widgets_groups_show_members')) {
+if ((elgg_in_context('livesearch') || elgg_in_context('owner_block') || elgg_in_context('widgets')) && !elgg_in_context('widgets_groups_show_members')) {
 	$metadata = '';
+} else {
+	$metadata = elgg_view_menu('entity', [
+		'entity' => $group,
+		'handler' => 'groups',
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	]);
 }
 
 if ($vars['full_view']) {

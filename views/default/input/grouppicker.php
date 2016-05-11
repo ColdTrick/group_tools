@@ -17,8 +17,6 @@
  * When this happens, a hidden input is created to return the GUID in the array with the form
  */
 
-elgg_load_js('jquery.ui.autocomplete.html');
-
 if (empty($vars['name'])) {
 	$vars['name'] = 'groups';
 }
@@ -50,11 +48,6 @@ $limit = (int) elgg_extract('limit', $vars, 0);
 	</ul>
 </div>
 <script type="text/javascript">
-	// make sure the jQueryUI Autocomplete lib is available in ajax loaded views
-	if (typeof(filter) !== "function") {
-		$.getScript(elgg.get_site_url() + "vendors/jquery/jquery.ui.autocomplete.html.js");
-	}
-	
 	require(['elgg/GroupPicker'], function (GroupPicker) {
 		GroupPicker.setup('.elgg-group-picker[data-name="<?php echo $name ?>"]');
 	});
