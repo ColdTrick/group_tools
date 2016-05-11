@@ -947,7 +947,6 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 		$prefix = "groups/{$group->getGUID()}";
 		
 		$sizes = elgg_get_config('icon_sizes');
-		$sizes[] = '';
 		
 		$ofh = new ElggFile();
 		$ofh->owner_guid = $old_owner->getGUID();
@@ -955,7 +954,7 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 		$nfh = new ElggFile();
 		$nfh->owner_guid = $group->getOwnerGUID();
 		
-		foreach ($sizes as $size) {
+		foreach ($sizes as $size => $info) {
 			// set correct file to handle
 			$ofh->setFilename("{$prefix}{$size}.jpg");
 			if (!$ofh->exists()) {
