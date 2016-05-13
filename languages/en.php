@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
 
 	// general
 	'group_tools:add_users' => "Add users",
@@ -456,6 +456,11 @@ You can find the group here:
 	// group member export
 	'group_tools:member_export:title_button' => "Export members",
 	
+	// csv exporter
+	'group_tools:csv_exporter:group_admin:name' => "Group admin(s) name",
+	'group_tools:csv_exporter:group_admin:email' => "Group admin(s) e-mail address",
+	'group_tools:csv_exporter:group_admin:url' => "Group admin(s) profile url",
+	
 	// group bulk delete
 	'group_tools:action:bulk_delete:success' => "The selected groups were deleted",
 	'group_tools:action:bulk_delete:error' => "An error occured while deleting the groups, please try again",
@@ -464,5 +469,3 @@ You can find the group here:
 	'group_tools:action:toggle_notifications:disabled' => "The notifications for the group '%s' have been disabled",
 	'group_tools:action:toggle_notifications:enabled' => "The notfications for the group '%s' have been enabled",
 );
-
-add_translation("en", $english);
