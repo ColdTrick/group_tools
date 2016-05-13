@@ -461,6 +461,9 @@ You can find the group here:
 	'group_tools:csv_exporter:group_admin:email' => "Group admin(s) e-mail address",
 	'group_tools:csv_exporter:group_admin:url' => "Group admin(s) profile url",
 	
+	'group_tools:csv_exporter:user:group_admin:name' => "Groups administrated name",
+	'group_tools:csv_exporter:user:group_admin:url' => "Groups administrated url",
+	
 	// group bulk delete
 	'group_tools:action:bulk_delete:success' => "The selected groups were deleted",
 	'group_tools:action:bulk_delete:error' => "An error occured while deleting the groups, please try again",
