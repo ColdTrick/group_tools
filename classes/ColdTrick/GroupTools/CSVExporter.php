@@ -81,7 +81,7 @@ class CSVExporter {
 				$batch = new \ElggBatch('elgg_get_entities_from_relationship', $group_admin_options);
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
-					$result[] = $group_admin->name;
+					$result[] = "\"{$group_admin->name}\"";
 				}
 				return $result;
 				break;
