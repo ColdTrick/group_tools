@@ -1,10 +1,15 @@
 <?php
 /**
  * This file was created by Translation Editor v5.1
- * On 2016-05-10 09:37
+ * On 2016-05-13 12:44
  */
 
 return array (
+  'group_tools:csv_exporter:group_admin:name' => 'Groepbeheerder(s) naam',
+  'group_tools:csv_exporter:group_admin:email' => 'Groepbeheerder(s) e-mail adres',
+  'group_tools:csv_exporter:group_admin:url' => 'Groepbeheerder(s) profiel url',
+  'group_tools:csv_exporter:user:group_admin:name' => 'Beheerde groepen naam',
+  'group_tools:csv_exporter:user:group_admin:url' => 'Beheerde groepen url',
   'group_tools:settings:listing:description' => 'Hier kun je instellen welke tabs beschikbaar zijn op de groeplijstweergave pagina, welke tab de standaard tab is en per tab welke sortering er standaard wordt toegepast.',
   'group_tools:settings:listing:enabled' => 'Ingeschakeld',
   'group_tools:settings:listing:default_short' => 'Standaard tab',
