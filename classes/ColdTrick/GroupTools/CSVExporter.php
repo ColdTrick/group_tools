@@ -14,7 +14,7 @@ class CSVExporter {
 	 *
 	 * @return void|array
 	 */
-	public static function getExportableValues($hook, $type, $return_value, $params) {
+	public static function addGroupAdmins($hook, $type, $return_value, $params) {
 		
 		$content_type = elgg_extract('type', $params);
 		if ($content_type !== 'group') {
