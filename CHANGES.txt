@@ -1,6 +1,13 @@
 Version history
 ===============
 
+6.0.3 (2016-05-26):
+
+- fixed: group owner transfer doesn't move icon
+- fixed: incorrect namespaced class
+- fixed: unable to select/unselect all group members on mail page
+- fixed: using wrong string format to output num_replies
+
 6.0.2 (2016-03-17):
 
 - fixed: correctly check for logged in user
