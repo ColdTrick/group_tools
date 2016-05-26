@@ -1,6 +1,20 @@
 Version history
 ===============
 
+7.2 (2016-05-26):
+
+- added: banned and role column to group member export
+- added: group admins can be exported by CSV Exporter
+- added: option to export the user is an admin of for CSV Exporter
+- added: sorting options to the group listing pages
+- added: styling for the group sort feature
+- fixed: default routing for /groups
+- fixed: exporting names group admin names with special chars
+- fixed: group members listing pagination doesn't jump to top of the list
+- fixed: group owner transfer doesn't move icon
+- fixed: grouppicker now correctly loads js and displays items
+- fixed: missing header column for displayname
+
 7.1 (2016-05-04):
 
 - added: option to allow users to directly change notification settings on group join
