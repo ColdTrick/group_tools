@@ -23,7 +23,7 @@ class Router {
 		$resource_loaded = false;
 		
 		$page = elgg_extract('segments', $return_value);
-		switch ($page[0]) {
+		switch (elgg_extract(0, $page, 'all')) {
 			case 'all':
 				// prepare tab listing settings
 				group_tools_prepare_listing_settings();
