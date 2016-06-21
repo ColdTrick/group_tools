@@ -21,6 +21,7 @@ return array(
 	'group_tools:menu:mail' => "Mail Members",
 	'group_tools:menu:invitations' => "Manage invitations",
 	'admin:administer_utilities:group_bulk_delete' => "Group bulk delete",
+	'admin:groups:admin_approval' => "Approval needed",
 
 	'admin:appearance:group_tool_presets' => "Group tool presets",
 	
@@ -85,6 +86,9 @@ return array(
 	
 	'group_tools:settings:member_export' => "Allow group admins to export member information",
 	'group_tools:settings:member_export:description' => "This includes the name, username and email address of the user.",
+	
+	'group_tools:settings:admin_approve' => "Site administrators need to approve new groups",
+	'group_tools:settings:admin_approve:description' => "Any user can create a group, but a site administrator has to approve the new group",
 	
 	// group tool presets
 	'group_tools:admin:group_tool_presets:description' => "Here you can configure group tool presets.
@@ -206,7 +210,44 @@ You can find the group here:
 	// group default access
 	'group_tools:default_access:title' => "Group default access",
 	'group_tools:default_access:description' => "Here you can control what the default access of new content in your group should be.",
+	
+	// group admin approve
+	'group_tools:group:admin_approve:notice' => "New groups need to be approved by a site administrator. You can make/edit the group, but it won't be visible to other users until approved by a site administrator.",
+	'group_tools:group:admin_approve:decline:confirm' => "Are you sure you wish to decline this group? This will delete the group.",
+	'group_tools:group:admin_approve:admin:description' => "Here is a list of groups which need to be approved by the site administrators before they can be used.
 
+When you approve a group the owner will receive a notification that his/her group is now ready for use.
+If you decline a group, the owner will receive a notification that his/her group was removed and the group will be removed.",
+	
+	'group_tools:group:admin_approve:approve:success' => "The group can now be used on the site",
+	'group_tools:group:admin_approve:decline:success' => "The group was removed",
+	
+	'group_tools:group:admin_approve:approve:subject' => "Your group '%s' was approved",
+	'group_tools:group:admin_approve:approve:summary' => "Your group '%s' was approved",
+	'group_tools:group:admin_approve:approve:message' => "Hi %s,
+
+your group '%s' was approved by a site administrator. You can now use it.
+
+To visit the group click here:
+%s",
+	'group_tools:group:admin_approve:admin:subject' => "A new group '%s' was created which requires approval",
+	'group_tools:group:admin_approve:admin:summary' => "A new group '%s' was created which requires approval",
+	'group_tools:group:admin_approve:admin:message' => "Hi %s,
+
+%s created a group '%s' which need to be approved by a site administrator.
+
+To visit the group click here:
+%s
+
+To view all groups which need action click here:
+%s",
+	
+	'group_tools:group:admin_approve:decline:subject' => "Your group '%s' was declined",
+	'group_tools:group:admin_approve:decline:summary' => "Your group '%s' was declined",
+	'group_tools:group:admin_approve:decline:message' => "Hi %s,
+
+your group '%s' was declined and removed by a site administrator.",
+	
 	// group notification
 	'group_tools:notifications:title' => "Group notifications",
 	'group_tools:notifications:description' => "This group has %s members, of those %s have enabled notifications on activity in this group. Below you can change this for all users of the group.",

@@ -16,6 +16,9 @@ $owner_guid = elgg_extract("owner_guid", $vars);
 $content_access_mode = elgg_extract("content_access_mode", $vars);
 $default_access = elgg_extract("group_default_access", $vars, ACCESS_DEFAULT);
 
+$show_visibility = (elgg_get_plugin_setting("hidden_groups", "groups") == "yes");
+$show_visibility = ($show_visibility && (empty($entity->guid) || ($entity->access_id !== ACCESS_PRIVATE)));
+
 ?>
 <div>
 	<label for="groups-membership"><?php echo elgg_echo("groups:membership"); ?></label><br />
@@ -31,7 +34,7 @@ $default_access = elgg_extract("group_default_access", $vars, ACCESS_DEFAULT);
 	?>
 </div>
 
-<?php if (elgg_get_plugin_setting("hidden_groups", "groups") == "yes") { ?>
+<?php if ($show_visibility) { ?>
 	<div>
 		<label for="groups-vis"><?php echo elgg_echo("groups:visibility"); ?></label><br />
 		<?php

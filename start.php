@@ -38,6 +38,7 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupMembership');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupInvite');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::exportGroupMembers');
+	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::pendingApproval', 9999);
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin', 501);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::relatedGroup');
@@ -98,8 +99,17 @@ function group_tools_init() {
 	elgg_extend_view('groups/edit', 'group_tools/forms/special_states', 350);
 	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoin');
 	
+	// group admin approve
+	elgg_extend_view('groups/edit', 'group_tools/extends/groups/edit/admin_approve', 1);
+	elgg_extend_view('groups/profile/layout', 'group_tools/extends/groups/edit/admin_approve', 1);
+	elgg_register_admin_menu_item('administer', 'admin_approval', 'groups');
+	
+	elgg_register_notification_event('group', null, ['admin_approval']);
+	elgg_register_plugin_hook_handler('get', 'subscriptions', '\ColdTrick\GroupTools\Notifications::adminApprovalSubs');
+	elgg_register_plugin_hook_handler('prepare', 'notification:admin_approval:group:', '\ColdTrick\GroupTools\Notifications::prepareAdminApprovalMessage');
+	
 	// show group edit as tabbed
-	elgg_extend_view('groups/edit', 'group_tools/group_edit_tabbed', 1);
+	elgg_extend_view('groups/edit', 'group_tools/group_edit_tabbed', 10);
 	
 	// cleanup group side menu
 	elgg_extend_view('groups/edit', 'group_tools/forms/cleanup', 450);
@@ -195,6 +205,8 @@ function group_tools_init() {
 	elgg_register_action('group_tools/fix_acl', dirname(__FILE__) . '/actions/admin/fix_acl.php', 'admin');
 	elgg_register_action('group_tools/group_tool_presets', dirname(__FILE__) . '/actions/admin/group_tool_presets.php', 'admin');
 	elgg_register_action('group_tools/admin/bulk_delete', dirname(__FILE__) . '/actions/admin/bulk_delete.php', 'admin');
+	elgg_register_action('group_tools/admin/approve', dirname(__FILE__) . '/actions/admin/approve.php', 'admin');
+	elgg_register_action('group_tools/admin/decline', dirname(__FILE__) . '/actions/admin/decline.php', 'admin');
 	
 	elgg_register_action('group_tools/email_invitation', dirname(__FILE__) . '/actions/membership/email_invitation.php');
 	elgg_register_action('groups/decline_email_invitation', dirname(__FILE__) . '/actions/groups/decline_email_invitation.php');

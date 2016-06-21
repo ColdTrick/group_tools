@@ -129,28 +129,48 @@ if ($is_new_group) {
 	}
 }
 
-// Invisible group support
+// Invisible group support + admin approve check
 // @todo this requires save to be called to create the acl for the group. This
 // is an odd requirement and should be removed. Either the acl creation happens
 // in the action or the visibility moves to a plugin hook
+$admin_approve = (bool) (elgg_get_plugin_setting('admin_approve', 'group_tools', 'no') == 'yes');
+$admin_approve = ($admin_approve && !elgg_is_admin_logged_in()); // admins don't need to wait
+
+// new groups get access private, so an admin can validate it
+$access_id = (int) $group->access_id;
+if ($is_new_group && $admin_approve) {
+	$access_id = ACCESS_PRIVATE;
+	
+	elgg_trigger_event('admin_approval', 'group', $group);
+}
+
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$value = get_input('vis');
 	if ($is_new_group || $value !== null) {
 		$visibility = (int)$value;
-
+		
 		if ($visibility == ACCESS_PRIVATE) {
 			// Make this group visible only to group members. We need to use
 			// ACCESS_PRIVATE on the form and convert it to group_acl here
 			// because new groups do not have acl until they have been saved once.
-			$visibility = $group->group_acl;
-
+			$visibility = (int) $group->group_acl;
+			
 			// Force all new group content to be available only to members
 			$group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
 		}
-
-		$group->access_id = $visibility;
+		
+		if (($access_id === ACCESS_PRIVATE) && $admin_approve) {
+			// admins has not yet approved the group, store wanted access
+			$group->intended_access_id = $visibility;
+		} else {
+			// already approved group
+			$access_id = $visibility;
+		}
 	}
 }
+
+// set access
+$group->access_id = $access_id;
 
 if (!$group->save()) {
 	register_error(elgg_echo("groups:save_error"));

@@ -153,8 +153,24 @@ $body .= elgg_view('input/select', [
 $body .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:settings:member_export:description'));
 $body .= '</div>';
 
+// do admins have to approve new groups
+if (elgg_get_plugin_setting('limited_groups', 'groups', 'no') !== 'yes') {
+	// only is group creation isn't limited to admins
+	$body .= '<div>';
+	$body .= elgg_echo('group_tools:settings:admin_approve');
+	$body .= elgg_view('input/select', [
+		'name' => 'params[admin_approve]',
+		'options_values' => $noyes_options,
+		'value' => $plugin->admin_approve,
+		'class' => 'mls',
+	]);
+	$body .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:settings:admin_approve:description'));
+	$body .= '</div>';
+}
+
 echo elgg_view_module('inline', $title, $body);
 
+// listing settings
 $title = elgg_echo('group_tools:settings:listing:title');
 $body = elgg_echo('group_tools:settings:listing:description');
 

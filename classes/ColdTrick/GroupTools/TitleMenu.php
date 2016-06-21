@@ -166,6 +166,7 @@ class TitleMenu {
 	}
 	
 	/**
+	 * add button to export users
 	 *
 	 * @param string          $hook         the name of the hook
 	 * @param string          $type         the type of the hook
@@ -206,6 +207,73 @@ class TitleMenu {
 			'is_action' => true,
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
+		
+		return $return_value;
+	}
+	
+	
+	/**
+	 * Change title menu buttons for a group pending admin approval
+	 *
+	 * @param string          $hook         the name of the hook
+	 * @param string          $type         the type of the hook
+	 * @param \ElggMenuItem[] $return_value current return value
+	 * @param array           $params       supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function pendingApproval($hook, $type, $return_value, $params) {
+		
+		if (!elgg_in_context('groups')) {
+			return;
+		}
+		
+		$page_owner = elgg_get_page_owner_entity();
+		if (!($page_owner instanceof \ElggGroup)) {
+			return;
+		}
+		
+		if ($page_owner->access_id !== ACCESS_PRIVATE) {
+			return;
+		}
+		
+		if (!is_array($return_value)) {
+			return;
+		}
+		
+		$allowed_items = [
+			'groups:edit',
+		];
+		
+		// cleanup all items
+		foreach ($return_value as $index => $menu_item) {
+			if (in_array($menu_item->getName(), $allowed_items)) {
+				continue;
+			}
+			
+			unset($return_value[$index]);
+		}
+		
+		// add admin actions
+		if (elgg_is_admin_logged_in()) {
+			// approve
+			$return_value[] = \ElggMenuItem::factory([
+				'name' => 'approve',
+				'text' => elgg_echo('approve'),
+				'href' => 'action/group_tools/admin/approve?guid=' . $page_owner->getGUID(),
+				'confirm' => true,
+				'class' => 'elgg-button elgg-button-submit',
+			]);
+			
+			// decline
+			$return_value[] = \ElggMenuItem::factory([
+				'name' => 'decline',
+				'text' => elgg_echo('decline'),
+				'href' => 'action/group_tools/admin/decline?guid=' . $page_owner->getGUID(),
+				'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
+				'class' => 'elgg-button elgg-button-delete',
+			]);
+		}
 		
 		return $return_value;
 	}

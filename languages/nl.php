@@ -1,10 +1,46 @@
 <?php
 /**
  * This file was created by Translation Editor v5.1
- * On 2016-05-13 12:44
+ * On 2016-06-21 11:35
  */
 
 return array (
+  'admin:groups:admin_approval' => 'Goedkeuring vereist',
+  'group_tools:settings:listing:title' => 'Lijstweergave instellingen',
+  'group_tools:settings:admin_approve' => 'Site beheerders moeten nieuwe groepen goedkeuren',
+  'group_tools:settings:admin_approve:description' => 'Iedere gebruiker kan een nieuwe groep aanmaken, maar een site beheerder moet deze goedkeuren',
+  'group_tools:group:admin_approve:notice' => 'Nieuwe groepen moeten worden goedgekeurd door een site beheerder. Je kunt de groep aanmaken/bewerken, maar de groep zal nog niet zichtbaar zijn voor andere gebruikers totdat een beheerder deze heeft goedgekeurd.',
+  'group_tools:group:admin_approve:decline:confirm' => 'Weet je zeker dat je deze groep wilt afkeuren? Dit zal de groep verwijderen.',
+  'group_tools:group:admin_approve:admin:description' => 'Hieronder staat een lijst met groepen welke nog moeten worden goedgekeurd door een site beheerder voordat ze kunnen worden gebruikt.
+
+Als je een groep goedkeurt zal de eigenaar een bericht ontvangen dat zijn/haar groep klaar is voor gebruik.
+Als je een groep afwijst zal de eigenaar ook hiervan een bericht ontvangen en wordt de groep verwijderd.',
+  'group_tools:group:admin_approve:approve:success' => 'De groep kan nu worden gebruikt op de site',
+  'group_tools:group:admin_approve:decline:success' => 'De groep is verwijderd',
+  'group_tools:group:admin_approve:approve:subject' => 'Je groep \'%s\' is goedgekeurd',
+  'group_tools:group:admin_approve:approve:summary' => 'Je groep \'%s\' is goedgekeurd',
+  'group_tools:group:admin_approve:approve:message' => 'Hallo %s,
+
+je groep %s\' is goedgekeurd door een site beheerder. Je kunt er nu gebruik van maken.
+
+Om naar de groep te gaan klik hier:
+%s',
+  'group_tools:group:admin_approve:admin:subject' => 'De groep \'%s\' is aangemaakt en vereist goedkeuring',
+  'group_tools:group:admin_approve:admin:summary' => 'De groep \'%s\' is aangemaakt en vereist goedkeuring',
+  'group_tools:group:admin_approve:admin:message' => 'Hallo %s,
+
+%s heeft de groep \'%s\' aangemaakt, deze groep vereist goedkeuring door een site beheerer.
+
+Om naar de groep te gaan, klik hier:
+%s
+
+Om naar de lijst te gaan met alle nog goed te keuren groepen, klik hier:
+%s',
+  'group_tools:group:admin_approve:decline:subject' => 'Je groep \'%s\' is afgewezen',
+  'group_tools:group:admin_approve:decline:summary' => 'Je groep \'%s\' is afgewezen',
+  'group_tools:group:admin_approve:decline:message' => 'Hallo %s,
+
+je groep \'%s\' is afgewezen en verwijderd door een site beheerder.',
   'group_tools:csv_exporter:group_admin:name' => 'Groepbeheerder(s) naam',
   'group_tools:csv_exporter:group_admin:email' => 'Groepbeheerder(s) e-mail adres',
   'group_tools:csv_exporter:group_admin:url' => 'Groepbeheerder(s) profiel url',
