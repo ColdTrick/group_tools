@@ -1143,3 +1143,57 @@ function group_tools_prepare_listing_settings() {
 	
 	set_input('filter', $filter);
 }
+
+/**
+ * Check the plugin/group setting if join motivation is needed
+ *
+ * @param ElggGroup $group (optional) the group to check for
+ *
+ * @return bool
+ */
+function group_tools_join_motivation_required(ElggGroup $group = null) {
+	static $plugin_settings;
+	static $check_group = false;
+	
+	// load plugin settings
+	if (!isset($plugin_settings)) {
+		$plugin_settings = false;
+		
+		$setting = elgg_get_plugin_setting('join_motivation', 'group_tools', 'no');
+		switch ($setting) {
+			case 'yes_off':
+				$check_group = true;
+				break;
+			case 'yes_on':
+				$check_group = true;
+				$plugin_settings = true;
+				break;
+			case 'required':
+				$plugin_settings = true;
+				break;
+		}
+	}
+	
+	// do we need to check the group settings?
+	if (!($group instanceof ElggGroup) || !$check_group) {
+		return ($plugin_settings || $check_group);
+	}
+	
+	if ($group->isPublicMembership()) {
+		// open group, no motivation needed
+		return false;
+	}
+	
+	// get group setting
+	$group_setting = $group->getPrivateSetting('join_motivation');
+	switch ($group_setting) {
+		case 'no':
+			return false;
+			break;
+		case 'yes':
+			return true;
+			break;
+	}
+	
+	return $plugin_settings;
+}

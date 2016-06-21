@@ -60,6 +60,18 @@ class TitleMenu {
 				$menu_item->setHref("action/groups/join?user_guid={$user->getGUID()}&group_guid={$page_owner->getGUID()}");
 				$menu_item->is_action = true;
 				
+			} elseif (group_tools_join_motivation_required($page_owner)) {
+				// a join motivation is required
+				elgg_load_js('lightbox');
+				elgg_load_css('lightbox');
+				
+				$menu_item->setHref("ajax/view/group_tools/forms/motivation?guid={$page_owner->getGUID()}");
+				
+				$menu_item->addLinkClass('elgg-lightbox');
+				$opts = 'data-colorbox-opts';
+				$menu_item->$opts = json_encode([
+					'width' => '500px',
+				]);
 			}
 			
 			break;

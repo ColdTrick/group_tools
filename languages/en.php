@@ -26,6 +26,10 @@ return array(
 	'admin:appearance:group_tool_presets' => "Group tool presets",
 	
 	// plugin settings
+	'group_tools:settings:default_off' => "Yes, default off",
+	'group_tools:settings:default_on' => "Yes, default on",
+	'group_tools:settings:required' => "Yes, required",
+	
 	'group_tools:settings:invite:title' => "Group invitation options",
 	'group_tools:settings:management:title' => "General group options",
 	'group_tools:settings:default_access:title' => "Default group access",
@@ -45,11 +49,11 @@ return array(
 	'group_tools:settings:invite_email' => "Allow all users to be invited by e-mail address",
 	'group_tools:settings:invite_csv' => "Allow all users to be invited by CSV-file",
 	'group_tools:settings:invite_members' => "Allow group members to invite new users",
-	'group_tools:settings:invite_members:default_off' => "Yes, default off",
-	'group_tools:settings:invite_members:default_on' => "Yes, default on",
 	'group_tools:settings:invite_members:description' => "Group owners/admins can enable/disable this for their group",
 	'group_tools:settings:domain_based' => "Enable domain based groups",
 	'group_tools:settings:domain_based:description' => "Users can join a group based on their e-mail domain. During registration they will auto join groups based on their e-mail domain.",
+	'group_tools:settings:join_motivation' => "Joining closed groups requires a motivation",
+	'group_tools:settings:join_motivation:description' => "When a user wants to join a closed group, a motivation is required. Group owners can change this setting, if not set to 'no' or 'required'.",
 
 	'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
 
@@ -512,4 +516,30 @@ your group '%s' was declined and removed by a site administrator.",
 	// group toggle notifications
 	'group_tools:action:toggle_notifications:disabled' => "The notifications for the group '%s' have been disabled",
 	'group_tools:action:toggle_notifications:enabled' => "The notfications for the group '%s' have been enabled",
+	
+	// group join motivation
+	'group_tools:join_motivation:edit:option:label' => "Joining this closed group requires motivation",
+	'group_tools:join_motivation:edit:option:description' => "Closed groups can require that new users supply a motivation why they want to join.",
+	
+	'group_tools:join_motivation:title' => "Why do you wish to join '%s'?",
+	'group_tools:join_motivation:description' => "The owner of '%s' has indicated that a motivation is required to join this group. Please provide a motivation below so the owner can judge your membership request.",
+	'group_tools:join_motivation:label' => "My motivation for joining this group",
+	
+	'group_tools:join_motivation:notification:subject' => "%s has requested to join %s",
+	'group_tools:join_motivation:notification:summary' => "%s has requested to join %s",
+	'group_tools:join_motivation:notification:body' => "Hi %s,
+
+%s has requested to join the '%s' group.
+
+Their motivation for joining is:
+%s
+
+Click below to view their profile:
+%s
+
+Click below to view the group's join requests:
+%s",
+	'group_tools:join_motivation:toggle' => "Show motivation",
+	'group_tools:join_motivation:listing' => "Reason for joining:",
+	
 );

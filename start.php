@@ -158,6 +158,9 @@ function group_tools_init() {
 	elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/membershiprequests');
 	elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinviteform');
 	
+	// group join motivation
+	elgg_register_ajax_view('group_tools/forms/motivation');
+	
 	// register events
 	elgg_register_event_handler('join', 'group', '\ColdTrick\GroupTools\Membership::groupJoin');
 	elgg_register_event_handler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
@@ -198,6 +201,7 @@ function group_tools_init() {
 	elgg_register_action('group_tools/remove_related_groups', dirname(__FILE__) . '/actions/remove_related_groups.php');
 	elgg_register_action('group_tools/member_export', dirname(__FILE__) . '/actions/member_export.php');
 	elgg_register_action('group_tools/toggle_notifications', dirname(__FILE__) . '/actions/toggle_notifications.php');
+	elgg_register_action('group_tools/join_motivation', dirname(__FILE__) . '/actions/membership/join_motivation.php');
 	
 	elgg_register_action('group_tools/toggle_special_state', dirname(__FILE__) . '/actions/admin/toggle_special_state.php', 'admin');
 	elgg_register_action('group_tools/fix_auto_join', dirname(__FILE__) . '/actions/admin/fix_auto_join.php', 'admin');

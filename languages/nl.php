@@ -1,10 +1,36 @@
 <?php
 /**
  * This file was created by Translation Editor v5.1
- * On 2016-06-21 11:35
+ * On 2016-06-21 17:43
  */
 
 return array (
+  'group_tools:settings:default_off' => 'Ja, standaard uit',
+  'group_tools:settings:default_on' => 'Ja, standaard aan',
+  'group_tools:settings:required' => 'Ja, vereist',
+  'group_tools:settings:join_motivation' => 'Lid worden van een besloten groep vereist een motivatie',
+  'group_tools:settings:join_motivation:description' => 'Als een gebruiker lid wil worden van een besloten groep moet een motivatie worden opgegeven. Groepseigenaren kunnen deze instelling aanpassen indien de instelling niet is \'nee\' of \'vereist\'.',
+  'group_tools:join_motivation:edit:option:label' => 'Lid worden van deze vereist een motivatie',
+  'group_tools:join_motivation:edit:option:description' => 'Besloten groepen kunnen vereisen dat nieuwe gebruikers een motivatie moeten opgeven als ze lid willen worden.',
+  'group_tools:join_motivation:title' => 'Waarom wil je lid worden van \'%s\'?',
+  'group_tools:join_motivation:description' => 'De eigenaar van \'%s\' heeft aangegeven dat een motivatie verplicht is om lid te kunnen worden van deze groep. Geeft hieronder je motivatie op om lid te worden van deze groep zodat de eigenaar dit kan beoordelen.',
+  'group_tools:join_motivation:label' => 'Mijn motivatie om lid te worden van deze groep',
+  'group_tools:join_motivation:notification:subject' => '%s wil lid worden van %s',
+  'group_tools:join_motivation:notification:summary' => '%s wil lid worden van %s',
+  'group_tools:join_motivation:notification:body' => 'Hallo %s,
+
+%s wil lid worden van de groep \'%s\'.
+
+De motivatie om lid te worden was:
+%s
+
+Om het profiel van de gebruiker te bekijken, klik hier:
+%s
+
+Om alle lidmaatschap verzoeken te bekijken, klik hier:
+%s',
+  'group_tools:join_motivation:toggle' => 'Toon motivatie',
+  'group_tools:join_motivation:listing' => 'Reden om lid te worden:',
   'admin:groups:admin_approval' => 'Goedkeuring vereist',
   'group_tools:settings:listing:title' => 'Lijstweergave instellingen',
   'group_tools:settings:admin_approve' => 'Site beheerders moeten nieuwe groepen goedkeuren',
@@ -167,8 +193,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:action:toggle_special_state:auto_join' => 'De nieuwe instelling voor het automatisch lid worden is opgeslagen',
   'group_tools:action:toggle_special_state:suggested' => 'De nieuwe instelling voor het voorstellen is opgeslagen',
   'group_tools:settings:invite_members' => 'Mogen groepsleden andere gebruikers uitnodigen',
-  'group_tools:settings:invite_members:default_off' => 'Ja, standaard uit',
-  'group_tools:settings:invite_members:default_on' => 'Ja, standaard aan',
   'group_tools:settings:invite_members:description' => 'Groep eigenaren/beheerders kunnen dit aan- / uitzetten foor hun groep',
   'group_tools:settings:show_membership_mode' => 'Toon open/gesloten lidmaatschap status op het profiel van een groep en in de zijbalk',
   'group_tools:invite_members:title' => 'Groepsleden mogen uitnodigen',

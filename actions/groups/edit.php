@@ -177,6 +177,14 @@ if (!$group->save()) {
 	forward(REFERER);
 }
 
+// join motivation
+if (!$group->isPublicMembership() && group_tools_join_motivation_required()) {
+	$join_motivation = get_input('join_motivation');
+	$group->setPrivateSetting('join_motivation', $join_motivation);
+} else {
+	$group->removePrivateSetting('join_motivation');
+}
+
 // default access
 $default_access = (int) get_input('group_default_access');
 if (($group->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) && (($default_access === ACCESS_PUBLIC) || ($default_access === ACCESS_LOGGED_IN))) {

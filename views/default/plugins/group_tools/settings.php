@@ -20,8 +20,8 @@ $yesno_options = array_reverse($noyes_options);
 
 $noyes3_options = [
 	'no' => elgg_echo('option:no'),
-	'yes_off' => elgg_echo('group_tools:settings:invite_members:default_off'),
-	'yes_on' => elgg_echo('group_tools:settings:invite_members:default_on'),
+	'yes_off' => elgg_echo('group_tools:settings:default_off'),
+	'yes_on' => elgg_echo('group_tools:settings:default_on'),
 ];
 
 $listing_options = [
@@ -354,6 +354,22 @@ $body .= elgg_view('input/select', [
 	'class' => 'mls',
 ]);
 $body .= elgg_format_element('div', ['class' => 'plm elgg-subtext'], elgg_echo('group_tools:settings:domain_based:description'));
+$body .= '</div>';
+
+$body .= '<div>';
+$body .= elgg_echo('group_tools:settings:join_motivation');
+$body .= elgg_view('input/select', [
+	'name' => 'params[join_motivation]',
+	'options_values' => [
+		'no' => elgg_echo('option:no'),
+		'yes_off' => elgg_echo('group_tools:settings:default_off'),
+		'yes_on' => elgg_echo('group_tools:settings:default_on'),
+		'required' => elgg_echo('group_tools:settings:required'),
+	],
+	'value' => $plugin->join_motivation,
+	'class' => 'mls',
+]);
+$body .= elgg_format_element('div', ['class' => 'plm elgg-subtext'], elgg_echo('group_tools:settings:join_motivation:description'));
 $body .= '</div>';
 
 echo elgg_view_module('inline', $title, $body);

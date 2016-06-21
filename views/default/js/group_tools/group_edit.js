@@ -1,3 +1,8 @@
+/**
+ * JS for on the group edit page
+ */
+
+/** global: elgg */
 elgg.provide("elgg.group_tools");
 
 elgg.group_tools.toggle_featured = function(group_guid, element) {
@@ -67,5 +72,14 @@ elgg.group_tools.cleanup_unhighlight = function(section) {
 		case "my_status":
 			$('#group_tools_my_status_example').remove();
 			break;
+	}
+};
+
+elgg.group_tools.show_join_motivation = function(elem) {
+	
+	if ($(elem).val() === '0') {
+		$('#group-tools-join-motivation').show();
+	} else {
+		$('#group-tools-join-motivation').hide();
 	}
 };

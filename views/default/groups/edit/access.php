@@ -9,6 +9,9 @@
  * @package ElggGroups
  */
 
+// load js
+elgg_require_js('group_tools/group_edit');
+
 $entity = elgg_extract("entity", $vars, false);
 $membership = elgg_extract("membership", $vars);
 $visibility = elgg_extract("vis", $vars);
@@ -18,6 +21,10 @@ $default_access = elgg_extract("group_default_access", $vars, ACCESS_DEFAULT);
 
 $show_visibility = (elgg_get_plugin_setting("hidden_groups", "groups") == "yes");
 $show_visibility = ($show_visibility && (empty($entity->guid) || ($entity->access_id !== ACCESS_PRIVATE)));
+
+$show_motivation_option = group_tools_join_motivation_required();
+$motivation_plugin_setting = elgg_get_plugin_setting('join_motivation', 'group_tools', 'no');
+$show_motivation_option = ($show_motivation_option && (strpos($motivation_plugin_setting, 'yes') === 0));
 
 ?>
 <div>
@@ -29,10 +36,38 @@ $show_visibility = ($show_visibility && (empty($entity->guid) || ($entity->acces
 		"options_values" => array(
 			ACCESS_PRIVATE => elgg_echo("groups:access:private"),
 			ACCESS_PUBLIC => elgg_echo("groups:access:public"),
-		)
+		),
+		"onchange" => "elgg.group_tools.show_join_motivation(this);",
 	));
 	?>
 </div>
+<?php
+
+if ($show_motivation_option) {
+	$checked = ($motivation_plugin_setting === 'yes_on');
+	if ($entity instanceof ElggGroup) {
+		$group_setting = $entity->getPrivateSetting('join_motivation');
+		if (!empty($group_setting)) {
+			$checked = ($group_setting === 'yes');
+		}
+	}
+	
+	$join_motivation = elgg_view('input/checkbox', [
+		'name' => 'join_motivation',
+		'default' => 'no',
+		'value' => 'yes',
+		'label' => elgg_echo('group_tools:join_motivation:edit:option:label'),
+		'checked' => $checked,
+	]);
+	$join_motivation .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:join_motivation:edit:option:description'));
+	
+	echo elgg_format_element('div', [
+		'id' => 'group-tools-join-motivation',
+		'class' => ($membership === ACCESS_PRIVATE) ? '' : 'hidden',
+	], $join_motivation);
+}
+
+?>
 
 <?php if ($show_visibility) { ?>
 	<div>

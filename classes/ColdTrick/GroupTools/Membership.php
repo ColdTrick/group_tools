@@ -272,6 +272,15 @@ class Membership {
 		} elseif ($annotations = elgg_get_annotations($options)) {
 			group_tools_delete_annotations($annotations);
 		}
+		
+		// join motivation
+		$options = [
+			'annotation_name' => 'join_motivation',
+			'guid' => $group->getGUID(),
+			'annotation_owner_guid' => $user->getGUID(),
+			'limit' => false,
+		];
+		elgg_delete_annotations($options);
 	}
 	
 	/**
@@ -607,6 +616,23 @@ class Membership {
 		$group = elgg_extract('group', $params);
 		if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
 			return;
+		}
+		
+		// show motivation button
+		$motivation = $group->getAnnotations([
+			'annotation_name' => 'join_motivation',
+			'count' => true,
+			'annotation_owner_guid' => $user->getGUID(),
+		]);
+		if (!empty($motivation)) {
+			$return_value[] = \ElggMenuItem::factory([
+				'name' => 'toggle_motivation',
+				'text' => elgg_echo('group_tools:join_motivation:toggle'),
+				'href' => "#group-tools-group-membershiprequest-motivation-{$user->getGUID()}",
+				'rel' => 'toggle',
+				'link_class' => 'elgg-button elgg-button-action mrm',
+				'priority' => 10,
+			]);
 		}
 		
 		// accept button
