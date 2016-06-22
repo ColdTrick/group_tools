@@ -1,7 +1,4 @@
-define(function (require) {
-
-	var elgg = require('elgg');
-	var $ = require('jquery');
+define('group_tools/killrequest', ['jquery', 'elgg'], function ($, elgg) {
 
 	$(document).on('submit', '.elgg-form-groups-killrequest', function () {
 
@@ -10,11 +7,12 @@ define(function (require) {
 		}
 		
 		var guid = $(this).data('guid');
-
+		
 		elgg.action($(this).attr('action'), {
 			data: $(this).serialize(),
 			success: function () {
-				var $wrapper = $('li.elgg-item[data-guid="' + guid + '"]');
+				var $wrapper = $('#elgg-user-' + guid);
+				
 				if ($wrapper.length) {
 					$wrapper.remove();
 				}
