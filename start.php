@@ -55,6 +55,7 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addTabs');
 	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addSorting');
 	elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::cleanupTabs', 900);
+	elgg_register_plugin_hook_handler('register', 'menu:groups:my_status', '\ColdTrick\GroupTools\MyStatus::registerJoinStatus');
 	elgg_register_plugin_hook_handler('prepare', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::setSelected');
 	
 	// group admins
