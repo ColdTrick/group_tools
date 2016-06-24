@@ -22,7 +22,7 @@ class GroupIcon {
 		}
 		
 		$size = elgg_extract('size', $params, 'medium');
-		$iconsizes = elgg_get_config('icon_sizes');
+		$iconsizes = (function_exists('elgg_get_icon_sizes') ? elgg_get_icon_sizes() : elgg_get_config('icon_sizes'));
 		if (empty($size) || empty($iconsizes) || !array_key_exists($size, $iconsizes)) {
 			return;
 		}
