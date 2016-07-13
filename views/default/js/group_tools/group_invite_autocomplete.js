@@ -10,11 +10,14 @@ define(function (require) {
 			
 			$('#' + id + '_autocomplete').each(function() {
 				$(this)
-				// don't navigate away from the field on tab when selecting an item
 				.bind( 'keydown', function(event) {
-					if (event.keyCode === $.ui.keyCode.TAB &&
-							$(this).data('autocomplete').menu.active) {
+					if (event.keyCode === $.ui.keyCode.TAB && $(this).data('autocomplete').menu.active) {
+						// don't navigate away from the field on tab when selecting an item
 						event.preventDefault();
+					}
+					
+					if (event.keyCode === $.ui.keyCode.ENTER) {
+						 event.preventDefault();
 					}
 				})
 				.autocomplete({
