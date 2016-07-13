@@ -40,6 +40,11 @@ $content .= elgg_view('input/select', [
 	'class' => 'mls',
 ]);
 
+$content .= elgg_view('output/longtext', [
+	'value' => elgg_echo('group_tools:invite_members:disclaimer'),
+	'class' => 'elgg-subtext',
+]);
+
 $content .= '<div class="mtm">';
 $content .= elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->getGUID()]);
 $content .= elgg_view('input/submit', ['value' => elgg_echo('save')]);
