@@ -109,7 +109,7 @@ class TitleMenu {
 		
 		// change invite menu text
 		$invite_found = false;
-		foreach ($return_value as $menu_item) {
+		foreach ($return_value as $index => $menu_item) {
 			
 			if ($menu_item->getName() !== 'groups:invite') {
 				continue;
@@ -117,13 +117,18 @@ class TitleMenu {
 			
 			$invite_found = true;
 			
+			$invite_friends = elgg_get_plugin_setting('invite_friends', 'group_tools', 'yes');
 			$invite = elgg_get_plugin_setting('invite', 'group_tools');
 			$invite_email = elgg_get_plugin_setting('invite_email', 'group_tools');
 			$invite_csv = elgg_get_plugin_setting('invite_csv', 'group_tools');
 			
 			if (in_array('yes', [$invite, $invite_csv, $invite_email])) {
 				$menu_item->setText(elgg_echo('group_tools:groups:invite'));
+			} elseif ($invite_friends === 'no') {
+				unset($return_value[$index]);
 			}
+			
+			break;
 		}
 		
 		// maybe allow normal users to invite new members
@@ -133,14 +138,14 @@ class TitleMenu {
 		
 		// this is only allowed for group members
 		if (!$page_owner->isMember($user)) {
-			return $return_value;
+			return;
 		}
 		
 		// we're on a group profile page, but haven't found the invite button yet
 		// so check if it should be here
 		$setting = elgg_get_plugin_setting('invite_members', 'group_tools');
 		if (!in_array($setting, ['yes_off', 'yes_on'])) {
-			return $return_value;
+			return;
 		}
 		
 		// check group settings
@@ -153,18 +158,22 @@ class TitleMenu {
 		}
 		
 		if ($invite_members !== 'yes') {
-			return $return_value;
+			return;
 		}
 		
 		// normal users are allowed to invite users
+		$invite_friends = elgg_get_plugin_setting('invite_friends', 'group_tools', 'yes');
 		$invite = elgg_get_plugin_setting('invite', 'group_tools');
 		$invite_email = elgg_get_plugin_setting('invite_email', 'group_tools');
 		$invite_csv = elgg_get_plugin_setting('invite_csv', 'group_tools');
 		
 		if (in_array('yes', [$invite, $invite_csv, $invite_email])) {
 			$text = elgg_echo('group_tools:groups:invite');
-		} else {
+		} elseif ($invite_friends !== 'no') {
 			$text = elgg_echo('groups:invite');
+		} else {
+			// not allowed
+			return;
 		}
 		
 		$return_value[] = \ElggMenuItem::factory([

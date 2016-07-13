@@ -46,6 +46,7 @@ return array(
 	'group_tools:settings:notifications:notification_toggle:description' => "This will show a system message where to user can toggle the notification settings, and add a link in the e-mail notification to the group notification settings.",
 	
 	'group_tools:settings:invite' => "Allow all users to be invited (not just friends)",
+	'group_tools:settings:invite_friends' => "Allow friends to be invited",
 	'group_tools:settings:invite_email' => "Allow all users to be invited by e-mail address",
 	'group_tools:settings:invite_csv' => "Allow all users to be invited by CSV-file",
 	'group_tools:settings:invite_members' => "Allow group members to invite new users",
@@ -281,6 +282,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:mail:form:js:description' => "Please enter a message",
 
 	// group invite
+	'group_tools:groups:invite:error' => "No invitation options are available",
 	'group_tools:groups:invite:title' => "Invite users to this group",
 	'group_tools:groups:invite' => "Invite users",
 	'group_tools:groups:invite:user_already_member' => "User is already a member of the group",

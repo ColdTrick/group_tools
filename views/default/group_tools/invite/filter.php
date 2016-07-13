@@ -5,24 +5,31 @@
  * used in /forms/groups/invite
  */
 
+$invite_friends = elgg_extract('invite_friends', $vars, 'yes');
 $invite_site_members = elgg_extract('invite', $vars, 'no');
 $invite_email = elgg_extract('invite_email', $vars, 'no');
 $invite_csv = elgg_extract('invite_csv', $vars, 'no');
 
 $tabs = [];
-$tabs['friends'] = [
-	'text' => elgg_echo('friends'),
-	'href' => '#group-tools-invite-friends',
-	'priority' => 200,
-	'selected' => true,
-];
+$selected = true;
+if ($invite_friends !== 'no') {
+	$tabs['friends'] = [
+		'text' => elgg_echo('friends'),
+		'href' => '#group-tools-invite-friends',
+		'priority' => 200,
+		'selected' => $selected,
+	];
+	$selected = false;
+}
 
 if ($invite_site_members == 'yes') {
 	$tabs['users'] = [
 		'text' => elgg_echo('group_tools:group:invite:users'),
 		'href' => '#group-tools-invite-users',
 		'priority' => 300,
+		'selected' => $selected,
 	];
+	$selected = false;
 }
 
 if ($invite_email == 'yes') {
@@ -30,7 +37,9 @@ if ($invite_email == 'yes') {
 		'text' => elgg_echo('group_tools:group:invite:email'),
 		'href' => '#group-tools-invite-email',
 		'priority' => 400,
+		'selected' => $selected,
 	];
+	$selected = false;
 }
 
 if ($invite_csv == 'yes') {
@@ -38,7 +47,9 @@ if ($invite_csv == 'yes') {
 		'text' => elgg_echo('group_tools:group:invite:csv'),
 		'href' => '#group-tools-invite-csv',
 		'priority' => 500,
+		'selected' => $selected,
 	];
+	$selected = false;
 }
 
 // register tabs if more than 1
@@ -56,6 +67,7 @@ echo elgg_view_menu('filter', [
 	'class' => 'group-tools-invite-filter',
 	'sort_by' => 'priority',
 	'params' => [
+		'invite_friends' => $invite_friends,
 		'invite' => $invite_site_members,
 		'invite_email' => $invite_email,
 		'invite_csv' => $invite_csv,

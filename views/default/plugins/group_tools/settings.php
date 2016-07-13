@@ -305,6 +305,16 @@ echo elgg_view_module('inline', $title, $body);
 $title = elgg_echo('group_tools:settings:invite:title');
 
 $body = '<div>';
+$body .= elgg_echo('group_tools:settings:invite_friends');
+$body .= elgg_view('input/select', [
+	'name' => 'params[invite_friends]',
+	'options_values' => $yesno_options,
+	'value' => $plugin->invite_friends,
+	'class' => 'mls',
+]);
+$body .= '</div>';
+
+$body .= '<div>';
 $body .= elgg_echo('group_tools:settings:invite');
 $body .= elgg_view('input/select', [
 	'name' => 'params[invite]',
