@@ -1,10 +1,13 @@
 <?php
 /**
  * This file was created by Translation Editor v5.1
- * On 2016-06-21 17:43
+ * On 2016-07-14 11:15
  */
 
 return array (
+  'group_tools:settings:invite_friends' => 'Vrienden uitnodigen toestaan',
+  'group_tools:settings:invite_email:match' => 'Probeer bestaande gebruikers te verbinden aan e-mail adressen',
+  'group_tools:groups:invite:error' => 'Er zijn geen uitnodigingsopties beschikbaar',
   'group_tools:settings:default_off' => 'Ja, standaard uit',
   'group_tools:settings:default_on' => 'Ja, standaard aan',
   'group_tools:settings:required' => 'Ja, vereist',
