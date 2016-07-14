@@ -334,6 +334,16 @@ $body .= elgg_view('input/select', [
 ]);
 $body .= '</div>';
 
+$body .= '<div class="elgg-divide-left pls mls">';
+$body .= elgg_echo('group_tools:settings:invite_email:match');
+$body .= elgg_view('input/select', [
+	'name' => 'params[invite_email_match]',
+	'options_values' => $yesno_options,
+	'value' => $plugin->invite_email_match,
+	'class' => 'mls',
+]);
+$body .= '</div>';
+
 $body .= '<div>';
 $body .= elgg_echo('group_tools:settings:invite_csv');
 $body .= elgg_view('input/select', [

@@ -48,6 +48,7 @@ return array(
 	'group_tools:settings:invite' => "Allow all users to be invited (not just friends)",
 	'group_tools:settings:invite_friends' => "Allow friends to be invited",
 	'group_tools:settings:invite_email' => "Allow all users to be invited by e-mail address",
+	'group_tools:settings:invite_email:match' => "Try to match e-mail addresses to existing users",
 	'group_tools:settings:invite_csv' => "Allow all users to be invited by CSV-file",
 	'group_tools:settings:invite_members' => "Allow group members to invite new users",
 	'group_tools:settings:invite_members:description' => "Group owners/admins can enable/disable this for their group",

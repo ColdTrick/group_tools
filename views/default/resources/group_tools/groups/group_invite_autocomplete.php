@@ -75,7 +75,9 @@ if ($relationship != 'email') {
 	if (preg_match($regexpr, $q)) {
 		// only start matching if $q is an emailaddress
 		
-		$users_found = get_user_by_email($q);
+		if (elgg_get_plugin_setting('invite_email_match', 'group_tools', 'yes') !== 'no') {
+			$users_found = get_user_by_email($q);
+		}
 		if (empty($users_found)) {
 			$result[] = [
 				'type' => 'email',
