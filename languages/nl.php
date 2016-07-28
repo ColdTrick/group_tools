@@ -200,7 +200,7 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:settings:show_membership_mode' => 'Toon open/gesloten lidmaatschap status op het profiel van een groep en in de zijbalk',
   'group_tools:invite_members:title' => 'Groepsleden mogen uitnodigen',
   'group_tools:invite_members:description' => 'Mogen de leden van deze groep nieuwe leden uitnodigen',
-  'group_tools:invite_members:disclaimer' => 'Let op, voor besloten groepen geldt dat als je leden nieuwe gebruikers mogen uitnodigen deze gebruikers geen goedkeuring nodig hebben van de groepseingenaar/-beheerder(s).',
+  'group_tools:invite_members:disclaimer' => 'Let op, voor besloten groepen geldt dat als je leden nieuwe gebruikers mogen uitnodigen deze gebruikers geen goedkeuring nodig hebben van de groepseigenaar/-beheerder(s).',
   'group_tools:cleanup:my_status' => 'Verberg de Mijn Status zijbalk',
   'group_tools:cleanup:my_status:explain' => 'In de zijbalk op de groepsprofiel pagina is er een item welke je informatie toont over je groepslidmaatschap. Tevens wordt hier andere status informatie getoond. Je kunt deze zijbalk verbergen.',
   'group_tools:settings:fix:title' => 'Los problemen met groep toegang op',
