@@ -21,6 +21,6 @@ $status = ucfirst($status);
 ?>
 <script type='text/javascript'>
 	require(['jquery'], function($) {
-		$('div.elgg-owner-block div.elgg-image-block').append('<div class="<?php echo $class; ?>"><?php echo $status;?></div>');
+		$('div.elgg-owner-block div.elgg-image-block > .elgg-body').append('<div class="<?php echo $class; ?>"><?php echo $status;?></div>');
 	});
 </script>
