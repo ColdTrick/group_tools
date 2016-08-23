@@ -58,6 +58,9 @@ return array(
 	'group_tools:settings:join_motivation:description' => "When a user wants to join a closed group, a motivation is required. Group owners can change this setting, if not set to 'no' or 'required'.",
 
 	'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
+	
+	'group_tools:settings:mail:members' => "Allow group admins to enable group mail for their members",
+	'group_tools:settings:mail:members:description' => "This requires group mail to be enabled",
 
 	'group_tools:settings:listing:title' => "Group listing settings",
 	'group_tools:settings:listing:description' => "Here you can configure which tabs will be visible on the group listing page, which tab will be the default landing page and what the default sorting will be per tab.",
@@ -270,6 +273,9 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:notifications:toggle:site:disabled:link' => "enable notifications",
 	
 	// group mail
+	'group_tools:tools:mail_members' => "Allow group members to mail other group members",
+	'mail_members:group_tool_option:description' => "This will allow normal group members to send an e-mail to other group members. By default this is limited to group admins.",
+	
 	'group_tools:mail:message:from' => "From group",
 
 	'group_tools:mail:title' => "Send a mail to the group members",

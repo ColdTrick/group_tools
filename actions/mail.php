@@ -8,7 +8,7 @@ $user_guids = (array) get_input('user_guids');
 $subject = get_input('title');
 $body = get_input('description');
 
-$user_guids = group_tools_verify_group_members($group_guid, $user_guids);
+array_walk($user_guids, 'sanitise_int');
 
 if (empty($group_guid) || empty($body) || empty($user_guids)) {
 	register_error(elgg_echo('error:missing_data'));
@@ -18,9 +18,9 @@ if (empty($group_guid) || empty($body) || empty($user_guids)) {
 elgg_entity_gatekeeper($group_guid, 'group');
 $group = get_entity($group_guid);
 
-if (!$group->canEdit()) {
+if (!group_tools_group_mail_enabled($group) && !group_tools_group_mail_members_enabled($group)) {
 	register_error(elgg_echo('actionunauthorized'));
-	forward(REFERER);
+	forward($group->getURL());
 }
 
 $group_mail = new GroupMail();

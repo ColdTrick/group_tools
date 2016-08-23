@@ -175,6 +175,10 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupMail::getSubscribers');
 	elgg_register_plugin_hook_handler('send:after', 'notifications', '\ColdTrick\GroupTools\GroupMail::cleanup');
 	
+	if (group_tools_group_mail_members_enabled()) {
+		add_group_tool_option('mail_members', elgg_echo('group_tools:tools:mail_members'), false);
+	}
+	
 	// register plugin hooks
 	elgg_register_plugin_hook_handler('entity:url', 'object', '\ColdTrick\GroupTools\WidgetManager::widgetURL');
 	elgg_register_plugin_hook_handler('default', 'access', '\ColdTrick\GroupTools\Access::setGroupDefaultAccess');

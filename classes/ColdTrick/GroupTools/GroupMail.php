@@ -26,11 +26,7 @@ class GroupMail {
 			return;
 		}
 		
-		if (!$page_owner->canEdit()) {
-			return;
-		}
-		
-		if (elgg_get_plugin_setting('mail', 'group_tools') !== 'yes') {
+		if (!group_tools_group_mail_enabled($page_owner) && !group_tools_group_mail_members_enabled($page_owner)) {
 			return;
 		}
 		

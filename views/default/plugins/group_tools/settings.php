@@ -143,6 +143,17 @@ $body .= elgg_view('input/select', [
 $body .= '</div>';
 
 $body .= '<div>';
+$body .= elgg_echo('group_tools:settings:mail:members');
+$body .= elgg_view('input/select', [
+	'name' => 'params[mail_members]',
+	'options_values' => $noyes_options,
+	'value' => $plugin->mail_members,
+	'class' => 'mls',
+]);
+$body .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:settings:mail:members:description'));
+$body .= '</div>';
+
+$body .= '<div>';
 $body .= elgg_echo('group_tools:settings:member_export');
 $body .= elgg_view('input/select', [
 	'name' => 'params[member_export]',
