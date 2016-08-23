@@ -36,7 +36,8 @@ class GroupMail extends ElggObject {
 		$message = $this->description;
 		$message .= PHP_EOL . PHP_EOL;
 		$message .= elgg_echo('group_tools:mail:message:from');
-		$message .= ": {$group->name} [{$group->getURL()}]";
+		$message .= ": {$group->name}" . PHP_EOL;
+		$message .= $group->getURL();
 		
 		return $message;
 	}
@@ -64,9 +65,19 @@ class GroupMail extends ElggObject {
 		}
 		
 		$recipients = (array) $this->recipients;
+		$batch = new ElggBatch('elgg_get_entities_from_relationship', [
+			'type' => 'user',
+			'limit' => false,
+			'guids' => $recipients,
+			'relationship' => 'member',
+			'relationship_guid' => $this->getContainerGUID(),
+			'inverse_relationship' => true,
+		]);
+		
 		$formatted_recipients = [];
-		foreach ($recipients as $user_guid) {
-			$formatted_recipients[$user_guid] = ['email'];
+		/* @var $user \ElggUser */
+		foreach ($batch as $user) {
+			$formatted_recipients[$user->getGUID()] = ['email'];
 		}
 		
 		return $formatted_recipients;
