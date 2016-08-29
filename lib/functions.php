@@ -105,7 +105,12 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 		$url,
 	]);
 	
-	if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, [], ['email'])) {
+	$params = [
+		'object' => $group,
+		'action' => 'invite',
+	];
+	
+	if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, $params, ['email', 'site'])) {
 		return true;
 	}
 	
