@@ -1,10 +1,14 @@
 <?php
 /**
  * This file was created by Translation Editor v5.1
- * On 2016-07-14 11:15
+ * On 2016-08-29 14:19
  */
 
 return array (
+  'group_tools:settings:mail:members' => 'Mogen groep beheerder groep mail inschakelen voor hun leden',
+  'group_tools:settings:mail:members:description' => 'Dit vereist dat groep mail ingeschakeld is',
+  'group_tools:tools:mail_members' => 'Mogen groep leden andere leden een e-mail sturen',
+  'mail_members:group_tool_option:description' => 'Dit maakt het mogelijk dat gewone groep leden een e-mail kunnen versturen aan de andere leden. Standaard is dit voorbehouden aan de groep beheerders.',
   'group_tools:settings:invite_friends' => 'Vrienden uitnodigen toestaan',
   'group_tools:settings:invite_email:match' => 'Probeer bestaande gebruikers te verbinden aan e-mail adressen',
   'group_tools:groups:invite:error' => 'Er zijn geen uitnodigingsopties beschikbaar',
