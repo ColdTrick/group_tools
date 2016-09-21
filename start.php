@@ -27,9 +27,6 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('route', 'groups', '\ColdTrick\GroupTools\Router::groups');
 	elgg_register_plugin_hook_handler('route', 'livesearch', '\ColdTrick\GroupTools\Router::livesearch');
 	
-	elgg_register_page_handler('groupicon', '\ColdTrick\GroupTools\GroupIcon::pageHandler');
-	elgg_register_plugin_hook_handler('entity:icon:url', 'group', '\ColdTrick\GroupTools\GroupIcon::getIconURL');
-	
 	// admin menu item
 	elgg_register_admin_menu_item('configure', 'group_tool_presets', 'appearance');
 	elgg_register_admin_menu_item('administer', 'group_bulk_delete', 'administer_utilities');
