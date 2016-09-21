@@ -29,13 +29,11 @@
 	<suggests>
 		<type>plugin</type>
 		<name>widget_manager</name>
-		<version>5.0</version>
 	</suggests>
 	
 	<suggests>
 		<type>plugin</type>
 		<name>html_email_handler</name>
-		<version>3.0</version>
 	</suggests>
 	
 	<category>ColdTrick</category>
