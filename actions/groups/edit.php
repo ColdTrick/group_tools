@@ -93,8 +93,9 @@ if (!$group->name) {
 	forward(REFERER);
 }
 
-// Set group tool options
-$tool_options = elgg_get_config('group_tool_options');
+// Set group tool options (only pass along saved entities)
+$tool_entity = !$is_new_group ? $group : null;
+$tool_options = groups_get_group_tool_options($tool_entity);
 if ($tool_options) {
 	foreach ($tool_options as $group_option) {
 		$option_toggle_name = $group_option->name . "_enable";
@@ -215,44 +216,16 @@ if ($is_new_group) {
 $has_uploaded_icon = (!empty($_FILES['icon']['type']) && substr_count($_FILES['icon']['type'], 'image/'));
 
 if ($has_uploaded_icon) {
-
-	$icon_sizes = elgg_get_config('icon_sizes');
-
-	$prefix = "groups/" . $group->guid;
-
 	$filehandler = new ElggFile();
 	$filehandler->owner_guid = $group->owner_guid;
-	$filehandler->setFilename($prefix . ".jpg");
+	$filehandler->setFilename("groups/$group->guid.jpg");
 	$filehandler->open("write");
 	$filehandler->write(get_uploaded_file('icon'));
 	$filehandler->close();
-	$filename = $filehandler->getFilenameOnFilestore();
 
-	$sizes = array('tiny', 'small', 'medium', 'large', 'master');
-
-	$thumbs = array();
-	foreach ($sizes as $size) {
-		$thumbs[$size] = get_resized_image_from_existing_file(
-			$filename,
-			$icon_sizes[$size]['w'],
-			$icon_sizes[$size]['h'],
-			$icon_sizes[$size]['square']
-		);
-	}
-
-	if ($thumbs['tiny']) { // just checking if resize successful
-		$thumb = new ElggFile();
-		$thumb->owner_guid = $group->owner_guid;
-		$thumb->setMimeType('image/jpeg');
-
-		foreach ($sizes as $size) {
-			$thumb->setFilename("{$prefix}{$size}.jpg");
-			$thumb->open("write");
-			$thumb->write($thumbs[$size]);
-			$thumb->close();
-		}
-
-		$group->icontime = time();
+	if ($filehandler->exists()) {
+		// Non existent file throws exception
+		$group->saveIconFromElggFile($filehandler);
 	}
 }
 
