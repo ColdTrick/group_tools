@@ -1,6 +1,21 @@
 Version history
 ===============
 
+7.3 (2016-09-21):
+
+- added: group mail members allowed for group members
+- added: new groups require admin approval (plugin setting)
+- added: option to disable friends invite tab
+- added: plugin/group setting to require motivation on group join
+- added: plugin setting to disable matching email addresses to users
+- changed: group invites also sent to site notifications
+- fixed: contain status string withing image block body
+- fixed: double encoding in grouppicker
+- fixed: group mail only to verified group members
+- fixed: membership requests don't get removed from the list on decline
+- fixed: my status sidebar has incorrect group join link/text
+- fixed: prevent ENTER in autocomplete from submitting the form
+
 7.2 (2016-05-26):
 
 - added: banned and role column to group member export
