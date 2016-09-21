@@ -907,7 +907,7 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	if (!empty($group->icontime)) {
 		$prefix = "groups/{$group->getGUID()}";
 		
-		$sizes = elgg_get_config('icon_sizes');
+		$sizes = elgg_get_icon_sizes($group->getType());
 		
 		$ofh = new ElggFile();
 		$ofh->owner_guid = $old_owner->getGUID();
