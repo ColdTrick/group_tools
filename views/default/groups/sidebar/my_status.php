@@ -19,10 +19,6 @@ if (!($group instanceof ElggGroup)) {
 	return;
 }
 
-if ($group->getPrivateSetting('group_tools:cleanup:my_status') === 'yes') {
-	return;
-}
-
 // membership status
 $is_member = $group->isMember($user);
 $is_owner = ($group->getOwnerGUID() === $user->getGUID());
@@ -40,14 +36,12 @@ if ($is_owner) {
 		'href' => '#',
 	]);
 } else {
-	if ($group->getPrivateSetting('group_tools:cleanup:actions') != 'yes') {
-		elgg_register_menu_item('groups:my_status', [
-			'name' => 'membership_status',
-			'text' => elgg_echo('groups:join'),
-			'href' => "action/groups/join?group_guid={$group->getGUID()}",
-			'is_action' => true,
-		]);
-	}
+	elgg_register_menu_item('groups:my_status', [
+		'name' => 'membership_status',
+		'text' => elgg_echo('groups:join'),
+		'href' => "action/groups/join?group_guid={$group->getGUID()}",
+		'is_action' => true,
+	]);
 }
 
 // notification info
@@ -71,6 +65,7 @@ $body = elgg_view_menu('groups:my_status', [
 	'entity' => $group,
 	'subscribed' => $subscribed,
 ]);
+
 if (!empty($body)) {
 	echo elgg_view_module('aside', elgg_echo('groups:my_status'), $body);
 }

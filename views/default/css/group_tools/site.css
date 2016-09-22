@@ -32,10 +32,6 @@
 	color: orange;
 }
 
-.group-tools-highlight {
-	border: 1px solid red;
-}
-
 .group-tools-suggested-groups .elgg-item {
 	width: 33%;
 	text-align: center;

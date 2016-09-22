@@ -110,7 +110,15 @@ function group_tools_init() {
 	elgg_extend_view('groups/edit', 'group_tools/group_edit_tabbed', 10);
 	
 	// cleanup group side menu
+	elgg_extend_view('page/elements/sidebar', 'group_tools/sidebar/featured');
 	elgg_extend_view('groups/edit', 'group_tools/forms/cleanup', 450);
+	elgg_register_plugin_hook_handler('view_vars', 'groups/sidebar/members', '\ColdTrick\GroupTools\Cleanup::hideSidebarMembers');
+	elgg_register_plugin_hook_handler('view_vars', 'groups/sidebar/my_status', '\ColdTrick\GroupTools\Cleanup::hideMyStatus');
+	elgg_register_plugin_hook_handler('view_vars', 'groups/sidebar/search', '\ColdTrick\GroupTools\Cleanup::hideSearchbox');
+	elgg_register_plugin_hook_handler('prepare', 'menu:extras', '\ColdTrick\GroupTools\Cleanup::hideExtrasMenu');
+	elgg_register_plugin_hook_handler('prepare', 'menu:title', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
+	elgg_register_plugin_hook_handler('prepare', 'menu:groups:my_status', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
+	elgg_register_plugin_hook_handler('prepare', 'menu:owner_block', '\ColdTrick\GroupTools\Cleanup::hideOwnerBlockMenu');
 	
 	// group notifications
 	elgg_extend_view('groups/edit', 'group_tools/forms/notifications', 375);
@@ -147,9 +155,6 @@ function group_tools_init() {
 	
 	// closed groups shouldn't be indexed by search engines
 	elgg_register_plugin_hook_handler('head', 'page', '\ColdTrick\GroupTools\PageLayout::noIndexClosedGroups');
-	
-	// cleanup sidebar
-	elgg_extend_view('page/elements/sidebar', 'group_tools/sidebar/cleanup');
 	
 	// group invitations
 	elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinvitations');

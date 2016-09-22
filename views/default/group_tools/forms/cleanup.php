@@ -4,18 +4,9 @@
  */
 
 $group = elgg_extract('entity', $vars);
-
 if (!($group instanceof ElggGroup) || !$group->canEdit()) {
 	return;
 }
-
-// load js
-elgg_require_js('group_tools/group_edit');
-
-$noyes_options = [
-	'no' => elgg_echo('option:no'),
-	'yes' => elgg_echo('option:yes'),
-];
 
 $featured_options = [
 	'no' => elgg_echo('option:no'),
@@ -39,149 +30,91 @@ $featured_sorting = [
 	'alphabetical' => elgg_echo('sort:alpha'),
 ];
 
-$prefix = 'group_tools:cleanup:';
+$prefix = \ColdTrick\GroupTools\Cleanup::SETTING_PREFIX;
 
 $form_body = elgg_format_element('div', ['class' => 'elgg-quiet'], elgg_echo('group_tools:cleanup:description'));
 
-// cleanup owner block
-$form_body .= '<div>';
-$form_body .= elgg_echo('group_tools:cleanup:owner_block');
-$form_body .= ':' . elgg_view('input/select', [
-	'name' => 'owner_block',
-	'options_values' => $noyes_options,
-	'value' => $group->getPrivateSetting("{$prefix}owner_block"),
-	'class' => 'mls',
+// cleanup extras menu
+$form_body  .= elgg_view_input('checkbox', [
+	'label' => elgg_echo('group_tools:cleanup:extras_menu'),
+	'help' => elgg_echo('group_tools:cleanup:extras_menu:explain'),
+	'name' => 'extras_menu',
+	'value' => 'yes',
+	'default' => 'no',
+	'checked' => ($group->getPrivateSetting("{$prefix}extras_menu") === 'yes'),
 ]);
-$form_body .= elgg_format_element('span', [
-	'alt' => elgg_echo('group_tools:explain'),
-	'title' => elgg_echo('group_tools:cleanup:owner_block:explain'),
-	'onmouseover' => 'elgg.group_tools.cleanup_highlight("owner_block");',
-	'onmouseout' => 'elgg.group_tools.cleanup_unhighlight("owner_block");',
-	'class' => 'float-alt',
-], elgg_view_icon('info'));
-$form_body .= '</div>';
 
 // hide group actions
-$form_body .= '<div>';
-$form_body .= elgg_echo('group_tools:cleanup:actions');
-$form_body .= ':' . elgg_view('input/select', [
+$form_body  .= elgg_view_input('checkbox', [
+	'label' => elgg_echo('group_tools:cleanup:actions'),
+	'help' => elgg_echo('group_tools:cleanup:actions:explain'),
 	'name' => 'actions',
-	'options_values' => $noyes_options,
-	'value' => $group->getPrivateSetting("{$prefix}actions"),
-	'class' => 'mls',
+	'value' => 'yes',
+	'default' => 'no',
+	'checked' => ($group->getPrivateSetting("{$prefix}actions") === 'yes'),
 ]);
-$form_body .= elgg_format_element('span', [
-	'alt' => elgg_echo('group_tools:explain'),
-	'title' => elgg_echo('group_tools:cleanup:actions:explain'),
-	'class' => 'float-alt',
-], elgg_view_icon('info'));
-$form_body .= '</div>';
 
-// hide group menu items
-$form_body .= '<div>';
-$form_body .= elgg_echo('group_tools:cleanup:menu');
-$form_body .= ':' . elgg_view('input/select', [
+// hide owner_block menu items
+$form_body  .= elgg_view_input('checkbox', [
+	'label' => elgg_echo('group_tools:cleanup:menu'),
+	'help' => elgg_echo('group_tools:cleanup:menu:explain'),
 	'name' => 'menu',
-	'options_values' => $noyes_options,
-	'value' => $group->getPrivateSetting("{$prefix}menu"),
-	'class' => 'mls',
+	'value' => 'yes',
+	'default' => 'no',
+	'checked' => ($group->getPrivateSetting("{$prefix}menu") === 'yes'),
 ]);
-$form_body .= elgg_format_element('span', [
-	'alt' => elgg_echo('group_tools:explain'),
-	'title' => elgg_echo('group_tools:cleanup:menu:explain'),
-	'onmouseover' => 'elgg.group_tools.cleanup_highlight("menu");',
-	'onmouseout' => 'elgg.group_tools.cleanup_unhighlight("menu");',
-	'class' => 'float-alt',
-], elgg_view_icon('info'));
-$form_body .= '</div>';
 
 // hide group search
-$form_body .= '<div>';
-$form_body .= elgg_echo('group_tools:cleanup:search');
-$form_body .= ':' . elgg_view('input/select', [
+$form_body  .= elgg_view_input('checkbox', [
+	'label' => elgg_echo('group_tools:cleanup:search'),
+	'help' => elgg_echo('group_tools:cleanup:search:explain'),
 	'name' => 'search',
-	'options_values' => $noyes_options,
-	'value' => $group->getPrivateSetting("{$prefix}search"),
-	'class' => 'mls',
+	'value' => 'yes',
+	'default' => 'no',
+	'checked' => ($group->getPrivateSetting("{$prefix}search") === 'yes'),
 ]);
-$form_body .= elgg_format_element('span', [
-	'alt' => elgg_echo('group_tools:explain'),
-	'title' => elgg_echo('group_tools:cleanup:search:explain'),
-	'onmouseover' => 'elgg.group_tools.cleanup_highlight("search");',
-	'onmouseout' => 'elgg.group_tools.cleanup_unhighlight("search");',
-	'class' => 'float-alt',
-], elgg_view_icon('info'));
-$form_body .= '</div>';
 
 // hide group members
-$form_body .= '<div>';
-$form_body .= elgg_echo('group_tools:cleanup:members');
-$form_body .= ':' . elgg_view('input/select', [
+$form_body  .= elgg_view_input('checkbox', [
+	'label' => elgg_echo('group_tools:cleanup:members'),
+	'help' => elgg_echo('group_tools:cleanup:members:explain'),
 	'name' => 'members',
-	'options_values' => $noyes_options,
-	'value' => $group->getPrivateSetting("{$prefix}members"),
-	'class' => 'mls',
+	'value' => 'yes',
+	'default' => 'no',
+	'checked' => ($group->getPrivateSetting("{$prefix}members") === 'yes'),
 ]);
-$form_body .= elgg_format_element('span', [
-	'alt' => elgg_echo('group_tools:explain'),
-	'title' => elgg_echo('group_tools:cleanup:members:explain'),
-	'onmouseover' => 'elgg.group_tools.cleanup_highlight("members");',
-	'onmouseout' => 'elgg.group_tools.cleanup_unhighlight("members");',
-	'class' => 'float-alt',
-], elgg_view_icon('info'));
-$form_body .= '</div>';
 
 // show featured groups
-$form_body .= '<div>';
-$form_body .= elgg_echo('group_tools:cleanup:featured');
-$form_body .= ':' . elgg_view('input/select', [
+$form_body  .= elgg_view_input('select', [
+	'label' => elgg_echo('group_tools:cleanup:featured'),
+	'help' => elgg_echo('group_tools:cleanup:featured:explain'),
 	'name' => 'featured',
 	'options_values' => $featured_options,
 	'value' => $group->getPrivateSetting("{$prefix}featured"),
-	'class' => 'mls',
 ]);
-$form_body .= elgg_format_element('span', [
-	'alt' => elgg_echo('group_tools:explain'),
-	'title' => elgg_echo('group_tools:cleanup:featured:explain'),
-	'onmouseover' => 'elgg.group_tools.cleanup_highlight("featured");',
-	'onmouseout' => 'elgg.group_tools.cleanup_unhighlight("featured");',
-	'class' => 'float-alt',
-], elgg_view_icon('info'));
-$form_body .= '</div>';
 
-$form_body .= '<div>';
-$form_body .= elgg_echo('group_tools:cleanup:featured_sorting');
-$form_body .= ':' . elgg_view('input/select', [
+$form_body  .= elgg_view_input('select', [
+	'label' => elgg_echo('group_tools:cleanup:featured_sorting'),
 	'name' => 'featured_sorting',
 	'options_values' => $featured_sorting,
 	'value' => $group->getPrivateSetting("{$prefix}featured_sorting"),
-	'class' => 'mls'
 ]);
-$form_body .= '</div>';
 
 // hide my status
-$form_body .= '<div>';
-$form_body .= elgg_echo('group_tools:cleanup:my_status');
-$form_body .= ':' . elgg_view('input/select', [
+$form_body  .= elgg_view_input('checkbox', [
+	'label' => elgg_echo('group_tools:cleanup:my_status'),
+	'help' => elgg_echo('group_tools:cleanup:my_status:explain'),
 	'name' => 'my_status',
-	'options_values' => $noyes_options,
-	'value' => $group->getPrivateSetting("{$prefix}my_status"),
-	'class' => 'mls',
+	'value' => 'yes',
+	'default' => 'no',
+	'checked' => ($group->getPrivateSetting("{$prefix}my_status") === 'yes'),
 ]);
-$form_body .= elgg_format_element('span', [
-	'alt' => elgg_echo('group_tools:explain'),
-	'title' => elgg_echo('group_tools:cleanup:my_status:explain'),
-	'onmouseover' => 'elgg.group_tools.cleanup_highlight("my_status");',
-	'onmouseout' => 'elgg.group_tools.cleanup_unhighlight("my_status");',
-	'class' => 'float-alt',
-], elgg_view_icon('info'));
-$form_body .= '</div>';
 
-// buttons
-$form_body .= '<div>';
-$form_body .= elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->getGUID()]);
-$form_body .= elgg_view('input/submit', ['value' => elgg_echo('save')]);
-$form_body .= '</div>';
+// footer buttons
+$footer = elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->getGUID()]);
+$footer .= elgg_view('input/submit', ['value' => elgg_echo('save')]);
+
+$form_body .= elgg_format_element('div', ['class' => 'elgg-foot'], $footer);
 
 // make body
 $title = elgg_echo('group_tools:cleanup:title');

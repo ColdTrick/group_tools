@@ -14,7 +14,7 @@ if (!$group->canEdit()) {
 }
 
 // get input
-$owner_block = get_input('owner_block');
+$extras_menu = get_input('extras_menu');
 $actions = get_input('actions');
 $menu = get_input('menu');
 $members = get_input('members');
@@ -24,9 +24,9 @@ $featured_sorting = get_input('featured_sorting');
 $my_status = get_input('my_status');
 
 // save settings
-$prefix = 'group_tools:cleanup:';
+$prefix = \ColdTrick\GroupTools\Cleanup::SETTING_PREFIX;
 
-$group->setPrivateSetting("{$prefix}owner_block", $owner_block);
+$group->setPrivateSetting("{$prefix}extras_menu", $extras_menu);
 $group->setPrivateSetting("{$prefix}actions", $actions);
 $group->setPrivateSetting("{$prefix}menu", $menu);
 $group->setPrivateSetting("{$prefix}members", $members);

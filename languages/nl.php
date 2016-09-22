@@ -1,10 +1,16 @@
 <?php
 /**
  * This file was created by Translation Editor v5.1
- * On 2016-08-29 14:19
+ * On 2016-09-22 11:14
  */
 
 return array (
+  'group_tools:cleanup:extras_menu' => 'Verberg het extra\'s menu',
+  'group_tools:cleanup:extras_menu:explain' => 'Het extra\'s menu bevind zich aan de bovenkant van de zijbalk. Hierin bevinden zich meestal additionele link (bijv. RSS links).',
+  'group_tools:cleanup:title' => 'Groep zijbalk opschonen',
+  'group_tools:cleanup:description' => 'Hier kan de zijbalk van de groep worden opgeschoond. Dit heeft geen effect voor groeps beheerders',
+  'group_tools:cleanup:members:explain' => 'Op de groep profiel pagina staat in de zijbalk een lijst met leden van de groep. Je kunt deze verbergen.',
+  'group_tools:cleanup:featured:explain' => 'Je kunt ervoor kiezen om op de groep profiel pagina een lijst met aangeraden groepen te tonen in de zijbalk.',
   'group_tools:settings:mail:members' => 'Mogen groep beheerder groep mail inschakelen voor hun leden',
   'group_tools:settings:mail:members:description' => 'Dit vereist dat groep mail ingeschakeld is',
   'group_tools:tools:mail_members' => 'Mogen groep leden andere leden een e-mail sturen',
@@ -383,16 +389,10 @@ Het formaat moet zijn: weergave naam;e-mail adres. Er mag geen kopregel zijn.',
   'group_tools:action:groups:email_invitation:error:code' => 'De opgegeven uitnodiginscode in niet meer geldig',
   'group_tools:action:groups:email_invitation:error:join' => 'Er is een onbekende fout opgetreden tijdens het lid worden van de groep %s, misschien ben je al lid',
   'group_tools:action:groups:email_invitation:success' => 'Je bent lid geworden van de groep',
-  'group_tools:cleanup:title' => 'Groep menu opschonen',
-  'group_tools:cleanup:description' => 'Hier kan het groep menu worden opgeschoond. Dit heeft geen effect voor groeps beheerders',
-  'group_tools:cleanup:owner_block' => 'Beperk het eigenaar blok',
-  'group_tools:cleanup:owner_block:explain' => 'Het eigenaar blok staat bovenaan het menu, hierin kunnen extra links worden getoond (bijvoorbeeld RSS links)',
   'group_tools:cleanup:actions' => 'Verberg de Lid worden/Lidmaatschap aanvragen knop',
   'group_tools:cleanup:actions:explain' => 'Afhankelijk van de groep instelling, kunnen gebruikers direct lid worden van de groep of lidmaatschap aanvragen.',
   'group_tools:cleanup:menu' => 'Verberg overige menu items',
   'group_tools:cleanup:menu:explain' => 'Verberg de overige menu links naar de verschillende groep functionaliteiten. De gebruikers kunnen alleen naar de verschillende functionaliteiten door gebruik te maken van de links in widgets.',
   'group_tools:cleanup:members' => 'Verberg groep leden',
-  'group_tools:cleanup:members:explain' => 'Op de groep profiel pagina staat op de aangegeven plaats een lijst met leden van de groep. Je kunt deze verbergen.',
   'group_tools:cleanup:featured' => 'Toon de aangeraden groepen in het menu',
-  'group_tools:cleanup:featured:explain' => 'Je kunt ervoor kiezen om op de groep profiel pagina een lijst met aangeraden groepen te tonen op de aangegeven plaats.',
 );
