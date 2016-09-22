@@ -10,7 +10,6 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 // default elgg event handlers
 elgg_register_event_handler('init', 'system', 'group_tools_init');
-elgg_register_event_handler('ready', 'system', 'group_tools_ready');
 
 /**
  * called when the Elgg system get initialized
@@ -77,6 +76,8 @@ function group_tools_init() {
 	// register group activity widget
 	// 2012-05-03: restored limited functionality of group activity widget, will be fully restored if Elgg fixes widget settings
 	elgg_register_widget_type('group_river_widget', elgg_echo('widgets:group_river_widget:title'), elgg_echo('widgets:group_river_widget:description'), ['dashboard', 'profile', 'index', 'groups'], true);
+	// unregister dashboard widget group_activity, because our version is better ;)
+	elgg_unregister_widget_type('group_activity');
 	
 	// register group members widget
 	elgg_register_widget_type('group_members', elgg_echo('widgets:group_members:title'), elgg_echo('widgets:group_members:description'), ['groups'], false);
@@ -225,14 +226,4 @@ function group_tools_init() {
 	elgg_register_action('groups/edit', dirname(__FILE__) . '/actions/groups/edit.php');
 	
 	elgg_register_action('group_tools/order_groups', dirname(__FILE__) . '/actions/order_groups.php', 'admin');
-}
-
-/**
- * called when the system is ready
- *
- * @return void
- */
-function group_tools_ready() {
-	// unregister dashboard widget group_activity
-	elgg_unregister_widget_type('group_activity');
 }
