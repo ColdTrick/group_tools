@@ -275,7 +275,7 @@ function group_tools_is_group_creation_limited() {
 	
 	$result = false;
 	
-	if (elgg_get_plugin_setting('admin_create', 'group_tools') === 'yes') {
+	if (elgg_get_plugin_setting('limited_groups', 'groups') === 'yes') {
 		$result = true;
 	}
 	
