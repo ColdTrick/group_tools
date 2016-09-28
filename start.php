@@ -96,7 +96,10 @@ function group_tools_init() {
 	
 	// manage auto join for groups
 	elgg_extend_view('groups/edit', 'group_tools/forms/special_states', 350);
-	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoin');
+	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinAutoJoinGroups');
+	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinEmailInvitedGroups');
+	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinGroupInviteCode');
+	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinDomainBasedGroups');
 	
 	// group admin approve
 	elgg_extend_view('groups/edit', 'group_tools/extends/groups/edit/admin_approve', 1);

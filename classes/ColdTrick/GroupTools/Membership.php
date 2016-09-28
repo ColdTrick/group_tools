@@ -317,6 +317,28 @@ class Membership {
 	}
 	
 	/**
+	 * Validate that the relationship is a site membership relationship
+	 *
+	 * @param \ElggRelationship $relationship the relationship to check
+	 *
+	 * @return bool
+	 */
+	protected static function validateSiteJoinRelationship($relationship) {
+		
+		if (!($relationship instanceof \ElggRelationship) || ($relationship->relationship !== 'member_of_site')) {
+			return false;
+		}
+		
+		$user_guid = (int) $relationship->guid_one;
+		$user = get_user($user_guid);
+		if (empty($user)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * Listen to the create member_of_site relationship event to handle new users
 	 *
 	 * @param string            $event        the name of the event
@@ -325,9 +347,9 @@ class Membership {
 	 *
 	 * @return void
 	 */
-	public static function siteJoin($event, $type, $relationship) {
+	public static function siteJoinAutoJoinGroups($event, $type, $relationship) {
 		
-		if (!($relationship instanceof \ElggRelationship) || ($relationship->relationship !== 'member_of_site')) {
+		if (!self::validateSiteJoinRelationship($relationship)) {
 			return;
 		}
 		
@@ -335,80 +357,167 @@ class Membership {
 		$site_guid = (int) $relationship->guid_two;
 		
 		$user = get_user($user_guid);
-		if (empty($user)) {
+		
+		// add user to the auto join groups
+		$auto_joins = elgg_get_plugin_setting('auto_join', 'group_tools');
+		if (empty($auto_joins)) {
 			return;
 		}
 		
 		// ignore access
 		$ia = elgg_set_ignore_access(true);
 		
-		// add user to the auto join groups
-		$auto_joins = elgg_get_plugin_setting('auto_join', 'group_tools');
-		if (!empty($auto_joins)) {
-			$auto_joins = string_to_tag_array($auto_joins);
-			
-			foreach ($auto_joins as $group_guid) {
-				$group = get_entity($group_guid);
-				if (empty($group) || !($group instanceof \ElggGroup)) {
-					continue;
-				}
-				
-				if ($group->site_guid !== $site_guid) {
-					continue;
-				}
-				
-				// join the group
-				$group->join($user);
+		$auto_joins = string_to_tag_array($auto_joins);
+		foreach ($auto_joins as $group_guid) {
+			$group = get_entity($group_guid);
+			if (!($group instanceof \ElggGroup)) {
+				continue;
 			}
+			
+			if ($group->site_guid !== $site_guid) {
+				continue;
+			}
+			
+			// join the group
+			$group->join($user);
 		}
+		
+		// restore access settings
+		elgg_set_ignore_access($ia);
+	}
+	
+	/**
+	 * Listen to the create member_of_site relationship event to handle new users
+	 *
+	 * @param string            $event        the name of the event
+	 * @param string            $type         the type of the event
+	 * @param \ElggRelationship $relationship supplied param
+	 *
+	 * @return void
+	 */
+	public static function siteJoinEmailInvitedGroups($event, $type, $relationship) {
+		
+		if (!self::validateSiteJoinRelationship($relationship)) {
+			return;
+		}
+		
+		$user_guid = (int) $relationship->guid_one;
+		$site_guid = (int) $relationship->guid_two;
+		
+		$user = get_user($user_guid);
+		
+		// ignore access
+		$ia = elgg_set_ignore_access(true);
 		
 		// auto detect email invited groups
 		$groups = group_tools_get_invited_groups_by_email($user->email, $site_guid);
-		if (!empty($groups)) {
-			foreach ($groups as $group) {
-				// join the group
-				$group->join($user);
-			}
+		if (empty($groups)) {
+			// restore access settings
+			elgg_set_ignore_access($ia);
+			
+			return;
 		}
+			
+		foreach ($groups as $group) {
+			// join the group
+			$group->join($user);
+		}
+		
+		// restore access settings
+		elgg_set_ignore_access($ia);
+	}
+	
+	/**
+	 * Listen to the create member_of_site relationship event to handle new users
+	 *
+	 * @param string            $event        the name of the event
+	 * @param string            $type         the type of the event
+	 * @param \ElggRelationship $relationship supplied param
+	 *
+	 * @return void
+	 */
+	public static function siteJoinGroupInviteCode($event, $type, $relationship) {
+		
+		if (!self::validateSiteJoinRelationship($relationship)) {
+			return;
+		}
+		
+		$user_guid = (int) $relationship->guid_one;
+		
+		$user = get_user($user_guid);
 		
 		// check for manual email invited groups
 		$group_invitecode = get_input('group_invitecode');
-		if (!empty($group_invitecode)) {
-			$group = group_tools_check_group_email_invitation($group_invitecode);
-			if (!empty($group)) {
-				// join the group
-				$group->join($user);
-				
-				// cleanup the invite code
-				$group_invitecode = sanitise_string($group_invitecode);
-				
-				$options = [
-					'guid' => $group->getGUID(),
-					'annotation_name' => 'email_invitation',
-					'wheres' => [
-						"(v.string = '{$group_invitecode}' OR v.string LIKE '{$group_invitecode}|%')",
-					],
-					'annotation_owner_guid' => $group->getGUID(),
-					'limit' => 1,
-				];
-				
-				// ignore access in order to cleanup the invitation
-				$ia2 = elgg_set_ignore_access(true);
-				
-				elgg_delete_annotations($options);
-				
-				// restore access
-				elgg_set_ignore_access($ia2);
-			}
+		if (empty($group_invitecode)) {
+			return;
 		}
+		
+		// ignore access
+		$ia = elgg_set_ignore_access(true);
+		
+		$group = group_tools_check_group_email_invitation($group_invitecode);
+		if (empty($group)) {
+			// restore access settings
+			elgg_set_ignore_access($ia);
+			
+			return;
+		}
+		
+		// join the group
+		$group->join($user);
+		
+		// cleanup the invite code
+		$group_invitecode = sanitise_string($group_invitecode);
+		
+		elgg_delete_annotations([
+			'guid' => $group->getGUID(),
+			'annotation_name' => 'email_invitation',
+			'wheres' => [
+				"(v.string = '{$group_invitecode}' OR v.string LIKE '{$group_invitecode}|%')",
+			],
+			'annotation_owner_guid' => $group->getGUID(),
+			'limit' => 1,
+		]);
+		
+		// restore access settings
+		elgg_set_ignore_access($ia);
+	}
+	
+	/**
+	 * Listen to the create member_of_site relationship event to handle new users
+	 *
+	 * @param string            $event        the name of the event
+	 * @param string            $type         the type of the event
+	 * @param \ElggRelationship $relationship supplied param
+	 *
+	 * @return void
+	 */
+	public static function siteJoinDomainBasedGroups($event, $type, $relationship) {
+		
+		if (!self::validateSiteJoinRelationship($relationship)) {
+			return;
+		}
+		
+		$user_guid = (int) $relationship->guid_one;
+		$site_guid = (int) $relationship->guid_two;
+		
+		$user = get_user($user_guid);
+		
+		// ignore access
+		$ia = elgg_set_ignore_access(true);
 		
 		// find domain based groups
 		$groups = group_tools_get_domain_based_groups($user, $site_guid);
-		if (!empty($groups)) {
-			foreach ($groups as $group) {
-				// join the group
-				$group->join($user);
-			}
+		if (empty($groups)) {
+			// restore access settings
+			elgg_set_ignore_access($ia);
+			
+			return;
+		}
+		
+		foreach ($groups as $group) {
+			// join the group
+			$group->join($user);
 		}
 		
 		// restore access settings
