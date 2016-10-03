@@ -42,7 +42,7 @@ switch ($toggle) {
 		foreach ($members as $member) {
 			foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
 				if (in_array($method, $auto_notification_handlers)) {
-					add_entity_relationship($member->getGUID(), "notify:{$method}", $group->getGUID());
+					elgg_add_subscription($member->getGUID(), $method, $group->getGUID());
 				}
 			}
 		}
@@ -53,7 +53,7 @@ switch ($toggle) {
 		// disable notification for everyone
 		foreach ($members as $member) {
 			foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
-				remove_entity_relationship($member->getGUID(), 'notify' . $method, $group->getGUID());
+				elgg_remove_subscription($member->getGUID(), $method, $group->getGUID());
 			}
 		}
 		
