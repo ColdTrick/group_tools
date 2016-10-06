@@ -1,6 +1,18 @@
 Version history
 ===============
 
+8.0 (2016-10-06):
+
+- changed: get group tool options using the new helper function
+- changed: group sidebar cleanup reworked
+- changed: moved different autojoin groups to own functions
+- changed: moved unregister widget from ready to init event
+- changed: required Elgg version set to 2.2
+- fixed: check correct plugin setting for group creation
+- fixed: deprecated notice when transfering group ownership
+- fixed: force notification settings don't apply
+- removed: custom icon serving handling
+
 7.3 (2016-09-21):
 
 - added: group mail members allowed for group members
