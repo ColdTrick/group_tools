@@ -1238,3 +1238,29 @@ function group_tools_group_mail_members_enabled(ElggGroup $group = null) {
 	
 	return false;
 }
+
+/**
+ * Get the helper class for stale information
+ *
+ * @param ElggGroup $group          the group to get the info for
+ * @param int       $number_of_days (optional) a number of days to check stale against, defaults to plugin setting
+ *
+ * @return false|\ColdTrick\GroupTools\StaleInfo
+ */
+function group_tools_get_stale_info(ElggGroup $group, $number_of_days = null) {
+	
+	if (!($group instanceof ElggGroup)) {
+		return false;
+	}
+	
+	if (!isset($number_of_days)) {
+		$number_of_days = elgg_get_plugin_setting('stale_timeout', 'group_tools');
+	}
+	
+	$number_of_days = (int) $number_of_days;
+	if ($number_of_days < 1) {
+		return false;
+	}
+	
+	return new ColdTrick\GroupTools\StaleInfo($group, $number_of_days);
+}

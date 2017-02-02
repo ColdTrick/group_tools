@@ -129,3 +129,7 @@
 .group-tools-group-sort-menu .elgg-menu-item-sorting > .elgg-child-menu li.elgg-state-selected a {
     font-weight: bold;
 }
+
+#group-tools-stale-message.elgg-message {
+	cursor: default;
+}

@@ -185,6 +185,9 @@ function group_tools_init() {
 		add_group_tool_option('mail_members', elgg_echo('group_tools:tools:mail_members'), false);
 	}
 	
+	// stale groups
+	elgg_extend_view('groups/profile/summary', 'group_tools/extends/groups/profile/stale_message');
+	
 	// register plugin hooks
 	elgg_register_plugin_hook_handler('entity:url', 'object', '\ColdTrick\GroupTools\WidgetManager::widgetURL');
 	elgg_register_plugin_hook_handler('default', 'access', '\ColdTrick\GroupTools\Access::setGroupDefaultAccess');
@@ -213,6 +216,7 @@ function group_tools_init() {
 	elgg_register_action('group_tools/member_export', dirname(__FILE__) . '/actions/member_export.php');
 	elgg_register_action('group_tools/toggle_notifications', dirname(__FILE__) . '/actions/toggle_notifications.php');
 	elgg_register_action('group_tools/join_motivation', dirname(__FILE__) . '/actions/membership/join_motivation.php');
+	elgg_register_action('group_tools/mark_not_stale', dirname(__FILE__) . '/actions/mark_not_stale.php');
 	
 	elgg_register_action('group_tools/toggle_special_state', dirname(__FILE__) . '/actions/admin/toggle_special_state.php', 'admin');
 	elgg_register_action('group_tools/fix_auto_join', dirname(__FILE__) . '/actions/admin/fix_auto_join.php', 'admin');
