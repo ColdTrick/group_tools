@@ -30,6 +30,8 @@ return array(
 	'group_tools:settings:default_on' => "Yes, default on",
 	'group_tools:settings:required' => "Yes, required",
 	
+	'group_tools:settings:edit:title' => "Group edit settings",
+	
 	'group_tools:settings:invite:title' => "Group invitation options",
 	'group_tools:settings:management:title' => "General group options",
 	'group_tools:settings:default_access:title' => "Default group access",
