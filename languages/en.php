@@ -558,4 +558,8 @@ Click below to view the group's join requests:
 	// stale groups
 	'group_tools:stale_info:description' => "This group has been inactive for a while. The content may no longer be relevant.",
 	'group_tools:stale_info:link' => "This group is still relevent",
+	
+	'group_tools:csv_exporter:stale_info:is_stale' => "Stale group",
+	'group_tools:csv_exporter:stale_info:timestamp' => "Stale timestamp",
+	'group_tools:csv_exporter:stale_info:timestamp:readable' => "Stale timestamp (readable)",
 );
