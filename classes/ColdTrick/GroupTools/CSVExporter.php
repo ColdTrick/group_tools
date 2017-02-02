@@ -196,4 +196,93 @@ class CSVExporter {
 				break;
 		}
 	}
+	
+	/**
+	 * Add stale information to the exportable values
+	 *
+	 * @param string $hook         the name of the hook
+	 * @param string $type         the type of the hook
+	 * @param array  $return_value current return value
+	 * @param array  $params       supplied params
+	 *
+	 * @return void|array
+	 */
+	public static function addStaleInfo($hook, $type, $return_value, $params) {
+		
+		$content_type = elgg_extract('type', $params);
+		if ($content_type !== 'group') {
+			return;
+		}
+		
+		if ((int) elgg_get_plugin_setting('stale_timeout', 'group_tools') < 1) {
+			return;
+		}
+		
+		$readable = (bool) elgg_extract('readable', $params, false);
+		
+		$fields = [
+			elgg_echo('group_tools:csv_exporter:stale_info:is_stale') => 'group_tools_stale_info_is_stale',
+			elgg_echo('group_tools:csv_exporter:stale_info:timestamp') => 'group_tools_stale_info_timestamp',
+			elgg_echo('group_tools:csv_exporter:stale_info:timestamp:readable') => 'group_tools_stale_info_timestamp_reabable',
+		];
+		
+		if (!$readable) {
+			$fields = array_values($fields);
+		}
+		
+		return array_merge($return_value, $fields);
+	}
+	
+	/**
+	 * Export stale information about the group
+	 *
+	 * @param string $hook         the name of the hook
+	 * @param string $type         the type of the hook
+	 * @param array  $return_value current return value
+	 * @param array  $params       supplied params
+	 *
+	 * @return void|array
+	 */
+	public static function exportStaleInfo($hook, $type, $return_value, $params) {
+		
+		if (!is_null($return_value)) {
+			// someone already provided output
+			return;
+		}
+		
+		$entity = elgg_extract('entity', $params);
+		if (!($entity instanceof \ElggGroup)) {
+			return;
+		}
+		
+		$stale_info = group_tools_get_stale_info($entity);
+		if (empty($stale_info)) {
+			return;
+		}
+		
+		$exportable_value = elgg_extract('exportable_value', $params);
+		switch ($exportable_value) {
+			case 'group_tools_stale_info_is_stale':
+				if ($stale_info->isStale()) {
+					return 'yes';
+				} else {
+					return 'no';
+				}
+				break;
+			case 'group_tools_stale_info_timestamp':
+				$ts = $stale_info->getTimestamp();
+				if (empty($ts)) {
+					return;
+				}
+				return $ts;
+				break;
+			case 'group_tools_stale_info_timestamp_reabable':
+				$ts = $stale_info->getTimestamp();
+				if (empty($ts)) {
+					return;
+				}
+				return csv_exported_get_readable_timestamp($ts);
+				break;
+		}
+	}
 }

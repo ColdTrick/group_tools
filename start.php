@@ -201,8 +201,10 @@ function group_tools_init() {
 	
 	elgg_register_plugin_hook_handler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToGroups');
 	elgg_register_plugin_hook_handler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToUsers');
+	elgg_register_plugin_hook_handler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addStaleInfo');
 	elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForGroups');
 	elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForUsers');
+	elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportStaleInfo');
 	
 	// actions
 	elgg_register_action('group_tools/toggle_admin', dirname(__FILE__) . '/actions/toggle_admin.php');
