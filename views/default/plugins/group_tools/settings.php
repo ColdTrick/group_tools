@@ -155,6 +155,15 @@ $group_edit .= elgg_view_field([
 	'value' => $plugin->simple_access_tab,
 ]);
 
+$group_edit .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('group_tools:settings:simple_create_form'),
+	'#help' => elgg_echo('group_tools:settings:simple_create_form:help'),
+	'name' => 'params[simple_create_form]',
+	'options_values' => $noyes_options,
+	'value' => $plugin->simple_create_form,
+]);
+
 echo elgg_view_module('inline', elgg_echo('group_tools:settings:edit:title'), $group_edit);
 
 // listing settings

@@ -22,12 +22,9 @@ define(function (require) {
 	}
 
 	$('.group-tools-simplified-access-button').on('click', function() {
-		if ($(this).hasClass('elgg-state-active')) {
-			return;
-		}
 		$('.group-tools-simplified-access-button').removeClass('elgg-state-active');
 		
-		$(this).toggleClass('elgg-state-active');
+		$(this).addClass('elgg-state-active');
 		
 		update_access_values($(this).data('groupType'));
 	});

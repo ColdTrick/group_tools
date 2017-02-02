@@ -2,6 +2,11 @@
 /**
  * Show tabs on the group edit form
  */
+$group = elgg_extract('entity', $vars);
+
+if (!$group && elgg_get_plugin_setting('simple_create_form', 'group_tools') == 'yes') {
+	return;
+}
 
 // load js
 elgg_require_js('group_tools/group_edit_tabbed');
@@ -26,7 +31,6 @@ $tabs = [
 	],
 ];
 
-$group = elgg_extract('entity', $vars);
 if ($group instanceof ElggGroup) {
 	$tabs['other'] = [
 		'text' => elgg_echo('group_tools:group:edit:other'),

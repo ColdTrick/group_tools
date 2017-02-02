@@ -9,7 +9,7 @@ $closed_text = '<h3>' . elgg_echo('group_tools:edit:access_simplified:closed') .
 $closed_text .= elgg_view('output/longtext', ['value' => elgg_echo('group_tools:edit:access_simplified:closed:description')]);
 
 $open_text = elgg_format_element('div', [
-	'class' => 'group-tools-simplified-access-button',
+	'class' => 'group-tools-simplified-access-button elgg-state-active',
 	'data-group-type' => 'open',
 ], $open_text);
 
