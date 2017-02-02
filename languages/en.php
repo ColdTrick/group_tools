@@ -555,4 +555,7 @@ Click below to view the group's join requests:
 	'group_tools:join_motivation:toggle' => "Show motivation",
 	'group_tools:join_motivation:listing' => "Reason for joining:",
 	
+	// stale groups
+	'group_tools:stale_info:description' => "This group has been inactive for a while. The content may no longer be relevant.",
+	'group_tools:stale_info:link' => "This group is still relevent",
 );
