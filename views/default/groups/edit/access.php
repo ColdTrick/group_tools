@@ -19,7 +19,7 @@ $owner_guid = elgg_extract('owner_guid', $vars);
 $content_access_mode = elgg_extract('content_access_mode', $vars);
 $default_access = elgg_extract('group_default_access', $vars, ACCESS_DEFAULT);
 
-$show_visibility = (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes');
+$show_visibility = group_tools_allow_hidden_groups();
 $show_visibility = ($show_visibility && (empty($entity->guid) || ($entity->access_id !== ACCESS_PRIVATE)));
 
 $show_motivation_option = group_tools_join_motivation_required();

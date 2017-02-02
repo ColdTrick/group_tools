@@ -707,10 +707,8 @@ function group_tools_show_hidden_indicator(ElggGroup $group) {
 	if (!isset($check_required)) {
 		$check_required = false;
 		
-		$groups_setting = elgg_get_plugin_setting('hidden_groups', 'groups');
-		$setting = elgg_get_plugin_setting('show_hidden_group_indicator', 'group_tools');
-		
-		if (($groups_setting == 'yes') && !empty($setting) && ($setting != 'no')) {
+		$setting = elgg_get_plugin_setting('show_hidden_group_indicator', 'group_tools', 'no');
+		if ($setting !== 'no') {
 			$check_required = $setting;
 		}
 	}
@@ -1263,4 +1261,35 @@ function group_tools_get_stale_info(ElggGroup $group, $number_of_days = null) {
 	}
 	
 	return new ColdTrick\GroupTools\StaleInfo($group, $number_of_days);
+}
+
+/**
+ * Allow hidden groups to be created (applies group tools setting)
+ *
+ * @return bool
+ */
+function group_tools_allow_hidden_groups() {
+	static $result;
+	
+	if (isset($result)) {
+		return $result;
+	}
+	
+	$result = false;
+	
+	$plugin_setting = elgg_get_plugin_setting('allow_hidden_groups', 'group_tools');
+	if (!isset($plugin_setting)) {
+		$plugin_setting = elgg_get_plugin_setting('hidden_groups', 'groups', 'no');
+	}
+	
+	switch ($plugin_setting) {
+		case 'yes':
+			$result = true;
+			break;
+		case 'admin':
+			$result = elgg_is_admin_logged_in();
+			break;
+	}
+	
+	return $result;
 }

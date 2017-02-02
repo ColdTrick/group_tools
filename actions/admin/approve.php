@@ -10,7 +10,7 @@ $group = get_entity($group_guid);
 
 // get access_id
 $access_id = ACCESS_PUBLIC;
-if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
+if (group_tools_allow_hidden_groups()) {
 	$intended_access_id = $group->intended_access_id;
 	if ($intended_access_id !== null) {
 		$access_id = (int) $intended_access_id;

@@ -29,6 +29,7 @@ return array(
 	'group_tools:settings:default_off' => "Yes, default off",
 	'group_tools:settings:default_on' => "Yes, default on",
 	'group_tools:settings:required' => "Yes, required",
+	'group_tools:settings:admin_only' => "Admin only",
 	
 	'group_tools:settings:edit:title' => "Group edit settings",
 	'group_tools:settings:simple_access_tab' => "Simplified group access selection",
@@ -36,6 +37,8 @@ return array(
 
 	'group_tools:settings:simple_create_form' => "Simple group create form",
 	'group_tools:settings:simple_create_form:help' => "Enabling this will change the way how the 'New Group' form is displayed",
+	
+	'group_tools:settings:allow_hidden_groups:help' => "Who can create hidden groups. This setting will overrule the groups plugin setting.",
 	
 	'group_tools:settings:invite:title' => "Group invitation options",
 	'group_tools:settings:management:title' => "General group options",

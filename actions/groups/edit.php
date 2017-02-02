@@ -145,7 +145,7 @@ if ($is_new_group && $admin_approve) {
 	elgg_trigger_event('admin_approval', 'group', $group);
 }
 
-if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
+if (group_tools_allow_hidden_groups()) {
 	$value = get_input('vis');
 	if ($is_new_group || $value !== null) {
 		$visibility = (int)$value;

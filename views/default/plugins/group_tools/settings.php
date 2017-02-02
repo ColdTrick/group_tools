@@ -164,6 +164,19 @@ $group_edit .= elgg_view_field([
 	'value' => $plugin->simple_create_form,
 ]);
 
+$group_edit .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('groups:allowhiddengroups'),
+	'#help' => elgg_echo('group_tools:settings:allow_hidden_groups:help'),
+	'name' => 'params[allow_hidden_groups]',
+	'options_values' => [
+		'no' => elgg_echo('option:no'),
+		'admin' => elgg_echo('group_tools:settings:admin_only'),
+		'yes' => elgg_echo('option:yes'),
+	],
+	'value' => $plugin->allow_hidden_groups ?: elgg_get_plugin_setting('hidden_groups', 'groups', 'no'),
+]);
+
 echo elgg_view_module('inline', elgg_echo('group_tools:settings:edit:title'), $group_edit);
 
 // listing settings
