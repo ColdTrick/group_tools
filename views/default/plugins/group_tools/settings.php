@@ -81,16 +81,6 @@ $body .= '</div>';
 $body .= '<br />';
 
 $body .= '<div>';
-$body .= elgg_echo('group_tools:settings:search_index');
-$body .= elgg_view('input/select', [
-	'name' => 'params[search_index]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->search_index,
-	'class' => 'mls',
-]);
-$body .= '</div>';
-
-$body .= '<div>';
 $body .= elgg_echo('group_tools:settings:show_membership_mode');
 $body .= elgg_view('input/select', [
 	'name' => 'params[show_membership_mode]',
@@ -405,27 +395,41 @@ $body .= '</div>';
 
 echo elgg_view_module('inline', $title, $body);
 
-// group default access settings
-$title = elgg_echo('group_tools:settings:default_access:title');
+// group content settings
 
-$body = '<div>';
-$body .= elgg_echo('group_tools:settings:default_access');
-
+// default group access
 // set a context so we can do stuff
 elgg_push_context('group_tools_default_access');
 
-$body .= elgg_view('input/access', [
+$body = elgg_view_field([
+	'#type' => 'access',
+	'#label' => elgg_echo('group_tools:settings:default_access'),
 	'name' => 'params[group_default_access]',
 	'value' => $plugin->group_default_access,
-	'class' => 'mls',
 ]);
 
 // restore context
 elgg_pop_context();
 
-$body .= '</div>';
+$body .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('group_tools:settings:search_index'),
+	'name' => 'params[search_index]',
+	'options_values' => $noyes_options,
+	'value' => $plugin->search_index,
+]);
 
-echo elgg_view_module('inline', $title, $body);
+$body .= elgg_view_field([
+	'#type' => 'number',
+	'#label' => elgg_echo('group_tools:settings:stale_timeout'),
+	'#help' => elgg_echo('group_tools:settings:stale_timeout:help'),
+	'name' => 'params[stale_timeout]',
+	'value' => $plugin->stale_timeout,
+	'min' => 0,
+	'max' => 9999,
+]);
+
+echo elgg_view_module('inline', elgg_echo('group_tools:settings:content:title'), $body);
 
 // list all special state groups (features/auto_join/suggested
 $tabs = [];

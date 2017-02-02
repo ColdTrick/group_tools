@@ -69,7 +69,10 @@ return array(
 	'group_tools:settings:listing:default' => "Default group listing tab",
 	'group_tools:settings:listing:available' => "Available group listing tabs",
 
+	'group_tools:settings:content:title' => "Group content settings",
 	'group_tools:settings:default_access' => "What should be the default access for content in the groups of this site",
+	'group_tools:settings:stale_timeout' => "Groups become stale if no content is created within a number of days",
+	'group_tools:settings:stale_timeout:help' => "If no new content is created in a group within the given number of days, the group is shown as stale. A group owner/admin can tell the group is still relevant. 0 or empty to not enable this feature.",
 	
 	'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 	'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
