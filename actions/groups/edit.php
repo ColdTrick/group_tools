@@ -187,7 +187,12 @@ if (!$group->isPublicMembership() && group_tools_join_motivation_required()) {
 }
 
 // default access
-$default_access = (int) get_input('group_default_access');
+$default_access = get_input('group_default_access');
+if ($default_access === null) {
+	$default_access = (int) $group->group_acl;
+}
+$default_access = (int) $default_access;
+
 if (($group->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) && (($default_access === ACCESS_PUBLIC) || ($default_access === ACCESS_LOGGED_IN))) {
 	system_message(elgg_echo('group_tools:action:group:edit:error:default_access'));
 	$default_access = (int) $group->group_acl;

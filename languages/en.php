@@ -30,6 +30,10 @@ return array(
 	'group_tools:settings:default_on' => "Yes, default on",
 	'group_tools:settings:required' => "Yes, required",
 	
+	'group_tools:settings:edit:title' => "Group edit settings",
+	'group_tools:settings:simple_access_tab' => "Simplified group access selection",
+	'group_tools:settings:simple_access_tab:help' => "Replaces group access options when creating groups with a simplified choice between 'Open' and 'Closed'",
+	
 	'group_tools:settings:invite:title' => "Group invitation options",
 	'group_tools:settings:management:title' => "General group options",
 	'group_tools:settings:default_access:title' => "Default group access",
@@ -101,6 +105,12 @@ return array(
 	
 	'group_tools:settings:admin_approve' => "Site administrators need to approve new groups",
 	'group_tools:settings:admin_approve:description' => "Any user can create a group, but a site administrator has to approve the new group",
+	
+	// simplified access
+	'group_tools:edit:access_simplified:open' => 'Open Group',
+	'group_tools:edit:access_simplified:open:description' => '<ul><li>Any user may join</li><li>Content can be shared with anyone</li></ul>',
+	'group_tools:edit:access_simplified:closed' => 'Closed Group',
+	'group_tools:edit:access_simplified:closed:description' => '<ul><li>Membership needs to be approved</li><li>Content can only be shared with group members</li></ul>',
 	
 	// group tool presets
 	'group_tools:admin:group_tool_presets:description' => "Here you can configure group tool presets.

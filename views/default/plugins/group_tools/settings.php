@@ -5,12 +5,6 @@
 
 $plugin = elgg_extract('entity', $vars);
 
-$admin_transfer_options = [
-	'no' => elgg_echo('option:no'),
-	'admin' => elgg_echo('group_tools:settings:admin_transfer:admin'),
-	'owner' => elgg_echo('group_tools:settings:admin_transfer:owner'),
-];
-
 $noyes_options = [
 	'no' => elgg_echo('option:no'),
 	'yes' => elgg_echo('option:yes'),
@@ -49,12 +43,6 @@ $listing_supported_sorting = [
 	'featured',
 ];
 
-$hidden_indicator_options = [
-	'no' => elgg_echo('option:no'),
-	'group_acl' => elgg_echo('group_tools:settings:show_hidden_group_indicator:group_acl'),
-	'logged_in' => elgg_echo('group_tools:settings:show_hidden_group_indicator:logged_in'),
-];
-
 $auto_joins = [];
 if (!empty($plugin->auto_join)) {
 	$auto_joins = string_to_tag_array($plugin->auto_join);
@@ -66,110 +54,108 @@ if (!empty($plugin->suggested_groups)) {
 }
 
 // group management settings
-$title = elgg_echo('group_tools:settings:management:title');
-
-$body = '<div>';
-$body .= elgg_echo('group_tools:settings:admin_transfer');
-$body .= elgg_view('input/select', [
-	'name' => 'params[admin_transfer]',
-	'options_values' => $admin_transfer_options,
-	'value' => $plugin->admin_transfer,
-	'class' => 'mls',
-]);
-$body .= '</div>';
-
-$body .= '<br />';
-
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:show_membership_mode');
-$body .= elgg_view('input/select', [
-	'name' => 'params[show_membership_mode]',
-	'options_values' => $yesno_options,
-	'value' => $plugin->show_membership_mode,
-	'class' => 'mls',
-]);
-$body .= '</div>';
-
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:show_hidden_group_indicator');
-$body .= elgg_view('input/select', [
-	'name' => 'params[show_hidden_group_indicator]',
-	'options_values' => $hidden_indicator_options,
-	'value' => $plugin->show_hidden_group_indicator,
-	'class' => 'mls',
-]);
-$body .= '</div>';
-
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:auto_suggest_groups');
-$body .= elgg_view('input/select', [
-	'name' => 'params[auto_suggest_groups]',
-	'options_values' => $yesno_options,
-	'value' => $plugin->auto_suggest_groups,
-	'class' => 'mls',
-]);
-$body .= '</div>';
-
-$body .= '<br />';
-
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:multiple_admin');
-$body .= elgg_view('input/select', [
-	'name' => 'params[multiple_admin]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->multiple_admin,
-	'class' => 'mls',
-]);
-$body .= '</div>';
-
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:mail');
-$body .= elgg_view('input/select', [
-	'name' => 'params[mail]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->mail,
-	'class' => 'mls',
-]);
-$body .= '</div>';
-
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:mail:members');
-$body .= elgg_view('input/select', [
-	'name' => 'params[mail_members]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->mail_members,
-	'class' => 'mls',
-]);
-$body .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:settings:mail:members:description'));
-$body .= '</div>';
-
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:member_export');
-$body .= elgg_view('input/select', [
-	'name' => 'params[member_export]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->member_export,
-	'class' => 'mls',
-]);
-$body .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:settings:member_export:description'));
-$body .= '</div>';
+$general_fields = [
+	[
+		'#type' => 'select',
+		'#label' => elgg_echo('group_tools:settings:show_membership_mode'),
+		'name' => 'params[show_membership_mode]',
+		'options_values' => $yesno_options,
+		'value' => $plugin->show_membership_mode,
+	],
+	[
+		'#type' => 'select',
+		'#label' => elgg_echo('group_tools:settings:show_hidden_group_indicator'),
+		'name' => 'params[show_hidden_group_indicator]',
+		'options_values' => [
+			'no' => elgg_echo('option:no'),
+			'group_acl' => elgg_echo('group_tools:settings:show_hidden_group_indicator:group_acl'),
+			'logged_in' => elgg_echo('group_tools:settings:show_hidden_group_indicator:logged_in'),
+		],
+		'value' => $plugin->show_hidden_group_indicator,
+	],
+	[
+		'#type' => 'select',
+		'#label' => elgg_echo('group_tools:settings:auto_suggest_groups'),
+		'name' => 'params[auto_suggest_groups]',
+		'options_values' => $yesno_options,
+		'value' => $plugin->auto_suggest_groups,
+	],
+	[
+		'#type' => 'select',
+		'#label' => elgg_echo('group_tools:settings:multiple_admin'),
+		'name' => 'params[multiple_admin]',
+		'options_values' => $noyes_options,
+		'value' => $plugin->multiple_admin,
+	],
+	[
+		'#type' => 'select',
+		'#label' => elgg_echo('group_tools:settings:mail'),
+		'name' => 'params[mail]',
+		'options_values' => $noyes_options,
+		'value' => $plugin->mail,
+	],
+	[
+		'#type' => 'select',
+		'#label' => elgg_echo('group_tools:settings:mail:members'),
+		'#help' => elgg_echo('group_tools:settings:mail:members:description'),
+		'name' => 'params[mail_members]',
+		'options_values' => $noyes_options,
+		'value' => $plugin->mail_members,
+	],
+	[
+		'#type' => 'select',
+		'#label' => elgg_echo('group_tools:settings:member_export'),
+		'#help' => elgg_echo('group_tools:settings:member_export:description'),
+		'name' => 'params[member_export]',
+		'options_values' => $noyes_options,
+		'value' => $plugin->member_export,
+	],
+];
 
 // do admins have to approve new groups
 if (elgg_get_plugin_setting('limited_groups', 'groups', 'no') !== 'yes') {
 	// only is group creation isn't limited to admins
-	$body .= '<div>';
-	$body .= elgg_echo('group_tools:settings:admin_approve');
-	$body .= elgg_view('input/select', [
+	$general_fields[] = [
+		'#type' => 'select',
+		'#label' => elgg_echo('group_tools:settings:admin_approve'),
+		'#help' => elgg_echo('group_tools:settings:admin_approve:description'),
 		'name' => 'params[admin_approve]',
 		'options_values' => $noyes_options,
 		'value' => $plugin->admin_approve,
-		'class' => 'mls',
-	]);
-	$body .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:settings:admin_approve:description'));
-	$body .= '</div>';
+	];
 }
 
-echo elgg_view_module('inline', $title, $body);
+$general_settings = '';
+foreach ($general_fields as $field) {
+	$general_settings .= elgg_view_field($field);
+}
+
+echo elgg_view_module('inline', elgg_echo('group_tools:settings:management:title'), $general_settings);
+
+// group edit settings
+$group_edit = '';
+$group_edit .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('group_tools:settings:admin_transfer'),
+	'name' => 'params[admin_transfer]',
+	'options_values' => [
+		'no' => elgg_echo('option:no'),
+		'admin' => elgg_echo('group_tools:settings:admin_transfer:admin'),
+		'owner' => elgg_echo('group_tools:settings:admin_transfer:owner'),
+	],
+	'value' => $plugin->admin_transfer,
+]);
+
+$group_edit .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('group_tools:settings:simple_access_tab'),
+	'#help' => elgg_echo('group_tools:settings:simple_access_tab:help'),
+	'name' => 'params[simple_access_tab]',
+	'options_values' => $noyes_options,
+	'value' => $plugin->simple_access_tab,
+]);
+
+echo elgg_view_module('inline', elgg_echo('group_tools:settings:edit:title'), $group_edit);
 
 // listing settings
 $title = elgg_echo('group_tools:settings:listing:title');
@@ -401,7 +387,7 @@ echo elgg_view_module('inline', $title, $body);
 // set a context so we can do stuff
 elgg_push_context('group_tools_default_access');
 
-$body = elgg_view_field([
+$group_content = elgg_view_field([
 	'#type' => 'access',
 	'#label' => elgg_echo('group_tools:settings:default_access'),
 	'name' => 'params[group_default_access]',
@@ -411,7 +397,7 @@ $body = elgg_view_field([
 // restore context
 elgg_pop_context();
 
-$body .= elgg_view_field([
+$group_content .= elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('group_tools:settings:search_index'),
 	'name' => 'params[search_index]',
@@ -419,7 +405,7 @@ $body .= elgg_view_field([
 	'value' => $plugin->search_index,
 ]);
 
-$body .= elgg_view_field([
+$group_content .= elgg_view_field([
 	'#type' => 'number',
 	'#label' => elgg_echo('group_tools:settings:stale_timeout'),
 	'#help' => elgg_echo('group_tools:settings:stale_timeout:help'),
@@ -429,7 +415,7 @@ $body .= elgg_view_field([
 	'max' => 9999,
 ]);
 
-echo elgg_view_module('inline', elgg_echo('group_tools:settings:content:title'), $body);
+echo elgg_view_module('inline', elgg_echo('group_tools:settings:content:title'), $group_content);
 
 // list all special state groups (features/auto_join/suggested
 $tabs = [];
