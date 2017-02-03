@@ -31,22 +31,23 @@ if (!empty($presets)) {
 		echo '<label rel="title">' . elgg_extract('title', $values) . '</label><br />'; // title
 		echo '<div class="elgg-output elgg-quiet" rel="description">' . elgg_extract('description', $values) . '</div>'; // description
 		echo '<div class="hidden">'; // edit part
-		echo '<div class="mbs">';
-		echo '<label>' . elgg_echo('title') . '</label>';
-		echo elgg_view('input/text', [
+		
+		echo elgg_view_field([
+			'#type' => 'text',
+			'#label' => elgg_echo('title'),
 			'name' => "params[{$index}][title]",
 			'value' => elgg_extract('title', $values),
 			'class' => 'group-tools-admin-change-tool-preset-title',
 		]);
-		echo '</div>';
-		echo '<div class="mbs">';
-		echo '<label>' . elgg_echo('description') . '</label>';
-		echo elgg_view('input/plaintext', [
+		
+		echo elgg_view_field([
+			'#type' => 'plaintext',
+			'#label' => elgg_echo('description'),
 			'name' => "params[{$index}][description]",
 			'value' => elgg_extract('description', $values),
 			'class' => 'group-tools-admin-change-tool-preset-description',
 		]);
-		echo '</div>';
+		
 		foreach ($group_tools as $group_tool) {
 			$group_tool_toggle_name = "params[{$index}][tools][{$group_tool->name}_enable]";
 
@@ -79,20 +80,22 @@ echo '</div>';
 echo '<label rel="title">' . elgg_echo('title') . '</label><br />'; // title
 echo '<div class="elgg-output elgg-quiet" rel="description">' . elgg_echo('description') . '</div>'; // description
 echo '<div class="hidden">'; // edit part
-echo '<div class="mbs">';
-echo '<label>' . elgg_echo('title') . '</label>';
-echo elgg_view('input/text', [
+
+echo elgg_view_field([
+	'#type' => 'text',
+	'#label' => elgg_echo('title'),
 	'name' => 'params[i][title]',
 	'class' => 'group-tools-admin-change-tool-preset-title',
 ]);
-echo '</div>';
-echo '<div class="mbs">';
-echo '<label>' . elgg_echo('description') . '</label>';
-echo elgg_view('input/plaintext', [
+
+echo elgg_view_field([
+	'#type' => 'plaintext',
+	'#label' => elgg_echo('description'),
 	'name' => 'params[i][description]',
 	'class' => 'group-tools-admin-change-tool-preset-description',
+	'rows' => 2,
 ]);
-echo '</div>';
+
 foreach ($group_tools as $group_tool) {
 	$group_tool_toggle_name = "params[i][tools][{$group_tool->name}_enable]";
 
@@ -107,6 +110,5 @@ echo '</div>'; // end edit part
 echo '</div>';
 
 // save button
-echo '<div class="elgg-footer">';
-echo elgg_view('input/submit', ['value' => elgg_echo('save')]);
-echo '</div>';
+$footer = elgg_view('input/submit', ['value' => elgg_echo('save')]);
+elgg_set_form_footer($footer);

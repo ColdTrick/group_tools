@@ -35,9 +35,10 @@ $prefix = \ColdTrick\GroupTools\Cleanup::SETTING_PREFIX;
 $form_body = elgg_format_element('div', ['class' => 'elgg-quiet'], elgg_echo('group_tools:cleanup:description'));
 
 // cleanup extras menu
-$form_body  .= elgg_view_input('checkbox', [
-	'label' => elgg_echo('group_tools:cleanup:extras_menu'),
-	'help' => elgg_echo('group_tools:cleanup:extras_menu:explain'),
+$form_body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:cleanup:extras_menu'),
+	'#help' => elgg_echo('group_tools:cleanup:extras_menu:explain'),
 	'name' => 'extras_menu',
 	'value' => 'yes',
 	'default' => 'no',
@@ -45,9 +46,10 @@ $form_body  .= elgg_view_input('checkbox', [
 ]);
 
 // hide group actions
-$form_body  .= elgg_view_input('checkbox', [
-	'label' => elgg_echo('group_tools:cleanup:actions'),
-	'help' => elgg_echo('group_tools:cleanup:actions:explain'),
+$form_body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:cleanup:actions'),
+	'#help' => elgg_echo('group_tools:cleanup:actions:explain'),
 	'name' => 'actions',
 	'value' => 'yes',
 	'default' => 'no',
@@ -55,9 +57,10 @@ $form_body  .= elgg_view_input('checkbox', [
 ]);
 
 // hide owner_block menu items
-$form_body  .= elgg_view_input('checkbox', [
-	'label' => elgg_echo('group_tools:cleanup:menu'),
-	'help' => elgg_echo('group_tools:cleanup:menu:explain'),
+$form_body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:cleanup:menu'),
+	'#help' => elgg_echo('group_tools:cleanup:menu:explain'),
 	'name' => 'menu',
 	'value' => 'yes',
 	'default' => 'no',
@@ -65,9 +68,10 @@ $form_body  .= elgg_view_input('checkbox', [
 ]);
 
 // hide group search
-$form_body  .= elgg_view_input('checkbox', [
-	'label' => elgg_echo('group_tools:cleanup:search'),
-	'help' => elgg_echo('group_tools:cleanup:search:explain'),
+$form_body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:cleanup:search'),
+	'#help' => elgg_echo('group_tools:cleanup:search:explain'),
 	'name' => 'search',
 	'value' => 'yes',
 	'default' => 'no',
@@ -75,9 +79,10 @@ $form_body  .= elgg_view_input('checkbox', [
 ]);
 
 // hide group members
-$form_body  .= elgg_view_input('checkbox', [
-	'label' => elgg_echo('group_tools:cleanup:members'),
-	'help' => elgg_echo('group_tools:cleanup:members:explain'),
+$form_body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:cleanup:members'),
+	'#help' => elgg_echo('group_tools:cleanup:members:explain'),
 	'name' => 'members',
 	'value' => 'yes',
 	'default' => 'no',
@@ -85,25 +90,28 @@ $form_body  .= elgg_view_input('checkbox', [
 ]);
 
 // show featured groups
-$form_body  .= elgg_view_input('select', [
-	'label' => elgg_echo('group_tools:cleanup:featured'),
-	'help' => elgg_echo('group_tools:cleanup:featured:explain'),
+$form_body .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('group_tools:cleanup:featured'),
+	'#help' => elgg_echo('group_tools:cleanup:featured:explain'),
 	'name' => 'featured',
 	'options_values' => $featured_options,
 	'value' => $group->getPrivateSetting("{$prefix}featured"),
 ]);
 
-$form_body  .= elgg_view_input('select', [
-	'label' => elgg_echo('group_tools:cleanup:featured_sorting'),
+$form_body .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('group_tools:cleanup:featured_sorting'),
 	'name' => 'featured_sorting',
 	'options_values' => $featured_sorting,
 	'value' => $group->getPrivateSetting("{$prefix}featured_sorting"),
 ]);
 
 // hide my status
-$form_body  .= elgg_view_input('checkbox', [
-	'label' => elgg_echo('group_tools:cleanup:my_status'),
-	'help' => elgg_echo('group_tools:cleanup:my_status:explain'),
+$form_body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:cleanup:my_status'),
+	'#help' => elgg_echo('group_tools:cleanup:my_status:explain'),
 	'name' => 'my_status',
 	'value' => 'yes',
 	'default' => 'no',

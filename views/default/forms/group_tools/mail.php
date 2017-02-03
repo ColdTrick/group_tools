@@ -44,25 +44,27 @@ $form_data .= elgg_view('input/button', [
 	'value' => elgg_echo('group_tools:all_members'),
 	'onclick' => 'elgg.group_tools.mail_all_members();',
 ]);
-$form_data .= '<br />';
 $form_data .= '</div>';
 
-$form_data .= '<div>';
-$form_data .= '<label>' . elgg_echo('group_tools:mail:form:title') . '</label>';
-$form_data .= elgg_view('input/text', ['name' => 'title']);
-$form_data .= '</div>';
+$form_data .= elgg_view_field([
+	'#type' => 'text',
+	'#label' => elgg_echo('group_tools:mail:form:title'),
+	'name' => 'title',
+]);
 
-$form_data .= '<div>';
-$form_data .= '<label>' . elgg_echo('group_tools:mail:form:description') . '</label>';
-$form_data .= elgg_view('input/longtext', ['name' => 'description']);
-$form_data .= '</div>';
+$form_data .= elgg_view_field([
+	'#type' => 'longtext',
+	'#label' => elgg_echo('group_tools:mail:form:description'),
+	'name' => 'description',
+	'required' => true,
+]);
 
-$form_data .= '<div class="elgg-foot">';
 $form_data .= elgg_view('input/hidden', [
 	'name' => 'group_guid',
 	'value' => $group->getGUID(),
 ]);
-$form_data .= elgg_view('input/submit', ['value' => elgg_echo('send')]);
-$form_data .= '</div>';
 
 echo $form_data;
+
+$footer = elgg_view('input/submit', ['value' => elgg_echo('send')]);
+elgg_set_form_footer($footer);
