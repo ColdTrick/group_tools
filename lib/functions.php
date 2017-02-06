@@ -880,8 +880,6 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 		return false;
 	}
 	
-	$loggedin_user = elgg_get_logged_in_user_entity();
-	
 	// register plugin hook to make sure transfer can complete
 	elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Access::allowGroupOwnerTransfer');
 	
@@ -957,7 +955,8 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	}
 	
 	// notify new owner
-	if ($new_owner->getGUID() !== $loggedin_user->getGUID()) {
+	$loggedin_user = elgg_get_logged_in_user_entity();
+	if ($loggedin_user && ($new_owner->getGUID() !== $loggedin_user->getGUID())) {
 		$subject = elgg_echo('group_tools:notify:transfer:subject', [$group->name]);
 		$message = elgg_echo('group_tools:notify:transfer:message', [
 			$new_owner->name,
