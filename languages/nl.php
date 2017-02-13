@@ -1,10 +1,29 @@
 <?php
 /**
- * This file was created by Translation Editor v5.1
- * On 2016-09-22 11:14
+ * This file was created by Translation Editor v5.2
+ * On 2017-02-13 12:53
  */
 
 return array (
+  'group_tools:settings:admin_only' => 'Alleen site beheerders',
+  'group_tools:settings:edit:title' => 'Groep bewerken instellingen',
+  'group_tools:settings:simple_access_tab' => 'Vereenvoudigde groepstoegang selectie',
+  'group_tools:settings:simple_access_tab:help' => 'Vervang de groepstoegang opties tijdens het aanmaken van een groep door een vereenvoudigde keuze \'Open\' en \'Besloten\'',
+  'group_tools:settings:simple_create_form' => 'Eenvoudig groep aanmaken formulier',
+  'group_tools:settings:simple_create_form:help' => 'Als dit wordt ingeschakeld wordt de weergave voor het aanmaken van een groep aangepast',
+  'group_tools:settings:allow_hidden_groups:help' => 'Wie mag er verborgen groepen aanmaken. Deze instelling overschrijft de instelling van de Groepen plugin.',
+  'group_tools:settings:content:title' => 'Groep content instellingen',
+  'group_tools:settings:stale_timeout' => 'Groepen worden inactief als er geen inhoud is gemaakt binnen een aantal dagen',
+  'group_tools:settings:stale_timeout:help' => 'Als er geen nieuwe inhoud wordt gemaakt in een groep binnen het opgegeven aantal dagen, wordt de groep getoond als inactief. Een groep eigenaar / beheerder kan zeggen dat de groep nog steeds relevant is. 0 of leeg om deze functie niet in te schakelen.',
+  'group_tools:edit:access_simplified:open' => 'Open groep',
+  'group_tools:edit:access_simplified:open:description' => '<ul><li>Iedere gebruiker mag lid worden</li><li>Content kan gedeeld worden met iedereen</li></ul>',
+  'group_tools:edit:access_simplified:closed' => 'Besloten groep',
+  'group_tools:edit:access_simplified:closed:description' => '<ul><li>Lidmaatschap moet worden aangevraagd</li><li>Content kan alleen gedeeld worden met groepsleden</li></ul>',
+  'group_tools:stale_info:description' => 'Deze groep is al een tijd inactief. De content kan niet langer relevant zijn.',
+  'group_tools:stale_info:link' => 'Deze groep is nog steeds relevant',
+  'group_tools:csv_exporter:stale_info:is_stale' => 'Inactieve groep',
+  'group_tools:csv_exporter:stale_info:timestamp' => 'Inactieve datum',
+  'group_tools:csv_exporter:stale_info:timestamp:readable' => 'Inactieve datum (leesbaar)',
   'group_tools:cleanup:extras_menu' => 'Verberg het extra\'s menu',
   'group_tools:cleanup:extras_menu:explain' => 'Het extra\'s menu bevind zich aan de bovenkant van de zijbalk. Hierin bevinden zich meestal additionele link (bijv. RSS links).',
   'group_tools:cleanup:title' => 'Groep zijbalk opschonen',
