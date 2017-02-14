@@ -206,6 +206,8 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForUsers');
 	elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportStaleInfo');
 	
+	elgg_register_plugin_hook_handler('cron', 'daily', '\ColdTrick\GroupTools\Cron::notifyStaleGroupOwners');
+	
 	// actions
 	elgg_register_action('group_tools/toggle_admin', dirname(__FILE__) . '/actions/toggle_admin.php');
 	elgg_register_action('group_tools/mail', dirname(__FILE__) . '/actions/mail.php');

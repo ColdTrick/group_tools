@@ -82,7 +82,7 @@ return array(
 	'group_tools:settings:content:title' => "Group content settings",
 	'group_tools:settings:default_access' => "What should be the default access for content in the groups of this site",
 	'group_tools:settings:stale_timeout' => "Groups become stale if no content is created within a number of days",
-	'group_tools:settings:stale_timeout:help' => "If no new content is created in a group within the given number of days, the group is shown as stale. A group owner/admin can tell the group is still relevant. 0 or empty to not enable this feature.",
+	'group_tools:settings:stale_timeout:help' => "If no new content is created in a group within the given number of days, the group is shown as stale. The group owner will receive a notification on the day the group becomes stale. A group owner/admin can tell the group is still relevant. 0 or empty to not enable this feature.",
 	
 	'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 	'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
@@ -578,4 +578,13 @@ Click below to view the group's join requests:
 	'group_tools:csv_exporter:stale_info:is_stale' => "Stale group",
 	'group_tools:csv_exporter:stale_info:timestamp' => "Stale timestamp",
 	'group_tools:csv_exporter:stale_info:timestamp:readable' => "Stale timestamp (readable)",
+	
+	'groups_tools:state_info:notification:subject' => "Your group '%s' has been inactive for a while",
+	'groups_tools:state_info:notification:summary' => "Your group '%s' has been inactive for a while",
+	'groups_tools:state_info:notification:message' => "Hi %s,
+
+Your group '%s' has been inactive for a while.
+
+Please check on the group here:
+%s",
 );

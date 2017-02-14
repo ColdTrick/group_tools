@@ -1,10 +1,19 @@
 <?php
 /**
  * This file was created by Translation Editor v5.2
- * On 2017-02-13 12:53
+ * On 2017-02-14 15:29
  */
 
 return array (
+  'groups_tools:state_info:notification:subject' => 'Je groep \'%s\' is al een tijd inactief',
+  'groups_tools:state_info:notification:summary' => 'Je groep \'%s\' is al een tijd inactief',
+  'groups_tools:state_info:notification:message' => 'Beste %s,
+
+Je groep \'%s\' is al een tijd inactief
+
+Bekijk de groep hier:
+%s',
+  'group_tools:settings:stale_timeout:help' => 'Als er geen nieuwe inhoud wordt gemaakt in een groep binnen het opgegeven aantal dagen, wordt de groep getoond als inactief. De groepseigenaar krijgt op de dag dat de groep inactief wordt een bericht. Een groep eigenaar / beheerder kan zeggen dat de groep nog steeds relevant is. 0 of leeg om deze functie niet in te schakelen.',
   'group_tools:settings:admin_only' => 'Alleen site beheerders',
   'group_tools:settings:edit:title' => 'Groep bewerken instellingen',
   'group_tools:settings:simple_access_tab' => 'Vereenvoudigde groepstoegang selectie',
@@ -14,7 +23,6 @@ return array (
   'group_tools:settings:allow_hidden_groups:help' => 'Wie mag er verborgen groepen aanmaken. Deze instelling overschrijft de instelling van de Groepen plugin.',
   'group_tools:settings:content:title' => 'Groep content instellingen',
   'group_tools:settings:stale_timeout' => 'Groepen worden inactief als er geen inhoud is gemaakt binnen een aantal dagen',
-  'group_tools:settings:stale_timeout:help' => 'Als er geen nieuwe inhoud wordt gemaakt in een groep binnen het opgegeven aantal dagen, wordt de groep getoond als inactief. Een groep eigenaar / beheerder kan zeggen dat de groep nog steeds relevant is. 0 of leeg om deze functie niet in te schakelen.',
   'group_tools:edit:access_simplified:open' => 'Open groep',
   'group_tools:edit:access_simplified:open:description' => '<ul><li>Iedere gebruiker mag lid worden</li><li>Content kan gedeeld worden met iedereen</li></ul>',
   'group_tools:edit:access_simplified:closed' => 'Besloten groep',
