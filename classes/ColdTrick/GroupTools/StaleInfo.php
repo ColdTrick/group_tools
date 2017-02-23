@@ -100,6 +100,7 @@ class StaleInfo {
 			'subtypes' => $object_subtypes,
 			'limit' => 1,
 			'container_guid' => $this->group->getGUID(),
+			'order_by' => 'e.time_updated DESC',
 		]);
 		if (empty($entities)) {
 			return 0;
@@ -132,6 +133,7 @@ class StaleInfo {
 			'wheres' => [
 				"(ce.container_guid = {$this->group->getGUID()})",
 			],
+			'order_by' => 'e.time_updated DESC',
 		]);
 		if (empty($entities)) {
 			return 0;
