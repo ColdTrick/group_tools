@@ -1,6 +1,18 @@
 Version history
 ===============
 
+9.0 (2017-02-28):
+
+- added: notification to group owner when group becomes stale
+- added: option to allow only admins to control hidden groups
+- added: plugin setting for stale groups
+- added: simplified group access for new groups
+- added: simplified group create form setting
+- added: stale information to csv exporter
+- adds Spanish translation
+- changed: increased Elgg version requirement to 2.3
+- fixed: check for logged in user when transferring owner
+
 8.0 (2016-10-06):
 
 - changed: get group tool options using the new helper function
