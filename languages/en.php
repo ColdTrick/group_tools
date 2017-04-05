@@ -20,10 +20,10 @@ return array(
 	// menu
 	'group_tools:menu:mail' => "Mail Members",
 	'group_tools:menu:invitations' => "Manage invitations",
-	'admin:administer_utilities:group_bulk_delete' => "Group bulk delete",
+	
+	'admin:groups:bulk_delete' => "Group bulk delete",
 	'admin:groups:admin_approval' => "Approval needed",
-
-	'admin:appearance:group_tool_presets' => "Group tool presets",
+	'admin:groups:tool_presets' => "Group tool presets",
 	
 	// plugin settings
 	'group_tools:settings:default_off' => "Yes, default off",

@@ -27,8 +27,8 @@ function group_tools_init() {
 	elgg_register_plugin_hook_handler('route', 'livesearch', '\ColdTrick\GroupTools\Router::livesearch');
 	
 	// admin menu item
-	elgg_register_admin_menu_item('configure', 'group_tool_presets', 'appearance');
-	elgg_register_admin_menu_item('administer', 'group_bulk_delete', 'administer_utilities');
+	elgg_register_admin_menu_item('administer', 'tool_presets', 'groups');
+	elgg_register_admin_menu_item('administer', 'bulk_delete', 'groups');
 	
 	// hook on title menu
 	elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupMembership');

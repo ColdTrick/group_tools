@@ -20,10 +20,10 @@ return array(
         // menu
         'group_tools:menu:mail' => "Miembros del Mail",
         'group_tools:menu:invitations' => "Gestionar invitaciones",
-        'admin:administer_utilities:group_bulk_delete' => "Borrar varios grupos",
+        
+		'admin:groups:bulk_delete' => "Borrar varios grupos",
         'admin:groups:admin_approval' => "Se necesita aprobación",
-
-        'admin:appearance:group_tool_presets' => "Configuraciones predefinidas de herramientas de grupo",
+		'admin:groups:tool_presets' => "Configuraciones predefinidas de herramientas de grupo",
 
         // plugin settings
         'group_tools:settings:default_off' => "Si, configuraciones por defecto desactivadas",

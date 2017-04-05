@@ -148,7 +148,7 @@ De groep kun je hier vinden:
   'group_tools:settings:member_export' => 'Groep beheerder mogen leden informatie exporteren',
   'group_tools:settings:member_export:description' => 'Dit bevat onder andere de naam, gebruikersnaam en email adres van de gebruiker',
   'group_tools:member_export:title_button' => 'Exporteer leden',
-  'admin:appearance:group_tool_presets' => 'Groep tool set',
+  'admin:groups:tool_presets' => 'Groep tool set',
   'group_tools:admin:group_tool_presets:description' => 'Hier kun je sets van groep tools definiëren.
 Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de vooraf gedefinieerde sets om zo snel en eenvoudig de juiste tools te krijgen. Er is automatisch een keuze voor een lege groep zodat de gebruiker een eigen keuze kan maken',
   'group_tools:admin:group_tool_presets:header' => 'Bestaande tool sets',
@@ -165,7 +165,7 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'activity:group_tool_option:description' => 'Toon een activiteiten stroom van groep gerelateerde content.',
   'group_tools:action:group_tool:presets:saved' => 'Groep tool sets opgeslagen',
   'group_tools:delete_selected' => 'Verwijder selectie',
-  'admin:administer_utilities:group_bulk_delete' => 'Bulk groep verwijderen',
+  'admin:groups:bulk_delete' => 'Bulk groep verwijderen',
   'group_tools:action:bulk_delete:success' => 'De geselecteerde groepen zijn verwijderd',
   'group_tools:action:bulk_delete:error' => 'Er is een fout opgetreden tijdens het verwijderen van de groepen, probeer het nogmaals',
   'groups:search:title' => 'Zoek naar groepen met \'%s\'',
