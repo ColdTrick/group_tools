@@ -43,11 +43,6 @@ $listing_supported_sorting = [
 	'featured',
 ];
 
-$auto_joins = [];
-if (!empty($plugin->auto_join)) {
-	$auto_joins = string_to_tag_array($plugin->auto_join);
-}
-
 $suggested_groups = [];
 if (!empty($plugin->suggested_groups)) {
 	$suggested_groups = string_to_tag_array($plugin->suggested_groups);
@@ -439,7 +434,7 @@ $group_content .= elgg_view_field([
 
 echo elgg_view_module('inline', elgg_echo('group_tools:settings:content:title'), $group_content);
 
-// list all special state groups (features/auto_join/suggested
+// list all special state groups (features/suggested)
 $tabs = [];
 $content = '';
 
@@ -480,57 +475,6 @@ if (!empty($featured_groups)) {
 		]));
 		$content .= elgg_format_element('td', ['style' => 'width: 25px;'], elgg_view('output/url', [
 			'href' => "action/groups/featured?group_guid={$group->getGUID()}",
-			'title' => elgg_echo('remove'),
-			'text' => elgg_view_icon('delete'),
-			'confirm' => true,
-		]));
-		$content .= '</tr>';
-	}
-	
-	$content .= '</table>';
-	$content .= '</div>';
-}
-
-// auto join
-if (!empty($auto_joins)) {
-	$class = '';
-	$selected = true;
-	if (!empty($tabs)) {
-		$class = 'hidden';
-		$selected = false;
-	}
-	$tabs[] = [
-		'text' => elgg_echo('group_tools:settings:special_states:auto_join'),
-		'href' => '#group-tools-special-states-auto-join',
-		'selected' => $selected,
-	];
-	
-	$content .= "<div id='group-tools-special-states-auto-join' class='{$class}'>";
-	$content .= elgg_view('output/longtext', [
-		'value' => elgg_echo('group_tools:settings:special_states:auto_join:description'),
-	]);
-	
-	$content .= '<table class="elgg-table mtm">';
-	
-	$content .= '<tr>';
-	$content .= elgg_format_element('th', ['colspan' => 2], elgg_echo('groups:name'));
-	$content .= '</tr>';
-	
-	$options = [
-		'type' => 'group',
-		'limit' => false,
-		'guids' => $auto_joins,
-	];
-	
-	$groups = new ElggBatch('elgg_get_entities', $options);
-	foreach ($groups as $group) {
-		$content .= '<tr>';
-		$content .= elgg_format_element('td', [], elgg_view('output/url', [
-			'href' => $group->getURL(),
-			'text' => $group->name,
-		]));
-		$content .= elgg_format_element('td', ['style' => 'width: 25px;'], elgg_view('output/url', [
-			'href' => "action/group_tools/toggle_special_state?group_guid={$group->getGUID()}&state=auto_join",
 			'title' => elgg_echo('remove'),
 			'text' => elgg_view_icon('delete'),
 			'confirm' => true,

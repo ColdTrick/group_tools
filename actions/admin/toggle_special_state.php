@@ -19,29 +19,6 @@ $success_message = '';
 $error_message = '';
 
 switch ($state) {
-	case 'auto_join':
-		$auto_join_groups = [];
-		$auto_join_setting = elgg_get_plugin_setting('auto_join', 'group_tools');
-		if (!empty($auto_join_setting)) {
-			$auto_join_groups = string_to_tag_array($auto_join_setting);
-		}
-			
-		if (($key = array_search($group_guid, $auto_join_groups)) !== false) {
-			unset($auto_join_groups[$key]);
-		} else {
-			$auto_join_groups[] = $group_guid;
-		}
-			
-		if (!empty($auto_join_groups)) {
-			$result = elgg_set_plugin_setting('auto_join', implode(',', $auto_join_groups), 'group_tools');
-		} else {
-			$result = elgg_unset_plugin_setting('auto_join', 'group_tools');
-		}
-		
-		$success_message = elgg_echo('group_tools:action:toggle_special_state:auto_join');
-		$error_message = elgg_echo('group_tools:action:toggle_special_state:error:auto_join');
-		
-		break;
 	case 'suggested':
 		$suggested_groups = [];
 		$suggested_setting = elgg_get_plugin_setting('suggested_groups', 'group_tools');

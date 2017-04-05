@@ -24,6 +24,7 @@ return array(
 	'admin:groups:bulk_delete' => "Group bulk delete",
 	'admin:groups:admin_approval' => "Approval needed",
 	'admin:groups:tool_presets' => "Group tool presets",
+	'admin:groups:auto_join' => "Auto join",
 	
 	// plugin settings
 	'group_tools:settings:default_off' => "Yes, default off",
@@ -93,8 +94,6 @@ return array(
 	
 	'group_tools:settings:special_states' => "Groups with a special state",
 	'group_tools:settings:special_states:featured:description' => "The site administrators have chosen to feature the following groups.",
-	'group_tools:settings:special_states:auto_join' => "Auto join",
-	'group_tools:settings:special_states:auto_join:description' => "New users will automaticly join the following groups.",
 	'group_tools:settings:special_states:suggested' => "Suggested",
 	'group_tools:settings:special_states:suggested:description' => "The following groups are suggested to (new) users. It is possible to auto suggest groups, if no groups are automaticly detected or too few, the list will be appended by these groups.",
 
@@ -111,6 +110,14 @@ return array(
 	
 	'group_tools:settings:admin_approve' => "Site administrators need to approve new groups",
 	'group_tools:settings:admin_approve:description' => "Any user can create a group, but a site administrator has to approve the new group",
+	
+	// auto join
+	'group_tools:admin:auto_join:default' => "Auto join",
+	'group_tools:admin:auto_join:default:description' => "New users will automaticly join the following groups.",
+	'group_tools:admin:auto_join:default:none' => "No auto join groups configured yet.",
+	
+	'group_tools:form:admin:auto_join:group' => "Add a group to the auto join groups",
+	'group_tools:form:admin:auto_join:group:help' => "Search for a group by name and select it from the list.",
 	
 	// simplified access
 	'group_tools:edit:access_simplified:open' => 'Open Group',
@@ -204,8 +211,6 @@ You can find the group here:
 	'group_tools:special_states:title' => "Group special states",
 	'group_tools:special_states:description' => "A group can have several special states, here is an overview of the special states and their current value.",
 	'group_tools:special_states:featured' => "Is this group featured",
-	'group_tools:special_states:auto_join' => "Will users automaticly join this group",
-	'group_tools:special_states:auto_join:fix' => "To make all site members a member of this group, please %sclick here%s.",
 	'group_tools:special_states:suggested' => "Is this group suggested to (new) users",
 	
 	// group admins
@@ -395,15 +400,10 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:suggested_groups:none' => "We can't suggest a group for you. This can happen if we have to little information about you, or that you are already a member of the groups we like you to join. Use the search to find more groups.",
 		
 	// group toggle auto join
-	'group_tools:action:toggle_special_state:error:auto_join' => "An error occured while saving the new auto join settings",
 	'group_tools:action:toggle_special_state:error:suggested' => "An error occured while saving the new suggested settings",
 	'group_tools:action:toggle_special_state:error:state' => "Invalid state provided",
-	'group_tools:action:toggle_special_state:auto_join' => "The new auto join settings were saved successfully",
 	'group_tools:action:toggle_special_state:suggested' => "The new suggested settings were saved successfully",
 	
-	// group fix auto_join
-	'group_tools:action:fix_auto_join:success' => "Group membership fixed: %s new members, %s were already a member and %s failures",
-
 	// group cleanup
 	'group_tools:actions:cleanup:success' => "The cleanup settings were saved successfully",
 
