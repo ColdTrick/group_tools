@@ -4,11 +4,10 @@ elgg.group_tools.init_members_search = function() {
 	require(['elgg/spinner']);
 	
 	$('.elgg-form-group-tools-members-search').submit(function(event) {
-		$form = $(this);
+		var $form = $(this);
 		
 		require(['elgg/spinner'], function(spinner) {
 			spinner.start();
-			
 			
 			elgg.get($form.attr('action'), {
 				data: $form.serialize(),
@@ -25,15 +24,14 @@ elgg.group_tools.init_members_search = function() {
 	});
 	
 	$('.elgg-form-group-tools-members-search').parent().on('click', '.elgg-pagination a', function(event) {
-
-		$elem = $(this);
+		var $elem = $(this);
 		
 		require(['elgg/spinner'], function(spinner) {
 			spinner.start();
 			elgg.get($elem.attr('href'), {
 				complete: spinner.stop,
 				success: function(html) {
-					$parents = $elem.parents('.elgg-main');
+					var $parents = $elem.parents('.elgg-main');
 					$parents.find('> .elgg-list, > .elgg-pagination').remove();
 					$parents.append(html);
 					$('html, body').animate({

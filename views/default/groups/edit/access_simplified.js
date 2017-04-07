@@ -19,7 +19,7 @@ define(function (require) {
 			$content_access_mode.val('members_only');
 			$group_default_access.prop('disabled', true);
 		}		
-	}
+	};
 
 	$('.group-tools-simplified-access-button').on('click', function() {
 		$('.group-tools-simplified-access-button').removeClass('elgg-state-active');

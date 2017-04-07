@@ -1,6 +1,5 @@
 define(function (require) {
 	
-	var elgg = require('elgg');
 	var $ = require('jquery');
 	
 	// tab filter
@@ -18,7 +17,7 @@ define(function (require) {
 	});
 	
 	// toggle all friends
-	$(document).on('click', '#group-tools-friends-toggle', function (e) {
+	$(document).on('click', '#group-tools-friends-toggle', function () {
 		
 		if ($('#group-tools-friends-toggle span:first').is(':visible')) {
 			$('#friends-picker1 input[type="checkbox"]').attr("checked", "checked");

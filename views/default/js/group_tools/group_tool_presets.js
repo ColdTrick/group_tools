@@ -1,6 +1,5 @@
 define(function (require) {
 
-	var elgg = require('elgg');
 	var $ = require('jquery');
 
 	require(["group_tools/ToolsEdit"], function (ToolsEdit) {
@@ -55,7 +54,7 @@ define(function (require) {
 		$(this).parent().parent().remove();
 	});
 
-	$(document).on('keyup keydown', '.group-tools-admin-change-tool-preset-title', function (e) {
+	$(document).on('keyup keydown', '.group-tools-admin-change-tool-preset-title', function () {
 		if (!$(this).val()) {
 			return;
 		}
@@ -63,7 +62,7 @@ define(function (require) {
 		$label.html($(this).val());
 	});
 
-	$(document).on('keyup keydown', '.group-tools-admin-change-tool-preset-description', function (e) {
+	$(document).on('keyup keydown', '.group-tools-admin-change-tool-preset-description', function () {
 		if (!$(this).val()) {
 			return;
 		}

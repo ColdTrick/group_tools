@@ -27,7 +27,7 @@ define(function (require) {
 							'user_guids': function() {
 								var result = '';
 								
-								$('#' + data.destination + ' input[name="' + data.name + '[]"]').each(function(index, elem) {
+								$('#' + data.destination + ' input[name="' + data.name + '[]"]').each(function() {
 									if (result === '') {
 										result = $(this).val();
 									} else {
@@ -48,8 +48,9 @@ define(function (require) {
 						if (term.length < data.minChars) {
 							return false;
 						}
+						return;
 					},
-					focus: function(event) {
+					focus: function() {
 						// prevent value inserted on focus
 						return false;
 					},

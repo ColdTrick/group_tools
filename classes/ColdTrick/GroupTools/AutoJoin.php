@@ -25,7 +25,7 @@ class AutoJoin {
 	 */
 	protected $configs;
 	
-	function __construct(\ElggUser $user) {
+	public function __construct(\ElggUser $user) {
 		$this->user = $user;
 		
 		// load additional rules

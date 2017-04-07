@@ -125,7 +125,7 @@ class StaleInfo {
 		
 		$entities = elgg_get_entities([
 			'type' => 'object',
-			'subtypes' => $object_subtypes,
+			'subtypes' => $subtypes,
 			'limit' => 1,
 			'joins' => [
 				"JOIN {$dbprefix}entities ce ON e.container_guid = ce.guid",

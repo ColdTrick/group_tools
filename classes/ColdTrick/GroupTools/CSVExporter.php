@@ -241,7 +241,7 @@ class CSVExporter {
 	 * @param array  $return_value current return value
 	 * @param array  $params       supplied params
 	 *
-	 * @return void|array
+	 * @return void|int|string
 	 */
 	public static function exportStaleInfo($hook, $type, $return_value, $params) {
 		
@@ -265,9 +265,8 @@ class CSVExporter {
 			case 'group_tools_stale_info_is_stale':
 				if ($stale_info->isStale()) {
 					return 'yes';
-				} else {
-					return 'no';
 				}
+				return 'no';
 				break;
 			case 'group_tools_stale_info_timestamp':
 				$ts = $stale_info->getTimestamp();
