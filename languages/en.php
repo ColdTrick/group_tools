@@ -7,8 +7,7 @@ return array(
 	'group_tools:delete_selected' => "Delete selected",
 	'group_tools:clear_selection' => "Clear selection",
 	'group_tools:all_members' => "All members",
-	'group_tools:explain' => "Explanation",
-
+	
 	'group_tools:default:access:group' => "Group members only",
 
 	'group_tools:joinrequest:already' => "Revoke membership request",
@@ -118,6 +117,29 @@ return array(
 	
 	'group_tools:form:admin:auto_join:group' => "Add a group to the auto join groups",
 	'group_tools:form:admin:auto_join:group:help' => "Search for a group by name and select it from the list.",
+	
+	'group_tools:form:admin:auto_join:additional:group' => "Select the group(s) to join",
+	'group_tools:form:admin:auto_join:additional:group:help' => "Search for a group by name and select it from the list.",
+	
+	'group_tools:admin:auto_join:additional' => "Additional auto join groups",
+	'group_tools:admin:auto_join:additional:description' => "Here you can configure additional groups a user should join, based on properties of the user.",
+	'group_tools:admin:auto_join:additional:none' => "No additional groups configured yet",
+	
+	'group_tools:admin:auto_join:exclusive' => "Exclusive auto join groups",
+	'group_tools:admin:auto_join:exclusive:description' => "Here you can configure exclusive groups a user should join, based on properties of the user. If a match is found for a user they will NOT be added to any of the groups defined above.",
+	'group_tools:admin:auto_join:exclusive:none' => "No exclusive groups configured yet",
+	
+	'group_tools:form:admin:auto_join:additional:pattern' => "User property matching",
+	'group_tools:form:admin:auto_join:additional:pattern:add' => "Add property",
+	'group_tools:form:admin:auto_join:additional:pattern:help' => "Users will be matched on all configured properties. To remove a property leave the value empty.",
+	'group_tools:auto_join:pattern:operand:equals' => "Equals",
+	'group_tools:auto_join:pattern:operand:not_equals' => "Not equals",
+	'group_tools:auto_join:pattern:operand:contains' => "Contains",
+	'group_tools:auto_join:pattern:operand:not_contains' => "Doesn't contain",
+	'group_tools:auto_join:pattern:operand:pregmatch' => "Preg match",
+	'group_tools:auto_join:pattern:value:placeholder' => "Enter a matching value",
+	
+	'group_tools:action:admin:auto_join:additional:error:pregmatch' => "The provided preg match pattern was invalid",
 	
 	// simplified access
 	'group_tools:edit:access_simplified:open' => 'Open Group',

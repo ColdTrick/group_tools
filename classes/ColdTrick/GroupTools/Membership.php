@@ -339,51 +339,131 @@ class Membership {
 	}
 	
 	/**
-	 * Listen to the create member_of_site relationship event to handle new users
+	 * Listen to the create user
 	 *
-	 * @param string            $event        the name of the event
-	 * @param string            $type         the type of the event
-	 * @param \ElggRelationship $relationship supplied param
+	 * @param string    $event the name of the event
+	 * @param string    $type  the type of the event
+	 * @param \ElggUser $user  supplied param
 	 *
 	 * @return void
 	 */
-	public static function siteJoinAutoJoinGroups($event, $type, $relationship) {
+	public static function autoJoinGroups($event, $type, $user) {
 		
-		if (!self::validateSiteJoinRelationship($relationship)) {
-			return;
-		}
-		
-		$user_guid = (int) $relationship->guid_one;
-		$site_guid = (int) $relationship->guid_two;
-		
-		$user = get_user($user_guid);
-		
-		// add user to the auto join groups
-		$auto_joins = elgg_get_plugin_setting('auto_join', 'group_tools');
-		if (empty($auto_joins)) {
+		if (!($user instanceof \ElggUser)) {
 			return;
 		}
 		
 		// ignore access
 		$ia = elgg_set_ignore_access(true);
 		
-		$auto_joins = string_to_tag_array($auto_joins);
-		foreach ($auto_joins as $group_guid) {
+		// mark the user to check for auto joins when we have more information
+		$user->group_tools_check_auto_joins = true;
+		
+		// restore access settings
+		elgg_set_ignore_access($ia);
+	}
+	
+	/**
+	 * Handle the auto join groups for users
+	 *
+	 * @param string $hook         the name of the hook
+	 * @param string $type         the type of the hook
+	 * @param mixed  $return_value current return value
+	 * @param array  $params       supplied params
+	 *
+	 * @return void
+	 */
+	public static function autoJoinGroupsCron($hook, $type, $return_value, $params) {
+		
+		$time = (int) elgg_extract('time', $params, time());
+		
+		$batch = new \ElggBatch('elgg_get_entities_from_metadata', [
+			'type' => 'user',
+			'limit' => false,
+			'metadata_name_value_pairs' => [
+				'group_tools_check_auto_joins' => true,
+			],
+			'created_time_upper' => ($time), // 5 minute delay
+		]);
+		$batch->setIncrementOffset(false);
+		
+		// ignore access
+		$ia = elgg_set_ignore_access(true);
+		
+		$auto_join = false;
+		/* @var $user \ElggUser */
+		foreach ($batch as $user) {
+			
+			// prep helper class
+			if (empty($auto_join)) {
+				$auto_join = new AutoJoin($user);
+			} else {
+				$auto_join->setUser($user);
+			}
+			
+			// remove user flag
+			unset($user->group_tools_check_auto_joins);
+			
+			// get groups
+			$group_guids = $auto_join->getGroupGUIDs();
+			if (empty($group_guids)) {
+				continue;
+			}
+			
+			foreach ($group_guids as $group_guid) {
+				$group = get_entity($group_guid);
+				if (!($group instanceof \ElggGroup)) {
+					continue;
+				}
+				
+				$group->join($user);
+			}
+		}
+		
+		// retore access
+		elgg_set_ignore_access($ia);
+	}
+	
+	/**
+	 * Check if a user needs to join auto groups (on login)
+	 *
+	 * @param string    $event the name of the event
+	 * @param string    $type  the type of the event
+	 * @param \ElggUser $user  the user
+	 *
+	 * @return void
+	 */
+	public static function autoJoinGroupsLogin($event, $type, $user) {
+		
+		if (!($user instanceof \ElggUser)) {
+			return;
+		}
+		
+		if (!isset($user->group_tools_check_auto_joins)) {
+			// user is already proccessed
+			return;
+		}
+		
+		// prep helper class
+		$auto_join = new AutoJoin($user);
+		
+		// remove user flag
+		unset($user->group_tools_check_auto_joins);
+		
+		// get groups
+		$group_guids = $auto_join->getGroupGUIDs();
+		if (empty($group_guids)) {
+			return;
+		}
+		
+		foreach ($group_guids as $group_guid) {
 			$group = get_entity($group_guid);
 			if (!($group instanceof \ElggGroup)) {
 				continue;
 			}
 			
-			if ($group->site_guid !== $site_guid) {
-				continue;
-			}
-			
-			// join the group
 			$group->join($user);
 		}
-		
-		// restore access settings
-		elgg_set_ignore_access($ia);
 	}
 	
 	/**

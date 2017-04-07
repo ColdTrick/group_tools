@@ -97,12 +97,19 @@ function group_tools_init() {
 	elgg_register_action('groups/invite', dirname(__FILE__) . '/actions/groups/invite.php');
 	
 	// manage auto join for groups
-	elgg_register_ajax_view('forms/group_tools/admin/auto_join');
+	elgg_register_ajax_view('forms/group_tools/admin/auto_join/default');
+	elgg_register_ajax_view('forms/group_tools/admin/auto_join/additional');
+	elgg_register_ajax_view('group_tools/elements/auto_join_match_pattern');
+	
 	elgg_extend_view('groups/edit', 'group_tools/forms/special_states', 350);
-	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinAutoJoinGroups');
+	
+	elgg_register_event_handler('create', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroups');
+	elgg_register_event_handler('login', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroupsLogin');
 	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinEmailInvitedGroups');
 	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinGroupInviteCode');
 	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinDomainBasedGroups');
+	
+	elgg_register_plugin_hook_handler('cron', 'fiveminute', '\ColdTrick\GroupTools\Membership::autoJoinGroupsCron');
 	
 	// group admin approve
 	elgg_extend_view('groups/edit', 'group_tools/extends/groups/edit/admin_approve', 1);
@@ -232,7 +239,9 @@ function group_tools_init() {
 	elgg_register_action('group_tools/admin/bulk_delete', dirname(__FILE__) . '/actions/admin/bulk_delete.php', 'admin');
 	elgg_register_action('group_tools/admin/approve', dirname(__FILE__) . '/actions/admin/approve.php', 'admin');
 	elgg_register_action('group_tools/admin/decline', dirname(__FILE__) . '/actions/admin/decline.php', 'admin');
-	elgg_register_action('group_tools/admin/auto_join', dirname(__FILE__) . '/actions/admin/auto_join.php', 'admin');
+	elgg_register_action('group_tools/admin/auto_join/default', dirname(__FILE__) . '/actions/admin/auto_join/default.php', 'admin');
+	elgg_register_action('group_tools/admin/auto_join/additional', dirname(__FILE__) . '/actions/admin/auto_join/additional.php', 'admin');
+	elgg_register_action('group_tools/admin/auto_join/delete', dirname(__FILE__) . '/actions/admin/auto_join/delete.php', 'admin');
 	
 	elgg_register_action('group_tools/email_invitation', dirname(__FILE__) . '/actions/membership/email_invitation.php');
 	elgg_register_action('groups/decline_email_invitation', dirname(__FILE__) . '/actions/groups/decline_email_invitation.php');

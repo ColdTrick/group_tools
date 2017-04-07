@@ -22,7 +22,7 @@ $footer = elgg_view_field([
 elgg_set_form_footer($footer);
 ?>
 <script>
-	$('.elgg-form-group-tools-admin-auto-join .elgg-input-group-picker').on('autocompleteselect', function() {
+	$('.elgg-form-group-tools-admin-auto-join-default .elgg-input-group-picker').on('autocompleteselect', function() {
 		var lightbox = require('elgg/lightbox');
 		lightbox.resize();
 	});

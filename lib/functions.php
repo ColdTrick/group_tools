@@ -1,4 +1,7 @@
 <?php
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\Schema\Visitor\RemoveNamespacedAssets;
+
 /**
  * All helper functions for this plugin can be found here.
  *
@@ -1292,3 +1295,137 @@ function group_tools_allow_hidden_groups() {
 	
 	return $result;
 }
+
+/**
+ * Get the auto join group configurations
+ *
+ * @param bool $refresh refresh data from database (default: false)
+ *
+ * @return array
+ */
+function group_tools_get_auto_join_configurations($refresh = false) {
+	static $result;
+	
+	$refresh = (bool) $refresh;
+	
+	if (isset($result) && !$refresh) {
+		return $result;
+	}
+	
+	$result = [];
+	$setting = elgg_get_plugin_setting('auto_join_config', 'group_tools');
+	if (!empty($setting)) {
+		$result = json_decode($setting, true);
+	}
+	
+	return $result;
+}
+
+/**
+ * Get an auto join group configuration
+ *
+ * @param string $id the id of the Configuration
+ *
+ * @return false|array
+ */
+function group_tools_get_auto_join_configuration($id) {
+	
+	if (empty($id)) {
+		return false;
+	}
+	
+	$existing = group_tools_get_auto_join_configurations();
+	
+	return elgg_extract($id, $existing, []);
+}
+
+/**
+ * Create/edit an auto join group configuration
+ *
+ * @param array $config the auto join configuration (must contain at least the key 'id')
+ *
+ * @return bool
+ */
+function group_tools_save_auto_join_configuration($config) {
+	
+	if (empty($config) || !is_array($config)) {
+		return false;
+	}
+	
+	$id = elgg_extract('id', $config);
+	if (empty($id)) {
+		return false;
+	}
+	
+	$existing_config = group_tools_get_auto_join_configurations();
+	$existing_config[$id] = $config;
+	
+	// store new config
+	$result = (bool) elgg_set_plugin_setting('auto_join_config', json_encode($existing_config), 'group_tools');
+	
+	// refesh cache
+	group_tools_get_auto_join_configurations(true);
+	
+	return $result;
+}
+
+/**
+ * Remove an auto join group configuration
+ *
+ * @param string $id the id of the configuration to remove
+ *
+ * @return bool
+ */
+function group_tools_delete_auto_join_configuration($id) {
+	
+	if (empty($id)) {
+		return false;
+	}
+	
+	$existing_config = group_tools_get_auto_join_configurations();
+	if (!isset($existing_config[$id])) {
+		// id didn't exist so remove was a success
+		return true;
+	}
+	
+	unset($existing_config[$id]);
+	
+	// store new config
+	$result = (bool) elgg_set_plugin_setting('auto_join_config', json_encode($existing_config), 'group_tools');
+	
+	// refesh cache
+	group_tools_get_auto_join_configurations(true);
+	
+	return $result;
+}
+
+function group_tools_get_auto_join_pattern_user_options() {
+	static $result;
+	
+	if (isset($result)) {
+		return $result;
+	}
+	
+	$result = [
+		'name' => elgg_echo('name'),
+		'email' => elgg_echo('email'),
+		'username' => elgg_echo('username'),
+	];
+	
+	$profile_fields = elgg_get_config('profile_fields');
+	if (empty($profile_fields)) {
+		return $result;
+	}
+	
+	foreach ($profile_fields as $metadata_name => $type) {
+		$lan = $metadata_name;
+		if (elgg_language_key_exists("profile:{$metadata_name}")) {
+			$lan = elgg_echo("profile:{$metadata_name}");
+		}
+		
+		$result[$metadata_name] = $lan;
+	}
+	
+	return $result;
+}
+
