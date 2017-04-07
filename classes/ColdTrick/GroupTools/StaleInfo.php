@@ -64,6 +64,7 @@ class StaleInfo {
 	public function getTimestamp() {
 		
 		$timestamps = [
+			$this->group->time_created,
 			$this->getTouchTimestamp(),
 			$this->getContentTimestamp(),
 			$this->getCommentTimestamp(),
