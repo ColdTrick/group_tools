@@ -107,7 +107,7 @@ class Cron {
 		}
 		
 		// groups with last content in timespace
-		$searchable_objects = get_registered_entity_types('object');
+		$searchable_objects = StaleInfo::getObjectSubtypes();
 		$object_ids = [];
 		foreach ($searchable_objects as $index => $subtype) {
 			switch ($subtype) {

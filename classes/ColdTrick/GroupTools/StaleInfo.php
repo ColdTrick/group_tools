@@ -91,7 +91,7 @@ class StaleInfo {
 	 */
 	protected function getContentTimestamp() {
 		
-		$object_subtypes = get_registered_entity_types('object');
+		$object_subtypes = $this::getObjectSubtypes();
 		if (empty($object_subtypes)) {
 			return 0;
 		}
@@ -141,5 +141,22 @@ class StaleInfo {
 		}
 		
 		return (int) $entities[0]->time_updated;
+	}
+	
+	/**
+	 * Get supported subtypes for stale info
+	 *
+	 * @return string[]
+	 */
+	public static function getObjectSubtypes() {
+		
+		$object_subtypes = get_registered_entity_types('object');
+		if (empty($object_subtypes)) {
+			$object_subtypes = [];
+		}
+		
+		return elgg_trigger_plugin_hook('stale_info_object_subtypes', 'group_tools', [
+			'subtypes' => $object_subtypes,
+		], $object_subtypes);
 	}
 }
