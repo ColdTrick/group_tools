@@ -70,6 +70,19 @@ class Cron {
 		
 		$group_guids = [];
 		
+		// groups created in timespace
+		$options = [
+			'type' => 'group',
+			'limit' => false,
+			'created_time_upper' => $compare_ts_upper,
+			'created_time_lower' => $compare_ts_lower,
+			'callback' => $row_to_guid,
+		];
+		$groups_created = elgg_get_entities($options);
+		if (!empty($groups_created)) {
+			$group_guids = array_merge($group_guids, $groups_created);
+		}
+		
 		// groups with touch in timespace
 		$options = [
 			'type' => 'group',
