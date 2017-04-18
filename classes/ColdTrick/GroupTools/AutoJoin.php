@@ -181,10 +181,10 @@ class AutoJoin {
 		
 		switch ($operand) {
 			case 'equals':
-				return $user_value == $expected_value;
+				return strtolower($user_value) == strtolower($expected_value);
 				break;
 			case 'not_equals':
-				return $user_value != $expected_value;
+				return strtolower($user_value) != strtolower($expected_value);
 				break;
 			case 'contains':
 				return (bool) stristr($user_value, $expected_value);
