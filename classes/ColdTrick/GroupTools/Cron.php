@@ -139,14 +139,14 @@ class Cron {
 					"e.guid IN (
 						SELECT container_guid
 						FROM (
-							SELECT container_guid, max(time_created) as time_created
+							SELECT container_guid, max(time_updated) as time_updated
 							FROM {$dbprefix}entities
 							WHERE type = 'object'
 							AND subtype IN (" . implode(',', $object_ids) . ")
 							GROUP BY container_guid
 						) as content
-						WHERE content.time_created > {$compare_ts_lower}
-						AND content.time_created < {$compare_ts_upper}
+						WHERE content.time_updated > {$compare_ts_lower}
+						AND content.time_updated < {$compare_ts_upper}
 					)",
 				],
 			];
@@ -173,15 +173,15 @@ class Cron {
 				"e.guid IN (
 					SELECT container_guid
 					FROM (
-						SELECT ce.container_guid, max(re.time_created) as time_created
+						SELECT ce.container_guid, max(re.time_updated) as time_updated
 						FROM {$dbprefix}entities re
 						JOIN {$dbprefix}entities ce ON re.container_guid = ce.guid
 						WHERE re.type = 'object'
 						AND re.subtype IN (" . implode(',', $comment_ids) . ")
 						GROUP BY ce.container_guid
 					) as comments
-					WHERE comments.time_created > {$compare_ts_lower}
-					AND comments.time_created < {$compare_ts_upper}
+					WHERE comments.time_updated > {$compare_ts_lower}
+					AND comments.time_updated < {$compare_ts_upper}
 				)",
 			],
 		];
