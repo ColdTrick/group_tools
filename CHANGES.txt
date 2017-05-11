@@ -1,6 +1,16 @@
 Version history
 ===============
 
+9.1 (2017-05-11):
+
+- added: hook to change object subtypes for stale group check
+- changed: consolidated admin pages in the same section
+- changed: moved auto join group management to admin section
+- changed: rewritten the auto join logic, now profiles can be created
+- fixed: grouppicker styling issues
+- fixed: stale group notification also includes empty groups in period
+- fixed: use time_updated in cron, same as on group profile page
+
 9.0 (2017-02-28):
 
 - added: notification to group owner when group becomes stale
