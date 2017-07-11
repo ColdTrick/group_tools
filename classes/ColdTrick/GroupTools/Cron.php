@@ -18,11 +18,18 @@ class Cron {
 		
 		$time = (int) elgg_extract('time', $params, time());
 		
+		// ignore access
+		$ia = elgg_set_ignore_access(true);
+		
+		// get stale groups
 		$groups = self::findStaleGroups($time);
 		if (empty($groups)) {
+			// non found
+			elgg_set_ignore_access($ia);
 			return;
 		}
 		
+		// process groups
 		foreach ($groups as $group) {
 			
 			$stale_info = group_tools_get_stale_info($group);
@@ -38,6 +45,9 @@ class Cron {
 			
 			self::notifyStaleGroupOwner($group);
 		}
+		
+		// restore access
+		elgg_set_ignore_access($ia);
 	}
 	
 	/**
