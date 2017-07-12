@@ -1,6 +1,10 @@
 Version history
 ===============
 
+9.1.1 (2017-07-12):
+
+- fixed: stale group notifcations not sent for non public groups
+
 9.1 (2017-05-11):
 
 - added: hook to change object subtypes for stale group check
