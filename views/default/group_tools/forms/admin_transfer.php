@@ -6,14 +6,11 @@
 $group = elgg_extract('entity', $vars);
 $user = elgg_get_logged_in_user_entity();
 
-if (!($group instanceof ElggGroup)) {
+if (!($group instanceof ElggGroup) || !($user instanceof ElggUser)) {
 	return;
 }
 
-if (!($user instanceof ElggUser)) {
-	return;
-}
-
+// don't check canEdit() because group admins can do that
 if (($group->getOwnerGUID() !== $user->getGUID()) && !$user->isAdmin()) {
 	return;
 }
@@ -56,16 +53,7 @@ $member_options = [
 $friends = elgg_get_entities_from_relationship($friends_options);
 $members = elgg_get_entities_from_relationship($member_options);
 
-if (empty($friends) && empty($members)) {
-	return;
-}
-
 $show_selector = false;
-
-$add_myself = false;
-$add_friends = false;
-$add_members = false;
-
 
 $options = [];
 // add current group owner
@@ -75,6 +63,12 @@ $options[] = elgg_format_element('option', ['value' => $group->getOwnerGUID()], 
 if ($group->getOwnerGUID() !== $user->getGUID()) {
 	$show_selector = true;
 	$options[] = elgg_format_element('option', ['value' => $user->getGUID()], elgg_echo('group_tools:admin_transfer:myself'));
+}
+
+if (!$show_selector && empty($friends) && empty($members)) {
+	// didn't add self
+	// no friends and no group members
+	return;
 }
 
 if (!empty($friends)) {
