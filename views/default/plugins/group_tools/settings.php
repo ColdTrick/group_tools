@@ -172,6 +172,15 @@ $group_edit .= elgg_view_field([
 	'value' => $plugin->allow_hidden_groups ?: elgg_get_plugin_setting('hidden_groups', 'groups', 'no'),
 ]);
 
+$group_edit .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('group_tools:settings:auto_accept_membership_requests'),
+	'#help' => elgg_echo('group_tools:settings:auto_accept_membership_requests:help'),
+	'name' => 'params[auto_accept_membership_requests]',
+	'options_values' => $noyes_options,
+	'value' => $plugin->auto_accept_membership_requests,
+]);
+
 echo elgg_view_module('inline', elgg_echo('group_tools:settings:edit:title'), $group_edit);
 
 // listing settings

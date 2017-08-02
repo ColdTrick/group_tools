@@ -110,6 +110,9 @@ return array(
 	'group_tools:settings:admin_approve' => "Site administrators need to approve new groups",
 	'group_tools:settings:admin_approve:description' => "Any user can create a group, but a site administrator has to approve the new group",
 	
+	'group_tools:settings:auto_accept_membership_requests' => "Automatically accept pending membership requests after opening the group",
+	'group_tools:settings:auto_accept_membership_requests:help' => "When the membership of a group changes to 'open', automatically accept all pending membership requests.",
+	
 	// auto join
 	'group_tools:admin:auto_join:default' => "Auto join",
 	'group_tools:admin:auto_join:default:description' => "New users will automaticly join the following groups.",

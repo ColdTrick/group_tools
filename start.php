@@ -109,6 +109,7 @@ function group_tools_init() {
 	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinGroupInviteCode');
 	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinDomainBasedGroups');
 	
+	elgg_register_plugin_hook_handler('action', 'groups/edit', '\ColdTrick\GroupTools\Group::editActionListener');
 	elgg_register_plugin_hook_handler('cron', 'fiveminute', '\ColdTrick\GroupTools\Membership::autoJoinGroupsCron');
 	
 	// group admin approve
