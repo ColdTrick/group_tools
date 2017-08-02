@@ -1,10 +1,12 @@
 <?php
 /**
- * This file was created by Translation Editor v5.2
- * On 2017-04-07 11:15
+ * This file was created by Translation Editor v6.0
+ * On 2017-08-02 14:48
  */
 
 return array (
+  'group_tools:settings:auto_accept_membership_requests' => 'Lidmaatschapsverzoeken automatisch accepteren na het openen van de groep',
+  'group_tools:settings:auto_accept_membership_requests:help' => 'Als het lidmaatschap van een groep wijzigt naar \'open\' worden automatisch alle openstaande lidmaatschapsverzoeken geaccepteerd.',
   'admin:groups:auto_join' => 'Automatisch lidmaatschap',
   'group_tools:admin:auto_join:default' => 'Automatisch lidmaatschap',
   'group_tools:admin:auto_join:default:description' => 'Nieuwe gebruikers zullen automatisch lid worden van de volgende groepen.',
