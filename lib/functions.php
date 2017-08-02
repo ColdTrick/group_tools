@@ -1,7 +1,4 @@
 <?php
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\Schema\Visitor\RemoveNamespacedAssets;
-
 /**
  * All helper functions for this plugin can be found here.
  *
