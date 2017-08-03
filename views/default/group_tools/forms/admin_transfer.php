@@ -107,17 +107,27 @@ if (!$show_selector) {
 	return;
 }
 
-echo '<div>';
-echo elgg_format_element('label', ['for' => 'groups-owner-guid'], elgg_echo('groups:owner'));
-echo '<br />';
+echo '<div class="elgg-field">';
+echo elgg_format_element('label', ['class' => 'elgg-field-label', 'for' => 'groups-owner-guid'], elgg_echo('groups:owner'));
 echo elgg_format_element('select', [
 	'name' => 'owner_guid',
 	'id' => 'groups-owner-guid',
 ], implode('', $options));
 
 if ($group->getOwnerGUID() == $user->getGUID()) {
-	echo '<br />';
-	echo elgg_format_element('span', ['class' => 'elgg-text-help'], elgg_echo('groups:owner:warning'));
+	echo elgg_format_element('div', ['class' => 'elgg-field-help elgg-text-help'], elgg_echo('groups:owner:warning'));
+	
+	// stay admin
+	if (group_tools_multiple_admin_enabled() && $group->isMember($user)) {
+		echo elgg_view_field([
+			'#type' => 'checkbox',
+			'#label' => elgg_echo('group_tools:admin_transfer:remain_admin'),
+			'#class' => 'elgg-divide-left plm hidden group-tools-admin-transfer-remain',
+			'name' => 'admin_transfer_remain',
+			'value' => '1',
+			'checked' => true,
+		]);
+	}
 }
 
 echo '</div>';

@@ -1,10 +1,11 @@
 <?php
 /**
  * This file was created by Translation Editor v6.0
- * On 2017-08-02 14:48
+ * On 2017-08-03 16:37
  */
 
 return array (
+  'group_tools:admin_transfer:remain_admin' => 'Blijf aan als groep beheerder na eigenaar overdracht',
   'group_tools:settings:auto_accept_membership_requests' => 'Lidmaatschapsverzoeken automatisch accepteren na het openen van de groep',
   'group_tools:settings:auto_accept_membership_requests:help' => 'Als het lidmaatschap van een groep wijzigt naar \'open\' worden automatisch alle openstaande lidmaatschapsverzoeken geaccepteerd.',
   'admin:groups:auto_join' => 'Automatisch lidmaatschap',

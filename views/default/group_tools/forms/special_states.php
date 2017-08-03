@@ -19,8 +19,6 @@ if (!($group instanceof ElggGroup)) {
 	return;
 }
 
-elgg_require_js('group_tools/group_edit');
-
 $noyes_options = [
 	'no' => elgg_echo('option:no'),
 	'yes' => elgg_echo('option:yes')

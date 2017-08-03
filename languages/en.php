@@ -231,6 +231,7 @@ You can find the group here:
 	// admin transfer - form
 	'group_tools:admin_transfer:current' => "Keep current owner: %s",
 	'group_tools:admin_transfer:myself' => "Myself",
+	'group_tools:admin_transfer:remain_admin' => "Remain a group admin after owner transfer",
 	
 	// special states form
 	'group_tools:special_states:title' => "Group special states",

@@ -865,12 +865,13 @@ function group_tools_enable_registration() {
 /**
  * Helper function to transfer the ownership of a group to a new user
  *
- * @param ElggGroup $group     the group to transfer
- * @param ElggUser  $new_owner the new owner
+ * @param ElggGroup $group        the group to transfer
+ * @param ElggUser  $new_owner    the new owner
+ * @param bool      $remain_admin the current owner remains an admin after transfer
  *
  * @return bool
  */
-function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_owner) {
+function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_owner, $remain_admin = false) {
 	
 	if (!($group instanceof ElggGroup) || !$group->canEdit()) {
 		return false;
@@ -879,6 +880,8 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	if (!($new_owner instanceof ElggUser)) {
 		return false;
 	}
+	
+	$remain_admin = (bool) $remain_admin;
 	
 	// register plugin hook to make sure transfer can complete
 	elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Access::allowGroupOwnerTransfer');
@@ -966,6 +969,11 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 		]);
 		
 		notify_user($new_owner->getGUID(), $group->getGUID(), $subject, $message);
+	}
+	
+	// check if the old owner wishes to remain as an admin
+	if ($remain_admin && ($old_owner->guid === $loggedin_user->guid)) {
+		add_entity_relationship($old_owner->guid, 'group_admin', $group->guid);
 	}
 	
 	// unregister plugin hook to make sure transfer can complete

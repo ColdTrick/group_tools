@@ -237,6 +237,10 @@ if ($has_uploaded_icon) {
 // owner transfer
 $old_owner_guid = $is_new_group ? 0 : $group->owner_guid;
 $new_owner_guid = (int) get_input('owner_guid');
+$remain_admin = false;
+if (group_tools_multiple_admin_enabled()) {
+	$remain_admin = (bool) get_input('admin_transfer_remain', false);
+}
 
 if (!$is_new_group && $new_owner_guid && ($new_owner_guid != $old_owner_guid)) {
 	// who can transfer
@@ -254,7 +258,7 @@ if (!$is_new_group && $new_owner_guid && ($new_owner_guid != $old_owner_guid)) {
 		$new_owner = get_user($new_owner_guid);
 		
 		// transfer the group to the new owner
-		group_tools_transfer_group_ownership($group, $new_owner);
+		group_tools_transfer_group_ownership($group, $new_owner, $remain_admin);
 	}
 }
 

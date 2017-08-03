@@ -9,9 +9,6 @@
  * @package ElggGroups
  */
 
-// load js
-elgg_require_js('group_tools/group_edit');
-
 $entity = elgg_extract('entity', $vars, false);
 $membership = elgg_extract('membership', $vars);
 $visibility = elgg_extract('vis', $vars);

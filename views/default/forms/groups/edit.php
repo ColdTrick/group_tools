@@ -5,6 +5,8 @@
  * @package ElggGroups
  */
 
+elgg_require_js('group_tools/group_edit');
+
 /* @var ElggGroup $entity */
 $entity = elgg_extract('entity', $vars, false);
 if ($entity) {
