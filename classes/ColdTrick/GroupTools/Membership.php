@@ -311,9 +311,15 @@ class Membership {
 			
 		// subject
 		$subject = elgg_echo('group_tools:welcome_message:subject', [$group->name]);
-			
+		
+		// mail params
+		$mail_params = [
+			'object' => $group,
+			'action' => 'welcome',
+		];
+		
 		// notify the user
-		notify_user($recipient->getGUID(), $group->getGUID(), $subject, $welcome_message);
+		notify_user($recipient->getGUID(), $group->getGUID(), $subject, $welcome_message, $mail_params);
 	}
 	
 	/**

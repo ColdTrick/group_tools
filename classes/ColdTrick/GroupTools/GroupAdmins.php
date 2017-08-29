@@ -77,6 +77,11 @@ class GroupAdmins {
 			$group->name,
 		]);
 		
+		$mail_params = [
+			'object' => $group,
+			'action' => 'membership_request',
+		];
+		
 		$admins = new \ElggBatch('elgg_get_entities_from_relationship', $options);
 		foreach ($admins as $a) {
 			$body = elgg_echo('groups:request:body', [
@@ -87,7 +92,7 @@ class GroupAdmins {
 				$url,
 			]);
 				
-			notify_user($a->getGUID(), $user->getGUID(), $subject, $body);
+			notify_user($a->getGUID(), $user->getGUID(), $subject, $body, $mail_params);
 		}
 	}
 	

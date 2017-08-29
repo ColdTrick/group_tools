@@ -121,12 +121,17 @@ class GroupMail {
 		// need to check if the $event actor is a recipient, because Elgg skips that user
 		$recipients = $object->getRecipients();
 		if (!empty($recipients)) {
+			$mail_params = [
+				'object' => $object,
+				'action' => $event->getAction(),
+			];
+			
 			foreach ($recipients as $user_guid => $methods) {
 				if ($user_guid != $event->getActorGUID()) {
 					continue;
 				}
 				
-				notify_user($user_guid, $event->getActorGUID(), $object->getSubject(), $object->getMessage(), [], $methods);
+				notify_user($user_guid, $event->getActorGUID(), $object->getSubject(), $object->getMessage(), $mail_params, $methods);
 				break;
 			}
 		}
