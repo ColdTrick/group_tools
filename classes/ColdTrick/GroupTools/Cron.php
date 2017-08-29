@@ -16,6 +16,9 @@ class Cron {
 	 */
 	public static function notifyStaleGroupOwners($hook, $type, $return_value, $params) {
 		
+		echo 'Starting GroupTools stale group owners' . PHP_EOL;
+		elgg_log('Starting GroupTools stale group owners', 'NOTICE');
+		
 		$time = (int) elgg_extract('time', $params, time());
 		
 		// ignore access
@@ -26,6 +29,10 @@ class Cron {
 		if (empty($groups)) {
 			// non found
 			elgg_set_ignore_access($ia);
+			
+			echo 'Done with GroupTools stale group owners' . PHP_EOL;
+			elgg_log('Done with GroupTools stale group owners', 'NOTICE');
+			
 			return;
 		}
 		
@@ -48,6 +55,9 @@ class Cron {
 		
 		// restore access
 		elgg_set_ignore_access($ia);
+		
+		echo 'Done with GroupTools stale group owners' . PHP_EOL;
+		elgg_log('Done with GroupTools stale group owners', 'NOTICE');
 	}
 	
 	/**
