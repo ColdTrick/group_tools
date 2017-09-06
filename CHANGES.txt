@@ -1,6 +1,11 @@
 Version history
 ===============
 
+9.2.1 (2017-09-06):
+
+- fixed: my groups tab not usable for logged out users
+- fixed: notify_user not always has mail params
+
 9.2 (2017-08-09):
 
 - added: option to remain a group admin after owner transfer
