@@ -26,12 +26,14 @@ class GroupSortMenu {
 			'href' => 'groups/all?filter=all',
 			'priority' => 200,
 		]);
-		$return_value[] = \ElggMenuItem::factory([
-			'name' => 'yours',
-			'text' => elgg_echo('groups:yours'),
-			'href' => 'groups/all?filter=yours',
-			'priority' => 250,
-		]);
+		if (elgg_is_logged_in()) {
+			$return_value[] = \ElggMenuItem::factory([
+				'name' => 'yours',
+				'text' => elgg_echo('groups:yours'),
+				'href' => 'groups/all?filter=yours',
+				'priority' => 250,
+			]);
+		}
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'open',
 			'text' => elgg_echo('group_tools:groups:sorting:open'),
