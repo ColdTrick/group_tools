@@ -244,7 +244,7 @@ function group_tools_init() {
 	elgg_register_action('group_tools/admin/auto_join/additional', dirname(__FILE__) . '/actions/admin/auto_join/additional.php', 'admin');
 	elgg_register_action('group_tools/admin/auto_join/delete', dirname(__FILE__) . '/actions/admin/auto_join/delete.php', 'admin');
 	
-	elgg_register_action('group_tools/email_invitation', dirname(__FILE__) . '/actions/membership/email_invitation.php');
+	elgg_register_action('groups/email_invitation', dirname(__FILE__) . '/actions/membership/email_invitation.php');
 	elgg_register_action('groups/decline_email_invitation', dirname(__FILE__) . '/actions/groups/decline_email_invitation.php');
 	elgg_register_action('group_tools/revoke_email_invitation', dirname(__FILE__) . '/actions/groups/revoke_email_invitation.php');
 	elgg_register_action('groups/edit', dirname(__FILE__) . '/actions/groups/edit.php');
