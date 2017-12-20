@@ -71,7 +71,7 @@ if ($relationship != 'email') {
 	$users_found = elgg_get_entities_from_relationship($query_options);
 } else {
 	// invite by email
-	$regexpr = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/';
+	$regexpr = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/';
 	if (preg_match($regexpr, $q)) {
 		// only start matching if $q is an emailaddress
 		
