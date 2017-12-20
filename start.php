@@ -104,7 +104,7 @@ function group_tools_init() {
 	elgg_extend_view('groups/edit', 'group_tools/forms/special_states', 350);
 	
 	elgg_register_event_handler('create', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroups');
-	elgg_register_event_handler('login', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroupsLogin');
+	elgg_register_event_handler('login:after', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroupsLogin');
 	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinEmailInvitedGroups');
 	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinGroupInviteCode');
 	elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinDomainBasedGroups');
