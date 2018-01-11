@@ -1,6 +1,14 @@
 Version history
 ===============
 
+9.2.2 (2018-01-11):
+
+- changed: email invite accept form location
+- changed: moved auto join groups to login:after event
+- fixed: delete email invitation error
+- fixed: email invite accept action not defined correctly
+- fixed: support longer TLDs (#124)
+
 9.2.1 (2017-09-06):
 
 - fixed: my groups tab not usable for logged out users
