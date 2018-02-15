@@ -37,7 +37,7 @@ $options = [
 		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
 	],
 	'wheres' => [
-		"(e1.container_guid = {$group->getGUID()} OR e2.container_guid = {$group->getGUID()})",
+		"(e1.container_guid = {$group->getGUID()} OR e1.guid = {$group->getGUID()} OR e2.container_guid = {$group->getGUID()})",
 	],
 	'no_results' => elgg_echo('groups:activity:none'),
 ];
