@@ -44,7 +44,9 @@ if ($limit < 1) {
 $sql = "SELECT {$dbprefix}river.*";
 $sql .= " FROM {$dbprefix}river";
 $sql .= " INNER JOIN {$dbprefix}entities AS entities1 ON {$dbprefix}river.object_guid = entities1.guid";
+$sql .= " LEFT JOIN {$dbprefix}entities AS entities2 ON {$dbprefix}river.target_guid = entities2.guid";
 $sql .= ' WHERE (entities1.container_guid in (' . implode(',', $group_guid) . ')';
+$sql .= " OR entities2.container_guid IN (" . implode(',', $group_guid) . ')';
 $sql .= " OR {$dbprefix}river.object_guid IN (" . implode(',', $group_guid) . '))';
 
 if (!empty($activity_filter) && is_string($activity_filter)) {
