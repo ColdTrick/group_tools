@@ -3,7 +3,7 @@
 	"description": "Combines different group additions into one plugin",
 	"type": "elgg-plugin",
 	"keywords": ["elgg", "plugin", "groups"],
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-only",
 	"support": {
 		"source": "https://github.com/ColdTrick/group_tools",
 		"issues": "https://github.com/ColdTrick/group_tools/issues"
