@@ -1,10 +1,15 @@
 <?php
 /**
  * This file was created by Translation Editor v6.0
- * On 2017-08-03 16:37
+ * On 2018-02-27 16:42
  */
 
 return array (
+  'group_tools:edit:group:notifications:no_methods' => 'Geen notificatie methodes beschikbaar',
+  'group_tools:edit:group:notifications:counter' => '(%d van %d)',
+  'group_tools:edit:group:notifications:defaults' => 'Standaard notificatie instellingen voor nieuwe gebruikers',
+  'group_tools:edit:group:notifications:defaults:help' => 'Als een gebruiker lid wordt van de groep worden dit de groep notificatie instellingen.',
+  'group_tools:notifications:enable' => 'Opslaan en instellingen toepassen op alle leden',
   'group_tools:admin_transfer:remain_admin' => 'Blijf aan als groep beheerder na eigenaar overdracht',
   'group_tools:settings:auto_accept_membership_requests' => 'Lidmaatschapsverzoeken automatisch accepteren na het openen van de groep',
   'group_tools:settings:auto_accept_membership_requests:help' => 'Als het lidmaatschap van een groep wijzigt naar \'open\' worden automatisch alle openstaande lidmaatschapsverzoeken geaccepteerd.',
@@ -280,9 +285,7 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'widgets:index_groups:filter:value' => 'met de waarde',
   'widgets:index_groups:filter:no_filter' => 'Geen filter',
   'group_tools:notifications:title' => 'Groepnotificaties',
-  'group_tools:notifications:description' => 'Deze groep heeft %s leden, hiervan hebben %s notificaties op activiteit in deze groep ingeschakeld. Hieronder kun je dit aanpassen voor alle leden van de groep.',
   'group_tools:notifications:disclaimer' => 'Met grote groepen kan dit enige tijd duren.',
-  'group_tools:notifications:enable' => 'Schakel notificaties voor iedereen in',
   'group_tools:notifications:disable' => 'Schakel notificaties voor iedereen uit',
   'group_tools:action:notifications:error:toggle' => 'Ongeldige schakel optie',
   'group_tools:action:notifications:success:disable' => 'De notificaties zijn voor iedereen uitgeschakeld',
