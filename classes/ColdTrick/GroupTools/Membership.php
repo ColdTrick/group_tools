@@ -5,13 +5,6 @@ namespace ColdTrick\GroupTools;
 class Membership {
 	
 	/**
-	 * Auto notification plugin settings
-	 *
-	 * @var string[]
-	 */
-	protected static $AUTO_NOTIFICATIONS;
-	
-	/**
 	 * Show notification settings on group join
 	 *
 	 * @var bool
@@ -19,44 +12,10 @@ class Membership {
 	protected static $NOTIFICATIONS_TOGGLE;
 	
 	/**
-	 * Load the plugin settings for notification settings on group join
-	 *
-	 * @return void
-	 */
-	protected static function loadAutoNotifications() {
-		
-		if (isset(self::$AUTO_NOTIFICATIONS)) {
-			return;
-		}
-		
-		self::$AUTO_NOTIFICATIONS = [];
-		
-		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
-		if (empty($NOTIFICATION_HANDLERS) || !is_array($NOTIFICATION_HANDLERS)) {
-			return;
-		}
-		
-		if (elgg_get_plugin_setting('auto_notification', 'group_tools') === 'yes') { // Backwards compatibility
-			self::$AUTO_NOTIFICATIONS = ['email', 'site'];
-		}
-		
-		foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-			$plugin_setting = (int) elgg_get_plugin_setting("auto_notification_{$method}", 'group_tools');
-			if (empty($plugin_setting)) {
-				continue;
-			}
-			
-			self::$AUTO_NOTIFICATIONS[] = $method;
-		}
-		
-		self::$AUTO_NOTIFICATIONS = array_unique(self::$AUTO_NOTIFICATIONS);
-	}
-	
-	/**
 	 * Listen to the delete of a membership request
 	 *
-	 * @param stirng            $event        the name of the event
-	 * @param stirng            $type         the type of the event
+	 * @param string            $event        the name of the event
+	 * @param string            $type         the type of the event
 	 * @param \ElggRelationship $relationship the relationship
 	 *
 	 * @return void
@@ -162,21 +121,19 @@ class Membership {
 			return;
 		}
 		
-		// load notification settings
-		self::loadAutoNotifications();
-		
-		if (empty(self::$AUTO_NOTIFICATIONS)) {
+		$notification_methods = group_tools_get_default_group_notification_settings($group);
+		if (empty($notification_methods)) {
 			return;
 		}
 		
 		// subscribe the user to the group
-		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-		foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
-			if (!in_array($method, self::$AUTO_NOTIFICATIONS)) {
+		$methods = elgg_get_notification_methods();
+		foreach ($methods as $method) {
+			if (!in_array($method, $notification_methods)) {
 				continue;
 			}
-	
-			elgg_add_subscription($user->getGUID(), $method, $group->getGUID());
+			
+			elgg_add_subscription($user->guid, $method, $group->guid);
 		}
 	}
 	

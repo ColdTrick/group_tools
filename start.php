@@ -234,12 +234,13 @@ function group_tools_init() {
 	elgg_register_action('group_tools/mark_not_stale', dirname(__FILE__) . '/actions/mark_not_stale.php');
 	
 	elgg_register_action('group_tools/toggle_special_state', dirname(__FILE__) . '/actions/admin/toggle_special_state.php', 'admin');
-	elgg_register_action('group_tools/notifications', dirname(__FILE__) . '/actions/admin/notifications.php', 'admin');
 	elgg_register_action('group_tools/fix_acl', dirname(__FILE__) . '/actions/admin/fix_acl.php', 'admin');
 	elgg_register_action('group_tools/group_tool_presets', dirname(__FILE__) . '/actions/admin/group_tool_presets.php', 'admin');
 	elgg_register_action('group_tools/admin/bulk_delete', dirname(__FILE__) . '/actions/admin/bulk_delete.php', 'admin');
 	elgg_register_action('group_tools/admin/approve', dirname(__FILE__) . '/actions/admin/approve.php', 'admin');
 	elgg_register_action('group_tools/admin/decline', dirname(__FILE__) . '/actions/admin/decline.php', 'admin');
+	elgg_register_action('group_tools/admin/disable_notifications', dirname(__FILE__) . '/actions/admin/disable_notifications.php', 'admin');
+	elgg_register_action('group_tools/admin/notifications', dirname(__FILE__) . '/actions/admin/notifications.php', 'admin');
 	elgg_register_action('group_tools/admin/auto_join/default', dirname(__FILE__) . '/actions/admin/auto_join/default.php', 'admin');
 	elgg_register_action('group_tools/admin/auto_join/additional', dirname(__FILE__) . '/actions/admin/auto_join/additional.php', 'admin');
 	elgg_register_action('group_tools/admin/auto_join/delete', dirname(__FILE__) . '/actions/admin/auto_join/delete.php', 'admin');

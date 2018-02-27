@@ -273,28 +273,18 @@ $body = '';
 
 // auto set notifications
 $auto_notifications = elgg_echo('group_tools:settings:auto_notification');
-if ($plugin->auto_notification == 'yes') {
-	// Backwards compatibility
-	$auto_notifications .= elgg_view('input/hidden', [
-		'name' => 'params[auto_notification]',
-		'value' => '0',
-	]);
-	$plugin->auto_notification_site = '1';
-	$plugin->auto_notification_email = '1';
-}
+
+$selected_methods = group_tools_get_default_group_notification_settings();
+$methods = elgg_get_notification_methods();
+
 $auto_notifications_lis = [];
-$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
-foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-	$name = "auto_notification_{$method}";
-	$checkbox_options = [
-		'name' => "params[{$name}]",
-		'value' => '1',
+foreach ($methods as $method) {
+	$auto_notifications_lis[] = elgg_format_element('li', [], elgg_view('input/checkbox', [
 		'label' => elgg_echo("notification:method:{$method}"),
-	];
-	if ($plugin->$name == '1') {
-		$checkbox_options['checked'] = 'checked';
-	}
-	$auto_notifications_lis[] = elgg_format_element('li', [], elgg_view('input/checkbox', $checkbox_options));
+		'name' => "params[auto_notification_{$method}]",
+		'value' => '1',
+		'checked' => in_array($method, $selected_methods),
+	]));
 }
 $auto_notifications .= elgg_format_element('ul', ['class' => 'mll'], implode('', $auto_notifications_lis));
 

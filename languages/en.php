@@ -309,10 +309,14 @@ your group '%s' was declined and removed by a site administrator.",
 	
 	// group notification
 	'group_tools:notifications:title' => "Group notifications",
-	'group_tools:notifications:description' => "This group has %s members, of those %s have enabled notifications on activity in this group. Below you can change this for all users of the group.",
 	'group_tools:notifications:disclaimer' => "With large groups this could take a while.",
-	'group_tools:notifications:enable' => "Enable notifications for everyone",
+	'group_tools:notifications:enable' => "Save and apply settings to all members",
 	'group_tools:notifications:disable' => "Disable notifications for everyone",
+	
+	'group_tools:edit:group:notifications:no_methods' => "No notification methods available.",
+	'group_tools:edit:group:notifications:counter' => "(%d of %d)",
+	'group_tools:edit:group:notifications:defaults' => "Default notification settings for new members",
+	'group_tools:edit:group:notifications:defaults:help' => "When a new member joins the group, this will be their group notification settings.",
 
 	'group_tools:notifications:toggle:email:enabled' => "Currently you are receiving notifications about activity in this group. If you don't want to receive notifications, change the settings here %s",
 	'group_tools:notifications:toggle:email:disabled' => "Currently you are not receiving notifications about activity in this group. If you want to receive notifications, change the settings here %s",

@@ -1,67 +1,47 @@
 <?php
 /**
- * Enable or disable group notifications for all members
+ * Save group default notification settings
  */
-$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
 
-$toggle = get_input('toggle');
 $guid = (int) get_input('guid');
+$default_methods = get_input('default_methods');
 
-if (empty($guid) || empty($toggle)) {
-	register_error(elgg_echo('error:missing_data'));
-	forward(REFERER);
+if (empty($guid) || !isset($default_methods)) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-elgg_entity_gatekeeper($guid, 'group');
-$group = get_entity($guid);
-
-// get group members
-$members = $group->getMembers(['count' => true]);
-if (empty($members)) {
-	forward($group->getURL());
+$entity = get_entity($guid);
+if (!$entity instanceof ElggGroup || !$entity->canEdit()) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
-$options = [
-	'type' => 'user',
-	'relationship' => 'member',
-	'relationship_guid' => $group->getGUID(),
-	'inverse_relationship' => true,
-	'limit' => false,
-];
-$members = new ElggBatch('elgg_get_entities_from_relationship', $options);
+if (empty($default_methods) || !is_array($default_methods)) {
+	$default_methods = 0;
+}
 
-switch ($toggle) {
-	case 'enable':
-		// fix notifications settings for site amd email
-		$auto_notification_handlers = [
-			'site',
-			'email',
-		];
-		
-		// enable notification for everyone
-		foreach ($members as $member) {
-			foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
-				if (in_array($method, $auto_notification_handlers)) {
-					elgg_add_subscription($member->getGUID(), $method, $group->getGUID());
-				}
+// save new defaults
+$entity->setPrivateSetting('group_tools:default_notifications', json_encode($default_methods));
+
+if (!empty(get_input('save_apply'))) {
+	// also apply the new settings to all group members
+	/* @var $members ElggBatch */
+	$members = $entity->getMembers([
+		'limit' => false,
+		'batch' => true,
+	]);
+	$methods = elgg_get_notification_methods();
+	$selected_methods = group_tools_get_default_group_notification_settings($entity);
+	
+	/* @var $member ElggUser */
+	foreach ($members as $member) {
+		foreach ($methods as $method) {
+			if (in_array($method, $selected_methods)) {
+				elgg_add_subscription($member->guid, $method, $entity->guid);
+			} else {
+				elgg_remove_subscription($member->guid, $method, $entity->guid);
 			}
 		}
-		
-		system_message(elgg_echo('group_tools:action:notifications:success:enable'));
-		break;
-	case 'disable':
-		// disable notification for everyone
-		foreach ($members as $member) {
-			foreach ($NOTIFICATION_HANDLERS as $method => $dummy) {
-				elgg_remove_subscription($member->getGUID(), $method, $group->getGUID());
-			}
-		}
-		
-		system_message(elgg_echo('group_tools:action:notifications:success:disable'));
-		break;
-	default:
-		register_error(elgg_echo('group_tools:action:notifications:error:toggle'));
-		break;
+	}
 }
 
-forward($group->getURL());
+return elgg_ok_response('', elgg_echo('save:success'), $entity->getURL());
