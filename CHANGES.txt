@@ -1,6 +1,10 @@
 Version history
 ===============
 
+9.3 (2018-03-08):
+
+- added: admins can set default group notification settings per group
+
 9.2.2 (2018-01-11):
 
 - changed: email invite accept form location
