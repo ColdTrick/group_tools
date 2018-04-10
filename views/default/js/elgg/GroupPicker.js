@@ -19,6 +19,7 @@ define(['jquery', 'elgg', 'jquery.ui.autocomplete.html'], function ($, elgg) {
 
 		this.name = data.name || 'groups';
 		this.handler = data.handler || 'livesearch';
+		this.match_on_title_only = data.match_on_title_only || 0;
 		this.limit = data.limit || 0;
 		this.minLength = data.minLength || 2;
 		this.isSealed = false;
@@ -36,7 +37,8 @@ define(['jquery', 'elgg', 'jquery.ui.autocomplete.html'], function ($, elgg) {
 					data: {
 						term: this.term,
 						"match_on[]": 'groups',
-						name: self.name
+						name: self.name,
+						match_on_title_only: self.match_on_title_only
 					},
 					dataType: 'json',
 					success: function(data) {

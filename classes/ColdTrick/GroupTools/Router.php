@@ -158,6 +158,12 @@ class Router {
 		
 		$input_name = get_input('name', 'groups');
 		$limit = sanitise_int(get_input('limit', elgg_get_config('default_limit')));
+		$match_on_title_only = (bool) get_input('match_on_title_only', false);
+		
+		$where = "(ge.name LIKE '%{$q}%' OR ge.description LIKE '%{$q}%')";
+		if ($match_on_title_only) {
+			$where = "(ge.name LIKE '%{$q}%')";
+		}
 		
 		// fetch groups
 		$results = [];
@@ -170,7 +176,7 @@ class Router {
 				"JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid",
 			],
 			'wheres' => [
-				"(ge.name LIKE '%{$q}%' OR ge.description LIKE '%{$q}%')",
+				$where,
 			],
 		];
 		

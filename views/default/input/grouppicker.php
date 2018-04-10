@@ -29,6 +29,7 @@ $handler = elgg_extract('handler', $vars, 'livesearch');
 $handler = htmlspecialchars($handler, ENT_QUOTES, 'UTF-8');
 
 $limit = (int) elgg_extract('limit', $vars, 0);
+$match_on_title_only = (int) elgg_extract('match_on_title_only', $vars, 0);
 
 echo elgg_format_element('link', [
 	'href' => elgg_get_simplecache_url('css/group_tools/GroupPicker.css'),
@@ -36,7 +37,7 @@ echo elgg_format_element('link', [
 ], '');
 
 ?>
-<div class="elgg-group-picker ui-front" data-limit="<?php echo $limit ?>" data-name="<?php echo $name ?>" data-handler="<?php echo $handler ?>">
+<div class="elgg-group-picker ui-front" data-limit="<?php echo $limit ?>" data-match_on_title_only="<?php echo $match_on_title_only ?>" data-name="<?php echo $name ?>" data-handler="<?php echo $handler ?>">
 	<input type="text" class="elgg-input-group-picker" size="30"/>
 	<ul class="elgg-group-picker-list">
 		<?php
