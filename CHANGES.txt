@@ -1,6 +1,10 @@
 Version history
 ===============
 
+9.4 (2018-04-19):
+
+- added: allow grouppicker to match on title only
+
 9.3 (2018-03-08):
 
 - added: admins can set default group notification settings per group
