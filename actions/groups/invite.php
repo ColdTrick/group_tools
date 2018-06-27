@@ -201,16 +201,14 @@ if (!empty($invited) || !empty($join)) {
 	elgg_clear_sticky_form('group_invite');
 	
 	if (!$adding) {
-		system_message(elgg_echo('group_tools:action:invite:success:invite', [$invited, $already_invited, $member]));
+		return elgg_ok_response('', elgg_echo('group_tools:action:invite:success:invite', [$invited, $already_invited, $member]));
 	} else {
-		system_message(elgg_echo('group_tools:action:invite:success:add', [$join, $already_invited, $member]));
+		return elgg_ok_response('', elgg_echo('group_tools:action:invite:success:add', [$join, $already_invited, $member]));
 	}
 } else {
 	if (!$adding) {
-		register_error(elgg_echo('group_tools:action:invite:error:invite', [$already_invited, $member]));
+		return elgg_error_response(elgg_echo('group_tools:action:invite:error:invite', [$already_invited, $member]));
 	} else {
-		register_error(elgg_echo('group_tools:action:invite:error:add', [$already_invited, $member]));
+		return elgg_error_response(elgg_echo('group_tools:action:invite:error:add', [$already_invited, $member]));
 	}
 }
-
-forward(REFERER);

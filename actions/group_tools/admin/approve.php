@@ -47,5 +47,4 @@ $params = [
 notify_user($owner->getGUID(), elgg_get_logged_in_user_guid(), $subject, $message, $params);
 
 // report success
-system_message(elgg_echo('group_tools:group:admin_approve:approve:success'));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('group_tools:group:admin_approve:approve:success'));

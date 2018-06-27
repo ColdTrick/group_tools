@@ -7,7 +7,7 @@ $guids = get_input('guids');
 $order = 1;
 
 if (empty($guids) || !is_array($guids)) {
-	forward(REFERER);
+	return elgg_ok_response();
 }
 
 foreach ($guids as $guid) {
@@ -19,3 +19,5 @@ foreach ($guids as $guid) {
 	$group->order = $order;
 	$order++;
 }
+
+return elgg_ok_response();

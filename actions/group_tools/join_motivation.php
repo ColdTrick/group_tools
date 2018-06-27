@@ -8,14 +8,12 @@ $group_guid = (int) get_input('group_guid');
 $motivation = get_input('motivation');
 
 if (empty($group_guid) || empty($motivation)) {
-	register_error(elgg_echo('error:missing_data'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
 $group = get_entity($group_guid);
 if (!($group instanceof ElggGroup)) {
-	register_error(elgg_echo('error:missing_data'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
 $user = elgg_get_logged_in_user_entity();
@@ -56,10 +54,8 @@ $params = [
 ];
 
 // Notify group owner
-if (notify_user($owner->getGUID(), $user->getGUID(), $subject, $body, $params)) {
-	system_message(elgg_echo("groups:joinrequestmade"));
-} else {
-	register_error(elgg_echo("groups:joinrequestnotmade"));
+if (!notify_user($owner->getGUID(), $user->getGUID(), $subject, $body, $params)) {
+	return elgg_error_response(elgg_echo('groups:joinrequestnotmade'));
 }
 
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('groups:joinrequestmade'));

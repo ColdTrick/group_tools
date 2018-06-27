@@ -20,6 +20,4 @@ if (!empty($presets)) {
 
 elgg_set_plugin_setting('group_tool_presets', json_encode($presets), 'group_tools');
 
-system_message(elgg_echo('group_tools:action:group_tool:presets:saved'));
-
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('group_tools:action:group_tool:presets:saved'));

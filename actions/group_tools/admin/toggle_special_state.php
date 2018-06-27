@@ -7,8 +7,7 @@ $group_guid = (int) get_input('group_guid');
 $state = get_input('state');
 
 if (empty($group_guid)) {
-	register_error(elgg_echo('error:missing_data'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
 elgg_entity_gatekeeper($group_guid, 'group');
@@ -47,10 +46,8 @@ switch ($state) {
 		break;
 }
 
-if ($result) {
-	system_message($success_message);
-} else {
-	register_error($error_message);
+if (!$result) {
+	return elgg_error_response($error_message);
 }
 
-forward(REFERER);
+return elgg_ok_response('', $success_message);

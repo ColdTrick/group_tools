@@ -33,5 +33,4 @@ if ($_SERVER['HTTP_REFERER'] === $group->getURL()) {
 $group->delete();
 
 // report success
-system_message(elgg_echo('group_tools:group:admin_approve:decline:success'));
-forward($forward_url);
+return elgg_ok_response('', elgg_echo('group_tools:group:admin_approve:decline:success'), $forward_url);

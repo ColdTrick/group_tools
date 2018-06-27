@@ -9,8 +9,7 @@ elgg_entity_gatekeeper($group_guid, 'group');
 $group = get_entity($group_guid);
 
 if (!$group->canEdit()) {
-	register_error(elgg_echo('actionunauthorized'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
 // get input
@@ -35,5 +34,4 @@ $group->setPrivateSetting("{$prefix}featured", $featured);
 $group->setPrivateSetting("{$prefix}featured_sorting", $featured_sorting);
 $group->setPrivateSetting("{$prefix}my_status", $my_status);
 
-system_message(elgg_echo('group_tools:actions:cleanup:success'));
-forward($group->getURL());
+return elgg_ok_response('', elgg_echo('group_tools:actions:cleanup:success'), $group->getURL());

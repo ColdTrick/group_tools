@@ -5,8 +5,7 @@
 
 $invitecode = get_input('invitecode');
 if (empty($invitecode)) {
-	register_error(elgg_echo('error:missing_data'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
 $options = [
@@ -19,14 +18,13 @@ $options = [
 
 // ignore access in order to cleanup the invitation
 $ia = elgg_set_ignore_access(true);
-
-if (elgg_delete_annotations($options)) {
-	system_message(elgg_echo('groups:invitekilled'));
-} else {
-	register_error(elgg_echo('group_tools:action:groups:decline_email_invitation:error:delete'));
-}
-// restore access
+$deleted = elgg_delete_annotations($options);
 elgg_set_ignore_access($ia);
 
-//forward to groups invitations page to remove invitecode query string
-forward("groups/invitations");
+//forwarding to groups invitations page to remove invitecode query string
+
+if (!$deleted) {
+	return elgg_error_response(elgg_echo('group_tools:action:groups:decline_email_invitation:error:delete'), 'groups/invitations');
+}
+
+return elgg_ok_response('', elgg_echo('groups:invitekilled'), 'groups/invitations');

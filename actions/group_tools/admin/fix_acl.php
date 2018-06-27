@@ -32,9 +32,9 @@ switch ($fix) {
 			// restore hidden settings
 			access_show_hidden_entities($hidden);
 			
-			system_message(elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
+			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
 		} else {
-			register_error(elgg_echo('group_tools:action:fix_acl:error:missing:nothing'));
+			return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:missing:nothing'));
 		}
 		break;
 	case 'excess':
@@ -51,9 +51,9 @@ switch ($fix) {
 				group_tools_remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
 			}
 			
-			system_message(elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
+			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
 		} else {
-			register_error(elgg_echo('group_tools:action:fix_acl:error:excess:nothing'));
+			return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:excess:nothing'));
 		}
 		break;
 	case 'without':
@@ -86,9 +86,9 @@ switch ($fix) {
 				access_show_hidden_entities($hidden);
 			}
 			
-			system_message(elgg_echo('group_tools:action:fix_acl:success:without', [count($groups)]));
+			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:without', [count($groups)]));
 		} else {
-			register_error(elgg_echo('group_tools:action:fix_acl:error:without:nothing'));
+			return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:without:nothing'));
 		}
 		break;
 	case 'all':
@@ -146,8 +146,8 @@ switch ($fix) {
 		
 		break;
 	default:
-		register_error(elgg_echo('group_tools:action:fix_acl:error:input', [$fix]));
+		return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:input', [$fix]));
 		break;
 }
 
-forward(REFERER);
+return elgg_ok_response();
