@@ -15,26 +15,17 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_register_admin_menu_item('administer', 'tool_presets', 'groups');
 		elgg_register_admin_menu_item('administer', 'bulk_delete', 'groups');
 		elgg_register_admin_menu_item('administer', 'auto_join', 'groups');
+		elgg_register_admin_menu_item('administer', 'admin_approval', 'groups');
 		
 		// group admins
 		if (group_tools_multiple_admin_enabled()) {
 			// add group tool option
 			add_group_tool_option('group_multiple_admin_allow', elgg_echo('group_tools:multiple_admin:group_tool_option'), false);
-			
-			// extend group members sidebar list
-			elgg_extend_view('groups/sidebar/members', 'group_tools/group_admins', 400);
-			
-			// cleanup for group admins
-			elgg_extend_view('groups/edit/tools', 'group_tools/extends/groups/edit/tools/group_admins', 400);
 		}
 		
 		// unregister dashboard widget group_activity, because our version is better ;)
 		// @todo is this still needed?
 		elgg_unregister_widget_type('group_activity');
-		
-		elgg_register_admin_menu_item('administer', 'admin_approval', 'groups');
-		
-		elgg_register_notification_event('group', null, ['admin_approval']);
 		
 		if (elgg_is_active_plugin('blog')) {
 			elgg_register_widget_type('group_news', elgg_echo('widgets:group_news:title'), elgg_echo('widgets:group_news:description'), ['profile', 'index', 'dashboard'], true);
@@ -47,7 +38,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 			add_group_tool_option('mail_members', elgg_echo('group_tools:tools:mail_members'), false);
 		}
 		
-		elgg_register_notification_event('object', GroupMail::SUBTYPE, ['enqueue']);
+		elgg_register_notification_event('group', null, ['admin_approval']);
+		elgg_register_notification_event('object', 'group_tools_group_mail', ['enqueue']);
 
 		$this->registerViews();
 		$this->registerEvents();
@@ -77,19 +69,18 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('groups/edit', 'group_tools/forms/domain_based');
 		elgg_extend_view('page/elements/owner_block/extend', 'group_tools/owner_block');
 		elgg_extend_view('groups/profile/summary', 'group_tools/group_stats');
+		elgg_extend_view('groups/sidebar/members', 'group_tools/group_admins', 400);
+		elgg_extend_view('groups/edit/tools', 'group_tools/extends/groups/edit/tools/group_admins', 400);
 		
 		elgg_register_ajax_view('group_tools/forms/motivation');
 		elgg_register_ajax_view('forms/group_tools/admin/auto_join/default');
 		elgg_register_ajax_view('forms/group_tools/admin/auto_join/additional');
 		elgg_register_ajax_view('group_tools/elements/auto_join_match_pattern');
-		
-		
 	}
 	
 	protected function registerEvents() {
 		elgg_register_event_handler('join', 'group', '\ColdTrick\GroupTools\Membership::groupJoin');
 		elgg_register_event_handler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
-		elgg_register_event_handler('upgrade', 'system', '\ColdTrick\GroupTools\Upgrade::setGroupMailClassHandler');
 		elgg_register_event_handler('upgrade', 'system', '\ColdTrick\GroupTools\Upgrade::migrateListingSettings');
 		elgg_register_event_handler('create', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroups');
 		elgg_register_event_handler('login:after', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroupsLogin');
@@ -98,74 +89,67 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinDomainBasedGroups');
 		elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\GroupAdmins::membershipRequest');
 		elgg_register_event_handler('leave', 'group', '\ColdTrick\GroupTools\GroupAdmins::groupLeave');
-		
 	}
 	
 	protected function registerHooks() {
 		$hooks = $this->elgg()->hooks;
 		
-// 		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::daily');
-
-// register plugin hooks
-		elgg_register_plugin_hook_handler('entity:url', 'object', '\ColdTrick\GroupTools\WidgetManager::widgetURL');
-		elgg_register_plugin_hook_handler('default', 'access', '\ColdTrick\GroupTools\Access::setGroupDefaultAccess');
-		elgg_register_plugin_hook_handler('default', 'access', '\ColdTrick\GroupTools\Access::validateGroupDefaultAccess', 999999);
-		elgg_register_plugin_hook_handler('access:collections:write', 'user', '\ColdTrick\GroupTools\Access::defaultAccessOptions');
-		elgg_register_plugin_hook_handler('action', 'groups/join', '\ColdTrick\GroupTools\Membership::groupJoinAction');
-		elgg_register_plugin_hook_handler('register', 'menu:owner_block', '\ColdTrick\GroupTools\OwnerBlockMenu::relatedGroups');
-		elgg_register_plugin_hook_handler('route', 'register', '\ColdTrick\GroupTools\Router::allowRegistration');
-		elgg_register_plugin_hook_handler('action', 'register', '\ColdTrick\GroupTools\Router::allowRegistration');
-		elgg_register_plugin_hook_handler('group_tool_widgets', 'widget_manager', '\ColdTrick\GroupTools\WidgetManager::groupToolWidgets');
-		elgg_register_plugin_hook_handler('head', 'page', '\ColdTrick\GroupTools\PageLayout::noIndexClosedGroups');
-		elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\GroupAdmins::permissionsCheck');
-		elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupMembership');
-		elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupInvite');
-		elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::exportGroupMembers');
-		elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::pendingApproval', 9999);
-		elgg_register_plugin_hook_handler('register', 'menu:user_hover', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
-		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin', 501);
-		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::relatedGroup');
-		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showMemberCount');
-		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showGroupHiddenIndicator');
-		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup', 501);
-		elgg_register_plugin_hook_handler('register', 'menu:membershiprequest', '\ColdTrick\GroupTools\Membership::membershiprequestMenu');
-		elgg_register_plugin_hook_handler('register', 'menu:emailinvitation', '\ColdTrick\GroupTools\Membership::emailinvitationMenu');
-		elgg_register_plugin_hook_handler('register', 'menu:group:membershiprequests', '\ColdTrick\GroupTools\Membership::groupMembershiprequests');
-		elgg_register_plugin_hook_handler('register', 'menu:group:membershiprequest', '\ColdTrick\GroupTools\Membership::groupMembershiprequest');
-		elgg_register_plugin_hook_handler('register', 'menu:group:invitation', '\ColdTrick\GroupTools\Membership::groupInvitation');
-		elgg_register_plugin_hook_handler('register', 'menu:group:email_invitation', '\ColdTrick\GroupTools\Membership::groupEmailInvitation');
-		elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\GroupTools\Membership::groupProfileSidebar');
-		elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addTabs');
-		elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addSorting');
-		elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::cleanupTabs', 900);
-		elgg_register_plugin_hook_handler('register', 'menu:groups:my_status', '\ColdTrick\GroupTools\MyStatus::registerJoinStatus');
-		elgg_register_plugin_hook_handler('prepare', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::setSelected');
-		elgg_register_plugin_hook_handler('route', 'groups', '\ColdTrick\GroupTools\Router::groups');
-		elgg_register_plugin_hook_handler('route', 'livesearch', '\ColdTrick\GroupTools\Router::livesearch');
-		
-		elgg_register_plugin_hook_handler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToGroups');
-		elgg_register_plugin_hook_handler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToUsers');
-		elgg_register_plugin_hook_handler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addStaleInfo');
-		elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForGroups');
-		elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForUsers');
-		elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportStaleInfo');
-		elgg_register_plugin_hook_handler('get', 'subscriptions', '\ColdTrick\GroupTools\Notifications::adminApprovalSubs');
-		elgg_register_plugin_hook_handler('prepare', 'notification:admin_approval:group:', '\ColdTrick\GroupTools\Notifications::prepareAdminApprovalMessage');
-		elgg_register_plugin_hook_handler('action', 'groups/edit', '\ColdTrick\GroupTools\Group::editActionListener');
-		elgg_register_plugin_hook_handler('cron', 'fiveminute', '\ColdTrick\GroupTools\Membership::autoJoinGroupsCron');
-		
-		elgg_register_plugin_hook_handler('cron', 'daily', '\ColdTrick\GroupTools\Cron::notifyStaleGroupOwners');
-		elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\GroupTools\GroupMail::pageMenu');
-		elgg_register_plugin_hook_handler('prepare', 'notification:enqueue:object:' . GroupMail::SUBTYPE, '\ColdTrick\GroupTools\GroupMail::prepareNotification');
-		elgg_register_plugin_hook_handler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupMail::getSubscribers');
-		elgg_register_plugin_hook_handler('send:after', 'notifications', '\ColdTrick\GroupTools\GroupMail::cleanup');
-		elgg_register_plugin_hook_handler('view_vars', 'groups/sidebar/members', '\ColdTrick\GroupTools\Cleanup::hideSidebarMembers');
-		elgg_register_plugin_hook_handler('view_vars', 'groups/sidebar/my_status', '\ColdTrick\GroupTools\Cleanup::hideMyStatus');
-		elgg_register_plugin_hook_handler('view_vars', 'groups/sidebar/search', '\ColdTrick\GroupTools\Cleanup::hideSearchbox');
-		elgg_register_plugin_hook_handler('prepare', 'menu:extras', '\ColdTrick\GroupTools\Cleanup::hideExtrasMenu');
-		elgg_register_plugin_hook_handler('prepare', 'menu:title', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
-		elgg_register_plugin_hook_handler('prepare', 'menu:groups:my_status', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
-		elgg_register_plugin_hook_handler('prepare', 'menu:owner_block', '\ColdTrick\GroupTools\Cleanup::hideOwnerBlockMenu');
-		
+		$hooks->registerHandler('entity:url', 'object', '\ColdTrick\GroupTools\WidgetManager::widgetURL');
+		$hooks->registerHandler('default', 'access', '\ColdTrick\GroupTools\Access::setGroupDefaultAccess');
+		$hooks->registerHandler('default', 'access', '\ColdTrick\GroupTools\Access::validateGroupDefaultAccess', 999999);
+		$hooks->registerHandler('access:collections:write', 'user', '\ColdTrick\GroupTools\Access::defaultAccessOptions');
+		$hooks->registerHandler('action', 'groups/join', '\ColdTrick\GroupTools\Membership::groupJoinAction');
+		$hooks->registerHandler('register', 'menu:owner_block', '\ColdTrick\GroupTools\OwnerBlockMenu::relatedGroups');
+		$hooks->registerHandler('route', 'register', '\ColdTrick\GroupTools\Router::allowRegistration');
+		$hooks->registerHandler('action', 'register', '\ColdTrick\GroupTools\Router::allowRegistration');
+		$hooks->registerHandler('group_tool_widgets', 'widget_manager', '\ColdTrick\GroupTools\WidgetManager::groupToolWidgets');
+		$hooks->registerHandler('head', 'page', '\ColdTrick\GroupTools\PageLayout::noIndexClosedGroups');
+		$hooks->registerHandler('permissions_check', 'group', '\ColdTrick\GroupTools\GroupAdmins::permissionsCheck');
+		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupMembership');
+		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupInvite');
+		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::exportGroupMembers');
+		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::pendingApproval', 9999);
+		$hooks->registerHandler('register', 'menu:user_hover', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
+		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin', 501);
+		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::relatedGroup');
+		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showMemberCount');
+		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showGroupHiddenIndicator');
+		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup', 501);
+		$hooks->registerHandler('register', 'menu:membershiprequest', '\ColdTrick\GroupTools\Membership::membershiprequestMenu');
+		$hooks->registerHandler('register', 'menu:emailinvitation', '\ColdTrick\GroupTools\Membership::emailinvitationMenu');
+		$hooks->registerHandler('register', 'menu:group:membershiprequests', '\ColdTrick\GroupTools\Membership::groupMembershiprequests');
+		$hooks->registerHandler('register', 'menu:group:membershiprequest', '\ColdTrick\GroupTools\Membership::groupMembershiprequest');
+		$hooks->registerHandler('register', 'menu:group:invitation', '\ColdTrick\GroupTools\Membership::groupInvitation');
+		$hooks->registerHandler('register', 'menu:group:email_invitation', '\ColdTrick\GroupTools\Membership::groupEmailInvitation');
+		$hooks->registerHandler('register', 'menu:page', '\ColdTrick\GroupTools\Membership::groupProfileSidebar');
+		$hooks->registerHandler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addTabs');
+		$hooks->registerHandler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addSorting');
+		$hooks->registerHandler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::cleanupTabs', 900);
+		$hooks->registerHandler('register', 'menu:groups:my_status', '\ColdTrick\GroupTools\MyStatus::registerJoinStatus');
+		$hooks->registerHandler('prepare', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::setSelected');
+		$hooks->registerHandler('route', 'groups', '\ColdTrick\GroupTools\Router::groups');
+		$hooks->registerHandler('route', 'livesearch', '\ColdTrick\GroupTools\Router::livesearch');
+		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToGroups');
+		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToUsers');
+		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addStaleInfo');
+		$hooks->registerHandler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForGroups');
+		$hooks->registerHandler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForUsers');
+		$hooks->registerHandler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportStaleInfo');
+		$hooks->registerHandler('get', 'subscriptions', '\ColdTrick\GroupTools\Notifications::adminApprovalSubs');
+		$hooks->registerHandler('prepare', 'notification:admin_approval:group:', '\ColdTrick\GroupTools\Notifications::prepareAdminApprovalMessage');
+		$hooks->registerHandler('action', 'groups/edit', '\ColdTrick\GroupTools\Group::editActionListener');
+		$hooks->registerHandler('cron', 'fiveminute', '\ColdTrick\GroupTools\Membership::autoJoinGroupsCron');
+		$hooks->registerHandler('cron', 'daily', '\ColdTrick\GroupTools\Cron::notifyStaleGroupOwners');
+		$hooks->registerHandler('register', 'menu:page', '\ColdTrick\GroupTools\GroupMail::pageMenu');
+		$hooks->registerHandler('prepare', 'notification:enqueue:object:group_tools_group_mail', '\ColdTrick\GroupTools\GroupMail::prepareNotification');
+		$hooks->registerHandler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupMail::getSubscribers');
+		$hooks->registerHandler('send:after', 'notifications', '\ColdTrick\GroupTools\GroupMail::cleanup');
+		$hooks->registerHandler('view_vars', 'groups/sidebar/members', '\ColdTrick\GroupTools\Cleanup::hideSidebarMembers');
+		$hooks->registerHandler('view_vars', 'groups/sidebar/my_status', '\ColdTrick\GroupTools\Cleanup::hideMyStatus');
+		$hooks->registerHandler('view_vars', 'groups/sidebar/search', '\ColdTrick\GroupTools\Cleanup::hideSearchbox');
+		$hooks->registerHandler('prepare', 'menu:extras', '\ColdTrick\GroupTools\Cleanup::hideExtrasMenu');
+		$hooks->registerHandler('prepare', 'menu:title', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
+		$hooks->registerHandler('prepare', 'menu:groups:my_status', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
+		$hooks->registerHandler('prepare', 'menu:owner_block', '\ColdTrick\GroupTools\Cleanup::hideOwnerBlockMenu');
 	}
 }
