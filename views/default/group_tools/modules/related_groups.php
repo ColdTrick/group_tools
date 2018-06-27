@@ -38,7 +38,7 @@ $content = elgg_list_entities_from_relationship($options);
 elgg_pop_context();
 
 echo elgg_view('groups/profile/module', [
-	'title' => elgg_echo('groups_tools:related_groups:widget:title'),
+	'title' => elgg_echo('widgets:related_groups:name'),
 	'content' => $content,
 	'all_link' => $all_link,
 ]);

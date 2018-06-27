@@ -5,7 +5,7 @@
  */
 
 return array (
-  'groups_tools:related_groups:widget:title' => 'Groupes suggérés',
+  'widgets:related_groups:name' => 'Groupes suggérés',
   'group_tools:related_groups:title' => 'Groupes suggérés',
   'groups_tools:related_groups:tool_option' => 'Indiquer les groupes suggérés',
   'groups_tools:related_groups:none' => 'Aucun groupe suggéré trouvé.',
@@ -107,7 +107,7 @@ Si vous n\'avez pas de compte sur %s, enregistrez vous ici.
 Si vous avez déjà un compte ou après vous être enregistré, cliquez sur le lien suivant. 
 %s',
   'group_tools:suggested_groups:none' => 'Nous ne pouvons vous suggérer des groupes de discussion. Nous n\'avons pas assez d\'information sur vous pour vous conseiller ou vous avez déjà rejoint les groupes que nous souhaitions vous suggérer. Utilisez le moteur de recherche pour trouvez de nouveaux groupes.',
-  'widgets:group_river_widget:title' => 'Activité du groupe',
+  'widgets:group_river_widget:name' => 'Activité du groupe',
   'widgets:group_river_widget:view:not_configured' => 'Ce module n\'est pas configuré. Choisissez vos groupes en cliquant sur le bouton de personnalisation en haut à droite de cette fenêtre.',
   'group_tools:welcome_message:subject' => 'Bienvenue dans le groupe %s !',
   'widgets:group_river_widget:description' => 'Affiche l\'activité d\'un groupe',
@@ -254,9 +254,9 @@ Votre groupe \'%s\' a été refusé',
   'group_tools:action:notifications:error:toggle' => 'Option de bascule non valide',
   'group_tools:action:fix_acl:error:without:nothing' => 'Aucun groupe trouvé sans ACL',
   'widgets:group_river_widget:edit:group' => 'Sélectionner un groupe',
-  'widgets:group_members:title' => 'Membres du groupe',
+  'widgets:group_members:name' => 'Membres du groupe',
   'widgets:group_members:view:no_members' => 'Aucun membre de groupe trouvé',
-  'widgets:group_invitations:title' => 'Invitations à des groupes',
+  'widgets:group_invitations:name' => 'Invitations à des groupes',
   'widgets:index_groups:show_members' => 'Afficher le nombre de membres',
   'widgets:index_groups:featured' => 'N\'afficher que les groupes mis en avant',
   'widgets:index_groups:sorting' => 'Comment trier les groupes',

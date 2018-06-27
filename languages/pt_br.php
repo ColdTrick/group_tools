@@ -261,7 +261,7 @@ Para visualizar a comunidade, clique neste link:
 	
 	// Widgets
 	// Group River Widget
-	'widgets:group_river_widget:title' => "Atividade na comunidade",
+	'widgets:group_river_widget:name' => "Atividade na comunidade",
 	'widgets:group_river_widget:description' => "Mostra a atividade na comunidade em um widget",
 	
 	'widgets:group_river_widget:edit:num_display' => "Número de atividades",
@@ -274,14 +274,14 @@ Para visualizar a comunidade, clique neste link:
 	'widgets:group_river_widget:view:noactivity' => "Não foi encontrada nenhuma atividade.",
 	
 	// Group Members
-	'widgets:group_members:title' => "Membros da comunidade",
+	'widgets:group_members:name' => "Membros da comunidade",
 	'widgets:group_members:description' => "Mostra os membros da comunidade",
 	
 	'widgets:group_members:edit:num_display' => "Quantos membros mostrar",
 	'widgets:group_members:view:no_members' => "Nenhum membro da comunidade foi encontrado",
 	
 	// Group Invitations
-	'widgets:group_invitations:title' => "Convites",
+	'widgets:group_invitations:name' => "Convites",
 	'widgets:group_invitations:description' => "Mostra os convites pendentes",
 	
 	// Discussion

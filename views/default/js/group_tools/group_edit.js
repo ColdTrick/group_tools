@@ -21,7 +21,7 @@ define(function(require) {
 	};
 	
 	elgg.group_tools.toggle_special_state = function(state, group_guid) {
-		elgg.action("action/group_tools/toggle_special_state", {
+		elgg.action("action/group_tools/admin/toggle_special_state", {
 			data : {
 				group_guid: group_guid,
 				state: state

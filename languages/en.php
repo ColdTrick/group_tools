@@ -454,7 +454,7 @@ your group '%s' was declined and removed by a site administrator.",
 
 	// Widgets
 	// Group River Widget
-	'widgets:group_river_widget:title' => "Group activity",
+	'widgets:group_river_widget:name' => "Group activity",
     'widgets:group_river_widget:description' => "Shows the activity of a group in a widget",
 
     'widgets:group_river_widget:edit:num_display' => "Number of activities",
@@ -466,13 +466,13 @@ your group '%s' was declined and removed by a site administrator.",
 	'widgets:group_river_widget:view:noactivity' => "We could not find any activity.",
 
 	// Group Members
-	'widgets:group_members:title' => "Group members",
+	'widgets:group_members:name' => "Group members",
   	'widgets:group_members:description' => "Shows the members of this group",
 
 	'widgets:group_members:view:no_members' => "No group members found",
 
   	// Group Invitations
-	'widgets:group_invitations:title' => "Group invitations",
+	'widgets:group_invitations:name' => "Group invitations",
   	'widgets:group_invitations:description' => "Shows the outstanding group invitations for the current user",
 
 	// index_groups
@@ -528,8 +528,8 @@ your group '%s' was declined and removed by a site administrator.",
 	// related groups
 	'groups_tools:related_groups:tool_option' => "Show related groups",
 	
-	'groups_tools:related_groups:widget:title' => "Related groups",
-	'groups_tools:related_groups:widget:description' => "Display a list of groups you added as related to this group.",
+	'widgets:related_groups:name' => "Related groups",
+	'widgets:related_groups:description' => "Display a list of groups you added as related to this group.",
 	
 	'groups_tools:related_groups:none' => "No related groups found.",
 	'group_tools:related_groups:title' => "Related groups",

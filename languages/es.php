@@ -406,7 +406,7 @@ tu grupo '%s' fue rechazado y eliminado por un administrador del sitio.",
 
         // Widgets
         // Group River Widget
-        'widgets:group_river_widget:title' => "Actividad de Grupo",
+        'widgets:group_river_widget:name' => "Actividad de Grupo",
     'widgets:group_river_widget:description' => "Muestra la actividad de un grupo en un widget",
 
     'widgets:group_river_widget:edit:num_display' => "Número de actividades",
@@ -418,13 +418,13 @@ tu grupo '%s' fue rechazado y eliminado por un administrador del sitio.",
         'widgets:group_river_widget:view:noactivity' => "No pudimos encontrar actividad.",
 
         // Group Members
-        'widgets:group_members:title' => "Miembros de Grupo",
+        'widgets:group_members:name' => "Miembros de Grupo",
           'widgets:group_members:description' => "Muestra los miembros de este grupo",
 
         'widgets:group_members:view:no_members' => "No se han encontrado miembros en el grupo",
 
           // Group Invitations
-        'widgets:group_invitations:title' => "Invitaciones de Grupo",
+        'widgets:group_invitations:name' => "Invitaciones de Grupo",
           'widgets:group_invitations:description' => "Muestra las invitaciones de grupo destacadas para el usuario vigente",
 
         // index_groups
@@ -480,8 +480,8 @@ tu grupo '%s' fue rechazado y eliminado por un administrador del sitio.",
         // related groups
         'groups_tools:related_groups:tool_option' => "Mostrar grupos relacionados",
 
-        'groups_tools:related_groups:widget:title' => "Grupos relacionados",
-        'groups_tools:related_groups:widget:description' => "Muestra un listado de grupos que has agregado como relacionados con este grupo.",
+        'widgets:related_groups:name' => "Grupos relacionados",
+        'widgets:related_groups:description' => "Muestra un listado de grupos que has agregado como relacionados con este grupo.",
 
         'groups_tools:related_groups:none' => "No se encontraron grupos relacionados.",
         'group_tools:related_groups:title' => "Grupos relacionados",

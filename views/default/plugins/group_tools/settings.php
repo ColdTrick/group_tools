@@ -524,7 +524,7 @@ if (!empty($suggested_groups)) {
 			'text' => $group->name,
 		]));
 		$content .= elgg_format_element('td', ['style' => 'width: 25px;'], elgg_view('output/url', [
-			'href' => "action/group_tools/toggle_special_state?group_guid={$group->getGUID()}&state=suggested",
+			'href' => "action/group_tools/admin/toggle_special_state?group_guid={$group->getGUID()}&state=suggested",
 			'title' => elgg_echo('remove'),
 			'text' => elgg_view_icon('delete'),
 			'confirm' => true,
@@ -558,7 +558,7 @@ if (!empty($missing_acl_members)) {
 	$rows[] = [
 		elgg_echo('group_tools:settings:fix:missing', [count($missing_acl_members)]),
 		elgg_view('output/url', [
-			'href' => 'action/group_tools/fix_acl?fix=missing',
+			'href' => 'action/group_tools/admin/fix_acl?fix=missing',
 			'text' => elgg_echo('group_tools:settings:fix_it'),
 			'class' => 'elgg-button elgg-button-action',
 			'is_action' => true,
@@ -574,7 +574,7 @@ if (!empty($excess_acl_members)) {
 	$rows[] = [
 		elgg_echo('group_tools:settings:fix:excess', [count($excess_acl_members)]),
 		elgg_view('output/url', [
-			'href' => 'action/group_tools/fix_acl?fix=excess',
+			'href' => 'action/group_tools/admin/fix_acl?fix=excess',
 			'text' => elgg_echo('group_tools:settings:fix_it'),
 			'class' => 'elgg-button elgg-button-action',
 			'is_action' => true,
@@ -590,7 +590,7 @@ if (!empty($wrong_groups)) {
 	$rows[] = [
 		elgg_echo('group_tools:settings:fix:without', [count($wrong_groups)]),
 		elgg_view('output/url', [
-			'href' => 'action/group_tools/fix_acl?fix=without',
+			'href' => 'action/group_tools/admin/fix_acl?fix=without',
 			'text' => elgg_echo('group_tools:settings:fix_it'),
 			'class' => 'elgg-button elgg-button-action',
 			'is_action' => true,
@@ -605,7 +605,7 @@ if (count($rows) > 1) {
 	$rows[] = [
 		elgg_echo('group_tools:settings:fix:all:description'),
 		elgg_view('output/url', [
-			'href' => 'action/group_tools/fix_acl?fix=all',
+			'href' => 'action/group_tools/admin/fix_acl?fix=all',
 			'text' => elgg_echo('group_tools:settings:fix:all'),
 			'class' => 'elgg-button elgg-button-action',
 			'is_action' => true,

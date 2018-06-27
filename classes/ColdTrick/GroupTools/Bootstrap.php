@@ -1,0 +1,171 @@
+<?php
+
+namespace ColdTrick\GroupTools;
+
+use Elgg\DefaultPluginBootstrap;
+
+class Bootstrap extends DefaultPluginBootstrap {
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function init() {
+		
+		// admin menu item
+		elgg_register_admin_menu_item('administer', 'tool_presets', 'groups');
+		elgg_register_admin_menu_item('administer', 'bulk_delete', 'groups');
+		elgg_register_admin_menu_item('administer', 'auto_join', 'groups');
+		
+		// group admins
+		if (group_tools_multiple_admin_enabled()) {
+			// add group tool option
+			add_group_tool_option('group_multiple_admin_allow', elgg_echo('group_tools:multiple_admin:group_tool_option'), false);
+			
+			// extend group members sidebar list
+			elgg_extend_view('groups/sidebar/members', 'group_tools/group_admins', 400);
+			
+			// cleanup for group admins
+			elgg_extend_view('groups/edit/tools', 'group_tools/extends/groups/edit/tools/group_admins', 400);
+		}
+		
+		// unregister dashboard widget group_activity, because our version is better ;)
+		// @todo is this still needed?
+		elgg_unregister_widget_type('group_activity');
+		
+		elgg_register_admin_menu_item('administer', 'admin_approval', 'groups');
+		
+		elgg_register_notification_event('group', null, ['admin_approval']);
+		
+		if (elgg_is_active_plugin('blog')) {
+			elgg_register_widget_type('group_news', elgg_echo('widgets:group_news:title'), elgg_echo('widgets:group_news:description'), ['profile', 'index', 'dashboard'], true);
+			elgg_extend_view('css/elgg', 'css/group_tools/group_news.css');
+		}
+		
+		// related groups
+		add_group_tool_option('related_groups', elgg_echo('groups_tools:related_groups:tool_option'), false);
+		if (group_tools_group_mail_members_enabled()) {
+			add_group_tool_option('mail_members', elgg_echo('group_tools:tools:mail_members'), false);
+		}
+		
+		elgg_register_notification_event('object', GroupMail::SUBTYPE, ['enqueue']);
+
+		$this->registerViews();
+		$this->registerEvents();
+		$this->registerHooks();
+	}
+	
+	protected function registerViews() {
+		elgg_extend_view('elgg.css', 'css/group_tools/site.css');
+		elgg_extend_view('admin.css', 'css/group_tools/admin.css');
+		elgg_extend_view('js/elgg', 'js/group_tools/site.js');
+		elgg_extend_view('theme_sandbox/forms', 'group_tools/theme_sandbox/grouppicker');
+		elgg_extend_view('register/extend', 'group_tools/register_extend');
+		elgg_extend_view('groups/profile/summary', 'group_tools/extends/groups/profile/stale_message');
+		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinvitations');
+		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/membershiprequests');
+		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinviteform');
+		elgg_extend_view('groups/tool_latest', 'group_tools/modules/related_groups');
+		elgg_extend_view('page/elements/sidebar', 'group_tools/sidebar/featured');
+		elgg_extend_view('groups/edit', 'group_tools/forms/cleanup', 450);
+		elgg_extend_view('groups/edit', 'group_tools/group_edit_tabbed', 10);
+		elgg_extend_view('groups/edit', 'group_tools/extends/groups/edit/admin_approve', 1);
+		elgg_extend_view('groups/profile/layout', 'group_tools/extends/groups/edit/admin_approve', 1);
+		elgg_extend_view('groups/edit', 'group_tools/forms/special_states', 350);
+		elgg_extend_view('groups/edit', 'group_tools/forms/notifications', 375);
+		elgg_extend_view('groups/edit', 'group_tools/forms/invite_members', 475);
+		elgg_extend_view('groups/edit', 'group_tools/forms/welcome_message');
+		elgg_extend_view('groups/edit', 'group_tools/forms/domain_based');
+		elgg_extend_view('page/elements/owner_block/extend', 'group_tools/owner_block');
+		elgg_extend_view('groups/profile/summary', 'group_tools/group_stats');
+		
+		elgg_register_ajax_view('group_tools/forms/motivation');
+		elgg_register_ajax_view('forms/group_tools/admin/auto_join/default');
+		elgg_register_ajax_view('forms/group_tools/admin/auto_join/additional');
+		elgg_register_ajax_view('group_tools/elements/auto_join_match_pattern');
+		
+		
+	}
+	
+	protected function registerEvents() {
+		elgg_register_event_handler('join', 'group', '\ColdTrick\GroupTools\Membership::groupJoin');
+		elgg_register_event_handler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
+		elgg_register_event_handler('upgrade', 'system', '\ColdTrick\GroupTools\Upgrade::setGroupMailClassHandler');
+		elgg_register_event_handler('upgrade', 'system', '\ColdTrick\GroupTools\Upgrade::migrateListingSettings');
+		elgg_register_event_handler('create', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroups');
+		elgg_register_event_handler('login:after', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroupsLogin');
+		elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinEmailInvitedGroups');
+		elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinGroupInviteCode');
+		elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinDomainBasedGroups');
+		elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\GroupAdmins::membershipRequest');
+		elgg_register_event_handler('leave', 'group', '\ColdTrick\GroupTools\GroupAdmins::groupLeave');
+		
+	}
+	
+	protected function registerHooks() {
+		$hooks = $this->elgg()->hooks;
+		
+// 		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::daily');
+
+// register plugin hooks
+		elgg_register_plugin_hook_handler('entity:url', 'object', '\ColdTrick\GroupTools\WidgetManager::widgetURL');
+		elgg_register_plugin_hook_handler('default', 'access', '\ColdTrick\GroupTools\Access::setGroupDefaultAccess');
+		elgg_register_plugin_hook_handler('default', 'access', '\ColdTrick\GroupTools\Access::validateGroupDefaultAccess', 999999);
+		elgg_register_plugin_hook_handler('access:collections:write', 'user', '\ColdTrick\GroupTools\Access::defaultAccessOptions');
+		elgg_register_plugin_hook_handler('action', 'groups/join', '\ColdTrick\GroupTools\Membership::groupJoinAction');
+		elgg_register_plugin_hook_handler('register', 'menu:owner_block', '\ColdTrick\GroupTools\OwnerBlockMenu::relatedGroups');
+		elgg_register_plugin_hook_handler('route', 'register', '\ColdTrick\GroupTools\Router::allowRegistration');
+		elgg_register_plugin_hook_handler('action', 'register', '\ColdTrick\GroupTools\Router::allowRegistration');
+		elgg_register_plugin_hook_handler('group_tool_widgets', 'widget_manager', '\ColdTrick\GroupTools\WidgetManager::groupToolWidgets');
+		elgg_register_plugin_hook_handler('head', 'page', '\ColdTrick\GroupTools\PageLayout::noIndexClosedGroups');
+		elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\GroupAdmins::permissionsCheck');
+		elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupMembership');
+		elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupInvite');
+		elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::exportGroupMembers');
+		elgg_register_plugin_hook_handler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::pendingApproval', 9999);
+		elgg_register_plugin_hook_handler('register', 'menu:user_hover', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
+		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin', 501);
+		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::relatedGroup');
+		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showMemberCount');
+		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showGroupHiddenIndicator');
+		elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup', 501);
+		elgg_register_plugin_hook_handler('register', 'menu:membershiprequest', '\ColdTrick\GroupTools\Membership::membershiprequestMenu');
+		elgg_register_plugin_hook_handler('register', 'menu:emailinvitation', '\ColdTrick\GroupTools\Membership::emailinvitationMenu');
+		elgg_register_plugin_hook_handler('register', 'menu:group:membershiprequests', '\ColdTrick\GroupTools\Membership::groupMembershiprequests');
+		elgg_register_plugin_hook_handler('register', 'menu:group:membershiprequest', '\ColdTrick\GroupTools\Membership::groupMembershiprequest');
+		elgg_register_plugin_hook_handler('register', 'menu:group:invitation', '\ColdTrick\GroupTools\Membership::groupInvitation');
+		elgg_register_plugin_hook_handler('register', 'menu:group:email_invitation', '\ColdTrick\GroupTools\Membership::groupEmailInvitation');
+		elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\GroupTools\Membership::groupProfileSidebar');
+		elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addTabs');
+		elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addSorting');
+		elgg_register_plugin_hook_handler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::cleanupTabs', 900);
+		elgg_register_plugin_hook_handler('register', 'menu:groups:my_status', '\ColdTrick\GroupTools\MyStatus::registerJoinStatus');
+		elgg_register_plugin_hook_handler('prepare', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::setSelected');
+		elgg_register_plugin_hook_handler('route', 'groups', '\ColdTrick\GroupTools\Router::groups');
+		elgg_register_plugin_hook_handler('route', 'livesearch', '\ColdTrick\GroupTools\Router::livesearch');
+		
+		elgg_register_plugin_hook_handler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToGroups');
+		elgg_register_plugin_hook_handler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToUsers');
+		elgg_register_plugin_hook_handler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addStaleInfo');
+		elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForGroups');
+		elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForUsers');
+		elgg_register_plugin_hook_handler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportStaleInfo');
+		elgg_register_plugin_hook_handler('get', 'subscriptions', '\ColdTrick\GroupTools\Notifications::adminApprovalSubs');
+		elgg_register_plugin_hook_handler('prepare', 'notification:admin_approval:group:', '\ColdTrick\GroupTools\Notifications::prepareAdminApprovalMessage');
+		elgg_register_plugin_hook_handler('action', 'groups/edit', '\ColdTrick\GroupTools\Group::editActionListener');
+		elgg_register_plugin_hook_handler('cron', 'fiveminute', '\ColdTrick\GroupTools\Membership::autoJoinGroupsCron');
+		
+		elgg_register_plugin_hook_handler('cron', 'daily', '\ColdTrick\GroupTools\Cron::notifyStaleGroupOwners');
+		elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\GroupTools\GroupMail::pageMenu');
+		elgg_register_plugin_hook_handler('prepare', 'notification:enqueue:object:' . GroupMail::SUBTYPE, '\ColdTrick\GroupTools\GroupMail::prepareNotification');
+		elgg_register_plugin_hook_handler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupMail::getSubscribers');
+		elgg_register_plugin_hook_handler('send:after', 'notifications', '\ColdTrick\GroupTools\GroupMail::cleanup');
+		elgg_register_plugin_hook_handler('view_vars', 'groups/sidebar/members', '\ColdTrick\GroupTools\Cleanup::hideSidebarMembers');
+		elgg_register_plugin_hook_handler('view_vars', 'groups/sidebar/my_status', '\ColdTrick\GroupTools\Cleanup::hideMyStatus');
+		elgg_register_plugin_hook_handler('view_vars', 'groups/sidebar/search', '\ColdTrick\GroupTools\Cleanup::hideSearchbox');
+		elgg_register_plugin_hook_handler('prepare', 'menu:extras', '\ColdTrick\GroupTools\Cleanup::hideExtrasMenu');
+		elgg_register_plugin_hook_handler('prepare', 'menu:title', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
+		elgg_register_plugin_hook_handler('prepare', 'menu:groups:my_status', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
+		elgg_register_plugin_hook_handler('prepare', 'menu:owner_block', '\ColdTrick\GroupTools\Cleanup::hideOwnerBlockMenu');
+		
+	}
+}
