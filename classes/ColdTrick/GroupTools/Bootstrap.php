@@ -81,7 +81,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 	protected function registerEvents() {
 		elgg_register_event_handler('join', 'group', '\ColdTrick\GroupTools\Membership::groupJoin');
 		elgg_register_event_handler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
-		elgg_register_event_handler('upgrade', 'system', '\ColdTrick\GroupTools\Upgrade::migrateListingSettings');
 		elgg_register_event_handler('create', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroups');
 		elgg_register_event_handler('login:after', 'user', '\ColdTrick\GroupTools\Membership::autoJoinGroupsLogin');
 		elgg_register_event_handler('create', 'relationship', '\ColdTrick\GroupTools\Membership::siteJoinEmailInvitedGroups');
