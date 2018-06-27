@@ -22,7 +22,9 @@ if (elgg_is_admin_logged_in()) {
 		
 		$options = [
 			'limit' => false,
-			'callback' => 'group_tools_guid_only_callback',
+			'callback' => function ($row) {
+				return (int) $row->guid;
+			},
 		];
 		
 		$user_guids = $site->getMembers($options);

@@ -76,7 +76,12 @@ if (!empty($friends)) {
 	$friends_optgroup = [];
 	
 	unset($friends_options['count']);
-	$friends_options['callback'] = 'group_tool_admin_transfer_callback';
+	$friends_options['callback'] = function($row) {
+		return [
+			'guid' => (int) $row->guid,
+			'name' => $row->name,
+		];
+	};
 	
 	$friends = new ElggBatch('elgg_get_entities_from_relationship', $friends_options);
 	foreach ($friends as $friend) {
@@ -92,7 +97,12 @@ if (!empty($members)) {
 	$members_optgroup = [];
 	
 	unset($member_options['count']);
-	$member_options['callback'] = 'group_tool_admin_transfer_callback';
+	$member_options['callback'] = function($row) {
+		return [
+			'guid' => (int) $row->guid,
+			'name' => $row->name,
+		];
+	};
 	
 	$members = new ElggBatch('elgg_get_entities_from_relationship', $member_options);
 	foreach ($members as $member) {

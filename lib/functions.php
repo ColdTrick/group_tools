@@ -247,19 +247,6 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 	return elgg_send_email($site_from, $email, $subject, $body);
 }
 
-
-
-/**
- * Custom callback function to only return the GUID from a database row
- *
- * @param stdClass $row the database row
- *
- * @return int
- */
-function group_tools_guid_only_callback($row) {
-	return (int) $row->guid;
-}
-
 /**
  * Check if group creation is limited to site administrators
  * Also this function caches the result
@@ -500,20 +487,6 @@ function group_tools_remove_user_from_access_collection($user_guid, $collection_
 	$query .= " AND user_guid = {$user_guid}";
 
 	return (bool) delete_data($query);
-}
-
-/**
- * Custom callback to save memory and queries for group admin transfer
- *
- * @param stdClass $row from elgg_get_* function
- *
- * @return array
- */
-function group_tool_admin_transfer_callback($row) {
-	return [
-		'guid' => (int) $row->guid,
-		'name' => $row->name,
-	];
 }
 
 /**
