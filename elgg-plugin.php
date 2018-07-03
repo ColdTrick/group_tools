@@ -1,66 +1,19 @@
 <?php
 
+use ColdTrick\GroupTools\Bootstrap;
+
 // define for default group access
 define('GROUP_TOOLS_GROUP_ACCESS_DEFAULT', -10);
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
-	'bootstrap' => '\ColdTrick\GroupTools\Bootstrap',
+	'bootstrap' => Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
 			'subtype' => 'group_tools_group_mail',
-			'class' => 'GroupMail',
-		],
-	],
-	'settings' => [
-// 		'enable_group' => 'no',
-// 		'extend_widgets' => 'yes',
-// 		'extend_activity' => 'no',
-// 		'mention_display' => 'username',
-		
-	],
-	'routes' => [
-// 		'collection:object:thewire:group' => [
-// 			'path' => '/thewire/group/{guid}',
-// 			'resource' => 'thewire/group',
-// 		],
-// 		'collection:object:thewire:autocomplete' => [
-// 			'path' => '/thewire/autocomplete',
-// 			'resource' => 'thewire/autocomplete',
-// 		],
-// 		'collection:object:thewire:search' => [
-// 			'path' => '/thewire/search/{q?}',
-// 			'resource' => 'thewire/search',
-// 		],
-	],
-	'widgets' => [
-		'group_river_widget' => [
-			/* 2012-05-03: restored limited functionality of group activity widget
-			 * will be fully restored if Elgg fixes widget settings
-			 * @todo is this still needed
-			 */
-			'context' => ['dashboard', 'profile', 'index', 'groups'],
-			'multiple' => true,
-		],
-		'group_members' => [
-			'context' => ['groups'],
-		],
-		'group_invitations' => [
-			'context' => ['index', 'dashboard'],
-		],
-		'featured_groups' => [
-			'name' => elgg_echo('groups:featured'),
-			'context' => ['index'],
-		],
-		'index_groups' => [
-			'name' => elgg_echo('groups'),
-			'context' => ['index'],
-			'multiple' => true,
-		],
-		'group_related' => [
-			'context' => ['groups'],
+			'class' => GroupMail::class,
 		],
 	],
 	'actions' => [
@@ -95,5 +48,33 @@ return [
 		'groups/decline_email_invitation' => [],
 		'groups/edit' => [],
 		'groups/invite' => [],
+	],
+	'widgets' => [
+		'group_river_widget' => [
+			/* 2012-05-03: restored limited functionality of group activity widget
+			 * will be fully restored if Elgg fixes widget settings
+			 * @todo is this still needed
+			 */
+			'context' => ['dashboard', 'profile', 'index', 'groups'],
+			'multiple' => true,
+		],
+		'group_members' => [
+			'context' => ['groups'],
+		],
+		'group_invitations' => [
+			'context' => ['index', 'dashboard'],
+		],
+		'featured_groups' => [
+			'name' => elgg_echo('groups:featured'),
+			'context' => ['index'],
+		],
+		'index_groups' => [
+			'name' => elgg_echo('groups'),
+			'context' => ['index'],
+			'multiple' => true,
+		],
+		'group_related' => [
+			'context' => ['groups'],
+		],
 	],
 ];
