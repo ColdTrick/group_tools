@@ -2,59 +2,55 @@
 
 namespace ColdTrick\GroupTools;
 
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Select;
+
 class Cron {
 	
 	/**
 	 * Find the new stale groups and notify the owner
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param mixed  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'cron', 'daily'
 	 *
 	 * @return void
 	 */
-	public static function notifyStaleGroupOwners($hook, $type, $return_value, $params) {
+	public static function notifyStaleGroupOwners(\Elgg\Hook $hook) {
 		
 		echo 'Starting GroupTools stale group owners' . PHP_EOL;
 		elgg_log('Starting GroupTools stale group owners', 'NOTICE');
 		
-		$time = (int) elgg_extract('time', $params, time());
-		
-		// ignore access
-		$ia = elgg_set_ignore_access(true);
+		$time = (int) $hook->getParam('time', time());
 		
 		// get stale groups
-		$groups = self::findStaleGroups($time);
+		$groups = elgg_call(ELGG_IGNORE_ACCESS, function() use ($time) {
+			return self::findStaleGroups($time);
+		});
 		if (empty($groups)) {
 			// non found
-			elgg_set_ignore_access($ia);
-			
 			echo 'Done with GroupTools stale group owners' . PHP_EOL;
 			elgg_log('Done with GroupTools stale group owners', 'NOTICE');
 			
 			return;
 		}
 		
-		// process groups
-		foreach ($groups as $group) {
-			
-			$stale_info = group_tools_get_stale_info($group);
-			if (empty($stale_info)) {
-				// error
-				continue;
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($groups) {
+			// process groups
+			foreach ($groups as $group) {
+				
+				$stale_info = group_tools_get_stale_info($group);
+				if (empty($stale_info)) {
+					// error
+					continue;
+				}
+				
+				if (!$stale_info->isStale()) {
+					// not stale
+					continue;
+				}
+				
+				self::notifyStaleGroupOwner($group);
 			}
-			
-			if (!$stale_info->isStale()) {
-				// not stale
-				continue;
-			}
-			
-			self::notifyStaleGroupOwner($group);
-		}
-		
-		// restore access
-		elgg_set_ignore_access($ia);
+		});
 		
 		echo 'Done with GroupTools stale group owners' . PHP_EOL;
 		elgg_log('Done with GroupTools stale group owners', 'NOTICE');
@@ -66,6 +62,7 @@ class Cron {
 	 * @param int $ts timestamp to compare to
 	 *
 	 * @return false|\ElggGroup[]
+	 * @todo revisit subquery
 	 */
 	protected static function findStaleGroups($ts) {
 		
@@ -78,8 +75,8 @@ class Cron {
 			return false;
 		}
 		
-		$compare_ts_upper = $ts - ($stale_timeout * 24 * 60 * 60);
-		$compare_ts_lower = $compare_ts_upper - (24 * 60 * 60);
+		$compare_ts_upper = strtotime("-{$stale_timeout} days", $ts);
+		$compare_ts_lower = strtotime("-1 day", $compare_ts_upper);
 		
 		$dbprefix = elgg_get_config('dbprefix');
 		$touch_md_id = elgg_get_metastring_id('group_tools_stale_touch_ts');
@@ -94,8 +91,8 @@ class Cron {
 		$options = [
 			'type' => 'group',
 			'limit' => false,
-			'created_time_upper' => $compare_ts_upper,
-			'created_time_lower' => $compare_ts_lower,
+			'created_before' => $compare_ts_upper,
+			'created_after' => $compare_ts_lower,
 			'callback' => $row_to_guid,
 		];
 		$groups_created = elgg_get_entities($options);
@@ -110,14 +107,15 @@ class Cron {
 			'created_time_upper' => $compare_ts_upper,
 			'callback' => $row_to_guid,
 			'wheres' => [
-				"e.guid IN (SELECT tmd.entity_guid
-					FROM {$dbprefix}metadata tmd
-					JOIN {$dbprefix}metastrings tmsv ON tmd.value_id = tmsv.id
-					WHERE tmd.name_id = {$touch_md_id}
-					AND tmd.entity_guid = e.guid
-					AND CAST(tmsv.string AS SIGNED) > {$compare_ts_lower}
-					AND CAST(tmsv.string AS SIGNED) < {$compare_ts_upper})
-				",
+				function (QueryBuilder $qb, $main_alias) use ($compare_ts_lower, $compare_ts_upper) {
+					$select = $qb->subquery('metadata', 'tmd');
+					$select->select('tmd.entity_guid')
+						->andWhere($qb->compare('tmd.name', '=', 'group_tools_stale_touch_ts', ELGG_VALUE_STRING))
+						->andWhere($qb->compare('tmd.value', '>', $compare_ts_lower, ELGG_VALUE_INTEGER))
+						->andWhere($qb->compare('tmd.value', '<', $compare_ts_upper, ELGG_VALUE_INTEGER));
+					
+					return $qb->compare("{$main_alias}.guid", 'IN', $select);
+				},
 			],
 		];
 		
@@ -128,32 +126,26 @@ class Cron {
 		
 		// groups with last content in timespace
 		$searchable_objects = StaleInfo::getObjectSubtypes();
-		$object_ids = [];
+		$object_subtypes = [];
 		foreach ($searchable_objects as $index => $subtype) {
 			switch ($subtype) {
-				case 'page':
-				case 'page_top':
-					$object_ids[] = get_subtype_id('object', 'page');
-					$object_ids[] = get_subtype_id('object', 'page_top');
-					break;
 				case 'comment':
-				case 'discussion_reply':
 					// don't do these yet
 					break;
 				default:
-					$object_ids[] = get_subtype_id('object', $subtype);
+					$object_subtypes[] = $subtype;
 					break;
 			}
 		}
 		
-		$object_ids = array_filter($object_ids);
-		$object_ids = array_unique($object_ids);
+		$object_subtypes = array_filter($object_subtypes);
+		$object_subtypes = array_unique($object_subtypes);
 		
-		if (!empty($object_ids)) {
+		if (!empty($object_subtypes)) {
 			$options = [
 				'type' => 'group',
 				'limit' => false,
-				'created_time_upper' => $compare_ts_upper,
+				'created_before' => $compare_ts_upper,
 				'callback' => $row_to_guid,
 				'wheres' => [
 					"e.guid IN (
@@ -162,7 +154,7 @@ class Cron {
 							SELECT container_guid, max(time_updated) as time_updated
 							FROM {$dbprefix}entities
 							WHERE type = 'object'
-							AND subtype IN (" . implode(',', $object_ids) . ")
+							AND subtype IN ('" . implode("', '", $object_subtypes) . "')
 							GROUP BY container_guid
 						) as content
 						WHERE content.time_updated > {$compare_ts_lower}
@@ -178,12 +170,6 @@ class Cron {
 		}
 		
 		// groups with last comments/discussion_replies in timespace
-		$comment_ids = [];
-		$comment_ids[] = get_subtype_id('object', 'comment');
-		if (elgg_is_active_plugin('discussions')) {
-			$comment_ids[] = get_subtype_id('object', 'discussion_reply');
-		}
-		
 		$options = [
 			'type' => 'group',
 			'limit' => false,
@@ -197,7 +183,7 @@ class Cron {
 						FROM {$dbprefix}entities re
 						JOIN {$dbprefix}entities ce ON re.container_guid = ce.guid
 						WHERE re.type = 'object'
-						AND re.subtype IN (" . implode(',', $comment_ids) . ")
+						AND re.subtype = 'comment'
 						GROUP BY ce.container_guid
 					) as comments
 					WHERE comments.time_updated > {$compare_ts_lower}
@@ -233,12 +219,12 @@ class Cron {
 	 */
 	protected static function notifyStaleGroupOwner(\ElggGroup $entity) {
 		
-		if (!($entity instanceof \ElggGroup)) {
+		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
 		
 		$owner = $entity->getOwnerEntity();
-		if (!($owner instanceof \ElggUser)) {
+		if (!$owner instanceof \ElggUser) {
 			return;
 		}
 		
@@ -257,6 +243,6 @@ class Cron {
 			'summary' => elgg_echo('groups_tools:state_info:notification:summary', [$entity->getDisplayName()]),
 		];
 		
-		notify_user($owner->getGUID(), $site->getGUID(), $subject, $message, $mail_params);
+		notify_user($owner->guid, $site->guid, $subject, $message, $mail_params);
 	}
 }
