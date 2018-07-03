@@ -23,20 +23,18 @@ if (empty($output)) {
 
 $content .= $output;
 
-$title = elgg_view('output/url', [
-	'text' => elgg_view_icon('plus-circle'),
+$menu = elgg_view('output/url', [
+	'icon' => 'plus-circle',
+	'text' => elgg_echo('add'),
 	'href' => elgg_http_add_url_query_elements('ajax/form/group_tools/admin/auto_join/additional', [
 		'type' => 'exclusive',
 	]),
-	'title' => elgg_echo('add'),
 	'class' => [
-		'float-alt',
 		'elgg-lightbox',
 	],
 	'data-colorbox-opts' => json_encode([
 		'maxWidth' => '650px',
 	]),
 ]);
-$title .= elgg_echo('group_tools:admin:auto_join:exclusive');
 
-echo elgg_view_module('inline', $title, $content);
+echo elgg_view_module('info', elgg_echo('group_tools:admin:auto_join:exclusive'), $content, ['menu' => $menu]);

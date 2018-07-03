@@ -9,18 +9,17 @@ if ($offset < 1) {
 	$offset = 0;
 }
 
-$dbprefix = elgg_get_config('dbprefix');
-
 $options = [
 	'type' => 'group',
-	'full_view' => false,
 	'count' => true,
 	'limit' => $limit,
 	'offset' => $offset,
-	'joins' => [
-		"JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid",
+	'order_by_metadata' => [
+		[
+			'name' => 'name',
+			'direction' => 'ASC',
+		],
 	],
-	'order_by' => 'ge.name',
 ];
 
 $group_count = elgg_get_entities($options);
@@ -54,7 +53,6 @@ $form_data .= '</thead>';
 // add group rows
 $rows = [];
 foreach ($batch as $group) {
-	
 	$cells = [];
 	
 	// brief view
