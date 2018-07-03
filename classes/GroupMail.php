@@ -31,12 +31,13 @@ class GroupMail extends ElggObject {
 	 */
 	public function getMessage() {
 		
+		/* @var $group ElggGroup */
 		$group = $this->getContainerEntity();
 		
 		$message = $this->description;
 		$message .= PHP_EOL . PHP_EOL;
 		$message .= elgg_echo('group_tools:mail:message:from');
-		$message .= ": {$group->name}" . PHP_EOL;
+		$message .= ": {$group->getDisplayName()}" . PHP_EOL;
 		$message .= $group->getURL();
 		
 		return $message;
@@ -70,14 +71,14 @@ class GroupMail extends ElggObject {
 			'limit' => false,
 			'guids' => $recipients,
 			'relationship' => 'member',
-			'relationship_guid' => $this->getContainerGUID(),
+			'relationship_guid' => $this->container_guid,
 			'inverse_relationship' => true,
 		]);
 		
 		$formatted_recipients = [];
 		/* @var $user \ElggUser */
 		foreach ($batch as $user) {
-			$formatted_recipients[$user->getGUID()] = ['email'];
+			$formatted_recipients[$user->guid] = ['email'];
 		}
 		
 		return $formatted_recipients;
