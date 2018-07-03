@@ -79,7 +79,6 @@ class Cron {
 		$compare_ts_lower = strtotime("-1 day", $compare_ts_upper);
 		
 		$dbprefix = elgg_get_config('dbprefix');
-		$touch_md_id = elgg_get_metastring_id('group_tools_stale_touch_ts');
 		
 		$row_to_guid = function ($row) {
 			return (int) $row->guid;
