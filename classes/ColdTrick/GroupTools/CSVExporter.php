@@ -7,16 +7,13 @@ class CSVExporter {
 	/**
 	 * Add group admins to the exportable values
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'get_exportable_values', 'csv_exporter'
 	 *
 	 * @return void|array
 	 */
-	public static function addGroupAdminsToGroups($hook, $type, $return_value, $params) {
+	public static function addGroupAdminsToGroups(\Elgg\Hook $hook) {
 		
-		$content_type = elgg_extract('type', $params);
+		$content_type = $hook->getParam('type');
 		if ($content_type !== 'group') {
 			return;
 		}
@@ -26,76 +23,38 @@ class CSVExporter {
 			return;
 		}
 		
-		$readable = (bool) elgg_extract('readable', $params, false);
-		
 		$fields = [
 			elgg_echo('group_tools:csv_exporter:group_admin:name') => 'group_tools_group_admin_name',
 			elgg_echo('group_tools:csv_exporter:group_admin:email') => 'group_tools_group_admin_email',
 			elgg_echo('group_tools:csv_exporter:group_admin:url') => 'group_tools_group_admin_url',
 		];
 		
-		if (!$readable) {
+		if (!(bool) $hook->getParam('readable', false)) {
 			$fields = array_values($fields);
 		}
 		
-		return array_merge($return_value, $fields);
-	}
-	
-	/**
-	 * Add the groups a user is admin of to the exportable values
-	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
-	 *
-	 * @return void|array
-	 */
-	public static function addGroupAdminsToUsers($hook, $type, $return_value, $params) {
+		$return = $hook->getValue();
 		
-		$content_type = elgg_extract('type', $params);
-		if ($content_type !== 'user') {
-			return;
-		}
-		
-		if (!group_tools_multiple_admin_enabled()) {
-			// group admins not enabled
-			return;
-		}
-		
-		$readable = (bool) elgg_extract('readable', $params, false);
-		
-		$fields = [
-			elgg_echo('group_tools:csv_exporter:user:group_admin:name') => 'group_tools_user_group_admin_name',
-			elgg_echo('group_tools:csv_exporter:user:group_admin:url') => 'group_tools_user_group_admin_url',
-		];
-		
-		if (!$readable) {
-			$fields = array_values($fields);
-		}
-		
-		return array_merge($return_value, $fields);
+		return array_merge($return, $fields);
 	}
 	
 	/**
 	 * Supply the group admin information for the export
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'export_value', 'csv_exporter'
 	 *
 	 * @return void|array
 	 */
-	public static function exportGroupAdminsForGroups($hook, $type, $return_value, $params) {
+	public static function exportGroupAdminsForGroups(\Elgg\Hook $hook) {
 		
-		if (!is_null($return_value)) {
+		$return = $hook->getValue();
+		if (!is_null($return)) {
 			// someone already provided output
 			return;
 		}
 		
-		$entity = elgg_extract('entity', $params);
-		if (!($entity instanceof \ElggGroup)) {
+		$entity = $hook->getEntityParam();
+		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -103,21 +62,21 @@ class CSVExporter {
 			'type' => 'user',
 			'limit' => false,
 			'relationship' => 'group_admin',
-			'relationship_guid' => $entity->getGUID(),
+			'relationship_guid' => $entity->guid,
 			'inverse_relationship' => true,
 			'wheres' => [
-				"e.guid <> {$entity->getOwnerGUID()}",
+				"e.guid <> {$entity->owner_guid}",
 			],
 		];
 		
-		$exportable_value = elgg_extract('exportable_value', $params);
+		$exportable_value = $hook->getParam('exportable_value');
 		switch ($exportable_value) {
 			case 'group_tools_group_admin_name':
 				$result = [];
 				$batch = new \ElggBatch('elgg_get_entities_from_relationship', $group_admin_options);
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
-					$result[] = "\"{$group_admin->name}\"";
+					$result[] = "\"{$group_admin->getDisplayName()}\"";
 				}
 				return $result;
 				break;
@@ -143,24 +102,55 @@ class CSVExporter {
 	}
 	
 	/**
-	 * Supply the group admin information for the export
+	 * Add the groups a user is admin of to the exportable values
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'get_exportable_values', 'csv_exporter'
 	 *
 	 * @return void|array
 	 */
-	public static function exportGroupAdminsForUsers($hook, $type, $return_value, $params) {
+	public static function addGroupAdminsToUsers(\Elgg\Hook $hook) {
 		
-		if (!is_null($return_value)) {
+		$content_type = $hook->getParam('type');
+		if ($content_type !== 'user') {
+			return;
+		}
+		
+		if (!group_tools_multiple_admin_enabled()) {
+			// group admins not enabled
+			return;
+		}
+		
+		$fields = [
+			elgg_echo('group_tools:csv_exporter:user:group_admin:name') => 'group_tools_user_group_admin_name',
+			elgg_echo('group_tools:csv_exporter:user:group_admin:url') => 'group_tools_user_group_admin_url',
+		];
+		
+		if (!(bool) $hook->getParam('readable', false)) {
+			$fields = array_values($fields);
+		}
+		
+		$return = $hook->getValue();
+		
+		return array_merge($return, $fields);
+	}
+	
+	/**
+	 * Supply the group admin information for the export
+	 *
+	 * @param \Elgg\Hook $hook 'export_value', 'csv_exporter'
+	 *
+	 * @return void|array
+	 */
+	public static function exportGroupAdminsForUsers(\Elgg\Hook $hook) {
+		
+		$return = $hook->getValue();
+		if (!is_null($return)) {
 			// someone already provided output
 			return;
 		}
 		
-		$entity = elgg_extract('entity', $params);
-		if (!($entity instanceof \ElggUser)) {
+		$entity = $hook->getEntityParam();
+		if (!$entity instanceof \ElggUser) {
 			return;
 		}
 		
@@ -168,20 +158,20 @@ class CSVExporter {
 			'type' => 'group',
 			'limit' => false,
 			'relationship' => 'group_admin',
-			'relationship_guid' => $entity->getGUID(),
+			'relationship_guid' => $entity->guid,
 			'wheres' => [
-				"e.guid <> {$entity->getOwnerGUID()}",
+				"e.guid <> {$entity->owner_guid}",
 			],
 		];
 		
-		$exportable_value = elgg_extract('exportable_value', $params);
+		$exportable_value = $hook->getParam('exportable_value');
 		switch ($exportable_value) {
 			case 'group_tools_user_group_admin_name':
 				$result = [];
 				$batch = new \ElggBatch('elgg_get_entities_from_relationship', $group_admin_options);
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
-					$result[] = "\"{$group_admin->name}\"";
+					$result[] = "\"{$group_admin->getDisplayName()}\"";
 				}
 				return $result;
 				break;
@@ -200,16 +190,13 @@ class CSVExporter {
 	/**
 	 * Add stale information to the exportable values
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'get_exportable_values', 'csv_exporter'
 	 *
 	 * @return void|array
 	 */
-	public static function addStaleInfo($hook, $type, $return_value, $params) {
+	public static function addStaleInfo(\Elgg\Hook $hook) {
 		
-		$content_type = elgg_extract('type', $params);
+		$content_type = $hook->getParam('type');
 		if ($content_type !== 'group') {
 			return;
 		}
@@ -226,32 +213,32 @@ class CSVExporter {
 			elgg_echo('group_tools:csv_exporter:stale_info:timestamp:readable') => 'group_tools_stale_info_timestamp_reabable',
 		];
 		
-		if (!$readable) {
+		if (!(bool) $hook->getParam('readable', false)) {
 			$fields = array_values($fields);
 		}
 		
-		return array_merge($return_value, $fields);
+		$return = $hook->getValue();
+		
+		return array_merge($return, $fields);
 	}
 	
 	/**
 	 * Export stale information about the group
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'export_value', 'csv_exporter'
 	 *
 	 * @return void|int|string
 	 */
-	public static function exportStaleInfo($hook, $type, $return_value, $params) {
+	public static function exportStaleInfo(\Elgg\Hook $hook) {
 		
-		if (!is_null($return_value)) {
+		$return = $hook->getValue();
+		if (!is_null($return)) {
 			// someone already provided output
 			return;
 		}
 		
-		$entity = elgg_extract('entity', $params);
-		if (!($entity instanceof \ElggGroup)) {
+		$entity = $hook->getEntityParam('entity');
+		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -260,7 +247,7 @@ class CSVExporter {
 			return;
 		}
 		
-		$exportable_value = elgg_extract('exportable_value', $params);
+		$exportable_value = $hook->getParam('exportable_value');
 		switch ($exportable_value) {
 			case 'group_tools_stale_info_is_stale':
 				if ($stale_info->isStale()) {
