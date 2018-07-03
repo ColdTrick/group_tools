@@ -48,7 +48,7 @@ switch ($fix) {
 				* 		-> group_guid 	=> the group the acl belongs to
 				* 		-> user_guid 	=> the user that should be removed
 				*/
-				group_tools_remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
+				remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
 			}
 			
 			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
@@ -138,7 +138,7 @@ switch ($fix) {
 				 * 		-> group_guid 	=> the group the acl belongs to
 				 * 		-> user_guid 	=> the user that should be removed
 				 */
-				group_tools_remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
+				remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
 			}
 			
 			system_message(elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));

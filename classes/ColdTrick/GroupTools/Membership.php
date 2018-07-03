@@ -224,11 +224,9 @@ class Membership {
 			'limit' => false,
 		];
 		
-		if (elgg_is_logged_in()) {
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($options){
 			elgg_delete_annotations($options);
-		} elseif ($annotations = elgg_get_annotations($options)) {
-			group_tools_delete_annotations($annotations);
-		}
+		});
 		
 		// join motivation
 		$options = [
