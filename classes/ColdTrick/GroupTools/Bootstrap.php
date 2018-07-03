@@ -144,7 +144,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupMail::getSubscribers');
 		$hooks->registerHandler('send:after', 'notifications', '\ColdTrick\GroupTools\GroupMail::cleanup');
 		$hooks->registerHandler('view_vars', 'groups/sidebar/members', '\ColdTrick\GroupTools\Cleanup::hideSidebarMembers');
-		$hooks->registerHandler('view_vars', 'groups/sidebar/my_status', '\ColdTrick\GroupTools\Cleanup::hideMyStatus');
 		$hooks->registerHandler('view_vars', 'groups/sidebar/search', '\ColdTrick\GroupTools\Cleanup::hideSearchbox');
 		$hooks->registerHandler('prepare', 'menu:extras', '\ColdTrick\GroupTools\Cleanup::hideExtrasMenu');
 		$hooks->registerHandler('prepare', 'menu:title', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');

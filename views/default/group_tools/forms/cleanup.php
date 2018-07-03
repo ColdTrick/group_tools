@@ -107,17 +107,6 @@ $form_body .= elgg_view_field([
 	'value' => $group->getPrivateSetting("{$prefix}featured_sorting"),
 ]);
 
-// hide my status
-$form_body .= elgg_view_field([
-	'#type' => 'checkbox',
-	'#label' => elgg_echo('group_tools:cleanup:my_status'),
-	'#help' => elgg_echo('group_tools:cleanup:my_status:explain'),
-	'name' => 'my_status',
-	'value' => 'yes',
-	'default' => 'no',
-	'checked' => ($group->getPrivateSetting("{$prefix}my_status") === 'yes'),
-]);
-
 // footer buttons
 $footer = elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->getGUID()]);
 $footer .= elgg_view('input/submit', ['value' => elgg_echo('save')]);

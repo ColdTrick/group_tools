@@ -264,8 +264,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:invite_members:title' => 'Groepsleden mogen uitnodigen',
   'group_tools:invite_members:description' => 'Mogen de leden van deze groep nieuwe leden uitnodigen',
   'group_tools:invite_members:disclaimer' => 'Let op, voor besloten groepen geldt dat als je leden nieuwe gebruikers mogen uitnodigen deze gebruikers geen goedkeuring nodig hebben van de groepseigenaar/-beheerder(s).',
-  'group_tools:cleanup:my_status' => 'Verberg de Mijn Status zijbalk',
-  'group_tools:cleanup:my_status:explain' => 'In de zijbalk op de groepsprofiel pagina is er een item welke je informatie toont over je groepslidmaatschap. Tevens wordt hier andere status informatie getoond. Je kunt deze zijbalk verbergen.',
   'group_tools:settings:fix:title' => 'Los problemen met groep toegang op',
   'group_tools:settings:fix:missing' => 'Er zijn %d gebruikers die lid zijn van een groep maar geen toegang hebben tot de content die gedeeld wordt met de groep.',
   'group_tools:settings:fix:excess' => 'Er zijn %d gebruikers die toegang hebben tot content van een groep waar ze geen lid meer van zijn.',

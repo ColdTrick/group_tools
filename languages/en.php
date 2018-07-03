@@ -263,9 +263,7 @@ You can find the group here:
 	'group_tools:cleanup:featured:explain' => "You can choose to show a list of featured groups in the sidebar on the group profile page",
 	'group_tools:cleanup:featured_sorting' => "How to sort featured groups",
 	'group_tools:cleanup:featured_sorting:time_created' => "Newest first",
-	'group_tools:cleanup:my_status' => "Hide the My Status sidebar",
-	'group_tools:cleanup:my_status:explain' => "In the sidebar on the group profile page there is an item which shows you your current membership status and some other status information. You can choose to hide this.",
-
+	
 	// group default access
 	'group_tools:default_access:title' => "Group default access",
 	'group_tools:default_access:description' => "Here you can control what the default access of new content in your group should be.",

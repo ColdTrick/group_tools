@@ -213,9 +213,7 @@ Puedes encontrar el grupo aquí:
         'group_tools:cleanup:featured:explain' => "Puedes elegir mostrar un listado de grupos destacados en la barra lateral de la página de perfil del grupo",
         'group_tools:cleanup:featured_sorting' => "Como ordenar grupos destacados",
         'group_tools:cleanup:featured_sorting:time_created' => "Recientes primero",
-        'group_tools:cleanup:my_status' => "Ocultar la barra lateral de Mi Estado",
-        'group_tools:cleanup:my_status:explain' => "En la barra lateral de la página de perfil de grupo hay un item que muestra tu actual estado de membresía y otra información de estado. Puedes elegir ocultar esto.",
-
+        
         // group default access
         'group_tools:default_access:title' => "Nivel de acceso por defecto en el grupo",
         'group_tools:default_access:description' => "Aquí puedes controlar cual será el nivel de acceso por defecto del nuevo contenido en tu grupo.",

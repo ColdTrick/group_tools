@@ -20,7 +20,6 @@ $members = get_input('members');
 $search = get_input('search');
 $featured = get_input('featured');
 $featured_sorting = get_input('featured_sorting');
-$my_status = get_input('my_status');
 
 // save settings
 $prefix = \ColdTrick\GroupTools\Cleanup::SETTING_PREFIX;
@@ -32,6 +31,5 @@ $group->setPrivateSetting("{$prefix}members", $members);
 $group->setPrivateSetting("{$prefix}search", $search);
 $group->setPrivateSetting("{$prefix}featured", $featured);
 $group->setPrivateSetting("{$prefix}featured_sorting", $featured_sorting);
-$group->setPrivateSetting("{$prefix}my_status", $my_status);
 
 return elgg_ok_response('', elgg_echo('group_tools:actions:cleanup:success'), $group->getURL());

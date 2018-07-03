@@ -8,20 +8,20 @@ namespace ColdTrick\GroupTools;
 class Cleanup {
 	
 	const SETTING_PREFIX = 'group_tools:cleanup:';
+	
 	/**
 	 * Hide the members listing in the sidebar
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'view_vars', 'groups/sidebar/members'
 	 *
 	 * @return void|array
 	 */
-	public static function hideSidebarMembers($hook, $type, $return_value, $params) {
+	public static function hideSidebarMembers(\Elgg\Hook $hook) {
 		
-		$group = elgg_extract('entity', $return_value);
-		if (!($group instanceof \ElggGroup)) {
+		$vars = $hook->getValue();
+		
+		$group = elgg_extract('entity', $vars);
+		if (!$group instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -33,55 +33,24 @@ class Cleanup {
 			return;
 		}
 		
-		$return_value[\Elgg\ViewsService::OUTPUT_KEY] = '';
+		$vars[\Elgg\ViewsService::OUTPUT_KEY] = '';
 		
-		return $return_value;
-	}
-	
-	/**
-	 * Hide my status in the sidebar
-	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
-	 *
-	 * @return void|array
-	 */
-	public static function hideMyStatus($hook, $type, $return_value, $params) {
-		
-		$group = elgg_extract('entity', $return_value);
-		if (!($group instanceof \ElggGroup)) {
-			return;
-		}
-		
-		if ($group->canEdit()) {
-			return;
-		}
-		
-		if ($group->getPrivateSetting(self::SETTING_PREFIX . 'my_status') !== 'yes') {
-			return;
-		}
-		
-		$return_value[\Elgg\ViewsService::OUTPUT_KEY] = '';
-		
-		return $return_value;
+		return $vars;
 	}
 	
 	/**
 	 * Hide the search box in the sidebar
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'view_vars', 'groups/sidebar/search'
 	 *
 	 * @return void|array
 	 */
-	public static function hideSearchbox($hook, $type, $return_value, $params) {
+	public static function hideSearchbox(\Elgg\Hook $hook) {
 		
-		$group = elgg_extract('entity', $return_value);
-		if (!($group instanceof \ElggGroup)) {
+		$vars = $hook->getValue();
+		
+		$group = elgg_extract('entity', $vars);
+		if (!$group instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -93,25 +62,22 @@ class Cleanup {
 			return;
 		}
 		
-		$return_value[\Elgg\ViewsService::OUTPUT_KEY] = '';
+		$vars[\Elgg\ViewsService::OUTPUT_KEY] = '';
 		
-		return $return_value;
+		return $vars;
 	}
 	
 	/**
 	 * Hide the extras menu in the sidebar
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'prepare', 'menu:extras'
 	 *
 	 * @return void|array
 	 */
-	public static function hideExtrasMenu($hook, $type, $return_value, $params) {
+	public static function hideExtrasMenu(\Elgg\Hook $hook) {
 		
 		$page_owner = elgg_get_page_owner_entity();
-		if (!($page_owner instanceof \ElggGroup)) {
+		if (!$page_owner instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -129,21 +95,14 @@ class Cleanup {
 	/**
 	 * Hide the membership action buttons
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'prepare', 'menu:title'
 	 *
 	 * @return void|array
 	 */
-	public static function hideMembershipActions($hook, $type, $return_value, $params) {
-		
-		if (!is_array($return_value)) {
-			return;
-		}
+	public static function hideMembershipActions(\Elgg\Hook $hook) {
 		
 		$page_owner = elgg_get_page_owner_entity();
-		if (!($page_owner instanceof \ElggGroup) || ! elgg_in_context('group_profile')) {
+		if (!$page_owner instanceof \ElggGroup || !elgg_in_context('group_profile')) {
 			return;
 		}
 		
@@ -163,6 +122,7 @@ class Cleanup {
 		
 		$is_member = $page_owner->isMember();
 		
+		$return_value = $hook->getValue();
 		foreach ($return_value as $section => $menu_items) {
 			
 			if (!is_array($menu_items)) {
@@ -196,21 +156,14 @@ class Cleanup {
 	/**
 	 * Hide the owner_block menu in the sidebar
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'prepare', 'menu:owner_block'
 	 *
 	 * @return void|array
 	 */
-	public static function hideOwnerBlockMenu($hook, $type, $return_value, $params) {
+	public static function hideOwnerBlockMenu(\Elgg\Hook $hook) {
 		
-		if (!is_array($params)) {
-			return;
-		}
-		
-		$group = elgg_extract('entity', $params);
-		if (!($group instanceof \ElggGroup)) {
+		$group = $hook->getEntityParam();
+		if (!$group instanceof \ElggGroup) {
 			return;
 		}
 		
