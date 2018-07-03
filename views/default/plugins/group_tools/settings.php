@@ -5,19 +5,6 @@
 
 $plugin = elgg_extract('entity', $vars);
 
-$noyes_options = [
-	'no' => elgg_echo('option:no'),
-	'yes' => elgg_echo('option:yes'),
-];
-
-$yesno_options = array_reverse($noyes_options);
-
-$noyes3_options = [
-	'no' => elgg_echo('option:no'),
-	'yes_off' => elgg_echo('group_tools:settings:default_off'),
-	'yes_on' => elgg_echo('group_tools:settings:default_on'),
-];
-
 $listing_options = [
 	'all' => elgg_echo('groups:all'),
 	'yours' => elgg_echo('groups:yours'),
@@ -51,11 +38,13 @@ if (!empty($plugin->suggested_groups)) {
 // group management settings
 $general_fields = [
 	[
-		'#type' => 'select',
+		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:show_membership_mode'),
 		'name' => 'params[show_membership_mode]',
-		'options_values' => $yesno_options,
-		'value' => $plugin->show_membership_mode,
+		'checked' => $plugin->show_membership_mode === 'yes',
+		'switch' => true,
+		'default' => 'no',
+		'value' => 'yes',
 	],
 	[
 		'#type' => 'select',
@@ -69,41 +58,52 @@ $general_fields = [
 		'value' => $plugin->show_hidden_group_indicator,
 	],
 	[
-		'#type' => 'select',
+		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:auto_suggest_groups'),
+		'#help' => elgg_echo('group_tools:settings:auto_suggest_groups:help'),
 		'name' => 'params[auto_suggest_groups]',
-		'options_values' => $yesno_options,
-		'value' => $plugin->auto_suggest_groups,
+		'checked' => $plugin->auto_suggest_groups === 'yes',
+		'switch' => true,
+		'default' => 'no',
+		'value' => 'yes',
 	],
 	[
-		'#type' => 'select',
+		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:multiple_admin'),
 		'name' => 'params[multiple_admin]',
-		'options_values' => $noyes_options,
-		'value' => $plugin->multiple_admin,
+		'checked' => $plugin->multiple_admin === 'yes',
+		'switch' => true,
+		'default' => 'no',
+		'value' => 'yes',
 	],
 	[
-		'#type' => 'select',
+		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:mail'),
 		'name' => 'params[mail]',
-		'options_values' => $noyes_options,
-		'value' => $plugin->mail,
+		'checked' => $plugin->mail === 'yes',
+		'switch' => true,
+		'default' => 'no',
+		'value' => 'yes',
 	],
 	[
-		'#type' => 'select',
+		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:mail:members'),
 		'#help' => elgg_echo('group_tools:settings:mail:members:description'),
 		'name' => 'params[mail_members]',
-		'options_values' => $noyes_options,
-		'value' => $plugin->mail_members,
+		'checked' => $plugin->mail_members === 'yes',
+		'switch' => true,
+		'default' => 'no',
+		'value' => 'yes',
 	],
 	[
-		'#type' => 'select',
+		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:member_export'),
 		'#help' => elgg_echo('group_tools:settings:member_export:description'),
 		'name' => 'params[member_export]',
-		'options_values' => $noyes_options,
-		'value' => $plugin->member_export,
+		'checked' => $plugin->member_export === 'yes',
+		'switch' => true,
+		'default' => 'no',
+		'value' => 'yes',
 	],
 ];
 
@@ -111,12 +111,14 @@ $general_fields = [
 if (elgg_get_plugin_setting('limited_groups', 'groups', 'no') !== 'yes') {
 	// only is group creation isn't limited to admins
 	$general_fields[] = [
-		'#type' => 'select',
+		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:admin_approve'),
 		'#help' => elgg_echo('group_tools:settings:admin_approve:description'),
 		'name' => 'params[admin_approve]',
-		'options_values' => $noyes_options,
-		'value' => $plugin->admin_approve,
+		'checked' => $plugin->admin_approve === 'yes',
+		'switch' => true,
+		'default' => 'no',
+		'value' => 'yes',
 	];
 }
 
@@ -125,7 +127,7 @@ foreach ($general_fields as $field) {
 	$general_settings .= elgg_view_field($field);
 }
 
-echo elgg_view_module('inline', elgg_echo('group_tools:settings:management:title'), $general_settings);
+echo elgg_view_module('info', elgg_echo('group_tools:settings:management:title'), $general_settings);
 
 // group edit settings
 $group_edit = '';
@@ -142,21 +144,25 @@ $group_edit .= elgg_view_field([
 ]);
 
 $group_edit .= elgg_view_field([
-	'#type' => 'select',
+	'#type' => 'checkbox',
 	'#label' => elgg_echo('group_tools:settings:simple_access_tab'),
 	'#help' => elgg_echo('group_tools:settings:simple_access_tab:help'),
 	'name' => 'params[simple_access_tab]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->simple_access_tab,
+	'checked' => $plugin->simple_access_tab === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
 
 $group_edit .= elgg_view_field([
-	'#type' => 'select',
+	'#type' => 'checkbox',
 	'#label' => elgg_echo('group_tools:settings:simple_create_form'),
 	'#help' => elgg_echo('group_tools:settings:simple_create_form:help'),
 	'name' => 'params[simple_create_form]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->simple_create_form,
+	'checked' => $plugin->simple_create_form === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
 
 $group_edit .= elgg_view_field([
@@ -173,18 +179,19 @@ $group_edit .= elgg_view_field([
 ]);
 
 $group_edit .= elgg_view_field([
-	'#type' => 'select',
+	'#type' => 'checkbox',
 	'#label' => elgg_echo('group_tools:settings:auto_accept_membership_requests'),
 	'#help' => elgg_echo('group_tools:settings:auto_accept_membership_requests:help'),
 	'name' => 'params[auto_accept_membership_requests]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->auto_accept_membership_requests,
+	'checked' => $plugin->auto_accept_membership_requests === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
 
-echo elgg_view_module('inline', elgg_echo('group_tools:settings:edit:title'), $group_edit);
+echo elgg_view_module('info', elgg_echo('group_tools:settings:edit:title'), $group_edit);
 
 // listing settings
-$title = elgg_echo('group_tools:settings:listing:title');
 $body = elgg_echo('group_tools:settings:listing:description');
 
 $listing_tab_rows = [];
@@ -265,10 +272,9 @@ foreach ($listing_options as $tab => $tab_title) {
 }
 $body .= elgg_format_element('table', ['class' => 'elgg-table-alt'], implode('', $listing_tab_rows));
 
-echo elgg_view_module('inline', $title, $body);
+echo elgg_view_module('info', elgg_echo('group_tools:settings:listing:title'), $body);
 
 // notifications
-$title = elgg_echo('group_tools:settings:notifications:title');
 $body = '';
 
 // auto set notifications
@@ -291,97 +297,100 @@ $auto_notifications .= elgg_format_element('ul', ['class' => 'mll'], implode('',
 $body .= elgg_format_element('div', [], $auto_notifications);
 
 // show toggle for group notification settings
-$notification_toggle = elgg_echo('group_tools:settings:notifications:notification_toggle');
-$notification_toggle .= elgg_view('input/select', [
+$body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:notifications:notification_toggle'),
+	'#help' => elgg_echo('group_tools:settings:notifications:notification_toggle:description'),
 	'name' => 'params[notification_toggle]',
-	'value' => $plugin->notification_toggle,
-	'options_values' => $noyes_options,
-	'class' => 'mls',
+	'checked' => $plugin->notification_toggle === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
-$notification_toggle .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:settings:notifications:notification_toggle:description'));
 
-$body .= elgg_format_element('div', [], $notification_toggle);
-
-echo elgg_view_module('inline', $title, $body);
+echo elgg_view_module('info', elgg_echo('group_tools:settings:notifications:title'), $body);
 
 // group invite settings
-$title = elgg_echo('group_tools:settings:invite:title');
+$invite_settings = '';
 
-$body = '<div>';
-$body .= elgg_echo('group_tools:settings:invite_friends');
-$body .= elgg_view('input/select', [
+$invite_settings .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:invite_friends'),
 	'name' => 'params[invite_friends]',
-	'options_values' => $yesno_options,
-	'value' => $plugin->invite_friends,
-	'class' => 'mls',
+	'checked' => $plugin->invite_friends === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
-$body .= '</div>';
 
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:invite');
-$body .= elgg_view('input/select', [
+$invite_settings .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:invite'),
 	'name' => 'params[invite]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->invite,
-	'class' => 'mls',
+	'checked' => $plugin->invite === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
-$body .= '</div>';
 
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:invite_email');
-$body .= elgg_view('input/select', [
+$invite_settings .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:invite_email'),
 	'name' => 'params[invite_email]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->invite_email,
-	'class' => 'mls',
+	'checked' => $plugin->invite_email === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
-$body .= '</div>';
 
-$body .= '<div class="elgg-divide-left pls mls">';
-$body .= elgg_echo('group_tools:settings:invite_email:match');
-$body .= elgg_view('input/select', [
+$invite_settings .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:invite_email:match'),
 	'name' => 'params[invite_email_match]',
-	'options_values' => $yesno_options,
-	'value' => $plugin->invite_email_match,
-	'class' => 'mls',
+	'checked' => $plugin->invite_email_match === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
-$body .= '</div>';
 
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:invite_csv');
-$body .= elgg_view('input/select', [
+$invite_settings .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:invite_csv'),
 	'name' => 'params[invite_csv]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->invite_csv,
-	'class' => 'mls',
+	'checked' => $plugin->invite_csv === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
-$body .= '</div>';
 
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:invite_members');
-$body .= elgg_view('input/select', [
+$invite_settings .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('group_tools:settings:invite_members'),
+	'#help' => elgg_echo('group_tools:settings:invite_members:description'),
 	'name' => 'params[invite_members]',
-	'options_values' => $noyes3_options,
+	'options_values' => [
+		'no' => elgg_echo('option:no'),
+		'yes_off' => elgg_echo('group_tools:settings:default_off'),
+		'yes_on' => elgg_echo('group_tools:settings:default_on'),
+	],
 	'value' => $plugin->invite_members,
-	'class' => 'mls',
 ]);
-$body .= elgg_format_element('div', ['class' => 'plm elgg-subtext'], elgg_echo('group_tools:settings:invite_members:description'));
-$body .= '</div>';
 
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:domain_based');
-$body .= elgg_view('input/select', [
+$invite_settings .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:domain_based'),
+	'#help' => elgg_echo('group_tools:settings:domain_based:description'),
 	'name' => 'params[domain_based]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->domain_based,
-	'class' => 'mls',
+	'checked' => $plugin->domain_based === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
-$body .= elgg_format_element('div', ['class' => 'plm elgg-subtext'], elgg_echo('group_tools:settings:domain_based:description'));
-$body .= '</div>';
 
-$body .= '<div>';
-$body .= elgg_echo('group_tools:settings:join_motivation');
-$body .= elgg_view('input/select', [
+$invite_settings .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('group_tools:settings:join_motivation'),
+	'#help' => elgg_echo('group_tools:settings:join_motivation:description'),
 	'name' => 'params[join_motivation]',
 	'options_values' => [
 		'no' => elgg_echo('option:no'),
@@ -390,12 +399,9 @@ $body .= elgg_view('input/select', [
 		'required' => elgg_echo('group_tools:settings:required'),
 	],
 	'value' => $plugin->join_motivation,
-	'class' => 'mls',
 ]);
-$body .= elgg_format_element('div', ['class' => 'plm elgg-subtext'], elgg_echo('group_tools:settings:join_motivation:description'));
-$body .= '</div>';
 
-echo elgg_view_module('inline', $title, $body);
+echo elgg_view_module('info', elgg_echo('group_tools:settings:invite:title'), $invite_settings);
 
 // group content settings
 
@@ -414,11 +420,13 @@ $group_content = elgg_view_field([
 elgg_pop_context();
 
 $group_content .= elgg_view_field([
-	'#type' => 'select',
+	'#type' => 'checkbox',
 	'#label' => elgg_echo('group_tools:settings:search_index'),
 	'name' => 'params[search_index]',
-	'options_values' => $noyes_options,
-	'value' => $plugin->search_index,
+	'checked' => $plugin->search_index === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
 ]);
 
 $group_content .= elgg_view_field([
@@ -431,7 +439,7 @@ $group_content .= elgg_view_field([
 	'max' => 9999,
 ]);
 
-echo elgg_view_module('inline', elgg_echo('group_tools:settings:content:title'), $group_content);
+echo elgg_view_module('info', elgg_echo('group_tools:settings:content:title'), $group_content);
 
 // list all special state groups (features/suggested)
 $tabs = [];
@@ -462,9 +470,9 @@ if (!empty($featured_groups)) {
 	
 	$content .= '<table class="elgg-table mtm">';
 	
-	$content .= '<tr>';
+	$content .= '<thead><tr>';
 	$content .= elgg_format_element('th', ['colspan' => 2], elgg_echo('groups:name'));
-	$content .= '</tr>';
+	$content .= '</tr></thead>';
 	
 	foreach ($featured_groups as $group) {
 		$content .= '<tr>';
@@ -546,7 +554,7 @@ if (!empty($tabs)) {
 		]);
 	}
 	
-	echo elgg_view_module('inline', elgg_echo('group_tools:settings:special_states'), $navigation . $content);
+	echo elgg_view_module('info', elgg_echo('group_tools:settings:special_states'), $navigation . $content);
 }
 
 // fix some problems with groups
@@ -624,5 +632,5 @@ if (!empty($rows)) {
 	
 	$content .= '</table>';
 	
-	echo elgg_view_module('inline', elgg_echo('group_tools:settings:fix:title'), $content);
+	echo elgg_view_module('info', elgg_echo('group_tools:settings:fix:title'), $content);
 }
