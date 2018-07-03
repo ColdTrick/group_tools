@@ -7,18 +7,15 @@ class Access {
 	/**
 	 * Change the default access in group context
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param int    $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'default', 'access'
 	 *
 	 * @return void|int
 	 */
-	public static function setGroupDefaultAccess($hook, $type, $return_value, $params) {
+	public static function setGroupDefaultAccess(\Elgg\Hook $hook) {
 		
 		// check if the page owner is a group
 		$page_owner = elgg_get_page_owner_entity();
-		if (!($page_owner instanceof \ElggGroup)) {
+		if (!$page_owner instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -37,7 +34,11 @@ class Access {
 		
 		switch ($site_group_access) {
 			case GROUP_TOOLS_GROUP_ACCESS_DEFAULT:
-				return (int) $page_owner->group_acl;
+				$acl = $page_owner->getOwnedAccessCollection('group_acl');
+				if (!$acl instanceof \ElggAccessCollection) {
+					return;
+				}
+				return $acl->id;
 				break;
 			default:
 				return (int) $site_group_access;
@@ -48,18 +49,15 @@ class Access {
 	/**
 	 * Validate that the group default access isn't above the group settings for content
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param int    $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'default', 'access'
 	 *
 	 * @return void|int
 	 */
-	public static function validateGroupDefaultAccess($hook, $type, $return_value, $params) {
+	public static function validateGroupDefaultAccess(\Elgg\Hook $hook) {
 		
 		// check if the page owner is a group
 		$page_owner = elgg_get_page_owner_entity();
-		if (!($page_owner instanceof \ElggGroup)) {
+		if (!$page_owner instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -67,32 +65,36 @@ class Access {
 			return;
 		}
 		
+		$return_value = $hook->getValue();
 		if (($return_value !== ACCESS_PUBLIC) && ($return_value !== ACCESS_LOGGED_IN)) {
 			return;
 		}
 		
 		// default access is higher than content access level, so lower
-		elgg_log("Default access for the group {$page_owner->name} is set more public than the content access level", 'NOTICE');
+		elgg_log("Default access for the group {$page_owner->getDisplayName()} is set more public than the content access level", 'NOTICE');
 		
-		return (int) $page_owner->group_acl;
+		$acl = $page_owner->getOwnedAccessCollection('group_acl');
+		if (!$acl instanceof \ElggAccessCollection) {
+			return;
+		}
+		
+		return (int) $acl->id;
 	}
 	
 	/**
 	 * Change the access list when selecting group default access
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'access:collections:write', 'user'
 	 *
 	 * @return void|array
 	 */
-	public static function defaultAccessOptions($hook, $type, $return_value, $params) {
+	public static function defaultAccessOptions(\Elgg\Hook $hook) {
 		
 		if (!elgg_in_context('group_tools_default_access')) {
 			return;
 		}
 		
+		$return_value = $hook->getValue();
 		if (!is_array($return_value)) {
 			return;
 		}
@@ -101,14 +103,14 @@ class Access {
 		if (isset($return_value[ACCESS_PRIVATE])) {
 			unset($return_value[ACCESS_PRIVATE]);
 		}
-	
+		
 		if (isset($return_value[ACCESS_FRIENDS])) {
 			unset($return_value[ACCESS_FRIENDS]);
 		}
-	
+		
 		// reverse the array
 		$return_value = array_reverse($return_value, true);
-	
+		
 		// add group option
 		$return_value[GROUP_TOOLS_GROUP_ACCESS_DEFAULT] = elgg_echo('group_tools:default:access:group');
 		
@@ -118,22 +120,19 @@ class Access {
 	/**
 	 * Allow a group to be transfered by the correct user
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param bool   $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'permissions_check', 'group'
 	 *
 	 * @return void|bool
 	 */
-	public static function allowGroupOwnerTransfer($hook, $type, $return_value, $params) {
+	public static function allowGroupOwnerTransfer(\Elgg\Hook $hook) {
 		
-		if (!empty($return_value)) {
+		if (!empty($hook->getValue())) {
 			// already has access
 			return;
 		}
 		
-		$group = elgg_extract('entity', $params);
-		if (!($group instanceof \ElggGroup)) {
+		$group = $hook->getEntityParam();
+		if (!$group instanceof \ElggGroup) {
 			return;
 		}
 		
