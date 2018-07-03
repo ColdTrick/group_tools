@@ -39,7 +39,8 @@ return array(
         'group_tools:settings:admin_transfer:owner' => "Propietarios de grupo y administadores del sitio",
 
         'group_tools:settings:multiple_admin' => "Permitir múltiples administradores de grupo",
-        'group_tools:settings:auto_suggest_groups' => "Sugerir grupos automaticamente en la página 'Sugeridos' basados en la información del perfil. Será completado con los grupos sugeridos predefinidos. Marcar esto como 'No' solo mostrará los grupos sugeridos predefinidos, en caso de haberlos.",
+        'group_tools:settings:auto_suggest_groups' => "Sugerir grupos automaticamente en la página 'Sugeridos' basados en la información del perfil",
+        'group_tools:settings:auto_suggest_groups:help' => "Será completado con los grupos sugeridos predefinidos. Marcar esto como 'No' solo mostrará los grupos sugeridos predefinidos, en caso de haberlos.",
 
         'group_tools:settings:notifications:title' => "Configuración de las notificaciones de grupo",
         'group_tools:settings:notifications:notification_toggle' => "Mostrar la configuración de notificaciónes al unirse al grupo",

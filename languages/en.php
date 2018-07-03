@@ -49,7 +49,8 @@ return array(
 	'group_tools:settings:admin_transfer:owner' => "Group owners and site admins",
 
 	'group_tools:settings:multiple_admin' => "Allow multiple group admins",
-	'group_tools:settings:auto_suggest_groups' => "Auto suggest groups on the 'Suggested' groups page based on profile information. Will be completed with the predefined suggested groups. Setting this to 'No' will only show the predefined suggested groups (if there are any).",
+	'group_tools:settings:auto_suggest_groups' => "Auto suggest groups on the 'Suggested' groups page based on profile information",
+	'group_tools:settings:auto_suggest_groups:help' => "Will be completed with the predefined suggested groups. Setting this to 'No' will only show the predefined suggested groups (if there are any).",
 	
 	'group_tools:settings:notifications:title' => "Group notification settings",
 	'group_tools:settings:notifications:notification_toggle' => "Show notification settings on group join",

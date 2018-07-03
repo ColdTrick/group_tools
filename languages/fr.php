@@ -54,12 +54,12 @@ return array (
   'group_tools:groups:invitation:code:title' => 'Invitations aux groupes de discussions reçues par e-mail',
   'group_tools:groups:invitation:code:description' => 'Si vous avez reçu une invitation pour rejoindre un groupe par e-mail, vous pouvez entrer le code d\'invitation ici, ou cliquez directement sur le lien de l\'e-mail.',
   'group_tools:groups:invite:add:subject' => 'Vous avez été ajouté au groupe %s',
-  'group_tools:groups:invite:add:body' => 'Bonjour %s, 
+  'group_tools:groups:invite:add:body' => 'Bonjour %s,
 
 %s vous a ajouté au groupe %s
 %s
 
-Pour accéder au groupe, cliquez sur le lien 
+Pour accéder au groupe, cliquez sur le lien
 %s
 
 Parcours Croisés',
@@ -67,20 +67,20 @@ Parcours Croisés',
 
 %s vous a désigné comme le nouvel animateur du groupe %s.
 
-Pour accéder au groupe, cliquez sur le lien suivant : 
+Pour accéder au groupe, cliquez sur le lien suivant :
 %s
 
 Parcours Croisés',
-  'group_tools:groups:invite:body' => 'Bonjour %s, 
+  'group_tools:groups:invite:body' => 'Bonjour %s,
 
 %s vous a invité à rejoindre le groupe "%s".
 %s
 
-Cliquez ci dessous pour voir votre invitation. 
+Cliquez ci dessous pour voir votre invitation.
 %s
 
 Parcours Croisés',
-  'group_tools:related_groups:notify:owner:message' => 'Bonjour %s, 
+  'group_tools:related_groups:notify:owner:message' => 'Bonjour %s,
 
 %s a ajouté votre groupe %s au groupe associé %s.
 
@@ -96,15 +96,15 @@ Parcours Croisés',
   'group_tools:group:invite:add:confirm' => 'Etes-vous sûr(e) de vouloir ajouter ces utilisateurs directement ?',
   'group_tools:groups:invite' => 'Inviter des membres',
   'group_tools:groups:invite:email:subject' => 'Vous avez été invité à rejoindre le Groupe %s',
-  'group_tools:groups:invite:email:body' => 'Bonjour, 
+  'group_tools:groups:invite:email:body' => 'Bonjour,
 
 %s vous invite à rejoindre le groupe %s sur %s.
 %s
 
-Si vous n\'avez pas de compte sur %s, enregistrez vous ici. 
+Si vous n\'avez pas de compte sur %s, enregistrez vous ici.
 %s
 
-Si vous avez déjà un compte ou après vous être enregistré, cliquez sur le lien suivant. 
+Si vous avez déjà un compte ou après vous être enregistré, cliquez sur le lien suivant.
 %s',
   'group_tools:suggested_groups:none' => 'Nous ne pouvons vous suggérer des groupes de discussion. Nous n\'avons pas assez d\'information sur vous pour vous conseiller ou vous avez déjà rejoint les groupes que nous souhaitions vous suggérer. Utilisez le moteur de recherche pour trouvez de nouveaux groupes.',
   'widgets:group_river_widget:name' => 'Activité du groupe',
@@ -121,7 +121,8 @@ Si vous avez déjà un compte ou après vous être enregistré, cliquez sur le l
   'group_tools:settings:required' => 'Oui, requis',
   'group_tools:settings:admin_only' => 'Admin seulement',
   'group_tools:settings:edit:title' => 'Paramètres de l\'édition de groupe',
-  'group_tools:settings:auto_suggest_groups' => 'Suggérer automatiquement des groupe sur la page "Groupes suggérés", basé sur les informations du profil. Sera complété par les groupes suggérés prédéfinis. Ne pas sélectionner cette option conduira à n"\'afficher que les groupes suggérés prédéfinis (si tant est qu\'il y en ait)',
+  'group_tools:settings:auto_suggest_groups' => 'Suggérer automatiquement des groupe sur la page "Groupes suggérés", basé sur les informations du profil',
+  'group_tools:settings:auto_suggest_groups:help' => 'Sera complété par les groupes suggérés prédéfinis. Ne pas sélectionner cette option conduira à n"\'afficher que les groupes suggérés prédéfinis (si tant est qu\'il y en ait)',
   'group_tools:settings:notifications:title' => 'Paramètres de notification de groupe',
   'group_tools:settings:notifications:notification_toggle' => 'Afficher les paramètres de notification lors de l\'adhésion au groupe.',
   'group_tools:settings:invite_friends' => 'Permettre d\'inviter des amis',

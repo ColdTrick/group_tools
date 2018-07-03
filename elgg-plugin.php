@@ -9,6 +9,29 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'bootstrap' => Bootstrap::class,
+	'settings' => [
+		'multiple_admin' => 'no',
+		'mail' => 'no',
+		'mail_members' => 'no',
+		'member_export' => 'no',
+		'admin_approve' => 'no',
+		'simple_access_tab' => 'no',
+		'simple_create_form' => 'no',
+		'auto_accept_membership_requests' => 'no',
+		'invite' => 'no',
+		'invite_email' => 'no',
+		'invite_csv' => 'no',
+		'invite_members' => 'no',
+		'domain_based' => 'no',
+		'join_motivation' => 'no',
+		'notification_toggle' => 'no',
+		'search_index' => 'no',
+
+		'auto_suggest_groups' => 'yes',
+		'show_membership_mode' => 'yes',
+		'invite_friends' => 'yes',
+		'invite_email_match' => 'yes',
+	],
 	'entities' => [
 		[
 			'type' => 'object',
