@@ -1,6 +1,6 @@
 <?php
 
-$brazilian = array(
+return array(
 	// general
 	'group_tools:decline' => "Recusar",
 	'group_tools:revoke' => "Cancelar",
@@ -318,5 +318,3 @@ Para visualizar a comunidade, clique neste link:
 	"widgets:group_news:settings:group_icon_size:medium" => "Médio",
 	
 );
-
-add_translation("pt_br", $brazilian);
