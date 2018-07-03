@@ -11,12 +11,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 */
 	public function init() {
 		
-		// admin menu item
-		elgg_register_admin_menu_item('administer', 'tool_presets', 'groups');
-		elgg_register_admin_menu_item('administer', 'bulk_delete', 'groups');
-		elgg_register_admin_menu_item('administer', 'auto_join', 'groups');
-		elgg_register_admin_menu_item('administer', 'admin_approval', 'groups');
-		
 		// group admins
 		if (group_tools_multiple_admin_enabled()) {
 			// add group tool option
@@ -114,6 +108,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showMemberCount');
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::showGroupHiddenIndicator');
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::removeUserFromGroup', 501);
+		$hooks->registerHandler('register', 'menu:page', '\ColdTrick\GroupTools\PageMenu::registerAdminItems', 501);
 		$hooks->registerHandler('register', 'menu:membershiprequest', '\ColdTrick\GroupTools\Membership::membershiprequestMenu');
 		$hooks->registerHandler('register', 'menu:emailinvitation', '\ColdTrick\GroupTools\Membership::emailinvitationMenu');
 		$hooks->registerHandler('register', 'menu:group:membershiprequests', '\ColdTrick\GroupTools\Membership::groupMembershiprequests');
