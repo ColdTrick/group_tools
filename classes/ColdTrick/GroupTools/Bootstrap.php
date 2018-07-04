@@ -53,7 +53,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('elgg.css', 'css/group_tools/site.css');
 		elgg_extend_view('admin.css', 'css/group_tools/admin.css');
 		elgg_extend_view('js/elgg', 'js/group_tools/site.js');
-		elgg_extend_view('theme_sandbox/forms', 'group_tools/theme_sandbox/grouppicker');
 		elgg_extend_view('register/extend', 'group_tools/register_extend');
 		elgg_extend_view('groups/profile/summary', 'group_tools/extends/groups/profile/stale_message');
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinvitations');
@@ -69,7 +68,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('groups/edit', 'group_tools/forms/welcome_message');
 		elgg_extend_view('groups/edit', 'group_tools/forms/domain_based');
 		elgg_extend_view('page/elements/owner_block/extend', 'group_tools/owner_block');
-		elgg_extend_view('groups/profile/summary', 'group_tools/group_stats');
 		elgg_extend_view('groups/sidebar/members', 'group_tools/group_admins', 400);
 		elgg_extend_view('groups/edit/tools', 'group_tools/extends/groups/edit/tools/group_admins', 400);
 		
@@ -127,7 +125,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:groups:my_status', '\ColdTrick\GroupTools\MyStatus::registerJoinStatus');
 		$hooks->registerHandler('prepare', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::setSelected', 550);
 		$hooks->registerHandler('route', 'groups', '\ColdTrick\GroupTools\Router::groups');
-		$hooks->registerHandler('route', 'livesearch', '\ColdTrick\GroupTools\Router::livesearch');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToGroups');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToUsers');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addStaleInfo');

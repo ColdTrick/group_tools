@@ -5,6 +5,9 @@
 
 $widget = elgg_extract('entity', $vars);
 
+echo 'Still needs to be fixed';
+return;
+
 // which group
 if ($widget->context == 'groups') {
 	$group_guid = [$widget->getOwnerGUID()];

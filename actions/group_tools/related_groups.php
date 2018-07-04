@@ -4,7 +4,10 @@
  */
 
 $group_guid = (int) get_input('group_guid');
-$guid = (int) get_input('guid');
+$guid = get_input('guid');
+if (is_array($guid) && !empty($guid)) {
+	$guid = $guid[0];
+}
 
 if (empty($group_guid) || empty($guid)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));

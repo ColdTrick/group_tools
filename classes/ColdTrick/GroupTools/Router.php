@@ -54,7 +54,7 @@ class Router {
 				$resource_loaded = true;
 				break;
 			case 'add':
-				if (group_tools_is_group_creation_limited()) {
+				if (elgg_get_plugin_setting('limited_groups', 'groups') === 'yes') {
 					elgg_admin_gatekeeper();
 				}
 				break;
@@ -101,115 +101,5 @@ class Router {
 		
 		// enable registration if disabled
 		group_tools_enable_registration();
-	}
-	
-	/**
-	 * Take over the livesearch when searching for groups
-	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param null   $params       supplied params
-	 *
-	 * @see input_livesearch_page_handler()
-	 *
-	 * @return void|false
-	 */
-	public static function livesearch($hook, $type, $return_value, $params) {
-		
-		// only return results to logged in users.
-		$user = elgg_get_logged_in_user_entity();
-		if (empty($user)) {
-			exit;
-		}
-		
-		$q = get_input('term', get_input('q'));
-		if (empty($q)) {
-			exit;
-		}
-		
-		// sanitise search query
-		$q = sanitise_string($q);
-		
-		// replace mysql vars with escaped strings
-		$q = str_replace(['_', '%'], ['\_', '\%'], $q);
-		
-		$match_on = get_input('match_on', 'all');
-		if (!is_array($match_on)) {
-			$match_on = [$match_on];
-		}
-		
-		// only take over groups search
-		if (count($match_on) > 1 || !in_array('groups', $match_on)) {
-			return;
-		}
-		
-		$owner_guid = ELGG_ENTITIES_ANY_VALUE;
-		if (get_input('match_owner', false)) {
-			$owner_guid = $user->getGUID();
-		}
-		
-		$input_name = get_input('name', 'groups');
-		$limit = sanitise_int(get_input('limit', elgg_get_config('default_limit')));
-		$match_on_title_only = (bool) get_input('match_on_title_only', false);
-		
-		$where = "(ge.name LIKE '%{$q}%' OR ge.description LIKE '%{$q}%')";
-		if ($match_on_title_only) {
-			$where = "(ge.name LIKE '%{$q}%')";
-		}
-		
-		// fetch groups
-		$results = [];
-		$dbprefix = elgg_get_config('dbprefix');
-		$options = [
-			'type' => 'group',
-			'limit' => $limit,
-			'owner_guid' => $owner_guid,
-			'joins' => [
-				"JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid",
-			],
-			'wheres' => [
-				$where,
-			],
-		];
-		
-		$entities = elgg_get_entities($options);
-		if (!empty($entities)) {
-			foreach ($entities as $entity) {
-				$output = elgg_view_list_item($entity, [
-					'use_hover' => false,
-					'class' => 'elgg-autocomplete-item',
-					'full_view' => false,
-					'href' => false,
-					'title' => $entity->name, // Default title would be a link
-				]);
-				
-				$icon = elgg_view_entity_icon($entity, 'tiny', [
-					'use_hover' => false,
-				]);
-				
-				$result = [
-					'type' => 'group',
-					'name' => $entity->name,
-					'desc' => strip_tags($entity->description),
-					'guid' => $entity->getGUID(),
-					'label' => $output,
-					'value' => $entity->getGUID(),
-					'icon' => $icon,
-					'url' => $entity->getURL(),
-					'html' => elgg_view('input/grouppicker/item', [
-						'entity' => $entity,
-						'input_name' => $input_name,
-					]),
-				];
-				
-				$results[$entity->name . rand(1, 100)] = $result;
-			}
-		}
-		
-		ksort($results);
-		header('Content-Type: application/json;charset=utf-8');
-		echo json_encode(array_values($results));
-		exit;
 	}
 }

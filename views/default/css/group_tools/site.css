@@ -24,6 +24,15 @@
 	cursor: pointer;
 }
 
+.elgg-form-group-tools-related-groups .elgg-fieldset-horizontal {
+	display: flex;
+	align-items: stretch;
+	
+	> .elgg-field:first-child {
+		flex-grow: 1;
+	}
+}
+
 .group-tools-suggested-groups .elgg-item {
 	width: 33%;
 	text-align: center;
@@ -38,10 +47,6 @@
 }
 .group-tools-suggested-groups .elgg-item > div {
 	padding: 10px;
-}
-
-#group-tools-related-groups-form input.elgg-input-autocomplete {
-	width: 80%;
 }
 
 #group-tools-group-edit-tabbed ~ div {

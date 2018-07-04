@@ -224,28 +224,6 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 }
 
 /**
- * Check if group creation is limited to site administrators
- * Also this function caches the result
- *
- * @return bool
- */
-function group_tools_is_group_creation_limited() {
-	static $result;
-	
-	if (isset($result)) {
-		return $result;
-	}
-	
-	$result = false;
-	
-	if (elgg_get_plugin_setting('limited_groups', 'groups') === 'yes') {
-		$result = true;
-	}
-	
-	return $result;
-}
-
-/**
  * Get all the groups this email address is invited for
  *
  * @param string $email     the email address

@@ -18,24 +18,18 @@ $all_link = elgg_view('output/url', [
 	'is_trusted' => true,
 ]);
 
-$dbprefix = elgg_get_config('dbprefix');
-
-$options = [
+$content = elgg_list_entities_from_relationship([
 	'type' => 'group',
 	'limit' => 4,
 	'relationship' => 'related_group',
 	'relationship_guid' => $group->getGUID(),
 	'full_view' => false,
-	'joins' => [
-		"JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid",
+	'order_by_metadata' => [
+		'name' => 'name',
+		'direction' => 'ASC',
 	],
-	'order_by' => 'ge.name ASC',
 	'no_results' => elgg_echo('groups_tools:related_groups:none'),
-];
-
-elgg_push_context('widgets');
-$content = elgg_list_entities_from_relationship($options);
-elgg_pop_context();
+]);
 
 echo elgg_view('groups/profile/module', [
 	'title' => elgg_echo('widgets:related_groups:name'),
