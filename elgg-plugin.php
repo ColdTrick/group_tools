@@ -28,7 +28,6 @@ return [
 		'search_index' => 'no',
 
 		'auto_suggest_groups' => 'yes',
-		'show_membership_mode' => 'yes',
 		'invite_friends' => 'yes',
 		'invite_email_match' => 'yes',
 	],
@@ -42,7 +41,6 @@ return [
 	'actions' => [
 		'group_tools/toggle_admin' => [],
 		'group_tools/mail' => [],
-		'group_tools/cleanup' => [],
 		'group_tools/invite_members' => [],
 		'group_tools/welcome_message' => [],
 		'group_tools/domain_based' => [],

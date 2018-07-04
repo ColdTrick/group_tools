@@ -39,15 +39,6 @@ if (!empty($plugin->suggested_groups)) {
 $general_fields = [
 	[
 		'#type' => 'checkbox',
-		'#label' => elgg_echo('group_tools:settings:show_membership_mode'),
-		'name' => 'params[show_membership_mode]',
-		'checked' => $plugin->show_membership_mode === 'yes',
-		'switch' => true,
-		'default' => 'no',
-		'value' => 'yes',
-	],
-	[
-		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:auto_suggest_groups'),
 		'#help' => elgg_echo('group_tools:settings:auto_suggest_groups:help'),
 		'name' => 'params[auto_suggest_groups]',

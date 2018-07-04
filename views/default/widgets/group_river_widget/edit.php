@@ -5,10 +5,7 @@
 
 $widget = elgg_extract('entity', $vars);
 
-$num_display = (int) $widget->num_display;
-if ($num_display < 1) {
-	$num_display = 10;
-}
+$num_display = (int) $widget->num_display ?: 10;
 
 // filter activity
 // get filter options
