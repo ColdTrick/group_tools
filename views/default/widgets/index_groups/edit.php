@@ -61,19 +61,13 @@ if (!empty($tag_fields)) {
 	]);
 }
 
-$sorting_value = $widget->sorting;
-if (empty($sorting_value) && ($widget->apply_sorting == 'yes')) {
-	$sorting_value = 'ordered';
-}
-
 echo elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('widgets:index_groups:sorting'),
 	'name' => 'params[sorting]',
-	'value' => $sorting_value,
+	'value' => $widget->sorting,
 	'options_values' => [
 		'newest' => elgg_echo('sort:newest'),
 		'popular' => elgg_echo('sort:popular'),
-		'ordered' => elgg_echo('group_tools:groups:sorting:ordered'),
 	],
 ]);

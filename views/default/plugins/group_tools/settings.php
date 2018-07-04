@@ -10,7 +10,6 @@ $listing_options = [
 	'yours' => elgg_echo('groups:yours'),
 	'open' => elgg_echo('group_tools:groups:sorting:open'),
 	'closed' => elgg_echo('group_tools:groups:sorting:closed'),
-	'ordered' => elgg_echo('group_tools:groups:sorting:ordered'),
 	'featured' => elgg_echo('status:featured'),
 	'suggested' => elgg_echo('group_tools:groups:sorting:suggested'),
 ];
@@ -203,14 +202,7 @@ foreach ($listing_options as $tab => $tab_title) {
 	];
 	$tab_value = $plugin->$tab_setting_name;
 	if ($tab_value !== '0') {
-		if (in_array($tab, ['ordered', 'featured'])) {
-			// these tabs are default disabled
-			if ($tab_value !== null) {
-				$checkbox_options['checked'] = true;
-			}
-		} else {
-			$checkbox_options['checked'] = true;
-		}
+		$checkbox_options['checked'] = true;
 	}
 	$cells[] = elgg_format_element('td', [
 		'class' => 'center',

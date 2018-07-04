@@ -363,7 +363,6 @@ your group '%s' was declined and removed by a site administrator.",
 	// group listing
 	'group_tools:groups:sorting:open' => "Open",
 	'group_tools:groups:sorting:closed' => "Closed",
-	'group_tools:groups:sorting:ordered' => "Ordered",
 	'group_tools:groups:sorting:suggested' => "Suggested",
 	
 	// allow group members to invite

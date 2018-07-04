@@ -52,27 +52,8 @@ if (!empty($filter_name) && !empty($filter_value)) {
 	}
 }
 
-$sorting_value = $widget->sorting;
-if (empty($sorting_value) && ($widget->apply_sorting == 'yes')) {
-	$sorting_value = 'ordered';
-}
-
 // check if groups should respect a specific order
-switch ($sorting_value) {
-	case 'ordered':
-		$dbprefix = elgg_get_config('dbprefix');
-		
-		$options['selects'] = [
-			"IFNULL((
-				SELECT order_ms.string as order_val
-				FROM {$dbprefix}metadata mo
-				WHERE e.guid = mo.entity_guid
-				AND mo.name = 'order'
-			), 99999) AS order_val",
-		];
-			
-		$options['order_by'] = 'CAST(order_val AS SIGNED) ASC, e.time_created DESC';
-		break;
+switch ($widget->sorting) {
 	case 'popular':
 		$options['relationship'] = 'member';
 		$options['inverse_relationship'] = false;

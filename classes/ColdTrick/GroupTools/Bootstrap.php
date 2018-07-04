@@ -120,11 +120,12 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:group:invitation', '\ColdTrick\GroupTools\Membership::groupInvitation');
 		$hooks->registerHandler('register', 'menu:group:email_invitation', '\ColdTrick\GroupTools\Membership::groupEmailInvitation');
 		$hooks->registerHandler('register', 'menu:page', '\ColdTrick\GroupTools\Membership::groupProfileSidebar');
-		$hooks->registerHandler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addTabs');
-		$hooks->registerHandler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::addSorting');
-		$hooks->registerHandler('register', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::cleanupTabs', 900);
+		$hooks->registerHandler('register', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::removeTabs', 550);
+		$hooks->registerHandler('register', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::addTabs', 550);
+		$hooks->registerHandler('register', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::addSorting', 550);
+		$hooks->registerHandler('register', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::cleanupTabs', 900);
 		$hooks->registerHandler('register', 'menu:groups:my_status', '\ColdTrick\GroupTools\MyStatus::registerJoinStatus');
-		$hooks->registerHandler('prepare', 'menu:filter', '\ColdTrick\GroupTools\GroupSortMenu::setSelected');
+		$hooks->registerHandler('prepare', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::setSelected', 550);
 		$hooks->registerHandler('route', 'groups', '\ColdTrick\GroupTools\Router::groups');
 		$hooks->registerHandler('route', 'livesearch', '\ColdTrick\GroupTools\Router::livesearch');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToGroups');

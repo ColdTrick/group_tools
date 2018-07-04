@@ -329,7 +329,6 @@ tu grupo '%s' fue rechazado y eliminado por un administrador del sitio.",
         // group listing
         'group_tools:groups:sorting:open' => "Abiertos",
         'group_tools:groups:sorting:closed' => "Cerrados",
-        'group_tools:groups:sorting:ordered' => "Ordenados",
         'group_tools:groups:sorting:suggested' => "Sugeridos",
 
         // allow group members to invite

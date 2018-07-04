@@ -79,49 +79,6 @@
 	color: inherit;
 }
 
-/* sort menu options */
-.group-tools-group-sort-menu .elgg-menu-item-sorting {
-	float: right;
-	background: none;
-	border-left: 1px solid transparent;
-	border-top: 1px solid transparent;
-	border-right: 1px solid transparent;
-}
-.group-tools-group-sort-menu .elgg-menu-item-sorting > a {
-	top: 0;
-}
-.group-tools-group-sort-menu .elgg-menu-item-sorting > a:hover {
-	background: none;
-}
-.group-tools-group-sort-menu .elgg-menu-item-sorting > .elgg-child-menu {
-	background: white;
-    display: none;
-    position: absolute;
-    right: 0;
-    white-space: nowrap;
-    z-index: 1;
-	border: 1px solid #ccc;
-	border-radius: 0 0 3px 3px;
-	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
-}
-
-.group-tools-group-sort-menu .elgg-menu-item-sorting:hover > .elgg-child-menu {
-	display: block;
-}
-.group-tools-group-sort-menu .elgg-menu-item-sorting > .elgg-child-menu a {
-	color: #444;
-	padding: 5px 10px;
-	text-decoration: none;
-	white-space: nowrap;
-}
-.group-tools-group-sort-menu .elgg-menu-item-sorting > .elgg-child-menu a:hover {
-	color: #444;
-	background: #f0f0f0;
-}
-.group-tools-group-sort-menu .elgg-menu-item-sorting > .elgg-child-menu li.elgg-state-selected a {
-    font-weight: bold;
-}
-
 #group-tools-stale-message.elgg-message {
 	cursor: default;
 }
