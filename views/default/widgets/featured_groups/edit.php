@@ -4,32 +4,19 @@
  */
 $widget = elgg_extract('entity', $vars);
 
-$noyes_options = [
-	'no' => elgg_echo('option:no'),
-	'yes' => elgg_echo('option:yes'),
-];
-
-$num_display = (int) $widget->num_display;
-if ($num_display < 1) {
-	$num_display = 5;
-}
-
-echo '<div>';
-echo elgg_echo('widget:numbertodisplay');
-echo elgg_view('input/select', [
-	'name' => 'params[num_display]',
-	'options' => range(1, 10),
-	'value' => $num_display,
-	'class' => 'mls',
+echo elgg_view('object/widget/edit/num_display', [
+	'entity' => $widget,
+	'default' => 5,
+	'min' => 1,
+	'max' => 10,
 ]);
-echo '</div>';
 
-echo '<div>';
-echo elgg_echo('widgets:featured_groups:edit:show_random_group');
-echo elgg_view('input/select', [
+echo elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('widgets:featured_groups:edit:show_random_group'),
 	'name' => 'params[show_random]',
-	'options_values' => $noyes_options,
-	'value' => $widget->show_random,
-	'class' => 'mls',
+	'checked' => $widget->show_random === 'yes',
+	'default' => 'no',
+	'value' => 'yes',
+	'switch' => true,
 ]);
-echo '</div>';

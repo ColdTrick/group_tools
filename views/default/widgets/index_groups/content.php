@@ -6,10 +6,7 @@
 $widget = elgg_extract('entity', $vars);
 
 // get widget settings
-$count = sanitise_int($widget->group_count, false);
-if ($count < 1) {
-	$count = 8;
-}
+$count = sanitise_int($widget->group_count, false) ?: 8;
 
 $options = [
 	'type' => 'group',
@@ -60,28 +57,23 @@ if (empty($sorting_value) && ($widget->apply_sorting == 'yes')) {
 	$sorting_value = 'ordered';
 }
 
-$getter = 'elgg_get_entities_from_metadata';
 // check if groups should respect a specific order
 switch ($sorting_value) {
 	case 'ordered':
 		$dbprefix = elgg_get_config('dbprefix');
-		$order_id = elgg_get_metastring_id('order');
 		
 		$options['selects'] = [
 			"IFNULL((
 				SELECT order_ms.string as order_val
 				FROM {$dbprefix}metadata mo
-				JOIN {$dbprefix}metastrings order_ms ON mo.value_id = order_ms.id
 				WHERE e.guid = mo.entity_guid
-				AND mo.name_id = {$order_id}
+				AND mo.name = 'order'
 			), 99999) AS order_val",
 		];
 			
 		$options['order_by'] = 'CAST(order_val AS SIGNED) ASC, e.time_created DESC';
 		break;
 	case 'popular':
-		$getter = 'elgg_get_entities_from_relationship_count';
-		
 		$options['relationship'] = 'member';
 		$options['inverse_relationship'] = false;
 		break;
@@ -91,4 +83,4 @@ switch ($sorting_value) {
 }
 
 // list groups
-echo elgg_list_entities($options, $getter);
+echo elgg_list_entities($options);
