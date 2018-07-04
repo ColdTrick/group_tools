@@ -63,10 +63,10 @@ $owner = $widget->getOwnerEntity();
 $options = [
 	'type' => 'group',
 	'limit' => false,
-	'joins' => [
-		'JOIN ' . elgg_get_config('dbprefix') . 'groups_entity ge ON e.guid = ge.guid',
+	'order_by_metadata' => [
+		'name' => 'name',
+		'directions' => 'ASC',
 	],
-	'order_by' => 'ge.name ASC',
 ];
 
 if ($owner instanceof ElggUser) {
