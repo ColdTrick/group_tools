@@ -9,7 +9,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-$tools = groups_get_group_tool_options($entity);
+$tools = elgg()->group_tools->group($entity);
 if (empty($tools)) {
 	return;
 }
