@@ -68,7 +68,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('groups/edit', 'group_tools/forms/welcome_message');
 		elgg_extend_view('groups/edit', 'group_tools/forms/domain_based');
 		elgg_extend_view('page/elements/owner_block/extend', 'group_tools/owner_block');
-		elgg_extend_view('groups/profile/summary', 'group_tools/group_stats');
 		elgg_extend_view('groups/sidebar/members', 'group_tools/group_admins', 400);
 		elgg_extend_view('groups/edit/tools', 'group_tools/extends/groups/edit/tools/group_admins', 400);
 		
