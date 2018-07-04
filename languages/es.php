@@ -75,10 +75,7 @@ return array(
         'group_tools:settings:search_index' => "Permitir que los grupos cerrados sean indexados en los motores de búsqueda",
         'group_tools:settings:auto_notification' => "Habilitar automáticamente notificaciones de grupo al unirse",
         'group_tools:settings:show_membership_mode' => "Mostrar el estado abierto/cerrado de las membresias y el bloqueo del propietario en el perfil de grupo",
-        'group_tools:settings:show_hidden_group_indicator' => "Mostrar un indicador si el grupo es oculto",
-        'group_tools:settings:show_hidden_group_indicator:group_acl' => "Si, si el grupo es solo para miembros",
-        'group_tools:settings:show_hidden_group_indicator:logged_in' => "Si, para todos los grupos no públicos",
-
+        
         'group_tools:settings:special_states' => "Grupos con un estado especial",
         'group_tools:settings:special_states:featured:description' => "Los administradores de grupo han elegido esta funcionalidad para los siguientes grupos.",
         'group_tools:settings:special_states:auto_join' => "Incorporación automática",

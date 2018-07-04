@@ -47,17 +47,6 @@ $general_fields = [
 		'value' => 'yes',
 	],
 	[
-		'#type' => 'select',
-		'#label' => elgg_echo('group_tools:settings:show_hidden_group_indicator'),
-		'name' => 'params[show_hidden_group_indicator]',
-		'options_values' => [
-			'no' => elgg_echo('option:no'),
-			'group_acl' => elgg_echo('group_tools:settings:show_hidden_group_indicator:group_acl'),
-			'logged_in' => elgg_echo('group_tools:settings:show_hidden_group_indicator:logged_in'),
-		],
-		'value' => $plugin->show_hidden_group_indicator,
-	],
-	[
 		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:auto_suggest_groups'),
 		'#help' => elgg_echo('group_tools:settings:auto_suggest_groups:help'),

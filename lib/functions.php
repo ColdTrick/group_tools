@@ -556,49 +556,6 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 }
 
 /**
- * Show an indicator if the group is hidden
- *
- * @param ElggGroup $group The group to check
- *
- * @return bool
- */
-function group_tools_show_hidden_indicator(ElggGroup $group) {
-	static $check_required;
-	
-	if (!$group instanceof ElggGroup) {
-		return false;
-	}
-	
-	if (!isset($check_required)) {
-		$check_required = false;
-		
-		$setting = elgg_get_plugin_setting('show_hidden_group_indicator', 'group_tools', 'no');
-		if ($setting !== 'no') {
-			$check_required = $setting;
-		}
-	}
-	
-	if ($check_required === false) {
-		return false;
-	}
-	
-	// when to show
-	if ($check_required === 'group_acl') {
-		// only if group is limited to members
-		if (($group->access_id !== ACCESS_PUBLIC) && ($group->access_id !== ACCESS_LOGGED_IN)) {
-			return true;
-		}
-	} else {
-		// for all non public groups
-		if ($group->access_id !== ACCESS_PUBLIC) {
-			return true;
-		}
-	}
-	
-	return false;
-}
-
-/**
  * Check the plugin setting which enables domain based groups
  *
  * @return bool
