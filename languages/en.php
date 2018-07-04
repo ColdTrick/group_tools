@@ -501,8 +501,8 @@ your group '%s' was declined and removed by a site administrator.",
 	// related groups
 	'groups_tools:related_groups:tool_option' => "Show related groups",
 	
-	'widgets:related_groups:name' => "Related groups",
-	'widgets:related_groups:description' => "Display a list of groups you added as related to this group.",
+	'widgets:related_group:name' => "Related groups",
+	'widgets:related_group:description' => "Display a list of groups you added as related to this group.",
 	
 	'groups_tools:related_groups:none' => "No related groups found.",
 	'group_tools:related_groups:title' => "Related groups",
