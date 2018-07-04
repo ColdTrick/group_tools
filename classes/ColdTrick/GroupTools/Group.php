@@ -17,15 +17,14 @@ class Group {
 	/**
 	 * Automaticly accept pending membership request for open groups
 	 *
-	 * @param string     $event  the name of the event
-	 * @param string     $type   the type of the event
-	 * @param \ElggGroup $entity entity to which the event applies
+	 * @param \Elgg\Event $event 'update:after', 'group'
 	 *
 	 * @return void
 	 */
-	public static function acceptMembershipRequests($event, $type, $entity) {
+	public static function acceptMembershipRequests(\Elgg\Event $event) {
 		
-		if (!($entity instanceof \ElggGroup) || !$entity->canEdit()) {
+		$entity = $event->getObject();
+		if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
 			return;
 		}
 		
@@ -52,7 +51,7 @@ class Group {
 		/* @var $requesting_user \ElggUser */
 		foreach ($pending_requests as $requesting_user) {
 			// join the group
-			groups_join_group($entity, $requesting_user);
+			$entity->join($requesting_user);
 		}
 	}
 }

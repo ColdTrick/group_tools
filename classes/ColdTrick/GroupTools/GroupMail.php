@@ -2,27 +2,25 @@
 
 namespace ColdTrick\GroupTools;
 
-use Elgg\Notifications\Event;
+use Elgg\Notifications\NotificationEvent;
+
 class GroupMail {
 	
 	/**
 	 * Add a menu option to the page menu of groups
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:page'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function pageMenu($hook, $type, $return_value, $params) {
+	public static function pageMenu(\Elgg\Hook $hook) {
 		
 		if (!elgg_is_logged_in()) {
 			return;
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
-		if (!($page_owner instanceof \ElggGroup) || !elgg_in_context('groups')) {
+		if (!$page_owner instanceof \ElggGroup || !elgg_in_context('groups')) {
 			return;
 		}
 		
@@ -30,10 +28,14 @@ class GroupMail {
 			return;
 		}
 		
+		$return_value = $hook->getValue();
+		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'mail',
 			'text' => elgg_echo('group_tools:menu:mail'),
-			'href' => "groups/mail/{$page_owner->getGUID()}",
+			'href' => elgg_generate_url('add:object:group_tools_group_mail', [
+				'guid' => $page_owner->guid,
+			]),
 		]);
 		
 		return $return_value;
@@ -42,24 +44,23 @@ class GroupMail {
 	/**
 	 * Change the notification for a GroupMail
 	 *
-	 * @param string                           $hook         the name of the hook
-	 * @param string                           $type         the type of the hook
-	 * @param \Elgg\Notifications\Notification $return_value current return value
-	 * @param array                            $params       supplied params
+	 * @param \Elgg\Hook $hook 'prepare', 'notification:enqueue:object:group_tools_group_mail'
 	 *
 	 * @return void|\Elgg\Notifications\Notification
 	 */
-	public static function prepareNotification($hook, $type, $return_value, $params) {
+	public static function prepareNotification(\Elgg\Hook $hook) {
 		
-		$event = elgg_extract('event', $params);
-		if (!($event instanceof \Elgg\Notifications\Event)) {
+		$event = $hook->getParam('event');
+		if (!$event instanceof NotificationEvent) {
 			return;
 		}
 		
 		$object = $event->getObject();
-		if (!($object instanceof \GroupMail)) {
+		if (!$object instanceof \GroupMail) {
 			return;
 		}
+		
+		$return_value = $hook->getValue();
 		
 		$return_value->subject = $object->getSubject();
 		$return_value->summary = $object->getSubject();
@@ -71,22 +72,19 @@ class GroupMail {
 	/**
 	 * Get the subscribers for the GroupMail
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'get', 'subscriptions'
 	 *
 	 * @return void|array
 	 */
-	public static function getSubscribers($hook, $type, $return_value, $params) {
+	public static function getSubscribers(\Elgg\Hook $hook) {
 		
-		$event = elgg_extract('event', $params);
-		if (!($event instanceof \Elgg\Notifications\Event)) {
+		$event = $hook->getParam('event');
+		if (!$event instanceof NotificationEvent) {
 			return;
 		}
 		
 		$object = $event->getObject();
-		if (!($object instanceof \GroupMail)) {
+		if (!$object instanceof \GroupMail) {
 			return;
 		}
 		
@@ -99,22 +97,19 @@ class GroupMail {
 	/**
 	 * Tasks todo after the notification has been send
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param void   $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'send:after', 'notifications'
 	 *
 	 * @return void
 	 */
-	public static function cleanup($hook, $type, $return_value, $params) {
+	public static function cleanup(\Elgg\Hook $hook) {
 		
-		$event = elgg_extract('event', $params);
-		if (!($event instanceof \Elgg\Notifications\Event)) {
+		$event = $hook->getParam('event');
+		if (!$event instanceof NotificationEvent) {
 			return;
 		}
 		
 		$object = $event->getObject();
-		if (!($object instanceof \GroupMail)) {
+		if (!$object instanceof \GroupMail) {
 			return;
 		}
 		

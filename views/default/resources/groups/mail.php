@@ -3,19 +3,17 @@
  * Mail group members
  */
 
+use Elgg\EntityPermissionsException;
+
 elgg_gatekeeper();
 
-$group_guid = (int) elgg_extract('group_guid', $vars);
+$group_guid = (int) elgg_extract('guid', $vars);
+elgg_entity_gatekeeper($group, 'group');
 
 $group = get_entity($group_guid);
-if (!($group instanceof ElggGroup)) {
-	register_error(elgg_echo('error:404:title'));
-	forward(REFERER);
-}
 
 if (!group_tools_group_mail_enabled($group) && !group_tools_group_mail_members_enabled($group)) {
-	register_error(elgg_echo('error:404:title'));
-	forward($group->getURL());
+	throw new EntityPermissionsException();
 }
 
 elgg_require_js('group_tools/mail');

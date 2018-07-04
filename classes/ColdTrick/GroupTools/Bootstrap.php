@@ -133,6 +133,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForGroups');
 		$hooks->registerHandler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForUsers');
 		$hooks->registerHandler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportStaleInfo');
+		$hooks->registerHandler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupAdmins::addGroupAdminsToMembershipRequest');
 		$hooks->registerHandler('get', 'subscriptions', '\ColdTrick\GroupTools\Notifications::adminApprovalSubs');
 		$hooks->registerHandler('prepare', 'notification:admin_approval:group:', '\ColdTrick\GroupTools\Notifications::prepareAdminApprovalMessage');
 		$hooks->registerHandler('action', 'groups/edit', '\ColdTrick\GroupTools\Group::editActionListener');
@@ -142,5 +143,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('prepare', 'notification:enqueue:object:group_tools_group_mail', '\ColdTrick\GroupTools\GroupMail::prepareNotification');
 		$hooks->registerHandler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupMail::getSubscribers');
 		$hooks->registerHandler('send:after', 'notifications', '\ColdTrick\GroupTools\GroupMail::cleanup');
+		$hooks->registerHandler('prepare', 'notification:membership_request:group:group', '\ColdTrick\GroupTools\GroupAdmins::prepareMembershipRequestMessage');
 	}
 }

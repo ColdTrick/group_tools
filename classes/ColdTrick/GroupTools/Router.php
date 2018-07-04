@@ -48,13 +48,6 @@ class Router {
 					$resource_loaded = true;
 				}
 				break;
-			case 'mail':
-				
-				echo elgg_view_resource('group_tools/groups/mail', [
-					'group_guid' => (int) elgg_extract('1', $page),
-				]);
-				$resource_loaded = true;
-				break;
 			case 'group_invite_autocomplete':
 				
 				echo elgg_view_resource('group_tools/groups/group_invite_autocomplete');
