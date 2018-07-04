@@ -61,7 +61,7 @@ class Router {
 				$resource_loaded = true;
 				break;
 			case 'add':
-				if (group_tools_is_group_creation_limited()) {
+				if (elgg_get_plugin_setting('limited_groups', 'groups') === 'yes') {
 					elgg_admin_gatekeeper();
 				}
 				break;
