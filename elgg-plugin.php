@@ -72,6 +72,12 @@ return [
 		'groups/edit' => [],
 		'groups/invite' => [],
 	],
+	'routes' => [
+		'add:object:group_tools_group_mail' => [
+			'path' => '/groups/mail/{guid}',
+			'resource' => 'groups/mail',
+		],
+	],
 	'widgets' => [
 		'group_river_widget' => [
 			/* 2012-05-03: restored limited functionality of group activity widget
