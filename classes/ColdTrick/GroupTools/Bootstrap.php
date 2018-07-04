@@ -135,6 +135,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForGroups');
 		$hooks->registerHandler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportGroupAdminsForUsers');
 		$hooks->registerHandler('export_value', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::exportStaleInfo');
+		$hooks->registerHandler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupAdmins::addGroupAdminsToMembershipRequest');
 		$hooks->registerHandler('get', 'subscriptions', '\ColdTrick\GroupTools\Notifications::adminApprovalSubs');
 		$hooks->registerHandler('prepare', 'notification:admin_approval:group:', '\ColdTrick\GroupTools\Notifications::prepareAdminApprovalMessage');
 		$hooks->registerHandler('action', 'groups/edit', '\ColdTrick\GroupTools\Group::editActionListener');
@@ -150,5 +151,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('prepare', 'menu:title', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
 		$hooks->registerHandler('prepare', 'menu:groups:my_status', '\ColdTrick\GroupTools\Cleanup::hideMembershipActions');
 		$hooks->registerHandler('prepare', 'menu:owner_block', '\ColdTrick\GroupTools\Cleanup::hideOwnerBlockMenu');
+		$hooks->registerHandler('prepare', 'notification:membership_request:group:group', '\ColdTrick\GroupTools\GroupAdmins::prepareMembershipRequestMessage');
 	}
 }
