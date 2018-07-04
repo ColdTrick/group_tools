@@ -24,14 +24,6 @@
 	cursor: pointer;
 }
 
-.group-tools-status-open {
-	color: green;
-}
-
-.group-tools-status-closed {
-	color: orange;
-}
-
 .group-tools-suggested-groups .elgg-item {
 	width: 33%;
 	text-align: center;

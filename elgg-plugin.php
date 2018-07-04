@@ -28,7 +28,6 @@ return [
 		'search_index' => 'no',
 
 		'auto_suggest_groups' => 'yes',
-		'show_membership_mode' => 'yes',
 		'invite_friends' => 'yes',
 		'invite_email_match' => 'yes',
 	],
