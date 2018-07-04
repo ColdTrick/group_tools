@@ -56,16 +56,6 @@ echo elgg_view('input/text', [
 echo '</div>';
 
 echo '<div>';
-echo elgg_echo('widgets:index_groups:show_members');
-echo elgg_view('input/select', [
-	'name' => 'params[show_members]',
-	'options_values' => $noyes_options,
-	'value' => $widget->show_members,
-	'class' => 'mls',
-]);
-echo '</div>';
-
-echo '<div>';
 echo elgg_echo('widgets:index_groups:featured');
 echo elgg_view('input/select', [
 	'name' => 'params[featured]',

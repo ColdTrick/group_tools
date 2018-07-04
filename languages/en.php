@@ -473,7 +473,6 @@ your group '%s' was declined and removed by a site administrator.",
 
 	// index_groups
 	'widgets:index_groups:description' => "List groups from your community",
-	'widgets:index_groups:show_members' => "Show members count",
 	'widgets:index_groups:featured' => "Show only featured groups",
 	'widgets:index_groups:sorting' => "How to sort the groups",
 

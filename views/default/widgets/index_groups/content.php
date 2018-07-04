@@ -90,17 +90,5 @@ switch ($sorting_value) {
 		break;
 }
 
-// show group member count
-$show_members = false;
-if ($widget->show_members == 'yes') {
-	$show_members = true;
-	elgg_push_context('widgets_groups_show_members');
-}
-
 // list groups
 echo elgg_list_entities($options, $getter);
-
-// restore context
-if ($show_members) {
-	elgg_pop_context();
-}
