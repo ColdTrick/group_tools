@@ -41,18 +41,16 @@ if (!empty($auto_joins)) {
 	$content .= elgg_echo('group_tools:admin:auto_join:default:none');
 }
 
-$title = elgg_view('output/url', [
-	'text' => elgg_view_icon('edit'),
+$menu = elgg_view('output/url', [
+	'text' => elgg_echo('edit'),
+	'icon' => 'edit',
 	'href' => 'ajax/form/group_tools/admin/auto_join/default',
-	'title' => elgg_echo('edit'),
 	'class' => [
-		'float-alt',
 		'elgg-lightbox',
 	],
 	'data-colorbox-opts' => json_encode([
 		'maxWidth' => '650px',
 	]),
 ]);
-$title .= elgg_echo('group_tools:admin:auto_join:default');
 
-echo elgg_view_module('inline', $title, $content);
+echo elgg_view_module('info', elgg_echo('group_tools:admin:auto_join:default'), $content, ['menu' => $menu]);

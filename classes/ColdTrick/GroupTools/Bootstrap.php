@@ -14,7 +14,10 @@ class Bootstrap extends DefaultPluginBootstrap {
 		// group admins
 		if (group_tools_multiple_admin_enabled()) {
 			// add group tool option
-			add_group_tool_option('group_multiple_admin_allow', elgg_echo('group_tools:multiple_admin:group_tool_option'), false);
+			elgg()->group_tools->register('group_multiple_admin_allow', [
+				'label' => elgg_echo('group_tools:multiple_admin:group_tool_option'),
+				'default_on' => false,
+			]);
 		}
 		
 		// unregister dashboard widget group_activity, because our version is better ;)
@@ -27,9 +30,15 @@ class Bootstrap extends DefaultPluginBootstrap {
 		}
 		
 		// related groups
-		add_group_tool_option('related_groups', elgg_echo('groups_tools:related_groups:tool_option'), false);
+		elgg()->group_tools->register('related_groups', [
+			'label' => elgg_echo('groups_tools:related_groups:tool_option'),
+			'default_on' => false,
+		]);
 		if (group_tools_group_mail_members_enabled()) {
-			add_group_tool_option('mail_members', elgg_echo('group_tools:tools:mail_members'), false);
+			elgg()->group_tools->register('mail_members', [
+				'label' => elgg_echo('group_tools:tools:mail_members'),
+				'default_on' => false,
+			]);
 		}
 		
 		elgg_register_notification_event('group', null, ['admin_approval']);
