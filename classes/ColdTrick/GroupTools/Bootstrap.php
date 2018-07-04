@@ -60,7 +60,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/membershiprequests');
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinviteform');
 		elgg_extend_view('groups/tool_latest', 'group_tools/modules/related_groups');
-		elgg_extend_view('page/elements/sidebar', 'group_tools/sidebar/featured');
 		elgg_extend_view('groups/edit', 'group_tools/forms/cleanup', 450);
 		elgg_extend_view('groups/edit', 'group_tools/group_edit_tabbed', 10);
 		elgg_extend_view('groups/edit', 'group_tools/extends/groups/edit/admin_approve', 1);
