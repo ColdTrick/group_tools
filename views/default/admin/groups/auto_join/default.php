@@ -15,15 +15,14 @@ if (!empty($auto_joins)) {
 	$row[] = elgg_format_element('th', ['style' => 'width: 40px;', 'class' => 'center'], '&nbsp;');
 	$row[] = elgg_format_element('th', [], elgg_echo('groups:name'));
 	
-	$rows[] = elgg_format_element('tr', [], implode('', $row));
+	$rows[] = elgg_format_element('thead', [], elgg_format_element('tr', [], implode('', $row)));
 	
-	$options = [
+	$groups = new ElggBatch('elgg_get_entities', [
 		'type' => 'group',
 		'limit' => false,
 		'guids' => $auto_joins,
-	];
+	]);
 	
-	$groups = new ElggBatch('elgg_get_entities', $options);
 	foreach ($groups as $group) {
 		$row = [];
 		
