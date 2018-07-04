@@ -42,7 +42,6 @@ return [
 	'actions' => [
 		'group_tools/toggle_admin' => [],
 		'group_tools/mail' => [],
-		'group_tools/cleanup' => [],
 		'group_tools/invite_members' => [],
 		'group_tools/welcome_message' => [],
 		'group_tools/domain_based' => [],
