@@ -461,16 +461,6 @@ your group '%s' was declined and removed by a site administrator.",
 	// Featured Groups
 	'widgets:featured_groups:description' => "Shows a random list of featured groups",
   	'widgets:featured_groups:edit:show_random_group' => "Show a random non-featured group",
-
-	// group_news widget
-	"widgets:group_news:title" => "Group News",
-	"widgets:group_news:description" => "Shows latest 5 blogs from various groups",
-	"widgets:group_news:no_projects" => "No groups configured",
-	"widgets:group_news:no_news" => "No blogs for this group",
-	"widgets:group_news:settings:project" => "Group",
-	"widgets:group_news:settings:no_project" => "Select a group",
-	"widgets:group_news:settings:blog_count" => "Max number of blogs",
-	"widgets:group_news:settings:group_icon_size" => "Group icon size",
 	
 	'groups:search:title' => "Search for groups matching '%s'",
 	

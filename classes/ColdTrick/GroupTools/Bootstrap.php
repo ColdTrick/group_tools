@@ -24,11 +24,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		// @todo is this still needed?
 		elgg_unregister_widget_type('group_activity');
 		
-		if (elgg_is_active_plugin('blog')) {
-			elgg_register_widget_type('group_news', elgg_echo('widgets:group_news:title'), elgg_echo('widgets:group_news:description'), ['profile', 'index', 'dashboard'], true);
-			elgg_extend_view('css/elgg', 'css/group_tools/group_news.css');
-		}
-		
 		// related groups
 		elgg()->group_tools->register('related_groups', [
 			'label' => elgg_echo('groups_tools:related_groups:tool_option'),
