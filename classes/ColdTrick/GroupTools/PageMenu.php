@@ -48,6 +48,22 @@ class PageMenu {
 			'parent_name' => 'groups',
 			'section' => 'configure',
 		]);
+
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'groups:featured',
+			'href' => 'admin/groups/featured',
+			'text' => elgg_echo('admin:groups:featured'),
+			'parent_name' => 'groups',
+			'section' => 'configure',
+		]);
+
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'groups:suggested',
+			'href' => 'admin/groups/suggested',
+			'text' => elgg_echo('admin:groups:suggested'),
+			'parent_name' => 'groups',
+			'section' => 'configure',
+		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:admin_approval',

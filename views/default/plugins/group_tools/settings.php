@@ -16,11 +16,13 @@ $listing_options = [
 if (elgg_is_active_plugin('discussions')) {
 	$listing_options['discussion'] = elgg_echo('discussion:latest');
 }
+
 $listing_sorting_options = [
 	'newest' => elgg_echo('sort:newest'),
 	'alpha' => elgg_echo('sort:alpha'),
 	'popular' => elgg_echo('sort:popular'),
 ];
+
 $listing_supported_sorting = [
 	'all',
 	'yours',
@@ -28,11 +30,6 @@ $listing_supported_sorting = [
 	'closed',
 	'featured',
 ];
-
-$suggested_groups = [];
-if (!empty($plugin->suggested_groups)) {
-	$suggested_groups = string_to_tag_array($plugin->suggested_groups);
-}
 
 // group management settings
 $general_fields = [
@@ -412,119 +409,3 @@ $group_content .= elgg_view_field([
 ]);
 
 echo elgg_view_module('info', elgg_echo('group_tools:settings:content:title'), $group_content);
-
-// list all special state groups (features/suggested)
-$tabs = [];
-$content = '';
-
-// featured
-$options = [
-	'type' => 'group',
-	'limit' => false,
-	'metadata_name_value_pairs' => [
-		'name' => 'featured_group',
-		'value' => 'yes',
-	],
-];
-
-$featured_groups = elgg_get_entities_from_metadata($options);
-if (!empty($featured_groups)) {
-	$tabs[] = [
-		'text' => elgg_echo('status:featured'),
-		'href' => '#group-tools-special-states-featured',
-		'selected' => true,
-	];
-	
-	$content .= '<div id="group-tools-special-states-featured">';
-	$content .= elgg_view('output/longtext', [
-		'value' => elgg_echo('group_tools:settings:special_states:featured:description'),
-	]);
-	
-	$content .= '<table class="elgg-table mtm">';
-	
-	$content .= '<thead><tr>';
-	$content .= elgg_format_element('th', ['colspan' => 2], elgg_echo('groups:name'));
-	$content .= '</tr></thead>';
-	
-	foreach ($featured_groups as $group) {
-		$content .= '<tr>';
-		$content .= elgg_format_element('td', [], elgg_view('output/url', [
-			'href' => $group->getURL(),
-			'text' => $group->name,
-		]));
-		$content .= elgg_format_element('td', ['style' => 'width: 25px;'], elgg_view('output/url', [
-			'href' => "action/groups/featured?group_guid={$group->getGUID()}",
-			'title' => elgg_echo('remove'),
-			'text' => elgg_view_icon('delete'),
-			'confirm' => true,
-		]));
-		$content .= '</tr>';
-	}
-	
-	$content .= '</table>';
-	$content .= '</div>';
-}
-
-// suggested
-if (!empty($suggested_groups)) {
-	$class = '';
-	$selected = true;
-	if (!empty($tabs)) {
-		$class = 'hidden';
-		$selected = false;
-	}
-	$tabs[] = [
-		'text' => elgg_echo('group_tools:settings:special_states:suggested'),
-		'href' => '#group-tools-special-states-suggested',
-		'selected' => $selected,
-	];
-	
-	$content .= "<div id='group-tools-special-states-suggested' class='{$class}'>";
-	$content .= elgg_view('output/longtext', [
-		'value' => elgg_echo('group_tools:settings:special_states:suggested:description'),
-	]);
-	
-	$content .= '<table class="elgg-table mtm">';
-	
-	$content .= '<tr>';
-	$content .= elgg_format_element('th', ['colspan' => 2], elgg_echo('groups:name'));
-	$content .= '</tr>';
-	
-	$options = [
-		'type' => 'group',
-		'limit' => false,
-		'guids' => $suggested_groups,
-	];
-	
-	$groups = new ElggBatch('elgg_get_entities', $options);
-	foreach ($groups as $group) {
-		$content .= '<tr>';
-		$content .= elgg_format_element('td', [], elgg_view('output/url', [
-			'href' => $group->getURL(),
-			'text' => $group->name,
-		]));
-		$content .= elgg_format_element('td', ['style' => 'width: 25px;'], elgg_view('output/url', [
-			'href' => "action/group_tools/admin/toggle_special_state?group_guid={$group->getGUID()}&state=suggested",
-			'title' => elgg_echo('remove'),
-			'text' => elgg_view_icon('delete'),
-			'confirm' => true,
-		]));
-		$content .= '</tr>';
-	}
-	
-	$content .= '</table>';
-	$content .= '</div>';
-}
-
-if (!empty($tabs)) {
-	$navigation = '';
-	if (count($tabs) > 1) {
-		elgg_require_js('group_tools/settings');
-		$navigation = elgg_view('navigation/tabs', [
-			'tabs' => $tabs,
-			'id' => 'group-tools-special-states-tabs',
-		]);
-	}
-	
-	echo elgg_view_module('info', elgg_echo('group_tools:settings:special_states'), $navigation . $content);
-}
