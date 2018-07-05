@@ -57,7 +57,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('groups/edit', 'group_tools/group_edit_tabbed', 10);
 		elgg_extend_view('groups/edit', 'group_tools/extends/groups/edit/admin_approve', 1);
 		elgg_extend_view('groups/profile/layout', 'group_tools/extends/groups/edit/admin_approve', 1);
-		elgg_extend_view('groups/edit', 'group_tools/forms/special_states', 350);
 		elgg_extend_view('groups/edit', 'group_tools/forms/notifications', 375);
 		elgg_extend_view('groups/edit', 'group_tools/forms/invite_members', 475);
 		elgg_extend_view('groups/edit', 'group_tools/forms/welcome_message');
@@ -105,6 +104,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:user_hover', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin', 501);
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::relatedGroup');
+		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::suggestedGroup');
 		$hooks->registerHandler('register', 'menu:page', '\ColdTrick\GroupTools\PageMenu::registerAdminItems', 501);
 		$hooks->registerHandler('register', 'menu:membershiprequest', '\ColdTrick\GroupTools\Membership::membershiprequestMenu');
 		$hooks->registerHandler('register', 'menu:emailinvitation', '\ColdTrick\GroupTools\Membership::emailinvitationMenu');

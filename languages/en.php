@@ -239,6 +239,9 @@ You can find the group here:
 	'group_tools:special_states:featured' => "Is this group featured",
 	'group_tools:special_states:suggested' => "Is this group suggested to (new) users",
 	
+	'group_tools:suggested:set' => "Suggest this group to users",
+	'group_tools:suggested:remove' => "Remove group from suggested list",
+	
 	// group admins
 	'group_tools:multiple_admin:group_admins' => "Group admins",
 	'group_tools:multiple_admin:profile_actions:remove' => "Remove group admin",

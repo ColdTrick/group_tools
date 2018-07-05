@@ -42,4 +42,63 @@ class EntityMenu {
 		
 		return $return_value;
 	}
+	
+	/**
+	 * Allow toggleing the suggested state
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function suggestedGroup(\Elgg\Hook $hook) {
+		
+		if (!elgg_is_admin_logged_in()) {
+			return;
+		}
+		
+		$entity = $hook->getEntityParam();
+		if (!$entity instanceof \ElggGroup) {
+			return;
+		}
+		
+		static $suggested_groups;
+		if (!isset($suggested_groups)) {
+			$suggested_groups = elgg_get_plugin_setting('suggested_groups', 'group_tools');
+			$suggested_groups = string_to_tag_array($suggested_groups);
+		}
+		
+		$suggested = in_array($entity->guid, $suggested_groups);
+		
+		$return_value = $hook->getValue();
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'set-suggested-group',
+			'icon' => 'check',
+			'text' => elgg_echo('group_tools:suggested:set'),
+			'href' => elgg_generate_action_url('group_tools/admin/toggle_special_state', [
+				'group_guid' => $entity->guid,
+				'state' => 'suggested',
+			]),
+			'item_class' => $suggested ? 'hidden' : null,
+			'confirm' => true,
+			'data-toggle' => 'remove-suggested-group',
+			'priority' => 550,
+		]);
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'remove-suggested-group',
+			'icon' => 'ban',
+			'text' => elgg_echo('group_tools:suggested:remove'),
+			'href' => elgg_generate_action_url('group_tools/admin/toggle_special_state', [
+				'group_guid' => $entity->guid,
+				'state' => 'suggested',
+			]),
+			'confirm' => true,
+			'item_class' => !$suggested ? 'hidden' : null,
+			'data-toggle' => 'set-suggested-group',
+			'priority' => 550,
+		]);
+		
+		return $return_value;
+	}
 }
