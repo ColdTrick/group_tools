@@ -119,7 +119,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::cleanupTabs', 900);
 		$hooks->registerHandler('register', 'menu:groups:my_status', '\ColdTrick\GroupTools\MyStatus::registerJoinStatus');
 		$hooks->registerHandler('prepare', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::setSelected', 550);
-		$hooks->registerHandler('route', 'groups', '\ColdTrick\GroupTools\Router::groups');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToGroups');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToUsers');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addStaleInfo');
@@ -137,5 +136,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('get', 'subscriptions', '\ColdTrick\GroupTools\GroupMail::getSubscribers');
 		$hooks->registerHandler('send:after', 'notifications', '\ColdTrick\GroupTools\GroupMail::cleanup');
 		$hooks->registerHandler('prepare', 'notification:membership_request:group:group', '\ColdTrick\GroupTools\GroupAdmins::prepareMembershipRequestMessage');
+		$hooks->registerHandler('view_vars', 'resources/groups/all', '\ColdTrick\GroupTools\Views::prepareGroupAll');
+		$hooks->registerHandler('view_vars', 'resources/groups/add', '\ColdTrick\GroupTools\Views::protectGroupAdd');
 	}
 }
