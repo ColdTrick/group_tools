@@ -11,17 +11,17 @@ $group = get_entity($group_guid);
 // notify owner
 $owner = $group->getOwnerEntity();
 
-$subject = elgg_echo('group_tools:group:admin_approve:decline:subject', [$group->name], $owner->language);
-$summary = elgg_echo('group_tools:group:admin_approve:decline:summary', [$group->name], $owner->language);
+$subject = elgg_echo('group_tools:group:admin_approve:decline:subject', [$group->getDisplayName()], $owner->language);
+$summary = elgg_echo('group_tools:group:admin_approve:decline:summary', [$group->getDisplayName()], $owner->language);
 $message = elgg_echo('group_tools:group:admin_approve:decline:message', [
-	$owner->name,
-	$group->name,
+	$owner->getDisplayName(),
+	$group->getDisplayName(),
 ], $owner->language);
 
 $params = [
 	'summary' => $summary,
 ];
-notify_user($owner->getGUID(), elgg_get_logged_in_user_guid(), $subject, $message, $params);
+notify_user($owner->guid, elgg_get_logged_in_user_guid(), $subject, $message, $params);
 
 // correct forward url
 $forward_url = REFERER;

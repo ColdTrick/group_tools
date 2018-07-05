@@ -21,7 +21,7 @@ $form_body .= elgg_format_element('div', [], elgg_view('input/tags', [
 ]));
 
 $form_body .= '<div class="elgg-foot mtm">';
-$form_body .= elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->getGUID()]);
+$form_body .= elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->guid]);
 $form_body .= elgg_view('input/submit', ['value' => elgg_echo('save')]);
 $form_body .= '</div>';
 

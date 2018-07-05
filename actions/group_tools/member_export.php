@@ -21,10 +21,10 @@ if (group_tools_multiple_admin_enabled()) {
 		'type' => 'user',
 		'limit' => false,
 		'relationship' => 'group_admin',
-		'relationship_guid' => $group->getGUID(),
+		'relationship_guid' => $group->guid,
 		'inverse_relationship' => true,
 		'wheres' => [
-			"e.guid <> {$group->getOwnerGUID()}",
+			"e.guid <> {$group->owner_guid}",
 		],
 		'callback' => function($row) {
 			return (int) $row->guid;
@@ -66,7 +66,7 @@ $options = [
 	'type' => 'user',
 	'limit' => false,
 	'relationship' => 'member',
-	'relationship_guid' => $group->getGUID(),
+	'relationship_guid' => $group->guid,
 	'inverse_relationship' => true,
 ];
 
@@ -75,7 +75,7 @@ $members = new ElggBatch('elgg_get_entities_from_relationship', $options);
 foreach ($members as $member) {
 	// basic user information
 	$info = [
-		$member->name,
+		$member->getDisplayName(),
 		$member->username,
 		$member->email,
 		$member->banned,
@@ -87,10 +87,10 @@ foreach ($members as $member) {
 	$info[] = date('Y-m-d G:i:s', $member_since);
 	
 	// role
-	if ($group->getOwnerGUID() === $member->getGUID()) {
+	if ($group->owner_guid === $member->guid) {
 		// owner
 		$info[] = 'owner';
-	} elseif (in_array($member->getGUID(), $group_admins)) {
+	} elseif (in_array($member->guid, $group_admins)) {
 		$info[] = 'group admin';
 	} else {
 		$info[] = 'member';
@@ -126,7 +126,7 @@ fclose($fh);
 
 // output the csv
 header('Content-Type: text/csv');
-header('Content-Disposition: attachment; filename="' . elgg_get_friendly_title($group->name) . '.csv"');
+header('Content-Disposition: attachment; filename="' . elgg_get_friendly_title($group->getDisplayName()) . '.csv"');
 header('Content-Length: ' . strlen($contents));
 
 echo $contents;

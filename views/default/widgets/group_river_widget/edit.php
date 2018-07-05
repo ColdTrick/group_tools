@@ -71,7 +71,7 @@ $options = [
 
 if ($owner instanceof ElggUser) {
 	$options['relationship'] = 'member';
-	$options['relationship_guid'] = $owner->getGUID();
+	$options['relationship_guid'] = $owner->guid;
 }
 
 $batch = new ElggBatch('elgg_get_entities_from_relationship', $options);
@@ -84,7 +84,7 @@ if (!$batch->valid()) {
 // get groups
 $group_options_values = [];
 foreach ($batch as $group) {
-	$group_options_values[$group->name] = $group->getGUID();
+	$group_options_values[$group->getDisplayName()] = $group->guid;
 }
 
 // make options

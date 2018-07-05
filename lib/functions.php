@@ -187,7 +187,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 	
 	if (empty($found_group)) {
 		// register invite with group
-		$group->annotate('email_invitation', "{$invite_code}|{$email}", ACCESS_LOGGED_IN, $group->getGUID());
+		$group->annotate('email_invitation', "{$invite_code}|{$email}", ACCESS_LOGGED_IN, $group->guid);
 	}
 	
 	// make site email
@@ -461,7 +461,7 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$group_membership_where = "e.guid NOT IN (
 		SELECT er.guid_two FROM {$dbprefix}entity_relationships er
-		WHERE er.guid_one = {$user->getGUID()}
+		WHERE er.guid_one = {$user->guid}
 		AND er.relationship IN (
 			'member',
 			'membership_request'

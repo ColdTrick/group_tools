@@ -20,13 +20,13 @@ elgg_set_page_owner_guid($guid);
 
 $title = elgg_echo('group_tools:menu:invitations');
 
-elgg_push_breadcrumb($group->name, $group->getURL());
+elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 elgg_push_breadcrumb($title);
 
 // additional title menu item
 elgg_register_menu_item('title', [
 	'name' => 'groups:invite',
-	'href' => "groups/invite/{$group->getGUID()}",
+	'href' => "groups/invite/{$group->guid}",
 	'text' => elgg_echo('groups:invite'),
 	'link_class' => 'elgg-button elgg-button-action',
 ]);
@@ -42,7 +42,7 @@ $options = [
 		'SUBSTRING_INDEX(v.string, "|", -1) AS invited_email',
 	],
 	'annotation_name' => 'email_invitation',
-	'annotation_owner_guid' => $group->getGUID(),
+	'annotation_owner_guid' => $group->guid,
 	'wheres' => [
 		'(v.string LIKE "%|%")',
 	],

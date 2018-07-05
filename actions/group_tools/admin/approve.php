@@ -31,11 +31,11 @@ unset($group->intended_access_id);
 // notify owner
 $owner = $group->getOwnerEntity();
 
-$subject = elgg_echo('group_tools:group:admin_approve:approve:subject', [$group->name], $owner->language);
-$summary = elgg_echo('group_tools:group:admin_approve:approve:summary', [$group->name], $owner->language);
+$subject = elgg_echo('group_tools:group:admin_approve:approve:subject', [$group->getDisplayName()], $owner->language);
+$summary = elgg_echo('group_tools:group:admin_approve:approve:summary', [$group->getDisplayName()], $owner->language);
 $message = elgg_echo('group_tools:group:admin_approve:approve:message', [
-	$owner->name,
-	$group->name,
+	$owner->getDisplayName(),
+	$group->getDisplayName(),
 	$group->getURL(),
 ], $owner->language);
 
@@ -44,7 +44,7 @@ $params = [
 	'action' => 'approve',
 	'summary' => $summary,
 ];
-notify_user($owner->getGUID(), elgg_get_logged_in_user_guid(), $subject, $message, $params);
+notify_user($owner->guid, elgg_get_logged_in_user_guid(), $subject, $message, $params);
 
 // report success
 return elgg_ok_response('', elgg_echo('group_tools:group:admin_approve:approve:success'));

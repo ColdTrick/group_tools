@@ -11,7 +11,7 @@ if (!($group instanceof ElggGroup) || !($user instanceof ElggUser)) {
 }
 
 // don't check canEdit() because group admins can do that
-if (($group->getOwnerGUID() !== $user->getGUID()) && !$user->isAdmin()) {
+if (($group->owner_guid !== $user->guid) && !$user->isAdmin()) {
 	return;
 }
 	
@@ -20,14 +20,14 @@ $dbprefix = elgg_get_config('dbprefix');
 $friends_options = [
 	'type' => 'user',
 	'relationship' => 'friend',
-	'relationship_guid' => $user->getGUID(),
+	'relationship_guid' => $user->guid,
 	'limit' => false,
 	'count' => true,
 	'joins' => [
 		"JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid",
 	],
 	'wheres' => [
-		"(e.guid <> {$group->getOwnerGUID()})",
+		"(e.guid <> {$group->owner_guid})",
 	],
 	'order_by' => 'ue.name',
 	'selects' => ['ue.name'],
@@ -36,7 +36,7 @@ $friends_options = [
 $member_options = [
 	'type' => 'user',
 	'relationship' => 'member',
-	'relationship_guid' => $group->getGUID(),
+	'relationship_guid' => $group->guid,
 	'inverse_relationship' => true,
 	'limit' => false,
 	'count' => true,
@@ -44,7 +44,7 @@ $member_options = [
 		"JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid",
 	],
 	'wheres' => [
-		"(e.guid NOT IN ({$group->getOwnerGUID()}, {$user->getGUID()}))",
+		"(e.guid NOT IN ({$group->owner_guid}, {$user->guid}))",
 	],
 	'order_by' => 'ue.name',
 	'selects' => ['ue.name'],
@@ -57,12 +57,12 @@ $show_selector = false;
 
 $options = [];
 // add current group owner
-$options[] = elgg_format_element('option', ['value' => $group->getOwnerGUID()], elgg_echo('group_tools:admin_transfer:current', [$group->getOwnerEntity()->name]));
+$options[] = elgg_format_element('option', ['value' => $group->owner_guid], elgg_echo('group_tools:admin_transfer:current', [$group->getOwnerEntity()->getDisplayName()]));
 
 // add current user
-if ($group->getOwnerGUID() !== $user->getGUID()) {
+if ($group->owner_guid !== $user->guid) {
 	$show_selector = true;
-	$options[] = elgg_format_element('option', ['value' => $user->getGUID()], elgg_echo('group_tools:admin_transfer:myself'));
+	$options[] = elgg_format_element('option', ['value' => $user->guid], elgg_echo('group_tools:admin_transfer:myself'));
 }
 
 if (!$show_selector && empty($friends) && empty($members)) {
@@ -124,7 +124,7 @@ echo elgg_format_element('select', [
 	'id' => 'groups-owner-guid',
 ], implode('', $options));
 
-if ($group->getOwnerGUID() == $user->getGUID()) {
+if ($group->owner_guid == $user->guid) {
 	echo elgg_format_element('div', ['class' => 'elgg-field-help elgg-text-help'], elgg_echo('groups:owner:warning'));
 	
 	// stay admin

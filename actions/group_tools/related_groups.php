@@ -23,30 +23,30 @@ if (!$group->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
-if ($group->getGUID() === $related->getGUID()) {
+if ($group->guid === $related->guid) {
 	return elgg_error_response(elgg_echo('group_tools:action:related_groups:error:same'));
 }
 
 // not already related?
-if (check_entity_relationship($group->getGUID(), 'related_group', $related->getGUID())) {
+if (check_entity_relationship($group->guid, 'related_group', $related->guid)) {
 	return elgg_error_response(elgg_echo('group_tools:action:related_groups:error:already'));
 }
 
-if (!add_entity_relationship($group->getGUID(), 'related_group', $related->getGUID())) {
+if (!add_entity_relationship($group->guid, 'related_group', $related->guid)) {
 	return elgg_error_response(elgg_echo('group_tools:action:related_groups:error:add'));
 }
 
 // notify the other owner about this
-if ($group->getOwnerGUID() != $related->getOwnerGUID()) {
+if ($group->owner_guid != $related->owner_guid) {
 	$subject = elgg_echo('group_tools:related_groups:notify:owner:subject');
 	$message = elgg_echo('group_tools:related_groups:notify:owner:message', [
-		$related->getOwnerEntity()->name,
-		elgg_get_logged_in_user_entity()->name,
-		$related->name,
-		$group->name,
+		$related->getOwnerEntity()->getDisplayName(),
+		elgg_get_logged_in_user_entity()->getDisplayName(),
+		$related->getDisplayName(),
+		$group->getDisplayName(),
 	]);
 	
-	notify_user($related->getOwnerGUID(), $group->getOwnerGUID(), $subject, $message);
+	notify_user($related->owner_guid, $group->owner_guid, $subject, $message);
 }
 
 return elgg_ok_response('', elgg_echo('group_tools:action:related_groups:success'));

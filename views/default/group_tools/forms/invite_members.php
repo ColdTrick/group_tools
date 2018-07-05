@@ -46,7 +46,7 @@ $content .= elgg_view('output/longtext', [
 ]);
 
 $content .= '<div class="mtm">';
-$content .= elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->getGUID()]);
+$content .= elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->guid]);
 $content .= elgg_view('input/submit', ['value' => elgg_echo('save')]);
 $content .= '</div>';
 

@@ -14,7 +14,7 @@ foreach ($groups as $group) {
 	
 	$group_url = $group->getURL();
 	
-	$join_url = "action/groups/join?group_guid={$group->getGUID()}";
+	$join_url = "action/groups/join?group_guid={$group->guid}";
 	
 	if ($group->isPublicMembership() || $group->canEdit()) {
 		$join_text = elgg_echo('groups:join');
@@ -24,7 +24,7 @@ foreach ($groups as $group) {
 	}
 	
 	$group_title = elgg_format_element('h3', [], elgg_view('output/url', [
-		'text' => $group->name,
+		'text' => $group->getDisplayName(),
 		'href' => $group_url,
 		'is_trusted' => true,
 	]));

@@ -25,7 +25,7 @@ foreach ($emails as $annotation) {
 	
 	$email_title = elgg_view('output/email', ['value' => $email]);
 	
-	$url = "action/group_tools/revoke_email_invitation?annotation_id={$annotation->id}&group_guid={$group->getGUID()}";
+	$url = "action/group_tools/revoke_email_invitation?annotation_id={$annotation->id}&group_guid={$group->guid}";
 	$delete_button = elgg_view('output/url', [
 		'href' => $url,
 		'confirm' => elgg_echo('group_tools:groups:membershipreq:invitations:revoke:confirm'),

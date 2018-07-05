@@ -29,7 +29,7 @@ if (!empty($auto_joins)) {
 		$row[] =  elgg_format_element('td', ['style' => 'width: 40px;', 'class' => 'center'], elgg_view_entity_icon($group, 'tiny'));
 		$row[] = elgg_format_element('td', [], elgg_view('output/url', [
 			'href' => $group->getURL(),
-			'text' => $group->name,
+			'text' => $group->getDisplayName(),
 		]));
 		
 		$rows[] = elgg_format_element('tr', [], implode('', $row));

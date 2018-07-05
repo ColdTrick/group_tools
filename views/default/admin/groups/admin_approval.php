@@ -32,13 +32,13 @@ foreach ($batch as $group) {
 	$buttons = [];
 	$buttons[] = elgg_view('output/url', [
 		'text' => elgg_echo('approve'),
-		'href' => 'action/group_tools/admin/approve?guid=' . $group->getGUID(),
+		'href' => 'action/group_tools/admin/approve?guid=' . $group->guid,
 		'confirm' => true,
 		'class' => 'elgg-button elgg-button-action',
 	]);
 	$buttons[] = elgg_view('output/url', [
 		'text' => elgg_echo('decline'),
-		'href' => 'action/group_tools/admin/decline?guid=' . $group->getGUID(),
+		'href' => 'action/group_tools/admin/decline?guid=' . $group->guid,
 		'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
 		'class' => 'elgg-button elgg-button-action',
 	]);

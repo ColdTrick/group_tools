@@ -21,11 +21,11 @@ if (!$group->canEdit()) {
 }
 
 // related?
-if (!check_entity_relationship($group->getGUID(), 'related_group', $related->getGUID())) {
+if (!check_entity_relationship($group->guid, 'related_group', $related->guid)) {
 	return elgg_error_response(elgg_echo('group_tools:action:remove_related_groups:error:not_related'));
 }
 
-if (!remove_entity_relationship($group->getGUID(), 'related_group', $related->getGUID())) {
+if (!remove_entity_relationship($group->guid, 'related_group', $related->guid)) {
 	return elgg_error_response(elgg_echo('group_tools:action:remove_related_groups:error:remove'));
 }
 

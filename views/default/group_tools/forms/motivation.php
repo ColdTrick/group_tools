@@ -5,10 +5,10 @@ elgg_entity_gatekeeper($group_guid, 'group');
 
 $group = get_entity($group_guid);
 
-$title = elgg_echo('group_tools:join_motivation:title', [$group->name]);
+$title = elgg_echo('group_tools:join_motivation:title', [$group->getDisplayName()]);
 
 $content = elgg_view('output/longtext', [
-	'value' => elgg_echo('group_tools:join_motivation:description', [$group->name]),
+	'value' => elgg_echo('group_tools:join_motivation:description', [$group->getDisplayName()]),
 ]);
 $content .= elgg_view_form('group_tools/join_motivation', ['class' => 'mtm'], ['entity' => $group]);
 

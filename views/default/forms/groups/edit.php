@@ -13,7 +13,7 @@ if ($entity) {
 	echo elgg_view_field([
 		'#type' => 'hidden',
 		'name' => 'group_guid',
-		'value' => $entity->getGUID(),
+		'value' => $entity->guid,
 	]);
 }
 
@@ -67,7 +67,7 @@ if ($simple_create_form) {
 $footer = elgg_view('input/submit', ['value' => elgg_echo('save')]);
 
 if ($entity) {
-	$delete_url = 'action/groups/delete?guid=' . $entity->getGUID();
+	$delete_url = 'action/groups/delete?guid=' . $entity->guid;
 	$footer .= elgg_view('output/url', [
 		'text' => elgg_echo('groups:delete'),
 		'href' => $delete_url,

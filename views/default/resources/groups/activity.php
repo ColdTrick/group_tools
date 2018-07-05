@@ -37,7 +37,7 @@ $options = [
 		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
 	],
 	'wheres' => [
-		"(e1.container_guid = {$group->getGUID()} OR e2.container_guid = {$group->getGUID()})",
+		"(e1.container_guid = {$group->guid} OR e2.container_guid = {$group->guid})",
 	],
 	'no_results' => elgg_echo('groups:activity:none'),
 ];
@@ -52,7 +52,7 @@ if ($type != 'all') {
 // build page elements
 $title = elgg_echo('groups:activity');
 
-elgg_push_breadcrumb($group->name, $group->getURL());
+elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 elgg_push_breadcrumb($title);
 
 $content = elgg_view('core/river/filter', [

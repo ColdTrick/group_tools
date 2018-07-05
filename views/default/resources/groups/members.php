@@ -10,7 +10,7 @@ elgg_set_page_owner_guid($guid);
 
 elgg_group_gatekeeper();
 
-elgg_push_breadcrumb($group->name, $group->getURL());
+elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 elgg_push_breadcrumb(elgg_echo('groups:members'));
 
 $options = [
@@ -43,7 +43,7 @@ if (!empty($members_search)) {
 	$options['wheres'][] = "(ms.name LIKE '%{$members_search}%' OR ms.username LIKE '%{$members_search}%')";
 }
 
-$title = elgg_echo('groups:members:title', array($group->name));
+$title = elgg_echo('groups:members:title', array($group->getDisplayName()));
 
 $tabs = elgg_view_menu('groups_members', [
 	'entity' => $group,

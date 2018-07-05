@@ -19,12 +19,12 @@ if (!group_tools_group_mail_enabled($group) && !group_tools_group_mail_members_e
 elgg_require_js('group_tools/mail');
 
 // set page owner
-elgg_set_page_owner_guid($group->getGUID());
+elgg_set_page_owner_guid($group->guid);
 elgg_set_context('groups');
 
 // set breadcrumb
 elgg_push_breadcrumb(elgg_echo('groups'), 'groups/all');
-elgg_push_breadcrumb($group->name, $group->getURL());
+elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 elgg_push_breadcrumb(elgg_echo('group_tools:menu:mail'));
 
 // get members

@@ -86,7 +86,7 @@ if ($group->canEdit()) {
 	]);
 }
 
-echo elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->getGUID()]);
+echo elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->guid]);
 
 
 // show buttons

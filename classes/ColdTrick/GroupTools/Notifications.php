@@ -44,17 +44,17 @@ class Notifications {
 		]);
 		/* @var $user \ElggUser */
 		foreach ($batch as $user) {
-			$notification_settings = get_user_notification_settings($user->getGUID());
+			$notification_settings = get_user_notification_settings($user->guid);
 			if (empty($notification_settings)) {
 				continue;
 			}
 			
-			$return_value[$user->getGUID()] = [];
+			$return_value[$user->guid] = [];
 			foreach ($notification_settings as $method => $active) {
 				if (!$active) {
 					continue;
 				}
-				$return_value[$user->getGUID()][] = $method;
+				$return_value[$user->guid][] = $method;
 			}
 		}
 		
@@ -91,12 +91,12 @@ class Notifications {
 			return;
 		}
 		
-		$return_value->subject = elgg_echo('group_tools:group:admin_approve:admin:subject', [$group->name], $language);
-		$return_value->summary = elgg_echo('group_tools:group:admin_approve:admin:summary', [$group->name], $language);
+		$return_value->subject = elgg_echo('group_tools:group:admin_approve:admin:subject', [$group->getDisplayName()], $language);
+		$return_value->summary = elgg_echo('group_tools:group:admin_approve:admin:summary', [$group->getDisplayName()], $language);
 		$return_value->body = elgg_echo('group_tools:group:admin_approve:admin:message', [
-			$recipient->name,
-			$actor->name,
-			$group->name,
+			$recipient->getDisplayName(),
+			$actor->getDisplayName(),
+			$group->getDisplayName(),
 			$group->getURL(),
 			elgg_normalize_url('admin/groups/admin_approval'),
 		], $language);

@@ -13,7 +13,7 @@ if ($group->related_groups_enable !== 'yes') {
 }
 
 $all_link = elgg_view('output/url', [
-	'href' => "groups/related/{$group->getGUID()}",
+	'href' => "groups/related/{$group->guid}",
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
@@ -22,7 +22,7 @@ $content = elgg_list_entities_from_relationship([
 	'type' => 'group',
 	'limit' => 4,
 	'relationship' => 'related_group',
-	'relationship_guid' => $group->getGUID(),
+	'relationship_guid' => $group->guid,
 	'full_view' => false,
 	'order_by_metadata' => [
 		'name' => 'name',

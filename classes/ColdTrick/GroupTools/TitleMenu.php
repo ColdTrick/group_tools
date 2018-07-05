@@ -37,19 +37,19 @@ class TitleMenu {
 				continue;
 			}
 			
-			if (check_entity_relationship($user->getGUID(), 'membership_request', $page_owner->getGUID())) {
+			if (check_entity_relationship($user->guid, 'membership_request', $page_owner->guid)) {
 				// user already requested to join this group
 				$menu_item->setText(elgg_echo('group_tools:joinrequest:already'));
 				$menu_item->setTooltip(elgg_echo('group_tools:joinrequest:already:tooltip'));
-				$menu_item->setHref("action/groups/killrequest?user_guid={$user->getGUID()}&group_guid={$page_owner->getGUID()}");
+				$menu_item->setHref("action/groups/killrequest?user_guid={$user->guid}&group_guid={$page_owner->guid}");
 				$menu_item->is_action = true;
 				
-			} elseif (check_entity_relationship($page_owner->getGUID(), 'invited', $user->getGUID())) {
+			} elseif (check_entity_relationship($page_owner->guid, 'invited', $user->guid)) {
 				// the user was invited, so let him/her join
 				$menu_item->setName('groups:join');
 				$menu_item->setText(elgg_echo('groups:join'));
 				$menu_item->setTooltip(elgg_echo('group_tools:join:already:tooltip'));
-				$menu_item->setHref("action/groups/join?user_guid={$user->getGUID()}&group_guid={$page_owner->getGUID()}");
+				$menu_item->setHref("action/groups/join?user_guid={$user->guid}&group_guid={$page_owner->guid}");
 				$menu_item->is_action = true;
 				
 			} elseif (group_tools_check_domain_based_group($page_owner, $user)) {
@@ -57,7 +57,7 @@ class TitleMenu {
 				$menu_item->setName('groups:join');
 				$menu_item->setText(elgg_echo('groups:join'));
 				$menu_item->setTooltip(elgg_echo('group_tools:join:domain_based:tooltip'));
-				$menu_item->setHref("action/groups/join?user_guid={$user->getGUID()}&group_guid={$page_owner->getGUID()}");
+				$menu_item->setHref("action/groups/join?user_guid={$user->guid}&group_guid={$page_owner->guid}");
 				$menu_item->is_action = true;
 				
 			} elseif (group_tools_join_motivation_required($page_owner)) {
@@ -65,7 +65,7 @@ class TitleMenu {
 				elgg_load_js('lightbox');
 				elgg_load_css('lightbox');
 				
-				$menu_item->setHref("ajax/view/group_tools/forms/motivation?guid={$page_owner->getGUID()}");
+				$menu_item->setHref("ajax/view/group_tools/forms/motivation?guid={$page_owner->guid}");
 				
 				$menu_item->addLinkClass('elgg-lightbox');
 				$opts = 'data-colorbox-opts';
@@ -178,7 +178,7 @@ class TitleMenu {
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'groups:invite',
-			'href' => "groups/invite/{$page_owner->getGUID()}",
+			'href' => "groups/invite/{$page_owner->guid}",
 			'text' => $text,
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
@@ -212,7 +212,7 @@ class TitleMenu {
 		}
 		
 		// group member export
-		$group_members_page = elgg_normalize_url("groups/members/{$page_owner->getGUID()}");
+		$group_members_page = elgg_normalize_url("groups/members/{$page_owner->guid}");
 		if (strpos(current_page_url(), $group_members_page) === false) {
 			return;
 		}
@@ -224,7 +224,7 @@ class TitleMenu {
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'member_export',
 			'text' => elgg_echo('group_tools:member_export:title_button'),
-			'href' => "action/group_tools/member_export?group_guid={$page_owner->getGUID()}",
+			'href' => "action/group_tools/member_export?group_guid={$page_owner->guid}",
 			'is_action' => true,
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
@@ -281,7 +281,7 @@ class TitleMenu {
 			$return_value[] = \ElggMenuItem::factory([
 				'name' => 'approve',
 				'text' => elgg_echo('approve'),
-				'href' => 'action/group_tools/admin/approve?guid=' . $page_owner->getGUID(),
+				'href' => 'action/group_tools/admin/approve?guid=' . $page_owner->guid,
 				'confirm' => true,
 				'class' => 'elgg-button elgg-button-submit',
 			]);
@@ -290,7 +290,7 @@ class TitleMenu {
 			$return_value[] = \ElggMenuItem::factory([
 				'name' => 'decline',
 				'text' => elgg_echo('decline'),
-				'href' => 'action/group_tools/admin/decline?guid=' . $page_owner->getGUID(),
+				'href' => 'action/group_tools/admin/decline?guid=' . $page_owner->guid,
 				'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
 				'class' => 'elgg-button elgg-button-delete',
 			]);

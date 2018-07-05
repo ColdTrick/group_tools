@@ -28,7 +28,7 @@ $motivation = '';
 $annotations = $page_owner->getAnnotations([
 	'annotation_name' => 'join_motivation',
 	'limit' => 1,
-	'annotation_owner_guid' => $user->getGUID(),
+	'annotation_owner_guid' => $user->guid,
 ]);
 if (!empty($annotations)) {
 	$join_motivation = $annotations[0];
@@ -40,7 +40,7 @@ if (!empty($annotations)) {
 	]);
 	
 	$motivation = elgg_format_element('div', [
-		'id' => "group-tools-group-membershiprequest-motivation-{$user->getGUID()}",
+		'id' => "group-tools-group-membershiprequest-motivation-{$user->guid}",
 		'class' => 'hidden',
 	], $motivation);
 }
@@ -54,8 +54,8 @@ $summary = elgg_view('user/elements/summary', [
 
 // allow a reason for the decline
 $form_vars = [
-	'id' => "group-kill-request-{$user->getGUID()}",
-	'data-guid' => $user->getGUID(),
+	'id' => "group-kill-request-{$user->guid}",
+	'data-guid' => $user->guid,
 ];
 $body_vars = [
 	'group' => $page_owner,

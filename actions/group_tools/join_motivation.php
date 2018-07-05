@@ -19,29 +19,29 @@ if (!($group instanceof ElggGroup)) {
 $user = elgg_get_logged_in_user_entity();
 
 // create membership request
-add_entity_relationship($user->getGUID(), 'membership_request', $group->getGUID());
+add_entity_relationship($user->guid, 'membership_request', $group->guid);
 
 // add motivation
-$group->annotate('join_motivation', $motivation, $group->group_acl, $user->getGUID());
+$group->annotate('join_motivation', $motivation, $group->group_acl, $user->guid);
 
 // notify owner
 $owner = $group->getOwnerEntity();
 
-$url = elgg_normalize_url("groups/requests/{$group->getGUID()}");
+$url = elgg_normalize_url("groups/requests/{$group->guid}");
 
 $subject = elgg_echo('group_tools:join_motivation:notification:subject', [
-	$user->name,
-	$group->name,
+	$user->getDisplayName(),
+	$group->getDisplayName(),
 ], $owner->language);
 $summary = elgg_echo('group_tools:join_motivation:notification:summary', [
-	$user->name,
-	$group->name,
+	$user->getDisplayName(),
+	$group->getDisplayName(),
 ], $owner->language);
 
 $body = elgg_echo('group_tools:join_motivation:notification:body', [
-	$owner->name,
-	$user->name,
-	$group->name,
+	$owner->getDisplayName(),
+	$user->getDisplayName(),
+	$group->getDisplayName(),
 	$motivation,
 	$user->getURL(),
 	$url,
@@ -54,7 +54,7 @@ $params = [
 ];
 
 // Notify group owner
-if (!notify_user($owner->getGUID(), $user->getGUID(), $subject, $body, $params)) {
+if (!notify_user($owner->guid, $user->guid, $subject, $body, $params)) {
 	return elgg_error_response(elgg_echo('groups:joinrequestnotmade'));
 }
 

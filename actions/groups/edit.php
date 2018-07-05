@@ -63,7 +63,7 @@ if (elgg_instanceof($group, "group") && !$group->canEdit()) {
 // Assume we can edit or this is a new group
 foreach ($input as $shortname => $value) {
 	// update access collection name if group name changes
-	if (!$is_new_group && $shortname == 'name' && $value != $group->name) {
+	if (!$is_new_group && $shortname == 'name' && $value !== $group->name) {
 		$group_name = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
 		$ac_name = sanitize_string(elgg_echo('groups:group') . ": " . $group_name);
 		$acl = get_access_collection($group->group_acl);
@@ -249,7 +249,7 @@ if (!$is_new_group && $new_owner_guid && ($new_owner_guid != $old_owner_guid)) {
 	$transfer_allowed = false;
 	if (($admin_transfer == "admin") && elgg_is_admin_logged_in()) {
 		$transfer_allowed = true;
-	} elseif (($admin_transfer == "owner") && (($group->getOwnerGUID() == $user->getGUID()) || elgg_is_admin_logged_in())) {
+	} elseif (($admin_transfer == "owner") && (($group->owner_guid == $user->guid) || elgg_is_admin_logged_in())) {
 		$transfer_allowed = true;
 	}
 	

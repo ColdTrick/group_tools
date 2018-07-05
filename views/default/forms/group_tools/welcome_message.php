@@ -10,8 +10,8 @@ echo elgg_view('output/longtext', ['value' => elgg_echo('group_tools:welcome_mes
 echo elgg_view_field([
 	'#type' => 'longtext',
 	'#help' => elgg_echo('group_tools:welcome_message:explain', [
-		elgg_get_logged_in_user_entity()->name,
-		$group->name,
+		elgg_get_logged_in_user_entity()->getDisplayName(),
+		$group->getDisplayName(),
 		$group->getURL(),
 	]),
 	'name' => 'welcome_message',

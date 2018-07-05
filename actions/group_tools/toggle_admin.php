@@ -16,20 +16,20 @@ if (!$group->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
-if (!$group->isMember($user) || ($group->getOwnerGUID() === $user->getGUID())) {
+if (!$group->isMember($user) || ($group->owner_guid === $user->guid)) {
 	return elgg_error_response(elgg_echo('group_tools:action:toggle_admin:error:group'));
 }
 
-if (!check_entity_relationship($user->getGUID(), 'group_admin', $group->getGUID())) {
+if (!check_entity_relationship($user->guid, 'group_admin', $group->guid)) {
 	// user is admin, so remove
-	if (add_entity_relationship($user->getGUID(), 'group_admin', $group->getGUID())) {
+	if (add_entity_relationship($user->guid, 'group_admin', $group->guid)) {
 		return elgg_ok_response('', elgg_echo('group_tools:action:toggle_admin:success:add'));
 	} else {
 		return elgg_error_response(elgg_echo('group_tools:action:toggle_admin:error:add'));
 	}
 } else {
 	// user is not admin, so add
-	if (remove_entity_relationship($user->getGUID(), 'group_admin', $group->getGUID())) {
+	if (remove_entity_relationship($user->guid, 'group_admin', $group->guid)) {
 		return elgg_ok_response('', elgg_echo('group_tools:action:toggle_admin:success:remove'));
 	} else {
 		return elgg_error_response(elgg_echo('group_tools:action:toggle_admin:error:remove'));

@@ -28,7 +28,7 @@ class OwnerBlockMenu {
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'related_groups',
 			'text' => elgg_echo('group_tools:related_groups:title'),
-			'href' => "groups/related/{$entity->getGUID()}",
+			'href' => "groups/related/{$entity->guid}",
 			'is_trusted' => true,
 		]);
 		

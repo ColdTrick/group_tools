@@ -18,7 +18,7 @@ echo elgg_view_field([
 			'#type' => 'email',
 			'#label' => elgg_echo('group_tools:group:invite:email:description'),
 			'name' => 'user_guid_email[]',
-			'group_guid' => $group->getGUID(),
+			'group_guid' => $group->guid,
 		],
 		[
 			'#type' => 'button',

@@ -18,7 +18,7 @@ if (empty($group)) {
 }
 
 if (!groups_join_group($group, $user)) {
-	return elgg_error_response(elgg_echo('group_tools:action:groups:email_invitation:error:join', [$group->name]), "groups/invitations/{$user->username}");
+	return elgg_error_response(elgg_echo('group_tools:action:groups:email_invitation:error:join', [$group->getDisplayName()]), "groups/invitations/{$user->username}");
 }
 
 $invitecode = sanitise_string($invitecode);

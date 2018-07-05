@@ -157,7 +157,7 @@ $admin_transfer = elgg_get_plugin_setting('admin_transfer', 'group_tools');
 $transfer_allowed = false;
 if (($admin_transfer == 'admin') && elgg_is_admin_logged_in()) {
 	$transfer_allowed = true;
-} elseif (($admin_transfer == 'owner') && (($entity->getOwnerGUID() == elgg_get_logged_in_user_guid()) || elgg_is_admin_logged_in())) {
+} elseif (($admin_transfer == 'owner') && (($entity->owner_guid == elgg_get_logged_in_user_guid()) || elgg_is_admin_logged_in())) {
 	$transfer_allowed = true;
 }
 

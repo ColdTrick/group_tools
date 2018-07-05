@@ -100,7 +100,7 @@ class StaleInfo {
 			'type' => 'object',
 			'subtypes' => $object_subtypes,
 			'limit' => 1,
-			'container_guid' => $this->group->getGUID(),
+			'container_guid' => $this->group->guid,
 			'order_by' => 'e.time_updated DESC',
 		]);
 		if (empty($entities)) {
@@ -132,7 +132,7 @@ class StaleInfo {
 				"JOIN {$dbprefix}entities ce ON e.container_guid = ce.guid",
 			],
 			'wheres' => [
-				"(ce.container_guid = {$this->group->getGUID()})",
+				"(ce.container_guid = {$this->group->guid})",
 			],
 			'order_by' => 'e.time_updated DESC',
 		]);

@@ -9,7 +9,7 @@ $members = elgg_extract('members', $vars);
 $friendpicker_value = [];
 if (!empty($members)) {
 	foreach ($members as $member) {
-		$friendpicker_value[] = $member->getGUID();
+		$friendpicker_value[] = $member->guid;
 	}
 }
 
@@ -61,7 +61,7 @@ $form_data .= elgg_view_field([
 
 $form_data .= elgg_view('input/hidden', [
 	'name' => 'group_guid',
-	'value' => $group->getGUID(),
+	'value' => $group->guid,
 ]);
 
 echo $form_data;

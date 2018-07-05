@@ -44,7 +44,7 @@ class Membership {
 			return;
 		}
 		
-		if ($user->getGUID() === elgg_get_logged_in_user_guid()) {
+		if ($user->guid === elgg_get_logged_in_user_guid()) {
 			// user kills own request
 			return;
 		}
@@ -52,28 +52,28 @@ class Membership {
 		$reason = get_input('reason');
 		if (empty($reason)) {
 			$body = elgg_echo('group_tools:notify:membership:declined:message', [
-				$user->name,
-				$group->name,
+				$user->getDisplayName(),
+				$group->getDisplayName(),
 				$group->getURL(),
 			]);
 		} else {
 			$body = elgg_echo('group_tools:notify:membership:declined:message:reason', [
-				$user->name,
-				$group->name,
+				$user->getDisplayName(),
+				$group->getDisplayName(),
 				$reason,
 				$group->getURL(),
 			]);
 		}
 		
 		$subject = elgg_echo('group_tools:notify:membership:declined:subject', [
-			$group->name,
+			$group->getDisplayName(),
 		]);
 		
 		$params = [
 			'object' => $group,
 			'action' => 'delete',
 		];
-		notify_user($user->getGUID(), $group->getGUID(), $subject, $body, $params);
+		notify_user($user->guid, $group->guid, $subject, $body, $params);
 	}
 	
 	/**
@@ -166,7 +166,7 @@ class Membership {
 		}
 		
 		$logged_in_user = elgg_get_logged_in_user_entity();
-		if (!empty($logged_in_user) && ($logged_in_user->getGUID() === $user->getGUID())) {
+		if (!empty($logged_in_user) && ($logged_in_user->guid === $user->guid)) {
 			// user joined group on own action (join public group, accept invite, etc)
 			$notifications_enabled = self::notificationsEnabledForGroup($user, $group);
 			
@@ -179,7 +179,7 @@ class Membership {
 			
 			$link = elgg_view('output/url', [
 				'text' => $link_text,
-				'href' => "action/group_tools/toggle_notifications?group_guid={$group->getGUID()}",
+				'href' => "action/group_tools/toggle_notifications?group_guid={$group->guid}",
 				'is_action' => true,
 			]);
 			
@@ -212,15 +212,15 @@ class Membership {
 		}
 		
 		// cleanup invites
-		remove_entity_relationship($group->getGUID(), 'invited', $user->getGUID());
+		remove_entity_relationship($group->guid, 'invited', $user->guid);
 		
 		// and requests
-		remove_entity_relationship($user->getGUID(), 'membership_request', $group->getGUID());
+		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
 		
 		// cleanup email invitations
 		$options = [
 			'annotation_name' => 'email_invitation',
-			'annotation_value' => group_tools_generate_email_invite_code($group->getGUID(), $user->email),
+			'annotation_value' => group_tools_generate_email_invite_code($group->guid, $user->email),
 			'limit' => false,
 		];
 		
@@ -231,8 +231,8 @@ class Membership {
 		// join motivation
 		$options = [
 			'annotation_name' => 'join_motivation',
-			'guid' => $group->getGUID(),
-			'annotation_owner_guid' => $user->getGUID(),
+			'guid' => $group->guid,
+			'annotation_owner_guid' => $user->guid,
 			'limit' => false,
 		];
 		elgg_delete_annotations($options);
@@ -260,12 +260,12 @@ class Membership {
 		}
 		
 		// replace the place holders
-		$welcome_message = str_ireplace('[name]', $recipient->name, $welcome_message);
-		$welcome_message = str_ireplace('[group_name]', $group->name, $welcome_message);
+		$welcome_message = str_ireplace('[name]', $recipient->getDisplayName(), $welcome_message);
+		$welcome_message = str_ireplace('[group_name]', $group->getDisplayName(), $welcome_message);
 		$welcome_message = str_ireplace('[group_url]', $group->getURL(), $welcome_message);
 			
 		// subject
-		$subject = elgg_echo('group_tools:welcome_message:subject', [$group->name]);
+		$subject = elgg_echo('group_tools:welcome_message:subject', [$group->getDisplayName()]);
 		
 		// mail params
 		$mail_params = [
@@ -274,7 +274,7 @@ class Membership {
 		];
 		
 		// notify the user
-		notify_user($recipient->getGUID(), $group->getGUID(), $subject, $welcome_message, $mail_params);
+		notify_user($recipient->guid, $group->guid, $subject, $welcome_message, $mail_params);
 	}
 	
 	/**
@@ -511,12 +511,12 @@ class Membership {
 		$group_invitecode = sanitise_string($group_invitecode);
 		
 		elgg_delete_annotations([
-			'guid' => $group->getGUID(),
+			'guid' => $group->guid,
 			'annotation_name' => 'email_invitation',
 			'wheres' => [
 				"(v.string = '{$group_invitecode}' OR v.string LIKE '{$group_invitecode}|%')",
 			],
-			'annotation_owner_guid' => $group->getGUID(),
+			'annotation_owner_guid' => $group->guid,
 			'limit' => 1,
 		]);
 		
@@ -649,7 +649,7 @@ class Membership {
 			'name' => 'killrequest',
 			'text' => elgg_echo('revoke'),
 			'confirm' => elgg_echo('group_tools:group:invitations:request:revoke:confirm'),
-			'href' => "action/groups/killrequest?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
+			'href' => "action/groups/killrequest?user_guid={$user->guid}&group_guid={$group->guid}",
 			'is_action' => true,
 			'link_class' => 'elgg-button elgg-button-delete',
 		]);
@@ -680,7 +680,7 @@ class Membership {
 			return;
 		}
 		
-		$invitecode = group_tools_generate_email_invite_code($group->getGUID(), $user->email);
+		$invitecode = group_tools_generate_email_invite_code($group->guid, $user->email);
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'accept',
 			'text' => elgg_echo('accept'),
@@ -722,7 +722,7 @@ class Membership {
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'membershipreq',
 			'text' => elgg_echo('group_tools:groups:membershipreq:requests'),
-			'href' => "groups/requests/{$group->getGUID()}",
+			'href' => "groups/requests/{$group->guid}",
 			'is_trusted' => true,
 			'priority' => 100,
 		]);
@@ -730,7 +730,7 @@ class Membership {
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'invites',
 			'text' => elgg_echo('group_tools:groups:membershipreq:invitations'),
-			'href' => "groups/requests/{$group->getGUID()}/invites",
+			'href' => "groups/requests/{$group->guid}/invites",
 			'is_trusted' => true,
 			'priority' => 200,
 		]);
@@ -738,7 +738,7 @@ class Membership {
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'email_invites',
 			'text' => elgg_echo('group_tools:groups:membershipreq:email_invitations'),
-			'href' => "groups/requests/{$group->getGUID()}/email_invites",
+			'href' => "groups/requests/{$group->guid}/email_invites",
 			'is_trusted' => true,
 			'priority' => 300,
 		]);
@@ -772,13 +772,13 @@ class Membership {
 		$motivation = $group->getAnnotations([
 			'annotation_name' => 'join_motivation',
 			'count' => true,
-			'annotation_owner_guid' => $user->getGUID(),
+			'annotation_owner_guid' => $user->guid,
 		]);
 		if (!empty($motivation)) {
 			$return_value[] = \ElggMenuItem::factory([
 				'name' => 'toggle_motivation',
 				'text' => elgg_echo('group_tools:join_motivation:toggle'),
-				'href' => "#group-tools-group-membershiprequest-motivation-{$user->getGUID()}",
+				'href' => "#group-tools-group-membershiprequest-motivation-{$user->guid}",
 				'rel' => 'toggle',
 				'link_class' => 'elgg-button elgg-button-action mrm',
 				'priority' => 10,
@@ -788,10 +788,10 @@ class Membership {
 		// accept button
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'accept',
-			'href' => "action/groups/addtogroup?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
+			'href' => "action/groups/addtogroup?user_guid={$user->guid}&group_guid={$group->guid}",
 			'text' => elgg_echo('accept'),
 			'link_class' => 'elgg-button elgg-button-submit group-tools-accept-request',
-			'rel' => $user->getGUID(),
+			'rel' => $user->guid,
 			'is_action' => true,
 		]);
 		
@@ -804,10 +804,10 @@ class Membership {
 			'href' => '#',
 			'text' => elgg_echo('decline'),
 			'link_class' => 'elgg-button elgg-button-delete mlm elgg-lightbox',
-			'rel' => $user->getGUID(),
+			'rel' => $user->guid,
 			'data-colorbox-opts' => json_encode([
 				'inline' => true,
-				'href' => "#group-kill-request-{$user->getGUID()}",
+				'href' => "#group-kill-request-{$user->guid}",
 				'width' => '600px',
 				'closeButton' => false,
 			]),
@@ -840,7 +840,7 @@ class Membership {
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'revoke',
-			'href' => "action/groups/killinvitation?user_guid={$user->getGUID()}&group_guid={$group->getGUID()}",
+			'href' => "action/groups/killinvitation?user_guid={$user->guid}&group_guid={$group->guid}",
 			'confirm' => elgg_echo('group_tools:groups:membershipreq:invitations:revoke:confirm'),
 			'text' => elgg_echo('revoke'),
 			'link_class' => 'elgg-button elgg-button-delete mlm',
@@ -873,7 +873,7 @@ class Membership {
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'revoke',
-			'href' => "action/group_tools/revoke_email_invitation?annotation_id={$annotation->id}&group_guid={$group->getGUID()}",
+			'href' => "action/group_tools/revoke_email_invitation?annotation_id={$annotation->id}&group_guid={$group->guid}",
 			'confirm' => elgg_echo('group_tools:groups:membershipreq:invitations:revoke:confirm'),
 			'text' => elgg_echo('revoke'),
 			'link_class' => 'elgg-button elgg-button-delete mlm',
@@ -919,7 +919,7 @@ class Membership {
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'membership_requests',
 			'text' => elgg_echo('group_tools:menu:invitations'),
-			'href' => "groups/requests/{$group->getGUID()}/invites",
+			'href' => "groups/requests/{$group->guid}/invites",
 		]);
 		
 		return $return_value;
@@ -1011,12 +1011,12 @@ class Membership {
 			return false;
 		}
 		
-		$subscriptions = elgg_get_subscriptions_for_container($group->getGUID());
+		$subscriptions = elgg_get_subscriptions_for_container($group->guid);
 		if (!is_array($subscriptions)) {
 			return false;
 		}
 		
-		if (!empty($subscriptions[$user->getGUID()])) {
+		if (!empty($subscriptions[$user->guid])) {
 			return true;
 		}
 		

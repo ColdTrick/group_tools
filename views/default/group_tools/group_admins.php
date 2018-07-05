@@ -14,14 +14,14 @@ if (!group_tools_multiple_admin_enabled()) {
 
 $options = [
 	'relationship' => 'group_admin',
-	'relationship_guid' => $group->getGUID(),
+	'relationship_guid' => $group->guid,
 	'inverse_relationship' => true,
 	'type' => 'user',
 	'limit' => false,
 	'list_type' => 'gallery',
 	'gallery_class' => 'elgg-gallery-users',
 	'wheres' => [
-		"e.guid <> {$group->getOwnerGUID()}",
+		"e.guid <> {$group->owner_guid}",
 	],
 ];
 

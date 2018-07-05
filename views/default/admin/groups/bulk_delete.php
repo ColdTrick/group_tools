@@ -67,20 +67,20 @@ foreach ($batch as $group) {
 	
 	$cells[] = elgg_format_element('td', ['class' => 'center'], elgg_view('input/checkbox', [
 		'name' => 'group_guids[]',
-		'value' => $group->getGUID(),
+		'value' => $group->guid,
 		'default' => false,
 	]));
 	$cells[] = elgg_format_element('td', [], $group_summary);
 	$cells[] = elgg_format_element('td', ['class' => 'center'], elgg_view('output/url', [
 		'text' => elgg_view_icon('settings-alt'),
 		'title' => elgg_echo('edit'),
-		'href' => "groups/edit/{$group->getGUID()}",
+		'href' => "groups/edit/{$group->guid}",
 	]));
 	$cells[] = elgg_format_element('td', ['class' => 'center'], elgg_view('output/url', [
 		'text' => elgg_view_icon('delete-alt'),
 		'title' => elgg_echo('delete'),
 		'confirm' => elgg_echo('deleteconfirm'),
-		'href' => "action/groups/delete?guid={$group->getGUID()}",
+		'href' => "action/groups/delete?guid={$group->guid}",
 	]));
 	
 	$rows[] = elgg_format_element('tr', [], implode('', $cells));

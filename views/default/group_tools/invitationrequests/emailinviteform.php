@@ -9,7 +9,7 @@ if (!($user instanceof ElggUser)) {
 	return;
 }
 
-if (elgg_get_page_owner_guid() !== $user->getGUID()) {
+if (elgg_get_page_owner_guid() !== $user->guid) {
 	// only show this form on the current user's page (only applies to admins)
 	return;
 }

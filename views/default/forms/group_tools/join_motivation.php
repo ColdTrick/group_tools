@@ -8,7 +8,7 @@ $group = elgg_extract('entity', $vars);
 echo elgg_view_field([
 	'#type' => 'hidden',
 	'name' => 'group_guid',
-	'value' => $group->getGUID(),
+	'value' => $group->guid,
 ]);
 
 echo elgg_view_field([

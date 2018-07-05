@@ -28,7 +28,7 @@ class WidgetManager {
 		
 		switch ($widget->handler) {
 			case 'group_members':
-				$return_value = "groups/members/{$widget->getOwnerGUID()}";
+				$return_value = "groups/members/{$widget->owner_guid}";
 				break;
 			case 'group_invitations':
 				$user = elgg_get_logged_in_user_entity();
@@ -40,13 +40,13 @@ class WidgetManager {
 				if ($widget->context !== 'groups') {
 					$group_guid = (int) $widget->group_guid;
 				} else {
-					$group_guid = $widget->getOwnerGUID();
+					$group_guid = $widget->owner_guid;
 				}
 				
 				if (!empty($group_guid)) {
 					$group = get_entity($group_guid);
 					if ($group instanceof \ElggGroup) {
-						$return_value = "groups/activity/{$group->getGUID()}";
+						$return_value = "groups/activity/{$group->guid}";
 					}
 				}
 				break;
@@ -63,7 +63,7 @@ class WidgetManager {
 				}
 				break;
 			case 'group_related':
-				$return_value = "groups/related/{$widget->getOwnerGUID()}";
+				$return_value = "groups/related/{$widget->owner_guid}";
 				break;
 		}
 		

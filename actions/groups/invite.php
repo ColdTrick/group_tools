@@ -89,7 +89,7 @@ if (!empty($user_guids)) {
 				continue;
 			}
 			
-			if (check_entity_relationship($group->getGUID(), 'invited', $user->getGUID()) && !$resend) {
+			if (check_entity_relationship($group->guid, 'invited', $user->guid) && !$resend) {
 				// user was already invited
 				$already_invited++;
 				continue;
@@ -169,7 +169,7 @@ if (!empty($csv)) {
 					continue;
 				}
 				
-				if (check_entity_relationship($group->getGUID(), 'invited', $user->getGUID()) && !$resend) {
+				if (check_entity_relationship($group->guid, 'invited', $user->guid) && !$resend) {
 					// user was already invited
 					$already_invited++;
 					continue;

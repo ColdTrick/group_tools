@@ -15,7 +15,7 @@ if (!($page_owner instanceof ElggGroup) || !($user instanceof ElggUser)) {
 	return;
 }
 
-if (($page_owner->getOwnerGUID() === $user->getGUID()) || $user->isAdmin()) {
+if (($page_owner->owner_guid === $user->guid) || $user->isAdmin()) {
 	// user is the group owner
 	// or a site admin
 	return;

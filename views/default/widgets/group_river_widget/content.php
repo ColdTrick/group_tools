@@ -10,7 +10,7 @@ return;
 
 // which group
 if ($widget->context == 'groups') {
-	$group_guid = [$widget->getOwnerGUID()];
+	$group_guid = [$widget->owner_guid];
 } else {
 	$group_guid = $widget->group_guid;
 	if (!empty($group_guid)) {
