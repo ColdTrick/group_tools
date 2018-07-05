@@ -339,7 +339,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:group:invite:users:all' => "Invite all site members to this group",
 
 	'group_tools:group:invite:email' => "Using e-mail address",
-	'group_tools:group:invite:email:description' => "Enter a valid e-mail address and select it from the list",
+	'group_tools:group:invite:email:description' => "Enter a valid e-mail address and add it to the list",
 
 	'group_tools:group:invite:csv' => "Using CSV upload",
 	'group_tools:group:invite:csv:description' => "You can upload a CSV file with users to invite.<br />The format must be: displayname;e-mail address. There shouldn't be a header line.",

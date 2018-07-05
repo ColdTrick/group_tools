@@ -48,11 +48,6 @@ class Router {
 					$resource_loaded = true;
 				}
 				break;
-			case 'group_invite_autocomplete':
-				
-				echo elgg_view_resource('group_tools/groups/group_invite_autocomplete');
-				$resource_loaded = true;
-				break;
 			case 'add':
 				if (elgg_get_plugin_setting('limited_groups', 'groups') === 'yes') {
 					elgg_admin_gatekeeper();

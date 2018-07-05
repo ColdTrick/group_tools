@@ -409,7 +409,7 @@ Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende co
   'group_tools:group:invite:users' => 'Zoek gebruiker(s)',
   'group_tools:group:invite:users:description' => 'Vul een naam of gebruikersnaam van een site gebruiker in en selecteer hem/haar uit de lijst',
   'group_tools:group:invite:email' => 'Obv e-mail adres',
-  'group_tools:group:invite:email:description' => 'Geef een geldig e-mail adres op en selecteer het uit de lijst',
+  'group_tools:group:invite:email:description' => 'Geef een geldig e-mail adres op en voeg het toe aan de lijst',
   'group_tools:group:invite:csv' => 'Obv CSV bestand',
   'group_tools:group:invite:csv:description' => 'Je kunt een CSV bestand uploaden om gebruikers uit te nodigen<br>
 Het formaat moet zijn: weergave naam;e-mail adres. Er mag geen kopregel zijn.',

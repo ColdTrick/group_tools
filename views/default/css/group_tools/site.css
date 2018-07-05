@@ -3,27 +3,6 @@
 	display: none;
 }
 
-#group_tools_group_invite_autocomplete_autocomplete_results .group_tools_group_invite_autocomplete_autocomplete_result {
-	border: 1px solid transparent;
-	border-radius: 5px;
-}
-
-#group_tools_group_invite_autocomplete_autocomplete_results .group_tools_group_invite_autocomplete_autocomplete_result:hover {
-	border: 1px solid #CCCCCC;
-}
-
-#group_tools_group_invite_autocomplete_autocomplete_results .elgg-avatar {
-	position: static;
-}
-
-.ui-autocomplete .group_tools_group_invite_autocomplete_autocomplete_result .elgg-icon-delete-alt.elgg-discoverable {
-	display: none;
-}
-
-.group_tools_group_invite_autocomplete_autocomplete_result .elgg-icon-delete-alt {
-	cursor: pointer;
-}
-
 .elgg-form-group-tools-related-groups .elgg-fieldset-horizontal {
 	display: flex;
 	align-items: stretch;
@@ -55,6 +34,23 @@
 
 .group-tools-group-edit-section > div {
 	margin-bottom: 15px;
+}
+
+#group-tools-invite-email .elgg-fieldset-horizontal {
+	display: flex;
+	align-items: flex-end;
+	
+	> .elgg-field {
+		flex-grow: 1;
+		
+		&:first-child {
+			width: 100%;
+		}
+		
+		&:last-child {
+			margin: 0;
+		}
+	}
 }
 
 /* groups simplified access */
