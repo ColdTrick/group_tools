@@ -111,15 +111,14 @@ switch ($sorting) {
 		$group_options['inverse_relationship'] = false;
 		break;
 	case 'alpha':
+		$group_options['joins'][] = "JOIN {$dbprefix}groups_entity ges ON e.guid = ges.guid";
+		
 		$order = strtoupper(get_input('order'));
 		if (!in_array($order, ['ASC', 'DESC'])) {
 			$order = 'ASC';
 		}
 		
-		$group_options['order_by_metadata'] = [
-			'name' => 'name',
-			'direction' =>$order,
-		];
+		$group_options['order_by'] = "ges.name {$order}";
 		break;
 	case 'newest':
 	default:

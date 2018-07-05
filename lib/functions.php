@@ -481,8 +481,15 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 			$user_values = elgg_get_metadata($user_metadata_options);
 			if (!empty($user_values)) {
 				// transform to values
-				$user_values = metadata_array_to_values($user_values);
-				
+				$user_values = [];
+				foreach ($user_values as $metadata) {
+					$user_values[] = $metadata->value;
+				}
+				$user_values = array_unique($user_values);
+				$user_values = array_filter($user_values);
+			}
+			
+			if (!empty($user_values)) {
 				// find group with these metadatavalues
 				$group_options = [
 					'type' => 'group',

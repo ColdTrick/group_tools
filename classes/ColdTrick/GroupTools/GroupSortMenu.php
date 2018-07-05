@@ -5,78 +5,95 @@ namespace ColdTrick\GroupTools;
 class GroupSortMenu {
 	
 	/**
-	 * add group tools tabs
+	 * Rewrite group listing tabs
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function addTabs($hook, $type, $return_value, $params) {
+	public static function removeTabs(\Elgg\Hook $hook) {
 		
-		if (!elgg_in_context('group_sort_menu')) {
-			return;
+		/* @var $return \Elgg\Menu\MenuItems */
+		$return = $hook->getValue();
+		
+		$remove_items = [
+			'newest',
+			'popular',
+			'alpha',
+		];
+		foreach ($remove_items as $name) {
+			$return->remove($name);
 		}
 		
-		$return_value[] = \ElggMenuItem::factory([
-			'name' => 'all',
-			'text' => elgg_echo('groups:all'),
-			'href' => 'groups/all?filter=all',
-			'priority' => 200,
-		]);
-		if (elgg_is_logged_in()) {
-			$return_value[] = \ElggMenuItem::factory([
-				'name' => 'yours',
-				'text' => elgg_echo('groups:yours'),
-				'href' => 'groups/all?filter=yours',
-				'priority' => 250,
-			]);
-		}
-		$return_value[] = \ElggMenuItem::factory([
-			'name' => 'open',
-			'text' => elgg_echo('group_tools:groups:sorting:open'),
-			'href' => 'groups/all?filter=open',
-			'priority' => 500,
-		]);
-		$return_value[] = \ElggMenuItem::factory([
-			'name' => 'closed',
-			'text' => elgg_echo('group_tools:groups:sorting:closed'),
-			'href' => 'groups/all?filter=closed',
-			'priority' => 600,
-		]);
-		$return_value[] = \ElggMenuItem::factory([
-			'name' => 'ordered',
-			'text' => elgg_echo('group_tools:groups:sorting:ordered'),
-			'href' => 'groups/all?filter=ordered',
-			'priority' => 800,
-		]);
-		$return_value[] = \ElggMenuItem::factory([
-			'name' => 'suggested',
-			'text' => elgg_echo('group_tools:groups:sorting:suggested'),
-			'href' => 'groups/suggested',
-			'priority' => 900,
-		]);
-		
-		return $return_value;
+		return $return;
 	}
 	
 	/**
-	 * add sorting options to the menu
+	 * Rewrite group listing tabs
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function addSorting($hook, $type, $return_value, $params) {
+	public static function addTabs(\Elgg\Hook $hook) {
 		
-		if (!elgg_in_context('group_sort_menu')) {
-			return;
+		/* @var $return \Elgg\Menu\MenuItems */
+		$return = $hook->getValue();
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'all',
+			'text' => elgg_echo('groups:all'),
+			'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+				'filter' => 'all',
+			]),
+			'priority' => 200,
+		]);
+		if (elgg_is_logged_in()) {
+			$return[] = \ElggMenuItem::factory([
+				'name' => 'yours',
+				'text' => elgg_echo('groups:yours'),
+				'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+					'filter' => 'yours',
+				]),
+				'priority' => 250,
+			]);
 		}
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'open',
+			'text' => elgg_echo('group_tools:groups:sorting:open'),
+			'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+				'filter' => 'open',
+			]),
+			'priority' => 500,
+		]);
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'closed',
+			'text' => elgg_echo('group_tools:groups:sorting:closed'),
+			'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+				'filter' => 'closed',
+			]),
+			'priority' => 600,
+		]);
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'suggested',
+			'text' => elgg_echo('group_tools:groups:sorting:suggested'),
+			'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+				'filter' => 'suggested',
+			]),
+			'priority' => 900,
+		]);
+		
+		return $return;
+	}
+	
+	/**
+	 * Add sorting options to the menu
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function addSorting(\Elgg\Hook $hook) {
 		
 		$allowed_sorting_tabs = [
 			'all',
@@ -85,25 +102,38 @@ class GroupSortMenu {
 			'closed',
 			'featured',
 		];
-		$selected_tab = elgg_extract('selected', $params);
+		$selected_tab = $hook->getParam('filter_value');
 		if (!in_array($selected_tab, $allowed_sorting_tabs)) {
 			return;
 		}
 		
 		$base_url = current_page_url();
+		
+		$return = $hook->getValue();
+		
 		// main sorting menu item
-		$return_value[] = \ElggMenuItem::factory([
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'sorting',
-			'text' => elgg_view_icon('sort'),
+			'icon' => 'sort',
+			'text' => false,
 			'title' => elgg_echo('sort'),
-			'href' => '#',
-			'priority' => -1, // needs to be first
+			'href' => false,
+			'priority' => 99999, // needs to be last
+			'child_menu' => [
+				'display' => 'dropdown',
+				'data-position' => json_encode([
+					'my' => 'right top',
+					'at' => 'right bottom',
+					'collision' => 'fit fit',
+				]),
+			],
 		]);
 		
 		// add sorting options
-		$return_value[] = \ElggMenuItem::factory([
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'newest',
-			'text' => elgg_view_icon('sort-amount-desc', ['class' => 'mrs']) . elgg_echo('sort:newest'),
+			'icon' => 'sort-amount-desc',
+			'text' => elgg_echo('sort:newest'),
 			'title' => elgg_echo('sort:newest'),
 			'href' => elgg_http_add_url_query_elements($base_url, [
 				'sort' => 'newest',
@@ -112,9 +142,10 @@ class GroupSortMenu {
 			'parent_name' => 'sorting',
 			'selected' => get_input('sort') === 'newest',
 		]);
-		$return_value[] = \ElggMenuItem::factory([
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'alpha',
-			'text' => elgg_view_icon('sort-alpha-asc', ['class' => 'mrs']) . elgg_echo('sort:alpha'),
+			'icon' => 'sort-alpha-asc',
+			'text' => elgg_echo('sort:alpha'),
 			'title' => elgg_echo('sort:alpha'),
 			'href' => elgg_http_add_url_query_elements($base_url, [
 				'sort' => 'alpha',
@@ -123,9 +154,10 @@ class GroupSortMenu {
 			'parent_name' => 'sorting',
 			'selected' => get_input('sort') === 'alpha',
 		]);
-		$return_value[] = \ElggMenuItem::factory([
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'popular',
-			'text' => elgg_view_icon('sort-numeric-desc', ['class' => 'mrs']) . elgg_echo('sort:popular'),
+			'icon' => 'sort-numeric-desc',
+			'text' => elgg_echo('sort:popular'),
 			'title' => elgg_echo('sort:popular'),
 			'href' => elgg_http_add_url_query_elements($base_url, [
 				'sort' => 'popular',
@@ -135,7 +167,7 @@ class GroupSortMenu {
 			'selected' => get_input('sort') === 'popular',
 		]);
 		
-		return $return_value;
+		return $return;
 	}
 	
 	/**
@@ -185,19 +217,7 @@ class GroupSortMenu {
 		
 		$show_tab_setting = elgg_get_plugin_setting("group_listing_{$name}_available", 'group_tools');
 		
-		$default_hidden_tabs = [
-			'ordered',
-			'featured',
-		];
-		if (in_array($name, $default_hidden_tabs)) {
-			if ($show_tab_setting === '1') {
-				return true;
-			}
-		} elseif ($show_tab_setting !== '0') {
-			return true;
-		}
-		
-		return false;
+		return ($show_tab_setting !== '0');
 	}
 	
 	/**
