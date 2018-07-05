@@ -24,6 +24,7 @@ return array(
 	'admin:groups:admin_approval' => "Approval needed",
 	'admin:groups:tool_presets' => "Group tool presets",
 	'admin:groups:auto_join' => "Auto join",
+	'admin:groups:repair' => "Repair",
 	
 	// plugin settings
 	'group_tools:settings:default_off' => "Yes, default off",

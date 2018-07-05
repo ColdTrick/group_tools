@@ -56,6 +56,14 @@ class PageMenu {
 			'parent_name' => 'groups',
 			'section' => 'configure',
 		]);
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'groups:repair',
+			'href' => 'admin/groups/repair',
+			'text' => elgg_echo('admin:groups:repair'),
+			'parent_name' => 'groups',
+			'section' => 'configure',
+		]);
 				
 		return $result;
 	}
