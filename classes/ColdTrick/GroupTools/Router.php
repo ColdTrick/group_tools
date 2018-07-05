@@ -28,10 +28,6 @@ class Router {
 				// prepare tab listing settings
 				group_tools_prepare_listing_settings();
 				break;
-			case 'suggested':
-				echo elgg_view_resource('group_tools/groups/suggested');
-				$resource_loaded = true;
-				break;
 			case 'requests':
 				$subpage = elgg_extract('2', $page);
 				if (empty($subpage)) {
