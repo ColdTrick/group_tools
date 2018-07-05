@@ -14,6 +14,8 @@ if (!$group->canEdit()) {
 	forward(REFERER);
 }
 
+elgg_push_breadcrumb(elgg_echo('groups'), 'groups/all');
+
 elgg_set_page_owner_guid($guid);
 
 $title = elgg_echo('group_tools:menu:invitations');

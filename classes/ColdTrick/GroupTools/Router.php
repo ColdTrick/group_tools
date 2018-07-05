@@ -28,22 +28,6 @@ class Router {
 				// prepare tab listing settings
 				group_tools_prepare_listing_settings();
 				break;
-			case 'requests':
-				$subpage = elgg_extract('2', $page);
-				if (empty($subpage)) {
-					break;
-				}
-				$guid = elgg_extract('1', $page);
-				if (elgg_view_exists("resources/groups/requests/{$subpage}")) {
-					
-					elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
-					
-					echo elgg_view_resource("groups/requests/{$subpage}", [
-						'guid' => $guid,
-					]);
-					$resource_loaded = true;
-				}
-				break;
 			case 'add':
 				if (elgg_get_plugin_setting('limited_groups', 'groups') === 'yes') {
 					elgg_admin_gatekeeper();

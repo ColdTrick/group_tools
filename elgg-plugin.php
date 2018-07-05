@@ -79,6 +79,14 @@ return [
 			'path' => '/groups/related/{guid}',
 			'resource' => 'groups/related',
 		],
+		'requests:invites:group:group' => [
+			'path' => '/groups/requests/{guid}/invites',
+			'resource' => 'groups/requests/invites',
+		],
+		'requests:email_invites:group:group' => [
+			'path' => '/groups/requests/{guid}/email_invites',
+			'resource' => 'groups/requests/email_invites',
+		],
 	],
 	'widgets' => [
 		'group_river_widget' => [
