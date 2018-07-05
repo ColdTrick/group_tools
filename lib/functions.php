@@ -541,28 +541,6 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 }
 
 /**
- * Check the plugin setting which enables domain based groups
- *
- * @return bool
- */
-function group_tools_domain_based_groups_enabled() {
-	static $result;
-	
-	if (isset($result)) {
-		return $result;
-	}
-	
-	$result = false;
-	
-	$setting = elgg_get_plugin_setting('domain_based', 'group_tools');
-	if ($setting === 'yes') {
-		$result = true;
-	}
-	
-	return $result;
-}
-
-/**
  * Check if the domain based settings for this group match the user
  *
  * @param ElggGroup $group the group to match to
@@ -572,7 +550,7 @@ function group_tools_domain_based_groups_enabled() {
  */
 function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user = null) {
 	
-	if (!group_tools_domain_based_groups_enabled()) {
+	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
 		return false;
 	}
 	
@@ -610,7 +588,7 @@ function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user =
  */
 function group_tools_get_domain_based_groups(ElggUser $user) {
 	
-	if (!group_tools_domain_based_groups_enabled()) {
+	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
 		return false;
 	}
 	
@@ -635,31 +613,6 @@ function group_tools_get_domain_based_groups(ElggUser $user) {
 	}
 	
 	return false;
-}
-
-/**
- * Enable registration on the site if disabled and a valid group invite code in provided
- *
- * @return void
- */
-function group_tools_enable_registration() {
-	
-	$registration_allowed = (bool) elgg_get_config('allow_registration');
-	if ($registration_allowed) {
-		return;
-	}
-	
-	// check for a group invite code
-	$group_invitecode = get_input('group_invitecode');
-	if (empty($group_invitecode)) {
-		return;
-	}
-	
-	// check if the code is valid
-	if (group_tools_check_group_email_invitation($group_invitecode)) {
-		// we have a valid code, so allow registration
-		elgg_set_config('allow_registration', true);
-	}
 }
 
 /**
@@ -747,28 +700,6 @@ function group_tools_get_tool_presets() {
 	}
 	
 	return json_decode($presets, true);
-}
-
-/**
- * Get the time_created from the group membership relation
- *
- * @param ElggUser  $user  the user to check
- * @param ElggGroup $group the group to check
- *
- * @return int
- */
-function group_tools_get_membership_information(ElggUser $user, ElggGroup $group) {
-	
-	if (!$user instanceof ElggUser || !$group instanceof ElggGroup) {
-		return 0;
-	}
-	
-	$relationship = check_entity_relationship($user->guid, 'member', $group->guid);
-	if (!$relationship instanceof ElggRelationship) {
-		return 0;
-	}
-	
-	return $relationship->time_created;
 }
 
 /**

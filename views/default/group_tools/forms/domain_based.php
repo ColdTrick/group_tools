@@ -1,7 +1,7 @@
 <?php
 
 $group = elgg_extract('entity', $vars);
-if (!($group instanceof ElggGroup) || !$group->canEdit() || !group_tools_domain_based_groups_enabled()) {
+if (!($group instanceof ElggGroup) || !$group->canEdit() || (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes')) {
 	return;
 }
 

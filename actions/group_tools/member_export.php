@@ -82,7 +82,13 @@ foreach ($members as $member) {
 	];
 	
 	// member since
-	$member_since = group_tools_get_membership_information($member, $group);
+	$member_since = 0;
+	
+	$relationship = check_entity_relationship($member->guid, 'member', $group->guid);
+	if ($relationship instanceof ElggRelationship) {
+		$member_since = $relationship->time_created;
+	}
+	
 	$info[] = $member_since;
 	$info[] = date('Y-m-d G:i:s', $member_since);
 	
