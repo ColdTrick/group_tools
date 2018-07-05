@@ -50,9 +50,9 @@ $options = [
 	'order_by' => 'ue.name ASC',
 ];
 
-$count = elgg_get_entities_from_relationship($options);
+$count = elgg_get_entities($options);
 unset($options['count']);
-$invitations = elgg_get_entities_from_relationship($options);
+$invitations = elgg_get_entities($options);
 
 $content = elgg_view('group_tools/membershipreq/invites', [
 	'invitations' => $invitations,

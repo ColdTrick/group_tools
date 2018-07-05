@@ -74,7 +74,7 @@ if ($owner instanceof ElggUser) {
 	$options['relationship_guid'] = $owner->guid;
 }
 
-$batch = new ElggBatch('elgg_get_entities_from_relationship', $options);
+$batch = new ElggBatch('elgg_get_entities', $options);
 $batch->rewind(); // needed so the next call succeeds
 if (!$batch->valid()) {
 	echo elgg_echo('widgets:group_river_widget:edit:no_groups');

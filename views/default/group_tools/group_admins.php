@@ -12,7 +12,7 @@ if (!group_tools_multiple_admin_enabled()) {
 	return;
 }
 
-$options = [
+$users = elgg_get_entities([
 	'relationship' => 'group_admin',
 	'relationship_guid' => $group->guid,
 	'inverse_relationship' => true,
@@ -23,9 +23,8 @@ $options = [
 	'wheres' => [
 		"e.guid <> {$group->owner_guid}",
 	],
-];
+]);
 
-$users = elgg_get_entities_from_relationship($options);
 if (empty($users)) {
 	return;
 }

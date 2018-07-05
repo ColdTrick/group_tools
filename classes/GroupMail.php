@@ -66,7 +66,7 @@ class GroupMail extends ElggObject {
 		}
 		
 		$recipients = (array) $this->recipients;
-		$batch = new ElggBatch('elgg_get_entities_from_relationship', [
+		$batch = new ElggBatch('elgg_get_entities', [
 			'type' => 'user',
 			'limit' => false,
 			'guids' => $recipients,

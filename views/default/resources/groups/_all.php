@@ -18,7 +18,7 @@ $selected_tab = get_input('filter', 'all');
 $content = '';
 
 $dbprefix = elgg_get_config('dbprefix');
-$getter = 'elgg_get_entities_from_relationship';
+$getter = 'elgg_get_entities';
 $group_options = [
 	'type' => 'group',
 	'full_view' => false,
@@ -105,7 +105,7 @@ switch ($selected_tab) {
 $sorting = get_input('sort');
 switch ($sorting) {
 	case 'popular':
-		$getter = 'elgg_get_entities_from_relationship_count';
+		$getter = 'elgg_get_entities';
 		
 		$group_options['relationship'] = 'member';
 		$group_options['inverse_relationship'] = false;

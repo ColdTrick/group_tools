@@ -73,7 +73,7 @@ class CSVExporter {
 		switch ($exportable_value) {
 			case 'group_tools_group_admin_name':
 				$result = [];
-				$batch = new \ElggBatch('elgg_get_entities_from_relationship', $group_admin_options);
+				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
 					$result[] = "\"{$group_admin->getDisplayName()}\"";
@@ -82,7 +82,7 @@ class CSVExporter {
 				break;
 			case 'group_tools_group_admin_email':
 				$result = [];
-				$batch = new \ElggBatch('elgg_get_entities_from_relationship', $group_admin_options);
+				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
 					$result[] = $group_admin->email;
@@ -91,7 +91,7 @@ class CSVExporter {
 				break;
 			case 'group_tools_group_admin_url':
 				$result = [];
-				$batch = new \ElggBatch('elgg_get_entities_from_relationship', $group_admin_options);
+				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
 					$result[] = $group_admin->getURL();
@@ -168,7 +168,7 @@ class CSVExporter {
 		switch ($exportable_value) {
 			case 'group_tools_user_group_admin_name':
 				$result = [];
-				$batch = new \ElggBatch('elgg_get_entities_from_relationship', $group_admin_options);
+				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
 					$result[] = "\"{$group_admin->getDisplayName()}\"";
@@ -177,7 +177,7 @@ class CSVExporter {
 				break;
 			case 'group_tools_user_group_admin_url':
 				$result = [];
-				$batch = new \ElggBatch('elgg_get_entities_from_relationship', $group_admin_options);
+				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
 					$result[] = $group_admin->getURL();

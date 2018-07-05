@@ -48,7 +48,7 @@ foreach ($methods as $method) {
 	
 	// add counters
 	$notification_options['relationship'] = "notify{$method}";
-	$count = elgg_get_entities_from_relationship($notification_options);
+	$count = elgg_get_entities($notification_options);
 	
 	$notification_count += $count;
 	

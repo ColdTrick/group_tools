@@ -17,7 +17,7 @@ if (!$group->canEdit() || (elgg_get_plugin_setting('member_export', 'group_tools
 
 $group_admins = [];
 if (group_tools_multiple_admin_enabled()) {
-	$group_admins = elgg_get_entities_from_relationship([
+	$group_admins = elgg_get_entities([
 		'type' => 'user',
 		'limit' => false,
 		'relationship' => 'group_admin',
@@ -70,7 +70,7 @@ $options = [
 	'inverse_relationship' => true,
 ];
 
-$members = new ElggBatch('elgg_get_entities_from_relationship', $options);
+$members = new ElggBatch('elgg_get_entities', $options);
 /* @var $member ElggUser */
 foreach ($members as $member) {
 	// basic user information

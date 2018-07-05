@@ -338,7 +338,7 @@ class Membership {
 		
 		$time = (int) elgg_extract('time', $params, time());
 		
-		$batch = new \ElggBatch('elgg_get_entities_from_metadata', [
+		$batch = new \ElggBatch('elgg_get_entities', [
 			'type' => 'user',
 			'limit' => false,
 			'metadata_name_value_pairs' => [

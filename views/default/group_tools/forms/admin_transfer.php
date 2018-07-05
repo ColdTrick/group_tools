@@ -50,8 +50,8 @@ $member_options = [
 	'selects' => ['ue.name'],
 ];
 
-$friends = elgg_get_entities_from_relationship($friends_options);
-$members = elgg_get_entities_from_relationship($member_options);
+$friends = elgg_get_entities($friends_options);
+$members = elgg_get_entities($member_options);
 
 $show_selector = false;
 
@@ -83,7 +83,7 @@ if (!empty($friends)) {
 		];
 	};
 	
-	$friends = new ElggBatch('elgg_get_entities_from_relationship', $friends_options);
+	$friends = new ElggBatch('elgg_get_entities', $friends_options);
 	foreach ($friends as $friend) {
 		$friends_optgroup[] = elgg_format_element('option', ['value' => $friend['guid']], $friend['name']);
 	}
@@ -104,7 +104,7 @@ if (!empty($members)) {
 		];
 	};
 	
-	$members = new ElggBatch('elgg_get_entities_from_relationship', $member_options);
+	$members = new ElggBatch('elgg_get_entities', $member_options);
 	foreach ($members as $member) {
 		$members_optgroup[] = elgg_format_element('option', ['value' => $member['guid']], $member['name']);
 	}

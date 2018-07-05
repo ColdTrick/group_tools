@@ -22,9 +22,9 @@ $request_options = [
 	'offset' => $offset,
 	'count' => true,
 ];
-$requests_count = elgg_get_entities_from_relationship($request_options);
+$requests_count = elgg_get_entities($request_options);
 unset($request_options['count']);
-$requests = elgg_get_entities_from_relationship($request_options);
+$requests = elgg_get_entities($request_options);
 
 // prepare listing view
 $vars['limit'] = $limit;
