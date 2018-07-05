@@ -75,6 +75,10 @@ return [
 			'path' => '/groups/mail/{guid}',
 			'resource' => 'groups/mail',
 		],
+		'collection:group:group:related' => [
+			'path' => '/groups/related/{guid}',
+			'resource' => 'groups/related',
+		],
 	],
 	'widgets' => [
 		'group_river_widget' => [

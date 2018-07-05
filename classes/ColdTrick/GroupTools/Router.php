@@ -49,14 +49,6 @@ class Router {
 					elgg_admin_gatekeeper();
 				}
 				break;
-			case 'related':
-				$guid = elgg_extract('1', $page);
-				
-				echo elgg_view_resource('group_tools/groups/related', [
-					'guid' => $guid,
-				]);
-				$resource_loaded = true;
-				break;
 		}
 		
 		// did we want this page?

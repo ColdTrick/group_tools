@@ -28,14 +28,10 @@ if ($group->canEdit()) {
 	]);
 }
 
-// helper context for entity menu
-elgg_push_context('group_tools_related_groups');
-
 $content .= elgg_list_entities([
 	'type' => 'group',
 	'relationship' => 'related_group',
 	'relationship_guid' => $group->guid,
-	'full_view' => false,
 	'order_by_metadata' => [
 		'name' => 'name',
 		'direction' => 'ASC',
@@ -43,13 +39,11 @@ $content .= elgg_list_entities([
 	'no_results' => elgg_echo('groups_tools:related_groups:none'),
 ]);
 
-elgg_pop_context();
-
 // build page
 $page_data = elgg_view_layout('content', [
 	'title' => $title_text,
 	'content' => $content,
-	'filter' => '',
+	'filter' => false,
 ]);
 
 // draw page

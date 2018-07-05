@@ -13,17 +13,21 @@ class EntityMenu {
 	 */
 	public static function relatedGroup(\Elgg\Hook $hook) {
 		
-		if (!elgg_in_context('group_tools_related_groups')) {
-			return;
-		}
-		
 		$page_owner = elgg_get_page_owner_entity();
 		$entity = $hook->getEntityParam();
 		if (!$page_owner instanceof \ElggGroup || !$entity instanceof \ElggGroup) {
 			return;
 		}
 		
+		if ($page_owner->guid === $entity->guid) {
+			return;
+		}
+		
 		if (!$page_owner->canEdit()) {
+			return;
+		}
+		
+		if (!check_entity_relationship($page_owner->guid, 'related_group', $entity->guid)) {
 			return;
 		}
 		
