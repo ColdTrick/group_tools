@@ -3,18 +3,20 @@
  * group owner tranfser form
  */
 
+use Elgg\Database\QueryBuilder;
+
 $group = elgg_extract('entity', $vars);
 $user = elgg_get_logged_in_user_entity();
 
-if (!($group instanceof ElggGroup) || !($user instanceof ElggUser)) {
+if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
 	return;
 }
 
 // don't check canEdit() because group admins can do that
-if (($group->owner_guid !== $user->guid) && !$user->isAdmin()) {
+if (($group->getOwnerGUID() !== $user->getGUID()) && !$user->isAdmin()) {
 	return;
 }
-	
+
 $dbprefix = elgg_get_config('dbprefix');
 
 $friends_options = [
@@ -23,14 +25,21 @@ $friends_options = [
 	'relationship_guid' => $user->guid,
 	'limit' => false,
 	'count' => true,
-	'joins' => [
-		"JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid",
-	],
 	'wheres' => [
-		"(e.guid <> {$group->owner_guid})",
+		function(QueryBuilder $qb, $main_alias) use ($group) {
+			return $qb->compare("{$main_alias}.guid", '!=', $group->owner_guid, ELGG_VALUE_GUID);
+		},
 	],
-	'order_by' => 'ue.name',
-	'selects' => ['ue.name'],
+	'order_by_metadata' => [
+		'name' => 'name',
+		'direction' => 'ASC',
+	],
+	'selects' => [
+		function(QueryBuilder $qb, $main_alias) {
+			$joined_alias = $qb->joinMetadataTable($main_alias, 'guid', 'name');
+			return "{$joined_alias}.value AS name";
+		},
+	],
 ];
 
 $member_options = [
@@ -40,14 +49,21 @@ $member_options = [
 	'inverse_relationship' => true,
 	'limit' => false,
 	'count' => true,
-	'joins' => [
-		"JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid",
-	],
 	'wheres' => [
-		"(e.guid NOT IN ({$group->owner_guid}, {$user->guid}))",
+		function (QueryBuilder $qb, $main_alias) use ($group, $user) {
+			return $qb->compare("{$main_alias}.guid", 'NOT IN', [$group->owner_guid, $user->guid]);
+		},
 	],
-	'order_by' => 'ue.name',
-	'selects' => ['ue.name'],
+	'order_by_metadata' => [
+		'name' => 'name',
+		'direction' => 'ASC',
+	],
+	'selects' => [
+		function(QueryBuilder $qb, $main_alias) {
+			$joined_alias = $qb->joinMetadataTable($main_alias, 'guid', 'name');
+			return "{$joined_alias}.value AS name";
+		},
+	],
 ];
 
 $friends = elgg_get_entities($friends_options);
@@ -57,12 +73,12 @@ $show_selector = false;
 
 $options = [];
 // add current group owner
-$options[] = elgg_format_element('option', ['value' => $group->owner_guid], elgg_echo('group_tools:admin_transfer:current', [$group->getOwnerEntity()->getDisplayName()]));
+$options[] = elgg_format_element('option', ['value' => $group->getOwnerGUID()], elgg_echo('group_tools:admin_transfer:current', [$group->getOwnerEntity()->name]));
 
 // add current user
-if ($group->owner_guid !== $user->guid) {
+if ($group->getOwnerGUID() !== $user->getGUID()) {
 	$show_selector = true;
-	$options[] = elgg_format_element('option', ['value' => $user->guid], elgg_echo('group_tools:admin_transfer:myself'));
+	$options[] = elgg_format_element('option', ['value' => $user->getGUID()], elgg_echo('group_tools:admin_transfer:myself'));
 }
 
 if (!$show_selector && empty($friends) && empty($members)) {
@@ -124,7 +140,7 @@ echo elgg_format_element('select', [
 	'id' => 'groups-owner-guid',
 ], implode('', $options));
 
-if ($group->owner_guid == $user->guid) {
+if ($group->getOwnerGUID() == $user->getGUID()) {
 	echo elgg_format_element('div', ['class' => 'elgg-field-help elgg-text-help'], elgg_echo('groups:owner:warning'));
 	
 	// stay admin
