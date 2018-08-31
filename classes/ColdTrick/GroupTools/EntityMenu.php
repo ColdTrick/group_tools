@@ -67,7 +67,7 @@ class EntityMenu {
 		
 		static $suggested_groups;
 		if (!isset($suggested_groups)) {
-			$suggested_groups = elgg_get_plugin_setting('suggested_groups', 'group_tools');
+			$suggested_groups = (string) elgg_get_plugin_setting('suggested_groups', 'group_tools');
 			$suggested_groups = string_to_tag_array($suggested_groups);
 		}
 		
