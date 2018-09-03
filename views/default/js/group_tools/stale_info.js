@@ -10,10 +10,11 @@ define(function(require) {
 			return false;
 		}
 		
+		var $elem = $(this);
 		var ajax = new Ajax();
-		ajax.action($(this).attr('href'), {
+		ajax.action($elem.attr('href'), {
 			success: function() {
-				$('#group-tools-stale-message').remove();
+				$elem.closest('.elgg-message').remove();
 			}
 		});
 		

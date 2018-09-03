@@ -28,11 +28,7 @@ if ($entity->canEdit()) {
 	elgg_require_js('group_tools/stale_info');
 }
 
-echo elgg_format_element('div', [
+echo elgg_view_message('warning', $message, [
 	'id' => 'group-tools-stale-message',
-	'class' => [
-		'elgg-message',
-		'elgg-state-error',
-		'mbm',
-	],
-], $message);
+	'title' => false,
+]);
