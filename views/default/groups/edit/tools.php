@@ -18,6 +18,8 @@ if (empty($tools)) {
 	return;
 }
 
+$tools = $tools->sort()->all();
+
 // if the form comes back from a failed save we can't use the presets
 $sticky_form = (bool) elgg_extract('group_tools_presets', $vars, false);
 $presets = false;

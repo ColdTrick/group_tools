@@ -220,7 +220,10 @@ class Membership {
 		// cleanup email invitations
 		$options = [
 			'annotation_name' => 'email_invitation',
-			'annotation_value' => group_tools_generate_email_invite_code($group->guid, $user->email),
+			'annotation_value' => elgg_build_hmac([
+				strtolower($user->email),
+				$group->guid,
+			])->getToken(),
 			'limit' => false,
 		];
 		
@@ -680,7 +683,11 @@ class Membership {
 			return;
 		}
 		
-		$invitecode = group_tools_generate_email_invite_code($group->guid, $user->email);
+		$invitecode = elgg_build_hmac([
+			strtolower($user->email),
+			$group->guid,
+		])->getToken();
+		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'accept',
 			'text' => elgg_echo('accept'),

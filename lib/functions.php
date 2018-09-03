@@ -175,10 +175,10 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 	}
 	
 	// generate invite code
-	$invite_code = group_tools_generate_email_invite_code($group->guid, $email);
-	if (empty($invite_code)) {
-		return false;
-	}
+	$invite_code = elgg_build_hmac([
+		strtolower($email),
+		$group->guid,
+	])->getToken();
 	
 	$found_group = group_tools_check_group_email_invitation($invite_code, $group->guid);
 	if (!empty($found_group) && empty($resend)) {
@@ -236,51 +236,28 @@ function group_tools_get_invited_groups_by_email($email) {
 		return false;
 	}
 	
-	$dbprefix = elgg_get_config('dbprefix');
-	$site_secret = get_site_secret();
-	$email = sanitise_string(strtolower($email));
-	
 	$options = [
 		'type' => 'group',
 		'limit' => false,
-		'joins' => [
-			"JOIN {$dbprefix}annotations a ON a.owner_guid = e.guid",
-		],
-		'wheres' => [
-			"(a.name = 'email_invitation' AND
-				(a.value = md5(CONCAT('{$site_secret}{$email}', e.guid))
-				OR a.value LIKE CONCAT(md5(CONCAT('{$site_secret}{$email}', e.guid)), '|%')
-				)
-			)",
-		],
+		'annotation_name' => 'email_invitation',
+		'annotation_value' => elgg_build_hmac([
+			sanitise_string(strtolower($email)),
+		])->getToken(),
+		
+		// @todo not working yet as intended
+// 		'wheres' => [
+// 			"(a.name = 'email_invitation' AND
+// 				(a.value = md5(CONCAT('{$site_secret}{$email}', e.guid))
+// 				OR a.value LIKE CONCAT(md5(CONCAT('{$site_secret}{$email}', e.guid)), '|%')
+// 				)
+// 			)",
+// 		],
 	];
 	
 	// make sure we can see all groups
 	return elgg_call(ELGG_IGNORE_ACCESS, function () use ($options) {
 		return elgg_get_entities($options);
 	});
-}
-
-/**
- * Generate a unique code to be used in email invitations
- *
- * @param int    $group_guid the group GUID
- * @param string $email      the email address
- *
- * @return false|string
- */
-function group_tools_generate_email_invite_code($group_guid, $email) {
-	
-	$group_guid = (int) $group_guid;
-	if ($group_guid < 1 || empty($email)) {
-		return false;
-	}
-	
-	// get site secret
-	$site_secret = get_site_secret();
-	
-	// generate code
-	return md5($site_secret . strtolower($email) . $group_guid);
 }
 
 /**
