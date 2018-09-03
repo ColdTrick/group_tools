@@ -9,7 +9,11 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-$tools = elgg()->group_tools->group($entity);
+if ($entity instanceof \ElggGroup) {
+	$tools = elgg()->group_tools->group($entity);
+} else {
+	$tools = elgg()->group_tools->all();
+}
 if (empty($tools)) {
 	return;
 }
