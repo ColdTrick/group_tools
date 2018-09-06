@@ -80,10 +80,15 @@ if (empty($entity) && !empty($presets)) {
 	$more_link = elgg_view('output/url', [
 		'text' => elgg_echo('group_tools:create_group:tool_presets:show_more'),
 		'href' => '#group-tools-preset-more',
+		'id' => 'group-tools-preset-more-link',
 		'rel' => 'toggle',
-		'class' => 'float-alt',
 	]);
-	echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:active_header'), $more_link, ['id' => 'group-tools-preset-active', 'class' => 'hidden']);
+	
+	echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:active_header'), '', [
+		'id' => 'group-tools-preset-active',
+		'class' => 'hidden',
+		'menu' => $more_link,
+	]);
 	
 	$tools_content = '';
 	foreach ($tools as $group_option) {

@@ -9,7 +9,7 @@
 elgg_require_js('group_tools/group_tool_presets');
 
 $presets = elgg_extract('group_tool_presets', $vars);
-$group_tools = elgg_get_config('group_tool_options');
+$group_tools = elgg()->group_tools->all();
 
 // list existing
 if (!empty($presets)) {

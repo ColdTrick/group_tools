@@ -38,7 +38,7 @@ define(function(require) {
 			});
 			
 			$('#group-tools-preset-more .elgg-input-checkbox[value="yes"]:checked').click();
-			$('#group-tools-preset-active .elgg-body > a').show();
+			$('#group-tools-preset-more-link').show();
 		},
 		presetTools : function(preset_id) {
 			if (preset_id == 'blank') {
@@ -54,7 +54,7 @@ define(function(require) {
 			}
 			
 			if ($('#group-tools-preset-more .elgg-body > div').length === 0) {
-				$('#group-tools-preset-active .elgg-body > a').hide();
+				$('#group-tools-preset-more-link').hide();
 			}
 		}
 	};
