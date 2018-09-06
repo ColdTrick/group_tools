@@ -55,13 +55,11 @@ elgg_entity_gatekeeper($group_guid, 'group');
 $group = get_entity($group_guid);
 
 if (empty($user_guids) && empty($emails) && empty($csv)) {
-	register_error(elgg_echo('error:missing_data'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
 if (!$group->canEdit() && !group_tools_allow_members_invite($group)) {
-	register_error(elgg_echo('actionunauthorized'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
 // show hidden (unvalidated) users
