@@ -111,6 +111,11 @@ class GroupSortMenu {
 		
 		$return = $hook->getValue();
 		
+		$order = get_input('order');
+		if (!in_array($order, ['ASC', 'DESC'])) {
+			$order = 'ASC';
+		}
+		
 		// main sorting menu item
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'sorting',
@@ -144,11 +149,12 @@ class GroupSortMenu {
 		]);
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'alpha',
-			'icon' => 'sort-alpha-asc',
+			'icon' => $order === 'ASC' ? 'sort-alpha-up' : 'sort-alpha-down',
 			'text' => elgg_echo('sort:alpha'),
 			'title' => elgg_echo('sort:alpha'),
 			'href' => elgg_http_add_url_query_elements($base_url, [
 				'sort' => 'alpha',
+				'order' => $order === 'ASC' ? 'DESC': 'ASC',
 			]),
 			'priority' => 200,
 			'parent_name' => 'sorting',

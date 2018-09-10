@@ -1,13 +1,14 @@
 <?php
 
+/**
+ * Renders a list of featured groups
+ */
 $options = [
 	'type' => 'group',
-	'metadata_name_value_pairs' => [
-		'name' => 'membership',
-		'value' => ACCESS_PUBLIC,
-		'operand' => '<>',
-	],
-	'no_results' => elgg_echo('groups:none'),
+	'metadata_name' => 'featured_group',
+	'metadata_value' => 'yes',
+	'full_view' => false,
+	'no_results' => elgg_echo('groups:nofeatured'),
 ];
 
 $getter = 'elgg_get_entities';

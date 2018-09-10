@@ -10,6 +10,7 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 return [
 	'bootstrap' => Bootstrap::class,
 	'settings' => [
+		'group_listing' => 'all',
 		'multiple_admin' => 'no',
 		'mail' => 'no',
 		'mail_members' => 'no',
