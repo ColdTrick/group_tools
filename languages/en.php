@@ -391,7 +391,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:action:toggle_admin:success:add' => "The user was successfully added as a group admin",
 
 	// group mail - action
-	'group_tools:action:mail:success' => "Message succesfully send",
+	'group_tools:action:mail:success' => "Message succesfully sent",
 
 	// group - invite - action
 	'group_tools:action:invite:error:invite'=> "No users were invited (%s already invited, %s already a member)",
