@@ -94,7 +94,7 @@ return array(
 	'group_tools:settings:special_states' => "Groups with a special state",
 	'group_tools:settings:special_states:featured:description' => "The site administrators have chosen to feature the following groups.",
 	'group_tools:settings:special_states:suggested' => "Suggested",
-	'group_tools:settings:special_states:suggested:description' => "The following groups are suggested to (new) users. It is possible to auto suggest groups, if no groups are automaticly detected or too few, the list will be appended by these groups.",
+	'group_tools:settings:special_states:suggested:description' => "The following groups are suggested to (new) users. It is possible to auto suggest groups, if no groups are automatically detected or too few, the list will be appended by these groups.",
 
 	'group_tools:settings:fix:title' => "Fix group access problems",
 	'group_tools:settings:fix:missing' => "There are %d users who are a member of a group but don't have access to the content shared with the group.",
@@ -115,7 +115,7 @@ return array(
 	
 	// auto join
 	'group_tools:admin:auto_join:default' => "Auto join",
-	'group_tools:admin:auto_join:default:description' => "New users will automaticly join the following groups.",
+	'group_tools:admin:auto_join:default:description' => "New users will automatically join the following groups.",
 	'group_tools:admin:auto_join:default:none' => "No auto join groups configured yet.",
 	
 	'group_tools:form:admin:auto_join:group' => "Add a group to the auto join groups",
@@ -205,7 +205,7 @@ You can also go to All site groups -> Group invitations and enter the following 
 To visit the group please click on the following link:
 %s",
 	
-	// deline membeship request notification
+	// decline membership request notification
 	'group_tools:notify:membership:declined:subject' => "Your membership request for '%s' was declined",
 	'group_tools:notify:membership:declined:message' => "Hi %s,
 
@@ -359,7 +359,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:groups:membershipreq:email_invitations' => "Invited e-mail addresses",
 	'group_tools:groups:membershipreq:email_invitations:none' => "No pending e-mail invitations",
 	'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Are you sure you wish to revoke this invitation",
-	'group_tools:groups:membershipreq:kill_request:prompt' => "Optionaly you can tell the user why you declined the request.",
+	'group_tools:groups:membershipreq:kill_request:prompt' => "Optionally you can tell the user why you declined the request.",
 
 	// group invitations
 	'group_tools:group:invitations:request' => "Outstanding membership requests",
@@ -385,13 +385,13 @@ your group '%s' was declined and removed by a site administrator.",
 	
 	// group admins - action
 	'group_tools:action:toggle_admin:error:group' => "The given input doesn't result in a group or you can't edit this group or the user is not a member",
-	'group_tools:action:toggle_admin:error:remove' => "An unknown error occured while removing the user as a group admin",
-	'group_tools:action:toggle_admin:error:add' => "An unknown error occured while adding the user as a group admin",
+	'group_tools:action:toggle_admin:error:remove' => "An unknown error occurred while removing the user as a group admin",
+	'group_tools:action:toggle_admin:error:add' => "An unknown error occurred while adding the user as a group admin",
 	'group_tools:action:toggle_admin:success:remove' => "The user was successfully removed as a group admin",
 	'group_tools:action:toggle_admin:success:add' => "The user was successfully added as a group admin",
 
 	// group mail - action
-	'group_tools:action:mail:success' => "Message succesfully send",
+	'group_tools:action:mail:success' => "Message successfully sent",
 
 	// group - invite - action
 	'group_tools:action:invite:error:invite'=> "No users were invited (%s already invited, %s already a member)",
@@ -401,7 +401,7 @@ your group '%s' was declined and removed by a site administrator.",
 
 	// group - invite - accept e-mail
 	'group_tools:action:groups:email_invitation:error:code' => "The entered invitation code is no longer valid",
-	'group_tools:action:groups:email_invitation:error:join' => "An unknown error occured while joining the group %s, maybe you're already a member",
+	'group_tools:action:groups:email_invitation:error:join' => "An unknown error occurred while joining the group %s, maybe you're already a member",
 	'group_tools:action:groups:email_invitation:success' => "You've successfully joined the group",
 
 	// group - invite - decline e-mail
@@ -412,7 +412,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:suggested_groups:none' => "We can't suggest a group for you. This can happen if we have to little information about you, or that you are already a member of the groups we like you to join. Use the search to find more groups.",
 		
 	// group toggle auto join
-	'group_tools:action:toggle_special_state:error:suggested' => "An error occured while saving the new suggested settings",
+	'group_tools:action:toggle_special_state:error:suggested' => "An error occurred while saving the new suggested settings",
 	'group_tools:action:toggle_special_state:error:state' => "Invalid state provided",
 	'group_tools:action:toggle_special_state:suggested' => "The new suggested settings were saved successfully",
 	
@@ -473,23 +473,23 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:welcome_message:title' => "Group welcome message",
 	'group_tools:welcome_message:description' => "You can configure a welcome message for new users who join this group. If you don't want to send a welcome message leave this field blank.",
 	'group_tools:welcome_message:explain' => "In order to personalize the message you can use the following placeholders:
-[name]: the name of the new user (eg. %s)
-[group_name]: the name of this group (eg. %s)
-[group_url]: the URL to this group (eg. %s)",
+[name]: the name of the new user (e.g. %s)
+[group_name]: the name of this group (e.g. %s)
+[group_url]: the URL to this group (e.g. %s)",
 	
 	'group_tools:action:welcome_message:success' => "The welcome message was saved",
 	
 	'group_tools:welcome_message:subject' => "Welcome to %s",
 	
 	// email invitations
-	'group_tools:action:revoke_email_invitation:error' => "An error occured while revoking the invitation, please try again",
+	'group_tools:action:revoke_email_invitation:error' => "An error occurred while revoking the invitation, please try again",
 	'group_tools:action:revoke_email_invitation:success' => "The invitation was revoked",
 	
 	// domain based groups
 	'group_tools:join:domain_based:tooltip' => "Because of a matching e-mail domain, you can join this group.",
 	
 	'group_tools:domain_based:title' => "Configure e-mail domains",
-	'group_tools:domain_based:description' => "When you configure one (or more) e-mail domains, users with that e-mail domain will automaticly join your group upon registration. Also if you have a closed group user with a matching e-mail domain can join without requesting membership. You can configure multipe domains by using a comma. Don't include the @ sign",
+	'group_tools:domain_based:description' => "When you configure one (or more) e-mail domains, users with that e-mail domain will automatically join your group upon registration. Also if you have a closed group user with a matching e-mail domain can join without requesting membership. You can configure multiple domains by using a comma. Don't include the @ sign",
 	
 	'group_tools:action:domain_based:success' => "The new e-mail domains were saved",
 	
@@ -507,7 +507,7 @@ your group '%s' was declined and removed by a site administrator.",
 	
 	'group_tools:action:related_groups:error:same' => "You can't related this group to itself",
 	'group_tools:action:related_groups:error:already' => "The selected group is already related",
-	'group_tools:action:related_groups:error:add' => "An unknown error occured while adding the relationship, please try again",
+	'group_tools:action:related_groups:error:add' => "An unknown error occurred while adding the relationship, please try again",
 	'group_tools:action:related_groups:success' => "The group is now related",
 	
 	'group_tools:related_groups:notify:owner:subject' => "A new related group was added",
@@ -518,7 +518,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:related_groups:entity:remove' => "Remove related group",
 	
 	'group_tools:action:remove_related_groups:error:not_related' => "The group is not related",
-	'group_tools:action:remove_related_groups:error:remove' => "An unknown error occured while removing the relationship, please try again",
+	'group_tools:action:remove_related_groups:error:remove' => "An unknown error occurred while removing the relationship, please try again",
 	'group_tools:action:remove_related_groups:success' => "The group is no longer related",
 	
 	'group_tools:action:group_tool:presets:saved' => "New group tool presets saved",
@@ -542,7 +542,7 @@ your group '%s' was declined and removed by a site administrator.",
 	
 	// group toggle notifications
 	'group_tools:action:toggle_notifications:disabled' => "The notifications for the group '%s' have been disabled",
-	'group_tools:action:toggle_notifications:enabled' => "The notfications for the group '%s' have been enabled",
+	'group_tools:action:toggle_notifications:enabled' => "The notifications for the group '%s' have been enabled",
 	
 	// group join motivation
 	'group_tools:join_motivation:edit:option:label' => "Joining this closed group requires motivation",
