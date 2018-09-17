@@ -115,24 +115,24 @@ class GroupSortMenu {
 		if (!in_array($order, ['ASC', 'DESC'])) {
 			$order = 'ASC';
 		}
+		$sort = get_input('sort', 'newest');
 		
-		// main sorting menu item
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'sorting',
-			'icon' => 'sort',
-			'text' => false,
-			'title' => elgg_echo('sort'),
-			'href' => false,
-			'priority' => 99999, // needs to be last
-			'child_menu' => [
-				'display' => 'dropdown',
-				'data-position' => json_encode([
-					'my' => 'right top',
-					'at' => 'right bottom',
-					'collision' => 'fit fit',
-				]),
-			],
-		]);
+		$child_menu_config = [
+			'display' => 'dropdown',
+			'data-position' => json_encode([
+				'my' => 'right top',
+				'at' => 'right bottom',
+				'collision' => 'fit fit',
+			]),
+		];
+		$parent_name = $sort;
+		if ($sort === 'alpha') {
+			if ($order === 'ASC') {
+				$parent_name = 'alpha_az';
+			} else {
+				$parent_name = 'alpha_za';
+			}
+		}
 		
 		// add sorting options
 		$return[] = \ElggMenuItem::factory([
@@ -143,22 +143,41 @@ class GroupSortMenu {
 			'href' => elgg_http_add_url_query_elements($base_url, [
 				'sort' => 'newest',
 			]),
-			'priority' => 100,
-			'parent_name' => 'sorting',
-			'selected' => get_input('sort') === 'newest',
+			'priority' => $sort === 'newest' ? 99999 : 100,
+			'parent_name' => $sort !== 'newest' ? $parent_name : null,
+			'selected' => $sort === 'newest',
+			'child_menu' => $sort === 'newest' ? $child_menu_config : null,
+			'item_class' => $sort === 'newest' ? 'group-tools-listing-sorting' : null,
 		]);
 		$return[] = \ElggMenuItem::factory([
-			'name' => 'alpha',
-			'icon' => $order === 'ASC' ? 'sort-alpha-up' : 'sort-alpha-down',
+			'name' => 'alpha_az',
+			'icon' => 'sort-alpha-down',
 			'text' => elgg_echo('sort:alpha'),
 			'title' => elgg_echo('sort:alpha'),
 			'href' => elgg_http_add_url_query_elements($base_url, [
 				'sort' => 'alpha',
-				'order' => $order === 'ASC' ? 'DESC': 'ASC',
+				'order' => 'ASC',
 			]),
-			'priority' => 200,
-			'parent_name' => 'sorting',
-			'selected' => get_input('sort') === 'alpha',
+			'priority' => ($sort === 'alpha' && $order === 'ASC') ? 99999 : 200,
+			'parent_name' => ($sort !== 'alpha' || $order !== 'ASC') ? $parent_name : null,
+			'selected' => ($sort === 'alpha' && $order === 'ASC'),
+			'child_menu' => ($sort === 'alpha' && $order === 'ASC') ? $child_menu_config : null,
+			'item_class' => ($sort === 'alpha' && $order === 'ASC') ? 'group-tools-listing-sorting' : null,
+		]);
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'alpha_za',
+			'icon' => 'sort-alpha-up',
+			'text' => elgg_echo('sort:alpha'),
+			'title' => elgg_echo('sort:alpha'),
+			'href' => elgg_http_add_url_query_elements($base_url, [
+				'sort' => 'alpha',
+				'order' => 'DESC',
+			]),
+			'priority' => ($sort === 'alpha' && $order === 'DESC') ? 99999 : 201,
+			'parent_name' => ($sort !== 'alpha' || $order !== 'DESC') ? $parent_name : null,
+			'selected' => ($sort === 'alpha' && $order === 'DESC'),
+			'child_menu' => ($sort === 'alpha' && $order === 'DESC') ? $child_menu_config : null,
+			'item_class' => ($sort === 'alpha' && $order === 'DESC') ? 'group-tools-listing-sorting' : null,
 		]);
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'popular',
@@ -168,9 +187,11 @@ class GroupSortMenu {
 			'href' => elgg_http_add_url_query_elements($base_url, [
 				'sort' => 'popular',
 			]),
-			'priority' => 300,
-			'parent_name' => 'sorting',
-			'selected' => get_input('sort') === 'popular',
+			'priority' => $sort === 'popular' ? 99999 : 300,
+			'parent_name' => $sort !== 'popular' ? $parent_name : null,
+			'selected' => $sort === 'popular',
+			'child_menu' => $sort === 'popular' ? $child_menu_config : null,
+			'item_class' => $sort === 'popular' ? 'group-tools-listing-sorting' : null,
 		]);
 		
 		return $return;
@@ -230,7 +251,7 @@ class GroupSortMenu {
 	 */
 	public static function setSelected(\Elgg\Hook $hook) {
 		
-		$selected_tab = $hook->getParam('selected', 'all');
+		$selected_tab = $hook->getParam('filter_value', 'all');
 		if (empty($selected_tab)) {
 			return;
 		}
