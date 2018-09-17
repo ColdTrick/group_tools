@@ -1,10 +1,6 @@
 <?php
-use Elgg\Database\QueryBuilder;
-
 /**
  * All helper functions for this plugin can be found here.
- *
- * @package group_tools
  */
 
 /**
