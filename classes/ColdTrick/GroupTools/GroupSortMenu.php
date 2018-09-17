@@ -43,7 +43,7 @@ class GroupSortMenu {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'all',
 			'text' => elgg_echo('groups:all'),
-			'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+			'href' => elgg_generate_url('collection:group:group:all', [
 				'filter' => 'all',
 			]),
 			'priority' => 200,
@@ -52,7 +52,7 @@ class GroupSortMenu {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'yours',
 				'text' => elgg_echo('groups:yours'),
-				'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+				'href' => elgg_generate_url('collection:group:group:all', [
 					'filter' => 'yours',
 				]),
 				'priority' => 250,
@@ -61,7 +61,7 @@ class GroupSortMenu {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'open',
 			'text' => elgg_echo('group_tools:groups:sorting:open'),
-			'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+			'href' => elgg_generate_url('collection:group:group:all', [
 				'filter' => 'open',
 			]),
 			'priority' => 500,
@@ -69,7 +69,7 @@ class GroupSortMenu {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'closed',
 			'text' => elgg_echo('group_tools:groups:sorting:closed'),
-			'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+			'href' => elgg_generate_url('collection:group:group:all', [
 				'filter' => 'closed',
 			]),
 			'priority' => 600,
@@ -77,7 +77,7 @@ class GroupSortMenu {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'suggested',
 			'text' => elgg_echo('group_tools:groups:sorting:suggested'),
-			'href' => elgg_http_add_url_query_elements(elgg_generate_url('collection:group:group:all'), [
+			'href' => elgg_generate_url('collection:group:group:all', [
 				'filter' => 'suggested',
 			]),
 			'priority' => 900,
@@ -179,37 +179,32 @@ class GroupSortMenu {
 	/**
 	 * Clean up the tabs on the group listing page
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function cleanupTabs($hook, $type, $return_value, $params) {
+	public static function cleanupTabs(\Elgg\Hook $hook) {
 		
-		if (!elgg_in_context('group_sort_menu')) {
-			return;
-		}
+		$return = $hook->getValue();
 		
 		/* @var $menu_item \ElggMenuItem */
-		foreach ($return_value as $index => $menu_item) {
+		foreach ($return as $index => $menu_item) {
 			$menu_name = $menu_item->getName();
 			
 			// check plugin settings for the tabs
 			if (!self::showTab($menu_name)) {
-				unset($return_value[$index]);
+				unset($return[$index]);
 				continue;
 			}
 			
 			// check if discussions is enabled
 			if (($menu_name === 'discussion') && !elgg_is_active_plugin('discussions')) {
-				unset($return_value[$index]);
+				unset($return[$index]);
 				continue;
 			}
 		}
 		
-		return $return_value;
+		return $return;
 	}
 	
 	/**
@@ -229,40 +224,32 @@ class GroupSortMenu {
 	/**
 	 * Set the correct selected tab
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'prepare', 'menu:filter:groups/all'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return void|\Elgg\Menu\PreparedMenu
 	 */
-	public static function setSelected($hook, $type, $return_value, $params) {
+	public static function setSelected(\Elgg\Hook $hook) {
 		
-		if (!elgg_in_context('group_sort_menu')) {
-			return;
-		}
-		
-		$selected_tab = elgg_extract('selected', $params, 'all');
+		$selected_tab = $hook->getParam('selected', 'all');
 		if (empty($selected_tab)) {
 			return;
 		}
 		
-		foreach ($return_value as $section => $menu_items) {
-			if (empty($menu_items) || !is_array($menu_items)) {
-				continue;
-			}
-			
+		/* @var $return \Elgg\Menu\PreparedMenu */
+		$return = $hook->getValue();
+		
+		foreach ($return as $section) {
 			/* @var $menu_item \ElggMenuItem */
-			foreach ($menu_items as $menu_item) {
+			foreach ($section as $menu_item) {
 				if ($menu_item->getName() !== $selected_tab) {
 					continue;
 				}
 				
 				$menu_item->setSelected(true);
-				break;
+				break(2);
 			}
 		}
 		
-		return $return_value;
+		return $return;
 	}
 }
