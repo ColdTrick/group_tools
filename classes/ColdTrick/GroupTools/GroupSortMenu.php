@@ -208,22 +208,26 @@ class GroupSortMenu {
 		
 		$return = $hook->getValue();
 		
+		$new = [];
+		
 		/* @var $menu_item \ElggMenuItem */
-		foreach ($return as $index => $menu_item) {
+		foreach ($return as $menu_item) {
 			$menu_name = $menu_item->getName();
 			
 			// check plugin settings for the tabs
 			if (!self::showTab($menu_name)) {
-				unset($return[$index]);
 				continue;
 			}
 			
 			// check if discussions is enabled
 			if (($menu_name === 'discussion') && !elgg_is_active_plugin('discussions')) {
-				unset($return[$index]);
 				continue;
 			}
+			
+			$new[] = $menu_item;
 		}
+		
+		$return->fill($new);
 		
 		return $return;
 	}
