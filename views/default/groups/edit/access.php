@@ -63,8 +63,8 @@ if ($show_motivation_option) {
 if ($show_visibility) {
 	$visibility_options = [
 		ACCESS_PRIVATE => elgg_echo('groups:access:group'),
-		ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
-		ACCESS_PUBLIC => elgg_echo('PUBLIC'),
+		ACCESS_LOGGED_IN => elgg_echo('access:label:logged_in'),
+		ACCESS_PUBLIC => elgg_echo('access:label:public'),
 	];
 
 	if (elgg_get_config('walled_garden')) {
@@ -95,19 +95,20 @@ $access_mode_params = [
 	'id' => 'groups-content-access-mode',
 	'value' => $content_access_mode,
 	'options_values' => [
-		\ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
-		\ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
+		ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
+		ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
 	],
 ];
 
-if ($entity) {
+if ($entity instanceof \ElggGroup) {
 	// Disable content_access_mode field for hidden groups because the setting
 	// will be forced to members_only regardless of the entered value
-	if ($entity->access_id === $entity->group_acl) {
+	$acl = _groups_get_group_acl($entity);
+	if ($acl && ($entity->access_id === $acl->id)) {
 		$access_mode_params['disabled'] = 'disabled';
 	}
 	
-	if ($entity && $entity->getContentAccessMode() == \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED) {
+	if ($entity->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED) {
 		// Warn the user that changing the content access mode to more
 		// restrictive will not affect the existing group content
 		$access_mode_params['#help'] = elgg_echo('groups:content_access_mode:warning');
