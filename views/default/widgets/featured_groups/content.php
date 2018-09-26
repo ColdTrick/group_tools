@@ -23,11 +23,10 @@ $featured = elgg_list_entities([
 
 $random = '';
 if ($show_random == 'yes') {
-	$dbprefix = elgg_get_config('dbprefix');
-	
-	$random_options = [
+	$random = elgg_list_entities([
 		'type' => 'group',
 		'limit' => 1,
+		'pagination' => false,
 		'order_by' => new OrderByClause('RAND()'),
 		'wheres' => [
 			function (QueryBuilder $qb) {
@@ -40,9 +39,7 @@ if ($show_random == 'yes') {
 				return "NOT EXISTS ({$subquery->getSQL()})";
 			},
 		],
-	];
-	
-	$random = elgg_list_entities($random_options);
+	]);
 }
 
 $list = $featured . $random;
