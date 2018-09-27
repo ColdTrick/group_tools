@@ -9,10 +9,10 @@ elgg_make_sticky_form('group_invite');
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 
-$user_guids = get_input('user_guid');
-if (!empty($user_guids) && !is_array($user_guids)) {
-	$user_guids = array($user_guids);
-}
+$user_guids = (array) get_input('user_guid');
+$non_group_members = (array) get_input('non_group_members');
+
+$user_guids = array_merge($user_guids, $non_group_members);
 
 $adding = false;
 if (elgg_is_admin_logged_in()) {
@@ -39,10 +39,7 @@ if (elgg_is_admin_logged_in()) {
 $group_guid = (int) get_input('group_guid');
 $text = get_input('comment');
 
-$emails = get_input('user_guid_email');
-if (!empty($emails) && !is_array($emails)) {
-	$emails = array($emails);
-}
+$emails = (array) get_input('user_guid_email');
 
 $csv = get_uploaded_file('csv');
 if (get_input('resend') == 'yes') {

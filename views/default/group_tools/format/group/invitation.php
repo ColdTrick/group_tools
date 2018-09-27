@@ -6,16 +6,15 @@
  */
 
 $page_owner = elgg_get_page_owner_entity();
-if (!($page_owner instanceof ElggGroup) || !$page_owner->canEdit()) {
+if (!$page_owner instanceof ElggGroup || !$page_owner->canEdit()) {
 	return;
 }
 
 $user = elgg_extract('entity', $vars);
-if (!($user instanceof ElggUser)) {
+if (!$user instanceof ElggUser) {
 	return;
 }
 
-$icon = elgg_view_entity_icon($user, 'small');
 $menu = elgg_view_menu('group:invitation', [
 	'entity' => $user,
 	'group' => $page_owner,
@@ -23,10 +22,8 @@ $menu = elgg_view_menu('group:invitation', [
 	'class' => 'elgg-menu-hz float-alt',
 ]);
 
-$summary = elgg_view('user/elements/summary', [
+echo elgg_view('user/elements/summary', [
 	'entity' => $user,
 	'subtitle' => $user->briefdescription,
 	'metadata' => $menu,
 ]);
-
-echo elgg_view_image_block($icon, $summary);

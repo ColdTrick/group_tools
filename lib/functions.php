@@ -198,7 +198,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 			$site->getDisplayName(),
 			$text,
 			$site->getDisplayName(),
-			elgg_http_add_url_query_elements(elgg_generate_url('account:register'), [
+			elgg_generate_url('account:register', [
 				'group_invitecode' => $invite_code,
 			]),
 			elgg_http_add_url_query_elements('groups/invitations', [
@@ -235,19 +235,14 @@ function group_tools_get_invited_groups_by_email($email) {
 	$options = [
 		'type' => 'group',
 		'limit' => false,
-		'annotation_name' => 'email_invitation',
-		'annotation_value' => elgg_build_hmac([
-			sanitise_string(strtolower($email)),
-		])->getToken(),
-		
-		// @todo not working yet as intended
-// 		'wheres' => [
-// 			"(a.name = 'email_invitation' AND
-// 				(a.value = md5(CONCAT('{$site_secret}{$email}', e.guid))
-// 				OR a.value LIKE CONCAT(md5(CONCAT('{$site_secret}{$email}', e.guid)), '|%')
-// 				)
-// 			)",
-// 		],
+		'annotation_name_value_pairs' => [
+			[
+				'name' => 'email_invitation',
+				'value' => "%|{$email}",
+				'operand' => 'LIKE',
+				'type' => ELGG_VALUE_STRING,
+			],
+		],
 	];
 	
 	// make sure we can see all groups

@@ -207,10 +207,6 @@ class Membership {
 	 */
 	protected static function cleanupGroupInvites(\ElggUser $user, \ElggGroup $group) {
 		
-		if (!($user instanceof \ElggUser) || !($group instanceof \ElggGroup)) {
-			return;
-		}
-		
 		// cleanup invites
 		remove_entity_relationship($group->guid, 'invited', $user->guid);
 		
@@ -219,12 +215,16 @@ class Membership {
 		
 		// cleanup email invitations
 		$options = [
-			'annotation_name' => 'email_invitation',
-			'annotation_value' => elgg_build_hmac([
-				strtolower($user->email),
-				$group->guid,
-			])->getToken(),
 			'limit' => false,
+			'annotation_owner_guid' => $group->guid,
+			'annotation_name_value_pairs' => [
+				[
+					'name' => 'email_invitation',
+					'value' => "%|{$user->email}",
+					'operand' => 'LIKE',
+					'type' => ELGG_VALUE_STRING,
+				],
+			],
 		];
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($options){
