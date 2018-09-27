@@ -15,4 +15,4 @@ unset($vars['invitations']);
 $vars['items'] = $invitations;
 $vars['item_view'] = 'group_tools/format/group/invitation';
 
-echo elgg_view('page/components/list', $vars);
+echo elgg_view_entity_list($invitations, $vars);

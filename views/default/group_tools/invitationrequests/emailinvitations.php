@@ -25,4 +25,4 @@ $params = [
 	'item_view' => 'group_tools/format/emailinvitation',
 ];
 
-echo elgg_view('page/components/list', $params);
+echo elgg_view_entity_list($email_invitations, $params);

@@ -35,7 +35,7 @@ $vars['item_view'] = 'group_tools/format/membershiprequest';
 $vars['no_results'] = elgg_echo('group_tools:group:invitations:request:non_found');
 
 // get list
-$list = elgg_view('page/components/list', $vars);
+$list = elgg_view_entity_list($requests, $vars);
 
 // draw result
 echo elgg_view_module('info', $title, $list);

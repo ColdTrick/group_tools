@@ -19,10 +19,9 @@ if (empty($requests) || !is_array($requests)) {
 }
 
 $params = [
-	'items' => $requests,
 	'count' => count($requests),
 	'limit' => false,
 	'offset' => 0,
 	'item_view' => 'group_tools/format/group/membershiprequest',
 ];
-echo elgg_view('page/components/list', $params);
+echo elgg_view_entity_list($requests, $params);
