@@ -1,4 +1,7 @@
 <?php
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\OrderByClause;
+
 /**
  * content of the featured groups widget
  */
@@ -15,26 +18,28 @@ $featured = elgg_list_entities([
 	'full_view' => false,
 	'pagination' => false,
 	'metadata_name_value_pairs' => ['featured_group' => 'yes'],
-	'order_by' => 'RAND()',
+	'order_by' => new OrderByClause('RAND()'),
 ]);
 
 $random = '';
 if ($show_random == 'yes') {
-	$dbprefix = elgg_get_config('dbprefix');
-	
-	$random_options = [
+	$random = elgg_list_entities([
 		'type' => 'group',
 		'limit' => 1,
-		'order_by' => 'RAND()',
-		'wheres' => ["NOT EXISTS (
-			SELECT 1 FROM {$dbprefix}metadata md
-			WHERE md.entity_guid = e.guid
-				AND md.name = 'featured_group'
-				AND md.value = 'yes')",
+		'pagination' => false,
+		'order_by' => new OrderByClause('RAND()'),
+		'wheres' => [
+			function (QueryBuilder $qb) {
+				$subquery = $qb->subquery('metadata', 'featured_md');
+				$subquery->select('guid')
+					->where($qb->compare('featured_md.entity_guid', '=', 'e.guid'))
+					->andWhere($qb->compare('featured_md.name', '=', 'featured_group', ELGG_VALUE_STRING))
+					->andWhere($qb->compare('featured_md.value', '=', 'yes', ELGG_VALUE_STRING));
+
+				return "NOT EXISTS ({$subquery->getSQL()})";
+			},
 		],
-	];
-	
-	$random = elgg_list_entities($random_options);
+	]);
 }
 
 $list = $featured . $random;
