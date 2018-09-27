@@ -47,6 +47,7 @@ if (!empty($annotations)) {
 
 $summary = elgg_view('user/elements/summary', [
 	'entity' => $user,
+	'icon' => false,
 	'subtitle' => $user->briefdescription,
 	'metadata' => $menu,
 	'content' => $motivation,

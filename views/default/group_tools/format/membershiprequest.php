@@ -13,7 +13,6 @@ if (!($group instanceof ElggGroup)) {
 	return;
 }
 
-$icon = elgg_view_entity_icon($group, 'small');
 $menu = elgg_view_menu('membershiprequest', [
 	'entity' => $group,
 	'user' => $user,
@@ -21,10 +20,9 @@ $menu = elgg_view_menu('membershiprequest', [
 	'class' => 'elgg-menu-hz float-alt',
 ]);
 
-$summary = elgg_view('group/elements/summary', [
+echo elgg_view('group/elements/summary', [
 	'entity' => $group,
+	'icon' => true,
 	'subtitle' => $group->briefdescription,
 	'metadata' => $menu,
 ]);
-
-echo elgg_view_image_block($icon, $summary);

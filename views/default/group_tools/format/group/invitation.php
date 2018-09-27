@@ -24,6 +24,7 @@ $menu = elgg_view_menu('group:invitation', [
 
 echo elgg_view('user/elements/summary', [
 	'entity' => $user,
+	'icon' => true,
 	'subtitle' => $user->briefdescription,
 	'metadata' => $menu,
 ]);
