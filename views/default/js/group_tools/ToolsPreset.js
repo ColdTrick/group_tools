@@ -31,10 +31,8 @@ define(function(require) {
 			
 		},
 		resetTools : function() {
-			$('#group-tools-preset-active .elgg-input-checkbox').each(function(index, elm) {
-				var $tool_parent = $(elm).parent().parent();
-				
-				$tool_parent.appendTo('#group-tools-preset-more div.elgg-body');
+			$('#group-tools-preset-active .elgg-field').each(function(index, elm) {
+				$(elm).appendTo('#group-tools-preset-more div.elgg-body');
 			});
 			
 			$('#group-tools-preset-more .elgg-input-checkbox[value="yes"]:checked').click();
@@ -42,18 +40,20 @@ define(function(require) {
 		},
 		presetTools : function(preset_id) {
 			if (preset_id == 'blank') {
-				$('#group-tools-preset-more .elgg-body > div').each(function() {
+				$('#group-tools-preset-more .elgg-body > .elgg-field').each(function() {
 					$(this).prependTo('#group-tools-preset-active div.elgg-body');
 				});
 			} else {
-				$('#group-tools-preset-more .group-tools-preset-' + preset_id).each(function() {
+				$('#group-tools-preset-more .elgg-field.group-tools-preset-' + preset_id).each(function() {
 					$(this).prependTo('#group-tools-preset-active div.elgg-body');
 				});
 				
 				$('#group-tools-preset-active .elgg-input-checkbox[value="yes"]').not(':checked').click();
 			}
 			
-			if ($('#group-tools-preset-more .elgg-body > div').length === 0) {
+			$('#group-tools-preset').val($('#group-tools-preset-description-' + preset_id + ' input[name="group_tools_preset"]').val());
+			
+			if ($('#group-tools-preset-more .elgg-body > .elgg-field').length === 0) {
 				$('#group-tools-preset-more-link').hide();
 			}
 		}

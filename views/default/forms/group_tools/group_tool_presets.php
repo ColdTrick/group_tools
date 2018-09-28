@@ -18,14 +18,16 @@ if (!empty($presets)) {
 		echo '<div>';
 		echo '<div class="float-alt">';
 		echo elgg_view('output/url', [
-			'href' => '#',
-			'class' => 'group-tools-admin-edit-tool-preset',
+			'href' => false,
+			'class' => ['group-tools-admin-edit-tool-preset', 'mrm'],
 			'text' => elgg_echo('edit'),
+			'icon' => 'edit',
 		]);
 		echo elgg_view('output/url', [
-			'href' => '#',
+			'href' => false,
 			'class' => 'group-tools-admin-delete-tool-preset',
-			'text' => elgg_view_icon('delete'),
+			'text' => elgg_echo('delete'),
+			'icon' => 'delete',
 		]);
 		echo '</div>';
 		echo '<label rel="title">' . elgg_extract('title', $values) . '</label><br />'; // title
@@ -67,14 +69,16 @@ if (!empty($presets)) {
 echo '<div id="group-tools-tool-preset-base" class="hidden">';
 echo '<div class="float-alt">';
 echo elgg_view('output/url', [
-	'href' => '#',
-	'class' => 'group-tools-admin-edit-tool-preset',
+	'href' => false,
+	'class' => ['group-tools-admin-edit-tool-preset', 'mrm'],
 	'text' => elgg_echo('edit'),
+	'icon' => 'edit',
 ]);
 echo elgg_view('output/url', [
-	'href' => '#',
+	'href' => false,
 	'class' => 'group-tools-admin-delete-tool-preset',
-	'text' => elgg_view_icon('delete'),
+	'text' => elgg_echo('delete'),
+	'icon' => 'delete',
 ]);
 echo '</div>';
 echo '<label rel="title">' . elgg_echo('title') . '</label><br />'; // title

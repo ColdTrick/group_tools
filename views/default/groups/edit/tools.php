@@ -18,7 +18,9 @@ if (empty($tools)) {
 	return;
 }
 
-$tools = $tools->sort()->all();
+$tools = $tools->sort(function (\Elgg\Groups\Tool $a, \Elgg\Groups\Tool$b) {
+	return strcmp($a->getLabel(), $b->getLabel());
+})->all();
 
 // if the form comes back from a failed save we can't use the presets
 $sticky_form = (bool) elgg_extract('group_tools_presets', $vars, false);
@@ -28,7 +30,17 @@ if (!$sticky_form) {
 }
 
 // we need to be able to tell if we came from a sticky form
-echo elgg_view('input/hidden', ['name' => 'group_tools_presets', 'value' => '1']);
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'group_tools_presets',
+	'value' => '1',
+]);
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'id' => 'group-tools-preset',
+	'name' => 'group_tools_preset',
+	'value' => elgg_extract('group_tool_preset', $vars),
+]);
 
 // new group can choose from preset (if any)
 if (empty($entity) && !empty($presets)) {
@@ -57,9 +69,18 @@ if (empty($entity) && !empty($presets)) {
 			}
 		}
 		
+		$tool_description = elgg_extract('description', $values);
+		$tool_description .= elgg_view_field([
+			'#type' => 'hidden',
+			'name' => 'group_tools_preset',
+			'value' => elgg_extract('title', $values),
+			'disabled' => true,
+		]);
+		
 		$preset_descriptions .= elgg_format_element('div', [
 			'id' => "group-tools-preset-description-{$index}",
-			'class' => 'hidden'], elgg_extract('description', $values));
+			'class' => 'hidden'
+		], $tool_description);
 	}
 	
 	// blank preset
@@ -69,9 +90,18 @@ if (empty($entity) && !empty($presets)) {
 		'class' => 'elgg-button elgg-button-action mrm',
 		'rel' => 'blank',
 	]);
+	
+	$tool_description = elgg_echo('group_tools:create_group:tool_presets:blank:description');
+	$tool_description .= elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'group_tools_preset',
+		'value' => 'blank',
+		'disabled' => true,
+	]);
 	$preset_descriptions .= elgg_format_element('div', [
 		'id' => 'group-tools-preset-description-blank',
-		'class' => 'hidden'], elgg_echo('group_tools:create_group:tool_presets:blank:description'));
+		'class' => 'hidden'
+	], $tool_description);
 	
 	echo elgg_format_element('label', ['class' => 'mbs'], elgg_echo('group_tools:create_group:tool_presets:select')) . ':';
 	echo elgg_format_element('div', ['id' => 'group-tools-preset-selector'], $preset_selectors);
@@ -91,18 +121,19 @@ if (empty($entity) && !empty($presets)) {
 	]);
 	
 	$tools_content = '';
+	/* @var $group_option \Elgg\Groups\Tool */
 	foreach ($tools as $group_option) {
-		$group_option_toggle_name = "{$group_option->name}_enable";
+		$group_option_toggle_name = $group_option->mapMetadataName();
 		$value = 'no';
 		
 		$options = [
 			'group_tool' => $group_option,
 			'value' => $value,
-			'class' => 'mbm',
+			'class' => ['mbm'],
 		];
 		
 		if (array_key_exists($group_option_toggle_name, $presets_tools)) {
-			$options['class'] .= ' ' . implode(' ', $presets_tools[$group_option_toggle_name]);
+			$options['class'] = elgg_extract_class($options, $presets_tools[$group_option_toggle_name]);
 		}
 		
 		$tools_content .= elgg_view('group_tools/elements/group_tool', $options);
@@ -118,16 +149,12 @@ if (empty($entity) && !empty($presets)) {
 	</script>
 	<?php
 } else {
-
-	usort($tools, create_function('$a, $b', 'return strcmp($a->label, $b->label);'));
 	
+	/* @var $group_option \Elgg\Groups\Tool */
 	foreach ($tools as $group_option) {
-		$group_option_toggle_name = "{$group_option->name}_enable";
-		$value = elgg_extract($group_option_toggle_name, $vars);
-		
 		echo elgg_view('group_tools/elements/group_tool', [
 			'group_tool' => $group_option,
-			'value' => $value,
+			'value' => elgg_extract($group_option->mapMetadataName(), $vars),
 		]);
 	}
 }

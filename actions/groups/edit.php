@@ -81,6 +81,12 @@ if (!$group->name) {
 // get their tools configured
 if ($is_new_group) {
 	$tools = elgg()->group_tools->all();
+	
+	// store selected group tool preset
+	$preset = get_input('group_tools_preset');
+	if (!empty($preset)) {
+		$group->group_tools_preset = $preset;
+	}
 } else {
 	$tools = elgg()->group_tools->group($group);
 }

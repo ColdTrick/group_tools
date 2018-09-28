@@ -67,10 +67,11 @@ if ($simple_create_form) {
 $footer = elgg_view('input/submit', ['value' => elgg_echo('save')]);
 
 if ($entity) {
-	$delete_url = 'action/groups/delete?guid=' . $entity->guid;
 	$footer .= elgg_view('output/url', [
 		'text' => elgg_echo('groups:delete'),
-		'href' => $delete_url,
+		'href' => elgg_generate_action_url('groups/delete', [
+			'guid' => $entity->guid,
+		]),
 		'confirm' => elgg_echo('groups:deletewarning'),
 		'class' => 'elgg-button elgg-button-delete float-alt',
 	]);
@@ -79,4 +80,3 @@ if ($entity) {
 elgg_set_form_footer($footer);
 
 elgg_pop_context();
-
