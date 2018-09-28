@@ -101,6 +101,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupInvite');
 		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::exportGroupMembers');
 		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::pendingApproval', 9999);
+		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::addGroupToolPresets');
 		$hooks->registerHandler('register', 'menu:user_hover', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin');
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\GroupAdmins::assignGroupAdmin', 501);
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\GroupTools\EntityMenu::relatedGroup');

@@ -35,12 +35,15 @@ echo elgg_view_field([
 	'name' => 'group_tools_presets',
 	'value' => '1',
 ]);
-echo elgg_view_field([
-	'#type' => 'hidden',
-	'id' => 'group-tools-preset',
-	'name' => 'group_tools_preset',
-	'value' => elgg_extract('group_tool_preset', $vars),
-]);
+
+if (!$entity instanceof ElggGroup) {
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'id' => 'group-tools-preset',
+		'name' => 'group_tools_preset',
+		'value' => elgg_extract('group_tool_preset', $vars),
+	]);
+}
 
 // new group can choose from preset (if any)
 if (empty($entity) && !empty($presets)) {
@@ -141,6 +144,15 @@ if (empty($entity) && !empty($presets)) {
 	
 	echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:more_header'), $tools_content, ['id' => 'group-tools-preset-more', 'class' => 'hidden']);
 	
+	
+	$url_preset = get_input('group_tools_preset');
+	if (!empty($url_preset)) {
+		echo elgg_view_field([
+			'#type' => 'hidden',
+			'name' => 'group_tools_auto_select',
+			'value' => $url_preset,
+		]);
+	}
 	?>
 	<script type='text/javascript'>
 		require(['group_tools/ToolsPreset'], function(ToolsPreset) {

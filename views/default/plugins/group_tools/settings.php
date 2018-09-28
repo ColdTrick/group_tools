@@ -142,6 +142,17 @@ $group_edit .= elgg_view_field([
 ]);
 
 $group_edit .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:create_based_on_preset'),
+	'#help' => elgg_echo('group_tools:settings:create_based_on_preset:help'),
+	'name' => 'params[create_based_on_preset]',
+	'checked' => $plugin->create_based_on_preset === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
+]);
+
+$group_edit .= elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('groups:allowhiddengroups'),
 	'#help' => elgg_echo('group_tools:settings:allow_hidden_groups:help'),

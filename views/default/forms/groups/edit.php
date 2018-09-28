@@ -48,6 +48,21 @@ $access_section = elgg_format_element('div', [
 ], elgg_view($access_view, $vars));
 
 // build the group tools options
+$tool_section_vars = [];
+$group_tools_preset = get_input('group_tools_preset');
+if (!empty($group_tools_preset)) {
+	$presets = group_tools_get_tool_presets();
+	if (!empty($presets)) {
+		foreach ($presets as $preset) {
+			if ($group_tools_preset !== elgg_extract('title', $preset)) {
+				continue;
+			}
+			
+			$tool_section_vars['class'] = ['hidden'];
+			break;
+		}
+	}
+}
 $tools_section = elgg_format_element('div', [
 	'id' => 'group-tools-group-edit-tools',
 	'class' => $classes,
@@ -56,7 +71,7 @@ $tools_section = elgg_format_element('div', [
 if ($simple_create_form) {
 	echo elgg_view_module('info', elgg_echo('group_tools:group:edit:profile'), $profile_section);
 	echo elgg_view_module('info', elgg_echo('group_tools:group:edit:access'), $access_section);
-	echo elgg_view_module('info', elgg_echo('group_tools:group:edit:tools'), $tools_section);
+	echo elgg_view_module('info', elgg_echo('group_tools:group:edit:tools'), $tools_section, $tool_section_vars);
 } else {
 	echo $profile_section;
 	echo $access_section;

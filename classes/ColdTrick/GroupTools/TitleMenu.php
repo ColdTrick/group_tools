@@ -298,4 +298,65 @@ class TitleMenu {
 		
 		return $return_value;
 	}
+	
+	/**
+	 * Add group tool presets to the add button
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 *
+	 * @return void|\Elgg\Menu\MenuItems
+	 */
+	public static function addGroupToolPresets(\Elgg\Hook $hook) {
+		
+		$user = elgg_get_logged_in_user_entity();
+		if (empty($user) || !elgg_in_context('groups')) {
+			return;
+		}
+		
+		/* @var $return \Elgg\Menu\MenuItems */
+		$return = $hook->getValue();
+		
+		$add_button = $return->get('add');
+		if (!$add_button instanceof \ElggMenuItem) {
+			return;
+		}
+		
+		$presets = group_tools_get_tool_presets();
+		if (empty($presets)) {
+			return;
+		}
+		
+		$url = elgg_generate_url('add:group:group', [
+			'container_guid' => $user->guid,
+		]);
+		
+		if ($add_button->getHref() !== $url) {
+			// not the group add button
+			return;
+		}
+		
+		$add_button->setChildMenuOptions([
+			'display' => 'dropdown',
+			'data-position' => json_encode([
+				'at' => 'right bottom',
+				'my' => 'right top',
+				'collision' => 'fit fit',
+			]),
+		]);
+		
+		foreach ($presets as $index => $preset) {
+			$menu_item = \ElggMenuItem::factory([
+				'name' => "add:preset:{$index}",
+				'text' => elgg_extract('title', $preset),
+				'href' => elgg_http_add_url_query_elements($url, [
+					'group_tools_preset' => elgg_extract('title', $preset),
+				]),
+				'parent_name' => $add_button->getName(),
+			]);
+			
+			$return->add($menu_item);
+		}
+		
+		return $return;
+	}
 }

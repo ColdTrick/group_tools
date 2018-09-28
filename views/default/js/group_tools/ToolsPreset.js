@@ -13,6 +13,8 @@ define(function(require) {
 			
 			return false;
 		});
+		
+		self.autoDetect();
 	}
 	
 	ToolsPreset.prototype = {
@@ -56,6 +58,22 @@ define(function(require) {
 			if ($('#group-tools-preset-more .elgg-body > .elgg-field').length === 0) {
 				$('#group-tools-preset-more-link').hide();
 			}
+		},
+		autoDetect: function() {
+			
+			var $input = $('#group-tools-group-edit-tools input[name="group_tools_auto_select"]');
+			if (!$input.length) {
+				return;
+			}
+			
+			var $preset = $('#group-tools-preset-selector .elgg-anchor-label').filter(function(index, elem) {
+				return $input.val() === $(elem).text();
+			});
+			if (!$preset.length) {
+				return;
+			}
+			
+			$preset.closest('a').click();
 		}
 	};
 	

@@ -41,6 +41,9 @@ return array(
 	'group_tools:settings:simple_create_form' => "Simple group create form",
 	'group_tools:settings:simple_create_form:help' => "Enabling this will change the way how the 'New Group' form is displayed",
 	
+	'group_tools:settings:create_based_on_preset' => "Create groups based on tool presets",
+	'group_tools:settings:create_based_on_preset:help' => "If group tool presets are configured add a quick selector to the create group button to use the preset on the group creation form.",
+	
 	'group_tools:settings:allow_hidden_groups:help' => "Who can create hidden groups. This setting will overrule the groups plugin setting.",
 	
 	'group_tools:settings:invite:title' => "Group invitation options",
