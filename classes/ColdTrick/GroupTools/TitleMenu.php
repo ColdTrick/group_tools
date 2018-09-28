@@ -313,6 +313,10 @@ class TitleMenu {
 			return;
 		}
 		
+		if (elgg_get_plugin_setting('create_based_on_preset', 'group_tools') !== 'yes') {
+			return;
+		}
+		
 		/* @var $return \Elgg\Menu\MenuItems */
 		$return = $hook->getValue();
 		

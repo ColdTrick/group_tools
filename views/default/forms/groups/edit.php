@@ -50,7 +50,7 @@ $access_section = elgg_format_element('div', [
 // build the group tools options
 $tool_section_vars = [];
 $group_tools_preset = get_input('group_tools_preset');
-if (!empty($group_tools_preset)) {
+if (!empty($group_tools_preset) && elgg_get_plugin_setting('create_based_on_preset', 'group_tools') === 'yes') {
 	$presets = group_tools_get_tool_presets();
 	if (!empty($presets)) {
 		foreach ($presets as $preset) {
