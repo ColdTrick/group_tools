@@ -65,7 +65,7 @@ if (empty($entity) && !empty($presets)) {
 			'title' => elgg_strip_tags(elgg_extract('description', $values)),
 		]);
 		
-		$preset_tools = elgg_extract('tools', $values);
+		$preset_tools = (array) elgg_extract('tools', $values, []);
 		foreach ($preset_tools as $tool_name => $tool) {
 			if ($tool == 'yes') {
 				$presets_tools[$tool_name][] = "group-tools-preset-{$index}";
