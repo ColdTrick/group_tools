@@ -46,7 +46,4 @@ foreach ($tabs as $name => $tab) {
 	elgg_register_menu_item('filter', $tab);
 }
 
-echo elgg_format_element('div', ['id' => 'group-tools-group-edit-tabbed'], elgg_view_menu('filter', [
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-]));
+echo elgg_format_element('div', ['id' => 'group-tools-group-edit-tabbed'], elgg_view_menu('filter'));
