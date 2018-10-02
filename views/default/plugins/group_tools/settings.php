@@ -12,6 +12,8 @@ $listing_options = [
 	'closed' => elgg_echo('group_tools:groups:sorting:closed'),
 	'featured' => elgg_echo('status:featured'),
 	'suggested' => elgg_echo('group_tools:groups:sorting:suggested'),
+	'member' => elgg_echo('group_tools:groups:sorting:member'),
+	'managed' => elgg_echo('group_tools:groups:sorting:managed'),
 ];
 if (elgg_is_active_plugin('discussions')) {
 	$listing_options['discussion'] = elgg_echo('discussion:latest');
@@ -29,6 +31,8 @@ $listing_supported_sorting = [
 	'open',
 	'closed',
 	'featured',
+	'member',
+	'managed',
 ];
 
 // group management settings

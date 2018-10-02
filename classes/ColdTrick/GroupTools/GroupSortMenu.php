@@ -57,6 +57,22 @@ class GroupSortMenu {
 				]),
 				'priority' => 250,
 			]);
+			$return[] = \ElggMenuItem::factory([
+				'name' => 'member',
+				'text' => elgg_echo('group_tools:groups:sorting:member'),
+				'href' => elgg_generate_url('collection:group:group:all', [
+					'filter' => 'member',
+				]),
+				'priority' => 260,
+			]);
+			$return[] = \ElggMenuItem::factory([
+				'name' => 'managed',
+				'text' => elgg_echo('group_tools:groups:sorting:managed'),
+				'href' => elgg_generate_url('collection:group:group:all', [
+					'filter' => 'managed',
+				]),
+				'priority' => 270,
+			]);
 		}
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'open',
@@ -102,6 +118,8 @@ class GroupSortMenu {
 			'open',
 			'closed',
 			'featured',
+			'member',
+			'managed',
 		];
 		$selected_tab = $hook->getParam('filter_value');
 		if (!in_array($selected_tab, $allowed_sorting_tabs)) {
