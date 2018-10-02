@@ -145,7 +145,7 @@ class GroupSortMenu {
 			]),
 			'priority' => $sort === 'newest' ? 99999 : 100,
 			'parent_name' => $sort !== 'newest' ? $parent_name : null,
-			'selected' => $sort === 'newest',
+			'selected' => false,
 			'child_menu' => $sort === 'newest' ? $child_menu_config : null,
 			'item_class' => $sort === 'newest' ? 'group-tools-listing-sorting' : null,
 		]);
@@ -160,7 +160,7 @@ class GroupSortMenu {
 			]),
 			'priority' => ($sort === 'alpha' && $order === 'ASC') ? 99999 : 200,
 			'parent_name' => ($sort !== 'alpha' || $order !== 'ASC') ? $parent_name : null,
-			'selected' => ($sort === 'alpha' && $order === 'ASC'),
+			'selected' => false,
 			'child_menu' => ($sort === 'alpha' && $order === 'ASC') ? $child_menu_config : null,
 			'item_class' => ($sort === 'alpha' && $order === 'ASC') ? 'group-tools-listing-sorting' : null,
 		]);
@@ -175,7 +175,7 @@ class GroupSortMenu {
 			]),
 			'priority' => ($sort === 'alpha' && $order === 'DESC') ? 99999 : 201,
 			'parent_name' => ($sort !== 'alpha' || $order !== 'DESC') ? $parent_name : null,
-			'selected' => ($sort === 'alpha' && $order === 'DESC'),
+			'selected' => false,
 			'child_menu' => ($sort === 'alpha' && $order === 'DESC') ? $child_menu_config : null,
 			'item_class' => ($sort === 'alpha' && $order === 'DESC') ? 'group-tools-listing-sorting' : null,
 		]);
@@ -189,7 +189,7 @@ class GroupSortMenu {
 			]),
 			'priority' => $sort === 'popular' ? 99999 : 300,
 			'parent_name' => $sort !== 'popular' ? $parent_name : null,
-			'selected' => $sort === 'popular',
+			'selected' => false,
 			'child_menu' => $sort === 'popular' ? $child_menu_config : null,
 			'item_class' => $sort === 'popular' ? 'group-tools-listing-sorting' : null,
 		]);
