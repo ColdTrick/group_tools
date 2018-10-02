@@ -118,6 +118,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::addTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::addSorting', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::cleanupTabs', 900);
+		$hooks->registerHandler('parameters', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::enableSorting');
 		$hooks->registerHandler('prepare', 'menu:filter:groups/all', '\ColdTrick\GroupTools\GroupSortMenu::setSelected', 550);
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToGroups');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', '\ColdTrick\GroupTools\CSVExporter::addGroupAdminsToUsers');

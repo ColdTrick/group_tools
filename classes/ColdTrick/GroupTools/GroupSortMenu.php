@@ -89,11 +89,12 @@ class GroupSortMenu {
 	/**
 	 * Add sorting options to the menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
+	 * @param \Elgg\Hook $hook 'params', 'menu:filter:groups/all'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return array
 	 */
-	public static function addSorting(\Elgg\Hook $hook) {
+	public static function enableSorting(\Elgg\Hook $hook) {
+		$result = $hook->getValue();
 		
 		$allowed_sorting_tabs = [
 			'all',
@@ -104,6 +105,23 @@ class GroupSortMenu {
 		];
 		$selected_tab = $hook->getParam('filter_value');
 		if (!in_array($selected_tab, $allowed_sorting_tabs)) {
+			return;
+		}
+		
+		$result['show_sorting'] = true;
+		
+		return $result;
+	}
+		
+	/**
+	 * Add sorting options to the menu
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function addSorting(\Elgg\Hook $hook) {
+		if (!$hook->getParam('show_sorting', false)) {
 			return;
 		}
 		
