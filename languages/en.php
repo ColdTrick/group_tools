@@ -79,6 +79,9 @@ use that preset on the group creation form. This will also hide the tool selecti
 	
 	'group_tools:settings:mail:members' => "Allow group admins to enable group mail for their members",
 	'group_tools:settings:mail:members:description' => "This requires group mail to be enabled",
+	
+	'group_tools:settings:related_groups' => "Allow related groups",
+	'group_tools:settings:related_groups:help' => "Group admins can configure groups that are similar/related to their group.",
 
 	'group_tools:settings:listing:title' => "Group listing settings",
 	'group_tools:settings:listing:description' => "Here you can configure which tabs will be visible on the group listing page, which tab will be the default landing page and what the default sorting will be per tab.",
@@ -472,6 +475,10 @@ your group '%s' was declined and removed by a site administrator.",
 	// Featured Groups
 	'widgets:featured_groups:description' => "Shows a random list of featured groups",
   	'widgets:featured_groups:edit:show_random_group' => "Show a random non-featured group",
+	
+	// related groups
+	'widgets:group_related:name' => "Related groups",
+  	'widgets:group_related:description' => "Show a list of related groups",
 	
 	'groups:search:title' => "Search for groups matching '%s'",
 	

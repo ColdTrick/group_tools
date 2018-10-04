@@ -24,11 +24,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		// @todo is this still needed?
 		elgg_unregister_widget_type('group_activity');
 		
-		// related groups
-		elgg()->group_tools->register('related_groups', [
-			'label' => elgg_echo('groups_tools:related_groups:tool_option'),
-			'default_on' => false,
-		]);
+		// group tools
 		if (group_tools_group_mail_members_enabled()) {
 			elgg()->group_tools->register('mail_members', [
 				'label' => elgg_echo('group_tools:tools:mail_members'),
@@ -53,7 +49,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinvitations');
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/membershiprequests');
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinviteform');
-		elgg_extend_view('groups/tool_latest', 'group_tools/modules/related_groups');
 		elgg_extend_view('groups/edit', 'group_tools/group_edit_tabbed', 10);
 		elgg_extend_view('groups/edit', 'group_tools/extends/groups/edit/admin_approve', 1);
 		elgg_extend_view('groups/profile/layout', 'group_tools/extends/groups/edit/admin_approve', 1);
@@ -96,6 +91,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('action', 'register', '\ColdTrick\GroupTools\Router::allowRegistration');
 		$hooks->registerHandler('group_tool_widgets', 'widget_manager', '\ColdTrick\GroupTools\WidgetManager::groupToolWidgets');
 		$hooks->registerHandler('head', 'page', '\ColdTrick\GroupTools\PageLayout::noIndexClosedGroups');
+		$hooks->registerHandler('handlers', 'widgets', __NAMESPACE__ . '\Widgets::unregsiterRelatedGroupsWidget');
 		$hooks->registerHandler('permissions_check', 'group', '\ColdTrick\GroupTools\GroupAdmins::permissionsCheck');
 		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupMembership');
 		$hooks->registerHandler('register', 'menu:title', '\ColdTrick\GroupTools\TitleMenu::groupInvite');
@@ -139,5 +135,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('prepare', 'notification:membership_request:group:group', '\ColdTrick\GroupTools\GroupAdmins::prepareMembershipRequestMessage');
 		$hooks->registerHandler('view_vars', 'resources/groups/all', '\ColdTrick\GroupTools\Views::prepareGroupAll');
 		$hooks->registerHandler('view_vars', 'resources/groups/add', '\ColdTrick\GroupTools\Views::protectGroupAdd');
+		$hooks->registerHandler('tool_options', 'group', __NAMESPACE__ . '\Tools::registerRelatedGroups');
 	}
 }

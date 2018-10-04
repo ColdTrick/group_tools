@@ -4,21 +4,19 @@
  */
 
 $group = elgg_extract('entity', $vars);
-if (!($group instanceof ElggGroup)) {
-	return;
-}
-
-if ($group->related_groups_enable !== 'yes') {
+if (!$group instanceof ElggGroup) {
 	return;
 }
 
 $all_link = elgg_view('output/url', [
-	'href' => "groups/related/{$group->guid}",
+	'href' => elgg_generate_url('collection:group:group:related', [
+		'guid' => $group->guid,
+	]),
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
 
-$content = elgg_list_entities_from_relationship([
+$content = elgg_list_entities([
 	'type' => 'group',
 	'limit' => 4,
 	'relationship' => 'related_group',

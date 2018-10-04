@@ -14,6 +14,7 @@ return [
 		'multiple_admin' => 'no',
 		'mail' => 'no',
 		'mail_members' => 'no',
+		'related_groups' => 'yes',
 		'member_export' => 'no',
 		'admin_approve' => 'no',
 		'simple_access_tab' => 'no',

@@ -17,18 +17,20 @@ class OwnerBlockMenu {
 	public static function relatedGroups($hook, $type, $return_value, $params) {
 		
 		$entity = elgg_extract('entity', $params);
-		if (!($entity instanceof \ElggGroup)) {
+		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
 		
-		if ($entity->related_groups_enable !== 'yes') {
+		if (!$entity->isToolEnabled('related_groups')) {
 			return;
 		}
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'related_groups',
 			'text' => elgg_echo('group_tools:related_groups:title'),
-			'href' => "groups/related/{$entity->guid}",
+			'href' => elgg_generate_url('collection:group:group:related', [
+				'guid' => $entity->guid,
+			]),
 			'is_trusted' => true,
 		]);
 		

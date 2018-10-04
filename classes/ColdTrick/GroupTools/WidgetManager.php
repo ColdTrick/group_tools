@@ -63,7 +63,9 @@ class WidgetManager {
 				}
 				break;
 			case 'group_related':
-				$return_value = "groups/related/{$widget->owner_guid}";
+				$return_value = elgg_generate_url('collection:group:group:related', [
+					'guid' => $widget->owner_guid,
+				]);
 				break;
 		}
 		
@@ -83,7 +85,7 @@ class WidgetManager {
 	public static function groupToolWidgets($hook, $type, $return_value, $params) {
 		
 		$entity = elgg_extract('entity', $params);
-		if (!($entity instanceof \ElggGroup)) {
+		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -92,13 +94,13 @@ class WidgetManager {
 		}
 		
 		// check different group tools for which we supply widgets
-		if ($entity->related_groups_enable === 'yes') {
+		if ($entity->isToolEnabled('related_groups')) {
 			$return_value['enable'][] = 'group_related';
 		} else {
 			$return_value['disable'][] = 'group_related';
 		}
 			
-		if ($entity->activity_enable === 'yes') {
+		if ($entity->isToolEnabled('activity')) {
 			$return_value['enable'][] = 'group_river_widget';
 		} else {
 			$return_value['disable'][] = 'group_river_widget';

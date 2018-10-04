@@ -77,6 +77,16 @@ $general_fields = [
 	],
 	[
 		'#type' => 'checkbox',
+		'#label' => elgg_echo('group_tools:settings:related_groups'),
+		'#help' => elgg_echo('group_tools:settings:related_groups:help'),
+		'name' => 'params[related_groups]',
+		'checked' => $plugin->related_groups === 'yes',
+		'switch' => true,
+		'default' => 'no',
+		'value' => 'yes',
+	],
+	[
+		'#type' => 'checkbox',
 		'#label' => elgg_echo('group_tools:settings:member_export'),
 		'#help' => elgg_echo('group_tools:settings:member_export:description'),
 		'name' => 'params[member_export]',
