@@ -374,6 +374,8 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:groups:sorting:open' => "Open",
 	'group_tools:groups:sorting:closed' => "Closed",
 	'group_tools:groups:sorting:suggested' => "Suggested",
+	'group_tools:groups:sorting:member' => "Member",
+	'group_tools:groups:sorting:managed' => "Managed",
 	
 	// allow group members to invite
 	'group_tools:invite_members:title' => "Group members can invite",

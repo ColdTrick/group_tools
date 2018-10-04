@@ -1,7 +1,6 @@
 <?php
 
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Database\QueryBuilder;
 
 $guid = (int) elgg_extract('guid', $vars);
 

@@ -8,11 +8,10 @@ if (empty($groups)) {
 	return;
 }
 
-// list suggested groups
 echo elgg_view('output/text', [
 	'value' => elgg_echo('group_tools:suggested_groups:info'),
 ]);
 
-echo elgg_view('group_tools/suggested', [
-	'groups' => $groups,
-]);
+$vars['full_view'] = false;
+
+echo elgg_view_entity_list($groups, $vars);
