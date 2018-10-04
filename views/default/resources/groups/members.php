@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\QueryBuilder;
 
 $guid = (int) elgg_extract('guid', $vars);
 
@@ -27,6 +28,22 @@ switch ($sort) {
 	case 'newest':
 		$options['order_by'] = [
 			new OrderByClause('r.time_created', 'DESC'),
+		];
+		break;
+	case 'group_admins':
+		$options['wheres'] = [
+			function (QueryBuilder $qb, $main_alias) use ($group) {
+				$owner = $qb->compare("{$main_alias}.guid", '=', $group->owner_guid, ELGG_VALUE_GUID);
+				
+				$admin_query = $qb->subquery('entity_relationships')
+					->select('guid_one')
+					->where($qb->compare('relationship', '=', 'group_admin', ELGG_VALUE_STRING))
+					->andWhere($qb->compare('guid_two', '=', $group->guid, ELGG_VALUE_GUID));
+				
+				$admins = $qb->compare("{$main_alias}.guid", 'IN', $admin_query->getSQL());
+				
+				return $qb->merge([$owner, $admins], 'OR');
+			},
 		];
 		break;
 	default:
