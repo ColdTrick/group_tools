@@ -10,7 +10,7 @@ $group = get_entity($guid);
 
 elgg_set_page_owner_guid($guid);
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 $options = [
@@ -40,8 +40,10 @@ switch ($sort) {
 }
 
 // user search
-$members_search = elgg()->db->sanitizeString(get_input('members_search'));
-if (!empty($members_search)) {
+$members_search = get_input('members_search');
+if (!elgg_is_empty($members_search)) {
+	$members_search = elgg()->db->sanitizeString($members_search);
+	
 	$options['base_url'] = elgg_generate_url('collection:user:user:group_members', [
 		'guid' => $guid,
 		'sort' => $sort,
@@ -65,21 +67,20 @@ if (!empty($members_search)) {
 	$options['metadata_name_value_pairs_operator'] = 'OR';
 }
 
-$title = elgg_echo('groups:members:title', [$group->getDisplayName()]);
-
-$tabs = elgg_view_menu('groups_members', [
-	'entity' => $group,
-	'sort_by' => 'priority',
-	'class' => 'elgg-tabs'
-]);
-
 $user_list = elgg_list_entities($options);
 
-if (elgg_is_xhr()) {
+if (elgg_is_xhr() && isset($members_search)) {
 	// ajax pagination
 	echo $user_list;
 	return;
 }
+
+$title = elgg_echo('groups:members:title', [$group->getDisplayName()]);
+
+$tabs = elgg_view_menu('groups_members', [
+	'entity' => $group,
+	'class' => 'elgg-tabs',
+]);
 
 $content = elgg_view_form('group_tools/members_search', [
 	'action' => elgg_generate_url('collection:user:user:group_members', [
@@ -91,8 +92,8 @@ $content = elgg_view_form('group_tools/members_search', [
 $content .= $user_list;
 
 $body = elgg_view_layout('content', [
-	'content' => $content,
 	'title' => $title,
+	'content' => $content,
 	'filter' => $tabs,
 ]);
 
