@@ -1106,3 +1106,38 @@ function group_tools_get_default_group_notification_settings(ElggGroup $entity =
 	
 	return $selected_methods;
 }
+
+/**
+ * Show the tools section on the group edit form
+ *
+ * @return bool
+ */
+function group_tools_show_tools_on_edit() {
+	
+	if (elgg_get_page_owner_entity() instanceof ElggGroup) {
+		// edit of a group
+		return true;
+	}
+	
+	$group_tools_preset = get_input('group_tools_preset');
+	if (empty($group_tools_preset) || elgg_get_plugin_setting('create_based_on_preset', 'group_tools') !== 'yes') {
+		// no preset or plugin setting doesn't hide it
+		return true;
+	}
+	
+	$presets = group_tools_get_tool_presets();
+	if (empty($presets)) {
+		// no presets
+		return true;
+	}
+	
+	foreach ($presets as $preset) {
+		if ($group_tools_preset !== elgg_extract('title', $preset)) {
+			continue;
+		}
+		
+		return false;
+	}
+	
+	return true;
+}

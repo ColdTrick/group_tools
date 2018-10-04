@@ -24,12 +24,15 @@ $tabs = [
 		'href' => '#group-tools-group-edit-access',
 		'priority' => 150,
 	],
-	'tools' => [
+];
+
+if (group_tools_show_tools_on_edit()) {
+	$tabs['tools'] = [
 		'text' => elgg_echo('group_tools:group:edit:tools'),
 		'href' => '#group-tools-group-edit-tools',
 		'priority' => 200,
-	],
-];
+	];
+}
 
 if ($group instanceof ElggGroup) {
 	$tabs['other'] = [
