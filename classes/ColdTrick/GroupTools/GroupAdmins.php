@@ -141,6 +141,7 @@ class GroupAdmins {
 		
 		if ($hook->getValue()) {
 			// already has access
+			return;
 		}
 		
 		if (!group_tools_multiple_admin_enabled()) {
