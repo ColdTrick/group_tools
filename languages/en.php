@@ -8,6 +8,9 @@ return array(
 	'group_tools:clear_selection' => "Clear selection",
 	'group_tools:all_members' => "All members",
 	
+	'group_tools:profile:field:group_tools_preset' => "Group Tools Preset",
+	'groups:group_tools_preset' => "Group Tools Preset",
+	
 	'group_tools:default:access:group' => "Group members only",
 
 	'group_tools:joinrequest:already' => "Revoke membership request",
