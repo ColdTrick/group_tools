@@ -122,7 +122,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:group:invitation', __NAMESPACE__ . '\Membership::groupInvitation');
 		$hooks->registerHandler('register', 'menu:group:membershiprequest', __NAMESPACE__ . '\Membership::groupMembershiprequest');
 		$hooks->registerHandler('register', 'menu:group:membershiprequests', __NAMESPACE__ . '\Membership::groupMembershiprequests');
-		$hooks->registerHandler('register', 'menu:groups_members', __NAMESPACE__ . '\menus\GroupsMembers::registerGroupAdmins');
+		$hooks->registerHandler('register', 'menu:groups_members', __NAMESPACE__ . '\Menus\GroupsMembers::registerGroupAdmins');
 		$hooks->registerHandler('register', 'menu:membershiprequest', __NAMESPACE__ . '\Membership::membershiprequestMenu');
 		$hooks->registerHandler('register', 'menu:owner_block', __NAMESPACE__ . '\OwnerBlockMenu::relatedGroups');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\PageMenu::registerAdminItems', 501);
