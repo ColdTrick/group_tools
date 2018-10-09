@@ -20,7 +20,7 @@ $options = [
 	'inverse_relationship' => true,
 	'type' => 'user',
 	'limit' => (int) get_input('limit', max(20, elgg_get_config('default_limit')), false),
-	'no_results' => elgg_format_element('div', ['class' => 'elgg-list'], elgg_echo('notfound')),
+	'no_results' => true,
 ];
 
 $sort = elgg_extract('sort', $vars);
