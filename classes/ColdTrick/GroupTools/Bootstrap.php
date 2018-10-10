@@ -80,7 +80,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$event->registerHandler('create', 'relationship', __NAMESPACE__ . '\Membership::siteJoinEmailInvitedGroups');
 		$event->registerHandler('create', 'relationship', __NAMESPACE__ . '\Membership::siteJoinGroupInviteCode');
 		$event->registerHandler('create', 'relationship', __NAMESPACE__ . '\Membership::siteJoinDomainBasedGroups');
-		$event->registerHandler('create', 'relationship', __NAMESPACE__ . '\GroupAdmins::membershipRequest');
 		$event->registerHandler('create', 'user', __NAMESPACE__ . '\Membership::autoJoinGroups');
 		$event->registerHandler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
 		$event->registerHandler('join', 'group', __NAMESPACE__ . '\Membership::groupJoin');
