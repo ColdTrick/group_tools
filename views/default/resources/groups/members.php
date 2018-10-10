@@ -45,6 +45,12 @@ switch ($sort) {
 				return $qb->merge([$owner, $admins], 'OR');
 			},
 		];
+
+		$options['order_by_metadata'] = [
+			'name' => 'name',
+			'direction' => 'ASC',
+		];
+		
 		break;
 	default:
 		$options['order_by_metadata'] = [
