@@ -18,7 +18,7 @@ $message = elgg_echo('group_tools:stale_info:description');
 
 if ($entity->canEdit()) {
 	$message .= elgg_view('output/url', [
-		'text' => elgg_view_icon('hand-pointer-o') . elgg_echo('group_tools:stale_info:link'),
+		'text' => elgg_view_icon('exclamation-triangle') . elgg_echo('group_tools:stale_info:link'),
 		'href' => "action/group_tools/mark_not_stale?guid={$entity->guid}",
 		'confirm' => true,
 		'class' => 'mls',
