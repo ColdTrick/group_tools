@@ -1,12 +1,12 @@
 <?php
+use Elgg\Database\QueryBuilder;
+
 /**
  * content for the group river/activity widget
  */
 
+/* @var $widget ElggWidget */
 $widget = elgg_extract('entity', $vars);
-
-echo 'Still needs to be fixed';
-return;
 
 // which group
 if ($widget->context == 'groups') {
@@ -21,11 +21,12 @@ if ($widget->context == 'groups') {
 }
 
 if (!empty($group_guid)) {
-	$group_guid = array_map('sanitise_int', $group_guid);
-	$key = array_search(0, $group_guid);
-	if ($key !== false) {
-		unset($group_guid[$key]);
-	}
+	array_walk($group_guid, function(&$value) {
+		$value = (int) $value;
+	});
+	$group_guid = array_filter($group_guid, function ($value) {
+		return $value > 0;
+	});
 }
 
 if (empty($group_guid)) {
@@ -33,55 +34,46 @@ if (empty($group_guid)) {
 	return;
 }
 
-// get activity filter
-$activity_filter = $widget->activity_filter;
-
-//get the number of items to display
-$dbprefix = elgg_get_config('dbprefix');
-$offset = 0;
+// limit
 $limit = (int) $widget->num_display;
 if ($limit < 1) {
 	$limit = 10;
 }
 
-$sql = "SELECT {$dbprefix}river.*";
-$sql .= " FROM {$dbprefix}river";
-$sql .= " INNER JOIN {$dbprefix}entities AS entities1 ON {$dbprefix}river.object_guid = entities1.guid";
-$sql .= ' WHERE (entities1.container_guid in (' . implode(',', $group_guid) . ')';
-$sql .= " OR {$dbprefix}river.object_guid IN (" . implode(',', $group_guid) . '))';
+// prepare options
+$options = [
+	'limit' => $limit,
+	'wheres' => [
+		function (QueryBuilder $qb, $main_alias) use ($group_guid) {
+			$wheres = [];
+			$wheres[] = $qb->compare("{$main_alias}.object_guid", 'in', $group_guid, ELGG_VALUE_GUID);
+			$wheres[] = $qb->compare("{$main_alias}.target_guid", 'in', $group_guid, ELGG_VALUE_GUID);
+			
+			$subject = $qb->joinEntitiesTable($main_alias, 'object_guid');
+			$wheres[] = $qb->compare("{$subject}.container_guid", 'in', $group_guid, ELGG_VALUE_GUID);
+			
+			$target = $qb->joinEntitiesTable($main_alias, 'target_guid', 'left');
+			$wheres[] = $qb->compare("{$target}.container_guid", 'in', $group_guid, ELGG_VALUE_GUID);
+			
+			return $qb->merge($wheres, 'OR');
+		},
+	],
+	'pagination' => false,
+	'no_results' => elgg_echo('widgets:group_river_widget:view:noactivity'),
+];
 
+// get activity filter
+$activity_filter = $widget->activity_filter;
 if (!empty($activity_filter) && is_string($activity_filter)) {
 	list($type, $subtype) = explode(',', $activity_filter);
 	
 	if (!empty($type)) {
-		$filter_where = " ({$dbprefix}river.type = '" . sanitise_string($type) . "'";
-		
-		if (!empty($subtype)) {
-			$filter_where .= " AND {$dbprefix}river.subtype = '" . sanitise_string($subtype) . "'";
-		}
-		
-		$filter_where .= ')';
-		$sql .= ' AND ' . $filter_where;
+		$options['type'] = $type;
+	}
+	
+	if (!empty($subtype)) {
+		$options['subtype'] = $subtype;
 	}
 }
 
-$sql .= ' AND ' . _elgg_get_access_where_sql(['table_alias' => 'entities1']);
-$sql .= " ORDER BY {$dbprefix}river.posted DESC";
-$sql .= " LIMIT {$offset},{$limit}";
-
-$items = get_data($sql, '_elgg_row_to_elgg_river_item');
-if (empty($items)) {
-	echo elgg_echo('widgets:group_river_widget:view:noactivity');
-	return;
-}
-
-$options = [
-	'pagination' => false,
-	'count' => count($items),
-	'items' => $items,
-	'list_class' => 'elgg-list-river elgg-river',
-	'limit' => $limit,
-	'offset' => $offset,
-];
-
-echo elgg_view('page/components/list', $options);
+echo elgg_list_river($options);

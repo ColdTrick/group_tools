@@ -22,7 +22,7 @@ class WidgetManager {
 		}
 		
 		$widget = elgg_extract('entity', $params);
-		if (!($widget instanceof \ElggWidget)) {
+		if (!$widget instanceof \ElggWidget) {
 			return;
 		}
 		
@@ -46,7 +46,9 @@ class WidgetManager {
 				if (!empty($group_guid)) {
 					$group = get_entity($group_guid);
 					if ($group instanceof \ElggGroup) {
-						$return_value = "groups/activity/{$group->guid}";
+						$return_value = elgg_generate_url('collection:river:group', [
+							'guid' => $group->guid,
+						]);
 					}
 				}
 				break;

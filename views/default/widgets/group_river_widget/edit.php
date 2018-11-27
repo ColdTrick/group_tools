@@ -3,111 +3,58 @@
  * Edit the widget
  */
 
+/* @var $widget ElggWidget */
 $widget = elgg_extract('entity', $vars);
-
-$num_display = (int) $widget->num_display ?: 10;
 
 // filter activity
 // get filter options
 $filter_contents = [
 	'0' => elgg_echo('all'),
 ];
-$registered_entities = elgg_get_config('registered_entities');
+$registered_entities = get_registered_entity_types();
 if (!empty($registered_entities)) {
-	foreach ($registered_entities as $type => $ar) {
-		if ($type == 'user') {
-			continue;
-		} else {
-			if (count($registered_entities[$type])) {
-				foreach ($registered_entities[$type] as $subtype) {
-					$keyname = "item:{$type}:{$subtype}";
-					$filter_contents["{$type},{$subtype}"] = elgg_echo($keyname);
-				}
-			} else {
-				$keyname = "item:{$type}";
-				$filter_contents["{$type},"] = elgg_echo($keyname);
-			}
+	foreach ($registered_entities as $type => $subtypes) {
+		if (empty($subtypes)) {
+			return;
+		}
+		
+		foreach ($subtypes as $subtype) {
+			$keyname = "item:{$type}:{$subtype}";
+			$filter_contents["{$type},{$subtype}"] = elgg_echo($keyname);
 		}
 	}
 }
 
-$filter_selector = elgg_view('input/select', [
+// make options
+echo elgg_view('object/widget/edit/num_display', [
+	'entity' => $widget,
+	'max' => 25,
+]);
+
+echo elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('filter'),
 	'name' => 'params[activity_filter]',
 	'value' => $widget->activity_filter,
 	'options_values' => $filter_contents,
 ]);
 
-if ($widget->context === 'groups') {
-	echo '<div>';
-	echo elgg_echo('widgets:group_river_widget:edit:num_display');
-	echo elgg_view('input/select', [
-		'options' => range(5, 25, 5),
-		'value' => $num_display,
-		'name' => 'params[num_display]',
-		'class' => 'mls',
-	]);
-	echo '</div>';
+// only allow a group picker if not in a group already
+if ($widget->context !== 'groups') {
 	
-	echo '<div>';
-	echo elgg_echo('filter') . '<br />';
-	echo $filter_selector;
-	echo '</div>';
+	$group_picker_options = [
+		'#type' => 'grouppicker',
+		'#label' => elgg_echo('widgets:group_river_widget:edit:group'),
+		'name' => 'params[group_guid]',
+		'value' => $widget->group_guid,
+		'options' => $group_options_values,
+	];
 	
-	return;
+	$owner = $widget->getOwnerEntity();
+	if ($owner instanceof ElggUser) {
+		$group_picker_options['options']['match_owner'] = $owner->guid;
+		$group_picker_options['options']['match_membership'] = true;
+	}
+	
+	echo elgg_view_field($group_picker_options);
 }
-
-//the user of the widget
-$owner = $widget->getOwnerEntity();
-
-// get all groups
-$options = [
-	'type' => 'group',
-	'limit' => false,
-	'order_by_metadata' => [
-		'name' => 'name',
-		'directions' => 'ASC',
-	],
-];
-
-if ($owner instanceof ElggUser) {
-	$options['relationship'] = 'member';
-	$options['relationship_guid'] = $owner->guid;
-}
-
-$batch = new ElggBatch('elgg_get_entities', $options);
-$batch->rewind(); // needed so the next call succeeds
-if (!$batch->valid()) {
-	echo elgg_echo('widgets:group_river_widget:edit:no_groups');
-	return;
-}
-
-// get groups
-$group_options_values = [];
-foreach ($batch as $group) {
-	$group_options_values[$group->getDisplayName()] = $group->guid;
-}
-
-// make options
-echo '<div>';
-echo elgg_echo('widgets:group_river_widget:edit:num_display');
-echo elgg_view('input/select', [
-	'options' => range(5, 25, 5),
-	'value' => $num_display,
-	'name' => 'params[num_display]',
-	'class' => 'mls',
-]);
-echo '</div>';
-
-echo '<div>';
-echo elgg_echo('filter') . '<br />';
-echo $filter_selector;
-echo '</div>';
-
-echo '<div>';
-echo elgg_echo('widgets:group_river_widget:edit:group');
-echo elgg_view('input/checkboxes', [
-	'name' => 'params[group_guid]',
-	'value' => $widget->group_guid,
-	'options' => $group_options_values,
-]);
-echo '</div>';
