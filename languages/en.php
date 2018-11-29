@@ -23,6 +23,8 @@ return array(
 	'group_tools:menu:mail' => "Mail Members",
 	'group_tools:menu:invitations' => "Manage invitations",
 	
+	'group_tools:menu:title:add:preset' => "Create a %s group",
+	
 	'admin:groups:bulk_delete' => "Group bulk delete",
 	'admin:groups:admin_approval' => "Approval needed",
 	'admin:groups:tool_presets' => "Group tool presets",
