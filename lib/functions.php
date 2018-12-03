@@ -1,4 +1,6 @@
 <?php
+use Elgg\Database\Clauses\OrderByClause;
+
 /**
  * All helper functions for this plugin can be found here.
  */
@@ -465,7 +467,7 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 					'metadata_values' => $user_values,
 					'wheres' => $group_membership_where,
 					'group_by' => 'e.guid',
-					'order_by' => 'count(msn.id) DESC',
+					'order_by' => new OrderByClause('count(msn.id)', 'DESC'),
 					'limit' => $limit,
 				];
 				

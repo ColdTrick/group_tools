@@ -17,8 +17,6 @@ if (($group->getOwnerGUID() !== $user->getGUID()) && !$user->isAdmin()) {
 	return;
 }
 
-$dbprefix = elgg_get_config('dbprefix');
-
 $friends_options = [
 	'type' => 'user',
 	'relationship' => 'friend',

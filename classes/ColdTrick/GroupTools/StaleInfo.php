@@ -2,6 +2,10 @@
 
 namespace ColdTrick\GroupTools;
 
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\Clauses\JoinClause;
+use Elgg\Database\QueryBuilder;
+
 class StaleInfo {
 
 	/**
@@ -101,7 +105,7 @@ class StaleInfo {
 			'subtypes' => $object_subtypes,
 			'limit' => 1,
 			'container_guid' => $this->group->guid,
-			'order_by' => 'e.time_updated DESC',
+			'order_by' => new OrderByClause('time_updated', 'DESC'),
 		]);
 		if (empty($entities)) {
 			return 0;
@@ -122,19 +126,23 @@ class StaleInfo {
 			$subtypes[] = 'discussion_reply';
 		}
 		
-		$dbprefix = elgg_get_config('dbprefix');
+		$guid = $this->group->guid;
 		
 		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtypes' => $subtypes,
 			'limit' => 1,
 			'joins' => [
-				"JOIN {$dbprefix}entities ce ON e.container_guid = ce.guid",
+				new JoinClause('entities', 'ce', function(QueryBuilder $qb, $joined_alias, $main_alias) {
+					return $qb->compare("$joined_alias.guid", '=', "$main_alias.container_guid");
+				}),
 			],
 			'wheres' => [
-				"(ce.container_guid = {$this->group->guid})",
+				function(QueryBuilder $qb) use ($guid) {
+					return $qb->compare('ce.container_guid', '=', $guid, ELGG_VALUE_INTEGER);
+				},
 			],
-			'order_by' => 'e.time_updated DESC',
+			'order_by' => new OrderByClause('time_updated', 'DESC'),
 		]);
 		if (empty($entities)) {
 			return 0;
