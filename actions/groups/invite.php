@@ -1,4 +1,6 @@
 <?php
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Invite a user to join a group
  *
@@ -41,7 +43,7 @@ $text = get_input('comment');
 
 $emails = (array) get_input('user_guid_email');
 
-$csv = get_uploaded_file('csv');
+$csv = elgg_get_uploaded_file('csv');
 if (get_input('resend') == 'yes') {
 	$resend = true;
 } else {
@@ -127,9 +129,8 @@ if (!empty($emails)) {
 }
 
 // invite from csv
-if (!empty($csv)) {
-	$file_location = $_FILES['csv']['tmp_name'];
-	$fh = fopen($file_location, 'r');
+if ($csv instanceof UploadedFile) {
+	$fh = fopen($csv->getPathname(), 'r');
 	
 	if (!empty($fh)) {
 		while (($data = fgetcsv($fh, 0, ';')) !== false) {
