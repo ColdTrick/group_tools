@@ -1,9 +1,12 @@
 <?php
-use Elgg\Database\Clauses\OrderByClause;
-
 /**
  * All helper functions for this plugin can be found here.
  */
+
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\Select;
+use Elgg\Database\Clauses\JoinClause;
+use Elgg\Database\QueryBuilder;
 
 /**
  * Check if a invitation code results in a group
@@ -259,38 +262,34 @@ function group_tools_get_invited_groups_by_email($email) {
  * @param int $group_guid (optional) a group GUID to check, otherwise all groups will be checked
  *
  * @return stdClass[] all the found database rows
- * @todo revisit this
  */
 function group_tools_get_missing_acl_users($group_guid = 0) {
 	
-	$dbprefix = elgg_get_config('dbprefix');
-	$group_guid = sanitize_int($group_guid, false);
+	$select = Select::fromTable('access_collections', 'ac');
+	$select->select('ac.id AS acl_id')
+		->addSelect('ac.owner_guid AS group_guid')
+		->addSelect('er.guid_one AS user_guid');
+	$select->joinEntitiesTable('ac', 'owner_guid', 'inner', 'e');
+	$select->joinRelationshipTable('ac', 'owner_guid', 'member', false, 'inner', 'er');
+	$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e2');
 	
-	$query = 'SELECT ac.id AS acl_id, ac.owner_guid AS group_guid, er.guid_one AS user_guid';
-	$query .= " FROM {$dbprefix}access_collections ac";
-	$query .= " JOIN {$dbprefix}entities e ON e.guid = ac.owner_guid";
-	$query .= " JOIN {$dbprefix}entity_relationships er ON ac.owner_guid = er.guid_two";
-	$query .= " JOIN {$dbprefix}entities e2 ON er.guid_one = e2.guid";
-	$query .= ' WHERE';
-	
+	$group_guid = (int) $group_guid;
 	if ($group_guid > 0) {
-		// limit to the provided group
-		$query .= " e.guid = {$group_guid}";
+		$select->where($select->compare('e.guid', '=', $group_guid, ELGG_VALUE_GUID));
 	} else {
-		// all groups
-		$query .= ' e.type = "group"';
+		$select->where($select->compare('e.type', '=', 'group', ELGG_VALUE_STRING));
 	}
 	
-	$query .= ' AND e2.type = "user"';
-	$query .= ' AND er.relationship = "member"';
-	$query .= ' AND er.guid_one NOT IN (';
-	$query .= ' SELECT acm.user_guid';
-	$query .= " FROM {$dbprefix}access_collections ac2";
-	$query .= " JOIN {$dbprefix}access_collection_membership acm ON ac2.id = acm.access_collection_id";
-	$query .= ' WHERE ac2.owner_guid = ac.owner_guid';
-	$query .= ' )';
+	$select->andWhere($select->compare('e2.type', '=', 'user', ELGG_VALUE_STRING));
 	
-	return get_data($query);
+	$sub = $select->subquery('access_collections', 'ac2');
+	$sub->select('acm.user_guid');
+	$sub->join('ac2', 'access_collection_membership', 'acm', $select->compare('ac2.id', '=', 'acm.access_collection_id'));
+	$sub->where($select->compare('ac2.owner_guid', '=', 'ac.owner_guid'));
+	
+	$select->andWhere($select->compare('er.guid_one', 'NOT IN', $sub->getSQL()));
+	
+	return $select->execute()->fetchAll();
 }
 
 /**
@@ -299,61 +298,57 @@ function group_tools_get_missing_acl_users($group_guid = 0) {
  * @param int $group_guid (optional) a group GUID to check, otherwise all groups will be checked
  *
  * @return stdClass[] all the found database rows
- * @todo revisit this
  */
 function group_tools_get_excess_acl_users($group_guid = 0) {
 	
-	$dbprefix = elgg_get_config('dbprefix');
-	$group_guid = sanitise_int($group_guid, false);
 	
-	$query = 'SELECT ac.id AS acl_id, ac.owner_guid AS group_guid, acm.user_guid AS user_guid';
-	$query .= " FROM {$dbprefix}access_collections ac";
-	$query .= " JOIN {$dbprefix}access_collection_membership acm ON ac.id = acm.access_collection_id";
-	$query .= " JOIN {$dbprefix}entities e ON ac.owner_guid = e.guid";
-	$query .= ' WHERE';
+	$select = Select::fromTable('access_collections', 'ac');
+	$select->select('ac.id AS acl_id')
+		->addSelect('ac.owner_guid AS group_guid')
+		->addSelect('acm.user_guid AS user_guid');
+	$select->joinEntitiesTable('ac', 'owner_guid', 'inner', 'e');
+	$select->join('ac', 'access_collection_membership', 'acm', $select->compare('ac.id', '=', 'acm.access_collection_id'));
 	
+	$group_guid = (int) $group_guid;
 	if ($group_guid > 0) {
-		// limit to the provided group
-		$query .= " e.guid = {$group_guid}";
+		$select->where($select->compare('e.guid', '=', $group_guid, ELGG_VALUE_GUID));
 	} else {
-		// all groups
-		$query .= ' e.type = "group"';
+		$select->where($select->compare('e.type', '=', 'group', ELGG_VALUE_STRING));
 	}
 	
-	$query .= ' AND acm.user_guid NOT IN (';
-	$query .= ' SELECT r.guid_one';
-	$query .= " FROM {$dbprefix}entity_relationships r";
-	$query .= ' WHERE r.relationship = "member"';
-	$query .= ' AND r.guid_two = ac.owner_guid';
-	$query .= ' )';
+	$sub = $select->subquery('entity_relationships', 'r');
+	$sub->select('r.guid_one');
+	$sub->where($select->compare('r.relationship', '=', 'member', ELGG_VALUE_STRING));
+	$sub->andWhere($select->compare('r.guid_two', '=', 'ac.owner_guid'));
 	
-	return get_data($query);
+	$select->andWhere($select->compare('acm.user_guid', 'NOT IN', $sub->getSQL()));
+	
+	return $select->execute()->fetchAll();
 }
 
 /**
  * Get all groups that don't have an ACL
  *
- * @return ElggGroup[]
- * @todo revisit this
+ * @param bool $count return a count
+ *
+ * @return int|ElggGroup[]
  */
-function group_tools_get_groups_without_acl() {
-	
-	$dbprefix = elgg_get_config('dbprefix');
-	
-	$options = [
+function group_tools_get_groups_without_acl($count = false) {
+	return elgg_get_entities([
 		'type' => 'group',
 		'limit' => false,
+		'count' => $count,
 		'wheres' => [
-			"e.guid NOT IN (
-				SELECT ac.owner_guid
-				FROM {$dbprefix}access_collections ac
-				JOIN {$dbprefix}entities e ON ac.owner_guid = e.guid
-				WHERE e.type = 'group'
-			)",
+			function (QueryBuilder $qb, $main_alias) {
+				$select = $qb->subquery('access_collections', 'ac');
+				$select->select('ac.owner_guid')
+					->where($qb->compare('e2.type', '=', 'group', ELGG_VALUE_STRING));
+				$select->joinEntitiesTable('ac', 'owner_guid', 'inner', 'e2');
+				
+				return $qb->compare("{$main_alias}.guid", 'NOT IN', $select->getSQL());
+			},
 		],
-	];
-	
-	return elgg_get_entities($options);
+	]);
 }
 
 /**
@@ -428,15 +423,13 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 	}
 
 	$result = [];
-	$dbprefix = elgg_get_config('dbprefix');
-	$group_membership_where = "e.guid NOT IN (
-		SELECT er.guid_two FROM {$dbprefix}entity_relationships er
-		WHERE er.guid_one = {$user->guid}
-		AND er.relationship IN (
-			'member',
-			'membership_request'
-		)
-	)";
+	$group_membership_where = function (QueryBuilder $qb, $main_alias) use ($user) {
+		$select = $qb->subquery('entity_relationships', 'er');
+		$select->where($qb->compare('er.guid_one', '=', $user->guid, ELGG_VALUE_GUID));
+		$select->andWhere($qb->compare('er.relationship', 'in', ['member', 'membership_request'], ELGG_VALUE_STRING));
+		
+		return $qb->compare("{$main_alias}.guid", 'NOT IN', $select->getSQL());
+	};
 	
 	if (elgg_get_plugin_setting('auto_suggest_groups', 'group_tools') !== 'no') {
 		$tag_names = elgg_get_registered_tag_metadata_names();

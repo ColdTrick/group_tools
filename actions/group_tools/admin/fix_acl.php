@@ -16,21 +16,17 @@ switch ($fix) {
 		$missing_users = group_tools_get_missing_acl_users();
 		if (!empty($missing_users)) {
 			// make sure we can see all users
-			$hidden = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
-			
-			foreach ($missing_users as $user_data) {
-				/**
-				 * $user_data = row stdClass
-				 * 		-> acl_id 		=> the acl the user should be added to
-				 * 		-> group_guid 	=> the group the acl belongs to
-				 * 		-> user_guid 	=> the user that should be added
-				 */
-				add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
-			}
-			
-			// restore hidden settings
-			access_show_hidden_entities($hidden);
+			elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($missing_users) {
+				foreach ($missing_users as $user_data) {
+					/**
+					 * $user_data = row stdClass
+					 * 		-> acl_id 		=> the acl the user should be added to
+					 * 		-> group_guid 	=> the group the acl belongs to
+					 * 		-> user_guid 	=> the user that should be added
+					 */
+					add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
+				}
+			});
 			
 			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
 		} else {
@@ -69,21 +65,17 @@ switch ($fix) {
 			$missing_users = group_tools_get_missing_acl_users();
 			if (!empty($missing_users)) {
 				// make sure we can see all users
-				$hidden = access_get_show_hidden_status();
-				access_show_hidden_entities(true);
-				
-				foreach ($missing_users as $user_data) {
-					/**
-					 * $user_data = row stdClass
-					 * 		-> acl_id 		=> the acl the user should be added to
-					 * 		-> group_guid 	=> the group the acl belongs to
-					 * 		-> user_guid 	=> the user that should be added
-					 */
-					add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
-				}
-				
-				// restore hidden settings
-				access_show_hidden_entities($hidden);
+				elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($missing_users) {
+					foreach ($missing_users as $user_data) {
+						/**
+						 * $user_data = row stdClass
+						 * 		-> acl_id 		=> the acl the user should be added to
+						 * 		-> group_guid 	=> the group the acl belongs to
+						 * 		-> user_guid 	=> the user that should be added
+						 */
+						add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
+					}
+				});
 			}
 			
 			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:without', [count($groups)]));
@@ -109,21 +101,17 @@ switch ($fix) {
 		$missing_users = group_tools_get_missing_acl_users();
 		if (!empty($missing_users)) {
 			// make sure we can see all users
-			$hidden = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
-			
-			foreach ($missing_users as $user_data) {
-				/**
-				 * $user_data = row stdClass
-				 * 		-> acl_id 		=> the acl the user should be added to
-				 * 		-> group_guid 	=> the group the acl belongs to
-				 * 		-> user_guid 	=> the user that should be added
-				 */
-				add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
-			}
-			
-			// restore hidden settings
-			access_show_hidden_entities($hidden);
+			elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($missing_users) {
+				foreach ($missing_users as $user_data) {
+					/**
+					 * $user_data = row stdClass
+					 * 		-> acl_id 		=> the acl the user should be added to
+					 * 		-> group_guid 	=> the group the acl belongs to
+					 * 		-> user_guid 	=> the user that should be added
+					 */
+					add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
+				}
+			});
 			
 			system_message(elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
 		}

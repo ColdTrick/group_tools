@@ -17,12 +17,12 @@ class Notifications {
 	public static function adminApprovalSubs($hook, $type, $return_value, $params) {
 		
 		$event = elgg_extract('event', $params);
-		if (!($event instanceof \Elgg\Notifications\Event)) {
+		if (!$event instanceof \Elgg\Notifications\NotificationEvent) {
 			return;
 		}
 		
 		$group = $event->getObject();
-		if (!($group instanceof \ElggGroup)) {
+		if (!$group instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -32,19 +32,17 @@ class Notifications {
 		}
 		
 		// get all admins
-		$dbprefix = elgg_get_config('dbprefix');
-		$batch = new \ElggBatch('elgg_get_entities', [
+		$batch = elgg_get_entities([
 			'type' => 'user',
-			'joins' => [
-				"JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid",
+			'metadata_name_value_pairs' => [
+				'name' => 'admin',
+				'value' => 'yes',
 			],
-			'wheres' => [
-				'ue.admin = "yes"',
-			],
+			'batch' => true,
 		]);
 		/* @var $user \ElggUser */
 		foreach ($batch as $user) {
-			$notification_settings = get_user_notification_settings($user->guid);
+			$notification_settings = $user->getNotificationSettings();
 			if (empty($notification_settings)) {
 				continue;
 			}
@@ -73,7 +71,7 @@ class Notifications {
 	 */
 	public static function prepareAdminApprovalMessage($hook, $type, $return_value, $params) {
 		
-		if (!($return_value instanceof \Elgg\Notifications\Notification)) {
+		if (!$return_value instanceof \Elgg\Notifications\Notification) {
 			return;
 		}
 		
@@ -82,7 +80,7 @@ class Notifications {
 		
 		$language = elgg_extract('language', $params);
 		$event = elgg_extract('event', $params);
-		if (!($event instanceof \Elgg\Notifications\Event)) {
+		if (!$event instanceof \Elgg\Notifications\NotificationEvent) {
 			return;
 		}
 		

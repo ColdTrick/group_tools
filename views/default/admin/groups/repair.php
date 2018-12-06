@@ -33,9 +33,9 @@ $rows[] = [
 ];
 
 // check groups without acl
-$wrong_groups = group_tools_get_groups_without_acl();
+$wrong_groups = group_tools_get_groups_without_acl(true);
 $rows[] = [
-	elgg_echo('group_tools:settings:fix:without', [count($wrong_groups)]),
+	elgg_echo('group_tools:settings:fix:without', [$wrong_groups]),
 	elgg_view('output/url', [
 		'href' => 'action/group_tools/admin/fix_acl?fix=without',
 		'text' => elgg_echo('group_tools:settings:fix_it'),
