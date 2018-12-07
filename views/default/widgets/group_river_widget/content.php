@@ -49,11 +49,13 @@ $options = [
 			$wheres[] = $qb->compare("{$main_alias}.object_guid", 'in', $group_guid, ELGG_VALUE_GUID);
 			$wheres[] = $qb->compare("{$main_alias}.target_guid", 'in', $group_guid, ELGG_VALUE_GUID);
 			
-			$object = $qb->joinEntitiesTable($main_alias, 'object_guid');
-			$wheres[] = $qb->compare("{$object}.container_guid", 'in', $group_guid, ELGG_VALUE_GUID);
+			$sub = $qb->subquery('entities', 'ce');
+			$sub->select('ce.guid')
+				->where($qb->compare('ce.container_guid', 'in', $group_guid, ELGG_VALUE_GUID));
 			
-			$target = $qb->joinEntitiesTable($main_alias, 'target_guid', 'left');
-			$wheres[] = $qb->compare("{$target}.container_guid", 'in', $group_guid, ELGG_VALUE_GUID);
+			$wheres[] = $qb->compare("{$main_alias}.object_guid", 'in', $sub->getSQL());
+		
+			$wheres[] = $qb->compare("{$main_alias}.target_guid", 'in', $sub->getSQL());
 			
 			return $qb->merge($wheres, 'OR');
 		},
