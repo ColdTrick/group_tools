@@ -91,9 +91,9 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks = $this->elgg()->hooks;
 		
 		$hooks->registerHandler('access:collections:write', 'user', __NAMESPACE__ . '\Access::defaultAccessOptions');
-		$hooks->registerHandler('action', 'groups/join', __NAMESPACE__ . '\Membership::groupJoinAction');
-		$hooks->registerHandler('action', 'register', __NAMESPACE__ . '\Router::allowRegistration');
-		$hooks->registerHandler('action', 'groups/edit', __NAMESPACE__ . '\Group::editActionListener');
+		$hooks->registerHandler('action:validate', 'groups/join', __NAMESPACE__ . '\Membership::groupJoinAction');
+		$hooks->registerHandler('action:validate', 'register', __NAMESPACE__ . '\Router::allowRegistration');
+		$hooks->registerHandler('action:validate', 'groups/edit', __NAMESPACE__ . '\Group::editActionListener');
 		$hooks->registerHandler('cron', 'fiveminute', __NAMESPACE__ . '\Membership::autoJoinGroupsCron');
 		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::notifyStaleGroupOwners');
 		$hooks->registerHandler('default', 'access', __NAMESPACE__ . '\Access::setGroupDefaultAccess');
