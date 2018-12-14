@@ -30,7 +30,7 @@ $content = elgg_list_entities([
 ]);
 
 echo elgg_view('groups/profile/module', [
-	'title' => elgg_echo('widgets:related_groups:name'),
+	'title' => elgg_echo('widgets:group_related:name'),
 	'content' => $content,
 	'all_link' => $all_link,
 ]);

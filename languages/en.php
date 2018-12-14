@@ -9,7 +9,6 @@ return array(
 	'group_tools:all_members' => "All members",
 	
 	'group_tools:profile:field:group_tools_preset' => "Group Tools Preset",
-	'groups:group_tools_preset' => "Group Tools Preset",
 	
 	'group_tools:default:access:group' => "Group members only",
 
@@ -54,8 +53,7 @@ use that preset on the group creation form. This will also hide the tool selecti
 	
 	'group_tools:settings:invite:title' => "Group invitation options",
 	'group_tools:settings:management:title' => "General group options",
-	'group_tools:settings:default_access:title' => "Default group access",
-
+	
 	'group_tools:settings:admin_transfer' => "Allow group owner transfer",
 	'group_tools:settings:admin_transfer:admin' => "Site admin only",
 	'group_tools:settings:admin_transfer:owner' => "Group owners and site admins",
@@ -103,11 +101,8 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 	'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
 	
-	'group_tools:settings:special_states' => "Groups with a special state",
 	'group_tools:settings:special_states:featured:description' => "The site administrators have chosen to feature the following groups.",
-	'group_tools:settings:special_states:suggested' => "Suggested",
-	'group_tools:settings:special_states:suggested:description' => "The following groups are suggested to (new) users. It is possible to auto suggest groups, if no groups are automatically detected or too few, the list will be appended by these groups.",
-
+	
 	'group_tools:settings:fix:title' => "Fix group access problems",
 	'group_tools:settings:fix:missing' => "There are %d users who are a member of a group but don't have access to the content shared with the group.",
 	'group_tools:settings:fix:excess' => "There are %d users who have access to group content of groups where they are no longer a member off.",
@@ -245,12 +240,6 @@ You can find the group here:
 	'group_tools:admin_transfer:myself' => "Myself",
 	'group_tools:admin_transfer:remain_admin' => "Remain a group admin after owner transfer",
 	
-	// special states form
-	'group_tools:special_states:title' => "Group special states",
-	'group_tools:special_states:description' => "A group can have several special states, here is an overview of the special states and their current value.",
-	'group_tools:special_states:featured' => "Is this group featured",
-	'group_tools:special_states:suggested' => "Is this group suggested to (new) users",
-	
 	'group_tools:suggested:set' => "Suggest this group to users",
 	'group_tools:suggested:remove' => "Remove group from suggested list",
 	
@@ -341,8 +330,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:groups:invite:error' => "No invitation options are available",
 	'group_tools:groups:invite:title' => "Invite users to this group",
 	'group_tools:groups:invite' => "Invite users",
-	'group_tools:groups:invite:user_already_member' => "User is already a member of the group",
-
+	
 	'group_tools:group:invite:friends:select_all' => "Select all friends",
 	'group_tools:group:invite:friends:deselect_all' => "Deselect all friends",
 
@@ -430,11 +418,6 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:action:toggle_special_state:error:state' => "Invalid state provided",
 	'group_tools:action:toggle_special_state:suggested' => "The new suggested settings were saved successfully",
 	
-	// group notifications
-	'group_tools:action:notifications:error:toggle' => "Invalid toggle option",
-	'group_tools:action:notifications:success:disable' => "Successfully disabled notifications for every member",
-	'group_tools:action:notifications:success:enable' => "Successfully enabled notifications for every member",
-
 	// fix group problems
 	'group_tools:action:fix_acl:error:input' => "Invalid option you can't fix: %s",
 	'group_tools:action:fix_acl:error:missing:nothing' => "No missing users found in the group ACLs",
@@ -450,12 +433,8 @@ your group '%s' was declined and removed by a site administrator.",
 	'widgets:group_river_widget:name' => "Group activity",
     'widgets:group_river_widget:description' => "Shows the activity of a group in a widget",
 
-    'widgets:group_river_widget:edit:num_display' => "Number of activities",
-	'widgets:group_river_widget:edit:group' => "Select a group",
-	'widgets:group_river_widget:edit:no_groups' => "You need to be a member of at least one group to use this widget",
-
+    'widgets:group_river_widget:edit:group' => "Select a group",
 	'widgets:group_river_widget:view:not_configured' => "This widget is not yet configured",
-
 	'widgets:group_river_widget:view:noactivity' => "We could not find any activity.",
 
 	// Group Members
@@ -485,8 +464,6 @@ your group '%s' was declined and removed by a site administrator.",
 	'widgets:group_related:name' => "Related groups",
   	'widgets:group_related:description' => "Show a list of related groups",
 	
-	'groups:search:title' => "Search for groups matching '%s'",
-	
 	// welcome message
 	'group_tools:welcome_message:title' => "Group welcome message",
 	'group_tools:welcome_message:description' => "You can configure a welcome message for new users who join this group. If you don't want to send a welcome message leave this field blank.",
@@ -513,9 +490,6 @@ your group '%s' was declined and removed by a site administrator.",
 	
 	// related groups
 	'groups_tools:related_groups:tool_option' => "Show related groups",
-	
-	'widgets:related_group:name' => "Related groups",
-	'widgets:related_group:description' => "Display a list of groups you added as related to this group.",
 	
 	'groups_tools:related_groups:none' => "No related groups found.",
 	'group_tools:related_groups:title' => "Related groups",

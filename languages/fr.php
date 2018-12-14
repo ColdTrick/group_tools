@@ -1,11 +1,10 @@
 <?php
 /**
- * This file was created by Translation Editor v5.2
- * On 2017-09-01 12:55
+ * This file was created by Translation Editor v7.0-beta
+ * On 2018-12-14 16:08
  */
 
 return array (
-  'widgets:related_groups:name' => 'Groupes suggérés',
   'group_tools:related_groups:title' => 'Groupes suggérés',
   'groups_tools:related_groups:tool_option' => 'Indiquer les groupes suggérés',
   'groups_tools:related_groups:none' => 'Aucun groupe suggéré trouvé.',
@@ -24,12 +23,7 @@ return array (
   'group_tools:group:edit:other' => 'Options avancées',
   'group_tools:admin_transfer:current' => 'Conserver l\'animateur actuel : %s',
   'group_tools:admin_transfer:myself' => 'Moi même',
-  'group_tools:special_states:title' => 'Options avancées du groupe',
-  'group_tools:special_states:description' => 'Des options de publication avancées peuvent être définies, groupe par groupe. Vous trouverez ci-dessous l\'ensemble de ces Options avancées.',
-  'group_tools:special_states:featured' => 'Ce groupe est-il mis en avant ?',
-  'group_tools:special_states:suggested' => 'Ce groupe est-il proposé automatiquement aux nouveaux inscrits ?',
   'group_tools:notifications:title' => 'Notifications du groupe',
-  'group_tools:notifications:description' => 'Ce groupe a %s membres. Parmi eux, %s ont activé les notifications pour ce groupe. Vous pouvez changer ci-dessous les paramètres pour tous les membres du groupe.',
   'group_tools:notifications:disable' => 'Désactiver les notifications pour tous les membres',
   'group_tools:notifications:enable' => 'Activer les notifications pour tous les membres',
   'group_tools:notifications:disclaimer' => 'Cela peut prendre un certain temps pour les groupes importants !',
@@ -45,7 +39,6 @@ return array (
   'group_tools:menu:mail' => 'Envoyer un e-mail aux membres',
   'group_tools:settings:invite:title' => 'Gestion des options d\'invitation du groupe',
   'group_tools:settings:management:title' => 'Gestion des options générales du groupe',
-  'group_tools:settings:default_access:title' => 'Accès par défault au groupe',
   'group_tools:settings:admin_transfer' => 'Autoriser le transfert d\'animateur de groupe',
   'group_tools:settings:admin_transfer:admin' => 'Administrateurs du site uniquement',
   'group_tools:settings:admin_transfer:owner' => 'Animateurs de groupes et administrateurs du site',
@@ -96,23 +89,11 @@ Parcours Croisés',
   'group_tools:group:invite:add:confirm' => 'Etes-vous sûr(e) de vouloir ajouter ces utilisateurs directement ?',
   'group_tools:groups:invite' => 'Inviter des membres',
   'group_tools:groups:invite:email:subject' => 'Vous avez été invité à rejoindre le Groupe %s',
-  'group_tools:groups:invite:email:body' => 'Bonjour,
-
-%s vous invite à rejoindre le groupe %s sur %s.
-%s
-
-Si vous n\'avez pas de compte sur %s, enregistrez vous ici.
-%s
-
-Si vous avez déjà un compte ou après vous être enregistré, cliquez sur le lien suivant.
-%s',
   'group_tools:suggested_groups:none' => 'Nous ne pouvons vous suggérer des groupes de discussion. Nous n\'avons pas assez d\'information sur vous pour vous conseiller ou vous avez déjà rejoint les groupes que nous souhaitions vous suggérer. Utilisez le moteur de recherche pour trouvez de nouveaux groupes.',
   'widgets:group_river_widget:name' => 'Activité du groupe',
   'widgets:group_river_widget:view:not_configured' => 'Ce module n\'est pas configuré. Choisissez vos groupes en cliquant sur le bouton de personnalisation en haut à droite de cette fenêtre.',
   'group_tools:welcome_message:subject' => 'Bienvenue dans le groupe %s !',
   'widgets:group_river_widget:description' => 'Affiche l\'activité d\'un groupe',
-  'widgets:group_news:title' => 'Suivre des groupes',
-  'widgets:group_news:description' => 'Affiche les 5 derniers articles de groupes variés',
   'item:object:group_tools_group_mail' => 'Email du groupe',
   'admin:groups:bulk_delete' => 'Suppression en masse',
   'admin:groups:admin_approval' => 'Approbation nécessaire',
@@ -152,10 +133,7 @@ Si vous avez déjà un compte ou après vous être enregistré, cliquez sur le l
   'group_tools:settings:search_index' => 'Autoriser les groupes fermés à être indexé par les moteurs de recherche.',
   'group_tools:settings:stale_timeout:help' => 'Si aucun contenu n\'a été créé depuis un certain nombre de jours, le groupe est affiché comme "Périmé". Le propriétaire du groupe recevra une notification le jour où le groupe devient "Périmé". Un propriétaire de groupe/admin peut dire si un groupe est malgré tout toujours d\'actualité. 0 ou vide pour désactiver cette option.',
   'group_tools:settings:auto_notification' => 'Activer automatiquement les notifications lors de l\'adhésion au groupe',
-  'group_tools:settings:show_membership_mode' => 'Afficher les status d\'adhésion ouvertes/fermées sur les pages profils de groupe et sur les bloc propriétaires',
   'group_tools:settings:special_states:featured:description' => 'Les administrateurs du site ont choisi de mettre en avant les groupes suivants',
-  'group_tools:settings:special_states:suggested' => 'Suggéré',
-  'group_tools:settings:special_states:suggested:description' => 'Les groupes suivant sont suggérés aux nouveaux utilisateurs. S\'il est permis de suggérer automatiquement des groupes, si aucun groupe n\'est automatiquement detecté ou si la liste est trop petite, la liste sera complétée par ces groupes.',
   'group_tools:settings:fix:title' => 'Réparer les problèmes d\'accés aux groupes',
   'group_tools:settings:fix:missing' => 'Il y a %d utilisateurs qui sont membres d\'un groupe, mais qui n\'ont pas accés au contenu partagé par ce groupe.',
   'group_tools:settings:fix:excess' => 'Il y a %d utilisateurs qui ont accés au contenu d\'un groupe alors qu\'ils n\'en sont plus membre.',
@@ -211,10 +189,6 @@ Nous vous remercions de vérifier votre groupe ici:
   'group_tools:multiple_admin:group_admins' => 'Administrateurs du groupe',
   'group_tools:multiple_admin:profile_actions:remove' => 'Retirer un administrateur de groupe',
   'group_tools:multiple_admin:profile_actions:add' => 'Ajouter un administrateur de groupe',
-  'group_tools:cleanup:title' => 'Nettoyage de la sidebar de group',
-  'group_tools:cleanup:extras_menu' => 'Masquer les menus additionels',
-  'group_tools:cleanup:extras_menu:explain' => 'Les menus additionnels peuvent être trouvés tout en haut de la sidebar, quelques liens peuvent être situés dans cette zone (ex liens RSS)',
-  'group_tools:cleanup:featured_sorting:time_created' => 'Les plus récents en premier',
   'group_tools:group:admin_approve:approve:summary' => 'Votre groupe \'%s" a été validée',
   'group_tools:group:admin_approve:approve:subject' => 'Votre groupe \'%s" a été validée',
   'group_tools:group:admin_approve:approve:message' => 'Bonjour %s,
@@ -241,19 +215,16 @@ Votre groupe \'%s\' a été refusé',
   'group_tools:mail:form:js:members' => 'Merci de sélectionner au moins un membre à qui envoyer un message',
   'group_tools:mail:form:js:description' => 'Merci de saisir votre message',
   'group_tools:groups:invite:error' => 'Aucune option d’invitation disponible',
-  'group_tools:groups:invite:user_already_member' => 'L\'utilisateur est déjà membre du groupe',
   'group_tools:group:invite:friends:select_all' => 'Sélectionner tous les amis',
   'group_tools:group:invite:friends:deselect_all' => 'Désélectionner tous les amis',
   'group_tools:groups:sorting:open' => 'Ouvrir',
   'group_tools:groups:sorting:closed' => 'Fermé',
   'group_tools:groups:sorting:suggested' => 'Suggéré',
-  'group_tools:action:notifications:error:toggle' => 'Option de bascule non valide',
   'group_tools:action:fix_acl:error:without:nothing' => 'Aucun groupe trouvé sans ACL',
   'widgets:group_river_widget:edit:group' => 'Sélectionner un groupe',
   'widgets:group_members:name' => 'Membres du groupe',
   'widgets:group_members:view:no_members' => 'Aucun membre de groupe trouvé',
   'widgets:group_invitations:name' => 'Invitations à des groupes',
-  'widgets:index_groups:show_members' => 'Afficher le nombre de membres',
   'widgets:index_groups:featured' => 'N\'afficher que les groupes mis en avant',
   'widgets:index_groups:sorting' => 'Comment trier les groupes',
   'group_tools:member_export:title_button' => 'Exporter les membres',
@@ -263,5 +234,4 @@ Votre groupe \'%s\' a été refusé',
   'admin:groups:auto_join' => 'Auto adhésion',
   'group_tools:create_group:tool_presets:more_header' => 'Outils additionels',
   'group_tools:create_group:tool_presets:select' => 'Sélectionnez un type de groupe',
-  'groups:search:title' => 'Rechercher des groupes avec le tag "%s"',
 );
