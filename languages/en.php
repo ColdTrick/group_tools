@@ -448,6 +448,7 @@ your group '%s' was declined and removed by a site administrator.",
   	'widgets:group_invitations:description' => "Shows the outstanding group invitations for the current user",
 
 	// index_groups
+	'widgets:index_groups:name' => "Groups",
 	'widgets:index_groups:description' => "List groups from your community",
 	'widgets:index_groups:featured' => "Show only featured groups",
 	'widgets:index_groups:sorting' => "How to sort the groups",
@@ -457,6 +458,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'widgets:index_groups:filter:no_filter' => "No filter",
 
 	// Featured Groups
+	'widgets:featured_groups:name' => "Featured groups",
 	'widgets:featured_groups:description' => "Shows a random list of featured groups",
   	'widgets:featured_groups:edit:show_random_group' => "Show a random non-featured group",
 	

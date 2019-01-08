@@ -106,11 +106,9 @@ return [
 			'context' => ['index', 'dashboard'],
 		],
 		'featured_groups' => [
-			'name' => elgg_echo('groups:featured'),
 			'context' => ['index'],
 		],
 		'index_groups' => [
-			'name' => elgg_echo('groups'),
 			'context' => ['index'],
 			'multiple' => true,
 		],
