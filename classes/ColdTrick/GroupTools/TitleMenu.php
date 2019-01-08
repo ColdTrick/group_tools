@@ -352,6 +352,7 @@ class TitleMenu {
 			$menu_item = \ElggMenuItem::factory([
 				'name' => "add:preset:{$index}",
 				'text' => elgg_echo('group_tools:menu:title:add:preset', [elgg_extract('title', $preset)]),
+				'title' => elgg_extract('description', $preset),
 				'href' => elgg_http_add_url_query_elements($url, [
 					'group_tools_preset' => elgg_extract('title', $preset),
 				]),
