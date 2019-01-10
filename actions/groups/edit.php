@@ -210,7 +210,12 @@ if ($is_new_group) {
 	]);
 }
 
-$group->saveIconFromUploadedFile('icon');
+if (get_input('icon_remove')) {
+	$group->deleteIcon();
+} else {
+	// try to save new icon, will fail silently if no icon provided
+	$group->saveIconFromUploadedFile('icon');
+}
 
 // owner transfer
 $old_owner_guid = $is_new_group ? 0 : $group->owner_guid;
