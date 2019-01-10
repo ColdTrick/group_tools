@@ -50,13 +50,14 @@ if (!empty($presets)) {
 			'class' => 'group-tools-admin-change-tool-preset-description',
 		]);
 		
+		/* @var $group_tool \Elgg\Groups\Tool */
 		foreach ($group_tools as $group_tool) {
-			$group_tool_toggle_name = "params[{$index}][tools][{$group_tool->name}_enable]";
-
+			$metadata_name = $group_tool->mapMetadataName();
+			
 			echo elgg_view('group_tools/elements/group_tool', [
 				'group_tool' => $group_tool,
-				'value' => elgg_extract("{$group_tool->name}_enable", $values['tools']),
-				'name' => $group_tool_toggle_name,
+				'value' => elgg_extract($metadata_name, $values['tools']),
+				'name' => "params[{$index}][tools][{$metadata_name}]",
 				'class' => 'mbs',
 			]);
 		}
