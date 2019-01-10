@@ -324,18 +324,18 @@ class TitleMenu {
 		if (!$add_button instanceof \ElggMenuItem) {
 			return;
 		}
-		
-		$presets = group_tools_get_tool_presets();
-		if (empty($presets)) {
-			return;
-		}
-		
+				
 		$url = elgg_generate_url('add:group:group', [
 			'container_guid' => $user->guid,
 		]);
 		
 		if ($add_button->getHref() !== $url) {
 			// not the group add button
+			return;
+		}
+	
+		$presets = group_tools_get_tool_presets();
+		if (empty($presets)) {
 			return;
 		}
 		
@@ -347,6 +347,8 @@ class TitleMenu {
 				'collision' => 'fit fit',
 			]),
 		]);
+		
+		$add_button->setHref(false);
 		
 		foreach ($presets as $index => $preset) {
 			$menu_item = \ElggMenuItem::factory([
