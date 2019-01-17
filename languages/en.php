@@ -236,9 +236,8 @@ You can find the group here:
 	'group_tools:group:edit:other' => "Other options",
 
 	// admin transfer - form
-	'group_tools:admin_transfer:current' => "Keep current owner: %s",
-	'group_tools:admin_transfer:myself' => "Myself",
 	'group_tools:admin_transfer:remain_admin' => "Remain a group admin after owner transfer",
+	'group_tools:admin_transfer:remain_admin:help' => "After changing the owner, remain a group admin.",
 	
 	'group_tools:suggested:set' => "Suggest this group to users",
 	'group_tools:suggested:remove' => "Remove group from suggested list",

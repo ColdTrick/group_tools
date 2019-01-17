@@ -27,6 +27,7 @@ om een groep te maken op basis van deze tool set. Dit zal ook de tool selectie o
   'group_tools:edit:group:notifications:defaults:help' => 'Als een gebruiker lid wordt van de groep worden dit de groep notificatie instellingen.',
   'group_tools:notifications:enable' => 'Opslaan en instellingen toepassen op alle leden',
   'group_tools:admin_transfer:remain_admin' => 'Blijf aan als groep beheerder na eigenaar overdracht',
+  'group_tools:admin_transfer:remain_admin:help' => 'Indien de eigenaar wijzigd, blijf aan als groep beheerder.',
   'group_tools:settings:auto_accept_membership_requests' => 'Lidmaatschapsverzoeken automatisch accepteren na het openen van de groep',
   'group_tools:settings:auto_accept_membership_requests:help' => 'Als het lidmaatschap van een groep wijzigt naar \'open\' worden automatisch alle openstaande lidmaatschapsverzoeken geaccepteerd.',
   'admin:groups:auto_join' => 'Automatisch lidmaatschap',
@@ -203,7 +204,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:create_group:tool_presets:blank:description' => 'Kies dit type groep indien je zelf de tools wilt bepalen.',
   'group_tools:group:edit:access' => 'Toegang',
   'group_tools:group:edit:tools' => 'Tools',
-  'group_tools:admin_transfer:current' => 'Behoud huidige eigenaar: %s',
   'activity:group_tool_option:description' => 'Toon een activiteiten stroom van groep gerelateerde content.',
   'group_tools:action:group_tool:presets:saved' => 'Groep tool sets opgeslagen',
   'group_tools:delete_selected' => 'Verwijder selectie',
@@ -376,7 +376,6 @@ Als je al een account hebt of na registratie, klik op de onderstaande link om de
 
 Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende code invoeren:
 %s',
-  'group_tools:admin_transfer:myself' => 'Mijzelf',
   'group_tools:multiple_admin:group_admins' => 'Groep beheerders',
   'group_tools:multiple_admin:profile_actions:remove' => 'Verwijder groep beheerder',
   'group_tools:multiple_admin:profile_actions:add' => 'Maak groep beheerder',

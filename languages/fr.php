@@ -21,8 +21,6 @@ return array (
   'group_tools:group:edit:access' => 'Droits d\'accès',
   'group_tools:group:edit:tools' => 'Options',
   'group_tools:group:edit:other' => 'Options avancées',
-  'group_tools:admin_transfer:current' => 'Conserver l\'animateur actuel : %s',
-  'group_tools:admin_transfer:myself' => 'Moi même',
   'group_tools:notifications:title' => 'Notifications du groupe',
   'group_tools:notifications:disable' => 'Désactiver les notifications pour tous les membres',
   'group_tools:notifications:enable' => 'Activer les notifications pour tous les membres',

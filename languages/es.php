@@ -133,8 +133,6 @@ Puedes encontrar el grupo aquí:
   'group_tools:group:edit:access' => 'Acceso',
   'group_tools:group:edit:tools' => 'Herramientas',
   'group_tools:group:edit:other' => 'Otras opciones',
-  'group_tools:admin_transfer:current' => 'Mantener propietario actual: %s',
-  'group_tools:admin_transfer:myself' => 'Yo mismo/a',
   'group_tools:multiple_admin:group_admins' => 'Administradores de grupo',
   'group_tools:multiple_admin:profile_actions:remove' => 'Borrar administrador de grupo',
   'group_tools:multiple_admin:profile_actions:add' => 'Agregar administrador de grupo',

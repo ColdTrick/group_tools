@@ -64,7 +64,6 @@ Para visualizar a comunidade, clique neste link:
 %s',
   'group_tools:group:edit:profile' => 'Comunidade',
   'group_tools:group:edit:other' => 'Outras opções',
-  'group_tools:admin_transfer:myself' => 'Eu',
   'group_tools:multiple_admin:group_admins' => 'Proprietários da comunidade',
   'group_tools:multiple_admin:profile_actions:remove' => 'Remover proprietário',
   'group_tools:multiple_admin:profile_actions:add' => 'Adicionar proprietário',

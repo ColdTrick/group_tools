@@ -219,7 +219,7 @@ if (get_input('icon_remove')) {
 
 // owner transfer
 $old_owner_guid = $is_new_group ? 0 : $group->owner_guid;
-$new_owner_guid = (int) get_input('owner_guid');
+$new_owner_guid = (int) elgg_extract(0, (array) get_input('owner_guid', []));
 $remain_admin = false;
 if (group_tools_multiple_admin_enabled()) {
 	$remain_admin = (bool) get_input('admin_transfer_remain', false);
@@ -227,12 +227,12 @@ if (group_tools_multiple_admin_enabled()) {
 
 if (!$is_new_group && $new_owner_guid && ($new_owner_guid != $old_owner_guid)) {
 	// who can transfer
-	$admin_transfer = elgg_get_plugin_setting("admin_transfer", "group_tools");
+	$admin_transfer = elgg_get_plugin_setting('admin_transfer', 'group_tools');
 	
 	$transfer_allowed = false;
-	if (($admin_transfer == "admin") && elgg_is_admin_logged_in()) {
+	if (($admin_transfer == 'admin') && elgg_is_admin_logged_in()) {
 		$transfer_allowed = true;
-	} elseif (($admin_transfer == "owner") && (($group->owner_guid == $user->guid) || elgg_is_admin_logged_in())) {
+	} elseif (($admin_transfer == 'owner') && (($group->owner_guid == $user->guid) || elgg_is_admin_logged_in())) {
 		$transfer_allowed = true;
 	}
 	
