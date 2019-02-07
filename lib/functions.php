@@ -5,7 +5,6 @@
 
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Select;
-use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\QueryBuilder;
 
 /**
@@ -425,8 +424,9 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 	$result = [];
 	$group_membership_where = function (QueryBuilder $qb, $main_alias) use ($user) {
 		$select = $qb->subquery('entity_relationships', 'er');
-		$select->where($qb->compare('er.guid_one', '=', $user->guid, ELGG_VALUE_GUID));
-		$select->andWhere($qb->compare('er.relationship', 'in', ['member', 'membership_request'], ELGG_VALUE_STRING));
+		$select->select('er.guid_two')
+			->where($qb->compare('er.guid_one', '=', $user->guid, ELGG_VALUE_GUID))
+			->andWhere($qb->compare('er.relationship', 'in', ['member', 'membership_request'], ELGG_VALUE_STRING));
 		
 		return $qb->compare("{$main_alias}.guid", 'NOT IN', $select->getSQL());
 	};
@@ -459,7 +459,11 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 					'metadata_names' => $tag_names,
 					'metadata_values' => $user_values,
 					'wheres' => $group_membership_where,
-					'group_by' => 'e.guid',
+					'group_by' => [
+						function (QueryBuilder $qb, $main_alias) {
+							return "{$main_alias}.guid";
+						},
+					],
 					'order_by' => new OrderByClause('count(msn.id)', 'DESC'),
 					'limit' => $limit,
 				];
@@ -488,7 +492,9 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 			
 			if (!empty($result)) {
 				$suggested_guids = array_keys($result);
-				$group_options['wheres'][] = 'e.guid NOT IN (' . implode(',', $suggested_guids) . ')';
+				$group_options['wheres'][] = function (QueryBuilder $qb, $main_alias) use ($suggested_guids) {
+					return $qb->compare("{$main_alias}.guid", 'not in', $suggested_guids, ELGG_VALUE_GUID);
+				};
 			}
 			
 			$groups = elgg_get_entities($group_options);
