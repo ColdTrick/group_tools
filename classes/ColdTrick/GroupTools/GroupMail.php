@@ -2,7 +2,7 @@
 
 namespace ColdTrick\GroupTools;
 
-use Elgg\Notifications\NotificationEvent;
+use Elgg\Notifications\SubscriptionNotificationEvent;
 
 class GroupMail {
 	
@@ -51,7 +51,11 @@ class GroupMail {
 	public static function prepareNotification(\Elgg\Hook $hook) {
 		
 		$event = $hook->getParam('event');
-		if (!$event instanceof NotificationEvent) {
+		if (!$event instanceof SubscriptionNotificationEvent) {
+			return;
+		}
+		
+		if ($event->getAction() !== 'enqueue') {
 			return;
 		}
 		
@@ -79,7 +83,11 @@ class GroupMail {
 	public static function getSubscribers(\Elgg\Hook $hook) {
 		
 		$event = $hook->getParam('event');
-		if (!$event instanceof NotificationEvent) {
+		if (!$event instanceof SubscriptionNotificationEvent) {
+			return;
+		}
+		
+		if ($event->getAction() !== 'enqueue') {
 			return;
 		}
 		
@@ -104,7 +112,11 @@ class GroupMail {
 	public static function cleanup(\Elgg\Hook $hook) {
 		
 		$event = $hook->getParam('event');
-		if (!$event instanceof NotificationEvent) {
+		if (!$event instanceof SubscriptionNotificationEvent) {
+			return;
+		}
+		
+		if ($event->getAction() !== 'enqueue') {
 			return;
 		}
 		
