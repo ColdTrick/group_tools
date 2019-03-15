@@ -137,6 +137,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\GroupMail::pageMenu');
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::groupMembership', 501);
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::groupInvite', 501);
+		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::groupAdminStatus', 501);
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::exportGroupMembers');
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::pendingApproval', 9999);
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::addGroupToolPresets');

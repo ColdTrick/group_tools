@@ -244,6 +244,7 @@ You can find the group here:
 	
 	// group admins
 	'group_tools:multiple_admin:group_admins' => "Group admins",
+	'group_tools:multiple_admin:status:group_admin' => "Group admin",
 	'group_tools:multiple_admin:profile_actions:remove' => "Remove group admin",
 	'group_tools:multiple_admin:profile_actions:add' => "Add group admin",
 

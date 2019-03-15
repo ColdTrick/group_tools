@@ -174,6 +174,53 @@ class TitleMenu {
 	}
 	
 	/**
+	 * Change the text on the group membership status button
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function groupAdminStatus(\Elgg\Hook $hook) {
+		
+		$entity = $hook->getEntityParam();
+		if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
+			return;
+		}
+		
+		if (!group_tools_multiple_admin_enabled()) {
+			return;
+		}
+		
+		$user = elgg_get_logged_in_user_entity();
+		
+		if ($entity->owner_guid === $user->guid) {
+			// owner
+			return;
+		} elseif (!$entity->isMember($user)) {
+			// not member
+			return;
+		}
+		
+		if (!check_entity_relationship($user->guid, 'group_admin', $entity->guid)) {
+			return;
+		}
+		
+		/* @var $result MenuItems */
+		$result = $hook->getValue();
+		
+		$menu_item = $result->get('group-dropdown');
+		if (!$menu_item instanceof \ElggMenuItem) {
+			return;
+		}
+		
+		$menu_item->setText(elgg_echo('group_tools:multiple_admin:status:group_admin'));
+		
+		$result->add($menu_item);
+		
+		return $result;
+	}
+	
+	/**
 	 * add button to export users
 	 *
 	 * @param string          $hook         the name of the hook

@@ -377,6 +377,7 @@ Als je al een account hebt of na registratie, klik op de onderstaande link om de
 Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende code invoeren:
 %s',
   'group_tools:multiple_admin:group_admins' => 'Groep beheerders',
+  'group_tools:multiple_admin:status:group_admin' => 'Groep beheerder',
   'group_tools:multiple_admin:profile_actions:remove' => 'Verwijder groep beheerder',
   'group_tools:multiple_admin:profile_actions:add' => 'Maak groep beheerder',
   'group_tools:multiple_admin:group_tool_option' => 'Mogen groep beheerders andere groep beheerder aanmaken',
