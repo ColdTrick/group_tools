@@ -2,119 +2,106 @@
 
 namespace ColdTrick\GroupTools;
 
+use Elgg\Menu\MenuItems;
+
 class TitleMenu {
 	
 	/**
 	 * Change the name/function of the group join button
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:title'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return void|MenuItems
 	 */
-	public static function groupMembership($hook, $type, $return_value, $params) {
+	public static function groupMembership(\Elgg\Hook $hook) {
 		
 		if (!elgg_in_context('groups')) {
 			return;
 		}
 		
-		$page_owner = elgg_get_page_owner_entity();
+		$entity = $hook->getEntityParam();
 		$user = elgg_get_logged_in_user_entity();
 		
-		if (!($page_owner instanceof \ElggGroup) || !($user instanceof \ElggUser)) {
+		if (!$entity instanceof \ElggGroup || !$user instanceof \ElggUser) {
 			return;
 		}
 		
-		if (empty($return_value) || !is_array($return_value)) {
+		/* @var $menu_items MenuItems */
+		$menu_items = $hook->getValue();
+		
+		$menu_item = $menu_items->get('groups:joinrequest');
+		if (!$menu_item instanceof \ElggMenuItem) {
 			return;
 		}
 		
-		foreach ($return_value as $menu_item) {
-			// group join button?
-			if ($menu_item->getName() !== 'groups:joinrequest') {
-				continue;
-			}
+		if (check_entity_relationship($user->guid, 'membership_request', $entity->guid)) {
+			// user already requested to join this group
+			$menu_item->setText(elgg_echo('group_tools:joinrequest:already'));
+			$menu_item->setTooltip(elgg_echo('group_tools:joinrequest:already:tooltip'));
+			$menu_item->setHref(elgg_generate_action_url('groups/killrequest', [
+				'user_guid' => $user->guid,
+				'group_guid' => $entity->guid,
+			]));
+		} elseif (check_entity_relationship($entity->guid, 'invited', $user->guid)) {
+			// the user was invited, so let him/her join
+			$menu_item->setName('groups:join');
+			$menu_item->setText(elgg_echo('groups:join'));
+			$menu_item->setTooltip(elgg_echo('group_tools:join:already:tooltip'));
+			$menu_item->setHref(elgg_generate_action_url('groups/join', [
+				'user_guid' => $user->guid,
+				'group_guid' => $entity->guid,
+			]));
+		} elseif (group_tools_check_domain_based_group($entity, $user)) {
+			// user has a matching email domain
+			$menu_item->setName('groups:join');
+			$menu_item->setText(elgg_echo('groups:join'));
+			$menu_item->setTooltip(elgg_echo('group_tools:join:domain_based:tooltip'));
+			$menu_item->setHref(elgg_generate_action_url('groups/join', [
+				'user_guid' => $user->guid,
+				'group_guid' => $entity->guid,
+			]));
+		} elseif (group_tools_join_motivation_required($entity)) {
+			// a join motivation is required
+			$menu_item->setHref("ajax/view/group_tools/forms/motivation?guid={$entity->guid}");
 			
-			if (check_entity_relationship($user->guid, 'membership_request', $page_owner->guid)) {
-				// user already requested to join this group
-				$menu_item->setText(elgg_echo('group_tools:joinrequest:already'));
-				$menu_item->setTooltip(elgg_echo('group_tools:joinrequest:already:tooltip'));
-				$menu_item->setHref("action/groups/killrequest?user_guid={$user->guid}&group_guid={$page_owner->guid}");
-				$menu_item->is_action = true;
-				
-			} elseif (check_entity_relationship($page_owner->guid, 'invited', $user->guid)) {
-				// the user was invited, so let him/her join
-				$menu_item->setName('groups:join');
-				$menu_item->setText(elgg_echo('groups:join'));
-				$menu_item->setTooltip(elgg_echo('group_tools:join:already:tooltip'));
-				$menu_item->setHref("action/groups/join?user_guid={$user->guid}&group_guid={$page_owner->guid}");
-				$menu_item->is_action = true;
-				
-			} elseif (group_tools_check_domain_based_group($page_owner, $user)) {
-				// user has a matching email domain
-				$menu_item->setName('groups:join');
-				$menu_item->setText(elgg_echo('groups:join'));
-				$menu_item->setTooltip(elgg_echo('group_tools:join:domain_based:tooltip'));
-				$menu_item->setHref("action/groups/join?user_guid={$user->guid}&group_guid={$page_owner->guid}");
-				$menu_item->is_action = true;
-				
-			} elseif (group_tools_join_motivation_required($page_owner)) {
-				// a join motivation is required
-				elgg_load_js('lightbox');
-				elgg_load_css('lightbox');
-				
-				$menu_item->setHref("ajax/view/group_tools/forms/motivation?guid={$page_owner->guid}");
-				
-				$menu_item->addLinkClass('elgg-lightbox');
-				$opts = 'data-colorbox-opts';
-				$menu_item->$opts = json_encode([
-					'width' => '500px',
-				]);
-			}
-			
-			break;
+			$menu_item->addLinkClass('elgg-lightbox');
+			$opts = 'data-colorbox-opts';
+			$menu_item->$opts = json_encode([
+				'width' => '500px',
+			]);
 		}
 
-		return $return_value;
+		$menu_items->add($menu_item);
+		
+		return $menu_items;
 	}
 	
 	/**
 	 * Change the text of the group invite button, and maybe add it for group members
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:title'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return void|MenuItems
 	 */
-	public static function groupInvite($hook, $type, $return_value, $params) {
+	public static function groupInvite(\Elgg\Hook $hook) {
 		
 		if (!elgg_in_context('groups')) {
 			return;
 		}
 		
-		$page_owner = elgg_get_page_owner_entity();
+		$entity = $hook->getEntityParam();
 		$user = elgg_get_logged_in_user_entity();
 		
-		if (!($page_owner instanceof \ElggGroup) || !($user instanceof \ElggUser)) {
+		if (!$entity instanceof \ElggGroup || !$user instanceof \ElggUser) {
 			return;
 		}
 		
-		if (empty($return_value) || !is_array($return_value)) {
-			return;
-		}
+		/* @var $menu_items MenuItems */
+		$menu_items = $hook->getValue();
 		
-		// change invite menu text
 		$invite_found = false;
-		foreach ($return_value as $index => $menu_item) {
-			
-			if ($menu_item->getName() !== 'groups:invite') {
-				continue;
-			}
-			
+		$menu_item = $menu_items->get('groups:invite');
+		if ($menu_item instanceof \ElggMenuItem) {
 			$invite_found = true;
 			
 			$invite_friends = elgg_get_plugin_setting('invite_friends', 'group_tools', 'yes');
@@ -124,20 +111,20 @@ class TitleMenu {
 			
 			if (in_array('yes', [$invite, $invite_csv, $invite_email])) {
 				$menu_item->setText(elgg_echo('group_tools:groups:invite'));
+				
+				$menu_items->add($menu_item);
 			} elseif ($invite_friends === 'no') {
-				unset($return_value[$index]);
+				$menu_items->remove('groups:invite');
 			}
-			
-			break;
 		}
 		
 		// maybe allow normal users to invite new members
 		if (!elgg_in_context('group_profile') || $invite_found) {
-			return $return_value;
+			return $menu_items;
 		}
 		
 		// this is only allowed for group members
-		if (!$page_owner->isMember($user)) {
+		if (!$entity->isMember($user)) {
 			return;
 		}
 		
@@ -149,7 +136,7 @@ class TitleMenu {
 		}
 		
 		// check group settings
-		$invite_members = $page_owner->invite_members;
+		$invite_members = $entity->invite_members;
 		if (empty($invite_members)) {
 			$invite_members = 'no';
 			if ($setting == 'yes_on') {
@@ -176,14 +163,14 @@ class TitleMenu {
 			return;
 		}
 		
-		$return_value[] = \ElggMenuItem::factory([
+		$menu_items[] = \ElggMenuItem::factory([
 			'name' => 'groups:invite',
-			'href' => "groups/invite/{$page_owner->guid}",
+			'href' => elgg_generate_url('invite:group:group', ['guid' => $entity->guid]),
 			'text' => $text,
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
 		
-		return $return_value;
+		return $menu_items;
 	}
 	
 	/**
