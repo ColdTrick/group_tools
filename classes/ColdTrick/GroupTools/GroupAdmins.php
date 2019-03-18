@@ -210,6 +210,7 @@ class GroupAdmins {
 		$return_value = $hook->getValue();
 		
 		$is_admin = check_entity_relationship($user->guid, 'group_admin', $page_owner->guid);
+		$section = $hook->getType() === 'menu:user_hover' ? 'action' : 'default';
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'group_admin',
@@ -221,6 +222,7 @@ class GroupAdmins {
 			]),
 			'item_class' => $is_admin ? 'hidden' : '',
 			'priority' => 600,
+			'section' => $section,
 			'data-toggle' => 'group-admin-remove',
 		]);
 		
@@ -234,6 +236,7 @@ class GroupAdmins {
 			]),
 			'item_class' => $is_admin ? '' : 'hidden',
 			'priority' => 601,
+			'section' => $section,
 			'data-toggle' => 'group-admin',
 		]);
 		
