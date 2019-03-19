@@ -167,6 +167,17 @@ $group_edit .= elgg_view_field([
 ]);
 
 $group_edit .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:simple_tool_presets'),
+	'#help' => elgg_echo('group_tools:settings:simple_tool_presets:help'),
+	'name' => 'params[simple_tool_presets]',
+	'checked' => $plugin->simple_tool_presets === 'yes',
+	'switch' => true,
+	'default' => 'no',
+	'value' => 'yes',
+]);
+
+$group_edit .= elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('groups:allowhiddengroups'),
 	'#help' => elgg_echo('group_tools:settings:allow_hidden_groups:help'),

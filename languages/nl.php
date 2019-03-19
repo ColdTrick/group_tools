@@ -10,7 +10,7 @@ return array (
   'admin:groups:featured' => 'Uitgelicht',
   'admin:groups:suggested' => 'Aangeraden',
   'admin:groups:repair' => 'Repareer',
-  'group_tools:settings:create_based_on_preset' => 'Maak groepen gebaseerd op tool sets',
+  'group_tools:settings:create_based_on_preset' => 'Toolsets toevoegen aan \'Maak nieuwe groep\' knop',
   'group_tools:settings:create_based_on_preset:help' => 'Indien er groep tool sets zijn geconfigureerd, voeg een optie aan de \'maak nieuwe groep\' knop toe
 om een groep te maken op basis van deze tool set. Dit zal ook de tool selectie op het formulier verbergen.',
   'group_tools:settings:related_groups' => 'Schakel gerelateerde groepen in',

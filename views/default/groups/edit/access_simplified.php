@@ -9,18 +9,17 @@ $closed_text = '<h3>' . elgg_echo('group_tools:edit:access_simplified:closed') .
 $closed_text .= elgg_view('output/longtext', ['value' => elgg_echo('group_tools:edit:access_simplified:closed:description')]);
 
 $open_text = elgg_format_element('div', [
-	'class' => 'group-tools-simplified-access-button elgg-state-active',
+	'class' => 'group-tools-simplified-option elgg-state-active',
 	'data-group-type' => 'open',
 ], $open_text);
 
 $closed_text = elgg_format_element('div', [
-	'class' => 'group-tools-simplified-access-button',
+	'class' => 'group-tools-simplified-option',
 	'data-group-type' => 'closed',
 ], $closed_text);
 
-echo '<div class="group-tools-simplified-access-container clearfix">';
-echo '<div class="elgg-col elgg-col-1of2">' . $open_text . '</div>';
-echo '<div class="elgg-col elgg-col-1of2">' . $closed_text . '</div>';
+echo '<div class="group-tools-simplified-options clearfix">';
+echo $open_text . $closed_text;
 echo '</div>';
 
 echo elgg_format_element('div', ['class' => 'hidden'] , elgg_view('groups/edit/access', $vars));

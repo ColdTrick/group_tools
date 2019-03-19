@@ -42,10 +42,13 @@ return array(
 	'group_tools:settings:simple_access_tab' => "Simplified group access selection",
 	'group_tools:settings:simple_access_tab:help' => "Replaces group access options when creating groups with a simplified choice between 'Open' and 'Closed'",
 
+	'group_tools:settings:simple_tool_presets' => "Simplified group tool preset selection",
+	'group_tools:settings:simple_tool_presets:help' => "Simplifies the group tool preset selection. It uses the group tool preset title and description. The individual tools will not be shown. There are also no options to configure individual tools in the simplified mode.",
+
 	'group_tools:settings:simple_create_form' => "Simple group create form",
 	'group_tools:settings:simple_create_form:help' => "Enabling this will change the way how the 'New Group' form is displayed",
 	
-	'group_tools:settings:create_based_on_preset' => "Create groups based on tool presets",
+	'group_tools:settings:create_based_on_preset' => "Add tool presets to 'Create group' button",
 	'group_tools:settings:create_based_on_preset:help' => "If group tool presets are configured add a quick selector to the create group button to
 use that preset on the group creation form. This will also hide the tool selection on the creation form.",
 	

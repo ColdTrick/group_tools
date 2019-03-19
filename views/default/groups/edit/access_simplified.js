@@ -21,13 +21,13 @@ define(function (require) {
 		}		
 	};
 
-	$('.group-tools-simplified-access-button').on('click', function() {
-		$('.group-tools-simplified-access-button').removeClass('elgg-state-active');
+	$('#group-tools-group-edit-access .group-tools-simplified-option').on('click', function() {
+		$(this).siblings().removeClass('elgg-state-active');
 		
 		$(this).addClass('elgg-state-active');
 		
 		update_access_values($(this).data('groupType'));
 	});
 	
-	$('.group-tools-simplified-access-button:first').click();
+	$('#group-tools-group-edit-access .group-tools-simplified-option:first').click();
 });

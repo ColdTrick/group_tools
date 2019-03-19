@@ -49,7 +49,6 @@ $access_section = elgg_format_element('div', [
 
 // build the group tools options
 $tool_section_vars = [];
-$group_tools_preset = get_input('group_tools_preset');
 if (!group_tools_show_tools_on_edit()) {
 	$tool_section_vars['class'] = ['hidden'];
 }

@@ -37,39 +37,45 @@
 	}
 }
 
-/* groups simplified access */
-.group-tools-simplified-access-container,
-.group-tools-simplified-access-container > .elgg-col {
+/* groups simplified options */
+.group-tools-simplified-options {
 	display: flex;
+	
+	> div {
+		flex-basis: 50%;
+	}
 }
 	
-.group-tools-simplified-access-button {
+.group-tools-simplified-option {
 	background: #f0f0f0;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	color: #333;
 	padding: 20px;
 	margin: 20px;
 	cursor: pointer;
-	width: 100%;
 	
 	border-radius: 3px;
 	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
-}
-
-.group-tools-simplified-access-button.elgg-state-active {
-	color: #FFF;
-	background: #4787b8;
-}
-.group-tools-simplified-access-button.elgg-state-active h3 {
-	color: inherit;
+	
+	> h3 {
+		display: block;
+	}
+	
+	&.elgg-state-active {
+		color: #FFF;
+		background: #4787b8;
+		
+		h3 {
+			color: inherit;
+		}
+	}
 }
 
 #group-tools-stale-message.elgg-message {
 	cursor: default;
 }
 
-.elgg-menu-filter-groups-all {
-	
+.elgg-menu-filter-groups-all {	
 	.group-tools-listing-sorting {
 		margin-left: auto;
 	}

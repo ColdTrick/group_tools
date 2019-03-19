@@ -19,6 +19,7 @@ return [
 		'admin_approve' => 'no',
 		'simple_access_tab' => 'no',
 		'simple_create_form' => 'no',
+		'simple_tool_presets' => 'no',
 		'auto_accept_membership_requests' => 'no',
 		'invite' => 'no',
 		'invite_email' => 'no',
