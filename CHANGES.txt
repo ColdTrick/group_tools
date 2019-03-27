@@ -1,6 +1,66 @@
 Version history
 ===============
 
+10.0 (2019-03-27):
+
+- added: group admins tab on group members page
+- added: group creation dropdown has some wrapper text around preset title
+- added: group membership and managed tabs
+- added: group status title menu button now shows group admin status
+- added: group tool preset input field type
+- added: group tool preset set from group add button
+- added: preset description set as title on create preset title menu item
+- added: related group plugin setting
+- added: simplified group tool preset selection
+- added: support for core removal of group icon
+- changed: cleanup of entity menu
+- changed: control availability of sorting menu through menu view var
+- changed: group all listing rework
+- changed: group mail rewrite
+- changed: invite user now uses userpicker
+- changed: moved featured and suggested admin list to own admin page
+- changed: moved group membership requests to correct route registration
+- changed: moved plugin init into elgg-plugin and bootstrap
+- changed: moved related groups to a correct route definition
+- changed: moved repair actions to its own admin page
+- changed: moved some helper functions to inline checks
+- changed: moved special state form actions to entity menu
+- changed: no longer provide a custom view and style for suggested groups
+- changed: related groups now uses a grouppicker
+- changed: replaced custom autocomplete features
+- changed: rewrite group sidebar/profile cleanup
+- changed: set minimal requirement to Elgg 3
+- changed: updated action responses
+- changed: use elgg_view_message for stale info
+- fixed: call correct group join function
+- fixed: database queries
+- fixed: database query error in suggested groups
+- fixed: fatal exception when showing group admins
+- fixed: group activity widget works again
+- fixed: group invite issues
+- fixed: group mail notifications listen to correct event
+- fixed: group member page
+- fixed: group members listing not in alphabetical order
+- fixed: group members search not working correctly
+- fixed: group owner transfer not scalable
+- fixed: group permissions taken away
+- fixed: group tool preset doesn't hide tools on tabbed creation
+- fixed: lots of query deprecated notices
+- fixed: moved deprecated action handles to correct hooks
+- fixed: only quick return on member search ajax call
+- fixed: typos in English translation
+- fixed: unable to disable tabs on group listing page
+- fixed: user hover menu itme sections
+- removed: callback functions for rows replaced with anonymous func
+- removed: custom featured group sidebar view
+- removed: grouppicker functionality has been moved to core
+- removed: group sidebar cleanup features have been removed
+- removed: group_news widget is no longer provided
+- removed: migrateListingSettings upgrade
+- removed: no longer support old routes to group profile
+- removed: setting to control if status is shown on ownerblock and profile
+- removed: widget settings to control visibility of membership count
+
 9.4 (2018-04-19):
 
 - added: allow grouppicker to match on title only
