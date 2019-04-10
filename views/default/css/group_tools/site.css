@@ -40,9 +40,11 @@
 /* groups simplified options */
 .group-tools-simplified-options {
 	display: flex;
+	flex-wrap: wrap;
 	
 	> div {
-		flex-basis: 50%;
+		flex-basis: 45%;
+		flex-grow: 1;
 	}
 }
 	
