@@ -1,11 +1,10 @@
 <?php
 
-$batch = new ElggBatch('elgg_get_entities', [
+$batch = elgg_get_entities([
 	'type' => 'group',
 	'limit' => false,
-	'wheres' => [
-		'e.access_id = ' . ACCESS_PRIVATE,
-	],
+	'batch' => true,
+	'access_id' => ACCESS_PRIVATE,
 ]);
 
 $output = false;
