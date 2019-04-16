@@ -313,18 +313,15 @@ class Membership {
 	 */
 	public static function autoJoinGroups($event, $type, $user) {
 		
-		if (!($user instanceof \ElggUser)) {
+		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		
 		// ignore access
-		$ia = elgg_set_ignore_access(true);
-		
-		// mark the user to check for auto joins when we have more information
-		$user->group_tools_check_auto_joins = true;
-		
-		// restore access settings
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($user) {
+			// mark the user to check for auto joins when we have more information
+			$user->group_tools_check_auto_joins = true;
+		});
 	}
 	
 	/**
@@ -341,51 +338,50 @@ class Membership {
 		
 		$time = (int) elgg_extract('time', $params, time());
 		
-		$batch = new \ElggBatch('elgg_get_entities', [
+		$batch = elgg_get_entities([
 			'type' => 'user',
 			'limit' => false,
+			'batch' => true,
+			'batch_inc_offset' => false,
 			'metadata_name_value_pairs' => [
 				'group_tools_check_auto_joins' => true,
 			],
 			'created_time_upper' => ($time), // 5 minute delay
 		]);
-		$batch->setIncrementOffset(false);
 		
 		// ignore access
-		$ia = elgg_set_ignore_access(true);
-		
-		$auto_join = false;
-		/* @var $user \ElggUser */
-		foreach ($batch as $user) {
-			
-			// prep helper class
-			if (empty($auto_join)) {
-				$auto_join = new AutoJoin($user);
-			} else {
-				$auto_join->setUser($user);
-			}
-			
-			// remove user flag
-			unset($user->group_tools_check_auto_joins);
-			
-			// get groups
-			$group_guids = $auto_join->getGroupGUIDs();
-			if (empty($group_guids)) {
-				continue;
-			}
-			
-			foreach ($group_guids as $group_guid) {
-				$group = get_entity($group_guid);
-				if (!($group instanceof \ElggGroup)) {
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($batch) {
+			$auto_join = false;
+			/* @var $user \ElggUser */
+			foreach ($batch as $user) {
+				// prep helper class
+				if (empty($auto_join)) {
+					$auto_join = new AutoJoin($user);
+				} else {
+					$auto_join->setUser($user);
+				}
+				
+				// remove user flag
+				unset($user->group_tools_check_auto_joins);
+				
+				// get groups
+				$group_guids = $auto_join->getGroupGUIDs();
+				if (empty($group_guids)) {
 					continue;
 				}
 				
-				$group->join($user);
+				$groups = elgg_get_entities([
+					'type' => 'group',
+					'guids' => $group_guids,
+					'limit' => false,
+					'batch' => true,
+				]);
+				/* @var $group \ElggGroup */
+				foreach ($groups as $group) {
+					$group->join($user);
+				}
 			}
-		}
-		
-		// retore access
-		elgg_set_ignore_access($ia);
+		});
 	}
 	
 	/**
@@ -399,7 +395,7 @@ class Membership {
 	 */
 	public static function autoJoinGroupsLogin($event, $type, $user) {
 		
-		if (!($user instanceof \ElggUser)) {
+		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		
@@ -408,26 +404,31 @@ class Membership {
 			return;
 		}
 		
-		// prep helper class
-		$auto_join = new AutoJoin($user);
-		
-		// remove user flag
-		unset($user->group_tools_check_auto_joins);
-		
-		// get groups
-		$group_guids = $auto_join->getGroupGUIDs();
-		if (empty($group_guids)) {
-			return;
-		}
-		
-		foreach ($group_guids as $group_guid) {
-			$group = get_entity($group_guid);
-			if (!($group instanceof \ElggGroup)) {
-				continue;
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($user) {
+			// prep helper class
+			$auto_join = new AutoJoin($user);
+			
+			// remove user flag
+			unset($user->group_tools_check_auto_joins);
+			
+			// get groups
+			$group_guids = $auto_join->getGroupGUIDs();
+			if (empty($group_guids)) {
+				return;
 			}
 			
-			$group->join($user);
-		}
+			$groups = elgg_get_entities([
+				'type' => 'group',
+				'guids' => $group_guids,
+				'limit' => false,
+				'batch' => true,
+			]);
+			
+			/* @var $group \ElggGroup */
+			foreach ($groups as $group) {
+				$group->join($user);
+			}
+		});
 	}
 	
 	/**
