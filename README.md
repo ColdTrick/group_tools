@@ -18,7 +18,7 @@ Features
 	- has support for river_comments and like
 - group members widget (group only)
 - group invitations widget (index, dashboard)
-- group mail
+- group mail (requires a working Elgg cron setup)
 - group invite
 	- better error messages
 	- free text with invite
