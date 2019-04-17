@@ -1,6 +1,11 @@
 Version history
 ===============
 
+10.0.1 (2019-04-17):
+
+- fixed: auto join hidden groups during login
+- fixed: wrap simplified options on smaller screens
+
 10.0 (2019-03-27):
 
 - added: group admins tab on group members page
