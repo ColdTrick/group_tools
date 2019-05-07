@@ -21,4 +21,4 @@ if (($page_owner->owner_guid === $user->guid) || $user->isAdmin()) {
 	return;
 }
 
-remove_group_tool_option('group_multiple_admin_allow');
+elgg()->group_tools->unregister('group_multiple_admin_allow');
