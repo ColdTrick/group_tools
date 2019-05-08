@@ -21,7 +21,7 @@ if ($notifications_enabled) {
 }
 
 // user has no notification settings for this group and wishes to enable this
-$user_settings = get_user_notification_settings($user->guid);
+$user_settings = $user->getNotificationSettings();
 
 $supported_notifications = elgg_get_notification_methods();
 $found = [];
