@@ -3,6 +3,7 @@
 namespace ColdTrick\GroupTools;
 
 use Elgg\Notifications\NotificationEvent;
+use Elgg\Database\QueryBuilder;
 
 class GroupAdmins {
 	
@@ -71,7 +72,9 @@ class GroupAdmins {
 			'inverse_relationship' => true,
 			'limit' => false,
 			'wheres' => [
-				"e.guid <> {$entity->owner_guid}",
+				function (QueryBuilder $qb, $main_alias) use ($entity) {
+					return $qb->compare("{$main_alias}.guid", '!=', $entity->owner_guid, ELGG_VALUE_GUID);
+				},
 			],
 			'batch' => true,
 		]);
