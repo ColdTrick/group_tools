@@ -582,4 +582,8 @@ Your group '%s' has been inactive for a while.
 
 Please check on the group here:
 %s",
+	
+	// upgrades
+	'group_tools:upgrade:2019051000:title' => "Fix group access",
+	'group_tools:upgrade:2019051000:description' => "Some group could have been created with the access level 'Private', this will prevent members from accessing the group.",
 );

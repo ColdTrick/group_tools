@@ -4,9 +4,11 @@
  */
 
 $group_guid = (int) get_input('guid');
-elgg_entity_gatekeeper($group_guid, 'group');
 
 $group = get_entity($group_guid);
+if (!$group instanceof ElggGroup) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
 // get access_id
 $access_id = ACCESS_PUBLIC;
@@ -17,7 +19,9 @@ if (group_tools_allow_hidden_groups()) {
 	}
 	
 	if ($access_id === ACCESS_PRIVATE) {
-		$access_id = (int) $group->group_acl;
+		$group_acl = _groups_get_group_acl($group);
+		
+		$access_id = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
 	}
 }
 

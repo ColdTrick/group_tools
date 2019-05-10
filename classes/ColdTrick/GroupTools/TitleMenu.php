@@ -275,24 +275,16 @@ class TitleMenu {
 	 * @param \ElggMenuItem[] $return_value current return value
 	 * @param array           $params       supplied params
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return void|MenuItems
 	 */
 	public static function pendingApproval($hook, $type, $return_value, $params) {
 		
-		if (!elgg_in_context('groups')) {
+		if (!$return_value instanceof MenuItems || !elgg_in_context('group_profile')) {
 			return;
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
-		if (!($page_owner instanceof \ElggGroup)) {
-			return;
-		}
-		
-		if ($page_owner->access_id !== ACCESS_PRIVATE) {
-			return;
-		}
-		
-		if (!is_array($return_value)) {
+		if (!$page_owner instanceof \ElggGroup || $page_owner->access_id !== ACCESS_PRIVATE) {
 			return;
 		}
 		
@@ -301,34 +293,42 @@ class TitleMenu {
 		];
 		
 		// cleanup all items
-		foreach ($return_value as $index => $menu_item) {
-			if (in_array($menu_item->getName(), $allowed_items)) {
+		/* @var $menu_item \ElggMenuItem */
+		foreach ($return_value as $menu_item) {
+			$name = $menu_item->getName();
+			if (in_array($name, $allowed_items)) {
 				continue;
 			}
 			
-			unset($return_value[$index]);
+			$return_value->remove($name);
+		}
+		
+		if (!elgg_is_admin_logged_in()) {
+			return $return_value;
 		}
 		
 		// add admin actions
-		if (elgg_is_admin_logged_in()) {
-			// approve
-			$return_value[] = \ElggMenuItem::factory([
-				'name' => 'approve',
-				'text' => elgg_echo('approve'),
-				'href' => 'action/group_tools/admin/approve?guid=' . $page_owner->guid,
-				'confirm' => true,
-				'class' => 'elgg-button elgg-button-submit',
-			]);
-			
-			// decline
-			$return_value[] = \ElggMenuItem::factory([
-				'name' => 'decline',
-				'text' => elgg_echo('decline'),
-				'href' => 'action/group_tools/admin/decline?guid=' . $page_owner->guid,
-				'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
-				'class' => 'elgg-button elgg-button-delete',
-			]);
-		}
+		// approve
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'approve',
+			'text' => elgg_echo('approve'),
+			'href' => elgg_generate_action_url('group_tools/admin/approve', [
+				'guid' => $page_owner->guid,
+			]),
+			'confirm' => true,
+			'class' => 'elgg-button elgg-button-submit',
+		]);
+		
+		// decline
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'decline',
+			'text' => elgg_echo('decline'),
+			'href' => elgg_generate_action_url('group_tools/admin/decline', [
+				'guid' => $page_owner->guid,
+			]),
+			'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
+			'class' => 'elgg-button elgg-button-delete',
+		]);
 		
 		return $return_value;
 	}

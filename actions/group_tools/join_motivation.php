@@ -22,7 +22,9 @@ $user = elgg_get_logged_in_user_entity();
 add_entity_relationship($user->guid, 'membership_request', $group->guid);
 
 // add motivation
-$group->annotate('join_motivation', $motivation, $group->group_acl, $user->guid);
+$group_acl = _groups_get_group_acl($group);
+$access_id = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
+$group->annotate('join_motivation', $motivation, $access_id, $user->guid);
 
 // notify owner
 $owner = $group->getOwnerEntity();

@@ -142,13 +142,16 @@ if ($is_new_group && $admin_approve) {
 if (group_tools_allow_hidden_groups()) {
 	$value = get_input('vis');
 	if ($is_new_group || $value !== null) {
-		$visibility = (int)$value;
+		$visibility = (int) $value;
 		
-		if ($visibility == ACCESS_PRIVATE) {
+		if ($visibility === ACCESS_PRIVATE) {
 			// Make this group visible only to group members. We need to use
 			// ACCESS_PRIVATE on the form and convert it to group_acl here
 			// because new groups do not have acl until they have been saved once.
-			$visibility = (int) $group->group_acl;
+			$acl = _groups_get_group_acl($group);
+			if ($acl instanceof ElggAccessCollection) {
+				$visibility = (int) $acl->id;
+			}
 			
 			// Force all new group content to be available only to members
 			$group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
@@ -180,18 +183,18 @@ if (!$group->isPublicMembership() && group_tools_join_motivation_required()) {
 }
 
 // default access
+$group_acl = _groups_get_group_acl($group);
 $default_access = get_input('group_default_access');
 if ($default_access === null) {
-	$default_access = (int) $group->group_acl;
+	$default_access = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
 }
 $default_access = (int) $default_access;
 
 if (($group->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) && (($default_access === ACCESS_PUBLIC) || ($default_access === ACCESS_LOGGED_IN))) {
 	system_message(elgg_echo('group_tools:action:group:edit:error:default_access'));
-	$default_access = (int) $group->group_acl;
+	$default_access = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
 }
-$group->setPrivateSetting("elgg_default_access", $default_access);
-
+$group->setPrivateSetting('elgg_default_access', $default_access);
 
 // group saved so clear sticky form
 elgg_clear_sticky_form('groups');

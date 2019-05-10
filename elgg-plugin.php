@@ -1,6 +1,7 @@
 <?php
 
 use ColdTrick\GroupTools\Bootstrap;
+use ColdTrick\GroupTools\Upgrades\FixGroupAccess;
 
 // define for default group access
 define('GROUP_TOOLS_GROUP_ACCESS_DEFAULT', -10);
@@ -90,6 +91,9 @@ return [
 			'path' => '/groups/requests/{guid}/email_invites',
 			'resource' => 'groups/requests/email_invites',
 		],
+	],
+	'upgrades' => [
+		FixGroupAccess::class,
 	],
 	'widgets' => [
 		'group_river_widget' => [
