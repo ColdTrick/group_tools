@@ -223,30 +223,28 @@ class TitleMenu {
 	/**
 	 * add button to export users
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param string    $hook         the name of the hook
+	 * @param string    $type         the type of the hook
+	 * @param MenuItems $return_value current return value
+	 * @param array     $params       supplied params
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return void|MenuItems
 	 */
 	public static function exportGroupMembers($hook, $type, $return_value, $params) {
 		
-		if (!elgg_in_context('groups')) {
+		if (!elgg_in_context('groups') || !$return_value instanceof MenuItems) {
 			return;
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
-		if (!($page_owner instanceof \ElggGroup)) {
-			return;
-		}
-		
-		if (!is_array($return_value)) {
+		if (!$page_owner instanceof \ElggGroup) {
 			return;
 		}
 		
 		// group member export
-		$group_members_page = elgg_normalize_url("groups/members/{$page_owner->guid}");
+		$group_members_page = elgg_normalize_url(elgg_generate_url('collection:user:user:group_members', [
+			'guid' => $page_owner->guid,
+		]));
 		if (strpos(current_page_url(), $group_members_page) === false) {
 			return;
 		}
@@ -257,9 +255,11 @@ class TitleMenu {
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'member_export',
+			'icon' => 'download',
 			'text' => elgg_echo('group_tools:member_export:title_button'),
-			'href' => "action/group_tools/member_export?group_guid={$page_owner->guid}",
-			'is_action' => true,
+			'href' => elgg_generate_action_url('group_tools/member_export', [
+				'group_guid' => $page_owner->guid,
+			]),
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
 		
@@ -270,10 +270,10 @@ class TitleMenu {
 	/**
 	 * Change title menu buttons for a group pending admin approval
 	 *
-	 * @param string          $hook         the name of the hook
-	 * @param string          $type         the type of the hook
-	 * @param \ElggMenuItem[] $return_value current return value
-	 * @param array           $params       supplied params
+	 * @param string    $hook         the name of the hook
+	 * @param string    $type         the type of the hook
+	 * @param MenuItems $return_value current return value
+	 * @param array     $params       supplied params
 	 *
 	 * @return void|MenuItems
 	 */
