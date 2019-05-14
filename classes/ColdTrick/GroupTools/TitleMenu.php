@@ -283,13 +283,17 @@ class TitleMenu {
 			return;
 		}
 		
+		if (elgg_get_plugin_setting('admin_approve', 'group_tools') !== 'yes') {
+			return;
+		}
+		
 		$page_owner = elgg_get_page_owner_entity();
 		if (!$page_owner instanceof \ElggGroup || $page_owner->access_id !== ACCESS_PRIVATE) {
 			return;
 		}
 		
 		$allowed_items = [
-			'groups:edit',
+			'edit',
 		];
 		
 		// cleanup all items
@@ -316,7 +320,7 @@ class TitleMenu {
 				'guid' => $page_owner->guid,
 			]),
 			'confirm' => true,
-			'class' => 'elgg-button elgg-button-submit',
+			'class' => 'elgg-button elgg-button-action',
 		]);
 		
 		// decline
