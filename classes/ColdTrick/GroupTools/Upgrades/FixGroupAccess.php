@@ -67,6 +67,8 @@ class FixGroupAccess implements AsynchronousUpgrade {
 			}
 			
 			$group->access_id = (int) $group_acl->id;
+			$group->save();
+			
 			$result->addSuccesses();
 		}
 		
