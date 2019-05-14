@@ -128,7 +128,7 @@ if ($is_new_group) {
 // @todo this requires save to be called to create the acl for the group. This
 // is an odd requirement and should be removed. Either the acl creation happens
 // in the action or the visibility moves to a plugin hook
-$admin_approve = (bool) (elgg_get_plugin_setting('admin_approve', 'group_tools', 'no') == 'yes');
+$admin_approve = (bool) (elgg_get_plugin_setting('admin_approve', 'group_tools') == 'yes');
 $admin_approve = ($admin_approve && !elgg_is_admin_logged_in()); // admins don't need to wait
 
 // new groups get access private, so an admin can validate it
