@@ -4,9 +4,10 @@
  */
 
 $group_guid = (int) get_input('guid');
-elgg_entity_gatekeeper($group_guid, 'group');
-
 $group = get_entity($group_guid);
+if (!$group instanceof ElggGroup) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
 // notify owner
 $owner = $group->getOwnerEntity();
