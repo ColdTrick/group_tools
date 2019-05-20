@@ -142,9 +142,9 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::pendingApproval', 9999);
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::addGroupToolPresets');
 		$hooks->registerHandler('register', 'menu:user_hover', __NAMESPACE__ . '\GroupAdmins::assignGroupAdmin');
-		$hooks->registerHandler('route', 'register', __NAMESPACE__ . '\Router::allowRegistration');
 		$hooks->registerHandler('send:after', 'notifications', __NAMESPACE__ . '\GroupMail::cleanup');
 		$hooks->registerHandler('tool_options', 'group', __NAMESPACE__ . '\Tools::registerRelatedGroups');
+		$hooks->registerHandler('view_vars', 'resources/account/register', __NAMESPACE__ . '\Router::allowRegistration');
 		$hooks->registerHandler('view_vars', 'resources/groups/add', __NAMESPACE__ . '\Views::protectGroupAdd');
 		$hooks->registerHandler('view_vars', 'resources/groups/all', __NAMESPACE__ . '\Views::prepareGroupAll');
 	}
