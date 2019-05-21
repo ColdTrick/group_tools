@@ -767,12 +767,12 @@ class Membership {
 	public static function groupMembershiprequest($hook, $type, $return_value, $params) {
 		
 		$user = elgg_extract('entity', $params);
-		if (!($user instanceof \ElggUser)) {
+		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		
 		$group = elgg_extract('group', $params);
-		if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
+		if (!$group instanceof \ElggGroup || !$group->canEdit()) {
 			return;
 		}
 		
@@ -788,7 +788,7 @@ class Membership {
 				'text' => elgg_echo('group_tools:join_motivation:toggle'),
 				'href' => "#group-tools-group-membershiprequest-motivation-{$user->guid}",
 				'rel' => 'toggle',
-				'link_class' => 'elgg-button elgg-button-action mrm',
+				'link_class' => 'elgg-button elgg-button-action',
 				'priority' => 10,
 			]);
 		}
@@ -796,26 +796,24 @@ class Membership {
 		// accept button
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'accept',
-			'href' => "action/groups/addtogroup?user_guid={$user->guid}&group_guid={$group->guid}",
 			'text' => elgg_echo('accept'),
+			'href' => elgg_generate_action_url('groups/addtogroup', [
+				'user_guid' => $user->guid,
+				'group_guid' => $group->guid,
+			]),
 			'link_class' => 'elgg-button elgg-button-submit group-tools-accept-request',
 			'rel' => $user->guid,
-			'is_action' => true,
 		]);
 		
 		// decline button
-		elgg_load_js('lightbox');
-		elgg_load_css('lightbox');
-		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'decline',
-			'href' => '#',
 			'text' => elgg_echo('decline'),
-			'link_class' => 'elgg-button elgg-button-delete mlm elgg-lightbox',
+			'href' => "#group-kill-request-{$user->guid}",
+			'link_class' => 'elgg-button elgg-button-delete elgg-lightbox',
 			'rel' => $user->guid,
 			'data-colorbox-opts' => json_encode([
 				'inline' => true,
-				'href' => "#group-kill-request-{$user->guid}",
 				'width' => '600px',
 				'closeButton' => false,
 			]),
