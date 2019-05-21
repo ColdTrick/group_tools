@@ -2,6 +2,7 @@
 
 use ColdTrick\GroupTools\Bootstrap;
 use ColdTrick\GroupTools\Upgrades\FixGroupAccess;
+use Elgg\Router\Middleware\Gatekeeper;
 
 // define for default group access
 define('GROUP_TOOLS_GROUP_ACCESS_DEFAULT', -10);
@@ -82,6 +83,13 @@ return [
 		'collection:group:group:related' => [
 			'path' => '/groups/related/{guid}',
 			'resource' => 'groups/related',
+		],
+		'collection:group:group:membership_requests' => [
+			'path' => '/groups/membership_requests/{username}',
+			'resource' => 'groups/membership_requests',
+			'middleware' => [
+				Gatekeeper::class,
+			],
 		],
 		'requests:invites:group:group' => [
 			'path' => '/groups/requests/{guid}/invites',

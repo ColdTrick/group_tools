@@ -22,8 +22,9 @@ $content = elgg_view('groups/invitationrequests');
 $params = [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
+	'filter_id' => 'group:invitations',
+	'filter_value' => 'invitations',
 ];
-$body = elgg_view_layout('content', $params);
+$body = elgg_view_layout('default', $params);
 
 echo elgg_view_page($title, $body);

@@ -59,7 +59,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('groups/edit', 'group_tools/forms/domain_based');
 		elgg_extend_view('groups/edit/tools', 'group_tools/extends/groups/edit/tools/group_admins', 400);
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinvitations');
-		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/membershiprequests');
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinviteform');
 		elgg_extend_view('groups/profile/layout', 'group_tools/extends/groups/edit/admin_approve', 1);
 		elgg_extend_view('groups/profile/summary', 'group_tools/extends/groups/profile/stale_message');
@@ -125,6 +124,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addSorting', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::cleanupTabs', 900);
+		$hooks->registerHandler('register', 'menu:filter:group:invitations', __NAMESPACE__ . '\Menus\Filter::registerGroupInvitationTabs');
 		$hooks->registerHandler('register', 'menu:group:email_invitation', __NAMESPACE__ . '\Membership::groupEmailInvitation');
 		$hooks->registerHandler('register', 'menu:group:invitation', __NAMESPACE__ . '\Membership::groupInvitation');
 		$hooks->registerHandler('register', 'menu:group:membershiprequest', __NAMESPACE__ . '\Membership::groupMembershiprequest');

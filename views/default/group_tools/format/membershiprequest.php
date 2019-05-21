@@ -4,12 +4,12 @@
  */
 
 $user = elgg_get_page_owner_entity();
-if (!($user instanceof ElggUser) || !$user->canEdit()) {
+if (!$user instanceof ElggUser || !$user->canEdit()) {
 	return;
 }
 
 $group = elgg_extract('entity', $vars);
-if (!($group instanceof ElggGroup)) {
+if (!$group instanceof ElggGroup) {
 	return;
 }
 
