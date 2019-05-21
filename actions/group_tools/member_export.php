@@ -3,6 +3,8 @@
  * Export the members of a group to CSV
  */
 
+use Elgg\Database\QueryBuilder;
+
 $group_guid = (int) get_input('group_guid');
 
 if (empty($group_guid)) {
@@ -24,7 +26,9 @@ if (group_tools_multiple_admin_enabled()) {
 		'relationship_guid' => $group->guid,
 		'inverse_relationship' => true,
 		'wheres' => [
-			"e.guid <> {$group->owner_guid}",
+			function (QueryBuilder $qb, $main_alias) use ($group) {
+				return $qb->compare("{$main_alias}.guid", '!+', $group->owner_guid, ELGG_VALUE_GUID);
+			},
 		],
 		'callback' => function($row) {
 			return (int) $row->guid;
