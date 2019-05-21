@@ -1,18 +1,17 @@
 <?php
 
-elgg_gatekeeper();
-
 $guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($guid);
 
 $group = get_entity($guid);
-if (!elgg_instanceof($group, 'group') || !$group->canEdit()) {
+if (!$group instanceof ElggGroup || !$group->canEdit()) {
 	register_error(elgg_echo('groups:noaccess'));
 	forward(REFERER);
 }
 
 $title = elgg_echo('groups:membershiprequests');
 
+elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 elgg_push_breadcrumb($title);
 
@@ -34,11 +33,11 @@ $tabs = elgg_view_menu('group:membershiprequests', [
 	'class' => 'elgg-tabs',
 ]);
 
-$params = array(
+$params = [
 	'content' => $content,
 	'title' => $title,
 	'filter' => $tabs,
-);
+];
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($title, $body);
