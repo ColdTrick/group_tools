@@ -1,6 +1,17 @@
 Version history
 ===============
 
+10.1 (2019-05-29):
+
+- changed: split group invitations/requests in tabs
+- fixed: deprecated function call
+- fixed: deprecated route hook for register
+- fixed: deprecated where clause
+- fixed: export group members not available
+- fixed: group access could be private
+- fixed: layout issues in group membership requests
+- fixed: only cleanup title menu for admin approve if enabled
+
 10.0.1 (2019-04-17):
 
 - fixed: auto join hidden groups during login
