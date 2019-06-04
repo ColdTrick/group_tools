@@ -120,6 +120,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\GroupAdmins::assignGroupAdmin', 501);
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\EntityMenu::relatedGroup');
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\EntityMenu::suggestedGroup');
+		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\EntityMenu::addRemoveFromGroup');
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::removeTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addSorting', 550);

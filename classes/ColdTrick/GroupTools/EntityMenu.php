@@ -2,6 +2,8 @@
 
 namespace ColdTrick\GroupTools;
 
+use Elgg\Menu\MenuItems;
+
 class EntityMenu {
 	
 	/**
@@ -104,5 +106,46 @@ class EntityMenu {
 		]);
 		
 		return $return_value;
+	}
+	
+	/**
+	 * Add the remove user from group menu item to the user entity menu
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function addRemoveFromGroup(\Elgg\Hook $hook) {
+		
+		$group = elgg_get_page_owner_entity();
+		if (!$group instanceof \ElggGroup || !$group->canEdit()) {
+			return;
+		}
+		
+		$entity = $hook->getEntityParam();
+		if (!$entity instanceof \ElggUser || !$group->isMember($entity)) {
+			return;
+		}
+		
+		if ($entity->guid === elgg_get_logged_in_user_guid() || $group->owner_guid === $entity->guid) {
+			// can't remove yourself, or group owner
+			return;
+		}
+		
+		/* @var $return MenuItems */
+		$return = $hook->getValue();
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'removeuser',
+			'href' => elgg_generate_action_url('groups/remove', [
+				'user_guid' => $entity->guid,
+				'group_guid' => $group->guid,
+			]),
+			'text' => elgg_echo('groups:removeuser'),
+			'icon' => 'user-times',
+			'confirm' => true,
+		]);
+		
+		return $return;
 	}
 }
