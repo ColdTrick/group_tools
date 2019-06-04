@@ -13,19 +13,8 @@ if (empty($friends_count)) {
 	return;
 }
 
-$friends = $user->getFriends(['limit' => false]);
-
-$toggle_content = elgg_format_element('span', [], elgg_echo('group_tools:group:invite:friends:select_all'));
-$toggle_content .= elgg_format_element('span', ['class' => 'hidden'], elgg_echo('group_tools:group:invite:friends:deselect_all'));
-
-echo elgg_view('input/friendspicker', [
-	'entities' => $friends,
+echo elgg_view_field([
+	'#type' => 'friendspicker',
+	'#help' => elgg_echo('groups:invite:friends:help'),
 	'name' => 'user_guid',
-	'highlight' => 'all',
-]);
-echo elgg_view('output/url', [
-	'text' => $toggle_content,
-	'href' => 'javascript:void(0);',
-	'id' => 'group-tools-friends-toggle',
-	'class' => 'elgg-button elgg-button-action',
 ]);

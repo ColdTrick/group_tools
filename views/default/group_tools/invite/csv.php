@@ -5,7 +5,11 @@
  * used in /forms/groups/invite
  */
 
-echo elgg_format_element('div', [], elgg_echo('group_tools:group:invite:csv:description'));
-echo elgg_view('input/file', [
+echo elgg_view('output/longtext', [
+	'value' => elgg_echo('group_tools:group:invite:csv:description'),
+]);
+
+echo elgg_view_field([
+	'#type' => 'file',
 	'name' => 'csv',
 ]);
