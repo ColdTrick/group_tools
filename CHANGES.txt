@@ -1,6 +1,11 @@
 Version history
 ===============
 
+10.2 (2019-06-12):
+
+- added: remove user from group to user entity menu
+- fixed: don't find banned users in autocomplete
+
 10.1 (2019-05-29):
 
 - changed: split group invitations/requests in tabs
