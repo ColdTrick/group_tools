@@ -113,7 +113,7 @@ class Cron {
 						->andWhere($qb->compare('tmd.value', '>', $compare_ts_lower, ELGG_VALUE_INTEGER))
 						->andWhere($qb->compare('tmd.value', '<', $compare_ts_upper, ELGG_VALUE_INTEGER));
 					
-					return $qb->compare("{$main_alias}.guid", 'IN', $select);
+					return $qb->compare("{$main_alias}.guid", 'IN', $select->getSQL());
 				},
 			],
 		];
