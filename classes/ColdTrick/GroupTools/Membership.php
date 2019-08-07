@@ -867,7 +867,7 @@ class Membership {
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'menu:page'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return void|MenuItems
 	 */
 	public static function groupProfileSidebar(\Elgg\Hook $hook) {
 		
