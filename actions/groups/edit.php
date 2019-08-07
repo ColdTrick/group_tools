@@ -54,7 +54,7 @@ if ($is_new_group
 }
 
 $group = $group_guid ? get_entity($group_guid) : new ElggGroup();
-if (elgg_instanceof($group, "group") && !$group->canEdit()) {
+if (!$group instanceof ElggGroup || !$group->canEdit()) {
 	return elgg_error_response(elgg_echo('groups:cantedit'));
 }
 

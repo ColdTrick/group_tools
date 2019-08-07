@@ -2,6 +2,8 @@
 
 namespace ColdTrick\GroupTools;
 
+use Elgg\Database\QueryBuilder;
+
 class Membership {
 	
 	/**
@@ -447,29 +449,21 @@ class Membership {
 		}
 		
 		$user_guid = (int) $relationship->guid_one;
-		$site_guid = (int) $relationship->guid_two;
-		
 		$user = get_user($user_guid);
 		
 		// ignore access
-		$ia = elgg_set_ignore_access(true);
-		
-		// auto detect email invited groups
-		$groups = group_tools_get_invited_groups_by_email($user->email, $site_guid);
-		if (empty($groups)) {
-			// restore access settings
-			elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
+			// auto detect email invited groups
+			$groups = group_tools_get_invited_groups_by_email($user->email);
+			if (empty($groups)) {
+				return;
+			}
 			
-			return;
-		}
-			
-		foreach ($groups as $group) {
-			// join the group
-			$group->join($user);
-		}
-		
-		// restore access settings
-		elgg_set_ignore_access($ia);
+			foreach ($groups as $group) {
+				// join the group
+				$group->join($user);
+			}
+		});
 	}
 	
 	/**
@@ -498,34 +492,33 @@ class Membership {
 		}
 		
 		// ignore access
-		$ia = elgg_set_ignore_access(true);
-		
-		$group = group_tools_check_group_email_invitation($group_invitecode);
-		if (empty($group)) {
-			// restore access settings
-			elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user, $group_invitecode) {
+			$group = group_tools_check_group_email_invitation($group_invitecode);
+			if (empty($group)) {
+				return;
+			}
 			
-			return;
-		}
-		
-		// join the group
-		$group->join($user);
-		
-		// cleanup the invite code
-		$group_invitecode = sanitise_string($group_invitecode);
-		
-		elgg_delete_annotations([
-			'guid' => $group->guid,
-			'annotation_name' => 'email_invitation',
-			'wheres' => [
-				"(v.string = '{$group_invitecode}' OR v.string LIKE '{$group_invitecode}|%')",
-			],
-			'annotation_owner_guid' => $group->guid,
-			'limit' => 1,
-		]);
-		
-		// restore access settings
-		elgg_set_ignore_access($ia);
+			// join the group
+			$group->join($user);
+			
+			// cleanup the invite code
+			elgg_delete_annotations([
+				'guid' => $group->guid,
+				'annotation_name' => 'email_invitation',
+				'wheres' => [
+					function(QueryBuilder $qb, $main_alias) use ($group_invitecode) {
+						$ors = [
+							$qb->compare("{$main_alias}.string", '=', $group_invitecode, ELGG_VALUE_STRING),
+							$qb->compare("{$main_alias}.string", 'like', "{$group_invitecode}|%", ELGG_VALUE_STRING),
+						];
+						
+						return $qb->merge($ors, 'OR');
+					},
+				],
+				'annotation_owner_guid' => $group->guid,
+				'limit' => 1,
+			]);
+		});
 	}
 	
 	/**
@@ -544,29 +537,22 @@ class Membership {
 		}
 		
 		$user_guid = (int) $relationship->guid_one;
-		$site_guid = (int) $relationship->guid_two;
 		
 		$user = get_user($user_guid);
 		
 		// ignore access
-		$ia = elgg_set_ignore_access(true);
-		
-		// find domain based groups
-		$groups = group_tools_get_domain_based_groups($user, $site_guid);
-		if (empty($groups)) {
-			// restore access settings
-			elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
+			// find domain based groups
+			$groups = group_tools_get_domain_based_groups($user);
+			if (empty($groups)) {
+				return;
+			}
 			
-			return;
-		}
-		
-		foreach ($groups as $group) {
-			// join the group
-			$group->join($user);
-		}
-		
-		// restore access settings
-		elgg_set_ignore_access($ia);
+			foreach ($groups as $group) {
+				// join the group
+				$group->join($user);
+			}
+		});
 	}
 	
 	/**
