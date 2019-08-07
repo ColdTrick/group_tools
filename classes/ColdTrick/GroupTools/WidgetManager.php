@@ -47,7 +47,7 @@ class WidgetManager {
 				if (!empty($group_guid)) {
 					$group = get_entity($group_guid);
 					if ($group instanceof \ElggGroup) {
-						$return_value = elgg_generate_url('collection:river:group', [
+						return elgg_generate_url('collection:river:group', [
 							'guid' => $group->guid,
 						]);
 					}
@@ -70,13 +70,11 @@ class WidgetManager {
 				}
 				break;
 			case 'group_related':
-				$return_value = elgg_generate_url('collection:group:group:related', [
+				return elgg_generate_url('collection:group:group:related', [
 					'guid' => $widget->owner_guid,
 				]);
 				break;
 		}
-		
-		return $return_value;
 	}
 	
 	/**
