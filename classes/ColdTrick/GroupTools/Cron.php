@@ -3,7 +3,6 @@
 namespace ColdTrick\GroupTools;
 
 use Elgg\Database\QueryBuilder;
-use Elgg\Database\Select;
 
 class Cron {
 	

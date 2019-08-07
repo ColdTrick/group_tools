@@ -7,33 +7,34 @@ class WidgetManager {
 	/**
 	 * Set the title URL for the group tools widgets
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param string $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'entity:url', 'object'
 	 *
 	 * @return void|string
 	 */
-	public static function widgetURL($hook, $type, $return_value, $params) {
+	public static function widgetURL(\Elgg\Hook $hook) {
 		
-		if (!empty($return_value)) {
+		if (!empty($hook->getValue())) {
 			// someone already set an url
 			return;
 		}
 		
-		$widget = elgg_extract('entity', $params);
+		$widget = $hook->getEntityParam();
 		if (!$widget instanceof \ElggWidget) {
 			return;
 		}
 		
 		switch ($widget->handler) {
 			case 'group_members':
-				$return_value = "groups/members/{$widget->owner_guid}";
-				break;
+				return elgg_generate_url('collection:user:user:group_members', [
+					'guid' => $widget->owner_guid,
+				]);
+			
 			case 'group_invitations':
 				$user = elgg_get_logged_in_user_entity();
 				if (!empty($user)) {
-					$return_value = "groups/invitations/{$user->username}";
+					return elgg_generate_url('collection:group:group:invitations', [
+						'username' => $user->username,
+					]);
 				}
 				break;
 			case 'group_river_widget':
@@ -53,15 +54,19 @@ class WidgetManager {
 				}
 				break;
 			case 'index_groups':
-				$return_value = 'groups/all';
-				break;
+				return elgg_generate_url('collection:group:group:all');
+			
 			case 'featured_groups':
-				$return_value = 'groups/all?filter=featured';
-				break;
+				return elgg_generate_url('collection:group:group:all', [
+					'filter' => 'featured',
+				]);
+				
 			case 'a_user_groups':
 				$owner = $widget->getOwnerEntity();
 				if ($owner instanceof \ElggUser) {
-					$return_value = "groups/member/{$owner->username}";
+					return elgg_generate_url('collection:group:group:member', [
+						'username' => $owner->username,
+					]);
 				}
 				break;
 			case 'group_related':
@@ -77,37 +82,32 @@ class WidgetManager {
 	/**
 	 * Add or remove widgets based on the group tool option
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'group_tool_widgets', 'widget_manager'
 	 *
 	 * @return void|array
 	 */
-	public static function groupToolWidgets($hook, $type, $return_value, $params) {
+	public static function groupToolWidgets(\Elgg\Hook $hook) {
 		
-		$entity = elgg_extract('entity', $params);
+		$entity = $hook->getEntityParam();
 		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
 		
-		if (!is_array($return_value)) {
-			return;
-		}
+		$return = $hook->getValue();
 		
 		// check different group tools for which we supply widgets
 		if ($entity->isToolEnabled('related_groups')) {
-			$return_value['enable'][] = 'group_related';
+			$return['enable'][] = 'group_related';
 		} else {
-			$return_value['disable'][] = 'group_related';
+			$return['disable'][] = 'group_related';
 		}
 			
 		if ($entity->isToolEnabled('activity')) {
-			$return_value['enable'][] = 'group_river_widget';
+			$return['enable'][] = 'group_river_widget';
 		} else {
-			$return_value['disable'][] = 'group_river_widget';
+			$return['disable'][] = 'group_river_widget';
 		}
 		
-		return $return_value;
+		return $return;
 	}
 }

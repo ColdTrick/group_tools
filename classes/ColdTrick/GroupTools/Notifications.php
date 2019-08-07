@@ -7,16 +7,13 @@ class Notifications {
 	/**
 	 * Get the subscribers for a new group which needs admin approval
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param array  $params       supplied params
+	 * @param \Elgg\Hook $hook 'get', 'subscriptions'
 	 *
 	 * @return void|array
 	 */
-	public static function adminApprovalSubs($hook, $type, $return_value, $params) {
+	public static function adminApprovalSubs(\Elgg\Hook $hook) {
 		
-		$event = elgg_extract('event', $params);
+		$event = $hook->getParam('event');
 		if (!$event instanceof \Elgg\Notifications\NotificationEvent) {
 			return;
 		}
@@ -30,6 +27,8 @@ class Notifications {
 		if ($action !== 'admin_approval') {
 			return;
 		}
+		
+		$return = $hook->getValue();
 		
 		// get all admins
 		$batch = elgg_get_entities([
@@ -47,51 +46,49 @@ class Notifications {
 				continue;
 			}
 			
-			$return_value[$user->guid] = [];
+			$return[$user->guid] = [];
 			foreach ($notification_settings as $method => $active) {
 				if (!$active) {
 					continue;
 				}
-				$return_value[$user->guid][] = $method;
+				$return[$user->guid][] = $method;
 			}
 		}
 		
-		return $return_value;
+		return $return;
 	}
 	
 	/**
 	 * Get the subscribers for a new group which needs admin approval
 	 *
-	 * @param string                           $hook         the name of the hook
-	 * @param string                           $type         the type of the hook
-	 * @param \Elgg\Notifications\Notification $return_value current return value
-	 * @param array                            $params       supplied params
+	 * @param \Elgg\Hook $hook 'prepare', 'notification:admin_approval:group:'
 	 *
 	 * @return void|\Elgg\Notifications\Notification
 	 */
-	public static function prepareAdminApprovalMessage($hook, $type, $return_value, $params) {
+	public static function prepareAdminApprovalMessage(\Elgg\Hook $hook) {
 		
-		if (!$return_value instanceof \Elgg\Notifications\Notification) {
+		$return = $hook->getValue();
+		if (!$return instanceof \Elgg\Notifications\Notification) {
 			return;
 		}
 		
-		$actor = $return_value->getSender();
-		$recipient = $return_value->getRecipient();
+		$actor = $return->getSender();
+		$recipient = $return->getRecipient();
 		
-		$language = elgg_extract('language', $params);
-		$event = elgg_extract('event', $params);
+		$language = $hook->getParam('language');
+		$event = $hook->getParam('event');
 		if (!$event instanceof \Elgg\Notifications\NotificationEvent) {
 			return;
 		}
 		
 		$group = $event->getObject();
-		if (!($group instanceof \ElggGroup)) {
+		if (!$group instanceof \ElggGroup) {
 			return;
 		}
 		
-		$return_value->subject = elgg_echo('group_tools:group:admin_approve:admin:subject', [$group->getDisplayName()], $language);
-		$return_value->summary = elgg_echo('group_tools:group:admin_approve:admin:summary', [$group->getDisplayName()], $language);
-		$return_value->body = elgg_echo('group_tools:group:admin_approve:admin:message', [
+		$return->subject = elgg_echo('group_tools:group:admin_approve:admin:subject', [$group->getDisplayName()], $language);
+		$return->summary = elgg_echo('group_tools:group:admin_approve:admin:summary', [$group->getDisplayName()], $language);
+		$return->body = elgg_echo('group_tools:group:admin_approve:admin:message', [
 			$recipient->getDisplayName(),
 			$actor->getDisplayName(),
 			$group->getDisplayName(),
@@ -99,6 +96,6 @@ class Notifications {
 			elgg_normalize_url('admin/groups/admin_approval'),
 		], $language);
 		
-		return $return_value;
+		return $return;
 	}
 }

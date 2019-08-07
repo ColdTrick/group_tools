@@ -7,15 +7,14 @@ class PageLayout {
 	/**
 	 * Don't allow closed groups to be indexed by search engines
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param mixed  $params       supplied params
+	 * @param \Elgg\Hook $hook 'head', 'page'
+	 *
+	 * @return array
 	 */
-	public static function noIndexClosedGroups($hook, $type, $return_value, $params) {
+	public static function noIndexClosedGroups(\Elgg\Hook $hook) {
 		
 		$page_owner = elgg_get_page_owner_entity();
-		if (!($page_owner instanceof \ElggGroup)) {
+		if (!$page_owner instanceof \ElggGroup) {
 			// not a group
 			return;
 		}
@@ -30,11 +29,13 @@ class PageLayout {
 			return;
 		}
 		
-		$return_value['metas']['robots'] = [
+		$return = $hook->getValue();
+		
+		$return['metas']['robots'] = [
 			'name' => 'robots',
 			'content' => 'noindex',
 		];
 		
-		return $return_value;
+		return $return;
 	}
 }

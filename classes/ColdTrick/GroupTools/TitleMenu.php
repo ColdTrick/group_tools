@@ -223,16 +223,13 @@ class TitleMenu {
 	/**
 	 * add button to export users
 	 *
-	 * @param string    $hook         the name of the hook
-	 * @param string    $type         the type of the hook
-	 * @param MenuItems $return_value current return value
-	 * @param array     $params       supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:title'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function exportGroupMembers($hook, $type, $return_value, $params) {
+	public static function exportGroupMembers(\Elgg\Hook $hook) {
 		
-		if (!elgg_in_context('groups') || !$return_value instanceof MenuItems) {
+		if (!elgg_in_context('groups')) {
 			return;
 		}
 		
@@ -242,18 +239,20 @@ class TitleMenu {
 		}
 		
 		// group member export
-		$group_members_page = elgg_normalize_url(elgg_generate_url('collection:user:user:group_members', [
+		$group_members_page = elgg_generate_url('collection:user:user:group_members', [
 			'guid' => $page_owner->guid,
-		]));
+		]);
 		if (strpos(current_page_url(), $group_members_page) === false) {
 			return;
 		}
 		
-		if (!$page_owner->canEdit() || (elgg_get_plugin_setting('member_export', 'group_tools') !== 'yes')) {
+		if (!$page_owner->canEdit() || elgg_get_plugin_setting('member_export', 'group_tools') !== 'yes') {
 			return;
 		}
 		
-		$return_value[] = \ElggMenuItem::factory([
+		$return = $hook->getValue();
+		
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'member_export',
 			'icon' => 'download',
 			'text' => elgg_echo('group_tools:member_export:title_button'),
@@ -263,23 +262,20 @@ class TitleMenu {
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
 		
-		return $return_value;
+		return $return;
 	}
 	
 	
 	/**
 	 * Change title menu buttons for a group pending admin approval
 	 *
-	 * @param string    $hook         the name of the hook
-	 * @param string    $type         the type of the hook
-	 * @param MenuItems $return_value current return value
-	 * @param array     $params       supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:title'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function pendingApproval($hook, $type, $return_value, $params) {
+	public static function pendingApproval(\Elgg\Hook $hook) {
 		
-		if (!$return_value instanceof MenuItems || !elgg_in_context('group_profile')) {
+		if (!elgg_in_context('group_profile')) {
 			return;
 		}
 		
@@ -296,24 +292,27 @@ class TitleMenu {
 			'edit',
 		];
 		
+		/* @var $return MenuItems */
+		$return = $hook->getValue();
+		
 		// cleanup all items
 		/* @var $menu_item \ElggMenuItem */
-		foreach ($return_value as $menu_item) {
+		foreach ($return as $menu_item) {
 			$name = $menu_item->getName();
 			if (in_array($name, $allowed_items)) {
 				continue;
 			}
 			
-			$return_value->remove($name);
+			$return->remove($name);
 		}
 		
 		if (!elgg_is_admin_logged_in()) {
-			return $return_value;
+			return $return;
 		}
 		
 		// add admin actions
 		// approve
-		$return_value[] = \ElggMenuItem::factory([
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'approve',
 			'text' => elgg_echo('approve'),
 			'href' => elgg_generate_action_url('group_tools/admin/approve', [
@@ -324,7 +323,7 @@ class TitleMenu {
 		]);
 		
 		// decline
-		$return_value[] = \ElggMenuItem::factory([
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'decline',
 			'text' => elgg_echo('decline'),
 			'href' => elgg_generate_action_url('group_tools/admin/decline', [
@@ -334,7 +333,7 @@ class TitleMenu {
 			'class' => 'elgg-button elgg-button-delete',
 		]);
 		
-		return $return_value;
+		return $return;
 	}
 	
 	/**

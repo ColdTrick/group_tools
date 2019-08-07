@@ -9,14 +9,11 @@ class Router {
 	 *
 	 * Both access to the registration page and the registration action
 	 *
-	 * @param string $hook         the name of the hook
-	 * @param string $type         the type of the hook
-	 * @param array  $return_value current return value
-	 * @param null   $params       supplied params
+	 * @param \Elgg\Hook $hook 'view_vars', 'resources/account/register'
 	 *
 	 * @return void
 	 */
-	public static function allowRegistration($hook, $type, $return_value, $params) {
+	public static function allowRegistration(\Elgg\Hook $hook) {
 		
 		$registration_allowed = (bool) elgg_get_config('allow_registration');
 		if ($registration_allowed) {

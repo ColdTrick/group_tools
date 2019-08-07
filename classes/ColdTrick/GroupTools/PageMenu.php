@@ -2,6 +2,8 @@
 
 namespace ColdTrick\GroupTools;
 
+use Elgg\Menu\MenuItems;
+
 class PageMenu {
 	
 	/**
@@ -9,7 +11,7 @@ class PageMenu {
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'menu:page'
 	 *
-	 * @return \Collection
+	 * @return MenuItems
 	 */
 	public static function registerAdminItems(\Elgg\Hook $hook) {
 		

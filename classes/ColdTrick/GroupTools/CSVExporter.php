@@ -205,8 +205,6 @@ class CSVExporter {
 			return;
 		}
 		
-		$readable = (bool) elgg_extract('readable', $params, false);
-		
 		$fields = [
 			elgg_echo('group_tools:csv_exporter:stale_info:is_stale') => 'group_tools_stale_info_is_stale',
 			elgg_echo('group_tools:csv_exporter:stale_info:timestamp') => 'group_tools_stale_info_timestamp',
