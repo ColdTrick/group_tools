@@ -1,6 +1,10 @@
 Version history
 ===============
 
+10.3 (2019-08-22):
+
+- changed: hook and event callbacks use new coding style
+
 10.2.1 (2019-07-11):
 
 - fixed: fatal exception during group member export
