@@ -1,6 +1,10 @@
 Version history
 ===============
 
+10.3.1 (2019-09-04):
+
+- several small chores/fixes
+
 10.3 (2019-08-22):
 
 - changed: hook and event callbacks use new coding style
