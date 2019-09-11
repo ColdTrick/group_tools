@@ -53,4 +53,36 @@ class Views {
 			elgg_admin_gatekeeper();
 		}
 	}
+	
+	/**
+	 * Change some inputs when listing users in livesearch for group invites
+	 *
+	 * @param \Elgg\Hook $hook 'view_vars', 'page/components/list'
+	 *
+	 * @return void|array
+	 */
+	public static function livesearchUserListing(\Elgg\Hook $hook) {
+		
+		$group_guid = (int) get_input('group_guid');
+		$group_invite = (bool) get_input('group_invite');
+		
+		if ($group_guid < 1 || empty($group_invite)) {
+			return;
+		}
+		
+		$group = get_entity($group_guid);
+		if (!$group instanceof \ElggGroup) {
+			return;
+		}
+		
+		$vars = $hook->getValue();
+		if (elgg_extract('type', $vars) !== 'user') {
+			return;
+		}
+		
+		$vars['item_view'] = 'group_tools/group_invite/user';
+		$vars['group'] = $group;
+		
+		return $vars;
+	}
 }

@@ -333,6 +333,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:groups:invite:error' => "No invitation options are available",
 	'group_tools:groups:invite:title' => "Invite users to this group",
 	'group_tools:groups:invite' => "Invite users",
+	'group_tools:groups:invite:member' => "Already a member of the group",
 	
 	'group_tools:group:invite:friends:select_all' => "Select all friends",
 	'group_tools:group:invite:friends:deselect_all' => "Deselect all friends",

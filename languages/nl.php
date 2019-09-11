@@ -1,10 +1,13 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0-beta
- * On 2019-03-27 13:54
+ * This file was created by Translation Editor v7.0.4
+ * On 2019-09-11 15:57
  */
 
 return array (
+  'group_tools:groups:invite:member' => 'Reeds lid van de groep',
+  'group_tools:upgrade:2019051000:title' => 'Repareer groep toegang',
+  'group_tools:upgrade:2019051000:description' => 'Sommige groepen kunnen zijn aangemaakt met het toegangsniveau \'Privé\', dit voorkomt dat leden van de groep toegang hebben tot de groep.',
   'group_tools:settings:simple_tool_presets' => 'Vereenvoudig groep tools preset selectie',
   'group_tools:settings:simple_tool_presets:help' => 'Vereenvoudigd de groep tool preset selectie. Enkel de groep tool preset titel en omschrijving worden getoond. De individuele tools worden niet getoond. Ook kan er in deze eenvoudige modus geen individuele tools worden geselecteerd.',
   'group_tools:profile:field:group_tools_preset' => 'Groep tool set',

@@ -11,10 +11,10 @@ echo elgg_view_field([
 	'#type' => 'userpicker',
 	'#label' => elgg_echo('group_tools:group:invite:users:description'),
 	'name' => 'non_group_members',
-	'match_on' => 'non_group_members',
 	'show_friends' => false,
 	'options' => [
 		'group_guid' => $group->guid,
+		'group_invite' => true,
 	],
 ]);
 
