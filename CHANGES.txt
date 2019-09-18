@@ -1,6 +1,10 @@
 Version history
 ===============
 
+10.4 (2019-09-18):
+
+- changed: inviting users to group now finds all users but shows message
+
 10.3.1 (2019-09-04):
 
 - several small chores/fixes
