@@ -85,4 +85,38 @@ class Views {
 		
 		return $vars;
 	}
+	
+	/**
+	 * Set correct value to show/hide group owner transfer
+	 *
+	 * @param \Elgg\Hook $hook 'view_vars', 'groups/edit/access'
+	 *
+	 * @retrun void|array
+	 */
+	public static function allowGroupOwnerTransfer(\Elgg\Hook $hook) {
+		
+		$vars = $hook->getValue();
+		
+		$group = elgg_extract('entity', $vars);
+		$user = elgg_get_logged_in_user_entity();
+		if (!$group instanceof \ElggGroup || !$user instanceof \ElggUser) {
+			// create a new group
+			return;
+		}
+		
+		$setting = elgg_get_plugin_setting('admin_transfer', 'group_tools');
+		switch ($setting) {
+			case 'admin':
+				$vars['show_group_owner_transfer'] = $user->isAdmin();
+				break;
+			case 'owner':
+				$vars['show_group_owner_transfer'] = ($group->owner_guid === $user->guid || $user->isAdmin());
+				break;
+			default:
+				$vars['show_group_owner_transfer'] = false;
+				break;
+		}
+		
+		return $vars;
+	}
 }

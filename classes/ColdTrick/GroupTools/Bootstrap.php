@@ -142,6 +142,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:user_hover', __NAMESPACE__ . '\GroupAdmins::assignGroupAdmin');
 		$hooks->registerHandler('send:after', 'notifications', __NAMESPACE__ . '\GroupMail::cleanup');
 		$hooks->registerHandler('tool_options', 'group', __NAMESPACE__ . '\Tools::registerRelatedGroups');
+		$hooks->registerHandler('view_vars', 'groups/edit/access', __NAMESPACE__ . '\Views::allowGroupOwnerTransfer');
 		$hooks->registerHandler('view_vars', 'page/components/list', __NAMESPACE__ . '\Views::livesearchUserListing');
 		$hooks->registerHandler('view_vars', 'resources/account/register', __NAMESPACE__ . '\Router::allowRegistration');
 		$hooks->registerHandler('view_vars', 'resources/groups/add', __NAMESPACE__ . '\Views::protectGroupAdd');

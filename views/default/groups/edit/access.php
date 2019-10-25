@@ -146,17 +146,4 @@ if (!$entity) {
 }
 
 // transfer owner
-
-// who can transfer
-$admin_transfer = elgg_get_plugin_setting('admin_transfer', 'group_tools');
-
-$transfer_allowed = false;
-if (($admin_transfer == 'admin') && elgg_is_admin_logged_in()) {
-	$transfer_allowed = true;
-} elseif (($admin_transfer == 'owner') && (($entity->owner_guid == elgg_get_logged_in_user_guid()) || elgg_is_admin_logged_in())) {
-	$transfer_allowed = true;
-}
-
-if ($transfer_allowed) {
-	echo elgg_view('group_tools/forms/admin_transfer', ['entity' => $entity]);
-}
+echo elgg_view('group_tools/forms/admin_transfer', $vars);

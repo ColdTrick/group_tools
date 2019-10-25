@@ -1,11 +1,16 @@
 <?php
 /**
  * group owner tranfser form
+ *
+ * @uses $vars['entity']                    the group to transfer
+ * @uses $vars['show_group_owner_transfer'] is transfer allowed to show
  */
 
 $group = elgg_extract('entity', $vars);
 $user = elgg_get_logged_in_user_entity();
-if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
+$show_group_owner_transfer = (bool) elgg_extract('show_group_owner_transfer', $vars, true);
+
+if (!$show_group_owner_transfer || !$group instanceof ElggGroup || !$user instanceof ElggUser) {
 	return;
 }
 
