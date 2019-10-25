@@ -45,17 +45,31 @@ if ($name !== null) {
 $user = elgg_get_logged_in_user_entity();
 
 $group_guid = (int) get_input('group_guid');
-$is_new_group = ($group_guid == 0);
 
-if ($is_new_group
-		&& (elgg_get_plugin_setting('limited_groups', 'groups') == 'yes')
-		&& !$user->isAdmin()) {
-	return elgg_error_response(elgg_echo('groups:cantcreate'));
-}
-
-$group = $group_guid ? get_entity($group_guid) : new ElggGroup();
-if (!$group instanceof ElggGroup || !$group->canEdit()) {
-	return elgg_error_response(elgg_echo('groups:cantedit'));
+if ($group_guid) {
+	$is_new_group = false;
+	$group = get_entity($group_guid);
+	if (!$group instanceof ElggGroup || !$group->canEdit()) {
+		$error = elgg_echo('groups:cantedit');
+		return elgg_error_response($error);
+	}
+} else {
+	if (elgg_get_plugin_setting('limited_groups', 'groups') == 'yes' && !$user->isAdmin()) {
+		$error = elgg_echo('groups:cantcreate');
+		return elgg_error_response($error);
+	}
+	
+	$container_guid = get_input('container_guid', $user->guid);
+	$container = get_entity($container_guid);
+	
+	if (!$container || !$container->canWriteToContainer($user->guid, 'group')) {
+		$error = elgg_echo('groups:cantcreate');
+		return elgg_error_response($error);
+	}
+	
+	$is_new_group = true;
+	$group = new ElggGroup();
+	$group->container_guid = $container->guid;
 }
 
 // Assume we can edit or this is a new group
@@ -170,6 +184,16 @@ if (group_tools_allow_hidden_groups()) {
 // set access
 $group->access_id = $access_id;
 
+// group default content access
+$content_default_access = get_input('content_default_access');
+if (isset($content_default_access)) {
+	if (elgg_is_empty($content_default_access)) {
+		unset($group->content_default_access);
+	} else {
+		$group->content_default_access = (int) $content_default_access;
+	}
+}
+
 if (!$group->save()) {
 	return elgg_error_response(elgg_echo('groups:save_error'));
 }
@@ -181,20 +205,6 @@ if (!$group->isPublicMembership() && group_tools_join_motivation_required()) {
 } else {
 	$group->removePrivateSetting('join_motivation');
 }
-
-// default access
-$group_acl = _groups_get_group_acl($group);
-$default_access = get_input('group_default_access');
-if ($default_access === null) {
-	$default_access = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
-}
-$default_access = (int) $default_access;
-
-if (($group->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) && (($default_access === ACCESS_PUBLIC) || ($default_access === ACCESS_LOGGED_IN))) {
-	system_message(elgg_echo('group_tools:action:group:edit:error:default_access'));
-	$default_access = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
-}
-$group->setPrivateSetting('elgg_default_access', $default_access);
 
 // group saved so clear sticky form
 elgg_clear_sticky_form('groups');

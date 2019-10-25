@@ -3,9 +3,7 @@
 use ColdTrick\GroupTools\Bootstrap;
 use ColdTrick\GroupTools\Upgrades\FixGroupAccess;
 use Elgg\Router\Middleware\Gatekeeper;
-
-// define for default group access
-define('GROUP_TOOLS_GROUP_ACCESS_DEFAULT', -10);
+use ColdTrick\GroupTools\Upgrades\MigrateGroupDefaultContentAccess;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
@@ -102,6 +100,7 @@ return [
 	],
 	'upgrades' => [
 		FixGroupAccess::class,
+		MigrateGroupDefaultContentAccess::class,
 	],
 	'widgets' => [
 		'group_river_widget' => [

@@ -23,7 +23,6 @@ return array (
   'group_tools:settings:invite_email' => 'Permitir convites por email',
   'group_tools:settings:invite_csv' => 'Permitir convites por arquivo CSV',
   'group_tools:settings:mail' => 'Permitir email para grupo (permite proprietários dos grupos enviar um email para todos os membros)',
-  'group_tools:settings:default_access' => 'Qual deve ser o acesso padrão para o conteúdo nas comunidades do site',
   'group_tools:settings:search_index' => 'Permitir comunidades fechadas serem indexadas pelas ferramentas de busca',
   'group_tools:settings:auto_notification' => 'Habilitar automaticamente notificações das comunidades para novos membros',
   'group_tools:groups:invite:body' => 'Olá %s,

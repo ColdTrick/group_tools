@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Group edit form
  *
@@ -14,7 +13,9 @@ $membership = elgg_extract('membership', $vars);
 $visibility = elgg_extract('vis', $vars);
 $owner_guid = elgg_extract('owner_guid', $vars);
 $content_access_mode = elgg_extract('content_access_mode', $vars);
-$default_access = elgg_extract('group_default_access', $vars, ACCESS_DEFAULT);
+$show_content_default_access = (bool) elgg_extract('show_content_default_access', $vars, true);
+$content_default_access = elgg_extract('content_default_access', $vars);
+$show_group_owner_transfer = (bool) elgg_extract('show_group_owner_transfer', $vars, true);
 
 $show_visibility = group_tools_allow_hidden_groups();
 $show_visibility = ($show_visibility && (empty($entity->guid) || ($entity->access_id !== ACCESS_PRIVATE)));
@@ -27,6 +28,7 @@ echo elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('groups:membership'),
 	'name' => 'membership',
+	'id' => 'groups-membership',
 	'value' => $membership,
 	'options_values' => [
 		ACCESS_PRIVATE => elgg_echo('groups:access:private'),
@@ -117,32 +119,25 @@ if ($entity instanceof \ElggGroup) {
 
 echo elgg_view_field($access_mode_params);
 
-// default group access
-if ($entity && ($default_access === ACCESS_DEFAULT)) {
-	$new_default_access = $entity->getPrivateSetting('elgg_default_access');
-	if ($new_default_access !== null) {
-		$default_access = (int) $new_default_access;
+// group default access
+if ($show_content_default_access) {
+	$content_default_access_options = [
+		'' => elgg_echo('groups:content_default_access:not_configured'),
+		ACCESS_PRIVATE => elgg_echo('groups:access:group'),
+		ACCESS_LOGGED_IN => elgg_echo('access:label:logged_in'),
+	];
+	if (!elgg_get_config('walled_garden')) {
+		$content_default_access_options[ACCESS_PUBLIC] = elgg_echo('access:label:public');
 	}
-}
-
-// make sure the full list can be shown
-$ga = false;
-if ($entity) {
-	$ga = $entity->getContentAccessMode();
-	$entity->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED);
-}
-
-echo elgg_view_field([
-	'#type' => 'access',
-	'#label' => elgg_echo('group_tools:default_access:title'),
-	'#help' => elgg_echo('group_tools:default_access:description'),
-	'name' => 'group_default_access',
-	'value' => $default_access,
-	'id' => 'groups-default-access',
-]);
-
-if ($ga !== false) {
-	$entity->setContentAccessMode($ga);
+	
+	echo elgg_view_field([
+		'#type' => 'select',
+		'#label' => elgg_echo('groups:content_default_access'),
+		'#help' => elgg_echo('groups:content_default_access:help'),
+		'name' => 'content_default_access',
+		'value' => $content_default_access,
+		'options_values' => $content_default_access_options,
+	]);
 }
 
 // next stuff only when entity exists

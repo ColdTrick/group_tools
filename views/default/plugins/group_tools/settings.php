@@ -409,21 +409,6 @@ $invite_settings .= elgg_view_field([
 echo elgg_view_module('info', elgg_echo('group_tools:settings:invite:title'), $invite_settings);
 
 // group content settings
-
-// default group access
-// set a context so we can do stuff
-elgg_push_context('group_tools_default_access');
-
-$group_content = elgg_view_field([
-	'#type' => 'access',
-	'#label' => elgg_echo('group_tools:settings:default_access'),
-	'name' => 'params[group_default_access]',
-	'value' => $plugin->group_default_access,
-]);
-
-// restore context
-elgg_pop_context();
-
 $group_content .= elgg_view_field([
 	'#type' => 'checkbox',
 	'#label' => elgg_echo('group_tools:settings:search_index'),

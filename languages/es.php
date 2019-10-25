@@ -53,7 +53,6 @@ return array (
   'group_tools:settings:listing:default_short' => 'Pestaña por defecto',
   'group_tools:settings:listing:default' => 'Pestaña de listados de grupos por defecto',
   'group_tools:settings:listing:available' => 'Pestañas de listados de grupos disponibles',
-  'group_tools:settings:default_access' => 'Cuál debe ser el acceso por defecto para el contenido de los grupos en este sitio?',
   'group_tools:settings:search_index' => 'Permitir que los grupos cerrados sean indexados en los motores de búsqueda',
   'group_tools:settings:auto_notification' => 'Habilitar automáticamente notificaciones de grupo al unirse',
   'group_tools:settings:special_states:featured:description' => 'Los administradores de grupo han elegido esta funcionalidad para los siguientes grupos.',

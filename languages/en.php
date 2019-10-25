@@ -97,7 +97,6 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:listing:available' => "Available group listing tabs",
 
 	'group_tools:settings:content:title' => "Group content settings",
-	'group_tools:settings:default_access' => "What should be the default access for content in the groups of this site",
 	'group_tools:settings:stale_timeout' => "Groups become stale if no content is created within a number of days",
 	'group_tools:settings:stale_timeout:help' => "If no new content is created in a group within the given number of days, the group is shown as stale. The group owner will receive a notification on the day the group becomes stale. A group owner/admin can tell the group is still relevant. 0 or empty to not enable this feature.",
 	
@@ -587,4 +586,7 @@ Please check on the group here:
 	// upgrades
 	'group_tools:upgrade:2019051000:title' => "Fix group access",
 	'group_tools:upgrade:2019051000:description' => "Some group could have been created with the access level 'Private', this will prevent members from accessing the group.",
+	
+	'group_tools:upgrade:2019102501:title' => "Migrate group default content access",
+	'group_tools:upgrade:2019102501:description' => "As of Elgg 3.2 group default content access is part of Elgg. This will migrate the group tools settings to the correct place in Elgg.",
 );

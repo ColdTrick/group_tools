@@ -290,7 +290,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:default:access:group' => 'Alleen groepsleden',
   'group_tools:settings:invite:title' => 'Groepsuitnodiging instellingen',
   'group_tools:settings:management:title' => 'Algemene groepsinstellingen',
-  'group_tools:settings:default_access' => 'Wat moet het standaard toegangsniveau zijn van nieuwe content in groepen op deze site',
   'group_tools:default_access:title' => 'Standaard groepstoegang',
   'group_tools:default_access:description' => 'Hier kun je aangeven wat het standaard toegangsniveau moet zijn van nieuwe content in je groep.',
   'widgets:index_groups:name' => 'Groepen',

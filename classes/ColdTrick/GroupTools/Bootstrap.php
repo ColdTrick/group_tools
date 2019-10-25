@@ -89,14 +89,11 @@ class Bootstrap extends DefaultPluginBootstrap {
 	protected function registerHooks() {
 		$hooks = $this->elgg()->hooks;
 		
-		$hooks->registerHandler('access:collections:write', 'user', __NAMESPACE__ . '\Access::defaultAccessOptions');
 		$hooks->registerHandler('action:validate', 'groups/join', __NAMESPACE__ . '\Membership::groupJoinAction');
 		$hooks->registerHandler('action:validate', 'register', __NAMESPACE__ . '\Router::allowRegistration');
 		$hooks->registerHandler('action:validate', 'groups/edit', __NAMESPACE__ . '\Group::editActionListener');
 		$hooks->registerHandler('cron', 'fiveminute', __NAMESPACE__ . '\Membership::autoJoinGroupsCron');
 		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::notifyStaleGroupOwners');
-		$hooks->registerHandler('default', 'access', __NAMESPACE__ . '\Access::setGroupDefaultAccess');
-		$hooks->registerHandler('default', 'access', __NAMESPACE__ . '\Access::validateGroupDefaultAccess', 999999);
 		$hooks->registerHandler('entity:url', 'object', __NAMESPACE__ . '\WidgetManager::widgetURL');
 		$hooks->registerHandler('export_value', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::exportGroupAdminsForGroups');
 		$hooks->registerHandler('export_value', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::exportGroupAdminsForUsers');

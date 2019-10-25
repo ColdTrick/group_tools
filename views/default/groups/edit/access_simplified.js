@@ -7,7 +7,7 @@ define(function (require) {
 		var $form = $('.elgg-form-groups-edit');
 		var $membership = $form.find('[name="membership"]');
 		var $content_access_mode = $form.find('[name="content_access_mode"]');
-		var $group_default_access = $form.find('[name="group_default_access"]');
+		var $group_default_access = $form.find('[name="content_default_access"]');
 		
 		if (group_type == 'open') {
 			$membership.val('2');
