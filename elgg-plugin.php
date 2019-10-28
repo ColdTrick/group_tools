@@ -78,6 +78,9 @@ return [
 		'add:object:group_tools_group_mail' => [
 			'path' => '/groups/mail/{guid}',
 			'resource' => 'groups/mail',
+			'middleware' => [
+				Gatekeeper::class,
+			],
 		],
 		'collection:group:group:related' => [
 			'path' => '/groups/related/{guid}',

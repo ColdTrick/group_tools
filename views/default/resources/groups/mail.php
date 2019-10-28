@@ -5,13 +5,10 @@
 
 use Elgg\EntityPermissionsException;
 
-elgg_gatekeeper();
-
 $group_guid = (int) elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($group, 'group');
+elgg_entity_gatekeeper($group_guid, 'group');
 
 $group = get_entity($group_guid);
-
 if (!group_tools_group_mail_enabled($group) && !group_tools_group_mail_members_enabled($group)) {
 	throw new EntityPermissionsException();
 }
@@ -34,7 +31,6 @@ $members = $group->getMembers([
 
 // build page elements
 $title_text = elgg_echo('group_tools:mail:title');
-$title = elgg_view_title($title_text);
 
 $form_vars = [
 	'id' => 'group_tools_mail_form',
@@ -51,7 +47,7 @@ $body = elgg_view_layout('content', [
 	'entity' => $group,
 	'title' => $title_text,
 	'content' => $form,
-	'filter' => false
+	'filter' => false,
 ]);
 
 // draw page
