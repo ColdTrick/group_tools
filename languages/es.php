@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0-beta
- * On 2018-12-14 16:03
+ * This file was created by Translation Editor v7.0.4
+ * On 2019-10-28 17:12
  */
 
 return array (
@@ -9,13 +9,11 @@ return array (
   'group_tools:delete_selected' => 'Borrar usuarios',
   'group_tools:clear_selection' => 'Limpiar selección',
   'group_tools:all_members' => 'Todos los miembros',
-  'group_tools:default:access:group' => 'Miembros del grupo solamente',
   'group_tools:joinrequest:already' => 'Cancelar pedido de incorporación a este grupo',
   'group_tools:joinrequest:already:tooltip' => 'Ya has solicitado la incorporación a este grupo, haz click aquí para cancelar tu solicitud',
   'group_tools:join:already:tooltip' => 'Fuiste invitado a este grupo, puedes unirte ahora.',
   'item:object:group_tools_group_mail' => 'Mail del Grupo',
   'group_tools:menu:mail' => 'Miembros del Mail',
-  'group_tools:menu:invitations' => 'Gestionar invitaciones',
   'admin:groups:bulk_delete' => 'Borrar varios grupos',
   'admin:groups:admin_approval' => 'Se necesita aprobación',
   'admin:groups:tool_presets' => 'Configuraciones predefinidas de herramientas de grupo',
@@ -36,7 +34,6 @@ return array (
   'group_tools:settings:invite' => 'Permitir la invitación a todos los usuarios (no solamente amigos)',
   'group_tools:settings:invite_friends' => 'Permitir la invitación a amigos',
   'group_tools:settings:invite_email' => 'Permitir la invitación a todos los usuarios via dirección de correo electrónico',
-  'group_tools:settings:invite_email:match' => 'Intentar coincidir los correos electrónicos de los usuarios existentes',
   'group_tools:settings:invite_csv' => 'Permitir la invitación a todos los usuarios via archivo CSV',
   'group_tools:settings:invite_members' => 'Permitir a los miembros la invitación de nuevos usuarios.',
   'group_tools:settings:invite_members:description' => 'Propietarios y administradores de grupo pueden habilitar/deshabilitar esta opción para su grupo',
@@ -133,8 +130,6 @@ Puedes encontrar el grupo aquí:
   'group_tools:multiple_admin:profile_actions:remove' => 'Borrar administrador de grupo',
   'group_tools:multiple_admin:profile_actions:add' => 'Agregar administrador de grupo',
   'group_tools:multiple_admin:group_tool_option' => 'Permitir a los administradores de grupo asignar otros administradores',
-  'group_tools:default_access:title' => 'Nivel de acceso por defecto en el grupo',
-  'group_tools:default_access:description' => 'Aquí puedes controlar cual será el nivel de acceso por defecto del nuevo contenido en tu grupo.',
   'group_tools:group:admin_approve:notice' => 'Los grupos nuevos necesitan se aprobados por el administrador del sitio. Puedes crear/editar el grupo, pero este no será visible para los otros usuarios hasta que sea aprobado por el administrador.',
   'group_tools:group:admin_approve:decline:confirm' => 'Estas seguro que deseas rechazar este grupo? Esto eliminaría el grupo.',
   'group_tools:group:admin_approve:admin:description' => 'Esta es una lista de grupos que necesitan ser aprobados por el administrador del sitio antes de que puedan utilizarse.
@@ -191,8 +186,6 @@ tu grupo \'%s\' fue rechazado y eliminado por un administrador del sitio.',
   'group_tools:groups:invite:error' => 'Las opciones de invitación no están disponibles',
   'group_tools:groups:invite:title' => 'Invitar usuarios a este grupo',
   'group_tools:groups:invite' => 'Invitar usuarios',
-  'group_tools:group:invite:friends:select_all' => 'Seleccionar todos mis amigos',
-  'group_tools:group:invite:friends:deselect_all' => 'Deseleccionar todos mis amigos',
   'group_tools:group:invite:users' => 'Encontrar usuario(s)',
   'group_tools:group:invite:users:description' => 'Ingresa el nombre o usuario que quieres encontrar y seleccionalo de la lista',
   'group_tools:group:invite:users:all' => 'Invitar a todos los usuarios del sitio a este grupo',
@@ -205,16 +198,9 @@ tu grupo \'%s\' fue rechazado y eliminado por un administrador del sitio.',
   'group_tools:group:invite:resend' => 'Reenviar invitaciones a usuarios que ya fueron invitados',
   'group_tools:groups:invitation:code:title' => 'Invitación a grupo vía correo electrónico',
   'group_tools:groups:invitation:code:description' => 'Si has recibido una invitación para unirte a un grupo via correo electrónico, puedes ingresar el código de la invitación aquí para aceptarla. Si hacer click en el link que te fue enviado, el código será ingresado automáticamente.',
-  'group_tools:groups:membershipreq:requests' => 'Solicitudes de incorporación',
-  'group_tools:groups:membershipreq:invitations' => 'Usuarios invitados',
-  'group_tools:groups:membershipreq:invitations:none' => 'No hay invitaciones pendientes',
-  'group_tools:groups:membershipreq:email_invitations' => 'Correos electrónicos invitados',
   'group_tools:groups:membershipreq:email_invitations:none' => 'No hay invitaciones a correos electrónicos pendientes',
   'group_tools:groups:membershipreq:invitations:revoke:confirm' => 'Estás seguro que deseas revocar esta invitación',
   'group_tools:groups:membershipreq:kill_request:prompt' => 'Puedes comunicar al usuario porque revocastes la solicitud.',
-  'group_tools:group:invitations:request' => 'Solicitudes de incorporación destacadas',
-  'group_tools:group:invitations:request:revoke:confirm' => 'Estás seguro que deseas revocar esta invitación',
-  'group_tools:group:invitations:request:non_found' => 'No hay solicitudes de incorporación destacadas en este momento',
   'group_tools:groups:sorting:open' => 'Abiertos',
   'group_tools:groups:sorting:closed' => 'Cerrados',
   'group_tools:groups:sorting:suggested' => 'Sugeridos',
@@ -222,7 +208,6 @@ tu grupo \'%s\' fue rechazado y eliminado por un administrador del sitio.',
   'group_tools:invite_members:description' => 'Permite a los miembros de un grupo invitar a nuevos miembros',
   'group_tools:invite_members:disclaimer' => 'Por favor ten en cuenta que para grupos cerrados esto significa que las invitaciones realizadas por miembros no requerirán aprobación del propietario o administradores de grupo.',
   'activity:group_tool_option:description' => 'Mostrar un feed de actividad sobre contenidos relacionados al grupo.',
-  'group_tools:action:group:edit:error:default_access' => 'El nivel de acceso elegido por defecto es más abierto que el nivel de acceso del grupo, por lo que el accese por defecto a sido reducido a los miembros del grupo.',
   'group_tools:action:toggle_admin:error:group' => 'El valor ingresado no sirve en un grupo, no puedes editar este grupo o el usuario no es miembro',
   'group_tools:action:toggle_admin:error:remove' => 'Un error desconocido ocurrió mientras se quitaba al usuario como administrador de grupo',
   'group_tools:action:toggle_admin:error:add' => 'Un error desconocido ocurrió mientras se añadía al usuario como administrador de grupo',
@@ -252,7 +237,6 @@ tu grupo \'%s\' fue rechazado y eliminado por un administrador del sitio.',
   'widgets:group_river_widget:name' => 'Actividad de Grupo',
   'widgets:group_river_widget:description' => 'Muestra la actividad de un grupo en un widget',
   'widgets:group_river_widget:edit:group' => 'Elige un grupo',
-  'widgets:group_river_widget:view:not_configured' => 'Este widget no está configurado todavía',
   'widgets:group_river_widget:view:noactivity' => 'No pudimos encontrar actividad.',
   'widgets:group_members:name' => 'Miembros de Grupo',
   'widgets:group_members:description' => 'Muestra los miembros de este grupo',
@@ -329,6 +313,5 @@ Haz click aquí para ver su perfil:
 
 Haz click debajo para ver las solicitudes de adhesión del grupo:
 %s',
-  'group_tools:join_motivation:toggle' => 'Mostrar motivación',
   'group_tools:join_motivation:listing' => 'Razón para unirse:',
 );

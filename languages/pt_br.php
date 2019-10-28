@@ -1,18 +1,16 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0-beta
- * On 2018-12-14 16:10
+ * This file was created by Translation Editor v7.0.4
+ * On 2019-10-28 17:13
  */
 
 return array (
   'group_tools:add_users' => 'Adicionar usuários',
   'group_tools:clear_selection' => 'Remover seleção',
   'group_tools:all_members' => 'Todos membros',
-  'group_tools:default:access:group' => 'Apenas membros do grupo',
   'group_tools:joinrequest:already' => 'Cancelar requisição de entrada no grupo',
   'group_tools:joinrequest:already:tooltip' => 'Você já solicitou entrada neste grupo, clique aqui para cancelar a requisição',
   'group_tools:menu:mail' => 'Enviar email para os membros',
-  'group_tools:menu:invitations' => 'Gerenciar convites',
   'group_tools:settings:invite:title' => 'Opções de convite',
   'group_tools:settings:management:title' => 'Opções gerais dos grupos',
   'group_tools:settings:admin_transfer' => 'Permitir transferência de proprietário dos grupos',
@@ -64,8 +62,6 @@ Para visualizar a comunidade, clique neste link:
   'group_tools:multiple_admin:profile_actions:remove' => 'Remover proprietário',
   'group_tools:multiple_admin:profile_actions:add' => 'Adicionar proprietário',
   'group_tools:multiple_admin:group_tool_option' => 'Permitir proprietários da comunidade atribuirem outros proprietários',
-  'group_tools:default_access:title' => 'Acesso padrão da comunidade',
-  'group_tools:default_access:description' => 'Aqui você pode controlar como os novos conteudos da sua comunidade podem ser acessados.',
   'group_tools:notifications:title' => 'Notificações da comunidade',
   'group_tools:notifications:disclaimer' => 'Com comunidades de muitos membros, isto pode demorar um pouco.',
   'group_tools:notifications:enable' => 'Habilitar notificações para todos',
@@ -80,8 +76,6 @@ Para visualizar a comunidade, clique neste link:
   'group_tools:mail:form:js:description' => 'Por favor escreva uma mensagem',
   'group_tools:groups:invite:title' => 'Convidar pessoas para este grupo',
   'group_tools:groups:invite' => 'Convidar pessoas',
-  'group_tools:group:invite:friends:select_all' => 'Selecionar todos os amigos',
-  'group_tools:group:invite:friends:deselect_all' => 'Desselecionar todos os amigos',
   'group_tools:group:invite:users' => 'Buscar pessoa(s)',
   'group_tools:group:invite:users:description' => 'Digita um nome de uma pessoa e a selecione da lista',
   'group_tools:group:invite:users:all' => 'Convidar todas as pessoas do site para a lista',
@@ -94,13 +88,7 @@ Para visualizar a comunidade, clique neste link:
   'group_tools:group:invite:resend' => 'Reenviar convites para usuários que já foram convidados',
   'group_tools:groups:invitation:code:title' => 'Convite por email',
   'group_tools:groups:invitation:code:description' => 'Se você recebei um convite para entrar na comunidade por email, você pode digitar o código aqui para aceitá-lo. Caso clique no link no email de convite, o código será inserido automaticamente para você.',
-  'group_tools:groups:membershipreq:requests' => 'Solicitações de entrada na comunidade',
-  'group_tools:groups:membershipreq:invitations' => 'Convites enviados ainda não aceitos',
-  'group_tools:groups:membershipreq:invitations:none' => 'Nenhum convite enviado pendente',
   'group_tools:groups:membershipreq:invitations:revoke:confirm' => 'Tem certeza que deseja cancelar este convite',
-  'group_tools:group:invitations:request' => 'Solicitações de entrada pendentes',
-  'group_tools:group:invitations:request:revoke:confirm' => 'Tem certeza que deseja cancelar sua solicitação de entrada na comunidade?',
-  'group_tools:group:invitations:request:non_found' => 'Não há solicitações de entrada pendentes neste momento',
   'group_tools:groups:sorting:open' => 'Abertas',
   'group_tools:groups:sorting:closed' => 'Fechadas',
   'group_tools:action:toggle_admin:error:group' => 'A entrada dada não resulto em uma comunidade válida ou você não pode editar esta grupo ou o usuário não é um membro',
@@ -119,7 +107,6 @@ Para visualizar a comunidade, clique neste link:
   'widgets:group_river_widget:name' => 'Atividade na comunidade',
   'widgets:group_river_widget:description' => 'Mostra a atividade na comunidade em um widget',
   'widgets:group_river_widget:edit:group' => 'Selecione uma comunidade',
-  'widgets:group_river_widget:view:not_configured' => 'Este widget ainda não foi configurado',
   'widgets:group_river_widget:view:noactivity' => 'Não foi encontrada nenhuma atividade.',
   'widgets:group_members:name' => 'Membros da comunidade',
   'widgets:group_members:description' => 'Mostra os membros da comunidade',

@@ -10,8 +10,6 @@ return [
 	
 	'group_tools:profile:field:group_tools_preset' => "Group Tools Preset",
 	
-	'group_tools:default:access:group' => "Group members only",
-
 	'group_tools:joinrequest:already' => "Revoke membership request",
 	'group_tools:joinrequest:already:tooltip' => "You already requested to join this group, click here to revoke this request",
 	'group_tools:join:already:tooltip' => "You were invited to this group so you can join right now.",
@@ -253,10 +251,6 @@ You can find the group here:
 
 	'group_tools:multiple_admin:group_tool_option' => "Enable group admins to assign other group admins",
 	
-	// group default access
-	'group_tools:default_access:title' => "Group default access",
-	'group_tools:default_access:description' => "Here you can control what the default access of new content in your group should be.",
-	
 	// group admin approve
 	'group_tools:group:admin_approve:notice' => "New groups need to be approved by a site administrator. You can make/edit the group, but it won't be visible to other users until approved by a site administrator.",
 	'group_tools:group:admin_approve:decline:confirm' => "Are you sure you wish to decline this group? This will delete the group.",
@@ -335,9 +329,6 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:groups:invite' => "Invite users",
 	'group_tools:groups:invite:member' => "Already a member of the group",
 	
-	'group_tools:group:invite:friends:select_all' => "Select all friends",
-	'group_tools:group:invite:friends:deselect_all' => "Deselect all friends",
-
 	'group_tools:group:invite:users' => "Find user(s)",
 	'group_tools:group:invite:users:description' => "Enter a name or username of a site member and select him/her from the list",
 	'group_tools:group:invite:users:all' => "Invite all site members to this group",
@@ -357,10 +348,6 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:groups:invitation:code:description' => "If you have received an invitation to join a group by e-mail, you can enter the invitation code here to accept the invitation. If you click on the link in the invitation e-mail the code will be entered for you.",
 
 	// group membership requests
-	'group_tools:groups:membershipreq:requests' => "Membership requests",
-	'group_tools:groups:membershipreq:invitations' => "Invited users",
-	'group_tools:groups:membershipreq:invitations:none' => "No pending user invitations",
-	'group_tools:groups:membershipreq:email_invitations' => "Invited e-mail addresses",
 	'group_tools:groups:membershipreq:email_invitations:none' => "No pending e-mail invitations",
 	'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Are you sure you wish to revoke this invitation",
 	'group_tools:groups:membershipreq:kill_request:prompt' => "Optionally you can tell the user why you declined the request.",
@@ -381,9 +368,6 @@ your group '%s' was declined and removed by a site administrator.",
 	'activity:group_tool_option:description' => "Show an activity feed about group related content.",
 	
 	// actions
-	// group edit
-	'group_tools:action:group:edit:error:default_access' => "The chosen default access level was more public than the group content access, therefore default access has been lowered to group members.",
-	
 	// group admins - action
 	'group_tools:action:toggle_admin:error:group' => "The given input doesn't result in a group or you can't edit this group or the user is not a member",
 	'group_tools:action:toggle_admin:error:remove' => "An unknown error occurred while removing the user as a group admin",
@@ -433,7 +417,6 @@ your group '%s' was declined and removed by a site administrator.",
     'widgets:group_river_widget:description' => "Shows the activity of a group in a widget",
 
     'widgets:group_river_widget:edit:group' => "Select a group",
-	'widgets:group_river_widget:view:not_configured' => "This widget is not yet configured",
 	'widgets:group_river_widget:view:noactivity' => "We could not find any activity.",
 
 	// Group Members
@@ -537,6 +520,9 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:action:toggle_notifications:disabled' => "The notifications for the group '%s' have been disabled",
 	'group_tools:action:toggle_notifications:enabled' => "The notifications for the group '%s' have been enabled",
 	
+	// disable notifications
+	'group_tools:action:notifications:success:disable' => "All notifcations have been disabled",
+	
 	// group join motivation
 	'group_tools:join_motivation:edit:option:label' => "Joining this closed group requires motivation",
 	'group_tools:join_motivation:edit:option:description' => "Closed groups can require that new users supply a motivation why they want to join.",
@@ -559,7 +545,6 @@ Click below to view their profile:
 
 Click below to view the group's join requests:
 %s",
-	'group_tools:join_motivation:toggle' => "Show motivation",
 	'group_tools:join_motivation:listing' => "Reason for joining:",
 	
 	// stale groups

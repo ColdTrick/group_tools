@@ -30,7 +30,7 @@ if (!empty($group_guid)) {
 }
 
 if (empty($group_guid)) {
-	echo elgg_echo('widgets:group_river_widget:view:not_configured');
+	echo elgg_echo('widgets:not_configured');
 	return;
 }
 
