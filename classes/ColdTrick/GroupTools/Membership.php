@@ -680,36 +680,6 @@ class Membership {
 	}
 	
 	/**
-	 * add menu items to the group memberships page
-	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:group:membershiprequests'
-	 *
-	 * @return void|\ElggMenuItem[]
-	 */
-	public static function groupMembershiprequests(\Elgg\Hook $hook) {
-		
-		$group = $hook->getEntityParam();
-		if (!$group instanceof \ElggGroup || !$group->canEdit()) {
-			return;
-		}
-		
-		$return = $hook->getValue();
-		
-		// invited emails
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'email_invites',
-			'text' => elgg_echo('group_tools:groups:membershipreq:email_invitations'),
-			'href' => elgg_generate_url('requests:email_invites:group:group', [
-				'guid' => $group->guid,
-			]),
-			'is_trusted' => true,
-			'priority' => 300,
-		]);
-		
-		return $return;
-	}
-	
-	/**
 	 * add menu items to the user invitation for group admins
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'menu:group:invitation'
@@ -735,41 +705,6 @@ class Membership {
 			'text' => elgg_echo('revoke'),
 			'href' => elgg_generate_action_url('groups/killinvitation', [
 				'user_guid' => $user->guid,
-				'group_guid' => $group->guid,
-			]),
-			'confirm' => elgg_echo('group_tools:groups:membershipreq:invitations:revoke:confirm'),
-			'link_class' => 'elgg-button elgg-button-delete mlm',
-		]);
-		
-		return $return;
-	}
-	
-	/**
-	 * add menu items to the email invitation for group admins
-	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:group:email_invitation'
-	 *
-	 * @return void|\ElggMenuItem[]
-	 */
-	public static function groupEmailInvitation(\Elgg\Hook $hook) {
-		
-		$annotation = $hook->getParam('annotation');
-		if (!$annotation instanceof \ElggAnnotation) {
-			return;
-		}
-		
-		$group = $hook->getParam('group');
-		if (!$group instanceof \ElggGroup || !$group->canEdit()) {
-			return;
-		}
-		
-		$return = $hook->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'revoke',
-			'text' => elgg_echo('revoke'),
-			'href' => elgg_generate_action_url('group_tools/revoke_email_invitation', [
-				'annotation_id' => $annotation->id,
 				'group_guid' => $group->guid,
 			]),
 			'confirm' => elgg_echo('group_tools:groups:membershipreq:invitations:revoke:confirm'),

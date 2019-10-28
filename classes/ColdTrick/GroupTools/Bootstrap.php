@@ -114,6 +114,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('prepare', 'notification:admin_approval:group:', __NAMESPACE__ . '\Notifications::prepareAdminApprovalMessage');
 		$hooks->registerHandler('prepare', 'notification:enqueue:object:group_tools_group_mail', __NAMESPACE__ . '\GroupMail::prepareNotification');
 		$hooks->registerHandler('prepare', 'notification:membership_request:group:group', __NAMESPACE__ . '\GroupAdmins::prepareMembershipRequestMessage');
+		$hooks->registerHandler('register', 'menu:annotation', __NAMESPACE__ . '\Menus\Annotation::registerEmailInvitation');
 		$hooks->registerHandler('register', 'menu:emailinvitation', __NAMESPACE__ . '\Membership::emailinvitationMenu');
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\GroupAdmins::assignGroupAdmin', 501);
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\EntityMenu::relatedGroup');
@@ -123,10 +124,9 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addSorting', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::cleanupTabs', 900);
-		$hooks->registerHandler('register', 'menu:group:email_invitation', __NAMESPACE__ . '\Membership::groupEmailInvitation');
 		$hooks->registerHandler('register', 'menu:group:invitation', __NAMESPACE__ . '\Membership::groupInvitation');
-		$hooks->registerHandler('register', 'menu:group:membershiprequests', __NAMESPACE__ . '\Membership::groupMembershiprequests');
 		$hooks->registerHandler('register', 'menu:groups_members', __NAMESPACE__ . '\Menus\GroupsMembers::registerGroupAdmins');
+		$hooks->registerHandler('register', 'menu:groups_members', __NAMESPACE__ . '\Menus\GroupsMembers::registerEmailInvitations');
 		$hooks->registerHandler('register', 'menu:membershiprequest', __NAMESPACE__ . '\Membership::membershiprequestMenu');
 		$hooks->registerHandler('register', 'menu:owner_block', __NAMESPACE__ . '\OwnerBlockMenu::relatedGroups');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\PageMenu::registerAdminItems', 501);

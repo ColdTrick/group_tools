@@ -1,37 +1,22 @@
 <?php
 /**
- * List all invited user for the group
+ * List all invited email addresses for the group
  */
 
-use Elgg\EntityPermissionsException;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Clauses\OrderByClause;
 
-elgg_gatekeeper();
-
-$guid = elgg_extract('guid', $vars);
-
-elgg_entity_gatekeeper($guid, 'group');
-$group = get_entity($guid);
-if (!$group->canEdit()) {
-	throw new EntityPermissionsException();
-}
+/* @var $group \ElggGroup */
+$group = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
-
-elgg_set_page_owner_guid($guid);
-
-$title = elgg_echo('group_tools:menu:invitations');
-
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
-elgg_push_breadcrumb($title);
 
 // additional title menu item
 elgg_register_menu_item('title', [
 	'name' => 'groups:invite',
-	'href' => elgg_generate_url('invite:group:group', [
-		'guid' => $group->guid,
-	]),
+	'icon' => 'user-plus',
+	'href' => elgg_generate_entity_url($group, 'invite'),
 	'text' => elgg_echo('groups:invite'),
 	'link_class' => 'elgg-button elgg-button-action',
 ]);
@@ -39,8 +24,10 @@ elgg_register_menu_item('title', [
 $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 25);
 
-// get invited users
-$options = [
+// build page elements
+$title = elgg_echo('collection:annotation:email_invitation:group');
+
+$content = elgg_list_annotations([
 	'selects' => [
 		function(QueryBuilder $qb, $main_alias) {
 			return "SUBSTRING_INDEX({$main_alias}.value, '|', -1) AS invited_email";
@@ -57,30 +44,20 @@ $options = [
 	'limit' => $limit,
 	'count' => true,
 	'order_by' => new OrderByClause('invited_email', 'ASC'),
-];
-
-$count = elgg_get_annotations($options);
-unset($options['count']);
-$emails = elgg_get_annotations($options);
-
-$content = elgg_view('group_tools/membershipreq/email_invites', [
-	'emails' => $emails,
-	'entity' => $group,
-	'offset' => $offset,
-	'limit' => $limit,
-	'count' => $count,
+	'no_results' => elgg_echo('group_tools:groups:membershipreq:email_invitations:none'),
 ]);
 
-$tabs = elgg_view_menu('group:membershiprequests', [
+$tabs = elgg_view_menu('groups_members', [
 	'entity' => $group,
-	'sort_by' => 'priority',
-	'class' => 'elgg-tabs',
+	'class' => 'elgg-tabs'
 ]);
 
-$body = elgg_view_layout('content', [
-	'content' => $content,
+// build page
+$body = elgg_view_layout('default', [
 	'title' => $title,
+	'content' => $content,
 	'filter' => $tabs,
 ]);
 
+// draw page
 echo elgg_view_page($title, $body);

@@ -350,16 +350,6 @@ $invite_settings .= elgg_view_field([
 
 $invite_settings .= elgg_view_field([
 	'#type' => 'checkbox',
-	'#label' => elgg_echo('group_tools:settings:invite_email:match'),
-	'name' => 'params[invite_email_match]',
-	'checked' => $plugin->invite_email_match === 'yes',
-	'switch' => true,
-	'default' => 'no',
-	'value' => 'yes',
-]);
-
-$invite_settings .= elgg_view_field([
-	'#type' => 'checkbox',
 	'#label' => elgg_echo('group_tools:settings:invite_csv'),
 	'name' => 'params[invite_csv]',
 	'checked' => $plugin->invite_csv === 'yes',

@@ -34,7 +34,6 @@ return [
 
 		'auto_suggest_groups' => 'yes',
 		'invite_friends' => 'yes',
-		'invite_email_match' => 'yes',
 	],
 	'entities' => [
 		[
@@ -94,9 +93,13 @@ return [
 				Gatekeeper::class,
 			],
 		],
-		'requests:email_invites:group:group' => [
-			'path' => '/groups/requests/{guid}/email_invites',
-			'resource' => 'groups/requests/email_invites',
+		'collection:annotation:email_invitation:group' => [
+			'path' => '/groups/invites/{guid}/email_invitations',
+			'resource' => 'groups/email_invitations',
+			'middleware' => [
+				Gatekeeper::class,
+				GroupPageOwnerCanEditGatekeeper::class,
+			],
 		],
 	],
 	'upgrades' => [

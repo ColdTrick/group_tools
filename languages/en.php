@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	// general
 	'group_tools:add_users' => "Add users",
@@ -17,11 +17,13 @@ return array(
 	'group_tools:join:already:tooltip' => "You were invited to this group so you can join right now.",
 	
 	'item:object:group_tools_group_mail' => "Group mail",
+	'collection:annotation:email_invitation:group' => "Manage e-mail invitations",
 	
 	// menu
 	'group_tools:menu:mail' => "Mail Members",
 	
 	'group_tools:menu:title:add:preset' => "Create a %s group",
+	'group_tools:menu:group_members:email_invitations' => "E-mail invitations",
 	
 	'admin:groups:bulk_delete' => "Group bulk delete",
 	'admin:groups:admin_approval' => "Approval needed",
@@ -71,7 +73,6 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:invite' => "Allow all users to be invited (not just friends)",
 	'group_tools:settings:invite_friends' => "Allow friends to be invited",
 	'group_tools:settings:invite_email' => "Allow all users to be invited by e-mail address",
-	'group_tools:settings:invite_email:match' => "Try to match e-mail addresses to existing users",
 	'group_tools:settings:invite_csv' => "Allow all users to be invited by CSV-file",
 	'group_tools:settings:invite_members' => "Allow group members to invite new users",
 	'group_tools:settings:invite_members:description' => "Group owners/admins can enable/disable this for their group",
@@ -583,4 +584,4 @@ Please check on the group here:
 	
 	'group_tools:upgrade:2019102501:title' => "Migrate group default content access",
 	'group_tools:upgrade:2019102501:description' => "As of Elgg 3.2 group default content access is part of Elgg. This will migrate the group tools settings to the correct place in Elgg.",
-);
+];
