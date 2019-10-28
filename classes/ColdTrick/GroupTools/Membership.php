@@ -695,26 +695,6 @@ class Membership {
 		
 		$return = $hook->getValue();
 		
-		// add default membership request
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'membershipreq',
-			'text' => elgg_echo('group_tools:groups:membershipreq:requests'),
-			'href' => elgg_generate_url('requests:group:group', [
-				'guid' => $group->guid,
-			]),
-			'is_trusted' => true,
-			'priority' => 100,
-		]);
-		// invited users
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'invites',
-			'text' => elgg_echo('group_tools:groups:membershipreq:invitations'),
-			'href' => elgg_generate_url('requests:invites:group:group', [
-				'guid' => $group->guid,
-			]),
-			'is_trusted' => true,
-			'priority' => 200,
-		]);
 		// invited emails
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'email_invites',

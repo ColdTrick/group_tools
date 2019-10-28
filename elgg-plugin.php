@@ -4,6 +4,7 @@ use ColdTrick\GroupTools\Bootstrap;
 use ColdTrick\GroupTools\Upgrades\FixGroupAccess;
 use Elgg\Router\Middleware\Gatekeeper;
 use ColdTrick\GroupTools\Upgrades\MigrateGroupDefaultContentAccess;
+use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
@@ -92,10 +93,6 @@ return [
 			'middleware' => [
 				Gatekeeper::class,
 			],
-		],
-		'requests:invites:group:group' => [
-			'path' => '/groups/requests/{guid}/invites',
-			'resource' => 'groups/requests/invites',
 		],
 		'requests:email_invites:group:group' => [
 			'path' => '/groups/requests/{guid}/email_invites',
