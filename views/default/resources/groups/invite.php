@@ -1,14 +1,13 @@
 <?php
 
-elgg_gatekeeper();
+use Elgg\EntityPermissionsException;
 
 $guid = elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid, 'group');
 
 $group = get_entity($guid);
 if (!$group->canEdit() && !group_tools_allow_members_invite($group)) {
-	register_error(elgg_echo('groups:noaccess'));
-	forward(REFERER);
+	throw new EntityPermissionsException(elgg_echo('groups:noaccess'));
 }
 
 elgg_set_page_owner_guid($guid);
@@ -27,33 +26,34 @@ if (in_array('yes', [$invite, $invite_csv, $invite_email])) {
 	$breadcrumb = elgg_echo('groups:invite');
 } else {
 	// no option is allowed
-	register_error(elgg_echo('group_tools:groups:invite:error'));
-	forward($group->getURL());
+	$ex = new EntityPermissionsException(elgg_echo('group_tools:groups:invite:error'));
+	$ex->setRedirectUrl($group->getURL());
+	
+	throw $ex;
 }
 
 // breadcrumb
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 elgg_push_breadcrumb($breadcrumb);
 
-$content = elgg_view_form('groups/invite', array(
+$content = elgg_view_form('groups/invite', [
 	'id' => 'invite_to_group',
 	'class' => 'elgg-form-alt mtm',
 	'enctype' => 'multipart/form-data', // to allow csv upload
-), array(
+], [
 	'entity' => $group,
 	'invite_friends' => $invite_friends,
 	'invite' => $invite,
 	'invite_email' => $invite_email,
 	'invite_csv' => $invite_csv,
-));
+]);
 
 // build page
-$params = array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-);
-$body = elgg_view_layout('content', $params);
+]);
 
 // draw page
 echo elgg_view_page($title, $body);
