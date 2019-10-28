@@ -622,7 +622,7 @@ class Membership {
 	}
 	
 	/**
-	 * add menu item to the page menu on the gruop profile page
+	 * Append text to an email notification with a link to the group notification settings
 	 *
 	 * @param \Elgg\Hook $hook 'email', 'system'
 	 *
