@@ -3,7 +3,6 @@
 namespace ColdTrick\GroupTools;
 
 use Elgg\Database\QueryBuilder;
-use Elgg\Menu\MenuItems;
 
 class Membership {
 	
