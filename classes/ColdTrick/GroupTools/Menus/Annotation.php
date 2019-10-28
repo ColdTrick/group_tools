@@ -41,4 +41,53 @@ class Annotation {
 		
 		return $result;
 	}
+	
+	/**
+	 * Add menu items to the email invitation annotation menu
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:annotation'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function registerEmailInvitationUser(\Elgg\Hook $hook) {
+		
+		$annotation = $hook->getParam('annotation');
+		if (!$annotation instanceof \ElggAnnotation || $annotation->name !== 'email_invitation') {
+			return;
+		}
+		
+		$user = elgg_get_logged_in_user_entity();
+		if (!$user instanceof \ElggUser) {
+			return;
+		}
+		list($secret, $email) = explode('|', $annotation->value);
+		
+		if ($email !== $user->email) {
+			return;
+		}
+		
+		/* @var $result MenuItems */
+		$result = $hook->getValue();
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'accept',
+			'text' => elgg_echo('accept'),
+			'href' => elgg_generate_action_url('groups/email_invitation', [
+				'invitecode' => $secret,
+			]),
+			'link_class' => 'elgg-button elgg-button-submit',
+		]);
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'decline',
+			'text' => elgg_echo('delete'),
+			'href' => elgg_generate_action_url('groups/decline_email_invitation', [
+				'invitecode' => $secret,
+			]),
+			'confirm' => elgg_echo('groups:invite:remove:check'),
+			'link_class' => 'elgg-button elgg-button-delete',
+		]);
+		
+		return $result;
+	}
 }

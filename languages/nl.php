@@ -375,9 +375,6 @@ Om naar de groep te gaan klik op onderstaande link:
 Als je nog geen account hebt op %s kun je je hier registreren
 %s
 
-Als je al een account hebt of na registratie, klik op de onderstaande link om de uitnodiging te accepteren:
-%s
-
 Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende code invoeren:
 %s',
   'group_tools:multiple_admin:group_admins' => 'Groepsbeheerders',

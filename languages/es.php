@@ -101,9 +101,6 @@ Para ver el grupo haz click en este link
 Si no tienes usuario en %s por favor regístrate aquí
 %s
 
-Si tienes un usuario o luego de registrarte, haz click en el siguiente link para aceptar la invitación
-%s
-
 También puedes ir a Todos los grupos -> Invitaciones de grupo e incluir el siguiene código:
 %s',
   'group_tools:notify:transfer:subject' => 'La administración del grupo %s te ha sido asignada',

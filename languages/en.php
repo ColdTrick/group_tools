@@ -18,12 +18,16 @@ return [
 	
 	'item:object:group_tools_group_mail' => "Group mail",
 	'collection:annotation:email_invitation:group' => "Manage e-mail invitations",
+	'collection:annotation:email_invitation:user' => "E-mail group invitations",
 	
 	// menu
 	'group_tools:menu:mail' => "Mail Members",
 	
 	'group_tools:menu:title:add:preset' => "Create a %s group",
 	'group_tools:menu:group_members:email_invitations' => "E-mail invitations",
+	
+	'group_tools:menu:group:invitations:invitations' => "Invitations",
+	'group_tools:menu:group:invitations:email_invitations' => "E-mail invitations",
 	
 	'admin:groups:bulk_delete' => "Group bulk delete",
 	'admin:groups:admin_approval' => "Approval needed",
@@ -198,9 +202,6 @@ To view the group click on this link
 %s
 
 If you don't have an account on %s please register here
-%s
-
-If you already have an account or after you registered, please click on the following link to accept the invitation
 %s
 
 You can also go to All site groups -> Group invitations and enter the following code:

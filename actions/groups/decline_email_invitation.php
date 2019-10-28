@@ -17,8 +17,8 @@ $deleted = elgg_call(ELGG_IGNORE_ACCESS, function() use ($invitecode) {
 		'wheres' => [
 			function(QueryBuilder $qb, $main_alias) use ($invitecode) {
 				$ors = [
-					$qb->compare("{$main_alias}.string", '=', $invitecode, ELGG_VALUE_STRING),
-					$qb->compare("{$main_alias}.string", 'like', "{$invitecode}|%", ELGG_VALUE_STRING),
+					$qb->compare("{$main_alias}.value", '=', $invitecode, ELGG_VALUE_STRING),
+					$qb->compare("{$main_alias}.value", 'like', "{$invitecode}|%", ELGG_VALUE_STRING),
 				];
 				
 				return $qb->merge($ors, 'OR');
@@ -28,7 +28,7 @@ $deleted = elgg_call(ELGG_IGNORE_ACCESS, function() use ($invitecode) {
 	]);
 });
 
-$forward_url = elgg_generate_url('collection:group:group:invitations', [
+$forward_url = elgg_generate_url('collection:annotation:email_invitation:user', [
 	'username' => elgg_get_logged_in_user_entity()->username,
 ]);
 

@@ -16,11 +16,11 @@ if (empty($invitecode)) {
 $group = group_tools_check_group_email_invitation($invitecode);
 
 if (empty($group)) {
-	return elgg_error_response(elgg_echo('group_tools:action:groups:email_invitation:error:code'), "groups/invitations/{$user->username}");
+	return elgg_error_response(elgg_echo('group_tools:action:groups:email_invitation:error:code'));
 }
 
-if (!groups_join_group($group, $user)) {
-	return elgg_error_response(elgg_echo('group_tools:action:groups:email_invitation:error:join', [$group->getDisplayName()]), "groups/invitations/{$user->username}");
+if (!$group->join($user)) {
+	return elgg_error_response(elgg_echo('group_tools:action:groups:email_invitation:error:join', [$group->getDisplayName()]));
 }
 
 elgg_call(ELGG_IGNORE_ACCESS, function() use ($group, $invitecode) {
@@ -30,15 +30,15 @@ elgg_call(ELGG_IGNORE_ACCESS, function() use ($group, $invitecode) {
 		'wheres' => [
 			function(QueryBuilder $qb, $main_alias) use ($invitecode) {
 				$ors = [
-					$qb->compare("{$main_alias}.string", '=', $invitecode, ELGG_VALUE_STRING),
-					$qb->compare("{$main_alias}.string", 'like', "{$invitecode}|%", ELGG_VALUE_STRING),
+					$qb->compare("{$main_alias}.value", '=', $invitecode, ELGG_VALUE_STRING),
+					$qb->compare("{$main_alias}.value", 'like', "{$invitecode}|%", ELGG_VALUE_STRING),
 				];
 				
 				return $qb->merge($ors, 'OR');
 			},
 		],
 		'annotation_owner_guid' => $group->guid,
-		'limit' => 1,
+		'limit' => false,
 	]);
 });
 

@@ -17,14 +17,26 @@ if (!$owner instanceof ElggGroup) {
 	return;
 }
 
+$page_owner = elgg_get_page_owner_entity();
+
 // value of the annotation is in the format 'secret|e-mail address'
 list(, $email) = explode('|', $annotation->value);
 
 $icon = elgg_view_entity_icon($owner, 'tiny');
 
-$title = elgg_format_element('h4', [], elgg_view('output/email', [
-	'value' => $email,
-]));
+$title_text = '';
+if ($page_owner->guid !== $owner->guid) {
+	$title_text = elgg_view('output/url', [
+		'text' => $owner->getDisplayName(),
+		'href' => $owner->getURL(),
+		'is_trusted' => true,
+	]);
+} else {
+	$title_text = elgg_view('output/email', [
+		'value' => $email,
+	]);
+}
+$title = elgg_format_element('h4', [], $title_text);
 
 $menu = elgg_view_menu('annotation', [
 	'annotation' => $annotation,

@@ -4,12 +4,8 @@
  * (auto-fill if provided by url param)
  */
 
-$user = elgg_get_logged_in_user_entity();
-if (!($user instanceof ElggUser)) {
-	return;
-}
-
-if (elgg_get_page_owner_guid() !== $user->guid) {
+$user = elgg_extract('entity', $vars);
+if (!$user instanceof ElggUser || $user->guid !== elgg_get_logged_in_user_guid()) {
 	// only show this form on the current user's page (only applies to admins)
 	return;
 }

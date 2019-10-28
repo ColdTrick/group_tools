@@ -2,7 +2,7 @@
 
 $user = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
 // build page elements
 $title = elgg_echo('groups:invitations');
@@ -17,10 +17,11 @@ $content = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
 });
 
 // build page
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'title' => $title,
 	'content' => $content,
-	'filter' => '',
+	'filter_id' => 'group:invitations',
+	'filter_value' => 'invitations',
 ]);
 
 // draw page

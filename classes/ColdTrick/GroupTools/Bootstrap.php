@@ -115,6 +115,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('prepare', 'notification:enqueue:object:group_tools_group_mail', __NAMESPACE__ . '\GroupMail::prepareNotification');
 		$hooks->registerHandler('prepare', 'notification:membership_request:group:group', __NAMESPACE__ . '\GroupAdmins::prepareMembershipRequestMessage');
 		$hooks->registerHandler('register', 'menu:annotation', __NAMESPACE__ . '\Menus\Annotation::registerEmailInvitation');
+		$hooks->registerHandler('register', 'menu:annotation', __NAMESPACE__ . '\Menus\Annotation::registerEmailInvitationUser');
 		$hooks->registerHandler('register', 'menu:emailinvitation', __NAMESPACE__ . '\Membership::emailinvitationMenu');
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\GroupAdmins::assignGroupAdmin', 501);
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\EntityMenu::relatedGroup');
@@ -124,6 +125,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addSorting', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::cleanupTabs', 900);
+		$hooks->registerHandler('register', 'menu:filter:group:invitations', __NAMESPACE__ . '\Menus\Filter::registerUserEmailInvitations');
 		$hooks->registerHandler('register', 'menu:group:invitation', __NAMESPACE__ . '\Membership::groupInvitation');
 		$hooks->registerHandler('register', 'menu:groups_members', __NAMESPACE__ . '\Menus\GroupsMembers::registerGroupAdmins');
 		$hooks->registerHandler('register', 'menu:groups_members', __NAMESPACE__ . '\Menus\GroupsMembers::registerEmailInvitations');

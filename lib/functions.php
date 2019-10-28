@@ -205,9 +205,6 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 			elgg_generate_url('account:register', [
 				'group_invitecode' => $invite_code,
 			]),
-			elgg_http_add_url_query_elements('groups/invitations', [
-				'invitecode' => $invite_code,
-			]),
 			$invite_code,
 		]),
 		'params' => [

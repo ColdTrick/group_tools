@@ -49,9 +49,6 @@ Para visualizar a comunidade, clique neste link:
 Se você não tiver uma conta em %s por favor registre-se aqui
 %s
 
-Se já possuir uma conta, clique aqui para aceitar o convite
-%s
-
 Ainda é possivel entrar nos convites de comunidades e digitar o seguinte código:
 %s',
   'group_tools:notify:transfer:subject' => 'A propriedade da comunidade %s foi transferida para você',

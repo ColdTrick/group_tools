@@ -5,6 +5,7 @@ use ColdTrick\GroupTools\Upgrades\FixGroupAccess;
 use Elgg\Router\Middleware\Gatekeeper;
 use ColdTrick\GroupTools\Upgrades\MigrateGroupDefaultContentAccess;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
+use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
@@ -99,6 +100,14 @@ return [
 			'middleware' => [
 				Gatekeeper::class,
 				GroupPageOwnerCanEditGatekeeper::class,
+			],
+		],
+		'collection:annotation:email_invitation:user' => [
+			'path' => '/groups/invitations/{username}/email',
+			'resource' => 'groups/user/email_invitations',
+			'middleware' => [
+				Gatekeeper::class,
+				UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 	],
