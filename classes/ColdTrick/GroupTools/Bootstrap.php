@@ -40,7 +40,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 			]);
 		}
 		
-		elgg_register_notification_event('group', null, ['admin_approval']);
+		elgg_register_notification_event('group', 'group', ['admin_approval']);
 		elgg_register_notification_event('object', 'group_tools_group_mail', ['enqueue']);
 
 		$this->registerViews();
@@ -111,7 +111,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('parameters', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::enableSorting');
 		$hooks->registerHandler('permissions_check', 'group', __NAMESPACE__ . '\GroupAdmins::permissionsCheck');
 		$hooks->registerHandler('prepare', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::setSelected', 550);
-		$hooks->registerHandler('prepare', 'notification:admin_approval:group:', __NAMESPACE__ . '\Notifications::prepareAdminApprovalMessage');
+		$hooks->registerHandler('prepare', 'notification:admin_approval:group:group', __NAMESPACE__ . '\Notifications::prepareAdminApprovalMessage');
 		$hooks->registerHandler('prepare', 'notification:enqueue:object:group_tools_group_mail', __NAMESPACE__ . '\GroupMail::prepareNotification');
 		$hooks->registerHandler('prepare', 'notification:membership_request:group:group', __NAMESPACE__ . '\GroupAdmins::prepareMembershipRequestMessage');
 		$hooks->registerHandler('register', 'menu:annotation', __NAMESPACE__ . '\Menus\Annotation::registerEmailInvitation');

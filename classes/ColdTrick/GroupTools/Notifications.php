@@ -61,7 +61,7 @@ class Notifications {
 	/**
 	 * Get the subscribers for a new group which needs admin approval
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'notification:admin_approval:group:'
+	 * @param \Elgg\Hook $hook 'prepare', 'notification:admin_approval:group:group'
 	 *
 	 * @return void|\Elgg\Notifications\Notification
 	 */
