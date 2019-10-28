@@ -77,9 +77,9 @@ class Bootstrap extends DefaultPluginBootstrap {
 	protected function registerEvents() {
 		$event = $this->elgg()->events;
 		
-		$event->registerHandler('create', 'relationship', __NAMESPACE__ . '\Membership::siteJoinEmailInvitedGroups');
-		$event->registerHandler('create', 'relationship', __NAMESPACE__ . '\Membership::siteJoinGroupInviteCode');
-		$event->registerHandler('create', 'relationship', __NAMESPACE__ . '\Membership::siteJoinDomainBasedGroups');
+		$event->registerHandler('create', 'user', __NAMESPACE__ . '\Membership::createUserEmailInvitedGroups');
+		$event->registerHandler('create', 'user', __NAMESPACE__ . '\Membership::createUserGroupInviteCode');
+		$event->registerHandler('create', 'user', __NAMESPACE__ . '\Membership::createUserDomainBasedGroups');
 		$event->registerHandler('create', 'user', __NAMESPACE__ . '\Membership::autoJoinGroups');
 		$event->registerHandler('delete', 'relationship', 'ColdTrick\GroupTools\Membership::deleteRequest');
 		$event->registerHandler('join', 'group', __NAMESPACE__ . '\Membership::groupJoin');

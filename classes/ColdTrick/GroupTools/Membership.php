@@ -429,19 +429,16 @@ class Membership {
 	/**
 	 * Listen to the create member_of_site relationship event to handle new users
 	 *
-	 * @param \Elgg\Event $event 'create', 'relationship'
+	 * @param \Elgg\Event $event 'create', 'user'
 	 *
 	 * @return void
 	 */
-	public static function siteJoinEmailInvitedGroups(\Elgg\Event $event) {
+	public static function createUserEmailInvitedGroups(\Elgg\Event $event) {
 		
-		$relationship = $event->getObject();
-		if (!self::validateSiteJoinRelationship($relationship)) {
+		$user = $event->getObject();
+		if ($user instanceof \ElggUser) {
 			return;
 		}
-		
-		$user_guid = (int) $relationship->guid_one;
-		$user = get_user($user_guid);
 		
 		// ignore access
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
@@ -461,20 +458,16 @@ class Membership {
 	/**
 	 * Listen to the create member_of_site relationship event to handle new users
 	 *
-	 * @param \Elgg\Event $event 'create', 'relationship'
+	 * @param \Elgg\Event $event 'create', 'user'
 	 *
 	 * @return void
 	 */
-	public static function siteJoinGroupInviteCode(\Elgg\Event $event) {
+	public static function createUserGroupInviteCode(\Elgg\Event $event) {
 		
-		$relationship = $event->getObject();
-		if (!self::validateSiteJoinRelationship($relationship)) {
+		$user = $event->getObject();
+		if (!$user instanceof \ElggUser) {
 			return;
 		}
-		
-		$user_guid = (int) $relationship->guid_one;
-		
-		$user = get_user($user_guid);
 		
 		// check for manual email invited groups
 		$group_invitecode = get_input('group_invitecode');
@@ -499,15 +492,15 @@ class Membership {
 				'wheres' => [
 					function(QueryBuilder $qb, $main_alias) use ($group_invitecode) {
 						$ors = [
-							$qb->compare("{$main_alias}.string", '=', $group_invitecode, ELGG_VALUE_STRING),
-							$qb->compare("{$main_alias}.string", 'like', "{$group_invitecode}|%", ELGG_VALUE_STRING),
+							$qb->compare("{$main_alias}.value", '=', $group_invitecode, ELGG_VALUE_STRING),
+							$qb->compare("{$main_alias}.value", 'like', "{$group_invitecode}|%", ELGG_VALUE_STRING),
 						];
 						
 						return $qb->merge($ors, 'OR');
 					},
 				],
 				'annotation_owner_guid' => $group->guid,
-				'limit' => 1,
+				'limit' => false,
 			]);
 		});
 	}
@@ -515,20 +508,16 @@ class Membership {
 	/**
 	 * Listen to the create member_of_site relationship event to handle new users
 	 *
-	 * @param \Elgg\Event $event 'create', 'relationship'
+	 * @param \Elgg\Event $event 'create', 'user'
 	 *
 	 * @return void
 	 */
-	public static function siteJoinDomainBasedGroups(\Elgg\Event $event) {
+	public static function createUserDomainBasedGroups(\Elgg\Event $event) {
 		
-		$relationship = $event->getObject();
-		if (!self::validateSiteJoinRelationship($relationship)) {
+		$user = $event->getObject();
+		if (!$user instanceof \ElggUser) {
 			return;
 		}
-		
-		$user_guid = (int) $relationship->guid_one;
-		
-		$user = get_user($user_guid);
 		
 		// ignore access
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
