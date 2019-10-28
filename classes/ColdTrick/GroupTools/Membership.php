@@ -24,25 +24,29 @@ class Membership {
 	public static function deleteRequest(\Elgg\Event $event) {
 		
 		$relationship = $event->getObject();
-		if (!$relationship instanceof \ElggRelationship) {
-			return;
-		}
-		
-		if ($relationship->relationship !== 'membership_request') {
+		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'membership_request') {
 			// not a membership request
-			return;
-		}
-		
-		$action_pattern = '/action\/groups\/killrequest/i';
-		if (!preg_match($action_pattern, current_page_url())) {
-			// not in the action, so do nothing
 			return;
 		}
 		
 		$group = get_entity($relationship->guid_two);
 		$user = get_user($relationship->guid_one);
-		
 		if (empty($user) || !$group instanceof \ElggGroup) {
+			return;
+		}
+		
+		// remove join motivations
+		elgg_delete_annotations([
+			'guid' => $group->guid,
+			'annotation_owner_guid' => $user->guid,
+			'annotation_name' => 'join_motivation',
+			'limit' => false,
+		]);
+		
+		// notify requesting user about declined request
+		$action_pattern = '/action\/groups\/killrequest/i';
+		if (!preg_match($action_pattern, current_page_url())) {
+			// not in the action, so do nothing
 			return;
 		}
 		
@@ -726,73 +730,6 @@ class Membership {
 	}
 	
 	/**
-	 * add menu items to the membershiprequest for group admins
-	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:group:membershiprequest'
-	 *
-	 * @return void|\ElggMenuItem[]
-	 */
-	public static function groupMembershiprequest(\Elgg\Hook $hook) {
-		
-		$user = $hook->getEntityParam();
-		if (!$user instanceof \ElggUser) {
-			return;
-		}
-		
-		$group = $hook->getParam('group');
-		if (!$group instanceof \ElggGroup || !$group->canEdit()) {
-			return;
-		}
-		
-		$return = $hook->getValue();
-		
-		// show motivation button
-		$motivation = $group->getAnnotations([
-			'annotation_name' => 'join_motivation',
-			'count' => true,
-			'annotation_owner_guid' => $user->guid,
-		]);
-		if (!empty($motivation)) {
-			$return[] = \ElggMenuItem::factory([
-				'name' => 'toggle_motivation',
-				'text' => elgg_echo('group_tools:join_motivation:toggle'),
-				'href' => "#group-tools-group-membershiprequest-motivation-{$user->guid}",
-				'rel' => 'toggle',
-				'link_class' => 'elgg-button elgg-button-action',
-				'priority' => 10,
-			]);
-		}
-		
-		// accept button
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'accept',
-			'text' => elgg_echo('accept'),
-			'href' => elgg_generate_action_url('groups/addtogroup', [
-				'user_guid' => $user->guid,
-				'group_guid' => $group->guid,
-			]),
-			'link_class' => 'elgg-button elgg-button-submit group-tools-accept-request',
-			'rel' => $user->guid,
-		]);
-		
-		// decline button
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'decline',
-			'text' => elgg_echo('decline'),
-			'href' => "#group-kill-request-{$user->guid}",
-			'link_class' => 'elgg-button elgg-button-delete elgg-lightbox',
-			'rel' => $user->guid,
-			'data-colorbox-opts' => json_encode([
-				'inline' => true,
-				'width' => '600px',
-				'closeButton' => false,
-			]),
-		]);
-		
-		return $return;
-	}
-	
-	/**
 	 * add menu items to the user invitation for group admins
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'menu:group:invitation'
@@ -857,43 +794,6 @@ class Membership {
 			]),
 			'confirm' => elgg_echo('group_tools:groups:membershipreq:invitations:revoke:confirm'),
 			'link_class' => 'elgg-button elgg-button-delete mlm',
-		]);
-		
-		return $return;
-	}
-	
-	/**
-	 * add menu item to the page menu on the gruop profile page
-	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:page'
-	 *
-	 * @return void|MenuItems
-	 */
-	public static function groupProfileSidebar(\Elgg\Hook $hook) {
-		
-		if (!elgg_in_context('group_profile')) {
-			return;
-		}
-		
-		$group = elgg_get_page_owner_entity();
-		if (!$group instanceof \ElggGroup || !$group->canEdit()) {
-			return;
-		}
-		
-		/* @var $return MenuItems */
-		$return = $hook->getValue();
-		
-		if ($return->has('membership_requests')) {
-			return;
-		}
-		
-		// add link to the manage invitations page
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'membership_requests',
-			'text' => elgg_echo('group_tools:menu:invitations'),
-			'href' => elgg_generate_url('requests:invites:group:group', [
-				'guid' => $group->guid,
-			]),
 		]);
 		
 		return $return;

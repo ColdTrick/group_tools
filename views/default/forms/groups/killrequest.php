@@ -1,32 +1,46 @@
 <?php
 
+use Elgg\BadRequestException;
+
 elgg_require_js('group_tools/killrequest');
 
-$group = elgg_extract('group', $vars);
-$user = elgg_extract('user', $vars);
+$relationship_id = (int) elgg_extract('relationship_id', $vars);
 
-if (!($group instanceof ElggGroup)) {
-	return;
+$relationship = get_relationship($relationship_id);
+error_log(var_export($relationship, true));
+if (!$relationship instanceof ElggRelationship || $relationship->relationship !== 'membership_request') {
+	throw new BadRequestException();
 }
 
-if (!($user instanceof ElggUser)) {
-	return;
+$user = get_entity($relationship->guid_one);
+$group = elgg_call(ELGG_IGNORE_ACCESS, function() use ($relationship) {
+	return get_entity($relationship->guid_two);
+});
+if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
+	throw new BadRequestException();
 }
 
-$content = elgg_view_field([
+echo elgg_view_field([
 	'#type' => 'hidden',
-	'name' => 'group_guid', 
+	'name' => 'group_guid',
 	'value' => $group->guid,
 ]);
-$content .= elgg_view_field([
+
+echo elgg_view_field([
 	'#type' => 'hidden',
-	'name' => 'user_guid', 
+	'name' => 'user_guid',
 	'value' => $user->guid,
 ]);
 
-$content .= elgg_echo('group_tools:groups:membershipreq:kill_request:prompt');
-$content .= elgg_view_field([
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'relationship_id',
+	'value' => $relationship->id,
+]);
+
+$content = elgg_view_field([
 	'#type' => 'plaintext',
+	'#label' => elgg_echo('group_tools:groups:membershipreq:kill_request:prompt'),
 	'name' => 'reason',
 	'rows' => '3',
 ]);
@@ -34,14 +48,19 @@ $content .= elgg_view_field([
 echo elgg_view_module('info', elgg_echo('groups:joinrequest:remove:check'), $content);
 
 $footer = elgg_view_field([
-	'#type' => 'button',
-	'value' => elgg_echo('cancel'),
-	'class' => 'elgg-button-cancel float-alt',
-	'onclick' => '$.colorbox.close();',
-]);
-$footer .= elgg_view_field([
-	'#type' => 'submit',
-	'value' => elgg_echo('decline')
+	'#type' => 'fieldset',
+	'align' => 'horizontal',
+	'fields' => [
+		[
+			'#type' => 'submit',
+			'value' => elgg_echo('decline'),
+		],
+		[
+			'#type' => 'button',
+			'value' => elgg_echo('cancel'),
+			'onclick' => '$.colorbox.close();',
+		],
+	],
 ]);
 
 elgg_set_form_footer($footer);

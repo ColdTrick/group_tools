@@ -69,6 +69,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		
 		elgg_register_ajax_view('forms/group_tools/admin/auto_join/additional');
 		elgg_register_ajax_view('forms/group_tools/admin/auto_join/default');
+		elgg_register_ajax_view('forms/groups/killrequest');
 		elgg_register_ajax_view('group_tools/elements/auto_join_match_pattern');
 		elgg_register_ajax_view('group_tools/forms/motivation');
 	}
@@ -122,17 +123,15 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addSorting', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::cleanupTabs', 900);
-		$hooks->registerHandler('register', 'menu:filter:group:invitations', __NAMESPACE__ . '\Menus\Filter::registerGroupInvitationTabs');
 		$hooks->registerHandler('register', 'menu:group:email_invitation', __NAMESPACE__ . '\Membership::groupEmailInvitation');
 		$hooks->registerHandler('register', 'menu:group:invitation', __NAMESPACE__ . '\Membership::groupInvitation');
-		$hooks->registerHandler('register', 'menu:group:membershiprequest', __NAMESPACE__ . '\Membership::groupMembershiprequest');
 		$hooks->registerHandler('register', 'menu:group:membershiprequests', __NAMESPACE__ . '\Membership::groupMembershiprequests');
 		$hooks->registerHandler('register', 'menu:groups_members', __NAMESPACE__ . '\Menus\GroupsMembers::registerGroupAdmins');
 		$hooks->registerHandler('register', 'menu:membershiprequest', __NAMESPACE__ . '\Membership::membershiprequestMenu');
 		$hooks->registerHandler('register', 'menu:owner_block', __NAMESPACE__ . '\OwnerBlockMenu::relatedGroups');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\PageMenu::registerAdminItems', 501);
-		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\Membership::groupProfileSidebar');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\GroupMail::pageMenu');
+		$hooks->registerHandler('register', 'menu:relationship', __NAMESPACE__ . '\Menus\Relationship::groupDeclineMembershipReason', 501);
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::groupMembership', 501);
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::groupInvite', 501);
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::groupAdminStatus', 501);
@@ -144,6 +143,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('tool_options', 'group', __NAMESPACE__ . '\Tools::registerRelatedGroups');
 		$hooks->registerHandler('view_vars', 'groups/edit/access', __NAMESPACE__ . '\Views::allowGroupOwnerTransfer');
 		$hooks->registerHandler('view_vars', 'page/components/list', __NAMESPACE__ . '\Views::livesearchUserListing');
+		$hooks->registerHandler('view_vars', 'relationship/membership_request', __NAMESPACE__ . '\Views::addJoinMotivationToGroupMembershipRequest');
 		$hooks->registerHandler('view_vars', 'resources/account/register', __NAMESPACE__ . '\Router::allowRegistration');
 		$hooks->registerHandler('view_vars', 'resources/groups/add', __NAMESPACE__ . '\Views::protectGroupAdd');
 		$hooks->registerHandler('view_vars', 'resources/groups/all', __NAMESPACE__ . '\Views::prepareGroupAll');

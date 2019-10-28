@@ -67,7 +67,7 @@ class TitleMenu {
 			$menu_item->addLinkClass('elgg-lightbox');
 			$opts = 'data-colorbox-opts';
 			$menu_item->$opts = json_encode([
-				'width' => '500px',
+				'width' => '600px',
 			]);
 		}
 

@@ -20,7 +20,6 @@ return array(
 	
 	// menu
 	'group_tools:menu:mail' => "Mail Members",
-	'group_tools:menu:invitations' => "Manage invitations",
 	
 	'group_tools:menu:title:add:preset' => "Create a %s group",
 	
@@ -363,11 +362,6 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:groups:membershipreq:email_invitations:none' => "No pending e-mail invitations",
 	'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Are you sure you wish to revoke this invitation",
 	'group_tools:groups:membershipreq:kill_request:prompt' => "Optionally you can tell the user why you declined the request.",
-
-	// group invitations
-	'group_tools:group:invitations:request' => "Outstanding membership requests",
-	'group_tools:group:invitations:request:revoke:confirm' => "Are you sure you wish to revoke your membership request?",
-	'group_tools:group:invitations:request:non_found' => "There are no outstanding membership requests at this time",
 
 	// group listing
 	'group_tools:groups:sorting:open' => "Open",

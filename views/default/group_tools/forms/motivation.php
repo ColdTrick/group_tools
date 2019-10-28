@@ -1,9 +1,15 @@
 <?php
 
-$group_guid = (int) get_input('guid');
-elgg_entity_gatekeeper($group_guid, 'group');
+use Elgg\EntityNotFoundException;
 
-$group = get_entity($group_guid);
+$group_guid = (int) get_input('guid');
+$group = elgg_call(ELGG_IGNORE_ACCESS, function () use ($group_guid) {
+	return get_entity($group_guid);
+});
+
+if (!$group instanceof ElggGroup) {
+	throw new EntityNotFoundException();
+}
 
 $title = elgg_echo('group_tools:join_motivation:title', [$group->getDisplayName()]);
 

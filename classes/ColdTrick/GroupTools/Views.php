@@ -119,4 +119,45 @@ class Views {
 		
 		return $vars;
 	}
+	
+	/**
+	 * Show the join motivation on a membership request
+	 *
+	 * @param \Elgg\Hook $hook 'view_vars', 'relationship/membership_request'
+	 *
+	 * @return void|array
+	 */
+	public static function addJoinMotivationToGroupMembershipRequest(\Elgg\Hook $hook) {
+		
+		$vars = $hook->getValue();
+		$relationship = elgg_extract('relationship', $vars);
+		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'membership_request') {
+			return;
+		}
+		
+		$user = get_entity($relationship->guid_one);
+		$group = elgg_call(ELGG_IGNORE_ACCESS, function() use ($relationship) {
+			return get_entity($relationship->guid_two);
+		});
+		if (!$group instanceof \ElggGroup || !$user instanceof \ElggUser) {
+			return;
+		}
+		
+		$motivations = $group->getAnnotations([
+			'annotation_name' => 'join_motivation',
+			'annotation_owner_guid' => $user->guid,
+			'limit' => 1,
+		]);
+		if (empty($motivations)) {
+			return;
+		}
+		
+		$vars['content'] = elgg_format_element('b', [], elgg_echo('group_tools:join_motivation:listing'));
+		$vars['content'] .= elgg_view('output/longtext', [
+			'value' => $motivations[0]->value,
+			'class' => 'mtn',
+		]);
+		
+		return $vars;
+	}
 }
