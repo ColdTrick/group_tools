@@ -124,7 +124,7 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = "") {
 		return false;
 	}
 	
-	return elgg_call(ELGG_IGNORE_ACCESS, function() use ($group, $user, $loggedin_user) {
+	return elgg_call(ELGG_IGNORE_ACCESS, function() use ($group, $user, $loggedin_user, $text) {
 		
 		if (!$group->join($user)) {
 			return false;
