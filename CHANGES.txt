@@ -1,6 +1,20 @@
 Version history
 ===============
 
+11.0 (2019-11-26):
+
+- changed: group owner transfer uses core options
+- changed: increased minimal Elgg requirement to 3.2
+- changed: listing of e-mail invitations uses annotation view
+- changed: membership requests use core functionality
+- changed: site join events moved to user creation events
+- fixed: admin approval of groups
+- fixed: plugin priority issue with profile manager
+- fixed: send custom text when adding users
+- fixed: user e-mail invitation listing
+- removed: default group content access
+- removed: group invites page for roup admins
+
 10.4 (2019-09-18):
 
 - changed: inviting users to group now finds all users but shows message
