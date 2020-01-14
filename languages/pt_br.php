@@ -82,7 +82,7 @@ Para visualizar a comunidade, clique neste link:
   'group_tools:group:invite:email' => 'Usando endereço de email',
   'group_tools:group:invite:email:description' => 'Digite um endereço de email válido e selecione da lista',
   'group_tools:group:invite:csv' => 'Usando envio de arquivo CSV',
-  'group_tools:group:invite:csv:description' => 'Você pode enviar um arquivo CSV com os usuários.<br />O formato deve ser: nome;e-mail . Não deve possuir uma linha de cabeçalho.',
+  'group_tools:group:invite:csv:description' => 'Você pode enviar um arquivo CSV com os usuários.<br />O formato deve ser: e-mail . Não deve possuir uma linha de cabeçalho.',
   'group_tools:group:invite:text' => 'Nota pessoal (opcional)',
   'group_tools:group:invite:add:confirm' => 'Tem certeza que deseja adicionar estes usuários diretamente?',
   'group_tools:group:invite:resend' => 'Reenviar convites para usuários que já foram convidados',

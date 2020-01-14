@@ -389,8 +389,8 @@ Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende co
   'group_tools:group:invite:email' => 'Obv e-mail adres',
   'group_tools:group:invite:email:description' => 'Geef een geldig e-mail adres op en voeg het toe aan de lijst',
   'group_tools:group:invite:csv' => 'Obv CSV bestand',
-  'group_tools:group:invite:csv:description' => 'Je kunt een CSV bestand uploaden om gebruikers uit te nodigen<br>
-Het formaat moet zijn: weergave naam;e-mail adres. Er mag geen kopregel zijn.',
+  'group_tools:group:invite:csv:description' => 'Je kunt een CSV bestand uploaden om gebruikers uit te nodigen
+In de eerste kolom moeten de e-mail adressen van de nieuwe leden staan. Er mag geen kopregel zijn.',
   'group_tools:group:invite:text' => 'Persoonlijk bericht (optioneel)',
   'group_tools:group:invite:add:confirm' => 'Weet je zeker dat je deze gebruikers direct wilt toevoegen?',
   'group_tools:groups:invitation:code:title' => 'Groep uitnodiging via e-mail',

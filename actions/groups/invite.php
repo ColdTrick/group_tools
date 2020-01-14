@@ -136,12 +136,11 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 			while (($data = fgetcsv($fh, 0, ';')) !== false) {
 				/*
 				 * data structure
-				 * data[0] => displayname
-				 * data[1] => e-mail address
+				 * data[0] => e-mail address
 				 */
 				$email = '';
-				if (isset($data[1])) {
-					$email = trim($data[1]);
+				if (isset($data[0])) {
+					$email = trim($data[0]);
 				}
 				
 				if (empty($email) || !is_email_address($email)) {
