@@ -47,12 +47,13 @@ if ($widget->context !== 'groups') {
 		'#label' => elgg_echo('widgets:group_river_widget:edit:group'),
 		'name' => 'params[group_guid]',
 		'value' => $widget->group_guid,
-		'options' => $group_options_values,
+		'options' => [],
 	];
 	
 	$owner = $widget->getOwnerEntity();
 	if ($owner instanceof ElggUser) {
-		$group_picker_options['options']['match_owner'] = $owner->guid;
+		$group_picker_options['options']['match_target'] = $owner->guid;
+		$group_picker_options['options']['match_owner'] = false;
 		$group_picker_options['options']['match_membership'] = true;
 	}
 	
