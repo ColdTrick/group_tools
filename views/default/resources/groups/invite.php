@@ -48,12 +48,15 @@ $content = elgg_view_form('groups/invite', [
 	'invite_csv' => $invite_csv,
 ]);
 
-// build page
-$body = elgg_view_layout('content', [
-	'content' => $content,
-	'title' => $title,
-	'filter' => '',
+$filter = elgg_view('group_tools/invite/filter', [
+	'invite_friends' => $invite_friends,
+	'invite' => $invite,
+	'invite_email' => $invite_email,
+	'invite_csv' => $invite_csv,
 ]);
 
 // draw page
-echo elgg_view_page($title, $body);
+echo elgg_view_page($title, [
+	'content' => $content,
+	'filter' => $filter,
+]);

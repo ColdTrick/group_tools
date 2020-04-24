@@ -112,10 +112,8 @@ $content = elgg_view_form('group_tools/members_search', [
 ]);
 $content .= $user_list;
 
-$body = elgg_view_layout('content', [
-	'title' => $title,
+// draw page
+echo elgg_view_page($title, [
 	'content' => $content,
 	'filter' => $tabs,
 ]);
-
-echo elgg_view_page($title, $body);

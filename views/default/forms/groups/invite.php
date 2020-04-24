@@ -14,12 +14,6 @@ $invite_site_members = elgg_extract('invite', $vars, 'no');
 $invite_email = elgg_extract('invite_email', $vars, 'no');
 $invite_csv = elgg_extract('invite_csv', $vars, 'no');
 
-// load js
-elgg_require_js('group_tools/invite');
-
-// show tabs
-echo elgg_view('group_tools/invite/filter', $vars);
-
 // invite friends
 $class = [
 	'group-tools-invite-form',
@@ -92,14 +86,14 @@ echo elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->guid]
 // show buttons
 $footer_fields = [
 	[
-	'#type' => 'submit', 
-	'name' => 'submit', 
+	'#type' => 'submit',
+	'name' => 'submit',
 	'value' => elgg_echo('invite'),
 	],
 ];
 if (elgg_is_admin_logged_in()) {
 	$footer_fields[] = [
-		'#type' => 'submit', 
+		'#type' => 'submit',
 		'name' => 'submit',
 		'value' => elgg_echo('group_tools:add_users'),
 		'onclick' => 'return confirm("' . elgg_echo('group_tools:group:invite:add:confirm') . '");',

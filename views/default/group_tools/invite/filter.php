@@ -5,6 +5,9 @@
  * used in /forms/groups/invite
  */
 
+// load js
+elgg_require_js('group_tools/invite');
+
 $invite_friends = elgg_extract('invite_friends', $vars, 'yes');
 $invite_site_members = elgg_extract('invite', $vars, 'no');
 $invite_email = elgg_extract('invite_email', $vars, 'no');

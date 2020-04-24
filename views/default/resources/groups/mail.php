@@ -42,13 +42,8 @@ $body_vars = [
 ];
 $form = elgg_view_form('group_tools/mail', $form_vars, $body_vars);
 
-// build page
-$body = elgg_view_layout('content', [
-	'entity' => $group,
-	'title' => $title_text,
-	'content' => $form,
-	'filter' => false,
-]);
-
 // draw page
-echo elgg_view_page($title_text, $body);
+echo elgg_view_page($title_text, [
+	'entity' => $group,
+	'content' => $form,
+]);
