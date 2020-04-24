@@ -1,0 +1,11 @@
+.elgg-layout-content {
+	> div {
+		display: none;
+	}
+	
+	.group-tools-group-edit-section {
+		> div {
+			margin-bottom: 15px;
+		}
+	}
+}

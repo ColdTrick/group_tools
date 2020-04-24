@@ -10,6 +10,7 @@ if (!$group && elgg_get_plugin_setting('simple_create_form', 'group_tools') == '
 
 // load js
 elgg_require_js('group_tools/group_edit_tabbed');
+elgg_require_css('group_tools/group_edit_tabbed');
 
 // make tabs
 $tabs = [
@@ -48,5 +49,3 @@ foreach ($tabs as $name => $tab) {
 	
 	elgg_register_menu_item('filter', $tab);
 }
-
-echo elgg_format_element('div', ['id' => 'group-tools-group-edit-tabbed'], elgg_view_menu('filter'));

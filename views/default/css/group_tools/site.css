@@ -12,14 +12,6 @@
 	}
 }
 
-#group-tools-group-edit-tabbed ~ div {
-	display: none;
-}
-
-.group-tools-group-edit-section > div {
-	margin-bottom: 15px;
-}
-
 #group-tools-invite-email .elgg-fieldset-horizontal {
 	display: flex;
 	align-items: flex-end;
