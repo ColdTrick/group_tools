@@ -130,6 +130,9 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 	
 	// invite from csv
 	if ($csv instanceof UploadedFile) {
+		// this could take a while
+		set_time_limit(0);
+		
 		$fh = fopen($csv->getPathname(), 'r');
 		
 		if (!empty($fh)) {
