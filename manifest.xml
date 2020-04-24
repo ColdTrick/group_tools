@@ -8,12 +8,12 @@
 	<website>http://www.coldtrick.com/</website>
 	<repository>https://github.com/ColdTrick/group_tools</repository>
 	<bugtracker>https://github.com/ColdTrick/group_tools/issues</bugtracker>
-	<copyright>(C) ColdTrick IT Solutions 2011 - 2019</copyright>
+	<copyright>(C) ColdTrick IT Solutions 2011 - 2020</copyright>
 	<license>GNU General Public License version 2</license>
  	
  	<requires>
 		<type>elgg_release</type>
-		<version>3.2</version>
+		<version>3.3</version>
 	</requires>
 	
 	<requires>
