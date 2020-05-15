@@ -399,6 +399,8 @@ $invite_settings .= elgg_view_field([
 echo elgg_view_module('info', elgg_echo('group_tools:settings:invite:title'), $invite_settings);
 
 // group content settings
+$group_content = '';
+
 $group_content .= elgg_view_field([
 	'#type' => 'checkbox',
 	'#label' => elgg_echo('group_tools:settings:search_index'),
