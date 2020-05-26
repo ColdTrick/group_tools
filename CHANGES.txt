@@ -1,6 +1,13 @@
 Version history
 ===============
 
+12.0 (2020-05-26):
+
+- changed: incerased minimal ELgg version to 3.3
+- fixed: double filter menu on group edit page
+- fixed: inviting all site members crashed the invite action
+- fixed: use correct options for grouppicker in river widget
+
 11.0.1 (2020-01-21):
 
 - fixed: csv invite members file format
