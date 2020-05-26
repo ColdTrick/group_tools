@@ -17,17 +17,19 @@ $user_guids = array_merge($user_guids, $non_group_members);
 $adding = false;
 if (elgg_is_admin_logged_in()) {
 	// add all users?
-	if (get_input('all_users') == 'yes') {
-		$site = elgg_get_site_entity();
+	if (get_input('all_users') === 'yes') {
+		// this could take a while
+		set_time_limit(0);
 		
-		$options = [
+		// prepare a batch for memory saving
+		$user_guids = elgg_get_entities([
+			'type' => 'user',
 			'limit' => false,
 			'callback' => function ($row) {
 				return (int) $row->guid;
 			},
-		];
-		
-		$user_guids = $site->getMembers($options);
+			'batch' => true,
+		]);
 	}
 	
 	// add users directly?
@@ -44,7 +46,7 @@ $emails = (array) get_input('user_guid_email');
 $csv = elgg_get_uploaded_file('csv');
 
 $resend = false;
-if (get_input('resend') == 'yes') {
+if (get_input('resend') === 'yes') {
 	$resend = true;
 }
 
