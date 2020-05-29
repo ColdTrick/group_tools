@@ -7,7 +7,6 @@ elgg_require_js('group_tools/killrequest');
 $relationship_id = (int) elgg_extract('relationship_id', $vars);
 
 $relationship = get_relationship($relationship_id);
-error_log(var_export($relationship, true));
 if (!$relationship instanceof ElggRelationship || $relationship->relationship !== 'membership_request') {
 	throw new BadRequestException();
 }
