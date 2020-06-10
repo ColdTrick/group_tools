@@ -151,18 +151,9 @@ class GroupSortMenu {
 		if (!in_array($order, ['ASC', 'DESC'])) {
 			$order = 'ASC';
 		}
-		$sort = get_input('sort', 'newest');
-		
-		$child_menu_config = [
-			'display' => 'dropdown',
-			'data-position' => json_encode([
-				'my' => 'right top',
-				'at' => 'right bottom',
-				'collision' => 'fit fit',
-			]),
-		];
-		$parent_name = $sort;
-		if ($sort === 'alpha') {
+
+		$parent_name = get_input('sort', 'newest');
+		if ($parent_name === 'alpha') {
 			if ($order === 'ASC') {
 				$parent_name = 'alpha_az';
 			} else {
@@ -179,11 +170,9 @@ class GroupSortMenu {
 			'href' => elgg_http_add_url_query_elements($base_url, [
 				'sort' => 'newest',
 			]),
-			'priority' => $sort === 'newest' ? 99999 : 100,
-			'parent_name' => $sort !== 'newest' ? $parent_name : null,
+			'priority' => 100,
+			'parent_name' => $parent_name,
 			'selected' => false,
-			'child_menu' => $sort === 'newest' ? $child_menu_config : null,
-			'item_class' => $sort === 'newest' ? 'group-tools-listing-sorting' : null,
 		]);
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'alpha_az',
@@ -194,11 +183,9 @@ class GroupSortMenu {
 				'sort' => 'alpha',
 				'order' => 'ASC',
 			]),
-			'priority' => ($sort === 'alpha' && $order === 'ASC') ? 99999 : 200,
-			'parent_name' => ($sort !== 'alpha' || $order !== 'ASC') ? $parent_name : null,
+			'priority' => 200,
+			'parent_name' => $parent_name,
 			'selected' => false,
-			'child_menu' => ($sort === 'alpha' && $order === 'ASC') ? $child_menu_config : null,
-			'item_class' => ($sort === 'alpha' && $order === 'ASC') ? 'group-tools-listing-sorting' : null,
 		]);
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'alpha_za',
@@ -209,11 +196,9 @@ class GroupSortMenu {
 				'sort' => 'alpha',
 				'order' => 'DESC',
 			]),
-			'priority' => ($sort === 'alpha' && $order === 'DESC') ? 99999 : 201,
-			'parent_name' => ($sort !== 'alpha' || $order !== 'DESC') ? $parent_name : null,
+			'priority' => 201,
+			'parent_name' => $parent_name,
 			'selected' => false,
-			'child_menu' => ($sort === 'alpha' && $order === 'DESC') ? $child_menu_config : null,
-			'item_class' => ($sort === 'alpha' && $order === 'DESC') ? 'group-tools-listing-sorting' : null,
 		]);
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'popular',
@@ -223,13 +208,26 @@ class GroupSortMenu {
 			'href' => elgg_http_add_url_query_elements($base_url, [
 				'sort' => 'popular',
 			]),
-			'priority' => $sort === 'popular' ? 99999 : 300,
-			'parent_name' => $sort !== 'popular' ? $parent_name : null,
+			'priority' => 300,
+			'parent_name' => $parent_name,
 			'selected' => false,
-			'child_menu' => $sort === 'popular' ? $child_menu_config : null,
-			'item_class' => $sort === 'popular' ? 'group-tools-listing-sorting' : null,
 		]);
 		
+		/** @var $parent_item \ElggMenuItem */
+		$parent_item = $return->get($parent_name);
+		$parent_item->setHref(false);
+		$parent_item->setParentName(false);
+		$parent_item->setPriority(99999);
+		$parent_item->setItemClass('group-tools-listing-sorting');
+		$parent_item->setChildMenuOptions([
+			'display' => 'dropdown',
+			'data-position' => json_encode([
+				'my' => 'right top',
+				'at' => 'right bottom',
+				'collision' => 'fit fit',
+			]),
+		]);
+
 		return $return;
 	}
 	
