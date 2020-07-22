@@ -1,5 +1,8 @@
 <?php
 
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\OrderByClause;
+
 elgg_gatekeeper();
 
 $options = [
@@ -15,10 +18,19 @@ $getter = 'elgg_get_entities';
 $sorting = get_input('sort');
 switch ($sorting) {
 	case 'popular':
-		$getter = 'elgg_get_entities_from_relationship_count';
-		
-		$options['relationship'] = 'member';
-		$options['inverse_relationship'] = false;
+		$options['select'] = [
+			function (QueryBuilder $qb, $main_alias) {
+				$sub = $qb->subquery('entity_relationships');
+				$sub->select('count(*)')
+					->where($qb->compare('guid_two', '=', "{$main_alias}.guid"))
+					->andWhere($qb->compare('relationship', '=', 'member', ELGG_VALUE_STRING));
+				
+				return "({$sub->getSQL()}) as total";
+			},
+		];
+		$options['order_by'] = [
+			new OrderByClause('total', 'desc'),
+		];
 		break;
 	case 'alpha':
 		$order = strtoupper(get_input('order'));
