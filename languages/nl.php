@@ -315,7 +315,7 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:mail:form:js:members' => 'Selecteer minstens ��n lid om het bericht aan te versturen',
   'group_tools:group:invite:resend' => 'Uitnodiging opnieuw versturen naar gebruikers die al zijn uitgenodigd',
   'group_tools:clear_selection' => 'Selectie wissen',
-  'group_tools:all_members' => 'Alle leden',
+  'group_tools:all_members' => 'Alle leden (%d)',
   'group_tools:mail:form:recipients' => 'Aantal geselecteerde ontvangers',
   'group_tools:mail:form:members:selection' => 'Selecteer individuele leden',
   'group_tools:mail:form:js:description' => 'Geef een bericht op',

@@ -6,7 +6,7 @@ return [
 	'group_tools:add_users' => "Add users",
 	'group_tools:delete_selected' => "Delete selected",
 	'group_tools:clear_selection' => "Clear selection",
-	'group_tools:all_members' => "All members",
+	'group_tools:all_members' => "All members (%d)",
 	
 	'group_tools:profile:field:group_tools_preset' => "Group Tools Preset",
 	
@@ -314,8 +314,7 @@ your group '%s' was declined and removed by a site administrator.",
 	'group_tools:mail:message:from' => "From group",
 
 	'group_tools:mail:title' => "Send a mail to the group members",
-	'group_tools:mail:form:recipients' => "Number of recipients",
-	'group_tools:mail:form:members:selection' => "Select individual members",
+	'group_tools:mail:form:recipients' => "Select individual recipients",
 
 	'group_tools:mail:form:title' => "Subject",
 	'group_tools:mail:form:description' => "Body",

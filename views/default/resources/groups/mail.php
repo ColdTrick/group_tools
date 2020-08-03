@@ -24,11 +24,6 @@ elgg_push_breadcrumb(elgg_echo('groups'), 'groups/all');
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 elgg_push_breadcrumb(elgg_echo('group_tools:menu:mail'));
 
-// get members
-$members = $group->getMembers([
-	'limit' => false,
-]);
-
 // build page elements
 $title_text = elgg_echo('group_tools:mail:title');
 
@@ -38,7 +33,6 @@ $form_vars = [
 ];
 $body_vars = [
 	'entity' => $group,
-	'members' => $members,
 ];
 $form = elgg_view_form('group_tools/mail', $form_vars, $body_vars);
 

@@ -8,7 +8,7 @@ return array (
   'group_tools:add_users' => 'Agregar usuarios',
   'group_tools:delete_selected' => 'Borrar usuarios',
   'group_tools:clear_selection' => 'Limpiar selección',
-  'group_tools:all_members' => 'Todos los miembros',
+  'group_tools:all_members' => 'Todos los miembros (%d)',
   'group_tools:joinrequest:already' => 'Cancelar pedido de incorporación a este grupo',
   'group_tools:joinrequest:already:tooltip' => 'Ya has solicitado la incorporación a este grupo, haz click aquí para cancelar tu solicitud',
   'group_tools:join:already:tooltip' => 'Fuiste invitado a este grupo, puedes unirte ahora.',

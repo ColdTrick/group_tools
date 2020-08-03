@@ -7,7 +7,7 @@
 return array (
   'group_tools:add_users' => 'Adicionar usuários',
   'group_tools:clear_selection' => 'Remover seleção',
-  'group_tools:all_members' => 'Todos membros',
+  'group_tools:all_members' => 'Todos membros (%d)',
   'group_tools:joinrequest:already' => 'Cancelar requisição de entrada no grupo',
   'group_tools:joinrequest:already:tooltip' => 'Você já solicitou entrada neste grupo, clique aqui para cancelar a requisição',
   'group_tools:menu:mail' => 'Enviar email para os membros',

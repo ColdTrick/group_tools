@@ -23,7 +23,7 @@ return array (
   'group_tools:add_users' => 'Ajouter des utilisateurs',
   'group_tools:delete_selected' => 'Supprimer la sélection',
   'group_tools:clear_selection' => 'Réinitialiser la sélection',
-  'group_tools:all_members' => 'Tous les membres',
+  'group_tools:all_members' => 'Tous les membres (%d)',
   'group_tools:joinrequest:already:tooltip' => 'Vous avez déjà demandé à rejoindre ce groupe. Cliquez ici pour annuler votre demande.',
   'group_tools:join:already:tooltip' => 'Vous avez été invité à rejoindre ce groupe et pouvez l\'intégrer dès à présent.',
   'group_tools:menu:mail' => 'Envoyer un e-mail aux membres',
