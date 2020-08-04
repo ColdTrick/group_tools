@@ -1,6 +1,11 @@
 Version history
 ===============
 
+12.0.3 (2020-08-04):
+
+- fixed: member of group listing popular sorting
+- fixed: member selection on group mail page
+
 12.0.2 (2020-06-23):
 
 - fixed: groups listing sort menu parent item is no longer a link
