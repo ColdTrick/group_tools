@@ -6,6 +6,7 @@
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Select;
 use Elgg\Database\QueryBuilder;
+use Elgg\Security\Base64Url;
 
 /**
  * Check if a invitation code results in a group
@@ -17,7 +18,7 @@ use Elgg\Database\QueryBuilder;
  */
 function group_tools_check_group_email_invitation($invite_code, $group_guid = 0) {
 	
-	if (empty($invite_code)) {
+	if (empty($invite_code) || !Base64Url::decode($invite_code)) {
 		return false;
 	}
 	
