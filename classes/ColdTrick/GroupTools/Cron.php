@@ -2,6 +2,7 @@
 
 namespace ColdTrick\GroupTools;
 
+use Doctrine\DBAL\Query\QueryBuilder as DBalQueryBuilder;
 use Elgg\Database\QueryBuilder;
 
 class Cron {
@@ -61,7 +62,6 @@ class Cron {
 	 * @param int $ts timestamp to compare to
 	 *
 	 * @return false|\ElggGroup[]
-	 * @todo revisit subquery
 	 */
 	protected static function findStaleGroups($ts) {
 		
@@ -76,8 +76,6 @@ class Cron {
 		
 		$compare_ts_upper = strtotime("-{$stale_timeout} days", $ts);
 		$compare_ts_lower = strtotime("-1 day", $compare_ts_upper);
-		
-		$dbprefix = elgg_get_config('dbprefix');
 		
 		$row_to_guid = function ($row) {
 			return (int) $row->guid;
@@ -125,7 +123,7 @@ class Cron {
 		// groups with last content in timespace
 		$searchable_objects = StaleInfo::getObjectSubtypes();
 		$object_subtypes = [];
-		foreach ($searchable_objects as $index => $subtype) {
+		foreach ($searchable_objects as $subtype) {
 			switch ($subtype) {
 				case 'comment':
 					// don't do these yet
@@ -146,18 +144,21 @@ class Cron {
 				'created_before' => $compare_ts_upper,
 				'callback' => $row_to_guid,
 				'wheres' => [
-					"e.guid IN (
-						SELECT container_guid
-						FROM (
-							SELECT container_guid, max(time_updated) as time_updated
-							FROM {$dbprefix}entities
-							WHERE type = 'object'
-							AND subtype IN ('" . implode("', '", $object_subtypes) . "')
-							GROUP BY container_guid
-						) as content
-						WHERE content.time_updated > {$compare_ts_lower}
-						AND content.time_updated < {$compare_ts_upper}
-					)",
+					function (QueryBuilder $qb, $main_alias) use ($object_subtypes, $compare_ts_lower, $compare_ts_upper) {
+						$content_sub = $qb->subquery('entities');
+						$content_sub->select('container_guid', 'max(time_updated) as time_updated')
+							->where($qb->compare('type', '=', 'object', ELGG_VALUE_STRING))
+							->andWhere($qb->compare('subtype', 'in', $object_subtypes, ELGG_VALUE_STRING))
+							->groupBy('container_guid');
+						
+						$container_sub = new DBalQueryBuilder($qb->getConnection());
+						$container_sub->select('container_guid')
+							->from("({$content_sub->getSQL()})", 'content')
+							->where($qb->compare('content.time_updated', '>', $compare_ts_lower, ELGG_VALUE_TIMESTAMP))
+							->andWhere($qb->compare('content.time_updated', '<', $compare_ts_upper, ELGG_VALUE_TIMESTAMP));
+						
+						return $qb->compare("{$main_alias}.guid", 'in', $container_sub->getSQL());
+					},
 				],
 			];
 			
@@ -174,19 +175,22 @@ class Cron {
 			'created_time_upper' => $compare_ts_upper,
 			'callback' => $row_to_guid,
 			'wheres' => [
-				"e.guid IN (
-					SELECT container_guid
-					FROM (
-						SELECT ce.container_guid, max(re.time_updated) as time_updated
-						FROM {$dbprefix}entities re
-						JOIN {$dbprefix}entities ce ON re.container_guid = ce.guid
-						WHERE re.type = 'object'
-						AND re.subtype = 'comment'
-						GROUP BY ce.container_guid
-					) as comments
-					WHERE comments.time_updated > {$compare_ts_lower}
-					AND comments.time_updated < {$compare_ts_upper}
-				)",
+				function (QueryBuilder $qb, $main_alias) use ($compare_ts_lower, $compare_ts_upper) {
+					$comments_sub = $qb->subquery('entities', re);
+					$comments_sub->joinEntitiesTable('re', 'container_guid', 'inner', 'ce');
+					$comments_sub->select('ce.container_guid', 'max(re.time_updated) as time_updated')
+						->where($qb->compare('re.type', '=', 'object', ELGG_VALUE_STRING))
+						->andWhere($qb->compare('re.subtype', '=', 'comment', ELGG_VALUE_STRING))
+						->groupBy('ce.container_guid');
+					
+					$container_sub = new DBalQueryBuilder($qb->getConnection());
+					$container_sub->select('container_guid')
+						->from("({$comments_sub->getSQL()})", 'comments')
+						->where($qb->compare('comments.time_updated', '>', $compare_ts_lower, ELGG_VALUE_TIMESTAMP))
+						->andWhere($qb->compare('comments.time_updated', '<', $compare_ts_upper, ELGG_VALUE_TIMESTAMP));
+					
+					return $qb->compare("{$main_alias}.guid", 'in', $container_sub->getSQL());
+				},
 			],
 		];
 		
