@@ -165,6 +165,7 @@ class TitleMenu {
 		
 		$menu_items[] = \ElggMenuItem::factory([
 			'name' => 'groups:invite',
+			'icon' => 'user-plus',
 			'href' => elgg_generate_url('invite:group:group', ['guid' => $entity->guid]),
 			'text' => $text,
 			'link_class' => 'elgg-button elgg-button-action',
