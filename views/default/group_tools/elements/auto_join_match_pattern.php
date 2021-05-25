@@ -12,7 +12,7 @@ $operand_options = [
 ];
 
 $field_name = elgg_extract('field', $pattern);
-if (!array_key_exists($field_name, $user_options)) {
+if (!elgg_is_empty($field_name) && !array_key_exists($field_name, $user_options)) {
 	// profile field was removed
 	$user_options[$field_name] = $field_name;
 }
