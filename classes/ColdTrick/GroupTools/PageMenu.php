@@ -60,6 +60,14 @@ class PageMenu {
 		]);
 
 		$result[] = \ElggMenuItem::factory([
+			'name' => 'groups:settings',
+			'href' => 'admin/plugin_settings/groups',
+			'text' => elgg_echo('settings'),
+			'parent_name' => 'groups',
+			'section' => 'configure',
+		]);
+		
+		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:suggested',
 			'href' => 'admin/groups/suggested',
 			'text' => elgg_echo('admin:groups:suggested'),
