@@ -16,7 +16,7 @@ if (elgg_get_plugin_setting('admin_approve', 'group_tools') !== 'yes') {
 if (empty($entity->guid) || ($entity->access_id === ACCESS_PRIVATE)) {
 	$message = elgg_echo('group_tools:group:admin_approve:notice');
 	
-	if (elgg_is_admin_logged_in() && (bool) elgg_get_plugin_setting('creation_reason', 'group_tools') && !empty($entity->guid)) {
+	if (!empty($entity->guid) && $entity->canEdit() && (bool) elgg_get_plugin_setting('creation_reason', 'group_tools')) {
 		$count = $entity->getAnnotations([
 			'count' => true,
 			'wheres' => [
