@@ -159,12 +159,12 @@ class EntityMenu {
 	 */
 	public static function registerApprovalReasons(\Elgg\Hook $hook) {
 		
-		if (!elgg_in_context('group_profile') || !elgg_is_admin_logged_in()) {
+		if (!elgg_in_context('group_profile')) {
 			return;
 		}
 		
 		$entity = $hook->getEntityParam();
-		if (!$entity instanceof \ElggGroup) {
+		if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
 			return;
 		}
 		

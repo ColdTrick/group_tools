@@ -6,7 +6,7 @@
 use Elgg\Database\QueryBuilder;
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggGroup) {
+if (!$entity instanceof ElggGroup || !$entity->canEdit()) {
 	return;
 }
 
