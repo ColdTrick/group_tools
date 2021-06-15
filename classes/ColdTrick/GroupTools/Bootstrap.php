@@ -72,6 +72,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_register_ajax_view('forms/groups/killrequest');
 		elgg_register_ajax_view('group_tools/elements/auto_join_match_pattern');
 		elgg_register_ajax_view('group_tools/forms/motivation');
+		elgg_register_ajax_view('group_tools/group/reasons');
 	}
 	
 	protected function registerEvents() {
@@ -120,6 +121,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\EntityMenu::relatedGroup');
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\EntityMenu::suggestedGroup');
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\EntityMenu::addRemoveFromGroup');
+		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\EntityMenu::registerApprovalReasons');
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::removeTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addSorting', 550);

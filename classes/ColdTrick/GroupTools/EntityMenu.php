@@ -2,6 +2,7 @@
 
 namespace ColdTrick\GroupTools;
 
+use Elgg\Database\QueryBuilder;
 use Elgg\Menu\MenuItems;
 
 class EntityMenu {
@@ -147,5 +148,51 @@ class EntityMenu {
 		]);
 		
 		return $return;
+	}
+	
+	/**
+	 * Add a menu item to the approval reasons on the group profile page
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function registerApprovalReasons(\Elgg\Hook $hook) {
+		
+		if (!elgg_in_context('group_profile') || !elgg_is_admin_logged_in()) {
+			return;
+		}
+		
+		$entity = $hook->getEntityParam();
+		if (!$entity instanceof \ElggGroup) {
+			return;
+		}
+		
+		$count = $entity->getAnnotations([
+			'count' => true,
+			'wheres' => [
+				function(QueryBuilder $qb, $main_alias) {
+					return $qb->compare("{$main_alias}.name", 'like', 'approval_reason:%', ELGG_VALUE_STRING);
+				},
+			],
+		]);
+		if (empty($count)) {
+			return;
+		}
+		
+		/* @var $result MenuItems */
+		$result = $hook->getValue();
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'approval_reasons',
+			'icon' => 'check-square',
+			'text' => elgg_echo('group_tools:group:admin_approve:menu'),
+			'href' => elgg_http_add_url_query_elements('ajax/view/group_tools/group/reasons', [
+				'guid' => $entity->guid,
+			]),
+			'link_class' => 'elgg-lightbox',
+		]);
+		
+		return $result;
 	}
 }

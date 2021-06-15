@@ -151,6 +151,13 @@ if ($is_new_group && $admin_approve) {
 	$access_id = ACCESS_PRIVATE;
 	
 	elgg_trigger_event('admin_approval', 'group', $group);
+	
+	if ((bool) elgg_get_plugin_setting('creation_reason', 'group_tools')) {
+		$reasons = (array) get_input('reasons', []);
+		foreach ($reasons as $question => $answer) {
+			$group->annotate("approval_reason:{$question}", serialize($answer), ACCESS_PRIVATE);
+		}
+	}
 }
 
 if (group_tools_allow_hidden_groups()) {

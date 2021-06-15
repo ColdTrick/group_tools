@@ -1,5 +1,5 @@
 .elgg-layout-content {
-	> div {
+	> div:not(.elgg-message) {
 		display: none;
 	}
 	

@@ -97,21 +97,6 @@ $general_fields = [
 	],
 ];
 
-// do admins have to approve new groups
-if (elgg_get_plugin_setting('limited_groups', 'groups', 'no') !== 'yes') {
-	// only is group creation isn't limited to admins
-	$general_fields[] = [
-		'#type' => 'checkbox',
-		'#label' => elgg_echo('group_tools:settings:admin_approve'),
-		'#help' => elgg_echo('group_tools:settings:admin_approve:description'),
-		'name' => 'params[admin_approve]',
-		'checked' => $plugin->admin_approve === 'yes',
-		'switch' => true,
-		'default' => 'no',
-		'value' => 'yes',
-	];
-}
-
 $general_settings = '';
 foreach ($general_fields as $field) {
 	$general_settings .= elgg_view_field($field);
@@ -121,6 +106,33 @@ echo elgg_view_module('info', elgg_echo('group_tools:settings:management:title')
 
 // group edit settings
 $group_edit = '';
+
+// do admins have to approve new groups
+if (elgg_get_plugin_setting('limited_groups', 'groups', 'no') !== 'yes') {
+	// only if group creation isn't limited to admins
+	$group_edit .= elgg_view_field([
+		'#type' => 'checkbox',
+		'#label' => elgg_echo('group_tools:settings:admin_approve'),
+		'#help' => elgg_echo('group_tools:settings:admin_approve:description'),
+		'name' => 'params[admin_approve]',
+		'checked' => $plugin->admin_approve === 'yes',
+		'switch' => true,
+		'default' => 'no',
+		'value' => 'yes',
+	]);
+	
+	$group_edit .= elgg_view_field([
+		'#type' => 'checkbox',
+		'#label' => elgg_echo('group_tools:settings:creation_reason'),
+		'#help' => elgg_echo('group_tools:settings:creation_reason:description'),
+		'name' => 'params[creation_reason]',
+		'checked' => (bool) $plugin->creation_reason,
+		'switch' => true,
+		'default' => 0,
+		'value' => 1,
+	]);
+}
+
 $group_edit .= elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('group_tools:settings:admin_transfer'),

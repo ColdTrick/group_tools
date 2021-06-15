@@ -12,15 +12,22 @@ define(function (require) {
 
 		// hide everything
 		var $content = $('.elgg-layout-content');
-		$content.find('> form, > div').hide();
+//		$content.find('> form, > div:not(.elgg-message)').hide();
 		$('.group-tools-group-edit-section').hide();
 		
 		var link = $(this).children('a').attr('href');
+		console.log(link);
 		switch (link) {
 			case '#group-tools-group-edit-profile':
 				$content.find('> form').show();
 				$('#group-tools-group-edit-profile').show();
 
+				break;
+			case '#group-tools-group-edit-reason':
+				console.log(link);
+				$content.find('> form').show();
+				$('#group-tools-group-edit-reason').show();
+				
 				break;
 			case '#group-tools-group-edit-access':
 				$content.find('> form').show();

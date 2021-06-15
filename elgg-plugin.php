@@ -19,6 +19,7 @@ return [
 		'related_groups' => 'yes',
 		'member_export' => 'no',
 		'admin_approve' => 'no',
+		'creation_reason' => 0,
 		'admin_transfer' => 'no',
 		'simple_access_tab' => 'no',
 		'simple_create_form' => 'no',

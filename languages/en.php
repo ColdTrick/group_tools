@@ -121,6 +121,9 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:admin_approve' => "Site administrators need to approve new groups",
 	'group_tools:settings:admin_approve:description' => "Any user can create a group, but a site administrator has to approve the new group",
 	
+	'group_tools:settings:creation_reason' => "Ask for a reason why the group should be approved",
+	'group_tools:settings:creation_reason:description' => "During the group creation proccess, the user is asked why the group should be approved by a site administrator",
+	
 	'group_tools:settings:auto_accept_membership_requests' => "Automatically accept pending membership requests after opening the group",
 	'group_tools:settings:auto_accept_membership_requests:help' => "When the membership of a group changes to 'open', automatically accept all pending membership requests.",
 	
@@ -232,10 +235,18 @@ You can find the group here:
 
 	// group edit tabbed
 	'group_tools:group:edit:profile' => "Profile",
+	'group_tools:group:edit:reason' => "Reason",
 	'group_tools:group:edit:access' => "Access",
 	'group_tools:group:edit:tools' => "Tools",
 	'group_tools:group:edit:other' => "Other options",
 
+	// group approval reason
+	'group_tools:group:edit:reason:description' => "Please explain to the site administrator why your group should be approved by answering the questions below.",
+	'group_tools:group:edit:reason:question' => "Why do you need this group",
+	'group_tools:group:admin_approve:reasons' => "Reasons",
+	'group_tools:group:admin_approve:reasons:details' => "The reasons the owner wants to get this group approved",
+	'group_tools:group:admin_approve:menu' => "Approval reasons",
+	
 	// admin transfer - form
 	'group_tools:admin_transfer:remain_admin' => "Remain a group admin after owner transfer",
 	'group_tools:admin_transfer:remain_admin:help' => "After changing the owner, remain a group admin.",

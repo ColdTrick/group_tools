@@ -27,6 +27,17 @@ $tabs = [
 	],
 ];
 
+$admin_approve = elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes';
+$admin_approve = $admin_approve && !elgg_is_admin_logged_in();
+$ask_reason = (bool) elgg_get_plugin_setting('creation_reason', 'group_tools');
+if (empty($group) && $admin_approve && $ask_reason) {
+	$tabs['reason'] = [
+		'text' => elgg_echo('group_tools:group:edit:reason'),
+		'href' => '#group-tools-group-edit-reason',
+		'priority' => 110,
+	];
+}
+
 if (group_tools_show_tools_on_edit()) {
 	$tabs['tools'] = [
 		'text' => elgg_echo('group_tools:group:edit:tools'),
