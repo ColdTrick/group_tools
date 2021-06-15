@@ -37,6 +37,9 @@ return [
 		'auto_suggest_groups' => 'yes',
 		'invite_friends' => 'yes',
 	],
+	'user_settings' => [
+		'notify_approval' => 0,
+	],
 	'entities' => [
 		[
 			'type' => 'object',

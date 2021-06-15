@@ -19,12 +19,7 @@ class Notifications {
 		}
 		
 		$group = $event->getObject();
-		if (!$group instanceof \ElggGroup) {
-			return;
-		}
-		
-		$action = $event->getAction();
-		if ($action !== 'admin_approval') {
+		if (!$group instanceof \ElggGroup || $event->getAction() !== 'admin_approval') {
 			return;
 		}
 		
@@ -38,21 +33,21 @@ class Notifications {
 				'value' => 'yes',
 			],
 			'batch' => true,
+			'limit' => false,
 		]);
 		/* @var $user \ElggUser */
 		foreach ($batch as $user) {
+			if (!(bool) elgg_get_plugin_user_setting('notify_approval', $user->guid, 'group_tools')) {
+				// only if the admin wants the notifications
+				continue;
+			}
+			
 			$notification_settings = $user->getNotificationSettings();
 			if (empty($notification_settings)) {
 				continue;
 			}
 			
-			$return[$user->guid] = [];
-			foreach ($notification_settings as $method => $active) {
-				if (!$active) {
-					continue;
-				}
-				$return[$user->guid][] = $method;
-			}
+			$return[$user->guid] = array_keys(array_filter($notification_settings));
 		}
 		
 		return $return;
