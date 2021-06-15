@@ -73,6 +73,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_register_ajax_view('group_tools/elements/auto_join_match_pattern');
 		elgg_register_ajax_view('group_tools/forms/motivation');
 		elgg_register_ajax_view('group_tools/group/reasons');
+		elgg_register_ajax_view('group_tools/group/suggested');
 	}
 	
 	protected function registerEvents() {

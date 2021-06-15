@@ -242,6 +242,7 @@ You can find the group here:
 	'group_tools:group:edit:access' => "Access",
 	'group_tools:group:edit:tools' => "Tools",
 	'group_tools:group:edit:other' => "Other options",
+	'group_tools:group:edit:suggested' => "Similar groups",
 
 	// group approval reason
 	'group_tools:group:edit:reason:description' => "Please explain to the site administrator why your group should be approved by answering the questions below.",
