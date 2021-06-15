@@ -269,4 +269,80 @@ class CSVExporter {
 				break;
 		}
 	}
+	
+	/**
+	 * Add exportable values
+	 *
+	 * @param \Elgg\Hook $hook 'get_exportable_values', 'csv_exporter'
+	 *
+	 * @return void|array
+	 */
+	public static function addApprovalReasons(\Elgg\Hook $hook) {
+		
+		$content_type = $hook->getParam('type');
+		if ($content_type !== 'group' || !(bool) elgg_get_plugin_setting('creation_reason', 'group_tools')) {
+			return;
+		}
+		
+		$readable = (bool) $hook->getParam('readable', false);
+		
+		$fields = [
+			elgg_echo('group_tools:group:admin_approve:menu') . ': ' . elgg_echo('group_tools:group:edit:reason:question') => 'group_tools_admin_approval_reason_question',
+		];
+		
+		$return = $hook->getValue();
+		
+		$read_access_key = array_search('read_access', $return);
+		if ($read_access_key !== false) {
+			unset($return[$read_access_key]);
+		}
+		
+		// which version did we want
+		if (!$readable) {
+			$fields = array_values($fields);
+		}
+		
+		return array_merge($return, $fields);
+	}
+	
+	/**
+	 * Export a single value for a group
+	 *
+	 * @param \Elgg\Hook $hook 'export_value', 'csv_exporter'
+	 *
+	 * @return void|mixed
+	 */
+	public static function exportApprovalReasons(\Elgg\Hook $hook) {
+		
+		if (!is_null($hook->getValue())) {
+			// someone already provided output
+			return;
+		}
+		
+		$entity = $hook->getEntityParam();
+		if (!$entity instanceof \ElggGroup) {
+			return;
+		}
+		
+		$get_annotation_value = function(string $name) use ($entity) {
+			$annotations = $entity->getAnnotations([
+				'annotation_name' => "approval_reason:{$name}",
+				'limit' => 1,
+			]);
+			
+			if (empty($annotations)) {
+				return '';
+			}
+			
+			$value = $annotations[0]->value;
+			
+			return unserialize($value);
+		};
+		
+		$exportable_value = $hook->getParam('exportable_value');
+		switch ($exportable_value) {
+			case 'group_tools_admin_approval_reason_question':
+				return $get_annotation_value('question');
+		}
+	}
 }

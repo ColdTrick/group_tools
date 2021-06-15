@@ -98,12 +98,14 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('cron', 'fiveminute', __NAMESPACE__ . '\Membership::autoJoinGroupsCron');
 		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::notifyStaleGroupOwners');
 		$hooks->registerHandler('entity:url', 'object', __NAMESPACE__ . '\WidgetManager::widgetURL');
+		$hooks->registerHandler('export_value', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::exportApprovalReasons');
 		$hooks->registerHandler('export_value', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::exportGroupAdminsForGroups');
 		$hooks->registerHandler('export_value', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::exportGroupAdminsForUsers');
 		$hooks->registerHandler('export_value', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::exportStaleInfo');
 		$hooks->registerHandler('get', 'subscriptions', __NAMESPACE__ . '\GroupAdmins::addGroupAdminsToMembershipRequest');
 		$hooks->registerHandler('get', 'subscriptions', __NAMESPACE__ . '\Notifications::adminApprovalSubs');
 		$hooks->registerHandler('get', 'subscriptions', __NAMESPACE__ . '\GroupMail::getSubscribers');
+		$hooks->registerHandler('get_exportable_values', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::addApprovalReasons');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::addGroupAdminsToGroups');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::addGroupAdminsToUsers');
 		$hooks->registerHandler('get_exportable_values', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::addStaleInfo');
