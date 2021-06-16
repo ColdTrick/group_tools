@@ -1,10 +1,20 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0.4
- * On 2019-10-28 17:12
+ * This file was created by Translation Editor v8.0
+ * On 2021-06-16 10:48
  */
 
 return array (
+  'group_tools:settings:creation_reason' => 'Vraag om een reden waarom de groep goedgekeurd zou moeten worden',
+  'group_tools:settings:creation_reason:description' => 'Gedurende het aanmaken van een groep zal de gebruiker gevraagd worden waarom de groep goedgekeurd zou moeten worden door een site beheerder',
+  'group_tools:usersettings:admin:notify_approval' => 'Stuur me een bericht wanneer er een groep is welke moet worden goedgekeurd',
+  'group_tools:group:edit:reason' => 'Goedkeuring reden',
+  'group_tools:group:edit:suggested' => 'Vergelijkbare groepen',
+  'group_tools:group:edit:reason:description' => 'Vertel de site beheerders waarom jouw groep zou moeten worden goedgekeurd, door een aantal vragen hieronder te beantwoorden.',
+  'group_tools:group:edit:reason:question' => 'Waarom heb je deze groep nodig',
+  'group_tools:group:admin_approve:reasons' => 'Goedkeuring redenen',
+  'group_tools:group:admin_approve:reasons:details' => 'De redenen waarom de groepseigenaar deze groep wil laten goedkeuren',
+  'group_tools:group:admin_approve:menu' => 'Goedkeuring redenen',
   'collection:annotation:email_invitation:group' => 'Beheer e-mail uitnodigingen',
   'collection:annotation:email_invitation:user' => 'E-mail groepsuitnodigingen',
   'group_tools:menu:group_members:email_invitations' => 'E-mail uitnodigingen',
@@ -317,7 +327,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:clear_selection' => 'Selectie wissen',
   'group_tools:all_members' => 'Alle leden (%d)',
   'group_tools:mail:form:recipients' => 'Aantal geselecteerde ontvangers',
-  'group_tools:mail:form:members:selection' => 'Selecteer individuele leden',
   'group_tools:mail:form:js:description' => 'Geef een bericht op',
   'group_tools:notify:transfer:subject' => 'Beheer van de groep %s is aan je overgedragen',
   'group_tools:notify:transfer:message' => 'Beste %s,
