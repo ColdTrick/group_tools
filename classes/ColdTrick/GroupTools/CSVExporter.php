@@ -292,11 +292,6 @@ class CSVExporter {
 		
 		$return = $hook->getValue();
 		
-		$read_access_key = array_search('read_access', $return);
-		if ($read_access_key !== false) {
-			unset($return[$read_access_key]);
-		}
-		
 		// which version did we want
 		if (!$readable) {
 			$fields = array_values($fields);
