@@ -12,7 +12,7 @@ if (!$entity instanceof ElggGroup || !$entity->canEdit()) {
 
 $content = elgg_list_annotations([
 	'limit' => false,
-	'entity_guid' => $entity->guid,
+	'guid' => $entity->guid,
 	'wheres' => [
 		function (QueryBuilder $qb, $main_alias) {
 			return $qb->compare("{$main_alias}.name", 'like', 'approval_reason:%', ELGG_VALUE_STRING);
