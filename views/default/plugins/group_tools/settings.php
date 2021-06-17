@@ -134,6 +134,26 @@ if (elgg_get_plugin_setting('limited_groups', 'groups', 'no') !== 'yes') {
 }
 
 $group_edit .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:concept_groups'),
+	'#help' => elgg_echo('group_tools:settings:concept_groups:description'),
+	'name' => 'params[concept_groups]',
+	'checked' => (bool) $plugin->concept_groups,
+	'switch' => true,
+	'default' => 0,
+	'value' => 1,
+]);
+
+$group_edit .= elgg_view_field([
+	'#type' => 'number',
+	'#label' => elgg_echo('group_tools:settings:concept_groups_retention'),
+	'#help' => elgg_echo('group_tools:settings:concept_groups_retention:description'),
+	'name' => 'params[concept_groups_retention]',
+	'value' => $plugin->concept_groups_retention,
+	'min' => 0,
+]);
+
+$group_edit .= elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('group_tools:settings:admin_transfer'),
 	'name' => 'params[admin_transfer]',

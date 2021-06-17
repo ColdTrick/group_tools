@@ -4,6 +4,7 @@ namespace ColdTrick\GroupTools;
 
 use Doctrine\DBAL\Query\QueryBuilder as DBalQueryBuilder;
 use Elgg\Database\QueryBuilder;
+use Elgg\Values;
 
 class Cron {
 	
@@ -176,7 +177,7 @@ class Cron {
 			'callback' => $row_to_guid,
 			'wheres' => [
 				function (QueryBuilder $qb, $main_alias) use ($compare_ts_lower, $compare_ts_upper) {
-					$comments_sub = $qb->subquery('entities', re);
+					$comments_sub = $qb->subquery('entities', 're');
 					$comments_sub->joinEntitiesTable('re', 'container_guid', 'inner', 'ce');
 					$comments_sub->select('ce.container_guid', 'max(re.time_updated) as time_updated')
 						->where($qb->compare('re.type', '=', 'object', ELGG_VALUE_STRING))
@@ -246,5 +247,123 @@ class Cron {
 		];
 		
 		notify_user($owner->guid, $site->guid, $subject, $message, $mail_params);
+	}
+	
+	/**
+	 * Remove the expired concept groups
+	 *
+	 * @param \Elgg\Hook $hook 'cron', 'daily'
+	 *
+	 * @return void
+	 */
+	public static function removeExpiredConceptGroups(\Elgg\Hook $hook) {
+		
+		$days = (int) elgg_get_plugin_setting('concept_groups_retention', 'group_tools');
+		if ($days < 1) {
+			return;
+		}
+		
+		echo 'Starting concept group cleanup' . PHP_EOL;
+		elgg_log('Starting concept group cleanup', 'NOTICE');
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($days) {
+			/* @var $groups \ElggBatch */
+			$groups = elgg_get_entities([
+				'type' => 'group',
+				'metadata_name_value_pairs' => [
+					'name' => 'is_concept',
+					'value' => true,
+				],
+				'access_id' => ACCESS_PRIVATE,
+				'created_before' => "-{$days} days",
+				'limit' => false,
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
+			/* @var $group \ElggGroup */
+			foreach ($groups as $group) {
+				$group->delete();
+			}
+		});
+		
+		echo 'Done with concept group cleanup' . PHP_EOL;
+		elgg_log('Done with concept group cleanup', 'NOTICE');
+	}
+	
+	/**
+	 * Notify the owners of concept groups to make their group public
+	 *
+	 * @param \Elgg\Hook $hook 'cron', 'weekly'
+	 *
+	 * @return void
+	 */
+	public static function notifyConceptGroupOwners(\Elgg\Hook $hook) {
+		
+		if (!(bool) elgg_get_plugin_setting('concept_groups', 'group_tools')) {
+			return;
+		}
+		
+		$days = (int) elgg_get_plugin_setting('concept_groups_retention', 'group_tools');
+		
+		echo 'Starting concept group owner notification' . PHP_EOL;
+		elgg_log('Starting concept group owner notification', 'NOTICE');
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($days) {
+			$site = elgg_get_site_entity();
+			$current_language = elgg()->translator->getCurrentLanguage();
+			
+			/* @var $groups \ElggBatch */
+			$groups = elgg_get_entities([
+				'type' => 'group',
+				'metadata_name_value_pairs' => [
+					'name' => 'is_concept',
+					'value' => true,
+				],
+				'access_id' => ACCESS_PRIVATE,
+				'limit' => false,
+				'batch' => true,
+			]);
+			/* @var $group \ElggGroup */
+			foreach ($groups as $group) {
+				/* @var $owner \ElggUser */
+				$owner = $group->getOwnerEntity();
+				
+				// setting language to make sure friendly time is in the correct language
+				elgg()->translator->setCurrentLanguage($owner->getLanguage());
+				
+				if ($days > 0) {
+					$expires = Values::normalizeTime($group->time_created);
+					$expires->modify("+{$days} days");
+					
+					$subject = elgg_echo('group_tools:notification:concept_group:expires:subject', [$group->getDisplayName()]);
+					$message = elgg_echo('group_tools:notification:concept_group:expires:message', [
+						$owner->getDisplayName(),
+						$group->getDisplayName(),
+						elgg_get_friendly_time($expires->getTimestamp()),
+						$group->getURL(),
+					]);
+				} else {
+					$subject = elgg_echo('group_tools:notification:concept_group:subject', [$group->getDisplayName()]);
+					$message = elgg_echo('group_tools:notification:concept_group:message', [
+						$owner->getDisplayName(),
+						$group->getDisplayName(),
+						$group->getURL(),
+					]);
+				}
+				
+				$params = [
+					'object' => $group,
+					'action' => 'concept_group_reminder',
+				];
+				
+				notify_user($owner->guid, $site->guid, $subject, $message, $params, ['email']);
+			}
+			
+			// restore language
+			elgg()->translator->setCurrentLanguage($current_language);
+		});
+		
+		echo 'Done with concept group owner notification' . PHP_EOL;
+		elgg_log('Done with concept group owner notification', 'NOTICE');
 	}
 }

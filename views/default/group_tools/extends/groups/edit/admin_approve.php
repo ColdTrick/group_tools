@@ -13,7 +13,7 @@ if (elgg_get_plugin_setting('admin_approve', 'group_tools') !== 'yes') {
 	return;
 }
 
-if (empty($entity->guid) || ($entity->access_id === ACCESS_PRIVATE)) {
+if (empty($entity->guid) || ($entity->access_id === ACCESS_PRIVATE && !(bool) $entity->is_concept)) {
 	$message = elgg_echo('group_tools:group:admin_approve:notice');
 	
 	if (!empty($entity->guid) && $entity->canEdit() && (bool) elgg_get_plugin_setting('creation_reason', 'group_tools')) {
@@ -35,5 +35,6 @@ if (empty($entity->guid) || ($entity->access_id === ACCESS_PRIVATE)) {
 			]);
 		}
 	}
+	
 	echo elgg_view_message('notice', $message);
 }

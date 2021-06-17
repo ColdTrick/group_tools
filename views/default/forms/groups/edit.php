@@ -84,7 +84,33 @@ if ($simple_create_form) {
 }
 
 // display the save button and some additional form data
-$footer = elgg_view('input/submit', ['value' => elgg_echo('save')]);
+$buttons = [];
+
+if ($admin_approve) {
+	$buttons[] = [
+		'#type' => 'submit',
+		'value' => elgg_echo('group_tools:group:edit:save:approve'),
+	];
+} else {
+	$buttons[] = [
+		'#type' => 'submit',
+		'value' => elgg_echo('save'),
+	];
+}
+
+if ((bool) elgg_get_plugin_setting('concept_groups', 'group_tools')) {
+	$buttons[] = [
+		'#type' => 'submit',
+		'name' => 'concept_group',
+		'value' => elgg_echo('group_tools:group:edit:save:concept'),
+	];
+}
+
+$footer = elgg_view_field([
+	'#type' => 'fieldset',
+	'align' => 'horizontal',
+	'fields' => $buttons,
+]);
 
 elgg_set_form_footer($footer);
 

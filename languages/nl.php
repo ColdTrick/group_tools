@@ -1,10 +1,41 @@
 <?php
 /**
  * This file was created by Translation Editor v8.0
- * On 2021-06-16 10:48
+ * On 2021-06-17 12:10
  */
 
 return array (
+  'group_tools:settings:concept_groups' => 'Maak het mogelijk \'concept\' groepen aan te maken',
+  'group_tools:settings:concept_groups:description' => 'Concept groepen zijn privé groepen waarvan de eigenaar nog niet klaar is om deze te presenteren aan de community. Bijvoorbeeld als er eerst nog meer content in de groep moet worden geplaatst. De eigenaar krijgt wekelijks een herinnering om de groep te publiceren.',
+  'group_tools:settings:concept_groups_retention' => 'Hoe lang mogen \'concept\' groepen in \'concept\' blijven staan',
+  'group_tools:settings:concept_groups_retention:description' => 'Het aantal dagen dat een \'concept\' groep in \'concept\' mag blijven staan voordat de groep wordt verwijderd. Laat dit leeg als \'concept\' groepen niet moeten worden verwijderd.',
+  'group_tools:group:edit:save:approve' => 'Opslaan en goedkeuring afwachten',
+  'group_tools:group:edit:save:concept' => 'Opslaan als concept',
+  'group_tools:group:concept:remaining' => 'Zal worden verwijderd %s',
+  'group_tools:group:concept:profile:approve' => 'Goedkeuring aanvragen',
+  'group_tools:group:concept:profile:approve:confirm' => 'Weet je zeker dat je groep klaar is om te worden beoordeeld door een site beheerder?',
+  'group_tools:group:concept:profile:publish' => 'Verwijder concept status',
+  'group_tools:group:concept:profile:publish:confirm' => 'Weet je zeker dat je groep klaar is om te worden gebruikt door de community?',
+  'group_tools:group:concept:profile:description' => 'Deze groep is nog in de concept fase, als je klaar bent klik op de knop aan de bovenkant van het profiel',
+  'group_tools:group:concept:profile:retention' => 'Deze groep zal worden verwijderd %s',
+  'group_tools:action:remove_concept_status:success:approval' => 'De groep wacht nu op goedkeuring door een site beheerder',
+  'group_tools:action:remove_concept_status:success:published' => 'De groep is nu beschikbaar voor de community',
+  'group_tools:notification:concept_group:expires:subject' => 'Je groep \'%s\' bevindt zich nog in de concept fase',
+  'group_tools:notification:concept_group:expires:message' => 'Beste %s,
+
+Je groep \'%s\' bevindt zich nog steeds in de concept fase, ben je al klaar deze groep te delen met de community?
+
+Indien je de groep niet publiceert zal deze worden verwijderd %s.
+
+Om naar de groep te gaan, klik hier:
+%s',
+  'group_tools:notification:concept_group:message' => 'Beste %s,
+
+Je groep \'%s\' bevindt zich nog steeds in de concept fase, ben je al klaar deze groep te delen met de community?
+
+Om naar de groep te gaan, klik hier:
+%s',
+  'group_tools:notification:concept_group:subject' => 'Je groep \'%s\' bevindt zich nog in de concept fase',
   'group_tools:settings:creation_reason' => 'Vraag om een reden waarom de groep goedgekeurd zou moeten worden',
   'group_tools:settings:creation_reason:description' => 'Gedurende het aanmaken van een groep zal de gebruiker gevraagd worden waarom de groep goedgekeurd zou moeten worden door een site beheerder',
   'group_tools:usersettings:admin:notify_approval' => 'Stuur me een bericht wanneer er een groep is welke moet worden goedgekeurd',

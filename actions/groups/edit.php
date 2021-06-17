@@ -145,18 +145,25 @@ if ($is_new_group) {
 $admin_approve = (bool) (elgg_get_plugin_setting('admin_approve', 'group_tools') == 'yes');
 $admin_approve = ($admin_approve && !elgg_is_admin_logged_in()); // admins don't need to wait
 
+$concept_group = (bool) elgg_get_plugin_setting('concept_groups', 'group_tools');
+$concept_group = $concept_group && !empty(get_input('concept_group'));
+
 // new groups get access private, so an admin can validate it
 $access_id = (int) $group->access_id;
-if ($is_new_group && $admin_approve) {
+if ($is_new_group && ($admin_approve || $concept_group)) {
 	$access_id = ACCESS_PRIVATE;
-	
-	elgg_trigger_event('admin_approval', 'group', $group);
 	
 	if ((bool) elgg_get_plugin_setting('creation_reason', 'group_tools')) {
 		$reasons = (array) get_input('reasons', []);
 		foreach ($reasons as $question => $answer) {
 			$group->annotate("approval_reason:{$question}", serialize($answer), ACCESS_PRIVATE);
 		}
+	}
+	
+	if (!$concept_group) {
+		elgg_trigger_event('admin_approval', 'group', $group);
+	} else {
+		$group->is_concept = true;
 	}
 }
 
@@ -178,7 +185,7 @@ if (group_tools_allow_hidden_groups()) {
 			$group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
 		}
 		
-		if (($access_id === ACCESS_PRIVATE) && $admin_approve) {
+		if (($access_id === ACCESS_PRIVATE) && ($admin_approve || $concept_group)) {
 			// admins has not yet approved the group, store wanted access
 			$group->intended_access_id = $visibility;
 		} else {

@@ -61,6 +61,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinvitations');
 		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinviteform');
 		elgg_extend_view('groups/profile/layout', 'group_tools/extends/groups/edit/admin_approve', 1);
+		elgg_extend_view('groups/profile/layout', 'group_tools/extends/groups/profile/concept', 2);
 		elgg_extend_view('groups/profile/summary', 'group_tools/extends/groups/profile/stale_message');
 		elgg_extend_view('groups/sidebar/members', 'group_tools/group_admins', 400);
 		elgg_extend_view('js/elgg', 'js/group_tools/site.js');
@@ -97,6 +98,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('action:validate', 'groups/edit', __NAMESPACE__ . '\Group::editActionListener');
 		$hooks->registerHandler('cron', 'fiveminute', __NAMESPACE__ . '\Membership::autoJoinGroupsCron');
 		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::notifyStaleGroupOwners');
+		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::removeExpiredConceptGroups');
+		$hooks->registerHandler('cron', 'weekly', __NAMESPACE__ . '\Cron::notifyConceptGroupOwners');
 		$hooks->registerHandler('entity:url', 'object', __NAMESPACE__ . '\WidgetManager::widgetURL');
 		$hooks->registerHandler('export_value', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::exportApprovalReasons');
 		$hooks->registerHandler('export_value', 'csv_exporter', __NAMESPACE__ . '\CSVExporter::exportGroupAdminsForGroups');
@@ -141,11 +144,13 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::groupAdminStatus', 501);
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::exportGroupMembers');
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::pendingApproval', 9999);
+		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::conceptGroup', 9999); // needs to be after pending approval
 		$hooks->registerHandler('register', 'menu:title', __NAMESPACE__ . '\TitleMenu::addGroupToolPresets');
 		$hooks->registerHandler('register', 'menu:user_hover', __NAMESPACE__ . '\GroupAdmins::assignGroupAdmin');
 		$hooks->registerHandler('send:after', 'notifications', __NAMESPACE__ . '\GroupMail::cleanup');
 		$hooks->registerHandler('tool_options', 'group', __NAMESPACE__ . '\Tools::registerRelatedGroups');
 		$hooks->registerHandler('view_vars', 'groups/edit/access', __NAMESPACE__ . '\Views::allowGroupOwnerTransfer');
+		$hooks->registerHandler('view_vars', 'input/form', __NAMESPACE__ . '\Views::allowDoubleSubmitWhenConceptGroupsEnabled');
 		$hooks->registerHandler('view_vars', 'page/components/list', __NAMESPACE__ . '\Views::livesearchUserListing');
 		$hooks->registerHandler('view_vars', 'relationship/membership_request', __NAMESPACE__ . '\Views::addJoinMotivationToGroupMembershipRequest');
 		$hooks->registerHandler('view_vars', 'resources/account/register', __NAMESPACE__ . '\Router::allowRegistration');

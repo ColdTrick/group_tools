@@ -124,6 +124,11 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:creation_reason' => "Ask for a reason why the group should be approved",
 	'group_tools:settings:creation_reason:description' => "During the group creation proccess, the user is asked why the group should be approved by a site administrator",
 	
+	'group_tools:settings:concept_groups' => "Allow the creation of 'concept' groups",
+	'group_tools:settings:concept_groups:description' => "Concept groups are private groups which the owner isn't ready to present to the rest of the community. For example when more content needs to be added first. The owner will get a weekly reminder to 'publish' the group.",
+	'group_tools:settings:concept_groups_retention' => "How long are 'concept' group allowed to remain in 'concept'",
+	'group_tools:settings:concept_groups_retention:description' => "The number of days 'concept' groups are allowed to remain in 'concept' before being removed. Leave empty to not remove the 'concept' groups.",
+	
 	'group_tools:settings:auto_accept_membership_requests' => "Automatically accept pending membership requests after opening the group",
 	'group_tools:settings:auto_accept_membership_requests:help' => "When the membership of a group changes to 'open', automatically accept all pending membership requests.",
 	
@@ -250,6 +255,37 @@ You can find the group here:
 	'group_tools:group:admin_approve:reasons' => "Reasons",
 	'group_tools:group:admin_approve:reasons:details' => "The reasons the owner wants to get this group approved",
 	'group_tools:group:admin_approve:menu' => "Approval reasons",
+	
+	// concept groups
+	'group_tools:group:edit:save:approve' => "Save & await approval",
+	'group_tools:group:edit:save:concept' => "Save as draft",
+	'group_tools:group:concept:remaining' => "Will be removed %s",
+	'group_tools:group:concept:profile:approve' => "Request approval",
+	'group_tools:group:concept:profile:approve:confirm' => "Are you sure your group is ready to be reviewed by a site administrator?",
+	'group_tools:group:concept:profile:publish' => "Remove draft status",
+	'group_tools:group:concept:profile:publish:confirm' => "Are you sure your group is ready to be used by the community?",
+	'group_tools:group:concept:profile:description' => "This group is still in concept, when you're ready click the button at the top of the profile.",
+	'group_tools:group:concept:profile:retention' => "This group will be removed %s",
+	'group_tools:action:remove_concept_status:success:approval' => "The group is now awaiting approval by a site administrator",
+	'group_tools:action:remove_concept_status:success:published' => "The group is now available on the community",
+	
+	'group_tools:notification:concept_group:expires:subject' => "Your group '%s' is still in concept",
+	'group_tools:notification:concept_group:expires:message' => "Hi %s,
+
+Your group '%s' is still in concept, are you ready yet to share the group with the community?
+
+If you don't publish your group it will be removed %s.
+
+To view the group, click here:
+%s",
+	
+	'group_tools:notification:concept_group:subject' => "Your group '%s' is still in concept",
+	'group_tools:notification:concept_group:message' => "Hi %s,
+
+Your group '%s' is still in concept, are you ready yet to share the group with the community?
+
+To view the group, click here:
+%s",
 	
 	// admin transfer - form
 	'group_tools:admin_transfer:remain_admin' => "Remain a group admin after owner transfer",

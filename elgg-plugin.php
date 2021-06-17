@@ -20,6 +20,7 @@ return [
 		'member_export' => 'no',
 		'admin_approve' => 'no',
 		'creation_reason' => 0,
+		'concept_groups' => 0,
 		'admin_transfer' => 'no',
 		'simple_access_tab' => 'no',
 		'simple_create_form' => 'no',
@@ -59,6 +60,7 @@ return [
 		'group_tools/toggle_notifications' => [],
 		'group_tools/mark_not_stale' => [],
 		'group_tools/join_motivation' => [],
+		'group_tools/remove_concept_status' => [],
 		'group_tools/revoke_email_invitation' => [],
 
 		'group_tools/order_groups' => ['access' => 'admin'],

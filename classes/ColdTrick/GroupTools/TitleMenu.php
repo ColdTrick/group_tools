@@ -266,7 +266,6 @@ class TitleMenu {
 		return $return;
 	}
 	
-	
 	/**
 	 * Change title menu buttons for a group pending admin approval
 	 *
@@ -297,15 +296,13 @@ class TitleMenu {
 		$return = $hook->getValue();
 		
 		// cleanup all items
+		$items = [];
 		/* @var $menu_item \ElggMenuItem */
-		foreach ($return as $menu_item) {
-			$name = $menu_item->getName();
-			if (in_array($name, $allowed_items)) {
-				continue;
-			}
-			
-			$return->remove($name);
+		foreach ($allowed_items as $name) {
+			$items[] = $return->get($name);
 		}
+		
+		$return->fill($items);
 		
 		if (!elgg_is_admin_logged_in()) {
 			return $return;
@@ -332,6 +329,71 @@ class TitleMenu {
 			]),
 			'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
 			'class' => 'elgg-button elgg-button-delete',
+		]);
+		
+		return $return;
+	}
+	
+	/**
+	 * Change title menu buttons for a concept group
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function conceptGroup(\Elgg\Hook $hook) {
+		
+		if (!elgg_in_context('group_profile')) {
+			return;
+		}
+		
+		if (!(bool) elgg_get_plugin_setting('concept_groups', 'group_tools')) {
+			return;
+		}
+		
+		$page_owner = elgg_get_page_owner_entity();
+		if (!$page_owner instanceof \ElggGroup || $page_owner->access_id !== ACCESS_PRIVATE || !(bool) $page_owner->is_concept) {
+			return;
+		}
+		
+		$allowed_items = [
+			'edit',
+		];
+		
+		/* @var $return MenuItems */
+		$return = $hook->getValue();
+		
+		// cleanup all items
+		$items = [];
+		/* @var $menu_item \ElggMenuItem */
+		foreach ($allowed_items as $name) {
+			$items[] = $return->get($name);
+		}
+		
+		$return->fill($items);
+		
+		if (!$page_owner->canEdit()) {
+			return $return;
+		}
+		
+		// add owner action
+		// publish
+		if (elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes' && !elgg_is_admin_logged_in()) {
+			// ask to be approved
+			$text = elgg_echo('group_tools:group:concept:profile:approve');
+			$confirm = elgg_echo('group_tools:group:concept:profile:approve:confirm');
+		} else {
+			$text = elgg_echo('group_tools:group:concept:profile:publish');
+			$confirm = elgg_echo('group_tools:group:concept:profile:publish:confirm');
+		}
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'remove_concept',
+			'text' => $text,
+			'href' => elgg_generate_action_url('group_tools/remove_concept_status', [
+				'guid' => $page_owner->guid,
+			]),
+			'confirm' => $confirm,
+			'class' => 'elgg-button elgg-button-action',
 		]);
 		
 		return $return;

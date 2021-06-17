@@ -6,6 +6,7 @@
  */
 
 use Elgg\Database\QueryBuilder;
+use Elgg\Values;
 
 $group = elgg_extract('entity', $vars);
 if (!$group instanceof ElggGroup || !elgg_is_admin_logged_in()) {
@@ -13,39 +14,55 @@ if (!$group instanceof ElggGroup || !elgg_is_admin_logged_in()) {
 }
 
 $buttons = [];
-$buttons[] = elgg_view('output/url', [
-	'text' => elgg_echo('approve'),
-	'href' => elgg_generate_action_url('group_tools/admin/approve', [
-		'guid' => $group->guid,
-	]),
-	'confirm' => true,
-	'class' => 'elgg-button elgg-button-submit',
-]);
-$buttons[] = elgg_view('output/url', [
-	'text' => elgg_echo('decline'),
-	'href' => elgg_generate_action_url('group_tools/admin/decline', [
-		'guid' => $group->guid,
-	]),
-	'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
-	'class' => 'elgg-button elgg-button-delete',
-]);
 
-$count = $group->getAnnotations([
-	'count' => true,
-	'wheres' => [
-		function(QueryBuilder $qb, $main_alias) {
-			return $qb->compare("{$main_alias}.name", 'like', 'approval_reason:%', ELGG_VALUE_STRING);
-		},
-	],
-]);
-if (!empty($count)) {
+if (!(bool) $group->is_concept) {
+	// awaiting approval
 	$buttons[] = elgg_view('output/url', [
-		'text' => elgg_echo('group_tools:group:admin_approve:reasons'),
-		'href' => elgg_http_add_url_query_elements('ajax/view/group_tools/group/reasons', [
+		'text' => elgg_echo('approve'),
+		'href' => elgg_generate_action_url('group_tools/admin/approve', [
 			'guid' => $group->guid,
 		]),
-		'class' => 'elgg-button elgg-button-action elgg-lightbox',
+		'confirm' => true,
+		'class' => 'elgg-button elgg-button-submit',
 	]);
+	$buttons[] = elgg_view('output/url', [
+		'text' => elgg_echo('decline'),
+		'href' => elgg_generate_action_url('group_tools/admin/decline', [
+			'guid' => $group->guid,
+		]),
+		'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
+		'class' => 'elgg-button elgg-button-delete',
+	]);
+	
+	$count = $group->getAnnotations([
+		'count' => true,
+		'wheres' => [
+			function(QueryBuilder $qb, $main_alias) {
+				return $qb->compare("{$main_alias}.name", 'like', 'approval_reason:%', ELGG_VALUE_STRING);
+			},
+		],
+	]);
+	if (!empty($count)) {
+		$buttons[] = elgg_view('output/url', [
+			'text' => elgg_echo('group_tools:group:admin_approve:reasons'),
+			'href' => elgg_http_add_url_query_elements('ajax/view/group_tools/group/reasons', [
+				'guid' => $group->guid,
+			]),
+			'class' => 'elgg-button elgg-button-action elgg-lightbox',
+		]);
+	}
+} else {
+	// concept group
+	$buttons[] = elgg_format_element('span', ['class' => 'mls'], elgg_echo('status:draft'));
+	
+	$retention = (int) elgg_get_plugin_setting('concept_groups_retention', 'group_tools');
+	if ($retention > 0) {
+		$remove_ts = Values::normalizeTime($group->time_created);
+		$remove_ts->modify("+{$retention} days");
+		
+		$friendly_time = elgg_get_friendly_time($remove_ts->getTimestamp());
+		$buttons[] = elgg_format_element('span', ['class' => 'mls'], elgg_echo('group_tools:group:concept:remaining', [$friendly_time]));
+	}
 }
 
 $params = [

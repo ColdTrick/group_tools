@@ -160,4 +160,27 @@ class Views {
 		
 		return $vars;
 	}
+	
+	/**
+	 * In order to know which submit button is pressed don't disable the submit buttons on submit
+	 *
+	 * @param \Elgg\Hook $hook 'view_vars', 'input/form'
+	 *
+	 * @return void|array
+	 */
+	public static function allowDoubleSubmitWhenConceptGroupsEnabled(\Elgg\Hook $hook) {
+		
+		$vars = $hook->getValue();
+		if (elgg_extract('action_name', $vars) !== 'groups/edit') {
+			return;
+		}
+		
+		if (!(bool) elgg_get_plugin_setting('concept_groups', 'group_tools')) {
+			return;
+		}
+		
+		$vars['prevent_double_submit'] = false;
+		
+		return $vars;
+	}
 }
