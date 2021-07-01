@@ -86,7 +86,7 @@ if ($simple_create_form) {
 // display the save button and some additional form data
 $buttons = [];
 
-if ($admin_approve) {
+if ($admin_approve && (!$entity instanceof ElggGroup || $entity->access_id === ACCESS_PRIVATE)) {
 	$buttons[] = [
 		'#type' => 'submit',
 		'value' => elgg_echo('group_tools:group:edit:save:approve'),
@@ -98,7 +98,7 @@ if ($admin_approve) {
 	];
 }
 
-if ((bool) elgg_get_plugin_setting('concept_groups', 'group_tools')) {
+if ((bool) elgg_get_plugin_setting('concept_groups', 'group_tools') && (!$entity instanceof ElggGroup || (bool) $entity->is_concept)) {
 	$buttons[] = [
 		'#type' => 'submit',
 		'name' => 'concept_group',
