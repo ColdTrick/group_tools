@@ -1,6 +1,6 @@
 define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 	/** global: elgg */
-	elgg.provide("elgg.group_tools");
+	elgg.provide('elgg.group_tools');
 			
 	elgg.group_tools.show_join_motivation = function(elem) {
 		
@@ -11,8 +11,8 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 		}
 	};
 
-	$(document).on('blur', 'form.elgg-form-groups-edit input[name="name"]', function(event) {
-		var $input = $(this);
+	elgg.group_tools.add_group_suggestions = function () {
+		var $input = $('form.elgg-form-groups-edit input[name="name"]');
 		if ($input.closest('form').find('input[name="group_guid"]').length) {
 			// edit
 			return;
@@ -29,5 +29,16 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 				$input.closest('.elgg-field').after(data);
 			}
 		});
+	};
+	
+	var inputTimeout;
+	$(document).on('input', 'form.elgg-form-groups-edit input[name="name"]', function(event) {
+		clearTimeout(inputTimeout);
+		if ($(this).val().length < 3) {
+			// not enought characters (yet)
+			return;
+		}
+		
+		inputTimeout = setTimeout(elgg.group_tools.add_group_suggestions, 400);
 	});
 });
