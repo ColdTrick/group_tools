@@ -304,6 +304,7 @@ To view the group, click here:
 	
 	// group admin approve
 	'group_tools:group:admin_approve:notice' => "New groups need to be approved by a site administrator. You can make/edit the group, but it won't be visible to other users until approved by a site administrator.",
+	'group_tools:group:admin_approve:notice:profile' => "This group is awaiting approval by a site administrator. You can edit the group, but it won't be visible to other users until approved by a site administrator.",
 	'group_tools:group:admin_approve:decline:confirm' => "Are you sure you wish to decline this group? This will delete the group.",
 	'group_tools:group:admin_approve:admin:description' => "Here is a list of groups which need to be approved by the site administrators before they can be used.
 

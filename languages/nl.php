@@ -1,10 +1,11 @@
 <?php
 /**
  * This file was created by Translation Editor v8.0
- * On 2021-06-17 12:10
+ * On 2021-07-01 11:25
  */
 
 return array (
+  'group_tools:group:admin_approve:notice:profile' => 'Deze groep wacht op goedkeuring door een site beheerder. Je kunt de groep nog steeds bewerken, maar de groep zal niet zichtbaar zijn voor andere gebruikers totdat een site beheerder de groep heeft goedgekeurd.',
   'group_tools:settings:concept_groups' => 'Maak het mogelijk \'concept\' groepen aan te maken',
   'group_tools:settings:concept_groups:description' => 'Concept groepen zijn privé groepen waarvan de eigenaar nog niet klaar is om deze te presenteren aan de community. Bijvoorbeeld als er eerst nog meer content in de groep moet worden geplaatst. De eigenaar krijgt wekelijks een herinnering om de groep te publiceren.',
   'group_tools:settings:concept_groups_retention' => 'Hoe lang mogen \'concept\' groepen in \'concept\' blijven staan',
