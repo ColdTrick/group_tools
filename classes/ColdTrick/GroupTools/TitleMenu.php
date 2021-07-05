@@ -290,6 +290,7 @@ class TitleMenu {
 		
 		$allowed_items = [
 			'edit',
+			'delete',
 		];
 		
 		/* @var $return MenuItems */
@@ -297,9 +298,16 @@ class TitleMenu {
 		
 		// cleanup all items
 		$items = [];
-		/* @var $menu_item \ElggMenuItem */
 		foreach ($allowed_items as $name) {
-			$items[] = $return->get($name);
+			/* @var $item \ElggMenuItem */
+			$item = $return->get($name);
+			$items[] = $item;
+			
+			// some items could be in a submenu
+			$parent_name = $item->getParentName();
+			if (!empty($parent_name)) {
+				$items[] = $return->get($parent_name);
+			}
 		}
 		
 		$return->fill($items);
@@ -358,6 +366,7 @@ class TitleMenu {
 		
 		$allowed_items = [
 			'edit',
+			'delete',
 		];
 		
 		/* @var $return MenuItems */
@@ -365,9 +374,16 @@ class TitleMenu {
 		
 		// cleanup all items
 		$items = [];
-		/* @var $menu_item \ElggMenuItem */
 		foreach ($allowed_items as $name) {
-			$items[] = $return->get($name);
+			/* @var $item \ElggMenuItem */
+			$item = $return->get($name);
+			$items[] = $item;
+			
+			// some items could be in a submenu
+			$parent_name = $item->getParentName();
+			if (!empty($parent_name)) {
+				$items[] = $return->get($parent_name);
+			}
 		}
 		
 		$return->fill($items);
