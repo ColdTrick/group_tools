@@ -1,6 +1,14 @@
 Version history
 ===============
 
+12.1 (2021-07-06):
+
+- added: admins can enable group approval notifications personally
+- added: concept groups
+- added: group suggestions during creation
+- added: plugin setting to require approval reasons during group creation
+- fixed: add link to groups plugin settings
+
 12.0.7 (2021-06-08):
 
 - fixed: don't add empty profile fields in auto join configuration
