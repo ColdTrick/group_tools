@@ -103,7 +103,9 @@ class Membership {
 		self::setGroupNotificationSettings($user, $group);
 		
 		// allow user to change notification settings
-		self::notificationsToggle($user, $group);
+		if ($user->guid !== $group->owner_guid) {
+			self::notificationsToggle($user, $group);
+		}
 		
 		// cleanup invites and membershiprequests
 		self::cleanupGroupInvites($user, $group);
