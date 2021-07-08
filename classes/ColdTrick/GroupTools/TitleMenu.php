@@ -332,11 +332,12 @@ class TitleMenu {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'decline',
 			'text' => elgg_echo('decline'),
-			'href' => elgg_generate_action_url('group_tools/admin/decline', [
-				'guid' => $page_owner->guid,
-			]),
-			'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
-			'class' => 'elgg-button elgg-button-delete',
+			'href' => "#group-tools-admin-approve-decline-{$page_owner->guid}",
+			'class' => [
+				'elgg-button',
+				'elgg-button-delete',
+				'elgg-lightbox-inline',
+			],
 		]);
 		
 		return $return;

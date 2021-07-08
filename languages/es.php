@@ -162,7 +162,10 @@ Para ver todos los grupos que requieren acciones haz click aquí:
   'group_tools:group:admin_approve:decline:summary' => 'Tu grupo \'%s\' ha sido rechazado',
   'group_tools:group:admin_approve:decline:message' => 'Hola %s,
 
-tu grupo \'%s\' fue rechazado y eliminado por un administrador del sitio.',
+tu grupo \'%s\' fue rechazado y eliminado por un administrador del sitio.
+
+La razón fue:
+%s',
   'group_tools:notifications:title' => 'Notificaciones de grupo',
   'group_tools:notifications:disclaimer' => 'Con grupos numerosos esto puede demorar unos momentos.',
   'group_tools:notifications:enable' => 'Activar las notificaciones para todos',

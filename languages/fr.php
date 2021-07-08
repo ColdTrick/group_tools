@@ -189,7 +189,10 @@ Pour voir votre groupe, cliquez ici:
   'group_tools:group:admin_approve:decline:summary' => 'Votre groupe \'%s\' a été refusé',
   'group_tools:group:admin_approve:decline:message' => 'Bonjour %s,
 
-Votre groupe \'%s\' a été refusé',
+Votre groupe \'%s\' a été refusé`
+
+La raison était:
+%s',
   'group_tools:notifications:toggle:site:enabled:link' => 'desactive les notifications',
   'group_tools:notifications:toggle:site:disabled:link' => 'active les notifications',
   'group_tools:mail:message:from' => 'Depuis le groupe',

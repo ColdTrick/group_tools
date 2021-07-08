@@ -4,6 +4,7 @@
  */
 
 $group_guid = (int) get_input('guid');
+$reason = get_input('reason');
 $group = get_entity($group_guid);
 if (!$group instanceof ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
@@ -17,6 +18,7 @@ $summary = elgg_echo('group_tools:group:admin_approve:decline:summary', [$group-
 $message = elgg_echo('group_tools:group:admin_approve:decline:message', [
 	$owner->getDisplayName(),
 	$group->getDisplayName(),
+	$reason,
 ], $owner->language);
 
 $params = [
@@ -26,8 +28,8 @@ notify_user($owner->guid, elgg_get_logged_in_user_guid(), $subject, $message, $p
 
 // correct forward url
 $forward_url = REFERER;
-if ($_SERVER['HTTP_REFERER'] === $group->getURL()) {
-	$forward_url = 'groups/all';
+if (stristr($_SERVER['HTTP_REFERER'], $group->getURL()) !== false) {
+	$forward_url = elgg_generate_url('default:group:group');
 }
 
 // delete group

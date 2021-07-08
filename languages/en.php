@@ -305,6 +305,9 @@ To view the group, click here:
 	// group admin approve
 	'group_tools:group:admin_approve:notice' => "New groups need to be approved by a site administrator. You can make/edit the group, but it won't be visible to other users until approved by a site administrator.",
 	'group_tools:group:admin_approve:notice:profile' => "This group is awaiting approval by a site administrator. You can edit the group, but it won't be visible to other users until approved by a site administrator.",
+	'group_tools:group:admin_approve:decline:title' => "Decline the group approval request",
+	'group_tools:group:admin_approve:decline:description' => "Here you can give a reason why the group '%s' isn't being approved. The group owner will receive a notification that the group was declined and the reason why. After the group is declined it'll be removed.",
+	'group_tools:group:admin_approve:decline:reason' => "Reason for declining the group",
 	'group_tools:group:admin_approve:decline:confirm' => "Are you sure you wish to decline this group? This will delete the group.",
 	'group_tools:group:admin_approve:admin:description' => "Here is a list of groups which need to be approved by the site administrators before they can be used.
 
@@ -346,7 +349,10 @@ To visit the group click here:
 	'group_tools:group:admin_approve:decline:summary' => "Your group '%s' was declined",
 	'group_tools:group:admin_approve:decline:message' => "Hi %s,
 
-your group '%s' was declined and removed by a site administrator.",
+your group '%s' was declined and removed by a site administrator.
+
+The reason was:
+%s",
 	
 	// group notification
 	'group_tools:notifications:title' => "Group notifications",

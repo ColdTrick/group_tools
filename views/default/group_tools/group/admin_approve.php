@@ -14,6 +14,7 @@ if (!$group instanceof ElggGroup || !elgg_is_admin_logged_in()) {
 }
 
 $buttons = [];
+$content = '';
 
 if (!(bool) $group->is_concept) {
 	// awaiting approval
@@ -27,12 +28,21 @@ if (!(bool) $group->is_concept) {
 	]);
 	$buttons[] = elgg_view('output/url', [
 		'text' => elgg_echo('decline'),
-		'href' => elgg_generate_action_url('group_tools/admin/decline', [
-			'guid' => $group->guid,
-		]),
-		'confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
-		'class' => 'elgg-button elgg-button-delete',
+		'href' => "#group-tools-admin-approve-decline-{$group->guid}",
+		'class' => [
+			'elgg-button',
+			'elgg-button-delete',
+			'elgg-lightbox-inline',
+		],
 	]);
+	
+	$form = elgg_view_form('group_tools/admin/decline', [], [
+		'entity' => $group,
+	]);
+	$module = elgg_view_module('info', elgg_echo('group_tools:group:admin_approve:decline:title'), $form, [
+		'id' => "group-tools-admin-approve-decline-{$group->guid}",
+	]);
+	$content .= elgg_format_element('div', ['class' => 'hidden'], $module);
 	
 	$count = $group->getAnnotations([
 		'count' => true,
@@ -72,7 +82,7 @@ $params = [
 	'access' => false,
 	'metadata' => false,
 	'image_block_vars' => [
-		'image_alt' => implode('', $buttons),
+		'image_alt' => implode('', $buttons) . $content,
 	],
 ];
 

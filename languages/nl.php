@@ -209,7 +209,10 @@ Om naar de lijst te gaan met alle nog goed te keuren groepen, klik hier:
   'group_tools:group:admin_approve:decline:summary' => 'Je groep \'%s\' is afgewezen',
   'group_tools:group:admin_approve:decline:message' => 'Hallo %s,
 
-je groep \'%s\' is afgewezen en verwijderd door een site beheerder.',
+je groep \'%s\' is afgewezen en verwijderd door een site beheerder.
+
+De reden was:
+%s',
   'group_tools:csv_exporter:group_admin:name' => 'Groepsbeheerder(s) naam',
   'group_tools:csv_exporter:group_admin:email' => 'Groepsbeheerder(s) e-mail adres',
   'group_tools:csv_exporter:group_admin:url' => 'Groepsbeheerder(s) profiel url',

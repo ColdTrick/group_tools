@@ -41,4 +41,15 @@ if (empty($entity->guid)) {
 	}
 	
 	echo elgg_view_message('notice', $message);
+	
+	if (elgg_is_admin_logged_in()) {
+		$form = elgg_view_form('group_tools/admin/decline', [], [
+			'entity' => $entity,
+		]);
+		$module = elgg_view_module('info', elgg_echo('group_tools:group:admin_approve:decline:title'), $form, [
+			'id' => "group-tools-admin-approve-decline-{$entity->guid}",
+		]);
+		
+		echo elgg_format_element('div', ['class' => 'hidden'], $module);
+	}
 }
