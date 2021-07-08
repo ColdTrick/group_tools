@@ -334,6 +334,14 @@ To visit the group click here:
 To view all groups which need action click here:
 %s",
 	
+	'group_tools:group:admin_approve:owner:subject' => "Your group '%s' is now awaiting approval",
+	'group_tools:group:admin_approve:owner:message' => "Hi %s,
+
+Your group '%s' is now awaiting approval by a site administrator.
+
+To visit the group click here:
+%s",
+	
 	'group_tools:group:admin_approve:decline:subject' => "Your group '%s' was declined",
 	'group_tools:group:admin_approve:decline:summary' => "Your group '%s' was declined",
 	'group_tools:group:admin_approve:decline:message' => "Hi %s,
