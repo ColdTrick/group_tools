@@ -15,6 +15,9 @@ if (!elgg_is_admin_logged_in() && (elgg_get_plugin_setting('admin_approve', 'gro
 	// request approval
 	unset($group->is_concept);
 	
+	// prevent advanced notifications from preventing the enqueing of this event
+	elgg_unregister_plugin_hook_handler('enqueue', 'notification', 'ColdTrick\AdvancedNotifications\Enqueue::preventPrivateNotifications');
+	
 	elgg_trigger_event('admin_approval', 'group', $group);
 	
 	return elgg_ok_response('', elgg_echo('group_tools:action:remove_concept_status:success:approval'));
