@@ -104,7 +104,7 @@ class TitleMenu {
 		if ($menu_item instanceof \ElggMenuItem) {
 			$invite_found = true;
 			
-			$invite_friends = elgg_get_plugin_setting('invite_friends', 'group_tools', 'yes');
+			$invite_friends = elgg_get_plugin_setting('invite_friends', 'group_tools');
 			$invite = elgg_get_plugin_setting('invite', 'group_tools');
 			$invite_email = elgg_get_plugin_setting('invite_email', 'group_tools');
 			$invite_csv = elgg_get_plugin_setting('invite_csv', 'group_tools');
@@ -130,26 +130,12 @@ class TitleMenu {
 		
 		// we're on a group profile page, but haven't found the invite button yet
 		// so check if it should be here
-		$setting = elgg_get_plugin_setting('invite_members', 'group_tools');
-		if (!in_array($setting, ['yes_off', 'yes_on'])) {
-			return;
-		}
-		
-		// check group settings
-		$invite_members = $entity->invite_members;
-		if (empty($invite_members)) {
-			$invite_members = 'no';
-			if ($setting == 'yes_on') {
-				$invite_members = 'yes';
-			}
-		}
-		
-		if ($invite_members !== 'yes') {
+		if (group_tools_allow_members_invite($entity)) {
 			return;
 		}
 		
 		// normal users are allowed to invite users
-		$invite_friends = elgg_get_plugin_setting('invite_friends', 'group_tools', 'yes');
+		$invite_friends = elgg_get_plugin_setting('invite_friends', 'group_tools');
 		$invite = elgg_get_plugin_setting('invite', 'group_tools');
 		$invite_email = elgg_get_plugin_setting('invite_email', 'group_tools');
 		$invite_csv = elgg_get_plugin_setting('invite_csv', 'group_tools');

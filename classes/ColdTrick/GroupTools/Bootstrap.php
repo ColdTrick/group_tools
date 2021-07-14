@@ -10,28 +10,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 * {@inheritdoc}
 	 */
 	public function init() {
-		
-		// group admins
-		if (group_tools_multiple_admin_enabled()) {
-			// add group tool option
-			elgg()->group_tools->register('group_multiple_admin_allow', [
-				'label' => elgg_echo('group_tools:multiple_admin:group_tool_option'),
-				'default_on' => false,
-			]);
-		}
-		
-		// unregister dashboard widget group_activity, because our version is better ;)
-		// @todo is this still needed?
-		elgg_unregister_widget_type('group_activity');
-		
-		// group tools
-		if (group_tools_group_mail_members_enabled()) {
-			elgg()->group_tools->register('mail_members', [
-				'label' => elgg_echo('group_tools:tools:mail_members'),
-				'default_on' => false,
-			]);
-		}
-		
 		if (is_callable('profile_manager_add_custom_field_type')) {
 			profile_manager_add_custom_field_type('custom_group_field_types', 'group_tools_preset', elgg_echo('group_tools:profile:field:group_tools_preset'), [
 				'user_editable' => true,
@@ -49,25 +27,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 	}
 	
 	protected function registerViews() {
-		elgg_extend_view('admin.css', 'css/group_tools/admin.css');
-		elgg_extend_view('elgg.css', 'css/group_tools/site.css');
-		elgg_extend_view('groups/edit', 'group_tools/group_edit_tabbed', 10);
-		elgg_extend_view('groups/edit', 'group_tools/extends/groups/edit/admin_approve', 1);
-		elgg_extend_view('groups/edit', 'group_tools/forms/notifications', 375);
-		elgg_extend_view('groups/edit', 'group_tools/forms/invite_members', 475);
-		elgg_extend_view('groups/edit', 'group_tools/forms/welcome_message');
-		elgg_extend_view('groups/edit', 'group_tools/forms/domain_based');
-		elgg_extend_view('groups/edit/tools', 'group_tools/extends/groups/edit/tools/group_admins', 400);
-		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinvitations');
-		elgg_extend_view('groups/invitationrequests', 'group_tools/invitationrequests/emailinviteform');
-		elgg_extend_view('groups/profile/layout', 'group_tools/extends/groups/edit/admin_approve', 1);
-		elgg_extend_view('groups/profile/layout', 'group_tools/extends/groups/profile/concept', 2);
-		elgg_extend_view('groups/profile/summary', 'group_tools/extends/groups/profile/stale_message');
-		elgg_extend_view('groups/sidebar/members', 'group_tools/group_admins', 400);
-		elgg_extend_view('js/elgg', 'js/group_tools/site.js');
-		elgg_extend_view('page/elements/owner_block/extend', 'group_tools/owner_block');
-		elgg_extend_view('register/extend', 'group_tools/register_extend');
-		
 		elgg_register_ajax_view('forms/group_tools/admin/auto_join/additional');
 		elgg_register_ajax_view('forms/group_tools/admin/auto_join/default');
 		elgg_register_ajax_view('forms/groups/killrequest');
@@ -132,7 +91,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addTabs', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::addSorting', 550);
 		$hooks->registerHandler('register', 'menu:filter:groups/all', __NAMESPACE__ . '\GroupSortMenu::cleanupTabs', 900);
-		$hooks->registerHandler('register', 'menu:filter:group:invitations', __NAMESPACE__ . '\Menus\Filter::registerUserEmailInvitations');
+		$hooks->registerHandler('register', 'menu:filter:group/invitations', __NAMESPACE__ . '\Menus\Filter::registerUserEmailInvitations');
 		$hooks->registerHandler('register', 'menu:groups_members', __NAMESPACE__ . '\Menus\GroupsMembers::registerGroupAdmins');
 		$hooks->registerHandler('register', 'menu:groups_members', __NAMESPACE__ . '\Menus\GroupsMembers::registerEmailInvitations');
 		$hooks->registerHandler('register', 'menu:owner_block', __NAMESPACE__ . '\OwnerBlockMenu::relatedGroups');

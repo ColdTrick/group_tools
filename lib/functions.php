@@ -357,10 +357,6 @@ function group_tools_get_groups_without_acl($count = false) {
  */
 function group_tools_allow_members_invite(ElggGroup $group) {
 	
-	if (!$group instanceof ElggGroup) {
-		return false;
-	}
-	
 	$user = elgg_get_logged_in_user_entity();
 	if (!$user instanceof ElggUser) {
 		return false;
@@ -378,21 +374,10 @@ function group_tools_allow_members_invite(ElggGroup $group) {
 	}
 	
 	// check group setting
-	$invite_members = $group->invite_members;
-	if (empty($invite_members)) {
-		// default not allowed
-		$invite_members = 'no';
-		if ($setting === 'yes_on') {
-			// plugin setting says default allowed
-			$invite_members = 'yes';
-		}
-	}
+	$invite_members = $setting === 'yes_off' ? 'no' : 'yes';
+	$invite_members = $group->getPluginSetting('group_tools', 'invite_members', $invite_members);
 	
-	if ($invite_members === 'yes') {
-		return true;
-	}
-	
-	return false;
+	return $invite_members === 'yes';
 }
 
 /**
@@ -521,10 +506,6 @@ function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user =
 		return false;
 	}
 	
-	if (!$group instanceof ElggGroup) {
-		return false;
-	}
-	
 	if (!$user instanceof ElggUser) {
 		// default to current user
 		$user = elgg_get_logged_in_user_entity();
@@ -534,14 +515,14 @@ function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user =
 		return false;
 	}
 		
-	$domains = $group->getPrivateSetting('domain_based');
+	$domains = $group->getPluginSetting('group_tools', 'domain_based');
 	if (empty($domains)) {
 		return false;
 	}
 	
-	$domains = explode('|', strtolower(trim($domains, '|')));
+	$domains = string_to_tag_array(strtolower($domains));
 	
-	list(,$domain) = explode('@', strtolower($user->email));
+	list(, $domain) = explode('@', strtolower($user->email));
 	
 	return in_array($domain, $domains);
 }
@@ -551,16 +532,12 @@ function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user =
  *
  * @param ElggUser $user      The user used to base the search
  *
- * @return false|ElggGroup[]
+ * @return ElggGroup[]
  */
-function group_tools_get_domain_based_groups(ElggUser $user) {
+function group_tools_get_domain_based_groups(ElggUser $user): array {
 	
 	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
-		return false;
-	}
-	
-	if (!$user instanceof ElggUser) {
-		return false;
+		return [];
 	}
 	
 	list(, $domain) = explode('@', strtolower($user->email));
@@ -568,18 +545,28 @@ function group_tools_get_domain_based_groups(ElggUser $user) {
 	$options = [
 		'type' => 'group',
 		'limit' => false,
-		'private_setting_name_value_pairs' => [
-			'name' => 'domain_based',
-			'value' => "%|{$domain}|%",
-			'operand' => 'LIKE',
+		'wheres' => [
+			function (QueryBuilder $qb, $main_alias) use ($domain) {
+				$ps = $qb->joinPrivateSettingsTable($main_alias);
+				
+				$ors = [
+					$qb->compare("{$ps}.value", '=', $domain, ELGG_VALUE_STRING),
+					$qb->compare("{$ps}.value", 'like', "{$domain},%", ELGG_VALUE_STRING),
+					$qb->compare("{$ps}.value", 'like', "%,{$domain}", ELGG_VALUE_STRING),
+					$qb->compare("{$ps}.value", 'like', "%,{$domain},%", ELGG_VALUE_STRING),
+				];
+				
+				$ands = [
+					$qb->compare("{$ps}.name", '=', 'plugin:group_setting:group_tools:domain_based', ELGG_VALUE_STRING),
+					$qb->merge($ors, 'OR'),
+				];
+				
+				return $qb->merge($ands);
+			},
 		],
 	];
-	$groups = elgg_get_entities($options);
-	if (!empty($groups)) {
-		return $groups;
-	}
 	
-	return false;
+	return elgg_get_entities($options);
 }
 
 /**
@@ -1063,21 +1050,8 @@ function group_tools_get_default_group_notification_settings(ElggGroup $entity =
 	if (!isset($site_defaults)) {
 		$site_defaults = [];
 		
-		$add_all = false;
-		if (elgg_get_plugin_setting('auto_notification', 'group_tools') === 'yes') {
-			// backwards compatibility
-			$add_all = true;
-			elgg_unset_plugin_setting('auto_notification', 'group_tools');
-		}
-		
 		$methods = elgg_get_notification_methods();
 		foreach ($methods as $method) {
-			if ($add_all) {
-				$site_defaults[] = $method;
-				elgg_set_plugin_setting("auto_notification_{$method}", 1, 'group_tools');
-				continue;
-			}
-			
 			$plugin_setting = (int) elgg_get_plugin_setting("auto_notification_{$method}", 'group_tools');
 			if (empty($plugin_setting)) {
 				continue;
@@ -1093,7 +1067,7 @@ function group_tools_get_default_group_notification_settings(ElggGroup $entity =
 		return $site_defaults;
 	}
 	
-	$selected_methods = $entity->getPrivateSetting('group_tools:default_notifications');
+	$selected_methods = $entity->getPluginSetting('group_tools', 'default_methods');
 	if (!isset($selected_methods)) {
 		return $site_defaults;
 	}

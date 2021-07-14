@@ -10,6 +10,18 @@ use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'version' => '12.1',
+		'dependencies' => [
+			'groups' => [
+				'position' => 'after',
+			],
+			'profile_manager' => [
+				'must_be_active' => false,
+				'position' => 'after',
+			],
+		],
+	],
 	'bootstrap' => Bootstrap::class,
 	'settings' => [
 		'group_listing' => 'all',
@@ -51,9 +63,6 @@ return [
 	'actions' => [
 		'group_tools/toggle_admin' => [],
 		'group_tools/mail' => [],
-		'group_tools/invite_members' => [],
-		'group_tools/welcome_message' => [],
-		'group_tools/domain_based' => [],
 		'group_tools/related_groups' => [],
 		'group_tools/remove_related_groups' => [],
 		'group_tools/member_export' => [],
@@ -80,6 +89,28 @@ return [
 		'groups/decline_email_invitation' => [],
 		'groups/edit' => [],
 		'groups/invite' => [],
+	],
+	'hooks' => [
+		'handlers' => [
+			'widgets' => [
+				'\ColdTrick\GroupTools\Widgets::unregsiterGroupActivityWidget' => [],
+			],
+		],
+		'plugin_setting' => [
+			'group' => [
+				'\ColdTrick\GroupTools\PluginSettings::saveGroupSettings' => [],
+			],
+		],
+		'tool_options' => [
+			'group' => [
+				'\ColdTrick\GroupTools\Plugins\Groups::registerGroupTools' => [],
+			],
+		],
+		'view_vars' => [
+			'forms/groups/edit' => [
+				'\ColdTrick\GroupTools\Views::prepareGroupApprovalReasons' => [],
+			],
+		],
 	],
 	'routes' => [
 		'add:object:group_tools_group_mail' => [
@@ -121,11 +152,38 @@ return [
 		FixGroupAccess::class,
 		MigrateGroupDefaultContentAccess::class,
 	],
+	'view_extensions' => [
+		'admin.css' => [
+			'group_tools/admin.css' => [],
+		],
+		'elgg.css' => [
+			'group_tools/site.css' => [],
+		],
+		'groups/edit' => [
+			'group_tools/extends/groups/edit/admin_approve' => ['priority' => 1],
+		],
+		'groups/edit/settings' => [
+			'group_tools/extends/groups/edit/settings/domain_based' => [],
+			'group_tools/extends/groups/edit/settings/invite_members' => [],
+			'group_tools/extends/groups/edit/settings/notifications' => [],
+			'group_tools/extends/groups/edit/settings/welcome_message' => [],
+		],
+		'groups/profile/summary' => [
+			'group_tools/extends/groups/edit/admin_approve' => [],
+			'group_tools/extends/groups/profile/concept' => [],
+			'group_tools/extends/groups/profile/stale_message' => [],
+		],
+		'groups/sidebar/members' => [
+			'group_tools/group_admins' => ['priority' => 400],
+		],
+		'register/extend' => [
+			'group_tools/register_extend' => [],
+		],
+	],
 	'widgets' => [
 		'group_river_widget' => [
 			/* 2012-05-03: restored limited functionality of group activity widget
 			 * will be fully restored if Elgg fixes widget settings
-			 * @todo is this still needed
 			 */
 			'context' => ['dashboard', 'profile', 'index', 'groups'],
 			'multiple' => true,

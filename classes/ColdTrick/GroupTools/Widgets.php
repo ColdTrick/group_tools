@@ -48,4 +48,27 @@ class Widgets {
 		
 		return $result;
 	}
+	
+	/**
+	 * Unregister the groups activity widget because our version is better
+	 *
+	 * @param \Elgg\Hook $hook 'handlers', 'widgets'
+	 *
+	 * @return void|\Elgg\WidgetDefinition[]
+	 */
+	public static function unregsiterGroupActivityWidget(\Elgg\Hook $hook) {
+		
+		/* @var $result \Elgg\WidgetDefinition[] */
+		$result = $hook->getValue();
+		foreach ($result as $index => $definition) {
+			if ($definition->id !== 'group_activity') {
+				continue;
+			}
+			
+			unset($result[$index]);
+			break;
+		}
+		
+		return $result;
+	}
 }

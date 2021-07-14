@@ -1,6 +1,7 @@
 {
 	"name": "coldtrick/group_tools",
 	"description": "Combines different group additions into one plugin",
+	"homepage": "https://www.coldtrick.com",
 	"type": "elgg-plugin",
 	"keywords": ["elgg", "plugin", "groups"],
 	"license": "GPL-2.0-only",
@@ -16,6 +17,6 @@
 		"coldtrick/releases": "dev-master"
 	},
 	"conflict": {
-		"elgg/elgg": "<3.3"
+		"elgg/elgg": "<4.0"
 	}
 }

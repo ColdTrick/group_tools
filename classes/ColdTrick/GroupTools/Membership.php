@@ -255,7 +255,7 @@ class Membership {
 	protected static function sendWelcomeMessage(\ElggUser $recipient, \ElggGroup $group) {
 		
 		// get welcome messgae
-		$welcome_message = $group->getPrivateSetting('group_tools:welcome_message');
+		$welcome_message = $group->getPluginSetting('group_tools', 'welcome_message', '');
 		$check_message = trim(strip_tags($welcome_message));
 		if (empty($check_message)) {
 			return;

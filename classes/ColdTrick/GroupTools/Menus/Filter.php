@@ -9,7 +9,7 @@ class Filter {
 	/**
 	 * Add menu items to the user group invitations page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:group:invitations'
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:group/invitations'
 	 *
 	 * @return void|MenuItems
 	 */
