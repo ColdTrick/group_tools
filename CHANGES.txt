@@ -1,6 +1,13 @@
 Version history
 ===============
 
+12.2 (2021-07-14):
+
+- added: notification to group owner when admin approval is requested
+- added: reason to group approval decline
+- fixed: conflict with advanced notifications for concept groups
+- fixed: don't show notification toggle to group owners
+
 12.1 (2021-07-06):
 
 - added: admins can enable group approval notifications personally
