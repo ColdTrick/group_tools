@@ -285,8 +285,10 @@ class Title {
 		// cleanup all items
 		$items = [];
 		foreach ($allowed_items as $name) {
-			/* @var $item \ElggMenuItem */
 			$item = $return->get($name);
+			if (!$item instanceof \ElggMenuItem) {
+				continue;
+			}
 			$items[] = $item;
 			
 			// some items could be in a submenu
@@ -362,8 +364,10 @@ class Title {
 		// cleanup all items
 		$items = [];
 		foreach ($allowed_items as $name) {
-			/* @var $item \ElggMenuItem */
 			$item = $return->get($name);
+			if (!$item instanceof \ElggMenuItem) {
+				continue;
+			}
 			$items[] = $item;
 			
 			// some items could be in a submenu

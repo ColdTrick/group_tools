@@ -11,7 +11,7 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'version' => '12.2',
+		'version' => '12.2.1',
 		'dependencies' => [
 			'groups' => [
 				'position' => 'after',

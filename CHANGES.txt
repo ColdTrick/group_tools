@@ -1,6 +1,10 @@
 Version history
 ===============
 
+12.2.1 (2021-07-16):
+
+- fixed: check for menu item in concept/approval cleanup
+
 12.2 (2021-07-14):
 
 - added: notification to group owner when admin approval is requested
