@@ -10,8 +10,12 @@ if (empty($group_guid)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-elgg_entity_gatekeeper($group_guid, 'group');
 $group = get_entity($group_guid);
+if (!$group instanceof ElggGroup || !$group->canEdit()) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
+}
+
+$plugin = elgg_get_plugin_from_id('group_tools');
 
 $result = false;
 $success_message = '';
@@ -20,7 +24,7 @@ $error_message = '';
 switch ($state) {
 	case 'suggested':
 		$suggested_groups = [];
-		$suggested_setting = elgg_get_plugin_setting('suggested_groups', 'group_tools');
+		$suggested_setting = $plugin->getSetting('suggested_groups');
 		if (!empty($suggested_setting)) {
 			$suggested_groups = string_to_tag_array($suggested_setting);
 		}
@@ -32,9 +36,9 @@ switch ($state) {
 		}
 		
 		if (!empty($suggested_groups)) {
-			$result = elgg_set_plugin_setting('suggested_groups', implode(',', $suggested_groups), 'group_tools');
+			$result = $plugin->setSetting('suggested_groups', implode(',', $suggested_groups));
 		} else {
-			$result = elgg_unset_plugin_setting('suggested_groups', 'group_tools');
+			$result = $plugin->unsetSetting('suggested_groups');
 		}
 		
 		$success_message = elgg_echo('group_tools:action:toggle_special_state:suggested');

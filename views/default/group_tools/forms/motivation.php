@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\EntityNotFoundException;
+use Elgg\Exceptions\Http\EntityNotFoundException;
 
 $group_guid = (int) get_input('guid');
 $group = elgg_call(ELGG_IGNORE_ACCESS, function () use ($group_guid) {

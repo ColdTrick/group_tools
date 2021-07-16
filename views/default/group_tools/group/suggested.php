@@ -21,10 +21,6 @@ if (empty($result)) {
 	return;
 }
 
-$module = 'info';
-if (elgg_get_plugin_setting('simple_create_form', 'group_tools') === 'yes') {
-	$module = 'simple';
-}
-echo elgg_view_module($module, elgg_echo('group_tools:group:edit:suggested'), $result, [
+echo elgg_view_module('info', elgg_echo('group_tools:group:edit:suggested'), $result, [
 	'id' => 'group-tools-edit-group-suggestions'
 ]);

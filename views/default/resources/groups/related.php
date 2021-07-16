@@ -16,9 +16,6 @@ elgg_set_page_owner_guid($group->guid);
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
-$title_text = elgg_echo('group_tools:related_groups:title');
-elgg_push_breadcrumb($title_text);
-
 // page elements
 $content = '';
 if ($group->canEdit()) {
@@ -40,11 +37,7 @@ $content .= elgg_list_entities([
 	'no_results' => elgg_echo('groups_tools:related_groups:none'),
 ]);
 
-// build page
-$page_data = elgg_view_layout('default', [
-	'title' => $title_text,
+// draw page
+echo elgg_view_page(elgg_echo('group_tools:related_groups:title'), [
 	'content' => $content,
 ]);
-
-// draw page
-echo elgg_view_page($title_text, $page_data);

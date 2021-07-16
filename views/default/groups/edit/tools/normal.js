@@ -1,9 +1,4 @@
-/**
- * Support file for group tool presets
- */
-define(function(require) {
-	
-	var $ = require('jquery');
+define(['jquery'], function($) {
 	
 	function ToolsPreset(wrapper) {
 		var self = this;
@@ -14,7 +9,7 @@ define(function(require) {
 			return false;
 		});
 		
-		self.autoDetect();
+		self.autoDetect(wrapper);
 	}
 	
 	ToolsPreset.prototype = {
@@ -59,9 +54,9 @@ define(function(require) {
 				$('#group-tools-preset-more-link').hide();
 			}
 		},
-		autoDetect: function() {
+		autoDetect: function(wrapper) {
 			
-			var $input = $('#group-tools-group-edit-tools input[name="group_tools_auto_select"]');
+			var $input = $(wrapper).find('input[name="group_tools_auto_select"]');
 			if (!$input.length) {
 				return;
 			}
@@ -81,5 +76,5 @@ define(function(require) {
 		new ToolsPreset(selector);
 	};
 	
-	return ToolsPreset;
+	ToolsPreset.init('.elgg-form-groups-edit');
 });

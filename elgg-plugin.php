@@ -35,7 +35,6 @@ return [
 		'concept_groups' => 0,
 		'admin_transfer' => 'no',
 		'simple_access_tab' => 'no',
-		'simple_create_form' => 'no',
 		'simple_tool_presets' => 'no',
 		'auto_accept_membership_requests' => 'no',
 		'invite' => 'no',
@@ -264,6 +263,7 @@ return [
 			],
 			'groups/edit/access' => [
 				'\ColdTrick\GroupTools\Views::allowGroupOwnerTransfer' => [],
+				'\ColdTrick\GroupTools\Views::showSimplefiedAccess' => [],
 			],
 			'input/form' => [
 				'\ColdTrick\GroupTools\Views::allowDoubleSubmitWhenConceptGroupsEnabled' => [],

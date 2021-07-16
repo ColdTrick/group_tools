@@ -1,7 +1,5 @@
-define(function (require) {
+define(['jquery'], function ($) {
 
-	var $ = require('jquery');
-	
 	var update_access_values = function (group_type) {
 		
 		var $form = $('.elgg-form-groups-edit');
@@ -21,7 +19,7 @@ define(function (require) {
 		}		
 	};
 
-	$('#group-tools-group-edit-access .group-tools-simplified-option').on('click', function() {
+	$('.elgg-form-groups-edit .group-tools-simplified-option').on('click', function() {
 		$(this).siblings().removeClass('elgg-state-active');
 		
 		$(this).addClass('elgg-state-active');
@@ -29,5 +27,5 @@ define(function (require) {
 		update_access_values($(this).data('groupType'));
 	});
 	
-	$('#group-tools-group-edit-access .group-tools-simplified-option:first').click();
+	$('.elgg-form-groups-edit .group-tools-simplified-option:first').click();
 });

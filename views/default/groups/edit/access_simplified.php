@@ -2,11 +2,15 @@
 
 elgg_require_js('groups/edit/access_simplified');
 
-$open_text = '<h3>' . elgg_echo('group_tools:edit:access_simplified:open') . '</h3>';
-$open_text .= elgg_view('output/longtext', ['value' => elgg_echo('group_tools:edit:access_simplified:open:description')]);
+$open_text = elgg_format_element('h3', [], elgg_echo('group_tools:edit:access_simplified:open'));
+$open_text .= elgg_view('output/longtext', [
+	'value' => elgg_echo('group_tools:edit:access_simplified:open:description'),
+]);
 
-$closed_text = '<h3>' . elgg_echo('group_tools:edit:access_simplified:closed') . '</h3>';
-$closed_text .= elgg_view('output/longtext', ['value' => elgg_echo('group_tools:edit:access_simplified:closed:description')]);
+$closed_text = elgg_format_element('h3', [], elgg_echo('group_tools:edit:access_simplified:closed'));
+$closed_text .= elgg_view('output/longtext', [
+	'value' => elgg_echo('group_tools:edit:access_simplified:closed:description'),
+]);
 
 $open_text = elgg_format_element('div', [
 	'class' => 'group-tools-simplified-option elgg-state-active',
@@ -18,8 +22,10 @@ $closed_text = elgg_format_element('div', [
 	'data-group-type' => 'closed',
 ], $closed_text);
 
-echo '<div class="group-tools-simplified-options clearfix">';
-echo $open_text . $closed_text;
-echo '</div>';
+echo elgg_format_element('div', ['class' => ['group-tools-simplified-options', 'clearfix']], $open_text . $closed_text);
 
-echo elgg_format_element('div', ['class' => 'hidden'] , elgg_view('groups/edit/access', $vars));
+$params = [
+	'_group_tools_simplified_deadloop' => true,
+];
+$params = $params + $vars;
+echo elgg_format_element('div', ['class' => 'hidden'] , elgg_view('groups/edit/access', $params));

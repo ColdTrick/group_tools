@@ -13,11 +13,10 @@ $output = '';
 $selected_tools = [];
 
 foreach ($presets as $index => $preset) {
-	$preset_content = '<h3>' . elgg_extract('title', $preset) . '</h3>';
+	$preset_content = elgg_format_element('h3', [], elgg_extract('title', $preset));
 	$preset_content .= elgg_view('output/longtext', [
 		'value' => elgg_extract('description', $preset),
 	]);
-	
 	
 	$preset_content .= elgg_view_field([
 		'#type' => 'hidden',

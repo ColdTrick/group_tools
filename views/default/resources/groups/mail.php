@@ -3,7 +3,7 @@
  * Mail group members
  */
 
-use Elgg\EntityPermissionsException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
 
 $group_guid = (int) elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($group_guid, 'group');
@@ -20,9 +20,8 @@ elgg_set_page_owner_guid($group->guid);
 elgg_set_context('groups');
 
 // set breadcrumb
-elgg_push_breadcrumb(elgg_echo('groups'), 'groups/all');
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
-elgg_push_breadcrumb(elgg_echo('group_tools:menu:mail'));
 
 // build page elements
 $title_text = elgg_echo('group_tools:mail:title');

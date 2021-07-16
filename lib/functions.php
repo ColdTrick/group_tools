@@ -963,7 +963,8 @@ function group_tools_save_auto_join_configuration(array $config): bool {
 	$existing_config[$id] = $config;
 	
 	// store new config
-	$result = (bool) elgg_set_plugin_setting('auto_join_config', json_encode($existing_config), 'group_tools');
+	$plugin = elgg_get_plugin_from_id('group_tools');
+	$result = $plugin->setSetting('auto_join_config', json_encode($existing_config), 'group_tools');
 	
 	// refesh cache
 	group_tools_get_auto_join_configurations(true);
@@ -993,7 +994,8 @@ function group_tools_delete_auto_join_configuration(string $id): bool {
 	unset($existing_config[$id]);
 	
 	// store new config
-	$result = (bool) elgg_set_plugin_setting('auto_join_config', json_encode($existing_config), 'group_tools');
+	$plugin = elgg_get_plugin_from_id('group_tools');
+	$result = $plugin->setSetting('auto_join_config', json_encode($existing_config));
 	
 	// refesh cache
 	group_tools_get_auto_join_configurations(true);

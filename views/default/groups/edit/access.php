@@ -4,8 +4,6 @@
  *
  * This view contains everything related to group access.
  * eg: how can people join this group, who can see the group, etc
- *
- * @package ElggGroups
  */
 
 $entity = elgg_extract('entity', $vars, false);
@@ -34,7 +32,6 @@ echo elgg_view_field([
 		ACCESS_PRIVATE => elgg_echo('groups:access:private'),
 		ACCESS_PUBLIC => elgg_echo('groups:access:public'),
 	],
-	'onchange' => 'elgg.group_tools.show_join_motivation(this);',
 ]);
 
 if ($show_motivation_option) {
@@ -90,6 +87,7 @@ if ($show_visibility) {
 	]);
 }
 
+// group content access mode
 $access_mode_params = [
 	'#type' => 'select',
 	'#label' => elgg_echo('groups:content_access_mode'),
@@ -105,8 +103,8 @@ $access_mode_params = [
 if ($entity instanceof \ElggGroup) {
 	// Disable content_access_mode field for hidden groups because the setting
 	// will be forced to members_only regardless of the entered value
-	$acl = _groups_get_group_acl($entity);
-	if ($acl && ($entity->access_id === $acl->id)) {
+	$acl = $entity->getOwnedAccessCollection('group_acl');
+	if ($acl instanceof ElggAccessCollection && ($entity->access_id === $acl->id)) {
 		$access_mode_params['disabled'] = 'disabled';
 	}
 	

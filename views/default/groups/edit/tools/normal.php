@@ -3,6 +3,8 @@
 $tools = elgg_extract('tools', $vars);
 $presets = elgg_extract('presets', $vars);
 
+elgg_require_js('groups/edit/tools/normal');
+
 echo elgg_view('output/longtext', [
 	'value' => elgg_echo('group_tools:create_group:tool_presets:description'),
 ]);
@@ -15,7 +17,7 @@ $presets_tools = [];
 foreach ($presets as $index => $values) {
 	$preset_selectors .= elgg_view('output/url', [
 		'text' => elgg_extract('title', $values),
-		'href' => '#',
+		'href' => false,
 		'class' => 'elgg-button elgg-button-action mrm',
 		'rel' => $index,
 		'title' => elgg_strip_tags(elgg_extract('description', $values)),
@@ -99,7 +101,6 @@ foreach ($tools as $group_option) {
 }
 
 echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:more_header'), $tools_content, ['id' => 'group-tools-preset-more', 'class' => 'hidden']);
-
 
 $url_preset = get_input('group_tools_preset');
 if (!empty($url_preset)) {

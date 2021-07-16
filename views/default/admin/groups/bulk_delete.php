@@ -28,6 +28,8 @@ if ($group_count < 1) {
 	return;
 }
 
+elgg_require_js('admin/groups/bulk_delete');
+
 unset($options['count']);
 $batch = new ElggBatch('elgg_get_entities', $options);
 
@@ -46,7 +48,7 @@ $form_data .= '<tr>';
 $form_data .= '<th class="center">' . elgg_view('input/checkbox', ['name' => 'checkall', 'default' => false]) . '</th>';
 $form_data .= '<th>' . elgg_echo('groups:group') . '</th>';
 $form_data .= '<th class="center">' . elgg_echo('groups:edit') . '</th>';
-$form_data .= '<th class="center">' . elgg_echo('groups:delete') . '</th>';
+$form_data .= '<th class="center">' . elgg_echo('delete') . '</th>';
 $form_data .= '</tr>';
 $form_data .= '</thead>';
 
@@ -74,18 +76,20 @@ foreach ($batch as $group) {
 	$cells[] = elgg_format_element('td', ['class' => 'center'], elgg_view('output/url', [
 		'text' => elgg_view_icon('settings-alt'),
 		'title' => elgg_echo('edit'),
-		'href' => "groups/edit/{$group->guid}",
+		'href' => elgg_generate_entity_url($group, 'edit'),
 	]));
 	$cells[] = elgg_format_element('td', ['class' => 'center'], elgg_view('output/url', [
 		'text' => elgg_view_icon('delete-alt'),
 		'title' => elgg_echo('delete'),
 		'confirm' => elgg_echo('deleteconfirm'),
-		'href' => "action/groups/delete?guid={$group->guid}",
+		'href' => elgg_generate_action_url('entity/delete', [
+			'guid' => $group->guid,
+		]),
 	]));
 	
-	$rows[] = elgg_format_element('tr', [], implode('', $cells));
+	$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $cells));
 }
-$form_data .= elgg_format_element('tbody', [], implode('', $rows));
+$form_data .= elgg_format_element('tbody', [], implode(PHP_EOL, $rows));
 
 $form_data .= '</table>';
 
@@ -103,4 +107,3 @@ echo elgg_view('input/form', [
 	'action' => 'action/group_tools/admin/bulk_delete',
 	'body' => $form_data,
 ]);
-elgg_require_js('group_tools/group_bulk_delete');

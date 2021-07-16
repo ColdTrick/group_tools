@@ -129,8 +129,6 @@ Bekijk de groep hier:
   'group_tools:settings:edit:title' => 'Groep bewerken instellingen',
   'group_tools:settings:simple_access_tab' => 'Vereenvoudigde groepstoegang selectie',
   'group_tools:settings:simple_access_tab:help' => 'Vervang de groepstoegang opties tijdens het aanmaken van een groep door een vereenvoudigde keuze \'Open\' en \'Besloten\'',
-  'group_tools:settings:simple_create_form' => 'Eenvoudig groep aanmaken formulier',
-  'group_tools:settings:simple_create_form:help' => 'Als dit wordt ingeschakeld wordt de weergave voor het aanmaken van een groep aangepast',
   'group_tools:settings:allow_hidden_groups:help' => 'Wie mag er verborgen groepen aanmaken. Deze instelling overschrijft de instelling van de Groepen plugin.',
   'group_tools:settings:content:title' => 'Groep content instellingen',
   'group_tools:settings:stale_timeout' => 'Groepen worden inactief als er geen inhoud is gemaakt binnen een aantal dagen',

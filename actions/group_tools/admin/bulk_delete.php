@@ -8,14 +8,25 @@ if (empty($group_guids)) {
 // this could take a while
 set_time_limit(0);
 
-$options = [
+/* @var $batch \ElggBatch */
+$batch = elgg_get_entities([
 	'type' => 'group',
 	'guids' => $group_guids,
 	'limit' => false,
-];
+	'batch' => true,
+	'batch_inc_offset' => false,
+]);
 
-$batch = new ElggBatch('elgg_get_entities', $options, 'elgg_batch_delete_callback', 25, false);
-if (!$batch->callbackResult) {
+$failure = false;
+/* @var $group \ElggGroup */
+foreach ($batch as $group) {
+	if (!$group->delete()) {
+		$failure = true;
+		$batch->reportFailure();
+	}
+}
+
+if ($failure) {
 	return elgg_error_response(elgg_echo('group_tools:action:bulk_delete:error'));
 }
 

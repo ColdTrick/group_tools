@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 elgg_gatekeeper();
 
 $limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'));
@@ -9,7 +11,7 @@ $target_guid = (int) elgg_extract('match_target', $vars);
 
 $target = get_entity($target_guid);
 if (!$target instanceof ElggGroup) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new EntityNotFoundException();
 }
 
 $options = [

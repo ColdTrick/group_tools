@@ -18,6 +18,7 @@ if (!empty($presets)) {
 	$presets = array_values($presets);
 }
 
-elgg_set_plugin_setting('group_tool_presets', json_encode($presets), 'group_tools');
+$plugin = elgg_get_plugin_from_id('group_tools');
+$plugin->setSetting('group_tool_presets', json_encode($presets));
 
 return elgg_ok_response('', elgg_echo('group_tools:action:group_tool:presets:saved'));

@@ -1,15 +1,13 @@
 <?php
-
 /**
  * Group edit form
  *
  * This view contains the group tool options provided by the different plugins
- *
- * @package ElggGroups
  */
 
 $entity = elgg_extract('entity', $vars);
-if ($entity instanceof \ElggGroup) {
+
+if ($entity instanceof ElggGroup) {
 	$tools = elgg()->group_tools->group($entity);
 } else {
 	$tools = elgg()->group_tools->all();
@@ -55,20 +53,7 @@ if (empty($entity) && !empty($presets)) {
 		echo elgg_view('groups/edit/tools/simple', $vars);
 	} else {
 		echo elgg_view('groups/edit/tools/normal', $vars);
-		?>
-		<script type='text/javascript'>
-			require(['group_tools/ToolsPreset'], function(ToolsPreset) {
-				ToolsPreset.init('#group-tools-group-edit-tools');
-			});
-		</script>
-		<?php
 	}
 } else {
 	echo elgg_view('groups/edit/tools/default', $vars);
 }
-?>
-<script type='text/javascript'>
-	require(['group_tools/ToolsEdit'], function(ToolsEdit) {
-		ToolsEdit.init('#group-tools-group-edit-tools');
-	});
-</script>

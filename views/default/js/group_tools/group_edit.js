@@ -2,15 +2,6 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 	/** global: elgg */
 	elgg.provide('elgg.group_tools');
 			
-	elgg.group_tools.show_join_motivation = function(elem) {
-		
-		if ($(elem).val() === '0') {
-			$('#group-tools-join-motivation').show();
-		} else {
-			$('#group-tools-join-motivation').hide();
-		}
-	};
-
 	elgg.group_tools.add_group_suggestions = function () {
 		var $input = $('form.elgg-form-groups-edit input[name="name"]');
 		if ($input.closest('form').find('input[name="group_guid"]').length) {
@@ -40,5 +31,14 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 		}
 		
 		inputTimeout = setTimeout(elgg.group_tools.add_group_suggestions, 400);
+	});
+	
+	$(document).on('change', '#groups-membership', function() {
+		console.log('adsfasd');
+		if ($(this).val() === '0') {
+			$('#group-tools-join-motivation').show();
+		} else {
+			$('#group-tools-join-motivation').hide();
+		}
 	});
 });

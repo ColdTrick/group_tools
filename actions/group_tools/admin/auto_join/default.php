@@ -12,10 +12,12 @@ if (!empty($group_guids)) {
 	}, $group_guids);
 }
 
+$plugin = elgg_get_plugin_from_id('group_tools');
+
 if (empty($group_guids)) {
-	elgg_unset_plugin_setting('auto_join', 'group_tools');
+	$plugin->unsetSetting('auto_join');
 } else {
-	elgg_set_plugin_setting('auto_join', implode(',', $group_guids), 'group_tools');
+	$plugin->setSetting('auto_join', implode(',', $group_guids));
 }
 
 return elgg_ok_response('', elgg_echo('save:success'));
