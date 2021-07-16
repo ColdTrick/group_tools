@@ -70,7 +70,7 @@ class TitleMenu {
 				'width' => '600px',
 			]);
 		}
-
+		
 		$menu_items->add($menu_item);
 		
 		return $menu_items;
@@ -299,8 +299,10 @@ class TitleMenu {
 		// cleanup all items
 		$items = [];
 		foreach ($allowed_items as $name) {
-			/* @var $item \ElggMenuItem */
 			$item = $return->get($name);
+			if (!$item instanceof \ElggMenuItem) {
+				continue;
+			}
 			$items[] = $item;
 			
 			// some items could be in a submenu
@@ -338,7 +340,7 @@ class TitleMenu {
 				'elgg-button-delete',
 				'elgg-lightbox-inline',
 			],
-		]);
+			]);
 		
 		return $return;
 	}
@@ -376,8 +378,10 @@ class TitleMenu {
 		// cleanup all items
 		$items = [];
 		foreach ($allowed_items as $name) {
-			/* @var $item \ElggMenuItem */
 			$item = $return->get($name);
+			if (!$item instanceof \ElggMenuItem) {
+				continue;
+			}
 			$items[] = $item;
 			
 			// some items could be in a submenu
@@ -441,7 +445,7 @@ class TitleMenu {
 		if (!$add_button instanceof \ElggMenuItem) {
 			return;
 		}
-				
+		
 		$url = elgg_generate_url('add:group:group', [
 			'container_guid' => $user->guid,
 		]);
@@ -450,7 +454,7 @@ class TitleMenu {
 			// not the group add button
 			return;
 		}
-	
+		
 		$presets = group_tools_get_tool_presets();
 		if (empty($presets)) {
 			return;
@@ -476,7 +480,7 @@ class TitleMenu {
 					'group_tools_preset' => elgg_extract('title', $preset),
 				]),
 				'parent_name' => $add_button->getName(),
-			]);
+				]);
 			
 			$return->add($menu_item);
 		}
