@@ -304,7 +304,7 @@ class Membership {
 	/**
 	 * Listen to the create user
 	 *
-	 * @param \Elgg\Event $event 'create', 'user'
+	 * @param \Elgg\Event $event 'validate:after', 'user'
 	 *
 	 * @return void
 	 */
@@ -430,7 +430,7 @@ class Membership {
 	/**
 	 * Listen to the create member_of_site relationship event to handle new users
 	 *
-	 * @param \Elgg\Event $event 'create', 'user'
+	 * @param \Elgg\Event $event 'validate:after', 'user'
 	 *
 	 * @return void
 	 */
@@ -509,7 +509,7 @@ class Membership {
 	/**
 	 * Listen to the create member_of_site relationship event to handle new users
 	 *
-	 * @param \Elgg\Event $event 'create', 'user'
+	 * @param \Elgg\Event $event 'validate:after', 'user'
 	 *
 	 * @return void
 	 */

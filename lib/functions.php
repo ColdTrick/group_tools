@@ -16,7 +16,7 @@ use Elgg\Security\Base64Url;
  *
  * @return false|ElggGroup
  */
-function group_tools_check_group_email_invitation($invite_code, $group_guid = 0) {
+function group_tools_check_group_email_invitation(string $invite_code, int $group_guid = 0) {
 	
 	if (empty($invite_code) || !Base64Url::decode($invite_code)) {
 		return false;
@@ -63,12 +63,10 @@ function group_tools_check_group_email_invitation($invite_code, $group_guid = 0)
  *
  * @return bool
  */
-function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $resend = false) {
+function group_tools_invite_user(ElggGroup $group, ElggUser $user, string $text = '', bool $resend = false) {
 	
 	$loggedin_user = elgg_get_logged_in_user_entity();
-	$resend = (bool) $resend;
-	
-	if (!$user instanceof ElggUser || !$group instanceof ElggGroup || empty($loggedin_user)) {
+	if (empty($loggedin_user)) {
 		return false;
 	}
 	
@@ -117,11 +115,10 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
  *
  * @return bool
  */
-function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = "") {
+function group_tools_add_user(ElggGroup $group, ElggUser $user, string $text = '') {
 	
 	$loggedin_user = elgg_get_logged_in_user_entity();
-	
-	if (!$user instanceof ElggUser || !$group instanceof ElggGroup || empty($loggedin_user)) {
+	if (empty($loggedin_user)) {
 		return false;
 	}
 	
@@ -166,12 +163,10 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = "") {
  *
  * @return bool|NULL true is invited, false on failure, null when already send
  */
-function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend = false) {
+function group_tools_invite_email(ElggGroup $group, string $email, string $text = '', bool $resend = false) {
 	
 	$loggedin_user = elgg_get_logged_in_user_entity();
-	$resend = (bool) $resend;
-	
-	if (!$group instanceof ElggGroup || empty($email) || !is_email_address($email) || empty($loggedin_user)) {
+	if (!is_email_address($email) || empty($loggedin_user)) {
 		return false;
 	}
 	
@@ -224,14 +219,13 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 /**
  * Get all the groups this email address is invited for
  *
- * @param string $email     the email address
+ * @param string $email the email address
  *
- * @return false|ElggGroup[]
+ * @return ElggGroup[]
  */
-function group_tools_get_invited_groups_by_email($email) {
-	
+function group_tools_get_invited_groups_by_email(string $email): array {
 	if (empty($email)) {
-		return false;
+		return [];
 	}
 	
 	$options = [
@@ -260,7 +254,7 @@ function group_tools_get_invited_groups_by_email($email) {
  *
  * @return stdClass[] all the found database rows
  */
-function group_tools_get_missing_acl_users($group_guid = 0) {
+function group_tools_get_missing_acl_users(int $group_guid = 0) {
 	
 	$select = Select::fromTable('access_collections', 'ac');
 	$select->select('ac.id AS acl_id')
@@ -286,7 +280,7 @@ function group_tools_get_missing_acl_users($group_guid = 0) {
 	
 	$select->andWhere($select->compare('er.guid_one', 'NOT IN', $sub->getSQL()));
 	
-	return $select->execute()->fetchAll();
+	return elgg()->db->getData($select);
 }
 
 /**
@@ -296,8 +290,7 @@ function group_tools_get_missing_acl_users($group_guid = 0) {
  *
  * @return stdClass[] all the found database rows
  */
-function group_tools_get_excess_acl_users($group_guid = 0) {
-	
+function group_tools_get_excess_acl_users(int $group_guid = 0) {
 	
 	$select = Select::fromTable('access_collections', 'ac');
 	$select->select('ac.id AS acl_id')
@@ -320,7 +313,7 @@ function group_tools_get_excess_acl_users($group_guid = 0) {
 	
 	$select->andWhere($select->compare('acm.user_guid', 'NOT IN', $sub->getSQL()));
 	
-	return $select->execute()->fetchAll();
+	return elgg()->db->getData($select);
 }
 
 /**
@@ -330,7 +323,7 @@ function group_tools_get_excess_acl_users($group_guid = 0) {
  *
  * @return int|ElggGroup[]
  */
-function group_tools_get_groups_without_acl($count = false) {
+function group_tools_get_groups_without_acl(bool $count = false) {
 	return elgg_get_entities([
 		'type' => 'group',
 		'limit' => false,
@@ -355,7 +348,7 @@ function group_tools_get_groups_without_acl($count = false) {
  *
  * @return bool
  */
-function group_tools_allow_members_invite(ElggGroup $group) {
+function group_tools_allow_members_invite(ElggGroup $group): bool {
 	
 	$user = elgg_get_logged_in_user_entity();
 	if (!$user instanceof ElggUser) {
@@ -389,7 +382,7 @@ function group_tools_allow_members_invite(ElggGroup $group) {
  * @return ElggGroup[]
  * @todo revisit this
  */
-function group_tools_get_suggested_groups($user = null, $limit = null) {
+function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = null) {
 	
 	if (!$user instanceof ElggUser) {
 		$user = elgg_get_logged_in_user_entity();
@@ -398,7 +391,6 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 	if (is_null($limit)) {
 		$limit = (int) get_input('limit', 10);
 	}
-	$limit = (int) $limit;
 	
 	if (!$user instanceof ElggUser || ($limit < 1)) {
 		return [];
@@ -415,12 +407,34 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 	};
 	
 	if (elgg_get_plugin_setting('auto_suggest_groups', 'group_tools') !== 'no') {
-		$tag_names = elgg_get_registered_tag_metadata_names();
-		if (!empty($tag_names)) {
+		$user_tag_names = [];
+		$group_tag_names = [];
+		
+		$user_fields = elgg()->fields->get($user->getType(), $user->getSubtype());
+		foreach ($user_fields as $field) {
+			if (!in_array(elgg_extract('#type', $field), ['tags', 'location'])) {
+				continue;
+			}
+			
+			$user_tag_names[] = elgg_extract('name', $field);
+		}
+		
+		$group_fields = elgg()->fields->get('group', 'group');
+		foreach ($group_fields as $field) {
+			if (!in_array(elgg_extract('#type', $field), ['tags', 'location'])) {
+				continue;
+			}
+			
+			$group_tag_names[] = elgg_extract('name', $field);
+		}
+		
+		$user_tag_names = array_filter($user_tag_names);
+		$group_tag_names = array_filter($group_tag_names);
+		if (!empty($user_tag_names) && !empty($group_tag_names)) {
 			$user_metadata_options = [
 				'guid' => $user->guid,
 				'limit' => false,
-				'metadata_names' => $tag_names,
+				'metadata_names' => $user_tag_names,
 			];
 			
 			// get metadata
@@ -439,7 +453,7 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
 				// find group with these metadatavalues
 				$group_options = [
 					'type' => 'group',
-					'metadata_names' => $tag_names,
+					'metadata_names' => $group_tag_names,
 					'metadata_values' => $user_values,
 					'wheres' => $group_membership_where,
 					'group_by' => [
@@ -500,7 +514,7 @@ function group_tools_get_suggested_groups($user = null, $limit = null) {
  *
  * @return bool true if the domain of the user is found in the group settings
  */
-function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user = null) {
+function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user = null): bool {
 	
 	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
 		return false;
@@ -578,20 +592,14 @@ function group_tools_get_domain_based_groups(ElggUser $user): array {
  *
  * @return bool
  */
-function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_owner, $remain_admin = false) {
+function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_owner, bool $remain_admin = false): bool {
 	
-	if (!$group instanceof ElggGroup || !$group->canEdit()) {
+	if (!$group->canEdit()) {
 		return false;
 	}
-	
-	if (!$new_owner instanceof ElggUser) {
-		return false;
-	}
-	
-	$remain_admin = (bool) $remain_admin;
 	
 	// register plugin hook to make sure transfer can complete
-	elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Access::allowGroupOwnerTransfer');
+	elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Permissions::allowGroupOwnerTransfer');
 	
 	$old_owner = $group->getOwnerEntity();
 	
@@ -636,7 +644,7 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	}
 	
 	// unregister plugin hook to make sure transfer can complete
-	elgg_unregister_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Access::allowGroupOwnerTransfer');
+	elgg_unregister_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Permissions::allowGroupOwnerTransfer');
 	
 	return true;
 }
@@ -661,7 +669,7 @@ function group_tools_get_tool_presets() {
  *
  * @return bool
  */
-function group_tools_multiple_admin_enabled() {
+function group_tools_multiple_admin_enabled(): bool {
 	static $result;
 	
 	if (isset($result)) {
@@ -684,11 +692,7 @@ function group_tools_multiple_admin_enabled() {
  *
  * @return bool
  */
-function group_tools_can_assign_group_admin(ElggGroup $group) {
-	
-	if (!$group instanceof ElggGroup) {
-		return false;
-	}
+function group_tools_can_assign_group_admin(ElggGroup $group): bool {
 	
 	$user_guid = elgg_get_logged_in_user_guid();
 	if (empty($user_guid)) {
@@ -715,7 +719,7 @@ function group_tools_can_assign_group_admin(ElggGroup $group) {
  *
  * @return bool
  */
-function group_tools_join_motivation_required(ElggGroup $group = null) {
+function group_tools_join_motivation_required(ElggGroup $group = null): bool {
 	static $plugin_settings;
 	static $check_group = false;
 	
@@ -753,10 +757,10 @@ function group_tools_join_motivation_required(ElggGroup $group = null) {
 	switch ($group_setting) {
 		case 'no':
 			return false;
-			break;
+			
 		case 'yes':
 			return true;
-			break;
+			
 	}
 	
 	return $plugin_settings;
@@ -769,7 +773,7 @@ function group_tools_join_motivation_required(ElggGroup $group = null) {
  *
  * @return bool
  */
-function group_tools_group_mail_enabled(ElggGroup $group = null) {
+function group_tools_group_mail_enabled(ElggGroup $group = null): bool {
 	static $mail_enabled;
 	
 	if (!isset($mail_enabled)) {
@@ -805,7 +809,7 @@ function group_tools_group_mail_enabled(ElggGroup $group = null) {
  *
  * @return bool
  */
-function group_tools_group_mail_members_enabled(ElggGroup $group = null) {
+function group_tools_group_mail_members_enabled(ElggGroup $group = null): bool {
 	static $mail_members_enabled;
 	
 	if (!isset($mail_members_enabled)) {
@@ -850,17 +854,12 @@ function group_tools_group_mail_members_enabled(ElggGroup $group = null) {
  *
  * @return false|\ColdTrick\GroupTools\StaleInfo
  */
-function group_tools_get_stale_info(ElggGroup $group, $number_of_days = null) {
-	
-	if (!$group instanceof ElggGroup) {
-		return false;
-	}
+function group_tools_get_stale_info(ElggGroup $group, int $number_of_days = null) {
 	
 	if (!isset($number_of_days)) {
-		$number_of_days = elgg_get_plugin_setting('stale_timeout', 'group_tools');
+		$number_of_days = (int) elgg_get_plugin_setting('stale_timeout', 'group_tools');
 	}
 	
-	$number_of_days = (int) $number_of_days;
 	if ($number_of_days < 1) {
 		return false;
 	}
@@ -873,7 +872,7 @@ function group_tools_get_stale_info(ElggGroup $group, $number_of_days = null) {
  *
  * @return bool
  */
-function group_tools_allow_hidden_groups() {
+function group_tools_allow_hidden_groups(): bool {
 	static $result;
 	
 	if (isset($result)) {
@@ -906,7 +905,7 @@ function group_tools_allow_hidden_groups() {
  *
  * @return array
  */
-function group_tools_get_auto_join_configurations($refresh = false) {
+function group_tools_get_auto_join_configurations(bool $refresh = false): array {
 	static $result;
 	
 	$refresh = (bool) $refresh;
@@ -931,7 +930,7 @@ function group_tools_get_auto_join_configurations($refresh = false) {
  *
  * @return false|array
  */
-function group_tools_get_auto_join_configuration($id) {
+function group_tools_get_auto_join_configuration(string $id) {
 	
 	if (empty($id)) {
 		return false;
@@ -949,9 +948,9 @@ function group_tools_get_auto_join_configuration($id) {
  *
  * @return bool
  */
-function group_tools_save_auto_join_configuration($config) {
+function group_tools_save_auto_join_configuration(array $config): bool {
 	
-	if (empty($config) || !is_array($config)) {
+	if (empty($config)) {
 		return false;
 	}
 	
@@ -979,7 +978,7 @@ function group_tools_save_auto_join_configuration($config) {
  *
  * @return bool
  */
-function group_tools_delete_auto_join_configuration($id) {
+function group_tools_delete_auto_join_configuration(string $id): bool {
 	
 	if (empty($id)) {
 		return false;
@@ -1007,7 +1006,7 @@ function group_tools_delete_auto_join_configuration($id) {
  *
  * @return string[]
  */
-function group_tools_get_auto_join_pattern_user_options() {
+function group_tools_get_auto_join_pattern_user_options(): array {
 	static $result;
 	
 	if (isset($result)) {
@@ -1020,12 +1019,14 @@ function group_tools_get_auto_join_pattern_user_options() {
 		'username' => elgg_echo('username'),
 	];
 	
-	$profile_fields = elgg_get_config('profile_fields');
+	$profile_fields = elgg()->fields->get('user', 'user');
 	if (empty($profile_fields)) {
 		return $result;
 	}
 	
-	foreach ($profile_fields as $metadata_name => $type) {
+	foreach ($profile_fields as $field) {
+		$metadata_name = elgg_extract('name', $field);
+		
 		$lan = $metadata_name;
 		if (elgg_language_key_exists("profile:{$metadata_name}")) {
 			$lan = elgg_echo("profile:{$metadata_name}");
@@ -1044,7 +1045,7 @@ function group_tools_get_auto_join_pattern_user_options() {
  *
  * @return string[]
  */
-function group_tools_get_default_group_notification_settings(ElggGroup $entity = null) {
+function group_tools_get_default_group_notification_settings(ElggGroup $entity = null): array {
 	static $site_defaults;
 	
 	if (!isset($site_defaults)) {
@@ -1085,7 +1086,7 @@ function group_tools_get_default_group_notification_settings(ElggGroup $entity =
  *
  * @return bool
  */
-function group_tools_show_tools_on_edit() {
+function group_tools_show_tools_on_edit(): bool {
 	
 	if (elgg_get_page_owner_entity() instanceof ElggGroup) {
 		// edit of a group

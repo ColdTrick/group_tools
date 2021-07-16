@@ -1,8 +1,8 @@
 <?php
 
-namespace ColdTrick\GroupTools;
+namespace ColdTrick\GroupTools\Menus;
 
-class OwnerBlockMenu {
+class OwnerBlock {
 	
 	/**
 	 * Add a link to the related groups page

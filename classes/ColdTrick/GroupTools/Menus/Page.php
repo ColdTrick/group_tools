@@ -1,10 +1,10 @@
 <?php
 
-namespace ColdTrick\GroupTools;
+namespace ColdTrick\GroupTools\Menus;
 
 use Elgg\Menu\MenuItems;
 
-class PageMenu {
+class Page {
 	
 	/**
 	 * Registers admin page menu items
@@ -92,5 +92,40 @@ class PageMenu {
 		]);
 				
 		return $result;
+	}
+	
+	/**
+	 * Add a menu option to the page menu of groups
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function registerGroupMail(\Elgg\Hook $hook) {
+		
+		if (!elgg_is_logged_in()) {
+			return;
+		}
+		
+		$page_owner = elgg_get_page_owner_entity();
+		if (!$page_owner instanceof \ElggGroup || !elgg_in_context('groups')) {
+			return;
+		}
+		
+		if (!group_tools_group_mail_enabled($page_owner) && !group_tools_group_mail_members_enabled($page_owner)) {
+			return;
+		}
+		
+		$return_value = $hook->getValue();
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'mail',
+			'text' => elgg_echo('group_tools:menu:mail'),
+			'href' => elgg_generate_url('add:object:group_tools_group_mail', [
+				'guid' => $page_owner->guid,
+			]),
+		]);
+		
+		return $return_value;
 	}
 }

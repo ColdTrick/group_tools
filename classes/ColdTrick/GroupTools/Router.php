@@ -9,7 +9,7 @@ class Router {
 	 *
 	 * Both access to the registration page and the registration action
 	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'resources/account/register'
+	 * @param \Elgg\Hook $hook 'view_vars', 'resources/account/register' | 'action:validate', 'register'
 	 *
 	 * @return void
 	 */

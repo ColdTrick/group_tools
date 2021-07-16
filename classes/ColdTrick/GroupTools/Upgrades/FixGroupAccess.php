@@ -12,7 +12,7 @@ class FixGroupAccess implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::getVersion()
 	 */
-	public function getVersion() {
+	public function getVersion(): int {
 		return 2019051000;
 	}
 	
@@ -20,7 +20,7 @@ class FixGroupAccess implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::needsIncrementOffset()
 	 */
-	public function needsIncrementOffset() {
+	public function needsIncrementOffset(): bool {
 		return false;
 	}
 	
@@ -28,7 +28,7 @@ class FixGroupAccess implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::shouldBeSkipped()
 	 */
-	public function shouldBeSkipped() {
+	public function shouldBeSkipped(): bool {
 		return empty($this->countItems());
 	}
 	
@@ -36,15 +36,15 @@ class FixGroupAccess implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::countItems()
 	 */
-	public function countItems() {
-		return elgg_get_entities($this->getOptions(['count' => true]));
+	public function countItems(): int {
+		return elgg_count_entities($this->getOptions());
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::run()
 	 */
-	public function run(Result $result, $offset) {
+	public function run(Result $result, $offset): Result {
 		
 		$groups = elgg_get_entities($this->getOptions(['offset' => $offset]));
 		if (empty($groups)) {
@@ -83,7 +83,7 @@ class FixGroupAccess implements AsynchronousUpgrade {
 	 * @return array
 	 * @see elgg_get_entities()
 	 */
-	protected function getOptions(array $options = []) {
+	protected function getOptions(array $options = []): array {
 		$defaults = [
 			'type' => 'group',
 			'access_id' => ACCESS_PRIVATE,

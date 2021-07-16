@@ -1,6 +1,6 @@
 <?php
 
-namespace ColdTrick\GroupTools;
+namespace ColdTrick\GroupTools\Plugins;
 
 class CSVExporter {
 	

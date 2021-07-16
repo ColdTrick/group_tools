@@ -1,11 +1,11 @@
 <?php
 
-namespace ColdTrick\GroupTools;
+namespace ColdTrick\GroupTools\Menus;
 
 use Elgg\Database\QueryBuilder;
 use Elgg\Menu\MenuItems;
 
-class EntityMenu {
+class Entity {
 	
 	/**
 	 * Remove the group as a related group
@@ -194,5 +194,86 @@ class EntityMenu {
 		]);
 		
 		return $result;
+	}
+	
+	/**
+	 * Add menu items to the user hover/entity menu
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:user_hover' | 'register', 'menu:entity'
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function assignGroupAdmin(\Elgg\Hook $hook) {
+		
+		if (!group_tools_multiple_admin_enabled()) {
+			return;
+		}
+		
+		$page_owner = elgg_get_page_owner_entity();
+		$loggedin_user = elgg_get_logged_in_user_entity();
+		if (!$page_owner instanceof \ElggGroup || empty($loggedin_user)) {
+			// not a group or logged in
+			return;
+		}
+		
+		if (!$page_owner->canEdit()) {
+			// can't edit the group
+			return;
+		}
+		
+		$user = $hook->getEntityParam();
+		if (!$user instanceof \ElggUser) {
+			// not a user menu
+			return;
+		}
+		
+		if (($page_owner->owner_guid === $user->guid) || ($loggedin_user->guid === $user->guid)) {
+			// group owner or current user
+			return;
+		}
+		
+		if (!$page_owner->isMember($user)) {
+			// user is not a member of the group
+			return;
+		}
+		
+		if (!group_tools_can_assign_group_admin($page_owner)) {
+			return;
+		}
+		
+		$return_value = $hook->getValue();
+		
+		$is_admin = check_entity_relationship($user->guid, 'group_admin', $page_owner->guid);
+		$section = $hook->getType() === 'menu:user_hover' ? 'action' : 'default';
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'group_admin',
+			'icon' => 'level-up',
+			'text' => elgg_echo('group_tools:multiple_admin:profile_actions:add'),
+			'href' => elgg_generate_action_url('group_tools/toggle_admin', [
+				'group_guid' => $page_owner->guid,
+				'user_guid' => $user->guid,
+			]),
+			'item_class' => $is_admin ? 'hidden' : '',
+			'priority' => 600,
+			'section' => $section,
+			'data-toggle' => 'group-admin-remove',
+		]);
+		
+		$return_value[] = \ElggMenuItem::factory([
+			'name' => 'group_admin_remove',
+			'icon' => 'level-down',
+			'text' => elgg_echo('group_tools:multiple_admin:profile_actions:remove'),
+			'href' => elgg_generate_action_url('group_tools/toggle_admin', [
+				'group_guid' => $page_owner->guid,
+				'user_guid' => $user->guid,
+			]),
+			'item_class' => $is_admin ? '' : 'hidden',
+			'priority' => 601,
+			'section' => $section,
+			'data-toggle' => 'group-admin',
+		]);
+		
+		return $return_value;
 	}
 }

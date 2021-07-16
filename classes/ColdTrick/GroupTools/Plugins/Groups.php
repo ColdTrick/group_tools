@@ -40,6 +40,90 @@ class Groups {
 			]);
 		}
 		
+		// related groups
+		if (elgg_get_plugin_setting('related_groups', 'group_tools') === 'yes') {
+			$tools[] = new \Elgg\Groups\Tool('related_groups', [
+				'label' => elgg_echo('groups_tools:related_groups:tool_option'),
+				'default_on' => false,
+			]);
+		}
+		
 		return $tools;
+	}
+	
+	/**
+	 * Listen to the groups/edit action and register events
+	 *
+	 * @return void
+	 */
+	public static function editActionListener() {
+		
+		elgg_register_event_handler('update:after', 'group', self::class . '::acceptMembershipRequests');
+	}
+	
+	/**
+	 * Automaticly accept pending membership request for open groups
+	 *
+	 * @param \Elgg\Event $event 'update:after', 'group'
+	 *
+	 * @return void
+	 */
+	public static function acceptMembershipRequests(\Elgg\Event $event) {
+		
+		$entity = $event->getObject();
+		if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
+			return;
+		}
+		
+		if (elgg_get_plugin_setting('auto_accept_membership_requests', 'group_tools') !== 'yes') {
+			return;
+		}
+		
+		if (!$entity->isPublicMembership()) {
+			return;
+		}
+		
+		// just in case
+		set_time_limit(0);
+		
+		// get pending requests
+		$pending_requests = $entity->getEntitiesFromRelationship([
+			'type' => 'user',
+			'relationship' => 'membership_request',
+			'inverse_relationship' => true,
+			'limit' => false,
+			'batch' => true,
+			'batch_inc_offset' => false,
+		]);
+		/* @var $requesting_user \ElggUser */
+		foreach ($pending_requests as $requesting_user) {
+			// join the group
+			$entity->join($requesting_user);
+		}
+	}
+	
+	/**
+	 * Cleanup group admin status on group leave
+	 *
+	 * @param \Elgg\Event $event 'leave', 'group'
+	 *
+	 * @return void|bool
+	 */
+	public static function removeGroupAdminOnLeave(\Elgg\Event $event) {
+		
+		$params = $event->getObject();
+		
+		$user = elgg_extract('user', $params);
+		$group = elgg_extract('group', $params);
+		if (!$user instanceof \ElggUser || !$group instanceof \ElggGroup) {
+			return;
+		}
+		
+		// is the user a group admin
+		if (!check_entity_relationship($user->guid, 'group_admin', $group->guid)) {
+			return;
+		}
+		
+		return remove_entity_relationship($user->guid, 'group_admin', $group->guid);
 	}
 }

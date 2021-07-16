@@ -3,7 +3,6 @@
 namespace ColdTrick\GroupTools\Upgrades;
 
 use Elgg\Upgrade\AsynchronousUpgrade;
-use Elgg\Database\QueryBuilder;
 use Elgg\Upgrade\Result;
 
 class MigrateGroupDefaultContentAccess implements AsynchronousUpgrade {
@@ -12,7 +11,7 @@ class MigrateGroupDefaultContentAccess implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::getVersion()
 	 */
-	public function getVersion() {
+	public function getVersion(): int {
 		return 2019102501;
 	}
 	
@@ -20,7 +19,7 @@ class MigrateGroupDefaultContentAccess implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::needsIncrementOffset()
 	 */
-	public function needsIncrementOffset() {
+	public function needsIncrementOffset(): bool {
 		return false;
 	}
 	
@@ -28,7 +27,7 @@ class MigrateGroupDefaultContentAccess implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::shouldBeSkipped()
 	 */
-	public function shouldBeSkipped() {
+	public function shouldBeSkipped(): bool {
 		return empty($this->countItems());
 	}
 	
@@ -36,7 +35,7 @@ class MigrateGroupDefaultContentAccess implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::countItems()
 	 */
-	public function countItems() {
+	public function countItems(): int {
 		return elgg_count_entities($this->getOptions());
 	}
 	
@@ -44,7 +43,7 @@ class MigrateGroupDefaultContentAccess implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 * @see \Elgg\Upgrade\Batch::run()
 	 */
-	public function run(Result $result, $offset) {
+	public function run(Result $result, $offset): Result {
 		
 		$groups = elgg_get_entities($this->getOptions());
 		if (empty($groups)) {
@@ -81,7 +80,7 @@ class MigrateGroupDefaultContentAccess implements AsynchronousUpgrade {
 	 * @return array
 	 * @see elgg_get_entities()
 	 */
-	protected function getOptions(array $options = []) {
+	protected function getOptions(array $options = []): array {
 		$defaults = [
 			'type' => 'group',
 			'limit' => 10,

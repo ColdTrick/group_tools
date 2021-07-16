@@ -4,15 +4,17 @@
  *
  * If editing an existing group, only the "group_guid" must be submitted. All other form
  * elements may be omitted and the corresponding data will be left as is.
- *
- * @package ElggGroups
  */
 
 elgg_make_sticky_form('groups');
 
 // Get group fields
 $input = [];
-foreach (elgg_get_config('group') as $shortname => $valuetype) {
+
+$fields = elgg()->fields->get('group', 'group');
+foreach ($fields as $field) {
+	$shortname = $field['name'];
+	
 	$value = get_input($shortname);
 
 	if ($value === null) {
@@ -31,7 +33,7 @@ foreach (elgg_get_config('group') as $shortname => $valuetype) {
 		$input[$shortname] = elgg_html_decode($input[$shortname]);
 	}
 
-	if ($valuetype == 'tags') {
+	if ($field['#type'] == 'tags') {
 		$input[$shortname] = string_to_tag_array($input[$shortname]);
 	}
 }
@@ -62,7 +64,7 @@ if ($group_guid) {
 	$container_guid = get_input('container_guid', $user->guid);
 	$container = get_entity($container_guid);
 	
-	if (!$container || !$container->canWriteToContainer($user->guid, 'group')) {
+	if (!$container || !$container->canWriteToContainer($user->guid, 'group', 'group')) {
 		$error = elgg_echo('groups:cantcreate');
 		return elgg_error_response($error);
 	}
@@ -176,9 +178,9 @@ if (group_tools_allow_hidden_groups()) {
 			// Make this group visible only to group members. We need to use
 			// ACCESS_PRIVATE on the form and convert it to group_acl here
 			// because new groups do not have acl until they have been saved once.
-			$acl = _groups_get_group_acl($group);
+			$acl = $group->getOwnedAccessCollection('group_acl');
 			if ($acl instanceof ElggAccessCollection) {
-				$visibility = (int) $acl->id;
+				$visibility = $acl->id;
 			}
 			
 			// Force all new group content to be available only to members
@@ -208,6 +210,22 @@ if (isset($content_default_access)) {
 	}
 }
 
+// save plugin settings
+$settings = (array) get_input('settings', []);
+foreach ($settings as $plugin_id => $plugin_settings) {
+	if (empty($plugin_settings) || !is_array($plugin_settings)) {
+		continue;
+	}
+	
+	foreach ($plugin_settings as $name => $value) {
+		if (elgg_is_empty($value)) {
+			$group->removePluginSetting($plugin_id, $name);
+		} else {
+			$group->setPluginSetting($plugin_id, $name, $value);
+		}
+	}
+}
+
 if (!$group->save()) {
 	return elgg_error_response(elgg_echo('groups:save_error'));
 }
@@ -232,7 +250,6 @@ if ($is_new_group) {
 	elgg_create_river_item([
 		'view' => 'river/group/create',
 		'action_type' => 'create',
-		'subject_guid' => $user->guid,
 		'object_guid' => $group->guid,
 	]);
 }

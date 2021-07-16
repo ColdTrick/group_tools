@@ -1,8 +1,8 @@
 <?php
 
-namespace ColdTrick\GroupTools;
+namespace ColdTrick\GroupTools\Menus\Filter;
 
-class GroupSortMenu {
+class GroupsAll {
 	
 	/**
 	 * Rewrite group listing tabs

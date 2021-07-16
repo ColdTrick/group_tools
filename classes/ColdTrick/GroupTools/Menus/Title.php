@@ -1,10 +1,10 @@
 <?php
 
-namespace ColdTrick\GroupTools;
+namespace ColdTrick\GroupTools\Menus;
 
 use Elgg\Menu\MenuItems;
 
-class TitleMenu {
+class Title {
 	
 	/**
 	 * Change the name/function of the group join button

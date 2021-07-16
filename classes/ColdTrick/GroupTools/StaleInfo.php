@@ -5,6 +5,7 @@ namespace ColdTrick\GroupTools;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\QueryBuilder;
+use Elgg\Exceptions\InvalidArgumentException;
 
 class StaleInfo {
 
@@ -18,11 +19,18 @@ class StaleInfo {
 	 */
 	protected $number_of_days;
 	
-	public function __construct(\ElggGroup $entity, $days) {
+	/**
+	 * Create new Stale info helper
+	 *
+	 * @param \ElggGroup $entity the group to check
+	 * @param int        $days   Number of days before a group becomes stale
+	 *
+	 * @throws InvalidArgumentException
+	 */
+	public function __construct(\ElggGroup $entity, int $days) {
 		
-		$days = (int) $days;
 		if ($days < 1) {
-			throw new \ClassException('Provide a positive number of days');
+			throw new InvalidArgumentException('Provide a positive number of days');
 		}
 		
 		$this->group = $entity;
@@ -34,7 +42,7 @@ class StaleInfo {
 	 *
 	 * @return bool
 	 */
-	public function isStale() {
+	public function isStale(): bool {
 		
 		$compare_ts = time() - ($this->number_of_days * 24 * 60 * 60);
 		
@@ -65,7 +73,7 @@ class StaleInfo {
 	 *
 	 * @return int
 	 */
-	public function getTimestamp() {
+	public function getTimestamp(): int {
 		
 		$timestamps = [
 			$this->group->time_created,
@@ -82,7 +90,7 @@ class StaleInfo {
 	 *
 	 * @return int
 	 */
-	protected function getTouchTimestamp() {
+	protected function getTouchTimestamp(): int {
 		return (int) $this->group->group_tools_stale_touch_ts;
 	}
 	
@@ -93,7 +101,7 @@ class StaleInfo {
 	 *
 	 * @return int
 	 */
-	protected function getContentTimestamp() {
+	protected function getContentTimestamp(): int {
 		
 		$object_subtypes = $this::getObjectSubtypes();
 		if (empty($object_subtypes)) {
@@ -119,7 +127,7 @@ class StaleInfo {
 	 *
 	 * @return int
 	 */
-	protected function getCommentTimestamp() {
+	protected function getCommentTimestamp(): int {
 		
 		$subtypes = ['comment'];
 		if (elgg_is_active_plugin('discussions')) {
@@ -156,7 +164,7 @@ class StaleInfo {
 	 *
 	 * @return string[]
 	 */
-	public static function getObjectSubtypes() {
+	public static function getObjectSubtypes(): array {
 		
 		$object_subtypes = get_registered_entity_types('object');
 		if (empty($object_subtypes)) {

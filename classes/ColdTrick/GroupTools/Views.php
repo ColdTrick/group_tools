@@ -47,19 +47,6 @@ class Views {
 	}
 	
 	/**
-	 * Protect group creation page
-	 *
-	 * @param \Elgg\Hook $hook 'view_vars', 'resources/groups/add'
-	 *
-	 * @return void
-	 */
-	public static function protectGroupAdd(\Elgg\Hook $hook) {
-		if (elgg_get_plugin_setting('limited_groups', 'groups') === 'yes') {
-			elgg_admin_gatekeeper();
-		}
-	}
-	
-	/**
 	 * Change some inputs when listing users in livesearch for group invites
 	 *
 	 * @param \Elgg\Hook $hook 'view_vars', 'page/components/list'
