@@ -6,7 +6,10 @@
 $widget = elgg_extract('entity', $vars);
 
 // get widget settings
-$count = sanitise_int($widget->group_count, false) ?: 8;
+$count = (int) $widget->group_count;
+if ($count < 1) {
+	$count = 8;
+}
 
 $options = [
 	'type' => 'group',
