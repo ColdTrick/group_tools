@@ -16,7 +16,11 @@ $add_button = elgg_view('output/url', [
 	'class' => 'elgg-button elgg-button-action group-tools-admin-add-tool-preset',
 ]);
 
-$form = elgg_view_form('group_tools/group_tool_presets', ['action' => 'action/group_tools/admin/group_tool_presets'], ['group_tool_presets' => $presets]);
+$form = elgg_view_form('group_tools/group_tool_presets', [
+	'action' => 'action/group_tools/admin/group_tool_presets',
+], [
+	'group_tool_presets' => $presets,
+]);
 
 // draw list
 echo elgg_view_module('info', $title, $form, ['menu' => $add_button]);

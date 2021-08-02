@@ -1,8 +1,4 @@
-define(function(require){
-	var $ = require('jquery');
-	var Ajax = require('elgg/Ajax');
-	var lightbox = require('elgg/lightbox');
-
+define(['jquery', 'elgg/Ajax', 'elgg/lightbox'], function($, Ajax, lightbox) {
 	$(document).on('click', '#group-tools-auto-join-add-pattern', function (event){
 		event.preventDefault();
 		

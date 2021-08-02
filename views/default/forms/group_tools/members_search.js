@@ -1,7 +1,4 @@
-define(function(require) {
-	
-	var $ = require('jquery');
-	var Ajax = require('elgg/Ajax');
+define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 	
 	var submitForm = function(event) {
 		event.preventDefault();
@@ -16,10 +13,7 @@ define(function(require) {
 				$form.after(data);
 			},
 		});
-		
-		return false;
 	};
 	
-	$(document).off('submit.memberSearch', '.elgg-form-group-tools-members-search');
 	$(document).on('submit.memberSearch', '.elgg-form-group-tools-members-search', submitForm);
 });

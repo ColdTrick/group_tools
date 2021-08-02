@@ -6,7 +6,7 @@
  */
 
 // load js
-elgg_require_js('group_tools/group_tool_presets');
+elgg_require_js('forms/group_tools/group_tool_presets');
 
 $presets = elgg_extract('group_tool_presets', $vars);
 $group_tools = elgg()->group_tools->all();
@@ -15,7 +15,7 @@ $group_tools = elgg()->group_tools->all();
 if (!empty($presets)) {
 
 	foreach ($presets as $index => $values) {
-		echo '<div>';
+		echo '<div class="group-tools-group-preset-wrapper">';
 		echo '<div class="float-alt">';
 		echo elgg_view('output/url', [
 			'href' => false,
@@ -32,7 +32,7 @@ if (!empty($presets)) {
 		echo '</div>';
 		echo '<label rel="title">' . elgg_extract('title', $values) . '</label><br />'; // title
 		echo '<div class="elgg-output elgg-quiet" rel="description">' . elgg_extract('description', $values) . '</div>'; // description
-		echo '<div class="hidden">'; // edit part
+		echo '<div class="hidden" rel="edit">'; // edit part
 		
 		echo elgg_view_field([
 			'#type' => 'text',

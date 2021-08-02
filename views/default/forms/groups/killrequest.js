@@ -1,8 +1,4 @@
-define('group_tools/killrequest', function (require) {
-
-	var $ = require('jquery');
-	var Ajax = require('elgg/Ajax');
-	var lightbox = require('elgg/lightbox');
+define(['jquery', 'elgg/Ajax', 'elgg/lightbox'], function ($, Ajax, lightbox) {
 	
 	$(document).on('submit', '.elgg-form-groups-killrequest', function () {
 		var id = $(this).find('input[name="relationship_id"]').val();

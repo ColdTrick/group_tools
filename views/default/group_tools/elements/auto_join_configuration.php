@@ -22,7 +22,7 @@ $title .= elgg_view('output/url', [
 ]);
 $title .= elgg_view('output/url', [
 	'text' => elgg_view_icon('delete-alt'),
-	'href' => elgg_http_add_url_query_elements('action/group_tools/admin/auto_join/delete', [
+	'href' => elgg_generate_action_url('group_tools/admin/auto_join/delete', [
 		'id' => elgg_extract('id', $config),
 	]),
 	'title' => elgg_echo('delete'),

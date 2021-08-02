@@ -25,8 +25,6 @@ $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 25);
 
 // build page elements
-$title = elgg_echo('collection:annotation:email_invitation:group');
-
 $content = elgg_list_annotations([
 	'selects' => [
 		function(QueryBuilder $qb, $main_alias) {
@@ -52,12 +50,8 @@ $tabs = elgg_view_menu('groups_members', [
 	'class' => 'elgg-tabs'
 ]);
 
-// build page
-$body = elgg_view_layout('default', [
-	'title' => $title,
+// draw page
+echo elgg_view_page(elgg_echo('collection:annotation:email_invitation:group'),  [
 	'content' => $content,
 	'filter' => $tabs,
 ]);
-
-// draw page
-echo elgg_view_page($title, $body);

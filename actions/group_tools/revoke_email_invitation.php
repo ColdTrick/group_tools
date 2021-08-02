@@ -10,10 +10,9 @@ if (empty($group_guid) || empty($annotation_id)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-elgg_entity_gatekeeper($group_guid, 'group');
 $group = get_entity($group_guid);
 $annotation = elgg_get_annotation_from_id($annotation_id);
-if (empty($annotation) || ($annotation->name !== 'email_invitation')) {
+if (!$group instanceof \ElggGroup || empty($annotation) || $annotation->name !== 'email_invitation') {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 

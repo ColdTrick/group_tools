@@ -10,11 +10,12 @@ if (empty($group_guid) || empty($guid)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-elgg_entity_gatekeeper($group_guid, 'group');
-elgg_entity_gatekeeper($guid, 'group');
-
 $group = get_entity($group_guid);
 $related = get_entity($guid);
+
+if (!$group instanceof \ElggGroup || !$related instanceof \ElggGroup) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
 if (!$group->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));

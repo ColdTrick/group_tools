@@ -40,4 +40,6 @@ $content .= elgg_list_entities([
 // draw page
 echo elgg_view_page(elgg_echo('group_tools:related_groups:title'), [
 	'content' => $content,
+	'filter_id' => 'groups/related',
+	'filter_value' => 'related',
 ]);

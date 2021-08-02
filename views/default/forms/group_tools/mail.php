@@ -3,6 +3,8 @@
  * Mail group members
  */
 
+elgg_require_js('forms/group_tools/mail');
+
 $group = elgg_extract('entity', $vars);
 $members = elgg_extract('members', $vars);
 

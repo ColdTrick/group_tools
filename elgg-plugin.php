@@ -222,7 +222,7 @@ return [
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::cleanupTabs' => ['priority' => 900],
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::removeTabs' => ['priority' => 550],
 			],
-			'menu:filter:group/invitations' => [
+			'menu:filter:groups/invitations' => [
 				'\ColdTrick\GroupTools\Menus\Filter::registerUserEmailInvitations' => [],
 			],
 			'menu:groups_members' => [

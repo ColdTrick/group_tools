@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('group_tools/MembersSearch');
+elgg_require_js('forms/group_tools/members_search');
 
 $result = elgg_view('input/text', [
 	'name' => 'members_search',

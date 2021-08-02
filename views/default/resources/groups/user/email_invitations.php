@@ -9,18 +9,12 @@ $user = elgg_get_page_owner_entity();
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
 // build page elements
-$title = elgg_echo('collection:annotation:email_invitation:user');
-
 $content = elgg_view('group_tools/invitationrequests/emailinvitations', ['entity' => $user]);
 $content .= elgg_view('group_tools/invitationrequests/emailinviteform', ['entity' => $user]);
 
-// build page
-$body = elgg_view_layout('default', [
-	'title' => $title,
+// draw page
+echo elgg_view_page(elgg_echo('collection:annotation:email_invitation:user'), [
 	'content' => $content,
-	'filter_id' => 'group:invitations',
+	'filter_id' => 'groups/invitations',
 	'filter_value' => 'email_invitations',
 ]);
-
-// draw page
-echo elgg_view_page($title, $body);

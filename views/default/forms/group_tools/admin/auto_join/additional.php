@@ -1,5 +1,7 @@
 <?php
 
+elgg_require_js('forms/group_tools/admin/auto_join/additional');
+
 $id = elgg_extract('id', $vars);
 $config = [];
 if (empty($id)) {
@@ -74,7 +76,3 @@ $footer = elgg_view_field([
 	'value' => elgg_echo('save'),
 ]);
 elgg_set_form_footer($footer);
-?>
-<script>
-	require(['group_tools/auto_join_additional']);
-</script>

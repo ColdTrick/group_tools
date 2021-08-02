@@ -2,7 +2,7 @@
 
 use Elgg\Exceptions\Http\BadRequestException;
 
-elgg_require_js('group_tools/killrequest');
+elgg_require_js('forms/groups/killrequest');
 
 $relationship_id = (int) elgg_extract('relationship_id', $vars);
 

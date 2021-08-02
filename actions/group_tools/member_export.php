@@ -11,9 +11,8 @@ if (empty($group_guid)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-elgg_entity_gatekeeper($group_guid, 'group');
 $group = get_entity($group_guid);
-if (!$group->canEdit() || (elgg_get_plugin_setting('member_export', 'group_tools') != 'yes')) {
+if (!$group instanceof \ElggGroup || !$group->canEdit() || elgg_get_plugin_setting('member_export', 'group_tools') !== 'yes') {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
@@ -37,7 +36,8 @@ if (group_tools_multiple_admin_enabled()) {
 }
 
 // create temp file
-$fh = tmpfile();
+$temp_file = new ElggTempFile();
+$fh = $temp_file->open('write');
 
 // write header line
 $headers = [
@@ -49,9 +49,11 @@ $headers = [
 	'member since (YYYY-MM-DD HH:MM:SS)',
 	'role',
 ];
-$profile_fields = elgg_get_config('profile_fields');
+$profile_fields = elgg()->fields->get('user', 'user');
 if (!empty($profile_fields)) {
-	foreach ($profile_fields as $metadata_name => $type) {
+	foreach ($profile_fields as $field_config) {
+		$metadata_name = elgg_extract('name', $field_config);
+		
 		$lan_key = "profile:{$metadata_name}";
 		$header = $metadata_name;
 		if (elgg_language_key_exists($lan_key)) {
@@ -108,7 +110,8 @@ foreach ($members as $member) {
 	
 	// profile fields
 	if (!empty($profile_fields)) {
-		foreach ($profile_fields as $metadata_name => $type) {
+		foreach ($profile_fields as $field_config) {
+			$metadata_name = elgg_extract('name', $field_config);
 			
 			$value = $member->$metadata_name;
 			if (is_array($value)) {
@@ -125,14 +128,12 @@ foreach ($members as $member) {
 }
 
 // read the csv in to a var before output
-$contents = '';
-rewind($fh);
-while (!feof($fh)) {
-	$contents .= fread($fh, 2048);
-}
+$temp_file->close();
+
+$contents = $temp_file->grabFile();
 
 // cleanup the temp file
-fclose($fh);
+$temp_file->delete();
 
 // output the csv
 header('Content-Type: text/csv');

@@ -14,6 +14,16 @@ elgg_set_page_owner_guid($guid);
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
+if ($group->canEdit() && elgg_is_active_plugin('friends')) {
+	elgg_register_menu_item('title', [
+		'name' => 'groups:invite',
+		'icon' => 'user-plus',
+		'href' => elgg_generate_entity_url($group, 'invite'),
+		'text' => elgg_echo('groups:invite'),
+		'link_class' => 'elgg-button elgg-button-action',
+	]);
+}
+
 $options = [
 	'relationship' => 'member',
 	'relationship_guid' => $group->guid,
@@ -63,8 +73,6 @@ switch ($sort) {
 // user search
 $members_search = get_input('members_search');
 if (!elgg_is_empty($members_search)) {
-	$members_search = elgg()->db->sanitizeString($members_search);
-	
 	$options['base_url'] = elgg_generate_url('collection:user:user:group_members', [
 		'guid' => $guid,
 		'sort' => $sort,
@@ -109,6 +117,7 @@ $content = elgg_view_form('group_tools/members_search', [
 		'sort' => $sort,
 	]),
 	'disable_security' => true,
+	'prevent_double_submit' => false,
 ]);
 $content .= $user_list;
 

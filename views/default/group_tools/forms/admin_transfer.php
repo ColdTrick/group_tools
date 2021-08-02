@@ -15,7 +15,7 @@ if (!$show_group_owner_transfer || !$group instanceof ElggGroup || !$user instan
 }
 
 // don't check canEdit() because group admins can do that
-if (($group->owner_guid !== $user->guid) && !$user->isAdmin()) {
+if ($group->owner_guid !== $user->guid && !$user->isAdmin()) {
 	return;
 }
 

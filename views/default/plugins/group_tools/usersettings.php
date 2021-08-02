@@ -22,6 +22,6 @@ echo elgg_view_field([
 	'name' => 'params[notify_approval]',
 	'default' => 0,
 	'value' => 1,
-	'checked' => (bool) $plugin->getUserSetting('notify_approval', $user->guid),
+	'checked' => (bool) $user->getPluginSetting('group_tools', 'notify_approval'),
 	'switch' => true,
 ]);

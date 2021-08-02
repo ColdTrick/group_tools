@@ -22,6 +22,7 @@ $show_motivation_option = group_tools_join_motivation_required();
 $motivation_plugin_setting = elgg_get_plugin_setting('join_motivation', 'group_tools', 'no');
 $show_motivation_option = ($show_motivation_option && (strpos($motivation_plugin_setting, 'yes') === 0));
 
+// group membership
 echo elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('groups:membership'),
@@ -59,6 +60,7 @@ if ($show_motivation_option) {
 	], $join_motivation);
 }
 
+// group access (hidden groups)
 if ($show_visibility) {
 	$visibility_options = [
 		ACCESS_PRIVATE => elgg_echo('groups:access:group'),

@@ -6,7 +6,7 @@
  */
 
 // load js
-elgg_require_js('group_tools/invite');
+elgg_require_js('group_tools/invite/filter');
 
 $invite_friends = elgg_extract('invite_friends', $vars, 'yes');
 $invite_site_members = elgg_extract('invite', $vars, 'no');

@@ -13,8 +13,6 @@ if (!group_tools_group_mail_enabled($group) && !group_tools_group_mail_members_e
 	throw new EntityPermissionsException();
 }
 
-elgg_require_js('group_tools/mail');
-
 // set page owner
 elgg_set_page_owner_guid($group->guid);
 elgg_set_context('groups');
@@ -24,11 +22,8 @@ elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:gr
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 // build page elements
-$title_text = elgg_echo('group_tools:mail:title');
-
 $form_vars = [
 	'id' => 'group_tools_mail_form',
-	'class' => 'elgg-form-alt',
 ];
 $body_vars = [
 	'entity' => $group,
@@ -36,7 +31,8 @@ $body_vars = [
 $form = elgg_view_form('group_tools/mail', $form_vars, $body_vars);
 
 // draw page
-echo elgg_view_page($title_text, [
-	'entity' => $group,
+echo elgg_view_page(elgg_echo('group_tools:mail:title'), [
 	'content' => $form,
+	'filter_id' => 'groups/mail',
+	'filter_value' => 'mail',
 ]);
