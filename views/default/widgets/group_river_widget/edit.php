@@ -19,7 +19,10 @@ if (!empty($registered_entities)) {
 		}
 		
 		foreach ($subtypes as $subtype) {
-			$keyname = "item:{$type}:{$subtype}";
+			$keyname = "collection:{$type}:{$subtype}";
+			if (!elgg_language_key_exists($keyname)) {
+				$keyname = "item:{$type}:{$subtype}";
+			}
 			$filter_contents["{$type},{$subtype}"] = elgg_echo($keyname);
 		}
 	}

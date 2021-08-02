@@ -3,19 +3,21 @@
  * settings for the index group widget
  */
 
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
 // filter based on tag fields
 $tag_fields = [];
-$profile_fields = elgg_get_config('group');
+$profile_fields = elgg()->fields->get('group', 'group');
 if (!empty($profile_fields)) {
-	foreach ($profile_fields as $name => $type) {
-		if ($type !== 'tags') {
+	foreach ($profile_fields as $field_config) {
+		if (elgg_extract('#type', $field_config) !== 'tags') {
 			continue;
 		}
 		
+		$label = $name = elgg_extract('name', $field_config);
+		
 		$lan_key = "groups:{$name}";
-		$label = $name;
 		if (elgg_language_key_exists($lan_key)) {
 			$label = elgg_echo($lan_key);
 		}

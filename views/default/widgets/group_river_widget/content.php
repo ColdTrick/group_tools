@@ -1,9 +1,9 @@
 <?php
-use Elgg\Database\QueryBuilder;
-
 /**
  * content for the group river/activity widget
  */
+
+use Elgg\Database\QueryBuilder;
 
 /* @var $widget ElggWidget */
 $widget = elgg_extract('entity', $vars);

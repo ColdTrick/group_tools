@@ -3,6 +3,7 @@
  * content of the index groups widget
  */
 
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
 // get widget settings
@@ -33,12 +34,12 @@ if ($widget->featured == 'yes') {
 $filter_name = $widget->filter_name;
 $filter_value = $widget->filter_value;
 if (!empty($filter_name) && !empty($filter_value)) {
-	$profile_fields = elgg_get_config('group');
+	$profile_fields = elgg()->fields->get('group', 'group');
 	if (!empty($profile_fields)) {
 		$found = false;
 		
-		foreach ($profile_fields as $name => $type) {
-			if (($name == $filter_name) && ($type == 'tags')) {
+		foreach ($profile_fields as $field_config) {
+			if ((elgg_extract('name', $field_config) === $filter_name) && (elgg_extract('#type', $field_config) === 'tags')) {
 				$found = true;
 				break;
 			}
@@ -56,8 +57,11 @@ if (!empty($filter_name) && !empty($filter_value)) {
 }
 
 // check if groups should respect a specific order
+$gettter = 'elgg_get_entities';
 switch ($widget->sorting) {
 	case 'popular':
+		$gettter = 'elgg_get_entities_from_relationship_count';
+		
 		$options['relationship'] = 'member';
 		$options['inverse_relationship'] = false;
 		break;
@@ -67,4 +71,4 @@ switch ($widget->sorting) {
 }
 
 // list groups
-echo elgg_list_entities($options);
+echo elgg_list_entities($options, $gettter);
