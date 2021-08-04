@@ -218,9 +218,9 @@ return [
 			],
 			'menu:filter:groups/all' => [
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::addTabs' => ['priority' => 550],
-				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::addSorting' => ['priority' => 550],
+				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::addSorting' => ['priority' => 570],
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::cleanupTabs' => ['priority' => 900],
-				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::removeTabs' => ['priority' => 550],
+				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::removeTabs' => ['priority' => 560],
 			],
 			'menu:filter:groups/invitations' => [
 				'\ColdTrick\GroupTools\Menus\Filter::registerUserEmailInvitations' => [],

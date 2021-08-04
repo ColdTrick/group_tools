@@ -164,7 +164,7 @@ class GroupsAll {
 		// add sorting options
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'newest',
-			'icon' => 'sort-amount-desc',
+			'icon' => 'sort-amount-down',
 			'text' => elgg_echo('sort:newest'),
 			'title' => elgg_echo('sort:newest'),
 			'href' => elgg_http_add_url_query_elements($base_url, [
@@ -189,7 +189,7 @@ class GroupsAll {
 		]);
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'alpha_za',
-			'icon' => 'sort-alpha-up',
+			'icon' => 'sort-alpha-down-alt',
 			'text' => elgg_echo('sort:alpha'),
 			'title' => elgg_echo('sort:alpha'),
 			'href' => elgg_http_add_url_query_elements($base_url, [
@@ -202,7 +202,7 @@ class GroupsAll {
 		]);
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'popular',
-			'icon' => 'sort-numeric-desc',
+			'icon' => 'sort-numeric-down-alt',
 			'text' => elgg_echo('sort:popular'),
 			'title' => elgg_echo('sort:popular'),
 			'href' => elgg_http_add_url_query_elements($base_url, [
@@ -250,11 +250,6 @@ class GroupsAll {
 			
 			// check plugin settings for the tabs
 			if (!self::showTab($menu_name)) {
-				continue;
-			}
-			
-			// check if discussions is enabled
-			if (($menu_name === 'discussion') && !elgg_is_active_plugin('discussions')) {
 				continue;
 			}
 			
