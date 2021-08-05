@@ -9,7 +9,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected function getSubscriptions(): array {
+	public function getSubscriptions(): array {
 		$return = [];
 		
 		// get all admins
