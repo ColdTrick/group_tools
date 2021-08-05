@@ -12,7 +12,7 @@ if (empty($group_guid) || empty($motivation)) {
 }
 
 $group = get_entity($group_guid);
-if (!($group instanceof ElggGroup)) {
+if (!$group instanceof ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
@@ -22,14 +22,16 @@ $user = elgg_get_logged_in_user_entity();
 add_entity_relationship($user->guid, 'membership_request', $group->guid);
 
 // add motivation
-$group_acl = _groups_get_group_acl($group);
+$group_acl = $group->getOwnedAccessCollection('group_acl');
 $access_id = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
 $group->annotate('join_motivation', $motivation, $access_id, $user->guid);
 
 // notify owner
 $owner = $group->getOwnerEntity();
 
-$url = elgg_normalize_url("groups/requests/{$group->guid}");
+$url = elgg_generate_url('requests:group:group', [
+	'guid' => $group->guid,
+]);
 
 $subject = elgg_echo('group_tools:join_motivation:notification:subject', [
 	$user->getDisplayName(),

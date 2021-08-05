@@ -17,23 +17,5 @@ class Bootstrap extends DefaultPluginBootstrap {
 				'admin_only' => true,
 			]);
 		}
-		
-		elgg_register_notification_event('group', 'group', ['admin_approval']);
-		elgg_register_notification_event('object', 'group_tools_group_mail', ['enqueue']);
-
-		$this->registerHooks();
-	}
-	
-	protected function registerHooks() {
-		$hooks = $this->elgg()->hooks;
-		
-		$hooks->registerHandler('get', 'subscriptions', __NAMESPACE__ . '\GroupAdmins::addGroupAdminsToMembershipRequest');
-		$hooks->registerHandler('get', 'subscriptions', __NAMESPACE__ . '\Notifications::adminApprovalSubs');
-		$hooks->registerHandler('get', 'subscriptions', __NAMESPACE__ . '\GroupMail::getSubscribers');
-		$hooks->registerHandler('prepare', 'notification:admin_approval:group:group', __NAMESPACE__ . '\Notifications::prepareAdminApprovalMessage');
-		$hooks->registerHandler('prepare', 'notification:enqueue:object:group_tools_group_mail', __NAMESPACE__ . '\GroupMail::prepareNotification');
-		$hooks->registerHandler('prepare', 'notification:membership_request:group:group', __NAMESPACE__ . '\GroupAdmins::prepareMembershipRequestMessage');
-		$hooks->registerHandler('send:after', 'notifications', __NAMESPACE__ . '\GroupMail::cleanup');
-		$hooks->registerHandler('send:after', 'notifications', __NAMESPACE__ . '\Notifications::sendConfirmationOfGroupAdminApprovalToOwner');
 	}
 }

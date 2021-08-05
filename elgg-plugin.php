@@ -1,9 +1,11 @@
 <?php
 
 use ColdTrick\GroupTools\Bootstrap;
+use ColdTrick\GroupTools\Notifications\GroupAdminApprovalNotificationHandler;
+use ColdTrick\GroupTools\Notifications\GroupMailEnqueueNotificationEventHandler;
 use ColdTrick\GroupTools\Upgrades\FixGroupAccess;
-use Elgg\Router\Middleware\Gatekeeper;
 use ColdTrick\GroupTools\Upgrades\MigrateGroupDefaultContentAccess;
+use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
 
@@ -160,6 +162,11 @@ return [
 				'\ColdTrick\GroupTools\Plugins\CSVExporter::exportStaleInfo' => [],
 			],
 		],
+		'get' => [
+			'subscriptions' => [
+				'\ColdTrick\GroupTools\GroupAdmins::addGroupAdminsToMembershipRequest' => [],
+			],
+		],
 		'get_exportable_values' => [
 			'csv_exporter' => [
 				'\ColdTrick\GroupTools\Plugins\CSVExporter::addApprovalReasons' => [],
@@ -252,6 +259,17 @@ return [
 				'\ColdTrick\GroupTools\Menus\Entity::assignGroupAdmin' => [],
 			],
 		],
+		'prepare' => [
+			'notification:membership_request:group:group' => [
+				'\ColdTrick\GroupTools\GroupAdmins::prepareMembershipRequestMessage' => [],
+			],
+		],
+		'send:after' => [
+			'notifications' => [
+				'\ColdTrick\GroupTools\Notifications::sendConfirmationOfGroupAdminApprovalToOwner' => [],
+				'\ColdTrick\GroupTools\GroupMail::cleanup' => [],
+			],
+		],
 		'tool_options' => [
 			'group' => [
 				'\ColdTrick\GroupTools\Plugins\Groups::registerGroupTools' => [],
@@ -281,6 +299,18 @@ return [
 				'\ColdTrick\GroupTools\Views::prepareGroupAll' => [],
 			],
 		],
+	],
+	'notifications' => [
+		'group' => [
+			'group' => [
+				'admin_approval' => GroupAdminApprovalNotificationHandler::class,
+			],
+		],
+		'object' => [
+			'group_tools_group_mail' => [
+				'enqueue' => GroupMailEnqueueNotificationEventHandler::class,
+			],
+		]
 	],
 	'routes' => [
 		'add:object:group_tools_group_mail' => [
