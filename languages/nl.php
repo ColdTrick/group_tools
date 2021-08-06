@@ -1,10 +1,13 @@
 <?php
 /**
  * This file was created by Translation Editor v8.0
- * On 2021-07-08 15:34
+ * On 2021-08-06 10:31
  */
 
 return array (
+  'group_tools:group:admin_approve:decline:title' => 'Wijs het groepsverzoek af',
+  'group_tools:group:admin_approve:decline:description' => 'Hier kun je een reden opgeven waarom de groep \'%s\' niet wordt goedgekeurd. De groepseigenaar zal een bericht ontvangen dat de groep is afgekeurd inclusief de reden. Nadat de groep is afgewezen zal de groep worden verwijderd.',
+  'group_tools:group:admin_approve:decline:reason' => 'Reden om de groep af te wijzen',
   'group_tools:group:admin_approve:owner:subject' => 'Je groep \'%s\' wacht nu op goedkeuring',
   'group_tools:group:admin_approve:owner:message' => 'Beste %s,
 
