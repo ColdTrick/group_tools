@@ -99,9 +99,6 @@ class Membership {
 			return;
 		}
 		
-		// set notification settings
-		self::setGroupNotificationSettings($user, $group);
-		
 		// allow user to change notification settings
 		if ($user->guid !== $group->owner_guid) {
 			self::notificationsToggle($user, $group);
@@ -112,36 +109,6 @@ class Membership {
 		
 		// welcome message
 		self::sendWelcomeMessage($user, $group);
-	}
-	
-	/**
-	 * Set the user's notification settings for the group
-	 *
-	 * @param \ElggUser  $user  user to set settings for
-	 * @param \ElggGroup $group group to set settings for
-	 *
-	 * @return void
-	 */
-	protected static function setGroupNotificationSettings(\ElggUser $user, \ElggGroup $group) {
-		
-		if (!($user instanceof \ElggUser) || !($group instanceof \ElggGroup)) {
-			return;
-		}
-		
-		$notification_methods = group_tools_get_default_group_notification_settings($group);
-		if (empty($notification_methods)) {
-			return;
-		}
-		
-		// subscribe the user to the group
-		$methods = elgg_get_notification_methods();
-		foreach ($methods as $method) {
-			if (!in_array($method, $notification_methods)) {
-				continue;
-			}
-			
-			elgg_add_subscription($user->guid, $method, $group->guid);
-		}
 	}
 	
 	/**
