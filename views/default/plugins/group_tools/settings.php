@@ -303,25 +303,6 @@ echo elgg_view_module('info', elgg_echo('group_tools:settings:listing:title'), $
 // notifications
 $body = '';
 
-// auto set notifications
-$auto_notifications = elgg_echo('group_tools:settings:auto_notification');
-
-$selected_methods = group_tools_get_default_group_notification_settings();
-$methods = elgg_get_notification_methods();
-
-$auto_notifications_lis = [];
-foreach ($methods as $method) {
-	$auto_notifications_lis[] = elgg_format_element('li', [], elgg_view('input/checkbox', [
-		'label' => elgg_echo("notification:method:{$method}"),
-		'name' => "params[auto_notification_{$method}]",
-		'value' => '1',
-		'checked' => in_array($method, $selected_methods),
-	]));
-}
-$auto_notifications .= elgg_format_element('ul', ['class' => 'mll'], implode('', $auto_notifications_lis));
-
-$body .= elgg_format_element('div', [], $auto_notifications);
-
 // show toggle for group notification settings
 $body .= elgg_view_field([
 	'#type' => 'checkbox',

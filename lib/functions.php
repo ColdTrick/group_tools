@@ -1041,49 +1041,6 @@ function group_tools_get_auto_join_pattern_user_options(): array {
 }
 
 /**
- * Get the default notification methods when joining a group
- *
- * @param ElggGroup $entity the group to check the settings for (leave empty for site settings)
- *
- * @return string[]
- */
-function group_tools_get_default_group_notification_settings(ElggGroup $entity = null): array {
-	static $site_defaults;
-	
-	if (!isset($site_defaults)) {
-		$site_defaults = [];
-		
-		$methods = elgg_get_notification_methods();
-		foreach ($methods as $method) {
-			$plugin_setting = (int) elgg_get_plugin_setting("auto_notification_{$method}", 'group_tools');
-			if (empty($plugin_setting)) {
-				continue;
-			}
-			
-			$site_defaults[] = $method;
-		}
-		
-		$site_defaults = array_unique($site_defaults);
-	}
-	
-	if (!$entity instanceof ElggGroup) {
-		return $site_defaults;
-	}
-	
-	$selected_methods = $entity->getPluginSetting('group_tools', 'default_methods');
-	if (!isset($selected_methods)) {
-		return $site_defaults;
-	}
-	
-	$selected_methods = json_decode($selected_methods, true);
-	if (empty($selected_methods)) {
-		return [];
-	}
-	
-	return $selected_methods;
-}
-
-/**
  * Show the tools section on the group edit form
  *
  * @return bool

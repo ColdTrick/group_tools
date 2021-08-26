@@ -48,11 +48,7 @@ class MigrateGroupPluginSettings implements AsynchronousUpgrade {
 		
 		/* @var $group \ElggGroup */
 		foreach ($groups as $group) {
-			// default notification settings
-			$default_notifications = $group->getPrivateSetting('group_tools:default_notifications');
-			if (!empty($default_notifications)) {
-				$group->setPluginSetting('group_tools', 'default_methods', $default_notifications);
-			}
+			// default notification settings (no longer used)
 			$group->removePrivateSetting('group_tools:default_notifications');
 			
 			// welcome message

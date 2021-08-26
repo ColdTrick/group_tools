@@ -27,13 +27,10 @@ $members = $group->getMembers([
 	'batch' => true,
 ]);
 
-$methods = elgg_get_notification_methods();
 // disable notification for everyone
 /* @var $member ElggUser */
 foreach ($members as $member) {
-	foreach ($methods as $method) {
-		elgg_remove_subscription($member->guid, $method, $group->guid);
-	}
+	$group->removeSubscriptions($member->guid);
 }
 
 return elgg_ok_response('', elgg_echo('group_tools:action:notifications:success:disable'), $group->getURL());

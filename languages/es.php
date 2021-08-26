@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0.4
- * On 2019-10-28 17:12
+ * This file was created by Translation Editor v8.0
+ * On 2021-08-26 10:11
  */
 
 return array (
@@ -51,7 +51,6 @@ return array (
   'group_tools:settings:listing:default' => 'Pestaña de listados de grupos por defecto',
   'group_tools:settings:listing:available' => 'Pestañas de listados de grupos disponibles',
   'group_tools:settings:search_index' => 'Permitir que los grupos cerrados sean indexados en los motores de búsqueda',
-  'group_tools:settings:auto_notification' => 'Habilitar automáticamente notificaciones de grupo al unirse',
   'group_tools:settings:special_states:featured:description' => 'Los administradores de grupo han elegido esta funcionalidad para los siguientes grupos.',
   'group_tools:settings:fix:title' => 'Corregir problemas de acceso a grupos',
   'group_tools:settings:fix:missing' => 'Hay %d usuarios que son miembros de un grupo pero no tienen acceso al contenido compartido con el grupo.',
@@ -181,7 +180,6 @@ La razón fue:
   'group_tools:mail:message:from' => 'Del grupo',
   'group_tools:mail:title' => 'Enviar un correo a los miembros del grupo',
   'group_tools:mail:form:recipients' => 'Número de destinatarios',
-  'group_tools:mail:form:members:selection' => 'Seleccionar miembros individuales',
   'group_tools:mail:form:title' => 'Asunto',
   'group_tools:mail:form:description' => 'Cuerpo del texto',
   'group_tools:mail:form:js:members' => 'Por favor, selecciona al menos un miembro al cual enviar el mensaje',

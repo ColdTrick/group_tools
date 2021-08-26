@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0.4
- * On 2019-10-28 17:13
+ * This file was created by Translation Editor v8.0
+ * On 2021-08-26 10:11
  */
 
 return array (
@@ -22,7 +22,6 @@ return array (
   'group_tools:settings:invite_csv' => 'Permitir convites por arquivo CSV',
   'group_tools:settings:mail' => 'Permitir email para grupo (permite proprietários dos grupos enviar um email para todos os membros)',
   'group_tools:settings:search_index' => 'Permitir comunidades fechadas serem indexadas pelas ferramentas de busca',
-  'group_tools:settings:auto_notification' => 'Habilitar automaticamente notificações das comunidades para novos membros',
   'group_tools:groups:invite:body' => 'Olá %s,
 
 %s convidou você para entrar na comunidade \'%s\'.
@@ -69,7 +68,6 @@ Para visualizar a comunidade, clique neste link:
   'group_tools:mail:message:from' => 'Do grupo',
   'group_tools:mail:title' => 'Enviar email para os membros da comunidade',
   'group_tools:mail:form:recipients' => 'Número de destinatários',
-  'group_tools:mail:form:members:selection' => 'Selecionar membros individuais',
   'group_tools:mail:form:title' => 'Assunto',
   'group_tools:mail:form:description' => 'Mensagem',
   'group_tools:mail:form:js:members' => 'Por favor selecionar pelo menos um membro para mandar a mensagem',

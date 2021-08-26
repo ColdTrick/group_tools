@@ -1,10 +1,12 @@
 <?php
 /**
  * This file was created by Translation Editor v8.0
- * On 2021-08-06 10:31
+ * On 2021-08-26 10:11
  */
 
 return array (
+  'group_tools:edit:group:notifications:change_settings' => 'Wijzig de notificatie instellingen van alle leden',
+  'group_tools:edit:group:notifications:change_settings:help' => 'Selecteer de notificatiemethodes welke moeten zijn ingeschakeld voor alle leden, de niet geselecteerde methodes zullen worden uitgeschakeld.',
   'group_tools:group:admin_approve:decline:title' => 'Wijs het groepsverzoek af',
   'group_tools:group:admin_approve:decline:description' => 'Hier kun je een reden opgeven waarom de groep \'%s\' niet wordt goedgekeurd. De groepseigenaar zal een bericht ontvangen dat de groep is afgekeurd inclusief de reden. Nadat de groep is afgewezen zal de groep worden verwijderd.',
   'group_tools:group:admin_approve:decline:reason' => 'Reden om de groep af te wijzen',
@@ -88,9 +90,7 @@ om een groep te maken op basis van deze tool set. Dit zal ook de tool selectie o
   'widgets:group_related:description' => 'Toon een lijst van gerelateerde groepen',
   'group_tools:edit:group:notifications:no_methods' => 'Geen notificatie methodes beschikbaar',
   'group_tools:edit:group:notifications:counter' => '(%d van %d)',
-  'group_tools:edit:group:notifications:defaults' => 'Standaard notificatie instellingen voor nieuwe gebruikers',
-  'group_tools:edit:group:notifications:defaults:help' => 'Als een gebruiker lid wordt van de groep worden dit de groep notificatie instellingen.',
-  'group_tools:notifications:enable' => 'Opslaan en instellingen toepassen op alle leden',
+  'group_tools:notifications:enable' => 'Instellingen toepassen op alle leden',
   'group_tools:admin_transfer:remain_admin' => 'Blijf aan als groepsbeheerder na eigenaar overdracht',
   'group_tools:admin_transfer:remain_admin:help' => 'Indien de eigenaar wijzigd, blijf aan als groepsbeheerder.',
   'group_tools:settings:auto_accept_membership_requests' => 'Lidmaatschapsverzoeken automatisch accepteren na het openen van de groep',
@@ -399,7 +399,6 @@ Om de groep te bezoeken klik op onderstaande link:
   'group_tools:settings:listing:default' => 'Standaard groep overzicht tab',
   'group_tools:settings:listing:available' => 'Beschikbare groepsoverzicht tabs',
   'group_tools:settings:search_index' => 'Mogen besloten groepen worden ge&iuml;ndexeerd door zoekmachines',
-  'group_tools:settings:auto_notification' => 'Schakel groeps notificaties automatisch in bij het lid worden van een groep',
   'group_tools:groups:invite:body' => 'Beste %s,
 
 %s heeft je uitgenodigd om lid te worden van de groep \'%s\'.

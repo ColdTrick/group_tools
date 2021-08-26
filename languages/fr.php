@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0.4
- * On 2019-10-28 17:12
+ * This file was created by Translation Editor v8.0
+ * On 2021-08-26 10:11
  */
 
 return array (
@@ -118,7 +118,6 @@ Parcours Croisés',
   'group_tools:settings:stale_timeout' => 'Un groupe devient "Périmé" si aucun contenu n\'a été créé depuis un certain nombre de jours',
   'group_tools:settings:search_index' => 'Autoriser les groupes fermés à être indexé par les moteurs de recherche.',
   'group_tools:settings:stale_timeout:help' => 'Si aucun contenu n\'a été créé depuis un certain nombre de jours, le groupe est affiché comme "Périmé". Le propriétaire du groupe recevra une notification le jour où le groupe devient "Périmé". Un propriétaire de groupe/admin peut dire si un groupe est malgré tout toujours d\'actualité. 0 ou vide pour désactiver cette option.',
-  'group_tools:settings:auto_notification' => 'Activer automatiquement les notifications lors de l\'adhésion au groupe',
   'group_tools:settings:special_states:featured:description' => 'Les administrateurs du site ont choisi de mettre en avant les groupes suivants',
   'group_tools:settings:fix:title' => 'Réparer les problèmes d\'accés aux groupes',
   'group_tools:settings:fix:missing' => 'Il y a %d utilisateurs qui sont membres d\'un groupe, mais qui n\'ont pas accés au contenu partagé par ce groupe.',
@@ -198,7 +197,6 @@ La raison était:
   'group_tools:mail:message:from' => 'Depuis le groupe',
   'group_tools:mail:form:recipients' => 'Nombre de destinataires',
   'group_tools:mail:title' => 'Envoyer un mail a tous les membres du groupe',
-  'group_tools:mail:form:members:selection' => 'Sélectionner les membres individuellement',
   'group_tools:mail:form:title' => 'Sujet',
   'group_tools:mail:form:description' => 'Corps',
   'group_tools:mail:form:js:members' => 'Merci de sélectionner au moins un membre à qui envoyer un message',

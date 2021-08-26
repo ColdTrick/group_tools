@@ -100,7 +100,6 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:stale_timeout:help' => "If no new content is created in a group within the given number of days, the group is shown as stale. The group owner will receive a notification on the day the group becomes stale. A group owner/admin can tell the group is still relevant. 0 or empty to not enable this feature.",
 	
 	'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
-	'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
 	
 	'group_tools:settings:special_states:featured:description' => "The site administrators have chosen to feature the following groups.",
 	
@@ -354,13 +353,13 @@ The reason was:
 	// group notification
 	'group_tools:notifications:title' => "Group notifications",
 	'group_tools:notifications:disclaimer' => "With large groups this could take a while.",
-	'group_tools:notifications:enable' => "Save and apply settings to all members",
+	'group_tools:notifications:enable' => "Apply settings to all members",
 	'group_tools:notifications:disable' => "Disable notifications for everyone",
 	
 	'group_tools:edit:group:notifications:no_methods' => "No notification methods available.",
 	'group_tools:edit:group:notifications:counter' => "(%d of %d)",
-	'group_tools:edit:group:notifications:defaults' => "Default notification settings for new members",
-	'group_tools:edit:group:notifications:defaults:help' => "When a new member joins the group, this will be their group notification settings.",
+	'group_tools:edit:group:notifications:change_settings' => "Change the notification settings of all members",
+	'group_tools:edit:group:notifications:change_settings:help' => "Select the notification methods to enable for all group members, any non selected method will be disabled.",
 
 	'group_tools:notifications:toggle:email:enabled' => "Currently you are receiving notifications about activity in this group. If you don't want to receive notifications, change the settings here %s",
 	'group_tools:notifications:toggle:email:disabled' => "Currently you are not receiving notifications about activity in this group. If you want to receive notifications, change the settings here %s",

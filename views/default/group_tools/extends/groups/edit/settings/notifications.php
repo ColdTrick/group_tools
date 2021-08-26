@@ -1,6 +1,6 @@
 <?php
 /**
- * Set notification settings of group members
+ * Set notification settings of group members, only admins can change this for all the current members
  */
 
 if (!elgg_is_admin_logged_in()) {
@@ -13,15 +13,16 @@ if (empty($methods)) {
 }
 
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggGroup) {
+	return;
+}
+
 $content = '';
 
 // notification settings
-$members_count = 0;
-if ($entity instanceof ElggGroup) {
-	$members_count = $entity->getMembers([
-		'count' => true,
-	]);
-}
+$members_count = $entity->getMembers([
+	'count' => true,
+]);
 
 $notification_count = 0;
 
@@ -46,15 +47,12 @@ foreach ($methods as $method) {
 	$options[$label] = $method;
 }
 
-$selected_methods = group_tools_get_default_group_notification_settings($entity);
-
 $content .= elgg_view_field([
 	'#type' => 'checkboxes',
-	'#label' => elgg_echo('group_tools:edit:group:notifications:defaults'),
-	'#help' => elgg_echo('group_tools:edit:group:notifications:defaults:help'),
-	'name' => 'settings[group_tools][default_methods]',
+	'#label' => elgg_echo('group_tools:edit:group:notifications:change_settings'),
+	'#help' => elgg_echo('group_tools:edit:group:notifications:change_settings:help'),
+	'name' => 'group_tools_change_notification_settings',
 	'options' => $options,
-	'value' => $selected_methods,
 	'align' => 'horizontal',
 ]);
 
@@ -71,27 +69,20 @@ if ($notification_count > 0) {
 			'class' => [
 				'elgg-button',
 				'elgg-button-delete',
+				'mrm',
 			],
 			'confirm' => true,
 		]),
 	];
 }
-if ($entity instanceof ElggGroup) {
-	$buttons[] = [
-		'#html' => elgg_view('output/url', [
-			'text' => elgg_echo('group_tools:notifications:enable'),
-			'title' => elgg_echo('group_tools:notifications:disclaimer'),
-			'href' => elgg_generate_action_url('group_tools/admin/notifications', [
-				'guid' => $entity->guid,
-			]),
-			'class' => [
-				'elgg-button',
-				'elgg-button-submit',
-			],
-			'confirm' => true,
-		]),
-	];
-}
+
+$buttons[] = [
+	'#type' => 'submit',
+	'value' => elgg_echo('group_tools:notifications:enable'),
+	'title' => elgg_echo('group_tools:notifications:disclaimer'),
+	'confirm' => true,
+	'formaction' => elgg_generate_action_url('group_tools/admin/notifications', [], false),
+];
 
 if (!empty($buttons)) {
 	$content .= elgg_view_field([
