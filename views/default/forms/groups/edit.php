@@ -125,12 +125,7 @@ if ((bool) elgg_get_plugin_setting('concept_groups', 'group_tools') && (!$entity
 $footer .= elgg_view_field([
 	'#type' => 'fieldset',
 	'#class' => $submit_classes,
-	'fields' => [
-		[
-			'#type' => 'submit',
-			'value' => elgg_echo('save'),
-		],
-	],
+	'fields' => $buttons,
 	'align' => 'horizontal',
 ]);
 
