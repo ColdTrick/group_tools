@@ -356,6 +356,8 @@ class Title {
 		$allowed_items = [
 			'edit',
 			'delete',
+			'elasticsearch_inspect', // elasticsearch
+			'entity_explorer', // developer tools
 		];
 		
 		/* @var $return MenuItems */
