@@ -22,7 +22,7 @@ $closed_text = elgg_format_element('div', [
 	'data-group-type' => 'closed',
 ], $closed_text);
 
-echo elgg_format_element('div', ['class' => ['group-tools-simplified-options', 'clearfix']], $open_text . $closed_text);
+echo elgg_format_element('div', ['class' => ['group-tools-edit-access-simple', 'group-tools-simplified-options', 'clearfix']], $open_text . $closed_text);
 
 $params = [
 	'_group_tools_simplified_deadloop' => true,

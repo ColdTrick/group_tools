@@ -19,7 +19,7 @@ define(['jquery'], function ($) {
 		}		
 	};
 
-	$('.elgg-form-groups-edit .group-tools-simplified-option').on('click', function() {
+	$('.group-tools-edit-access-simple .group-tools-simplified-option').on('click', function() {
 		$(this).siblings().removeClass('elgg-state-active');
 		
 		$(this).addClass('elgg-state-active');
@@ -27,5 +27,5 @@ define(['jquery'], function ($) {
 		update_access_values($(this).data('groupType'));
 	});
 	
-	$('.elgg-form-groups-edit .group-tools-simplified-option:first').click();
+	$('.group-tools-edit-access-simple .group-tools-simplified-option:first').click();
 });

@@ -1,14 +1,14 @@
 define(['jquery'], function ($) {
 
 	var update_tools = function (preset_id) {
-		$tool_section = $('.group-tools-simplified-options').parent();
+		$tool_section = $('.group-tools-edit-tools-simple').parent();
 		$tool_section.find('.elgg-input-checkbox[value="yes"]:checked').click();
 		
 		$preset_section = $tool_section.find('.group-tools-preset-' + preset_id);
 		$preset_section.find('.elgg-input-checkbox[value="yes"]').not(':checked').click();
 	};
 
-	$('.elgg-form-groups-edit .group-tools-simplified-option').on('click', function() {
+	$('.group-tools-edit-tools-simple .group-tools-simplified-option').on('click', function() {
 		$(this).siblings().removeClass('elgg-state-active');
 		
 		$(this).addClass('elgg-state-active');
@@ -19,5 +19,5 @@ define(['jquery'], function ($) {
 		update_tools($(this).data('preset'));
 	});
 	
-	$('.elgg-form-groups-edit .group-tools-simplified-option:first').click();
+	$('.group-tools-edit-tools-simple .group-tools-simplified-option:first').click();
 });

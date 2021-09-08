@@ -38,7 +38,7 @@ foreach ($presets as $index => $preset) {
 	], $preset_content);
 }
 
-echo elgg_format_element('div', ['class' => 'group-tools-simplified-options'], $output);
+echo elgg_format_element('div', ['class' => ['group-tools-edit-tools-simple', 'group-tools-simplified-options']], $output);
 
 /* @var $group_option \Elgg\Groups\Tool */
 foreach ($tools as $group_option) {
