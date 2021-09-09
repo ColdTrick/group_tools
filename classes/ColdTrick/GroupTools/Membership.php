@@ -123,12 +123,7 @@ class Membership {
 		static $register_once;
 		
 		if (!isset(self::$NOTIFICATIONS_TOGGLE)) {
-			self::$NOTIFICATIONS_TOGGLE = false;
-			
-			$plugin_settings = elgg_get_plugin_setting('notification_toggle', 'group_tools');
-			if ($plugin_settings === 'yes' && elgg_is_active_plugin('notifications')) {
-				self::$NOTIFICATIONS_TOGGLE = true;
-			}
+			self::$NOTIFICATIONS_TOGGLE = (elgg_get_plugin_setting('notification_toggle', 'group_tools') === 'yes');
 		}
 		
 		if (!self::$NOTIFICATIONS_TOGGLE) {
@@ -149,8 +144,9 @@ class Membership {
 			
 			$link = elgg_view('output/url', [
 				'text' => $link_text,
-				'href' => "action/group_tools/toggle_notifications?group_guid={$group->guid}",
-				'is_action' => true,
+				'href' => elgg_generate_action_url('group_tools/toggle_notifications', [
+					'group_guid' => $group->guid,
+				]),
 			]);
 			
 			system_message(elgg_echo($text_key, [$link]));
