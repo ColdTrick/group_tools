@@ -54,7 +54,7 @@ class FixGroupAccess implements AsynchronousUpgrade {
 		
 		/* @var $group \ElggGroup */
 		foreach ($groups as $group) {
-			$group_acl = _groups_get_group_acl($group);
+			$group_acl = $group->getOwnedAccessCollection('group_acl');
 			if (!$group_acl instanceof \ElggAccessCollection) {
 				$result->addFailures();
 				continue;
