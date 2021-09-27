@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "01be72e290632614ca42011f7308b26b",
+    "content-hash": "2348f0750f00ac8181bb9cb38fccf699",
     "packages": [
         {
             "name": "composer/installers",
@@ -155,43 +155,6 @@
     ],
     "packages-dev": [
         {
-            "name": "coldtrick/releases",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ColdTrick/releases.git",
-                "reference": "c135064f9fc269e4f4d3ea9f0ef40989165c7b7c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ColdTrick/releases/zipball/c135064f9fc269e4f4d3ea9f0ef40989165c7b7c",
-                "reference": "c135064f9fc269e4f4d3ea9f0ef40989165c7b7c",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0"
-            ],
-            "description": "A set of scripts needed for building releases",
-            "keywords": [
-                "ci",
-                "release",
-                "travis"
-            ],
-            "funding": [
-                {
-                    "url": "https://www.paypal.me/ColdTrick",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/ColdTrick",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-07-08T11:28:12+00:00"
-        },
-        {
             "name": "coldtrick/sniffs",
             "version": "dev-master",
             "source": {
@@ -283,8 +246,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "coldtrick/sniffs": 20,
-        "coldtrick/releases": 20
+        "coldtrick/sniffs": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
