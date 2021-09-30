@@ -27,6 +27,7 @@ $access_id = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id
 $group->annotate('join_motivation', $motivation, $access_id, $user->guid);
 
 // notify owner
+/* @var $owner \ElggUser */
 $owner = $group->getOwnerEntity();
 
 $url = elgg_generate_url('requests:group:group', [
@@ -36,20 +37,19 @@ $url = elgg_generate_url('requests:group:group', [
 $subject = elgg_echo('group_tools:join_motivation:notification:subject', [
 	$user->getDisplayName(),
 	$group->getDisplayName(),
-], $owner->language);
+], $owner->getLanguage());
 $summary = elgg_echo('group_tools:join_motivation:notification:summary', [
 	$user->getDisplayName(),
 	$group->getDisplayName(),
-], $owner->language);
+], $owner->getLanguage());
 
 $body = elgg_echo('group_tools:join_motivation:notification:body', [
-	$owner->getDisplayName(),
 	$user->getDisplayName(),
 	$group->getDisplayName(),
 	$motivation,
 	$user->getURL(),
 	$url,
-], $owner->language);
+], $owner->getLanguage());
 
 $params = [
 	'action' => 'membership_request',

@@ -57,22 +57,20 @@ class Membership {
 		$reason = get_input('reason');
 		if (empty($reason)) {
 			$body = elgg_echo('group_tools:notify:membership:declined:message', [
-				$user->getDisplayName(),
 				$group->getDisplayName(),
 				$group->getURL(),
-			]);
+			], $user->getLanguage());
 		} else {
 			$body = elgg_echo('group_tools:notify:membership:declined:message:reason', [
-				$user->getDisplayName(),
 				$group->getDisplayName(),
 				$reason,
 				$group->getURL(),
-			]);
+			], $user->getLanguage());
 		}
 		
 		$subject = elgg_echo('group_tools:notify:membership:declined:subject', [
 			$group->getDisplayName(),
-		]);
+		], $user->getLanguage());
 		
 		$params = [
 			'object' => $group,
@@ -230,7 +228,7 @@ class Membership {
 		$welcome_message = str_ireplace('[group_url]', $group->getURL(), $welcome_message);
 			
 		// subject
-		$subject = elgg_echo('group_tools:welcome_message:subject', [$group->getDisplayName()]);
+		$subject = elgg_echo('group_tools:welcome_message:subject', [$group->getDisplayName()], $recipient->getLanguage());
 		
 		// mail params
 		$mail_params = [

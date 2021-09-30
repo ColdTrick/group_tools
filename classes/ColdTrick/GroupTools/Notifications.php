@@ -29,7 +29,6 @@ class Notifications {
 		
 		$subject = elgg_echo('group_tools:group:admin_approve:owner:subject', [$object->getDisplayName()], $owner->getLanguage());
 		$message = elgg_echo('group_tools:group:admin_approve:owner:message', [
-			$owner->getDisplayName(),
 			$object->getDisplayName(),
 			$object->getURL(),
 		], $owner->getLanguage());

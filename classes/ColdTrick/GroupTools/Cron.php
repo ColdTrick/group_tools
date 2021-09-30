@@ -233,17 +233,16 @@ class Cron {
 		
 		$site = elgg_get_site_entity();
 		
-		$subject = elgg_echo('groups_tools:state_info:notification:subject', [$entity->getDisplayName()]);
+		$subject = elgg_echo('groups_tools:state_info:notification:subject', [$entity->getDisplayName()], $owner->getLanguage());
 		$message = elgg_echo('groups_tools:state_info:notification:message', [
-			$owner->getDisplayName(),
 			$entity->getDisplayName(),
 			$entity->getURL(),
-		]);
+		], $owner->getLanguage());
 		
 		$mail_params = [
 			'object' => $entity,
 			'action' => 'group_tools:stale',
-			'summary' => elgg_echo('groups_tools:state_info:notification:summary', [$entity->getDisplayName()]),
+			'summary' => elgg_echo('groups_tools:state_info:notification:summary', [$entity->getDisplayName()], $owner->getLanguage()),
 		];
 		
 		notify_user($owner->guid, $site->guid, $subject, $message, $mail_params);
@@ -335,20 +334,18 @@ class Cron {
 					$expires = Values::normalizeTime($group->time_created);
 					$expires->modify("+{$days} days");
 					
-					$subject = elgg_echo('group_tools:notification:concept_group:expires:subject', [$group->getDisplayName()]);
+					$subject = elgg_echo('group_tools:notification:concept_group:expires:subject', [$group->getDisplayName()], $owner->getLanguage());
 					$message = elgg_echo('group_tools:notification:concept_group:expires:message', [
-						$owner->getDisplayName(),
 						$group->getDisplayName(),
 						elgg_get_friendly_time($expires->getTimestamp()),
 						$group->getURL(),
-					]);
+					], $owner->getLanguage());
 				} else {
 					$subject = elgg_echo('group_tools:notification:concept_group:subject', [$group->getDisplayName()]);
 					$message = elgg_echo('group_tools:notification:concept_group:message', [
-						$owner->getDisplayName(),
 						$group->getDisplayName(),
 						$group->getURL(),
-					]);
+					], $owner->getLanguage());
 				}
 				
 				$params = [

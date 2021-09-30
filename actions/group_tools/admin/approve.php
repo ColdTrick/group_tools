@@ -33,15 +33,15 @@ $group->save();
 unset($group->intended_access_id);
 
 // notify owner
+/* @var $owner \ElggUser */
 $owner = $group->getOwnerEntity();
 
-$subject = elgg_echo('group_tools:group:admin_approve:approve:subject', [$group->getDisplayName()], $owner->language);
-$summary = elgg_echo('group_tools:group:admin_approve:approve:summary', [$group->getDisplayName()], $owner->language);
+$subject = elgg_echo('group_tools:group:admin_approve:approve:subject', [$group->getDisplayName()], $owner->getLanguage());
+$summary = elgg_echo('group_tools:group:admin_approve:approve:summary', [$group->getDisplayName()], $owner->getLanguage());
 $message = elgg_echo('group_tools:group:admin_approve:approve:message', [
-	$owner->getDisplayName(),
 	$group->getDisplayName(),
 	$group->getURL(),
-], $owner->language);
+], $owner->getLanguage());
 
 $params = [
 	'object' => $group,

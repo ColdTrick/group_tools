@@ -37,17 +37,26 @@ if (!add_entity_relationship($group->guid, 'related_group', $related->guid)) {
 	return elgg_error_response(elgg_echo('group_tools:action:related_groups:error:add'));
 }
 
+$logged_in_user = elgg_get_logged_in_user_entity();
+
 // notify the other owner about this
-if ($group->owner_guid !== $related->owner_guid) {
-	$subject = elgg_echo('group_tools:related_groups:notify:owner:subject');
+if ($group->owner_guid !== $related->owner_guid && $related->owner_guid !== $logged_in_user->guid) {
+	/* @var $related_owner \ElggUser */
+	$related_owner = $related->getOwnerEntity();
+	
+	$subject = elgg_echo('group_tools:related_groups:notify:owner:subject', [], $related_owner->getLanguage());
 	$message = elgg_echo('group_tools:related_groups:notify:owner:message', [
-		$related->getOwnerEntity()->getDisplayName(),
-		elgg_get_logged_in_user_entity()->getDisplayName(),
+		$logged_in_user->getDisplayName(),
 		$related->getDisplayName(),
 		$group->getDisplayName(),
-	]);
+	], $related_owner->getLanguage());
 	
-	notify_user($related->owner_guid, $group->owner_guid, $subject, $message);
+	$params = [
+		'action' => 'relate',
+		'object' => $related,
+	];
+	
+	notify_user($related_owner->guid, $logged_in_user->guid, $subject, $message, $params);
 }
 
 return elgg_ok_response('', elgg_echo('group_tools:action:related_groups:success'));

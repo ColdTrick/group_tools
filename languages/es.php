@@ -73,17 +73,13 @@ Cuando un usuario crea un grupo, puede elegir una de los configuraciones predefi
   'group_tools:create_group:tool_presets:show_more' => 'Más herramientas',
   'group_tools:create_group:tool_presets:blank:title' => 'Grupo en blanco',
   'group_tools:create_group:tool_presets:blank:description' => 'Elige este tipo de grupo para configurar tus propias herramientas.',
-  'group_tools:groups:invite:body' => 'Hola %s,
-
-%s te ha invitado a unirte al grupo \'%s\'.
+  'group_tools:groups:invite:body' => '%s te ha invitado a unirte al grupo \'%s\'.
 %s
 
 Haz click debajo para ver tus invitaciones:
 %s',
   'group_tools:groups:invite:add:subject' => 'Te han agregado al grupo %s',
-  'group_tools:groups:invite:add:body' => 'Hola %s,
-
-%s te ha agregado al grupo %s.
+  'group_tools:groups:invite:add:body' => '%s te ha agregado al grupo %s.
 %s
 
 Para ver el grupo haz click en este link
@@ -100,22 +96,16 @@ Si no tienes usuario en %s por favor regístrate aquí
 También puedes ir a Todos los grupos -> Invitaciones de grupo e incluir el siguiene código:
 %s',
   'group_tools:notify:transfer:subject' => 'La administración del grupo %s te ha sido asignada',
-  'group_tools:notify:transfer:message' => 'Hola %s,
-
-%s te ha asignado como el nuevo administrador del grupo %s.
+  'group_tools:notify:transfer:message' => '%s te ha asignado como el nuevo administrador del grupo %s.
 
 Para visitar el grupo haz click sobre el siguiente link:
 %s',
   'group_tools:notify:membership:declined:subject' => 'Su pedido de incorporación para el grupo \'%s\' fue rechazado',
-  'group_tools:notify:membership:declined:message' => 'Hola %s,
-
-Tu pedido de incorporación para el grupo \'%s\' fue rechazado.
+  'group_tools:notify:membership:declined:message' => 'Tu pedido de incorporación para el grupo \'%s\' fue rechazado.
 
 Puedes encontrar el grupo aquí:
 %s',
-  'group_tools:notify:membership:declined:message:reason' => 'Hola %s,
-
-Tu pedido de incorporación para el grupo \'%s\' fue rechazado, debido a la siguiente razón:
+  'group_tools:notify:membership:declined:message:reason' => 'Tu pedido de incorporación para el grupo \'%s\' fue rechazado, debido a la siguiente razón:
 
 %s
 
@@ -140,17 +130,13 @@ Si rechazas un grupo, el propietario recibirá una notificación de que su grupo
   'group_tools:group:admin_approve:decline:success' => 'El grupo fue eliminado',
   'group_tools:group:admin_approve:approve:subject' => 'Tu grupo \'%s\' fue aprobado',
   'group_tools:group:admin_approve:approve:summary' => 'Tu grupo \'%s\' fue aprobado',
-  'group_tools:group:admin_approve:approve:message' => 'Hola %s,
-
-tu grupo \'%s\' fue aprobado por el administrador del sitio. Ahora puedes utilizarlo.
+  'group_tools:group:admin_approve:approve:message' => 'tu grupo \'%s\' fue aprobado por el administrador del sitio. Ahora puedes utilizarlo.
 
 Para visitar el grupo haz click aquí:
 %s',
   'group_tools:group:admin_approve:admin:subject' => 'Un nuevo grupo \'%s\' fue creado y requiere aprobación',
   'group_tools:group:admin_approve:admin:summary' => 'Un nuevo grupo \'%s\' fue creado y requiere aprobación',
-  'group_tools:group:admin_approve:admin:message' => 'Hola %s,
-
-%s creó el grupo \'%s\' que necesita ser aprobado por un administrador del sitio.
+  'group_tools:group:admin_approve:admin:message' => '%s creó el grupo \'%s\' que necesita ser aprobado por un administrador del sitio.
 
 Para visitar el grupo haz click aquí:
 %s
@@ -159,9 +145,7 @@ Para ver todos los grupos que requieren acciones haz click aquí:
 %s',
   'group_tools:group:admin_approve:decline:subject' => 'Tu grupo \'%s\' ha sido rechazado',
   'group_tools:group:admin_approve:decline:summary' => 'Tu grupo \'%s\' ha sido rechazado',
-  'group_tools:group:admin_approve:decline:message' => 'Hola %s,
-
-tu grupo \'%s\' fue rechazado y eliminado por un administrador del sitio.
+  'group_tools:group:admin_approve:decline:message' => 'tu grupo \'%s\' fue rechazado y eliminado por un administrador del sitio.
 
 La razón fue:
 %s',
@@ -276,9 +260,7 @@ La razón fue:
   'group_tools:action:related_groups:error:add' => 'Un error desconocido ocurrió mientras se añadía una relación, por favor intenta nuevamente.',
   'group_tools:action:related_groups:success' => 'El grupo ahora está relacionado',
   'group_tools:related_groups:notify:owner:subject' => 'Un nuevo grupo relacionado fue agregado',
-  'group_tools:related_groups:notify:owner:message' => 'Hola %s,
-
-%s agregó tu grupo %s como un grupo relacionado de %s.',
+  'group_tools:related_groups:notify:owner:message' => '%s agregó tu grupo %s como un grupo relacionado de %s.',
   'group_tools:related_groups:entity:remove' => 'Remover grupo relacionado',
   'group_tools:action:remove_related_groups:error:not_related' => 'Este grupo no está relacionado',
   'group_tools:action:remove_related_groups:error:remove' => 'Un error desconocido ocurrió mientras se removía la relación, por favor intente de nuevo',
@@ -302,9 +284,7 @@ La razón fue:
   'group_tools:join_motivation:label' => 'Mi motivación para unirme a este grupo',
   'group_tools:join_motivation:notification:subject' => '%s ha solicitado unirse a %s',
   'group_tools:join_motivation:notification:summary' => '%s ha solicitado unirse a %s',
-  'group_tools:join_motivation:notification:body' => 'Hola %s,
-
-%s ha solicitado unirse al grupo \'%s\'.
+  'group_tools:join_motivation:notification:body' => '%s ha solicitado unirse al grupo \'%s\'.
 
 Su motivación para unirse es:
 %s

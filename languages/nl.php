@@ -11,9 +11,7 @@ return array (
   'group_tools:group:admin_approve:decline:description' => 'Hier kun je een reden opgeven waarom de groep \'%s\' niet wordt goedgekeurd. De groepseigenaar zal een bericht ontvangen dat de groep is afgekeurd inclusief de reden. Nadat de groep is afgewezen zal de groep worden verwijderd.',
   'group_tools:group:admin_approve:decline:reason' => 'Reden om de groep af te wijzen',
   'group_tools:group:admin_approve:owner:subject' => 'Je groep \'%s\' wacht nu op goedkeuring',
-  'group_tools:group:admin_approve:owner:message' => 'Beste %s,
-
-je groep \'%s\' wacht nu op goedkeuring door een site beheerder.
+  'group_tools:group:admin_approve:owner:message' => 'je groep \'%s\' wacht nu op goedkeuring door een site beheerder.
 
 Om je groep te bekijken, klik hier:
 %s',
@@ -34,17 +32,13 @@ Om je groep te bekijken, klik hier:
   'group_tools:action:remove_concept_status:success:approval' => 'De groep wacht nu op goedkeuring door een site beheerder',
   'group_tools:action:remove_concept_status:success:published' => 'De groep is nu beschikbaar voor de community',
   'group_tools:notification:concept_group:expires:subject' => 'Je groep \'%s\' bevindt zich nog in de concept fase',
-  'group_tools:notification:concept_group:expires:message' => 'Beste %s,
-
-Je groep \'%s\' bevindt zich nog steeds in de concept fase, ben je al klaar deze groep te delen met de community?
+  'group_tools:notification:concept_group:expires:message' => 'Je groep \'%s\' bevindt zich nog steeds in de concept fase, ben je al klaar deze groep te delen met de community?
 
 Indien je de groep niet publiceert zal deze worden verwijderd %s.
 
 Om naar de groep te gaan, klik hier:
 %s',
-  'group_tools:notification:concept_group:message' => 'Beste %s,
-
-Je groep \'%s\' bevindt zich nog steeds in de concept fase, ben je al klaar deze groep te delen met de community?
+  'group_tools:notification:concept_group:message' => 'Je groep \'%s\' bevindt zich nog steeds in de concept fase, ben je al klaar deze groep te delen met de community?
 
 Om naar de groep te gaan, klik hier:
 %s',
@@ -121,9 +115,7 @@ om een groep te maken op basis van deze tool set. Dit zal ook de tool selectie o
   'group_tools:auto_join:pattern:operand:not_contains' => 'Bevat niet',
   'groups_tools:state_info:notification:subject' => 'Je groep \'%s\' is al een tijd inactief',
   'groups_tools:state_info:notification:summary' => 'Je groep \'%s\' is al een tijd inactief',
-  'groups_tools:state_info:notification:message' => 'Beste %s,
-
-Je groep \'%s\' is al een tijd inactief
+  'groups_tools:state_info:notification:message' => 'Je groep \'%s\' is al een tijd inactief
 
 Bekijk de groep hier:
 %s',
@@ -162,9 +154,7 @@ Bekijk de groep hier:
   'group_tools:join_motivation:label' => 'Mijn motivatie om lid te worden van deze groep',
   'group_tools:join_motivation:notification:subject' => '%s wil lid worden van %s',
   'group_tools:join_motivation:notification:summary' => '%s wil lid worden van %s',
-  'group_tools:join_motivation:notification:body' => 'Hallo %s,
-
-%s wil lid worden van de groep \'%s\'.
+  'group_tools:join_motivation:notification:body' => '%s wil lid worden van de groep \'%s\'.
 
 De motivatie om lid te worden was:
 %s
@@ -189,17 +179,13 @@ Als je een groep afwijst zal de eigenaar ook hiervan een bericht ontvangen en wo
   'group_tools:group:admin_approve:decline:success' => 'De groep is verwijderd',
   'group_tools:group:admin_approve:approve:subject' => 'Je groep \'%s\' is goedgekeurd',
   'group_tools:group:admin_approve:approve:summary' => 'Je groep \'%s\' is goedgekeurd',
-  'group_tools:group:admin_approve:approve:message' => 'Hallo %s,
-
-je groep %s\' is goedgekeurd door een site beheerder. Je kunt er nu gebruik van maken.
+  'group_tools:group:admin_approve:approve:message' => 'je groep %s\' is goedgekeurd door een site beheerder. Je kunt er nu gebruik van maken.
 
 Om naar de groep te gaan klik hier:
 %s',
   'group_tools:group:admin_approve:admin:subject' => 'De groep \'%s\' is aangemaakt en vereist goedkeuring',
   'group_tools:group:admin_approve:admin:summary' => 'De groep \'%s\' is aangemaakt en vereist goedkeuring',
-  'group_tools:group:admin_approve:admin:message' => 'Hallo %s,
-
-%s heeft de groep \'%s\' aangemaakt, deze groep vereist goedkeuring door een site beheerer.
+  'group_tools:group:admin_approve:admin:message' => '%s heeft de groep \'%s\' aangemaakt, deze groep vereist goedkeuring door een site beheerer.
 
 Om naar de groep te gaan, klik hier:
 %s
@@ -208,9 +194,7 @@ Om naar de lijst te gaan met alle nog goed te keuren groepen, klik hier:
 %s',
   'group_tools:group:admin_approve:decline:subject' => 'Je groep \'%s\' is afgewezen',
   'group_tools:group:admin_approve:decline:summary' => 'Je groep \'%s\' is afgewezen',
-  'group_tools:group:admin_approve:decline:message' => 'Hallo %s,
-
-je groep \'%s\' is afgewezen en verwijderd door een site beheerder.
+  'group_tools:group:admin_approve:decline:message' => 'je groep \'%s\' is afgewezen en verwijderd door een site beheerder.
 
 De reden was:
 %s',
@@ -236,15 +220,11 @@ De reden was:
   'item:object:group_tools_group_mail' => 'Groepmail',
   'group_tools:forms:members_search:members_search:placeholder' => 'Type de naam of gebruikersnaam van een gebruiker om te zoeken',
   'group_tools:notify:membership:declined:subject' => 'Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen',
-  'group_tools:notify:membership:declined:message' => 'Hallo %s,
-
-Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen.
+  'group_tools:notify:membership:declined:message' => 'Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen.
 
 De groep kun je hier vinden:
 %s',
-  'group_tools:notify:membership:declined:message:reason' => 'Hallo %s,
-
-Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen, met als reden:
+  'group_tools:notify:membership:declined:message:reason' => 'Je groep lidmaatschap aanvraag voor \'%s\' is afgewezen, met als reden:
 
 %s
 
@@ -289,9 +269,7 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:action:related_groups:error:add' => 'Er is een onbekende fout opgetreden tijdens het toevoegen van de relatie, probeer het nogmaals',
   'group_tools:action:related_groups:success' => 'De groep is nu gerelateerd',
   'group_tools:related_groups:notify:owner:subject' => 'Er is een nieuwe gerelateerde groep toegevoegd',
-  'group_tools:related_groups:notify:owner:message' => 'Beste %s,
-
-%s heeft je groep %s als een gerelateerde groep toegevoegd aan %s',
+  'group_tools:related_groups:notify:owner:message' => '%s heeft je groep %s als een gerelateerde groep toegevoegd aan %s',
   'group_tools:related_groups:entity:remove' => 'Verwijder gerelateerde groep',
   'group_tools:action:remove_related_groups:error:not_related' => 'De groep is niet gerelateerd',
   'group_tools:action:remove_related_groups:error:remove' => 'Er is een onbekende fout opgetreden tijdens het verwijderen van de relatie, probeer het nogmaals',
@@ -372,9 +350,7 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:mail:form:recipients' => 'Aantal geselecteerde ontvangers',
   'group_tools:mail:form:js:description' => 'Geef een bericht op',
   'group_tools:notify:transfer:subject' => 'Beheer van de groep %s is aan je overgedragen',
-  'group_tools:notify:transfer:message' => 'Beste %s,
-
-%s heeft het beheer van de groep %s aan je overgedragen.
+  'group_tools:notify:transfer:message' => '%s heeft het beheer van de groep %s aan je overgedragen.
 
 Om de groep te bezoeken klik op onderstaande link:
 %s',
@@ -399,17 +375,13 @@ Om de groep te bezoeken klik op onderstaande link:
   'group_tools:settings:listing:default' => 'Standaard groep overzicht tab',
   'group_tools:settings:listing:available' => 'Beschikbare groepsoverzicht tabs',
   'group_tools:settings:search_index' => 'Mogen besloten groepen worden ge&iuml;ndexeerd door zoekmachines',
-  'group_tools:groups:invite:body' => 'Beste %s,
-
-%s heeft je uitgenodigd om lid te worden van de groep \'%s\'.
+  'group_tools:groups:invite:body' => '%s heeft je uitgenodigd om lid te worden van de groep \'%s\'.
 %s
 
 Klik op onderstaande link om je uitnodigingen te zien:
 %s',
   'group_tools:groups:invite:add:subject' => 'Je bent toegevoegd aan de groep %s',
-  'group_tools:groups:invite:add:body' => 'Beste %s,
-
-%s heeft jou toegevoegd aan de groep %s.
+  'group_tools:groups:invite:add:body' => '%s heeft jou toegevoegd aan de groep %s.
 %s
 
 Om naar de groep te gaan klik op onderstaande link:

@@ -182,9 +182,7 @@ When a user creates a group he/she gets to choose one of the presets in order to
 	
 	
 	// group invite message
-	'group_tools:groups:invite:body' => "Hi %s,
-
-%s invited you to join the '%s' group.
+	'group_tools:groups:invite:body' => "%s invited you to join the '%s' group.
 %s
 
 Click below to view your invitations:
@@ -192,9 +190,7 @@ Click below to view your invitations:
 
 	// group add message
 	'group_tools:groups:invite:add:subject' => "You've been added to the group %s",
-	'group_tools:groups:invite:add:body' => "Hi %s,
-
-%s added you to the group %s.
+	'group_tools:groups:invite:add:body' => "%s added you to the group %s.
 %s
 
 To view the group click on this link
@@ -213,24 +209,18 @@ You can also go to All site groups -> Group invitations and enter the following 
 %s",
 	// group transfer notification
 	'group_tools:notify:transfer:subject' => "Administration of the group %s has been appointed to you",
-	'group_tools:notify:transfer:message' => "Hi %s,
-
-%s has appointed you as the new administrator of the group %s.
+	'group_tools:notify:transfer:message' => "%s has appointed you as the new administrator of the group %s.
 
 To visit the group please click on the following link:
 %s",
 	
 	// decline membership request notification
 	'group_tools:notify:membership:declined:subject' => "Your membership request for '%s' was declined",
-	'group_tools:notify:membership:declined:message' => "Hi %s,
-
-Your membership request for the group '%s' was declined.
+	'group_tools:notify:membership:declined:message' => "Your membership request for the group '%s' was declined.
 
 You can find the group here:
 %s",
-	'group_tools:notify:membership:declined:message:reason' => "Hi %s,
-
-Your membership request for the group '%s' was declined, because of:
+	'group_tools:notify:membership:declined:message:reason' => "Your membership request for the group '%s' was declined, because of:
 
 %s
 
@@ -266,9 +256,7 @@ You can find the group here:
 	'group_tools:action:remove_concept_status:success:published' => "The group is now available on the community",
 	
 	'group_tools:notification:concept_group:expires:subject' => "Your group '%s' is still in concept",
-	'group_tools:notification:concept_group:expires:message' => "Hi %s,
-
-Your group '%s' is still in concept, are you ready yet to share the group with the community?
+	'group_tools:notification:concept_group:expires:message' => "Your group '%s' is still in concept, are you ready yet to share the group with the community?
 
 If you don't publish your group it will be removed %s.
 
@@ -276,9 +264,7 @@ To view the group, click here:
 %s",
 	
 	'group_tools:notification:concept_group:subject' => "Your group '%s' is still in concept",
-	'group_tools:notification:concept_group:message' => "Hi %s,
-
-Your group '%s' is still in concept, are you ready yet to share the group with the community?
+	'group_tools:notification:concept_group:message' => "Your group '%s' is still in concept, are you ready yet to share the group with the community?
 
 To view the group, click here:
 %s",
@@ -315,17 +301,13 @@ If you decline a group, the owner will receive a notification that his/her group
 	
 	'group_tools:group:admin_approve:approve:subject' => "Your group '%s' was approved",
 	'group_tools:group:admin_approve:approve:summary' => "Your group '%s' was approved",
-	'group_tools:group:admin_approve:approve:message' => "Hi %s,
-
-your group '%s' was approved by a site administrator. You can now use it.
+	'group_tools:group:admin_approve:approve:message' => "your group '%s' was approved by a site administrator. You can now use it.
 
 To visit the group click here:
 %s",
 	'group_tools:group:admin_approve:admin:subject' => "A new group '%s' was created which requires approval",
 	'group_tools:group:admin_approve:admin:summary' => "A new group '%s' was created which requires approval",
-	'group_tools:group:admin_approve:admin:message' => "Hi %s,
-
-%s created a group '%s' which need to be approved by a site administrator.
+	'group_tools:group:admin_approve:admin:message' => "%s created a group '%s' which need to be approved by a site administrator.
 
 To visit the group click here:
 %s
@@ -334,18 +316,14 @@ To view all groups which need action click here:
 %s",
 	
 	'group_tools:group:admin_approve:owner:subject' => "Your group '%s' is now awaiting approval",
-	'group_tools:group:admin_approve:owner:message' => "Hi %s,
-
-Your group '%s' is now awaiting approval by a site administrator.
+	'group_tools:group:admin_approve:owner:message' => "Your group '%s' is now awaiting approval by a site administrator.
 
 To visit the group click here:
 %s",
 	
 	'group_tools:group:admin_approve:decline:subject' => "Your group '%s' was declined",
 	'group_tools:group:admin_approve:decline:summary' => "Your group '%s' was declined",
-	'group_tools:group:admin_approve:decline:message' => "Hi %s,
-
-your group '%s' was declined and removed by a site administrator.
+	'group_tools:group:admin_approve:decline:message' => "your group '%s' was declined and removed by a site administrator.
 
 The reason was:
 %s",
@@ -549,9 +527,7 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:action:related_groups:success' => "The group is now related",
 	
 	'group_tools:related_groups:notify:owner:subject' => "A new related group was added",
-	'group_tools:related_groups:notify:owner:message' => "Hi %s,
-	
-%s added your group %s as a related group to %s.",
+	'group_tools:related_groups:notify:owner:message' => "%s added your group %s as a related group to %s.",
 	
 	'group_tools:related_groups:entity:remove' => "Remove related group",
 	
@@ -595,9 +571,7 @@ The first column must contain the e-mail addresses of the new members. There sho
 	
 	'group_tools:join_motivation:notification:subject' => "%s has requested to join %s",
 	'group_tools:join_motivation:notification:summary' => "%s has requested to join %s",
-	'group_tools:join_motivation:notification:body' => "Hi %s,
-
-%s has requested to join the '%s' group.
+	'group_tools:join_motivation:notification:body' => "%s has requested to join the '%s' group.
 
 Their motivation for joining is:
 %s
@@ -619,9 +593,7 @@ Click below to view the group's join requests:
 	
 	'groups_tools:state_info:notification:subject' => "Your group '%s' has been inactive for a while",
 	'groups_tools:state_info:notification:summary' => "Your group '%s' has been inactive for a while",
-	'groups_tools:state_info:notification:message' => "Hi %s,
-
-Your group '%s' has been inactive for a while.
+	'groups_tools:state_info:notification:message' => "Your group '%s' has been inactive for a while.
 
 Please check on the group here:
 %s",

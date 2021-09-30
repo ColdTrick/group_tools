@@ -22,17 +22,13 @@ return array (
   'group_tools:settings:invite_csv' => 'Permitir convites por arquivo CSV',
   'group_tools:settings:mail' => 'Permitir email para grupo (permite proprietários dos grupos enviar um email para todos os membros)',
   'group_tools:settings:search_index' => 'Permitir comunidades fechadas serem indexadas pelas ferramentas de busca',
-  'group_tools:groups:invite:body' => 'Olá %s,
-
-%s convidou você para entrar na comunidade \'%s\'.
+  'group_tools:groups:invite:body' => '%s convidou você para entrar na comunidade \'%s\'.
 %s
 
 Clique abaixo para visualizar seus convites:
 %s',
   'group_tools:groups:invite:add:subject' => 'Você foi adicionado na comunidade %s',
-  'group_tools:groups:invite:add:body' => 'Olá %s,
-
-%s adicionou você para a comunidade %s.
+  'group_tools:groups:invite:add:body' => '%s adicionou você para a comunidade %s.
 %s
 
 Para visualizar a comunidade, clique neste link:
@@ -49,9 +45,7 @@ Se você não tiver uma conta em %s por favor registre-se aqui
 Ainda é possivel entrar nos convites de comunidades e digitar o seguinte código:
 %s',
   'group_tools:notify:transfer:subject' => 'A propriedade da comunidade %s foi transferida para você',
-  'group_tools:notify:transfer:message' => 'Olá %s,
-
-%s transferiu para você a propriedade da comunidade %s.
+  'group_tools:notify:transfer:message' => '%s transferiu para você a propriedade da comunidade %s.
 
 Para visualizar a comunidade, clique neste link:
 %s',

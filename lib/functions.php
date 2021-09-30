@@ -85,14 +85,13 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, string $text 
 	$subject = elgg_echo('groups:invite:subject', [
 		$user->getDisplayName(),
 		$group->getDisplayName(),
-	]);
+	], $user->getLanguage());
 	$msg = elgg_echo('group_tools:groups:invite:body', [
-		$user->getDisplayName(),
 		$loggedin_user->getDisplayName(),
 		$group->getDisplayName(),
 		$text,
 		$url,
-	]);
+	], $user->getLanguage());
 	
 	$params = [
 		'object' => $group,
@@ -129,14 +128,13 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, string $text = '
 		}
 		
 		// notify user
-		$subject = elgg_echo('group_tools:groups:invite:add:subject', [$group->getDisplayName()]);
+		$subject = elgg_echo('group_tools:groups:invite:add:subject', [$group->getDisplayName()], $user->getLanguage());
 		$msg = elgg_echo('group_tools:groups:invite:add:body', [
-			$user->getDisplayName(),
 			$loggedin_user->getDisplayName(),
 			$group->getDisplayName(),
 			$text,
 			$group->getURL(),
-		]);
+		], $user->getLanguage());
 		
 		$params = [
 			'group' => $group,
@@ -620,13 +618,12 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	// notify new owner
 	$loggedin_user = elgg_get_logged_in_user_entity();
 	if ($loggedin_user && ($new_owner->guid !== $loggedin_user->guid)) {
-		$subject = elgg_echo('group_tools:notify:transfer:subject', [$group->getDisplayName()]);
+		$subject = elgg_echo('group_tools:notify:transfer:subject', [$group->getDisplayName()], $new_owner->getLanguage());
 		$message = elgg_echo('group_tools:notify:transfer:message', [
-			$new_owner->getDisplayName(),
 			$loggedin_user->getDisplayName(),
 			$group->getDisplayName(),
 			$group->getURL(),
-		]);
+		], $new_owner->getLanguage());
 		
 		$params = [
 			'object' => $group,

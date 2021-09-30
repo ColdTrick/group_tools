@@ -11,15 +11,15 @@ if (!$group instanceof ElggGroup) {
 }
 
 // notify owner
+/* @var $owner \ElggUser */
 $owner = $group->getOwnerEntity();
 
-$subject = elgg_echo('group_tools:group:admin_approve:decline:subject', [$group->getDisplayName()], $owner->language);
-$summary = elgg_echo('group_tools:group:admin_approve:decline:summary', [$group->getDisplayName()], $owner->language);
+$subject = elgg_echo('group_tools:group:admin_approve:decline:subject', [$group->getDisplayName()], $owner->getLanguage());
+$summary = elgg_echo('group_tools:group:admin_approve:decline:summary', [$group->getDisplayName()], $owner->getLanguage());
 $message = elgg_echo('group_tools:group:admin_approve:decline:message', [
-	$owner->getDisplayName(),
 	$group->getDisplayName(),
 	$reason,
-], $owner->language);
+], $owner->getLanguage());
 
 $params = [
 	'summary' => $summary,

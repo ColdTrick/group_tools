@@ -36,37 +36,27 @@ return array (
   'group_tools:groups:invitation:code:title' => 'Invitations aux groupes de discussions reçues par e-mail',
   'group_tools:groups:invitation:code:description' => 'Si vous avez reçu une invitation pour rejoindre un groupe par e-mail, vous pouvez entrer le code d\'invitation ici, ou cliquez directement sur le lien de l\'e-mail.',
   'group_tools:groups:invite:add:subject' => 'Vous avez été ajouté au groupe %s',
-  'group_tools:groups:invite:add:body' => 'Bonjour %s,
-
-%s vous a ajouté au groupe %s
+  'group_tools:groups:invite:add:body' => '%s vous a ajouté au groupe %s
 %s
 
 Pour accéder au groupe, cliquez sur le lien
 %s
 
 Parcours Croisés',
-  'group_tools:notify:transfer:message' => 'Bonjour %s,
-
-%s vous a désigné comme le nouvel animateur du groupe %s.
+  'group_tools:notify:transfer:message' => '%s vous a désigné comme le nouvel animateur du groupe %s.
 
 Pour accéder au groupe, cliquez sur le lien suivant :
 %s
 
 Parcours Croisés',
-  'group_tools:groups:invite:body' => 'Bonjour %s,
-
-%s vous a invité à rejoindre le groupe "%s".
+  'group_tools:groups:invite:body' => '%s vous a invité à rejoindre le groupe "%s".
 %s
 
 Cliquez ci dessous pour voir votre invitation.
 %s
 
 Parcours Croisés',
-  'group_tools:related_groups:notify:owner:message' => 'Bonjour %s,
-
-%s a ajouté votre groupe %s au groupe associé %s.
-
-Parcours Croisés',
+  'group_tools:related_groups:notify:owner:message' => '%s a ajouté votre groupe %s au groupe associé %s.',
   'group_tools:groups:invite:title' => 'Inviter des membres à rejoindre ce groupe',
   'group_tools:group:invite:users' => 'Trouver des membres',
   'group_tools:group:invite:email' => 'Utiliser des e-mails',
@@ -157,9 +147,7 @@ Parcours Croisés',
   'group_tools:edit:access_simplified:open:description' => '<ul><li>Tout utilisateur peut s\'inscrire </li><li>Le contenu peut être partagé avec tous le monde</li></ul>',
   'group_tools:edit:access_simplified:closed' => 'Groupe fermé',
   'group_tools:edit:access_simplified:closed:description' => '<ul><li>L\'adhésion a besoin d\'être validée</li><li>Le contenu ne peut être partagé que par les membres du groupe</li></ul>',
-  'groups_tools:state_info:notification:message' => 'Bonjour %s,
-
-Votre groupe \'%s\' est inactif depuis un bon moment
+  'groups_tools:state_info:notification:message' => 'Votre groupe \'%s\' est inactif depuis un bon moment
 
 Nous vous remercions de vérifier votre groupe ici:
 %s',
@@ -176,9 +164,7 @@ Nous vous remercions de vérifier votre groupe ici:
   'group_tools:multiple_admin:profile_actions:add' => 'Ajouter un administrateur de groupe',
   'group_tools:group:admin_approve:approve:summary' => 'Votre groupe \'%s" a été validée',
   'group_tools:group:admin_approve:approve:subject' => 'Votre groupe \'%s" a été validée',
-  'group_tools:group:admin_approve:approve:message' => 'Bonjour %s,
-
-Votre groupe \'%s" a été validée par les administreteurs du site. Vous pouvez dorénavant l\'utiliser
+  'group_tools:group:admin_approve:approve:message' => 'Votre groupe \'%s" a été validée par les administreteurs du site. Vous pouvez dorénavant l\'utiliser
 
 Pour voir votre groupe, cliquez ici:
 %s',
@@ -186,9 +172,7 @@ Pour voir votre groupe, cliquez ici:
   'group_tools:group:admin_approve:approve:success' => 'Le groupe peut être utilisé sur le site',
   'group_tools:group:admin_approve:decline:subject' => 'Votre groupe \'%s\' a été refusé',
   'group_tools:group:admin_approve:decline:summary' => 'Votre groupe \'%s\' a été refusé',
-  'group_tools:group:admin_approve:decline:message' => 'Bonjour %s,
-
-Votre groupe \'%s\' a été refusé`
+  'group_tools:group:admin_approve:decline:message' => 'Votre groupe \'%s\' a été refusé`
 
 La raison était:
 %s',
