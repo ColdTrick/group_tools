@@ -2,7 +2,7 @@
 
 $group_guid = (int) get_input('group_guid');
 $group = get_entity($group_guid);
-if (!($group instanceof ElggGroup)) {
+if (!$group instanceof ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
@@ -13,9 +13,7 @@ $notifications_enabled = \ColdTrick\GroupTools\Membership::notificationsEnabledF
 if ($notifications_enabled) {
 	// user has notifications enabled, but wishes to disable this
 	$methods = elgg_get_notification_methods();
-	foreach ($methods as $method) {
-		elgg_remove_subscription($user->guid, $method, $group->guid);
-	}
+	$group->removeSubscriptions($user->guid, $methods);
 	
 	return elgg_ok_response('', elgg_echo('group_tools:action:toggle_notifications:disabled', [$group->getDisplayName()]));
 }
@@ -43,8 +41,6 @@ if (empty($found)) {
 	$found = $supported_notifications;
 }
 
-foreach ($found as $method) {
-	elgg_add_subscription($user->guid, $method, $group->guid);
-}
+$group->addSubscription($user->guid, $found);
 
 return elgg_ok_response('', elgg_echo('group_tools:action:toggle_notifications:enabled', [$group->getDisplayName()]));
