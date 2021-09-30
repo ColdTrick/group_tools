@@ -34,6 +34,12 @@ class Membership {
 			return;
 		}
 		
+		$logged_in_user = elgg_get_logged_in_user_entity();
+		if (!$logged_in_user instanceof \ElggUser) {
+			// some backgroup process is cleaning this
+			return;
+		}
+		
 		// remove join motivations
 		elgg_delete_annotations([
 			'guid' => $group->guid,
@@ -49,7 +55,7 @@ class Membership {
 			return;
 		}
 		
-		if ($user->guid === elgg_get_logged_in_user_guid()) {
+		if ($user->guid === $logged_in_user->guid) {
 			// user kills own request
 			return;
 		}
@@ -76,7 +82,7 @@ class Membership {
 			'object' => $group,
 			'action' => 'delete',
 		];
-		notify_user($user->guid, $group->guid, $subject, $body, $params);
+		notify_user($user->guid, $logged_in_user->guid, $subject, $body, $params);
 	}
 	
 	/**

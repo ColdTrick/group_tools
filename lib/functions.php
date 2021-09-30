@@ -632,7 +632,7 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 			'new_owner' => $new_owner,
 		];
 		
-		notify_user($new_owner->guid, $group->guid, $subject, $message, $params);
+		notify_user($new_owner->guid, $loggedin_user->guid, $subject, $message, $params);
 	}
 	
 	// check if the old owner wishes to remain as an admin
