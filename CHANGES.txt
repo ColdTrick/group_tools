@@ -1,6 +1,11 @@
 Version history
 ===============
 
+13.0.1 (2021-10-12):
+
+- fixed: call to undefined function elgg_add_subscription
+- fixed: duplicate salutation in a lot of notifications
+
 13.0 (2021-09-27):
 
 - changed: updated for Elgg 4.0
