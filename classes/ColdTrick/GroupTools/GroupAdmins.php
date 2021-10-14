@@ -98,7 +98,6 @@ class GroupAdmins {
 		$return = $hook->getValue();
 		
 		$return->body = elgg_echo('groups:request:body', [
-			$recipient->getDisplayName(),
 			$sender->getDisplayName(),
 			$entity->getDisplayName(),
 			$sender->getURL(),
