@@ -53,14 +53,16 @@ class MigrateGroupPluginSettings implements AsynchronousUpgrade {
 			
 			// welcome message
 			$welcome = $group->getPrivateSetting('group_tools:welcome_message');
-			if (!empty($welcome)) {
+			$new_welcome = $group->getPluginSetting('group_tools', 'welcome_message');
+			if (!empty($welcome) && !isset($new_welcome)) {
 				$group->setPluginSetting('group_tools', 'welcome_message', $welcome);
 			}
 			$group->removePrivateSetting('group_tools:welcome_message');
 			
 			// domain based groups
 			$domains = $group->getPrivateSetting('domain_based');
-			if (!empty($domains)) {
+			$new_domains = $group->getPluginSetting('group_tools', 'domain_based');
+			if (!empty($domains) && !isset($new_domains)) {
 				$domains = explode('|', $domains);
 				$domains = array_filter($domains);
 				$group->setPluginSetting('group_tools', 'domain_based', implode(',', $domains));
@@ -81,7 +83,8 @@ class MigrateGroupPluginSettings implements AsynchronousUpgrade {
 			/* @var $group \ElggGroup */
 			foreach ($groups as $group) {
 				$invite_members = $group->invite_members;
-				if (!empty($invite_members)) {
+				$new_invite_members = $group->getPluginSetting('group_tools', 'invite_members');
+				if (!empty($invite_members) && !isset($new_invite_members)) {
 					$group->setPluginSetting('group_tools', 'invite_members', $invite_members);
 				}
 				unset($group->invite_members);
