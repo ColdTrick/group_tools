@@ -25,7 +25,7 @@ class MigrateGroupPluginSettings implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 */
 	public function shouldBeSkipped(): bool {
-		return !empty($this->countItems());
+		return empty($this->countItems());
 	}
 
 	/**
