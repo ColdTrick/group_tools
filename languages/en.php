@@ -604,4 +604,7 @@ Please check on the group here:
 	
 	'group_tools:upgrade:2019102501:title' => "Migrate group default content access",
 	'group_tools:upgrade:2019102501:description' => "As of Elgg 3.2 group default content access is part of Elgg. This will migrate the group tools settings to the correct place in Elgg.",
+	
+	'group_tools:upgrade:2021071401:title' => "Migrate group plugin settings for Group Tools",
+	'group_tools:upgrade:2021071401:description' => "In Elgg 4.0 it's now possible to store specific plugin settings with the group. All old settings need to be migrated.",
 ];

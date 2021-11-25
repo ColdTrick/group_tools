@@ -5,6 +5,7 @@ use ColdTrick\GroupTools\Notifications\GroupAdminApprovalNotificationHandler;
 use ColdTrick\GroupTools\Notifications\GroupMailEnqueueNotificationEventHandler;
 use ColdTrick\GroupTools\Upgrades\FixGroupAccess;
 use ColdTrick\GroupTools\Upgrades\MigrateGroupDefaultContentAccess;
+use ColdTrick\GroupTools\Upgrades\MigrateGroupPluginSettings;
 use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
@@ -351,6 +352,7 @@ return [
 	'upgrades' => [
 		FixGroupAccess::class,
 		MigrateGroupDefaultContentAccess::class,
+		MigrateGroupPluginSettings::class,
 	],
 	'view_extensions' => [
 		'admin.css' => [

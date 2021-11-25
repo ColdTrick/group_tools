@@ -1,10 +1,12 @@
 <?php
 /**
- * This file was created by Translation Editor v8.0
- * On 2021-08-26 10:11
+ * This file was created by Translation Editor v9.0
+ * On 2021-11-25 10:53
  */
 
 return array (
+  'group_tools:upgrade:2021071401:title' => 'Migreer de groep plugin instellingen voor Group Tools',
+  'group_tools:upgrade:2021071401:description' => 'Sinds Elgg 4.0 is het mogelijk specifieke plugin instellingen op te slaan bij de groep. Alle oude instellingen moeten worden gemigreerd.',
   'group_tools:edit:group:notifications:change_settings' => 'Wijzig de notificatie instellingen van alle leden',
   'group_tools:edit:group:notifications:change_settings:help' => 'Selecteer de notificatiemethodes welke moeten zijn ingeschakeld voor alle leden, de niet geselecteerde methodes zullen worden uitgeschakeld.',
   'group_tools:group:admin_approve:decline:title' => 'Wijs het groepsverzoek af',
