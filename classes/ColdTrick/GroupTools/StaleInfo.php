@@ -166,13 +166,10 @@ class StaleInfo {
 	 */
 	public static function getObjectSubtypes(): array {
 		
-		$object_subtypes = get_registered_entity_types('object');
-		if (empty($object_subtypes)) {
-			$object_subtypes = [];
-		}
-		
+		$subtypes = elgg_extract('object', elgg_entity_types_with_capability('searchable'), []);
+	
 		return elgg_trigger_plugin_hook('stale_info_object_subtypes', 'group_tools', [
-			'subtypes' => $object_subtypes,
-		], $object_subtypes);
+			'subtypes' => $subtypes,
+		], $subtypes);
 	}
 }

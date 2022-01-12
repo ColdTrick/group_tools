@@ -60,6 +60,9 @@ return [
 			'type' => 'object',
 			'subtype' => 'group_tools_group_mail',
 			'class' => GroupMail::class,
+			'capabilities' => [
+				'commentable' => false,
+			],
 		],
 	],
 	'actions' => [
