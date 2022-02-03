@@ -39,7 +39,7 @@ if (elgg_is_admin_logged_in()) {
 }
 
 $group_guid = (int) get_input('group_guid');
-$text = get_input('comment');
+$text = get_input('comment', '');
 
 $emails = (array) get_input('user_guid_email');
 

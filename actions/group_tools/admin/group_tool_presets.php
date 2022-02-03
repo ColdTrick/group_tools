@@ -1,6 +1,6 @@
 <?php
 
-$presets = get_input('params');
+$presets = (array) get_input('params', []);
 
 // filter out invalid input
 foreach ($presets as $index => $values) {
