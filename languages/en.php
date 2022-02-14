@@ -499,6 +499,8 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:action:welcome_message:success' => "The welcome message was saved",
 	
 	'group_tools:welcome_message:subject' => "Welcome to %s",
+	'group_tools:welcome_message:notifications' => "Activity in this group can send out notifications.
+Currently your notification preferences for this group are: %s",
 	
 	// email invitations
 	'group_tools:action:revoke_email_invitation:error' => "An error occurred while revoking the invitation, please try again",

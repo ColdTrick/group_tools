@@ -232,7 +232,20 @@ class Membership {
 		$welcome_message = str_ireplace('[name]', $recipient->getDisplayName(), $welcome_message);
 		$welcome_message = str_ireplace('[group_name]', $group->getDisplayName(), $welcome_message);
 		$welcome_message = str_ireplace('[group_url]', $group->getURL(), $welcome_message);
-			
+		
+		// get notification preferences for this group
+		$methods = elgg_get_notification_methods();
+		if ($group->hasSubscription($recipient->guid, $methods)) {
+			$subscription = elgg_echo('on', [], $recipient->getLanguage());
+		} else {
+			$subscription = elgg_echo('off', [], $recipient->getLanguage());
+		}
+		$subscription = elgg_format_element('b', [], $subscription);
+		
+		$welcome_message .= PHP_EOL . PHP_EOL . elgg_echo('group_tools:welcome_message:notifications', [
+			$subscription,
+		], $recipient->getLanguage());
+		
 		// subject
 		$subject = elgg_echo('group_tools:welcome_message:subject', [$group->getDisplayName()], $recipient->getLanguage());
 		
