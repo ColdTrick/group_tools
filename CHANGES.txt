@@ -1,6 +1,11 @@
 Version history
 ===============
 
+14.0 (2022-02-16):
+
+- added: group notification preference status to welcome notification
+- changed: updated code for Elgg 4.1 capabilities system
+
 13.0.3 (2021-12-16):
 
 - fixed: register upgrade to migrate plugin settings
