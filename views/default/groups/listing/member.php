@@ -33,7 +33,7 @@ switch ($sorting) {
 		];
 		break;
 	case 'alpha':
-		$order = strtoupper(get_input('order'));
+		$order = strtoupper(get_input('order', ''));
 		if (!in_array($order, ['ASC', 'DESC'])) {
 			$order = 'ASC';
 		}
