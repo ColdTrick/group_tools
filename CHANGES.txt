@@ -1,6 +1,10 @@
 Version history
 ===============
 
+14.0.1 (2022-03-11):
+
+- several small chores/fixes
+
 14.0 (2022-02-16):
 
 - added: group notification preference status to welcome notification
