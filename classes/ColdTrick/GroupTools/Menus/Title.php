@@ -358,6 +358,7 @@ class Title {
 			'delete',
 			'elasticsearch_inspect', // elasticsearch
 			'entity_explorer', // developer tools
+			'opensearch_inspect', // opensearch
 		];
 		
 		/* @var $return MenuItems */
