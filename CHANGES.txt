@@ -1,6 +1,10 @@
 Version history
 ===============
 
+14.0.2 (2022-03-30):
+
+- several small chores/fixes
+
 14.0.1 (2022-03-11):
 
 - several small chores/fixes
