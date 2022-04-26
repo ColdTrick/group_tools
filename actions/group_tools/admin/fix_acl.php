@@ -1,7 +1,6 @@
 <?php
 /**
  * Fixes issues with Group ACLs
- *
  */
 
 // maybe this could take a while

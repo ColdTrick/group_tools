@@ -40,16 +40,8 @@ foreach ($group_guids as $guid) {
 	if (!$group instanceof ElggGroup) {
 		continue;
 	}
-	
-	$icon = elgg_view_entity_icon($group, 'tiny');
-	
-	$body = elgg_view('output/url', [
-		'text' => $group->getDisplayName(),
-		'href' => $group->getURL(),
-		'is_trusted' => true,
-	]);
-	
-	$content .= elgg_view_image_block($icon, $body);
+
+	$content .= elgg_view_image_block(elgg_view_entity_icon($group, 'tiny'), elgg_view_entity_url($group));
 }
 
 echo elgg_format_element('div', ['class' => 'group-tools-auto-join-config'], $content);

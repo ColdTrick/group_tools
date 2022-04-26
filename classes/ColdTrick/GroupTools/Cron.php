@@ -85,20 +85,19 @@ class Cron {
 		$group_guids = [];
 		
 		// groups created in timespace
-		$options = [
+		$groups_created = elgg_get_entities([
 			'type' => 'group',
 			'limit' => false,
 			'created_before' => $compare_ts_upper,
 			'created_after' => $compare_ts_lower,
 			'callback' => $row_to_guid,
-		];
-		$groups_created = elgg_get_entities($options);
+		]);
 		if (!empty($groups_created)) {
 			$group_guids = array_merge($group_guids, $groups_created);
 		}
 		
 		// groups with touch in timespace
-		$options = [
+		$groups_touch_ts = elgg_get_entities([
 			'type' => 'group',
 			'limit' => false,
 			'created_time_upper' => $compare_ts_upper,
@@ -114,9 +113,7 @@ class Cron {
 					return $qb->compare("{$main_alias}.guid", 'IN', $select->getSQL());
 				},
 			],
-		];
-		
-		$groups_touch_ts = elgg_get_entities($options);
+		]);
 		if (!empty($groups_touch_ts)) {
 			$group_guids = array_merge($group_guids, $groups_touch_ts);
 		}
@@ -139,7 +136,7 @@ class Cron {
 		$object_subtypes = array_unique($object_subtypes);
 		
 		if (!empty($object_subtypes)) {
-			$options = [
+			$group_content_ts = elgg_get_entities([
 				'type' => 'group',
 				'limit' => false,
 				'created_before' => $compare_ts_upper,
@@ -161,16 +158,14 @@ class Cron {
 						return $qb->compare("{$main_alias}.guid", 'in', $container_sub->getSQL());
 					},
 				],
-			];
-			
-			$group_content_ts = elgg_get_entities($options);
+			]);
 			if (!empty($group_content_ts)) {
 				$group_guids = array_merge($group_guids, $group_content_ts);
 			}
 		}
 		
 		// groups with last comments/discussion_replies in timespace
-		$options = [
+		$group_comments_ts = elgg_get_entities([
 			'type' => 'group',
 			'limit' => false,
 			'created_time_upper' => $compare_ts_upper,
@@ -193,9 +188,7 @@ class Cron {
 					return $qb->compare("{$main_alias}.guid", 'in', $container_sub->getSQL());
 				},
 			],
-		];
-		
-		$group_comments_ts = elgg_get_entities($options);
+		]);
 		if (!empty($group_comments_ts)) {
 			$group_guids = array_merge($group_guids, $group_comments_ts);
 		}

@@ -94,7 +94,7 @@ class Widgets {
 		switch ($widget->handler) {
 			case 'group_members':
 				return elgg_generate_url('collection:user:user:group_members', [
-				'guid' => $widget->owner_guid,
+					'guid' => $widget->owner_guid,
 				]);
 				
 			case 'group_invitations':
@@ -126,7 +126,7 @@ class Widgets {
 				
 			case 'featured_groups':
 				return elgg_generate_url('collection:group:group:all', [
-				'filter' => 'featured',
+					'filter' => 'featured',
 				]);
 				
 			case 'a_user_groups':
@@ -139,7 +139,7 @@ class Widgets {
 				break;
 			case 'group_related':
 				return elgg_generate_url('collection:group:group:related', [
-				'guid' => $widget->owner_guid,
+					'guid' => $widget->owner_guid,
 				]);
 				break;
 		}

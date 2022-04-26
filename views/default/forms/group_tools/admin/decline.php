@@ -27,8 +27,7 @@ echo elgg_view_field([
 ]);
 
 // form footer
-$footer = '';
-$footer .= elgg_view_field([
+$footer = elgg_view_field([
 	'#type' => 'submit',
 	'value' => elgg_echo('decline'),
 	'class' => 'elgg-button-delete',

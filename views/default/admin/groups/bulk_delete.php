@@ -11,7 +11,6 @@ if ($offset < 1) {
 
 $options = [
 	'type' => 'group',
-	'count' => true,
 	'limit' => $limit,
 	'offset' => $offset,
 	'order_by_metadata' => [
@@ -22,7 +21,7 @@ $options = [
 	],
 ];
 
-$group_count = elgg_get_entities($options);
+$group_count = elgg_count_entities($options);
 if ($group_count < 1) {
 	echo elgg_echo('groups:none');
 	return;
@@ -30,13 +29,12 @@ if ($group_count < 1) {
 
 elgg_require_js('admin/groups/bulk_delete');
 
-unset($options['count']);
 $batch = new ElggBatch('elgg_get_entities', $options);
 
 $delete_button = elgg_view('input/submit', [
 	'value' => elgg_echo('group_tools:delete_selected'),
 	'class' => 'elgg-button-submit float-alt mvs',
-	'onclick' => "return confirm(elgg.echo('deleteconfirm:plural'));",
+	'data-confirm' => elgg_echo('deleteconfirm:plural'),
 ]);
 
 $form_data = $delete_button;

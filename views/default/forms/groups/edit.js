@@ -1,8 +1,6 @@
-define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
-	/** global: elgg */
-	elgg.provide('elgg.group_tools');
+define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 			
-	elgg.group_tools.add_group_suggestions = function () {
+	function add_group_suggestions() {
 		var $input = $('form.elgg-form-groups-edit input[name="name"]');
 		if ($input.closest('form').find('input[name="group_guid"]').length) {
 			// edit
@@ -30,11 +28,10 @@ define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 			return;
 		}
 		
-		inputTimeout = setTimeout(elgg.group_tools.add_group_suggestions, 400);
+		inputTimeout = setTimeout(add_group_suggestions, 400);
 	});
 	
 	$(document).on('change', '#groups-membership', function() {
-		console.log('adsfasd');
 		if ($(this).val() === '0') {
 			$('#group-tools-join-motivation').show();
 		} else {

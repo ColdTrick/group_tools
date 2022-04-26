@@ -15,10 +15,7 @@ if (!$entity instanceof ElggGroup || !$entity->canEdit()) {
 
 // also apply the new settings to all group members
 /* @var $members ElggBatch */
-$members = $entity->getMembers([
-	'limit' => false,
-	'batch' => true,
-]);
+$members = $entity->getMembers(['limit' => false, 'batch' => true]);
 $methods = elgg_get_notification_methods();
 $selected_methods = (array) get_input('group_tools_change_notification_settings', []);
 

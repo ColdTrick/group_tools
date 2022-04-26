@@ -14,6 +14,4 @@ if (elgg_get_plugin_setting('invite_email', 'group_tools') !== 'yes') {
 	return;
 }
 
-$form = elgg_view_form('groups/email_invitation');
-
-echo elgg_view_module('info', elgg_echo('group_tools:groups:invitation:code:title'), $form);
+echo elgg_view_module('info', elgg_echo('group_tools:groups:invitation:code:title'), elgg_view_form('groups/email_invitation'));

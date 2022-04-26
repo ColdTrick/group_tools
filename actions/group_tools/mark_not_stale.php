@@ -6,7 +6,7 @@ if (empty($guid)) {
 }
 
 $group = get_entity($guid);
-if (!($group instanceof ElggGroup) || !$group->canEdit()) {
+if (!$group instanceof ElggGroup || !$group->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 

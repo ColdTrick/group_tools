@@ -1,4 +1,4 @@
-define(['jquery', 'elgg'], function ($, elgg) {
+define(['jquery', 'elgg/system_messages'], function ($, system_messages) {
 
 	$(document).on('keydown', '#group-tools-invite-email .elgg-input-email', function (event) {
 		if (event.keyCode === 10 || event.keyCode === 13) {
@@ -20,7 +20,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 		var $email_input = $form.find('.elgg-input-email');
 		
 		if (!$email_input[0].checkValidity()) {
-			elgg.register_error($email_input[0].validationMessage);
+			system_messages.error($email_input[0].validationMessage);
 			
 			return;
 		}
@@ -36,6 +36,4 @@ define(['jquery', 'elgg'], function ($, elgg) {
 		
 		$email_input.val('');
 	});
-
-
 });

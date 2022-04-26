@@ -75,7 +75,7 @@ if (!(bool) $group->is_concept) {
 	}
 }
 
-$params = [
+echo elgg_view('group/elements/summary', [
 	'entity' => $group,
 	'icon' => true,
 	'icon_entity' => $group,
@@ -84,6 +84,4 @@ $params = [
 	'image_block_vars' => [
 		'image_alt' => implode('', $buttons) . $content,
 	],
-];
-
-echo elgg_view('group/elements/summary', $params);
+]);

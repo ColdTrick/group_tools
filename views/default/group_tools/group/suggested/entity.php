@@ -12,10 +12,7 @@ if (!$entity instanceof ElggGroup) {
 
 $params = [
 	'entity' => $entity,
-	'title' => elgg_view('output/url', [
-		'text' => $entity->getDisplayName(),
-		'href' => $entity->getURL(),
-	]),
+	'title' => elgg_view_entity_url($entity),
 	'content' => elgg_get_excerpt($entity->description),
 	'byline' => false,
 	'time' => false,

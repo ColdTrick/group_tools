@@ -74,15 +74,12 @@ class StaleInfo {
 	 * @return int
 	 */
 	public function getTimestamp(): int {
-		
-		$timestamps = [
+		return max([
 			$this->group->time_created,
 			$this->getTouchTimestamp(),
 			$this->getContentTimestamp(),
 			$this->getCommentTimestamp(),
-		];
-		
-		return max($timestamps);
+		]);
 	}
 	
 	/**

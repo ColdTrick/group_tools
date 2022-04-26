@@ -68,15 +68,14 @@ if (!empty($profile_fields)) {
 fputcsv($fh, $headers, ';');
 
 // get members
-$options = [
+$members = new ElggBatch('elgg_get_entities', [
 	'type' => 'user',
 	'limit' => false,
 	'relationship' => 'member',
 	'relationship_guid' => $group->guid,
 	'inverse_relationship' => true,
-];
+]);
 
-$members = new ElggBatch('elgg_get_entities', $options);
 /* @var $member ElggUser */
 foreach ($members as $member) {
 	// basic user information

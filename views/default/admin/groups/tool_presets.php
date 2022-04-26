@@ -5,9 +5,6 @@ echo elgg_view('output/longtext', [
 	'value' => elgg_echo('group_tools:admin:group_tool_presets:description'),
 ]);
 
-// get presets
-$presets = group_tools_get_tool_presets();
-
 // build elements
 $title = elgg_echo('group_tools:admin:group_tool_presets:header');
 $add_button = elgg_view('output/url', [
@@ -19,7 +16,7 @@ $add_button = elgg_view('output/url', [
 $form = elgg_view_form('group_tools/group_tool_presets', [
 	'action' => 'action/group_tools/admin/group_tool_presets',
 ], [
-	'group_tool_presets' => $presets,
+	'group_tool_presets' => group_tools_get_tool_presets(),
 ]);
 
 // draw list

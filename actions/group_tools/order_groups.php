@@ -12,7 +12,7 @@ if (empty($guids) || !is_array($guids)) {
 
 foreach ($guids as $guid) {
 	$group = get_entity($guid);
-	if (!($group instanceof ElggGroup)) {
+	if (!$group instanceof ElggGroup) {
 		continue;
 	}
 	

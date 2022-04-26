@@ -202,13 +202,12 @@ class Membership {
 		});
 		
 		// join motivation
-		$options = [
+		elgg_delete_annotations([
 			'annotation_name' => 'join_motivation',
 			'guid' => $group->guid,
 			'annotation_owner_guid' => $user->guid,
 			'limit' => false,
-		];
-		elgg_delete_annotations($options);
+		]);
 	}
 	
 	/**
@@ -272,13 +271,7 @@ class Membership {
 			return false;
 		}
 		
-		$user_guid = (int) $relationship->guid_one;
-		$user = get_user($user_guid);
-		if (empty($user)) {
-			return false;
-		}
-		
-		return true;
+		return (bool) get_user($relationship->guid_one) instanceof \ElggUser;
 	}
 	
 	/**
@@ -623,7 +616,7 @@ class Membership {
 		}
 		
 		$user = $notification->getRecipient();
-		if (!($user instanceof \ElggUser)) {
+		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		

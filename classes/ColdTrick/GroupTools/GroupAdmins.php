@@ -91,7 +91,6 @@ class GroupAdmins {
 			return;
 		}
 		
-		$language = $hook->getParam('language');
 		$sender = $hook->getParam('sender'); // user requesting membership
 		
 		/* @var $return \Elgg\Notifications\Notification */
@@ -102,7 +101,7 @@ class GroupAdmins {
 			$entity->getDisplayName(),
 			$sender->getURL(),
 			$hook->getParam('url'),
-		], $language);
+		], $hook->getParam('language'));
 		
 		return $return;
 	}

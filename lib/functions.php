@@ -225,23 +225,21 @@ function group_tools_get_invited_groups_by_email(string $email): array {
 	if (empty($email)) {
 		return [];
 	}
-	
-	$options = [
-		'type' => 'group',
-		'limit' => false,
-		'annotation_name_value_pairs' => [
-			[
-				'name' => 'email_invitation',
-				'value' => "%|{$email}",
-				'operand' => 'LIKE',
-				'type' => ELGG_VALUE_STRING,
-			],
-		],
-	];
-	
+
 	// make sure we can see all groups
-	return elgg_call(ELGG_IGNORE_ACCESS, function () use ($options) {
-		return elgg_get_entities($options);
+	return elgg_call(ELGG_IGNORE_ACCESS, function () use ($email) {
+		return elgg_get_entities([
+			'type' => 'group',
+			'limit' => false,
+			'annotation_name_value_pairs' => [
+				[
+					'name' => 'email_invitation',
+					'value' => "%|{$email}",
+					'operand' => 'LIKE',
+					'type' => ELGG_VALUE_STRING,
+				],
+			],
+		]);
 	});
 }
 
@@ -449,7 +447,7 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 			
 			if (!empty($user_values)) {
 				// find group with these metadatavalues
-				$group_options = [
+				$groups = elgg_get_entities([
 					'type' => 'group',
 					'metadata_names' => $group_tag_names,
 					'metadata_values' => $user_values,
@@ -461,9 +459,7 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 					],
 					'order_by' => new OrderByClause('count(msn.id)', 'DESC'),
 					'limit' => $limit,
-				];
-				
-				$groups = elgg_get_entities($group_options);
+				]);
 				if (!empty($groups)) {
 					foreach ($groups as $group) {
 						$result[$group->guid] = $group;
@@ -553,8 +549,8 @@ function group_tools_get_domain_based_groups(ElggUser $user): array {
 	}
 	
 	list(, $domain) = explode('@', strtolower($user->email));
-	
-	$options = [
+
+	return elgg_get_entities([
 		'type' => 'group',
 		'limit' => false,
 		'wheres' => [
@@ -576,9 +572,7 @@ function group_tools_get_domain_based_groups(ElggUser $user): array {
 				return $qb->merge($ands);
 			},
 		],
-	];
-	
-	return elgg_get_entities($options);
+	]);
 }
 
 /**

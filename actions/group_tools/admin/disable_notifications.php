@@ -14,18 +14,13 @@ if (!$group instanceof ElggGroup) {
 }
 
 // get group members
-$members_count = $group->getMembers([
-	'count' => true,
-]);
+$members_count = $group->getMembers(['count' => true]);
 if (empty($members_count)) {
 	return elgg_ok_response('', '', $group->getURL());
 }
 
 /* @var $members ElggBatch */
-$members = $group->getMembers([
-	'limit' => false,
-	'batch' => true,
-]);
+$members = $group->getMembers(['limit' => false, 'batch' => true]);
 
 // disable notification for everyone
 /* @var $member ElggUser */
