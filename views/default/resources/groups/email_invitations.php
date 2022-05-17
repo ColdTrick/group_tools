@@ -13,13 +13,15 @@ elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:gr
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 // additional title menu item
-elgg_register_menu_item('title', [
-	'name' => 'groups:invite',
-	'icon' => 'user-plus',
-	'href' => elgg_generate_entity_url($group, 'invite'),
-	'text' => elgg_echo('groups:invite'),
-	'link_class' => 'elgg-button elgg-button-action',
-]);
+if ($group->canEdit() && elgg_is_active_plugin('friends')) {
+	elgg_register_menu_item('title', [
+		'name' => 'groups:invite',
+		'icon' => 'user-plus',
+		'href' => elgg_generate_entity_url($group, 'invite'),
+		'text' => elgg_echo('groups:invite'),
+		'link_class' => 'elgg-button elgg-button-action',
+	]);
+}
 
 $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 25);
@@ -45,13 +47,11 @@ $content = elgg_list_annotations([
 	'no_results' => elgg_echo('group_tools:groups:membershipreq:email_invitations:none'),
 ]);
 
-$tabs = elgg_view_menu('groups_members', [
-	'entity' => $group,
-	'class' => 'elgg-tabs'
-]);
-
 // draw page
 echo elgg_view_page(elgg_echo('collection:annotation:email_invitation:group'),  [
 	'content' => $content,
-	'filter' => $tabs,
+	'filter_id' => 'groups/members',
+	'filter_value' => 'email_invitations',
+	'filter_entity' => $group,
+	'filter_sorting' => false,
 ]);

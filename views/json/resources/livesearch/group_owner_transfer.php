@@ -31,8 +31,11 @@ $options = [
 	'query' => $query,
 	'type' => 'user',
 	'limit' => $limit,
-	'sort' => 'name',
-	'order' => 'ASC',
+	'sort_by' => [
+		'property_type' => 'metadata',
+		'property' => 'name',
+		'direction' => 'ASC',
+	],
 	'fields' => ['metadata' => ['name', 'username']],
 	'item_view' => 'search/entity',
 	'input_name' => $input_name,

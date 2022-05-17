@@ -248,7 +248,7 @@ class Entity {
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'group_admin',
-			'icon' => 'level-up',
+			'icon' => 'level-up-alt',
 			'text' => elgg_echo('group_tools:multiple_admin:profile_actions:add'),
 			'href' => elgg_generate_action_url('group_tools/toggle_admin', [
 				'group_guid' => $page_owner->guid,
@@ -262,7 +262,7 @@ class Entity {
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'group_admin_remove',
-			'icon' => 'level-down',
+			'icon' => 'level-down-alt',
 			'text' => elgg_echo('group_tools:multiple_admin:profile_actions:remove'),
 			'href' => elgg_generate_action_url('group_tools/toggle_admin', [
 				'group_guid' => $page_owner->guid,

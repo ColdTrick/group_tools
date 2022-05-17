@@ -195,11 +195,6 @@ return [
 				'\ColdTrick\GroupTools\PageLayout::noIndexClosedGroups' => [],
 			],
 		],
-		'parameters' => [
-			'menu:filter:groups/all' => [
-				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::enableSorting' => [],
-			],
-		],
 		'permissions_check' => [
 			'group' => [
 				'\ColdTrick\GroupTools\Permissions::allowGroupAdminsToEdit' => [],
@@ -208,11 +203,6 @@ return [
 		'plugin_setting' => [
 			'group' => [
 				'\ColdTrick\GroupTools\PluginSettings::saveGroupSettings' => [],
-			],
-		],
-		'prepare' => [
-			'menu:filter:groups/all' => [
-				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::setSelected' => ['priority' => 550],
 			],
 		],
 		'register' => [
@@ -229,14 +219,14 @@ return [
 			],
 			'menu:filter:groups/all' => [
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::addTabs' => ['priority' => 550],
-				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::addSorting' => ['priority' => 570],
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::cleanupTabs' => ['priority' => 900],
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::removeTabs' => ['priority' => 560],
+				'\ColdTrick\GroupTools\Menus\FilterSortItems::registerPopularSorting' => ['priority' => 560],
 			],
 			'menu:filter:groups/invitations' => [
 				'\ColdTrick\GroupTools\Menus\Filter::registerUserEmailInvitations' => [],
 			],
-			'menu:groups_members' => [
+			'menu:filter:groups/members' => [
 				'\ColdTrick\GroupTools\Menus\GroupsMembers::registerGroupAdmins' => [],
 				'\ColdTrick\GroupTools\Menus\GroupsMembers::registerEmailInvitations' => [],
 			],

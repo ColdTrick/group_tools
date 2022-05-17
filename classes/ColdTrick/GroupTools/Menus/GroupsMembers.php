@@ -9,13 +9,13 @@ class GroupsMembers {
 	/**
 	 * Add a menu item to the tabs on the group members page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:groups_members'
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/member'
 	 *
 	 * @return void|MenuItems
 	 */
 	public static function registerGroupAdmins(\Elgg\Hook $hook) {
 		
-		$entity = $hook->getEntityParam();
+		$entity = $hook->getParam('filter_entity');
 		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
@@ -32,7 +32,7 @@ class GroupsMembers {
 			'text' => elgg_echo('group_tools:multiple_admin:group_admins'),
 			'href' => elgg_generate_url('collection:user:user:group_members', [
 				'guid' => $entity->guid,
-				'sort' => 'group_admins',
+				'filter' => 'group_admins',
 			]),
 			'priority' => 250,
 		]);
@@ -43,13 +43,13 @@ class GroupsMembers {
 	/**
 	 * Add a menu item to the tabs on the group members page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:groups_members'
+	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/member'
 	 *
 	 * @return void|MenuItems
 	 */
 	public static function registerEmailInvitations(\Elgg\Hook $hook) {
 		
-		$entity = $hook->getEntityParam();
+		$entity = $hook->getParam('filter_entity');
 		if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
 			return;
 		}

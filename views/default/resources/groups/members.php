@@ -1,6 +1,8 @@
 <?php
+/**
+ * Show a list of all group members
+ */
 
-use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 
 $guid = (int) elgg_extract('guid', $vars);
@@ -24,61 +26,39 @@ if ($group->canEdit() && elgg_is_active_plugin('friends')) {
 	]);
 }
 
+$filter = get_input('filter', 'members');
+
 $options = [
+	'type' => 'user',
 	'relationship' => 'member',
 	'relationship_guid' => $group->guid,
 	'inverse_relationship' => true,
-	'type' => 'user',
-	'limit' => (int) get_input('limit', max(20, elgg_get_config('default_limit')), false),
-	'no_results' => true,
+	'sort_by' => get_input('sort_by', [
+		'property' => 'name',
+		'property_type' => 'metadata',
+		'direction' => 'asc',
+	]),
 ];
 
-$sort = elgg_extract('sort', $vars);
-switch ($sort) {
-	case 'newest':
-		$options['order_by'] = [
-			new OrderByClause('r.time_created', 'DESC'),
-		];
-		break;
-	case 'group_admins':
-		$options['wheres'] = [
-			function (QueryBuilder $qb, $main_alias) use ($group) {
-				$owner = $qb->compare("{$main_alias}.guid", '=', $group->owner_guid, ELGG_VALUE_GUID);
-				
-				$admin_query = $qb->subquery('entity_relationships')
-					->select('guid_one')
-					->where($qb->compare('relationship', '=', 'group_admin', ELGG_VALUE_STRING))
-					->andWhere($qb->compare('guid_two', '=', $group->guid, ELGG_VALUE_GUID));
-				
-				$admins = $qb->compare("{$main_alias}.guid", 'IN', $admin_query->getSQL());
-				
-				return $qb->merge([$owner, $admins], 'OR');
-			},
-		];
-
-		$options['order_by_metadata'] = [
-			'name' => 'name',
-			'direction' => 'ASC',
-		];
-		
-		break;
-	default:
-		$options['order_by_metadata'] = [
-			'name' => 'name',
-			'direction' => 'ASC',
-		];
-		break;
+if ($filter === 'group_admins') {
+	$options['wheres'] = [
+		function (QueryBuilder $qb, $main_alias) use ($group) {
+			$owner = $qb->compare("e.guid", '=', $group->owner_guid, ELGG_VALUE_GUID);
+			
+			$admin_query = $qb->subquery('entity_relationships')
+				->select('guid_one')
+				->where($qb->compare('relationship', '=', 'group_admin', ELGG_VALUE_STRING))
+				->andWhere($qb->compare('guid_two', '=', $group->guid, ELGG_VALUE_GUID));
+			
+			$admins = $qb->compare("e.guid", 'IN', $admin_query->getSQL());
+			
+			return $qb->merge([$owner, $admins], 'OR');
+		},
+	];
 }
 
-// user search
 $members_search = get_input('members_search');
 if (!elgg_is_empty($members_search)) {
-	$options['base_url'] = elgg_generate_url('collection:user:user:group_members', [
-		'guid' => $guid,
-		'sort' => $sort,
-		'members_search' => $members_search,
-	]);
-	
 	$options['metadata_name_value_pairs'] = [
 		[
 			'name' => 'name',
@@ -96,33 +76,26 @@ if (!elgg_is_empty($members_search)) {
 	$options['metadata_name_value_pairs_operator'] = 'OR';
 }
 
-$user_list = elgg_list_entities($options);
+$list = elgg_list_relationships($options);
 
 if (elgg_is_xhr() && isset($members_search)) {
 	// ajax pagination
-	echo $user_list;
+	echo $list;
 	return;
 }
 
-$title = elgg_echo('groups:members:title', [$group->getDisplayName()]);
-
-$tabs = elgg_view_menu('groups_members', [
-	'entity' => $group,
-	'class' => 'elgg-tabs',
-]);
-
-$content = elgg_view_form('group_tools/members_search', [
-	'action' => elgg_generate_url('collection:user:user:group_members', [
+$form = elgg_view_form('group_tools/members_search', [
+	'action' => elgg_http_add_url_query_elements(current_page_url(), [
 		'guid' => $guid,
-		'sort' => $sort,
 	]),
 	'disable_security' => true,
 	'prevent_double_submit' => false,
 ]);
-$content .= $user_list;
 
 // draw page
-echo elgg_view_page($title, [
-	'content' => $content,
-	'filter' => $tabs,
+echo elgg_view_page(elgg_echo('groups:members:title', [$group->getDisplayName()]), [
+	'content' => $form . $list,
+	'filter_id' => 'groups/members',
+	'filter_value' => $filter,
+	'filter_entity' => $group,
 ]);

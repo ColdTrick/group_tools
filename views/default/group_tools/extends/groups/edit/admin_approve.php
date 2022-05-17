@@ -19,6 +19,7 @@ if (empty($entity->guid)) {
 } elseif ($entity->access_id === ACCESS_PRIVATE && !(bool) $entity->is_concept) {
 	// group profile / edit form
 	$message = elgg_echo('group_tools:group:admin_approve:notice:profile');
+	$link = '';
 	
 	if ($entity->canEdit() && (bool) elgg_get_plugin_setting('creation_reason', 'group_tools')) {
 		$count = $entity->getAnnotations([
@@ -30,17 +31,17 @@ if (empty($entity->guid)) {
 			],
 		]);
 		if (!empty($count)) {
-			$message .= elgg_view('output/url', [
+			$link = elgg_view('output/url', [
 				'text' => elgg_echo('group_tools:group:admin_approve:reasons'),
 				'href' => elgg_http_add_url_query_elements('ajax/view/group_tools/group/reasons', [
 					'guid' => $entity->guid,
 				]),
-				'class' => 'mls elgg-lightbox',
+				'class' => 'elgg-lightbox',
 			]);
 		}
 	}
 	
-	echo elgg_view_message('notice', $message);
+	echo elgg_view_message('notice', $message, ['link' => $link]);
 	
 	if (elgg_is_admin_logged_in()) {
 		$form = elgg_view_form('group_tools/admin/decline', [], [
