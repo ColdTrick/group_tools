@@ -145,15 +145,16 @@ class Membership {
 				$link_text = elgg_echo('group_tools:notifications:toggle:site:enabled:link');
 				$text_key = 'group_tools:notifications:toggle:site:enabled';
 			}
-			
-			$link = elgg_view('output/url', [
-				'text' => $link_text,
-				'href' => elgg_generate_action_url('group_tools/toggle_notifications', [
-					'group_guid' => $group->guid,
+
+			elgg_register_success_message([
+				'message' => elgg_echo($text_key),
+				'link' => elgg_view('output/url', [
+					'text' => $link_text,
+					'href' => elgg_generate_action_url('group_tools/toggle_notifications', [
+						'group_guid' => $group->guid,
+					]),
 				]),
 			]);
-			
-			system_message(elgg_echo($text_key, [$link]));
 		} else {
 			// user was joined by other means (group admin accepted request, added user, etc)
 			if (!empty($register_once)) {

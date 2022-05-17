@@ -93,7 +93,7 @@ switch ($fix) {
 				groups_create_event_listener('create', 'group', $group);
 			}
 			
-			system_message(elgg_echo('group_tools:action:fix_acl:success:without', [count($groups)]));
+			elgg_register_success_message(elgg_echo('group_tools:action:fix_acl:success:without', [count($groups)]));
 		}
 		
 		// now add the group members
@@ -112,7 +112,7 @@ switch ($fix) {
 				}
 			});
 			
-			system_message(elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
+			elgg_register_success_message(elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
 		}
 		
 		// users with access to group content, but no longer member
@@ -128,7 +128,7 @@ switch ($fix) {
 				remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
 			}
 			
-			system_message(elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
+			elgg_register_success_message(elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
 		}
 		
 		break;

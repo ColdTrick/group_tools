@@ -342,10 +342,10 @@ The reason was:
 	'group_tools:notifications:toggle:email:enabled' => "Currently you are receiving notifications about activity in this group. If you don't want to receive notifications, change the settings here %s",
 	'group_tools:notifications:toggle:email:disabled' => "Currently you are not receiving notifications about activity in this group. If you want to receive notifications, change the settings here %s",
 	
-	'group_tools:notifications:toggle:site:enabled' => "Currently you are receiving notifications about activity in this group. If you don't want to receive notifications, click here %s",
-	'group_tools:notifications:toggle:site:enabled:link' => "disable notifications",
-	'group_tools:notifications:toggle:site:disabled' => "Currently you are not receiving notifications about activity in this group. If you want to receive notifications, click here %s",
-	'group_tools:notifications:toggle:site:disabled:link' => "enable notifications",
+	'group_tools:notifications:toggle:site:enabled' => "Currently you are receiving notifications about activity in this group",
+	'group_tools:notifications:toggle:site:enabled:link' => "Disable notifications",
+	'group_tools:notifications:toggle:site:disabled' => "Currently you are not receiving notifications about activity in this group",
+	'group_tools:notifications:toggle:site:disabled:link' => "Enable notifications",
 	
 	// group mail
 	'group_tools:tools:mail_members' => "Allow group members to mail other group members",

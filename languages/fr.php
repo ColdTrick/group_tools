@@ -176,8 +176,8 @@ Pour voir votre groupe, cliquez ici:
 
 La raison était:
 %s',
-  'group_tools:notifications:toggle:site:enabled:link' => 'desactive les notifications',
-  'group_tools:notifications:toggle:site:disabled:link' => 'active les notifications',
+  'group_tools:notifications:toggle:site:enabled:link' => 'Desactive les notifications',
+  'group_tools:notifications:toggle:site:disabled:link' => 'Active les notifications',
   'group_tools:mail:message:from' => 'Depuis le groupe',
   'group_tools:mail:form:recipients' => 'Nombre de destinataires',
   'group_tools:mail:title' => 'Envoyer un mail a tous les membres du groupe',
