@@ -1,6 +1,13 @@
 Version history
 ===============
 
+15.0 (2022-06-01):
+
+- added: listing view introduced to list groups based on preset
+- changed: updated for Elgg 4.2
+- changed: updated sorting features for Elgg 4.2
+- changed: use new functions for system messages
+
 14.0.2 (2022-03-30):
 
 - several small chores/fixes
