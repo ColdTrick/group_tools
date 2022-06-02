@@ -25,6 +25,8 @@ class Views {
 		}
 		$filter = get_input('filter', $default_filter);
 		
+		$vars = $hook->getValue();
+		
 		// support for 'old' tabs
 		switch ($filter) {
 			case 'newest':
@@ -33,11 +35,13 @@ class Views {
 					'property' => 'time_created',
 					'direction' => 'desc',
 				]));
-				$filter = 'all';
+				set_input('filter', 'all');
+				$vars['filter_sorting_selected'] = 'sort:time_created:desc';
 				break;
 			case 'popular':
 				set_input('sort', get_input('sort', 'popular'));
-				$filter = 'all';
+				set_input('filter', 'all');
+				$vars['filter_sorting_selected'] = 'popular';
 				break;
 			case 'alpha':
 				set_input('sort_by', get_input('sort_by', [
@@ -45,7 +49,8 @@ class Views {
 					'property' => 'name',
 					'direction' => 'asc',
 				]));
-				$filter = 'all';
+				set_input('filter', 'all');
+				$vars['filter_sorting_selected'] = 'sort:name:asc';
 				break;
 			default:
 				$sorting = elgg_get_plugin_setting("group_listing_{$filter}_sorting", 'group_tools', 'newest');
@@ -56,6 +61,7 @@ class Views {
 							'property' => 'name',
 							'direction' => 'asc',
 						]));
+						$vars['filter_sorting_selected'] = 'sort:name:asc';
 						break;
 					case 'newest':
 						set_input('sort_by', get_input('sort_by', [
@@ -63,9 +69,11 @@ class Views {
 							'property' => 'time_created',
 							'direction' => 'desc',
 						]));
+						$vars['filter_sorting_selected'] = 'sort:time_created:desc';
 						break;
 					case 'popular':
 						set_input('sort', get_input('sort', $sorting));
+						$vars['filter_sorting_selected'] = 'popular';
 						break;
 					default:
 						break;
@@ -74,7 +82,7 @@ class Views {
 				break;
 		}
 		
-		set_input('filter', $filter);
+		return $vars;
 	}
 	
 	/**

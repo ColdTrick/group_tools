@@ -20,4 +20,5 @@ echo elgg_view_page(elgg_echo('groups:all'), [
 	'filter_id' => 'groups/all',
 	'filter_value' => $selected_tab,
 	'filter_sorting' => $selected_tab !== 'suggested',
+	'filter_sorting_selected' => elgg_extract('filter_sorting_selected', $vars),
 ]);
