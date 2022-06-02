@@ -57,14 +57,17 @@ class GroupsAll {
 				]),
 				'priority' => 260,
 			]);
-			$return[] = \ElggMenuItem::factory([
-				'name' => 'managed',
-				'text' => elgg_echo('group_tools:groups:sorting:managed'),
-				'href' => elgg_generate_url('collection:group:group:all', [
-					'filter' => 'managed',
-				]),
-				'priority' => 270,
-			]);
+			
+			if (group_tools_multiple_admin_enabled()) {
+				$return[] = \ElggMenuItem::factory([
+					'name' => 'managed',
+					'text' => elgg_echo('group_tools:groups:sorting:managed'),
+					'href' => elgg_generate_url('collection:group:group:all', [
+						'filter' => 'managed',
+					]),
+					'priority' => 270,
+				]);
+			}
 		}
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'open',
