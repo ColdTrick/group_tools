@@ -15,9 +15,6 @@ $listing_options = [
 	'member' => elgg_echo('group_tools:groups:sorting:member'),
 	'managed' => elgg_echo('group_tools:groups:sorting:managed'),
 ];
-if (elgg_is_active_plugin('discussions')) {
-	$listing_options['discussion'] = elgg_echo('discussion:latest');
-}
 
 $listing_sorting_options = [
 	'newest' => elgg_echo('sort:newest'),
