@@ -42,15 +42,14 @@ return [
 		'auto_accept_membership_requests' => 'no',
 		'invite' => 'no',
 		'invite_email' => 'no',
+		'invite_friends' => 'yes',
 		'invite_csv' => 'no',
 		'invite_members' => 'no',
 		'domain_based' => 'no',
 		'join_motivation' => 'no',
 		'notification_toggle' => 'no',
 		'search_index' => 'no',
-
 		'auto_suggest_groups' => 'yes',
-		'invite_friends' => 'yes',
 	],
 	'user_settings' => [
 		'notify_approval' => 0,

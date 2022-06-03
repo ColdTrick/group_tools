@@ -9,57 +9,47 @@ $comment = elgg_get_sticky_value('group_invite', 'comment');
 elgg_clear_sticky_form('group_invite');
 
 $group = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
-$invite_friends = elgg_extract('invite_friends', $vars, 'yes');
-$invite_site_members = elgg_extract('invite', $vars, 'no');
-$invite_email = elgg_extract('invite_email', $vars, 'no');
-$invite_csv = elgg_extract('invite_csv', $vars, 'no');
 
 // invite friends
-$class = [
-	'group-tools-invite-form',
-	'elgg-state-active',
-];
-if ($invite_friends !== 'no') {
-	$friends_attr = [
-		'id' => 'group-tools-invite-friends',
-		'class' => $class,
+$tabs = [];
+
+if ((bool) elgg_extract('invite_friends', $vars)) {
+	$tabs[] = [
+		'text' => elgg_echo('friends'),
+		'content' => elgg_view('group_tools/invite/friends', $vars),
 	];
-	echo elgg_format_element('div', $friends_attr, elgg_view('group_tools/invite/friends', $vars));
-	
-	$class[1] = 'hidden';
 }
 
 // invite site members
-if ($invite_site_members === 'yes') {
-	$site_members_attr = [
-		'id' => 'group-tools-invite-users',
-		'class' => $class,
+if ((bool) elgg_extract('invite', $vars)) {
+	$tabs[] = [
+		'text' => elgg_echo('group_tools:group:invite:users'),
+		'content' => elgg_view('group_tools/invite/users', $vars),
 	];
-	echo elgg_format_element('div', $site_members_attr, elgg_view('group_tools/invite/users', $vars));
-	
-	$class[1] = 'hidden';
 }
 
 // invite email
-if ($invite_email === 'yes') {
-	$email_attr = [
-		'id' => 'group-tools-invite-email',
-		'class' => $class,
+if ((bool) elgg_extract('invite_email', $vars)) {
+	$tabs[] = [
+		'text' => elgg_echo('group_tools:group:invite:email'),
+		'content' => elgg_view('group_tools/invite/email', $vars),
 	];
-	echo elgg_format_element('div', $email_attr, elgg_view('group_tools/invite/email', $vars));
-	
-	$class[1] = 'hidden';
 }
 
 // invite csv
-if ($invite_csv === 'yes') {
-	$csv_attr = [
-		'id' => 'group-tools-invite-csv',
-		'class' => $class,
+if ((bool) elgg_extract('invite_csv', $vars)) {
+	$tabs[] = [
+		'text' => elgg_echo('group_tools:group:invite:csv'),
+		'content' => elgg_view('group_tools/invite/csv', $vars),
 	];
-	echo elgg_format_element('div', $csv_attr, elgg_view('group_tools/invite/csv', $vars));
-	
-	$class[1] = 'hidden';
+}
+
+if (count($tabs) === 1) {
+	echo $tabs[0]['content'];
+} else {
+	echo elgg_view('page/components/tabs', [
+		'tabs' => $tabs,
+	]);
 }
 
 // optional text
@@ -82,13 +72,12 @@ if ($group->canEdit()) {
 
 echo elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->guid]);
 
-
 // show buttons
 $footer_fields = [
 	[
-	'#type' => 'submit',
-	'name' => 'submit',
-	'value' => elgg_echo('invite'),
+		'#type' => 'submit',
+		'name' => 'submit',
+		'value' => elgg_echo('invite'),
 	],
 ];
 if (elgg_is_admin_logged_in()) {

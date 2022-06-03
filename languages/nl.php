@@ -140,7 +140,7 @@ Bekijk de groep hier:
   'group_tools:csv_exporter:stale_info:is_stale' => 'Inactieve groep',
   'group_tools:csv_exporter:stale_info:timestamp' => 'Inactieve datum',
   'group_tools:csv_exporter:stale_info:timestamp:readable' => 'Inactieve datum (leesbaar)',
-  'group_tools:settings:mail:members' => 'Mogen groep beheerder groep mail inschakelen voor hun leden',
+  'group_tools:settings:mail:members' => 'Mogen groep beheerders groep mail inschakelen voor hun leden',
   'group_tools:settings:mail:members:description' => 'Dit vereist dat groep mail ingeschakeld is',
   'group_tools:tools:mail_members' => 'Mogen groep leden andere leden een e-mail sturen',
   'mail_members:group_tool_option:description' => 'Dit maakt het mogelijk dat gewone groep leden een e-mail kunnen versturen aan de andere leden. Standaard is dit voorbehouden aan de groep beheerders.',

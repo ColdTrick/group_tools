@@ -9,7 +9,7 @@ elgg_require_js('group_tools/invite/email');
 
 $group = elgg_extract('entity', $vars);
 
-echo elgg_view_field([
+$contents = elgg_view_field([
 	'#type' => 'fieldset',
 	'align' => 'horizontal',
 	
@@ -30,4 +30,6 @@ echo elgg_view_field([
 	],
 ]);
 
-echo elgg_format_element('ul', ['class' => ['elgg-list', 'elgg-list-email']]);
+$contents .= elgg_format_element('ul', ['class' => ['elgg-list', 'elgg-list-email']]);
+
+echo elgg_format_element('div', ['id' => 'group-tools-invite-email'], $contents);
