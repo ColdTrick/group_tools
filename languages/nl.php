@@ -294,7 +294,7 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:suggested_groups:info' => 'De volgende groepen zijn mogelijk interessant voor je. Klik op "Wordt lid" om direct lid te worden, of klik op de naam van de groep om meer informatie te zien.',
   'group_tools:settings:auto_suggest_groups' => 'Automatisch groepen voorstellen op de "Voorgesteld" pagina gebaseerd op profiel informatie',
   'group_tools:settings:auto_suggest_groups:help' => 'De lijst zal worden aangevuld met de voorgedefinieerde lijst van voorgestelde groepen. Als dit op "Nee" staat zullen alleen de voorgedefinieerde groepen worden getoond (als die er zijn)',
-  'group_tools:settings:special_states:featured:description' => 'De beheerder hebben de volgende groepen aangeraden.',
+  'group_tools:settings:special_states:featured:description' => 'De beheerder heeft de volgende groepen aangeraden.',
   'group_tools:groups:sorting:suggested' => 'Voorgesteld',
   'group_tools:suggested_groups:none' => 'We kunnen geen groep aan je voorstellen. Dit kan gebeuren als we te weinig informatie van jou hebben of als je al lid bent van alle groepen die we aan je voor wilden stellen. Gebruik de zoek functionaliteit om meer groepen te vinden.',
   'group_tools:action:toggle_special_state:error:suggested' => 'Er is een fout opgetreden tijdens het opslaan van de nieuwe instelling voor het voorstellen',
