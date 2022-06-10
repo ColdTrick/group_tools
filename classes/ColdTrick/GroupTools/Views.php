@@ -19,6 +19,10 @@ class Views {
 	 * @return void
 	 */
 	public static function prepareGroupAll(\Elgg\Hook $hook) {
+		if (!empty(get_input('sort_by')) || !empty(get_input('sort'))) {
+			return;
+		}
+		
 		$default_filter = elgg_get_plugin_setting('group_listing', 'group_tools');
 		if ($default_filter === 'yours' && !elgg_is_logged_in()) {
 			$default_filter = 'all';
@@ -30,25 +34,25 @@ class Views {
 		// support for 'old' tabs
 		switch ($filter) {
 			case 'newest':
-				set_input('sort_by', get_input('sort_by', [
+				set_input('sort_by', [
 					'property_type' => 'attribute',
 					'property' => 'time_created',
 					'direction' => 'desc',
-				]));
+				]);
 				set_input('filter', 'all');
 				$vars['filter_sorting_selected'] = 'sort:time_created:desc';
 				break;
 			case 'popular':
-				set_input('sort', get_input('sort', 'popular'));
+				set_input('sort', 'popular');
 				set_input('filter', 'all');
 				$vars['filter_sorting_selected'] = 'popular';
 				break;
 			case 'alpha':
-				set_input('sort_by', get_input('sort_by', [
+				set_input('sort_by', [
 					'property_type' => 'metadata',
 					'property' => 'name',
 					'direction' => 'asc',
-				]));
+				]);
 				set_input('filter', 'all');
 				$vars['filter_sorting_selected'] = 'sort:name:asc';
 				break;
@@ -56,23 +60,23 @@ class Views {
 				$sorting = elgg_get_plugin_setting("group_listing_{$filter}_sorting", 'group_tools', 'newest');
 				switch ($sorting) {
 					case 'alpha':
-						set_input('sort_by', get_input('sort_by', [
+						set_input('sort_by', [
 							'property_type' => 'metadata',
 							'property' => 'name',
 							'direction' => 'asc',
-						]));
+						]);
 						$vars['filter_sorting_selected'] = 'sort:name:asc';
 						break;
 					case 'newest':
-						set_input('sort_by', get_input('sort_by', [
+						set_input('sort_by', [
 							'property_type' => 'attribute',
 							'property' => 'time_created',
 							'direction' => 'desc',
-						]));
+						]);
 						$vars['filter_sorting_selected'] = 'sort:time_created:desc';
 						break;
 					case 'popular':
-						set_input('sort', get_input('sort', $sorting));
+						set_input('sort', $sorting);
 						$vars['filter_sorting_selected'] = 'popular';
 						break;
 					default:
