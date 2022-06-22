@@ -1,6 +1,13 @@
 Version history
 ===============
 
+15.1 (2022-06-22):
+
+- changed: invite form now uses page/components/tabs
+- fixed: correctly set sorting parent menu item
+- fixed: only add managed group menu item if multiple admins are allowed
+- fixed: removed unused setting for discussions menu item on groups menu
+
 15.0 (2022-06-01):
 
 - added: listing view introduced to list groups based on preset
