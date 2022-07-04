@@ -301,7 +301,7 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:action:toggle_special_state:error:state' => 'Ongeldige status opgegeven',
   'group_tools:action:toggle_special_state:suggested' => 'De nieuwe instelling voor het voorstellen is opgeslagen',
   'group_tools:settings:invite_members' => 'Mogen groepsleden andere gebruikers uitnodigen',
-  'group_tools:settings:invite_members:description' => 'Groepseigenaren / -beheerders kunnen dit aan- / uitzetten voor hun groep',
+  'group_tools:settings:invite_members:description' => 'Groepseigenaren of -beheerders kunnen dit aan- of uitzetten voor hun groep',
   'group_tools:invite_members:title' => 'Groepsleden mogen uitnodigen',
   'group_tools:invite_members:description' => 'Mogen de leden van deze groep nieuwe leden uitnodigen',
   'group_tools:invite_members:disclaimer' => 'Let op, voor besloten groepen geldt dat als je leden nieuwe gebruikers mogen uitnodigen deze gebruikers geen goedkeuring nodig hebben van de groepseigenaar/-beheerder(s).',
