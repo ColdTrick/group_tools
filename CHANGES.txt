@@ -1,6 +1,10 @@
 Version history
 ===============
 
+15.1.1 (2022-07-12):
+
+- several small chores/fixes
+
 15.1 (2022-06-22):
 
 - changed: invite form now uses page/components/tabs
