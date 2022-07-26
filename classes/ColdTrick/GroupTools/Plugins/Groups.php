@@ -120,10 +120,10 @@ class Groups {
 		}
 		
 		// is the user a group admin
-		if (!check_entity_relationship($user->guid, 'group_admin', $group->guid)) {
+		if (!$user->hasRelationship($group->guid, 'group_admin')) {
 			return;
 		}
 		
-		return remove_entity_relationship($user->guid, 'group_admin', $group->guid);
+		return $user->removeRelationship($group->guid, 'group_admin');
 	}
 }

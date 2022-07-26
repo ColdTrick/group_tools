@@ -89,7 +89,7 @@ foreach ($members as $member) {
 	// member since
 	$member_since = 0;
 	
-	$relationship = check_entity_relationship($member->guid, 'member', $group->guid);
+	$relationship = $member->getRelationship($group->guid, 'member');
 	if ($relationship instanceof ElggRelationship) {
 		$member_since = $relationship->time_created;
 	}

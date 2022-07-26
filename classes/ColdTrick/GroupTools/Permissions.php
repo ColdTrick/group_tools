@@ -31,7 +31,7 @@ class Permissions {
 	 *
 	 * @param \Elgg\Hook $hook 'permissions_check', 'group'
 	 *
-	 * @return void|true
+	 * @return void|bool
 	 */
 	public static function allowGroupAdminsToEdit(\Elgg\Hook $hook) {
 		
@@ -55,6 +55,6 @@ class Permissions {
 			return;
 		}
 		
-		return check_entity_relationship($user->guid, 'group_admin', $entity->guid);
+		return $user->hasRelationship($entity->guid, 'group_admin');
 	}
 }

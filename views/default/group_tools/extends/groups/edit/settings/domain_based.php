@@ -9,9 +9,9 @@ $content = elgg_format_element('div', ['class' => 'mbm'], elgg_echo('group_tools
 $domains = '';
 $group = elgg_extract('entity', $vars);
 if ($group instanceof ElggGroup) {
-	$domains = $group->getPluginSetting('group_tools', 'domain_based');
+	$domains = (string) $group->getPluginSetting('group_tools', 'domain_based');
 	if (!empty($domains)) {
-		$domains = string_to_tag_array($domains);
+		$domains = elgg_string_to_array($domains);
 	}
 }
 

@@ -34,7 +34,7 @@ class Title {
 			return;
 		}
 		
-		if (check_entity_relationship($user->guid, 'membership_request', $entity->guid)) {
+		if ($user->hasRelationship($entity->guid, 'membership_request')) {
 			// user already requested to join this group
 			$menu_item->setText(elgg_echo('group_tools:joinrequest:already'));
 			$menu_item->setTooltip(elgg_echo('group_tools:joinrequest:already:tooltip'));
@@ -42,7 +42,7 @@ class Title {
 				'user_guid' => $user->guid,
 				'group_guid' => $entity->guid,
 			]));
-		} elseif (check_entity_relationship($entity->guid, 'invited', $user->guid)) {
+		} elseif ($entity->hasRelationship($user->guid, 'invited')) {
 			// the user was invited, so let him/her join
 			$menu_item->setName('groups:join');
 			$menu_item->setText(elgg_echo('groups:join'));
@@ -188,7 +188,7 @@ class Title {
 			return;
 		}
 		
-		if (!check_entity_relationship($user->guid, 'group_admin', $entity->guid)) {
+		if (!$user->hasRelationship($entity->guid, 'group_admin')) {
 			return;
 		}
 		
@@ -229,7 +229,7 @@ class Title {
 		$group_members_page = elgg_generate_url('collection:user:user:group_members', [
 			'guid' => $page_owner->guid,
 		]);
-		if (strpos(current_page_url(), $group_members_page) === false) {
+		if (strpos(elgg_get_current_url(), $group_members_page) === false) {
 			return;
 		}
 		

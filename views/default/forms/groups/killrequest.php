@@ -6,8 +6,8 @@ elgg_require_js('forms/groups/killrequest');
 
 $relationship_id = (int) elgg_extract('relationship_id', $vars);
 
-$relationship = get_relationship($relationship_id);
-if (!$relationship instanceof ElggRelationship || $relationship->relationship !== 'membership_request') {
+$relationship = elgg_get_relationship($relationship_id);
+if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'membership_request') {
 	throw new BadRequestException();
 }
 
@@ -15,7 +15,7 @@ $user = get_entity($relationship->guid_one);
 $group = elgg_call(ELGG_IGNORE_ACCESS, function() use ($relationship) {
 	return get_entity($relationship->guid_two);
 });
-if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
+if (!$group instanceof \ElggGroup || !$user instanceof \ElggUser) {
 	throw new BadRequestException();
 }
 

@@ -72,7 +72,7 @@ $more_link = elgg_view('output/url', [
 	'text' => elgg_echo('group_tools:create_group:tool_presets:show_more'),
 	'href' => '#group-tools-preset-more',
 	'id' => 'group-tools-preset-more-link',
-	'rel' => 'toggle',
+	'class' => 'elgg-toggle',
 ]);
 
 echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:active_header'), '', [

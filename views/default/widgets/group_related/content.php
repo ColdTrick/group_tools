@@ -14,8 +14,8 @@ echo elgg_list_entities([
 	'relationship_guid' => $widget->owner_guid,
 	'full_view' => false,
 	'pagination' => false,
-	'order_by_metadata' => [
-		'name' => 'name',
+	'sort_by' => [
+		'property' => 'name',
 		'direction' => 'ASC',
 	],
 	'no_results' => elgg_echo('groups_tools:related_groups:none'),

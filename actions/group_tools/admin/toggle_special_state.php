@@ -26,7 +26,7 @@ switch ($state) {
 		$suggested_groups = [];
 		$suggested_setting = $plugin->getSetting('suggested_groups');
 		if (!empty($suggested_setting)) {
-			$suggested_groups = string_to_tag_array($suggested_setting);
+			$suggested_groups = elgg_string_to_array($suggested_setting);
 		}
 		
 		if (($key = array_search($group_guid, $suggested_groups)) !== false) {

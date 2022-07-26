@@ -6,7 +6,10 @@
  */
 
 $user = elgg_get_logged_in_user_entity();
-$friends_count = $user->getFriends(['count' => true]);
+$friends_count = $user->getEntitiesFromRelationship([
+	'relationship' => 'friend',
+	'count' => true,
+]);
 
 $group = elgg_extract('entity', $vars);
 

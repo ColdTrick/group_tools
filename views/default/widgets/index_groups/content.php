@@ -46,7 +46,7 @@ if (!empty($filter_name) && !empty($filter_value)) {
 		}
 		
 		if ($found) {
-			$filter_value = string_to_tag_array($filter_value);
+			$filter_value = elgg_string_to_array((string) $filter_value);
 			
 			$options['metadata_name_value_pairs'][] = [
 				'name' => $filter_name,

@@ -9,23 +9,50 @@ set_time_limit(0);
 // what do we need to fix
 $fix = get_input('fix');
 
+$add_users = function ($data) {
+	// make sure we can see all users
+	elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($data) {
+		foreach ($data as $user_data) {
+			/**
+			 * $user_data = row stdClass
+			 * 		-> acl_id 		=> the acl the user should be added to
+			 * 		-> group_guid 	=> the group the acl belongs to
+			 * 		-> user_guid 	=> the user that should be added
+			 */
+			$acl = elgg_get_access_collection($user_data->acl_id);
+			if (!$acl instanceof \ElggAccessCollection) {
+				continue;
+			}
+			$acl->addMember($user_data->user_guid);
+		}
+	});
+};
+
+$remove_users = function ($data) {
+	// make sure we can see all users
+	elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($data) {
+		foreach ($data as $user_data) {
+			/**
+			 * $user_data = row stdClass
+			 * 		-> acl_id 		=> the acl the user should be added to
+			 * 		-> group_guid 	=> the group the acl belongs to
+			 * 		-> user_guid 	=> the user that should be added
+			 */
+			$acl = elgg_get_access_collection($user_data->acl_id);
+			if (!$acl instanceof \ElggAccessCollection) {
+				continue;
+			}
+			$acl->removeMember($user_data->user_guid);
+		}
+	});
+};
+
 switch ($fix) {
 	case 'missing':
 		// users without access to group content
 		$missing_users = group_tools_get_missing_acl_users();
 		if (!empty($missing_users)) {
-			// make sure we can see all users
-			elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($missing_users) {
-				foreach ($missing_users as $user_data) {
-					/**
-					 * $user_data = row stdClass
-					 * 		-> acl_id 		=> the acl the user should be added to
-					 * 		-> group_guid 	=> the group the acl belongs to
-					 * 		-> user_guid 	=> the user that should be added
-					 */
-					add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
-				}
-			});
+			$add_users($missing_users);
 			
 			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
 		} else {
@@ -36,15 +63,7 @@ switch ($fix) {
 		// users with access to group content, but no longer member
 		$excess_users = group_tools_get_excess_acl_users();
 		if (!empty($excess_users)) {
-			foreach ($excess_users as $user_data) {
-				/**
-				* $user_data = row stdClass
-				* 		-> acl_id 		=> the acl the user should be removed from
-				* 		-> group_guid 	=> the group the acl belongs to
-				* 		-> user_guid 	=> the user that should be removed
-				*/
-				remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
-			}
+			$remove_users($excess_users);
 			
 			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
 		} else {
@@ -63,18 +82,7 @@ switch ($fix) {
 			// now add the group members
 			$missing_users = group_tools_get_missing_acl_users();
 			if (!empty($missing_users)) {
-				// make sure we can see all users
-				elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($missing_users) {
-					foreach ($missing_users as $user_data) {
-						/**
-						 * $user_data = row stdClass
-						 * 		-> acl_id 		=> the acl the user should be added to
-						 * 		-> group_guid 	=> the group the acl belongs to
-						 * 		-> user_guid 	=> the user that should be added
-						 */
-						add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
-					}
-				});
+				$add_users($missing_users);
 			}
 			
 			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:without', [count($groups)]));
@@ -99,18 +107,7 @@ switch ($fix) {
 		// now add the group members
 		$missing_users = group_tools_get_missing_acl_users();
 		if (!empty($missing_users)) {
-			// make sure we can see all users
-			elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($missing_users) {
-				foreach ($missing_users as $user_data) {
-					/**
-					 * $user_data = row stdClass
-					 * 		-> acl_id 		=> the acl the user should be added to
-					 * 		-> group_guid 	=> the group the acl belongs to
-					 * 		-> user_guid 	=> the user that should be added
-					 */
-					add_user_to_access_collection($user_data->user_guid, $user_data->acl_id);
-				}
-			});
+			$add_users($missing_users);
 			
 			elgg_register_success_message(elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
 		}
@@ -118,15 +115,7 @@ switch ($fix) {
 		// users with access to group content, but no longer member
 		$excess_users = group_tools_get_excess_acl_users();
 		if (!empty($excess_users)) {
-			foreach ($excess_users as $user_data) {
-				/**
-				 * $user_data = row stdClass
-				 * 		-> acl_id 		=> the acl the user should be removed from
-				 * 		-> group_guid 	=> the group the acl belongs to
-				 * 		-> user_guid 	=> the user that should be removed
-				 */
-				remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
-			}
+			$remove_users($excess_users);
 			
 			elgg_register_success_message(elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
 		}

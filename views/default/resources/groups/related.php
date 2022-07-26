@@ -30,8 +30,8 @@ $content .= elgg_list_entities([
 	'type' => 'group',
 	'relationship' => 'related_group',
 	'relationship_guid' => $group->guid,
-	'order_by_metadata' => [
-		'name' => 'name',
+	'sort_by' => [
+		'property' => 'name',
 		'direction' => 'ASC',
 	],
 	'no_results' => elgg_echo('groups_tools:related_groups:none'),

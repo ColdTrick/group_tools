@@ -88,7 +88,7 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 					continue;
 				}
 				
-				if (check_entity_relationship($group->guid, 'invited', $user->guid) && !$resend) {
+				if ($group->hasRelationship($user->guid, 'invited') && !$resend) {
 					// user was already invited
 					$already_invited++;
 					continue;
@@ -148,7 +148,7 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 					$email = trim($data[0]);
 				}
 				
-				if (empty($email) || !is_email_address($email)) {
+				if (empty($email) || !elgg_is_valid_email($email)) {
 					continue;
 				}
 				
@@ -169,7 +169,7 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 						continue;
 					}
 					
-					if (check_entity_relationship($group->guid, 'invited', $user->guid) && !$resend) {
+					if ($group->hasRelationship($user->guid, 'invited') && !$resend) {
 						// user was already invited
 						$already_invited++;
 						continue;

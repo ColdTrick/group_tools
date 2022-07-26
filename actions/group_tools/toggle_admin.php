@@ -21,9 +21,9 @@ if (!$group->isMember($user) || ($group->owner_guid === $user->guid)) {
 	return elgg_error_response(elgg_echo('group_tools:action:toggle_admin:error:group'));
 }
 
-if (!check_entity_relationship($user->guid, 'group_admin', $group->guid)) {
+if (!$user->hasRelationship($group->guid, 'group_admin')) {
 	// user is admin, so remove
-	if (add_entity_relationship($user->guid, 'group_admin', $group->guid)) {
+	if ($user->addRelationship($group->guid, 'group_admin')) {
 		return elgg_ok_response('', elgg_echo('group_tools:action:toggle_admin:success:add'));
 	}
 	
@@ -31,7 +31,7 @@ if (!check_entity_relationship($user->guid, 'group_admin', $group->guid)) {
 }
 
 // user is not admin, so add
-if (remove_entity_relationship($user->guid, 'group_admin', $group->guid)) {
+if ($user->removeRelationship($group->guid, 'group_admin')) {
 	return elgg_ok_response('', elgg_echo('group_tools:action:toggle_admin:success:remove'));
 }
 

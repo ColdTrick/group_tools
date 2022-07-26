@@ -30,7 +30,7 @@ class Entity {
 			return;
 		}
 		
-		if (!check_entity_relationship($page_owner->guid, 'related_group', $entity->guid)) {
+		if (!$page_owner->hasRelationship($entity->guid, 'related_group')) {
 			return;
 		}
 		
@@ -71,7 +71,7 @@ class Entity {
 		static $suggested_groups;
 		if (!isset($suggested_groups)) {
 			$suggested_groups = (string) elgg_get_plugin_setting('suggested_groups', 'group_tools');
-			$suggested_groups = string_to_tag_array($suggested_groups);
+			$suggested_groups = elgg_string_to_array($suggested_groups);
 		}
 		
 		$suggested = in_array($entity->guid, $suggested_groups);
@@ -243,7 +243,7 @@ class Entity {
 		
 		$return_value = $hook->getValue();
 		
-		$is_admin = check_entity_relationship($user->guid, 'group_admin', $page_owner->guid);
+		$is_admin = $user->hasRelationship($page_owner->guid, 'group_admin');
 		$section = $hook->getType() === 'menu:user_hover' ? 'action' : 'default';
 		
 		$return_value[] = \ElggMenuItem::factory([

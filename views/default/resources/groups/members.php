@@ -85,7 +85,7 @@ if (elgg_is_xhr() && isset($members_search)) {
 }
 
 $form = elgg_view_form('group_tools/members_search', [
-	'action' => elgg_http_add_url_query_elements(current_page_url(), [
+	'action' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 		'guid' => $guid,
 	]),
 	'disable_security' => true,

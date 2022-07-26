@@ -13,11 +13,9 @@ $options = [
 	'type' => 'group',
 	'limit' => $limit,
 	'offset' => $offset,
-	'order_by_metadata' => [
-		[
-			'name' => 'name',
-			'direction' => 'ASC',
-		],
+	'sort_by' => [
+		'property' => 'name',
+		'direction' => 'ASC',
 	],
 ];
 

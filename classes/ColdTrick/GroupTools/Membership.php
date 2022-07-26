@@ -50,7 +50,7 @@ class Membership {
 		
 		// notify requesting user about declined request
 		$action_pattern = '/action\/groups\/killrequest/i';
-		if (!preg_match($action_pattern, current_page_url())) {
+		if (!preg_match($action_pattern, elgg_get_current_url())) {
 			// not in the action, so do nothing
 			return;
 		}
@@ -179,10 +179,10 @@ class Membership {
 	protected static function cleanupGroupInvites(\ElggUser $user, \ElggGroup $group) {
 		
 		// cleanup invites
-		remove_entity_relationship($group->guid, 'invited', $user->guid);
+		$group->removeRelationship($user->guid, 'invited');
 		
 		// and requests
-		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
+		$user->removeRelationship($group->guid, 'membership_request');
 		
 		// cleanup email invitations
 		$options = [

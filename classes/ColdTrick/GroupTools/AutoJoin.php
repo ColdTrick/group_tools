@@ -253,7 +253,7 @@ class AutoJoin {
 		
 		$auto_joins = elgg_get_plugin_setting('auto_join', 'group_tools');
 		if (!empty($auto_joins)) {
-			$this->defaults = $this->sanitiseGUIDS(string_to_tag_array($auto_joins));
+			$this->defaults = $this->sanitiseGUIDS(elgg_string_to_array($auto_joins));
 		}
 		
 		return $this->defaults;

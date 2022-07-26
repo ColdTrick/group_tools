@@ -19,7 +19,7 @@ if (!$group instanceof ElggGroup) {
 $user = elgg_get_logged_in_user_entity();
 
 // create membership request
-add_entity_relationship($user->guid, 'membership_request', $group->guid);
+$user->addRelationship($group->guid, 'membership_request');
 
 // add motivation
 $group_acl = $group->getOwnedAccessCollection('group_acl');

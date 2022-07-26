@@ -71,9 +71,8 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, string $text 
 	}
 	
 	// Create relationship
-	$relationship = add_entity_relationship($group->guid, 'invited', $user->guid);
-	
-	if (empty($relationship) && empty($resend)) {
+	$relationship = $group->addRelationship($user->guid, 'invited');
+	if (!$relationship && !$resend) {
 		return false;
 	}
 	
@@ -164,7 +163,7 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, string $text = '
 function group_tools_invite_email(ElggGroup $group, string $email, string $text = '', bool $resend = false) {
 	
 	$loggedin_user = elgg_get_logged_in_user_entity();
-	if (!is_email_address($email) || empty($loggedin_user)) {
+	if (!elgg_is_valid_email($email) || empty($loggedin_user)) {
 		return false;
 	}
 	
@@ -472,7 +471,7 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 	
 	// get admin defined suggested groups
 	if ($limit > 0) {
-		$group_guids = string_to_tag_array(elgg_get_plugin_setting('suggested_groups', 'group_tools'));
+		$group_guids = elgg_string_to_array((string) elgg_get_plugin_setting('suggested_groups', 'group_tools'));
 		if (!empty($group_guids)) {
 			$group_options = [
 				'guids' => $group_guids,
@@ -528,7 +527,7 @@ function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user =
 		return false;
 	}
 	
-	$domains = string_to_tag_array(strtolower($domains));
+	$domains = elgg_string_to_array(strtolower($domains));
 	
 	list(, $domain) = explode('@', strtolower($user->email));
 	
@@ -607,7 +606,7 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	$group->join($new_owner);
 	
 	// remove existing group administrator role for new owner
-	remove_entity_relationship($new_owner->guid, 'group_admin', $group->guid);
+	$new_owner->removeRelationship($group->guid, 'group_admin');
 	
 	// notify new owner
 	$loggedin_user = elgg_get_logged_in_user_entity();
@@ -631,7 +630,7 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	
 	// check if the old owner wishes to remain as an admin
 	if ($remain_admin && ($old_owner->guid === $loggedin_user->guid)) {
-		add_entity_relationship($old_owner->guid, 'group_admin', $group->guid);
+		$old_owner->addRelationship($group->guid, 'group_admin');
 	}
 	
 	// unregister plugin hook to make sure transfer can complete

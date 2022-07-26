@@ -33,7 +33,7 @@ class FilterSortItems {
 			'name' => 'popular',
 			'icon' => 'sort-numeric-down-alt',
 			'text' => elgg_echo('sort:popular'),
-			'href' => elgg_http_add_url_query_elements(current_page_url(), [
+			'href' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
 				'sort' => 'popular',
 				'sort_by' => null, // unset core filter options
 			]),

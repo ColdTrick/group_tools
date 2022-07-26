@@ -29,11 +29,11 @@ if ($group->guid === $related->guid) {
 }
 
 // not already related?
-if (check_entity_relationship($group->guid, 'related_group', $related->guid)) {
+if ($group->hasRelationship($related->guid, 'related_group')) {
 	return elgg_error_response(elgg_echo('group_tools:action:related_groups:error:already'));
 }
 
-if (!add_entity_relationship($group->guid, 'related_group', $related->guid)) {
+if (!$group->addRelationship($related->guid, 'related_group')) {
 	return elgg_error_response(elgg_echo('group_tools:action:related_groups:error:add'));
 }
 

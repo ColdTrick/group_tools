@@ -16,6 +16,11 @@
 		"coldtrick/sniffs": "dev-master"
 	},
 	"conflict": {
-		"elgg/elgg": "<4.2"
+		"elgg/elgg": "<4.3"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
 	}
 }
