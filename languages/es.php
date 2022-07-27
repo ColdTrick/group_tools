@@ -192,7 +192,6 @@ La razón fue:
   'group_tools:invite_members:title' => 'Los miembros del grupo pueden invitar',
   'group_tools:invite_members:description' => 'Permite a los miembros de un grupo invitar a nuevos miembros',
   'group_tools:invite_members:disclaimer' => 'Por favor ten en cuenta que para grupos cerrados esto significa que las invitaciones realizadas por miembros no requerirán aprobación del propietario o administradores de grupo.',
-  'activity:group_tool_option:description' => 'Mostrar un feed de actividad sobre contenidos relacionados al grupo.',
   'group_tools:action:toggle_admin:error:group' => 'El valor ingresado no sirve en un grupo, no puedes editar este grupo o el usuario no es miembro',
   'group_tools:action:toggle_admin:error:remove' => 'Un error desconocido ocurrió mientras se quitaba al usuario como administrador de grupo',
   'group_tools:action:toggle_admin:error:add' => 'Un error desconocido ocurrió mientras se añadía al usuario como administrador de grupo',

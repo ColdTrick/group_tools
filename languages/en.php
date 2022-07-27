@@ -403,9 +403,6 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:invite_members:title' => "Group members can invite",
 	'group_tools:invite_members:description' => "Allow the members of this group to invite new members",
 	'group_tools:invite_members:disclaimer' => "Please note that for closed groups allowing your users to invite new members means they don't require approval by the group owner/admin(s).",
-
-	// group tool option descriptions
-	'activity:group_tool_option:description' => "Show an activity feed about group related content.",
 	
 	// actions
 	// group admins - action

@@ -251,7 +251,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:create_group:tool_presets:blank:description' => 'Kies dit type groep indien je zelf de tools wilt bepalen.',
   'group_tools:group:edit:access' => 'Toegang',
   'group_tools:group:edit:tools' => 'Tools',
-  'activity:group_tool_option:description' => 'Toon een activiteiten stroom van groep gerelateerde content.',
   'group_tools:action:group_tool:presets:saved' => 'Groep tool sets opgeslagen',
   'group_tools:delete_selected' => 'Verwijder selectie',
   'admin:groups:bulk_delete' => 'Bulk groep verwijderen',
