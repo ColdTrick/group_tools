@@ -136,9 +136,6 @@ return [
 			'groups/join' => [
 				'\ColdTrick\GroupTools\Membership::groupJoinAction' => [],
 			],
-			'register' => [
-				'\ColdTrick\GroupTools\Router::allowRegistration' => [],
-			],
 		],
 		'cron' => [
 			'daily' => [
@@ -284,9 +281,6 @@ return [
 			],
 			'relationship/membership_request' => [
 				'\ColdTrick\GroupTools\Views::addJoinMotivationToGroupMembershipRequest' => [],
-			],
-			'resources/account/register' => [
-				'\ColdTrick\GroupTools\Router::allowRegistration' => [],
 			],
 			'resources/groups/all' => [
 				'\ColdTrick\GroupTools\Views::prepareGroupAll' => [],

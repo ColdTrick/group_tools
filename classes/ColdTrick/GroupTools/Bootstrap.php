@@ -7,6 +7,15 @@ use Elgg\DefaultPluginBootstrap;
 class Bootstrap extends DefaultPluginBootstrap {
 	
 	/**
+	 * {@inheritDoc}
+	 */
+	public function load() {
+		$hooks = $this->elgg()->hooks;
+		$hooks->registerHandler('route:config', 'account:register', __NAMESPACE__ . '\Router\GroupInviteRegistrationGatekeeper::register');
+		$hooks->registerHandler('route:config', 'action:register', __NAMESPACE__ . '\Router\GroupInviteRegistrationGatekeeper::register');
+	}
+	
+	/**
 	 * {@inheritdoc}
 	 */
 	public function init() {
