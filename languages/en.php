@@ -282,7 +282,8 @@ To view the group, click here:
 	'group_tools:multiple_admin:profile_actions:remove' => "Remove group admin",
 	'group_tools:multiple_admin:profile_actions:add' => "Add group admin",
 
-	'group_tools:multiple_admin:group_tool_option' => "Enable group admins to assign other group admins",
+	'groups:tool:group_multiple_admin_allow' => "Enable group admins to assign other group admins",
+	'groups:tool:group_multiple_admin_allow:description' => "Allow other group admins to (un)assign group admins. Normally this is only allowed by the group owner.",
 	
 	// group admin approve
 	'group_tools:group:admin_approve:notice' => "New groups need to be approved by a site administrator. You can make/edit the group, but it won't be visible to other users until approved by a site administrator.",
@@ -348,8 +349,8 @@ The reason was:
 	'group_tools:notifications:toggle:site:disabled:link' => "Enable notifications",
 	
 	// group mail
-	'group_tools:tools:mail_members' => "Allow group members to mail other group members",
-	'mail_members:group_tool_option:description' => "This will allow normal group members to send an e-mail to other group members. By default this is limited to group admins.",
+	'groups:tool:mail_members' => "Allow group members to mail other group members",
+	'groups:tool:mail_members:description' => "This will allow normal group members to send an e-mail to other group members. By default this is limited to group admins.",
 	
 	'group_tools:mail:message:from' => "From group",
 
@@ -512,7 +513,8 @@ Currently your notification preferences for this group are: %s",
 	'group_tools:action:domain_based:success' => "The new e-mail domains were saved",
 	
 	// related groups
-	'groups_tools:related_groups:tool_option' => "Show related groups",
+	'groups:tool:related_groups' => "Show related groups",
+	'groups:tool:related_groups:description' => "Show a list of related groups to the members of this group.",
 	
 	'groups_tools:related_groups:none' => "No related groups found.",
 	'group_tools:related_groups:title' => "Related groups",

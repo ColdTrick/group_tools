@@ -27,7 +27,6 @@ class Groups {
 			if (!$entity instanceof \ElggGroup || $entity->owner_guid === elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in()) {
 				// add group tool option
 				$tools[] = new Tool('group_multiple_admin_allow', [
-					'label' => elgg_echo('group_tools:multiple_admin:group_tool_option'),
 					'default_on' => false,
 				]);
 			}
@@ -35,7 +34,6 @@ class Groups {
 		
 		if (group_tools_group_mail_members_enabled()) {
 			$tools[] = new Tool('mail_members', [
-				'label' => elgg_echo('group_tools:tools:mail_members'),
 				'default_on' => false,
 			]);
 		}
@@ -43,7 +41,6 @@ class Groups {
 		// related groups
 		if (elgg_get_plugin_setting('related_groups', 'group_tools') === 'yes') {
 			$tools[] = new \Elgg\Groups\Tool('related_groups', [
-				'label' => elgg_echo('groups_tools:related_groups:tool_option'),
 				'default_on' => false,
 			]);
 		}

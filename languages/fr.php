@@ -6,7 +6,7 @@
 
 return array (
   'group_tools:related_groups:title' => 'Groupes suggérés',
-  'groups_tools:related_groups:tool_option' => 'Indiquer les groupes suggérés',
+  'groups:tool:related_groups' => 'Indiquer les groupes suggérés',
   'groups_tools:related_groups:none' => 'Aucun groupe suggéré trouvé.',
   'group_tools:related_groups:form:description' => 'Vous pouvez chercher dans les suggestions de groupes, sélectionnez en un et cliquez sur Ajouter.',
   'group_tools:joinrequest:already' => 'Supprimer l\'invitation du membre',

@@ -54,7 +54,7 @@ Para visualizar a comunidade, clique neste link:
   'group_tools:multiple_admin:group_admins' => 'Proprietários da comunidade',
   'group_tools:multiple_admin:profile_actions:remove' => 'Remover proprietário',
   'group_tools:multiple_admin:profile_actions:add' => 'Adicionar proprietário',
-  'group_tools:multiple_admin:group_tool_option' => 'Permitir proprietários da comunidade atribuirem outros proprietários',
+  'groups:tool:group_multiple_admin_allow' => 'Permitir proprietários da comunidade atribuirem outros proprietários',
   'group_tools:notifications:title' => 'Notificações da comunidade',
   'group_tools:notifications:disclaimer' => 'Com comunidades de muitos membros, isto pode demorar um pouco.',
   'group_tools:notifications:enable' => 'Habilitar notificações para todos',
