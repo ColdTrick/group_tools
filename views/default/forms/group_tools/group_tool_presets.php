@@ -54,8 +54,8 @@ if (!empty($presets)) {
 		foreach ($group_tools as $group_tool) {
 			$metadata_name = $group_tool->mapMetadataName();
 			
-			echo elgg_view('group_tools/elements/group_tool', [
-				'group_tool' => $group_tool,
+			echo elgg_view('groups/edit/tool', [
+				'tool' => $group_tool,
 				'value' => elgg_extract($metadata_name, $values['tools']),
 				'name' => "params[{$index}][tools][{$metadata_name}]",
 				'class' => 'mbs',
@@ -102,18 +102,20 @@ echo elgg_view_field([
 ]);
 
 foreach ($group_tools as $group_tool) {
-	$group_tool_toggle_name = "params[i][tools][{$group_tool->name}_enable]";
-
-	echo elgg_view('group_tools/elements/group_tool', [
-		'group_tool' => $group_tool,
+	echo elgg_view('groups/edit/tool', [
+		'tool' => $group_tool,
+		'name' => "params[i][tools][{$group_tool->mapMetadataName()}]",
 		'value' => 'no',
-		'name' => $group_tool_toggle_name,
 		'class' => 'mbs',
 	]);
 }
+
 echo '</div>'; // end edit part
 echo '</div>';
 
 // save button
-$footer = elgg_view('input/submit', ['value' => elgg_echo('save')]);
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
 elgg_set_form_footer($footer);

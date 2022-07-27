@@ -40,13 +40,13 @@ foreach ($presets as $index => $preset) {
 
 echo elgg_format_element('div', ['class' => ['group-tools-edit-tools-simple', 'group-tools-simplified-options']], $output);
 
-/* @var $group_option \Elgg\Groups\Tool */
-foreach ($tools as $group_option) {
-	$name = $group_option->mapMetadataName();
+/* @var $tool \Elgg\Groups\Tool */
+foreach ($tools as $tool) {
+	$name = $tool->mapMetadataName();
 	
 	$options = [
-		'group_tool' => $group_option,
-		'value' => 'name',
+		'tool' => $tool,
+		'value' => 'no',
 		'class' => ['hidden'],
 	];
 	
@@ -54,5 +54,5 @@ foreach ($tools as $group_option) {
 		$options['class'] = elgg_extract_class($options, $selected_tools[$name]);
 	}
 	
-	echo elgg_view('group_tools/elements/group_tool', $options);
+	echo elgg_view('groups/edit/tool', $options);
 }

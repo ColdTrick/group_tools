@@ -65,8 +65,8 @@ $preset_descriptions .= elgg_format_element('div', [
 ], $tool_description);
 
 echo elgg_format_element('label', ['class' => 'mbs'], elgg_echo('group_tools:create_group:tool_presets:select')) . ':';
-echo elgg_format_element('div', ['id' => 'group-tools-preset-selector'], $preset_selectors);
-echo elgg_format_element('div', ['id' => 'group-tools-preset-descriptions'], $preset_descriptions);
+echo elgg_format_element('div', ['id' => 'group-tools-preset-selector', 'class' => 'mbs'], $preset_selectors);
+echo elgg_format_element('div', ['id' => 'group-tools-preset-descriptions', 'class' => 'mbs'], $preset_descriptions);
 
 $more_link = elgg_view('output/url', [
 	'text' => elgg_echo('group_tools:create_group:tool_presets:show_more'),
@@ -82,14 +82,13 @@ echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:a
 ]);
 
 $tools_content = '';
-/* @var $group_option \Elgg\Groups\Tool */
-foreach ($tools as $group_option) {
-	$group_option_toggle_name = $group_option->mapMetadataName();
-	$value = 'no';
+/* @var $tool \Elgg\Groups\Tool */
+foreach ($tools as $tool) {
+	$group_option_toggle_name = $tool->mapMetadataName();
 	
 	$options = [
-		'group_tool' => $group_option,
-		'value' => $value,
+		'tool' => $tool,
+		'value' => 'no',
 		'class' => ['mbm'],
 	];
 	
@@ -97,7 +96,7 @@ foreach ($tools as $group_option) {
 		$options['class'] = elgg_extract_class($options, $presets_tools[$group_option_toggle_name]);
 	}
 	
-	$tools_content .= elgg_view('group_tools/elements/group_tool', $options);
+	$tools_content .= elgg_view('groups/edit/tool', $options);
 }
 
 echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:more_header'), $tools_content, ['id' => 'group-tools-preset-more', 'class' => 'hidden']);

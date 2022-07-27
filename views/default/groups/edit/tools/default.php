@@ -2,10 +2,11 @@
 
 $tools = elgg_extract('tools', $vars);
 
-/* @var $group_option \Elgg\Groups\Tool */
-foreach ($tools as $group_option) {
-	echo elgg_view('group_tools/elements/group_tool', [
-		'group_tool' => $group_option,
-		'value' => elgg_extract($group_option->mapMetadataName(), $vars),
+/* @var $tool \Elgg\Groups\Tool */
+foreach ($tools as $tool) {
+	echo elgg_view('groups/edit/tool', [
+		'entity' => elgg_extract('entity', $vars),
+		'tool' => $tool,
+		'value' => elgg_extract($tool->mapMetadataName(), $vars),
 	]);
 }

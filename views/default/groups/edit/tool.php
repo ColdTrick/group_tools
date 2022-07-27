@@ -6,6 +6,7 @@
  * @uses $vars['entity'] \ElggGroup
  * @uses $vars['value']  (optional) tool value
  * @uses $vars['class']  (optional) field class
+ * @uses $vars['name']   (optional) the name of the input
  */
 
 $tool = elgg_extract('tool', $vars);
@@ -18,7 +19,7 @@ echo elgg_view_field([
 	'#label' => $tool->getLabel(),
 	'#help' => $tool->getDescription(),
 	'#class' => elgg_extract_class($vars),
-	'name' => $tool->mapMetadataName(),
+	'name' => elgg_extract('name', $vars, $tool->mapMetadataName()),
 	'value' => 'yes',
 	'default' => 'no',
 	'switch' => true,
