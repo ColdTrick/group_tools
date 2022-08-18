@@ -1,10 +1,12 @@
 <?php
 /**
- * This file was created by Translation Editor v9.0
- * On 2022-02-14 10:51
+ * This file was created by Translation Editor v10.1.1
+ * On 2022-08-18 12:25
  */
 
 return array (
+  'groups:tool:group_multiple_admin_allow:description' => 'Laat groepsbeheerders andere groepsbeheerders beheren. Normaal kan alleen de groepseigenaar dit beheren.',
+  'groups:tool:related_groups:description' => 'Toon een lijst met gerelateerde groepen aan de leden van deze groep.',
   'group_tools:welcome_message:notifications' => 'Activiteiten binnen deze groep kunnen notificaties versturen.
 Op dit moment staan je notificatie voorkeuren voor deze groep: %s',
   'group_tools:upgrade:2021071401:title' => 'Migreer de groep plugin instellingen voor Group Tools',
