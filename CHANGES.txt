@@ -1,6 +1,11 @@
 Version history
 ===============
 
+16.0 (2022-08-24):
+
+- changed: registration with group invite
+- changed: updated for Elgg 4.3
+
 15.1.1 (2022-07-12):
 
 - several small chores/fixes
