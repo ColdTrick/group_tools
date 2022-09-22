@@ -130,7 +130,7 @@ class Title {
 		
 		// we're on a group profile page, but haven't found the invite button yet
 		// so check if it should be here
-		if (group_tools_allow_members_invite($entity)) {
+		if (!group_tools_allow_members_invite($entity)) {
 			return;
 		}
 		
