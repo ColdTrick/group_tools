@@ -352,6 +352,7 @@ The reason was:
 	'groups:tool:mail_members' => "Allow group members to mail other group members",
 	'groups:tool:mail_members:description' => "This will allow normal group members to send an e-mail to other group members. By default this is limited to group admins.",
 	
+	'group_tools:mail:message:default_subject' => "Notification from the group %s",
 	'group_tools:mail:message:from' => "From group",
 
 	'group_tools:mail:title' => "Send a mail to the group members",

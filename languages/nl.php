@@ -1,10 +1,11 @@
 <?php
 /**
- * This file was created by Translation Editor v10.1.1
- * On 2022-08-18 12:25
+ * This file was created by Translation Editor v11.0
+ * On 2022-09-26 11:59
  */
 
 return array (
+  'group_tools:mail:message:default_subject' => 'Bericht uit de groep %s',
   'groups:tool:group_multiple_admin_allow:description' => 'Laat groepsbeheerders andere groepsbeheerders beheren. Normaal kan alleen de groepseigenaar dit beheren.',
   'groups:tool:related_groups:description' => 'Toon een lijst met gerelateerde groepen aan de leden van deze groep.',
   'group_tools:welcome_message:notifications' => 'Activiteiten binnen deze groep kunnen notificaties versturen.

@@ -295,7 +295,7 @@ return [
 		],
 		'object' => [
 			'group_tools_group_mail' => [
-				'enqueue' => GroupMailEnqueueNotificationEventHandler::class,
+				'enqueue-mail' => GroupMailEnqueueNotificationEventHandler::class,
 			],
 		]
 	],

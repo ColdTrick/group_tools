@@ -21,7 +21,7 @@ class GroupMail extends ElggObject {
 	 * @return string
 	 */
 	public function getSubject() {
-		return $this->title;
+		return $this->title ?? elgg_echo('group_tools:mail:message:default_subject', [$this->getContainerEntity()->getDisplayName()]);
 	}
 	
 	/**
@@ -95,7 +95,7 @@ class GroupMail extends ElggObject {
 			return false;
 		}
 		
-		elgg_trigger_event('enqueue', 'object', $this);
+		elgg_trigger_event('enqueue-mail', 'object', $this);
 		
 		return true;
 	}
