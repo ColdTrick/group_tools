@@ -32,7 +32,6 @@ return [
 		'mail' => 'no',
 		'mail_members' => 'no',
 		'related_groups' => 'yes',
-		'member_export' => 'no',
 		'admin_approve' => 'no',
 		'creation_reason' => 0,
 		'concept_groups' => 0,
@@ -69,7 +68,6 @@ return [
 		'group_tools/mail' => [],
 		'group_tools/related_groups' => [],
 		'group_tools/remove_related_groups' => [],
-		'group_tools/member_export' => [],
 		'group_tools/toggle_notifications' => [],
 		'group_tools/mark_not_stale' => [],
 		'group_tools/join_motivation' => [],
@@ -239,7 +237,6 @@ return [
 			'menu:title' => [
 				'\ColdTrick\GroupTools\Menus\Title::addGroupToolPresets' => [],
 				'\ColdTrick\GroupTools\Menus\Title::conceptGroup' => ['priority' => 9999],
-				'\ColdTrick\GroupTools\Menus\Title::exportGroupMembers' => ['priority' => 501],
 				'\ColdTrick\GroupTools\Menus\Title::groupAdminStatus' => ['priority' => 501],
 				'\ColdTrick\GroupTools\Menus\Title::groupInvite' => ['priority' => 501],
 				'\ColdTrick\GroupTools\Menus\Title::groupMembership' => ['priority' => 501],

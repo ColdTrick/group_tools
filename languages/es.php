@@ -59,8 +59,6 @@ return array (
   'group_tools:settings:fix:all:description' => 'Corregir todos los problemas seleccionados de una sola vez.',
   'group_tools:settings:fix_it' => 'Corregir esto',
   'group_tools:settings:fix:all' => 'Corregir todos los problemas',
-  'group_tools:settings:member_export' => 'Permitir a los administradores de grupo exportar la información de los miembros',
-  'group_tools:settings:member_export:description' => 'Esto incluye el nombre, usuario y correo electrónico de los usuarios.',
   'group_tools:settings:admin_approve' => 'Los administradores de usuario necesitan aprobar nuevos grupos',
   'group_tools:settings:admin_approve:description' => 'Cualquier usuario puede crear un grupo, pero un administrador del sitio debe aprobarlo',
   'group_tools:admin:group_tool_presets:description' => 'Aquí puedes configurar las herramientas predefinidas del grupo.
@@ -266,7 +264,6 @@ La razón fue:
   'group_tools:action:remove_related_groups:success' => 'Este grupo no está más relacionado',
   'group_tools:action:group_tool:presets:saved' => 'Se han guardado las nuevas configuraciones predefinidas para las herramientas de grupo',
   'group_tools:forms:members_search:members_search:placeholder' => 'Ingresa el nombre del usuario al que estas buscando',
-  'group_tools:member_export:title_button' => 'Exportar miembros',
   'group_tools:csv_exporter:group_admin:name' => 'Nombre del administrador(es) de grupo',
   'group_tools:csv_exporter:group_admin:email' => 'Correo electrónico del administrador(es) de grupo',
   'group_tools:csv_exporter:group_admin:url' => 'Url del perfil del administrador(es) de grupo',

@@ -111,9 +111,6 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:fix_it' => "Fix this",
 	'group_tools:settings:fix:all' => "Fix all problems",
 	
-	'group_tools:settings:member_export' => "Allow group admins to export member information",
-	'group_tools:settings:member_export:description' => "This includes the name, username and email address of the user.",
-	
 	'group_tools:settings:admin_approve' => "Site administrators need to approve new groups",
 	'group_tools:settings:admin_approve:description' => "Any user can create a group, but a site administrator has to approve the new group",
 	
@@ -540,9 +537,6 @@ Currently your notification preferences for this group are: %s",
 	'group_tools:action:group_tool:presets:saved' => "New group tool presets saved",
 	
 	'group_tools:forms:members_search:members_search:placeholder' => "Enter the name or username of the user to search for",
-	
-	// group member export
-	'group_tools:member_export:title_button' => "Export members",
 	
 	// csv exporter
 	'group_tools:csv_exporter:group_admin:name' => "Group admin(s) name",

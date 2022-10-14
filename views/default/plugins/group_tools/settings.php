@@ -82,16 +82,6 @@ $general_fields = [
 		'default' => 'no',
 		'value' => 'yes',
 	],
-	[
-		'#type' => 'checkbox',
-		'#label' => elgg_echo('group_tools:settings:member_export'),
-		'#help' => elgg_echo('group_tools:settings:member_export:description'),
-		'name' => 'params[member_export]',
-		'checked' => $plugin->member_export === 'yes',
-		'switch' => true,
-		'default' => 'no',
-		'value' => 'yes',
-	],
 ];
 
 $general_settings = '';

@@ -208,51 +208,6 @@ class Title {
 	}
 	
 	/**
-	 * add button to export users
-	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
-	 *
-	 * @return void|MenuItems
-	 */
-	public static function exportGroupMembers(\Elgg\Hook $hook) {
-		
-		if (!elgg_in_context('groups')) {
-			return;
-		}
-		
-		$page_owner = elgg_get_page_owner_entity();
-		if (!$page_owner instanceof \ElggGroup) {
-			return;
-		}
-		
-		// group member export
-		$group_members_page = elgg_generate_url('collection:user:user:group_members', [
-			'guid' => $page_owner->guid,
-		]);
-		if (strpos(elgg_get_current_url(), $group_members_page) === false) {
-			return;
-		}
-		
-		if (!$page_owner->canEdit() || elgg_get_plugin_setting('member_export', 'group_tools') !== 'yes') {
-			return;
-		}
-		
-		$return = $hook->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'member_export',
-			'icon' => 'download',
-			'text' => elgg_echo('group_tools:member_export:title_button'),
-			'href' => elgg_generate_action_url('group_tools/member_export', [
-				'group_guid' => $page_owner->guid,
-			]),
-			'link_class' => 'elgg-button elgg-button-action',
-		]);
-		
-		return $return;
-	}
-	
-	/**
 	 * Change title menu buttons for a group pending admin approval
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'menu:title'

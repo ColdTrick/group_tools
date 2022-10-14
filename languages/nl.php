@@ -238,9 +238,6 @@ De groep kun je hier vinden:
 De groep kun je hier vinden:
 %s',
   'group_tools:groups:membershipreq:kill_request:prompt' => 'Optioneel kun je een reden opgeven voor het afwijzen.',
-  'group_tools:settings:member_export' => 'Groepsbeheerders mogen leden informatie exporteren',
-  'group_tools:settings:member_export:description' => 'Dit bevat onder andere de naam, gebruikersnaam en e-mailadres van de gebruiker',
-  'group_tools:member_export:title_button' => 'Exporteer leden',
   'admin:groups:tool_presets' => 'Groep tool set',
   'group_tools:admin:group_tool_presets:description' => 'Hier kun je sets van groep tools definiëren.
 Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de vooraf gedefinieerde sets om zo snel en eenvoudig de juiste tools te krijgen. Er is automatisch een keuze voor een lege groep zodat de gebruiker een eigen keuze kan maken',
