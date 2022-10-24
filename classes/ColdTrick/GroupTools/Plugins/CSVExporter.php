@@ -120,9 +120,14 @@ class CSVExporter {
 			return;
 		}
 		
+		$postfix = elgg_echo('csv_exporter:exportable_value:group:postfix');
+		
 		$fields = [
 			elgg_echo('group_tools:csv_exporter:user:group_admin:name') => 'group_tools_user_group_admin_name',
 			elgg_echo('group_tools:csv_exporter:user:group_admin:url') => 'group_tools_user_group_admin_url',
+			
+			// group only values
+			elgg_echo('group_tools:csv_exporter:user:group_role') . $postfix => 'group_tools_user_group_role',
 		];
 		
 		if (!(bool) $hook->getParam('readable', false)) {
@@ -135,11 +140,36 @@ class CSVExporter {
 	}
 	
 	/**
+	 * Allow additional user values to be exported during group member export
+	 *
+	 * @param \Elgg\Hook $hook 'get_exportable_values:group', 'csv_exporter'
+	 *
+	 * @return void|array
+	 */
+	public static function allowUserGroupValues(\Elgg\Hook $hook) {
+		
+		$content_type = $hook->getParam('type');
+		if ($content_type !== 'user') {
+			return;
+		}
+		
+		if (!group_tools_multiple_admin_enabled()) {
+			// group admins not enabled
+			return;
+		}
+		
+		$return = $hook->getValue();
+		$return[] = 'group_tools_user_group_role';
+		
+		return $return;
+	}
+	
+	/**
 	 * Supply the group admin information for the export
 	 *
 	 * @param \Elgg\Hook $hook 'export_value', 'csv_exporter'
 	 *
-	 * @return void|array
+	 * @return void|array|string
 	 */
 	public static function exportGroupAdminsForUsers(\Elgg\Hook $hook) {
 		
@@ -174,7 +204,7 @@ class CSVExporter {
 					$result[] = "\"{$group_admin->getDisplayName()}\"";
 				}
 				return $result;
-				break;
+				
 			case 'group_tools_user_group_admin_url':
 				$result = [];
 				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
@@ -183,7 +213,24 @@ class CSVExporter {
 					$result[] = $group_admin->getURL();
 				}
 				return $result;
-				break;
+				
+			case 'group_tools_user_group_role':
+				$export = $hook->getParam('csv_export');
+				if (!$export instanceof \CSVExport) {
+					return '';
+				}
+				$group = $export->getContainerEntity();
+				if (!$group instanceof \ElggGroup) {
+					return '';
+				}
+				
+				if ($entity->guid === $group->owner_guid) {
+					return 'owner';
+				} elseif ($entity->hasRelationship($group->guid, 'group_admin')) {
+					return 'group admin';
+				}
+				
+				return 'member';
 		}
 	}
 	

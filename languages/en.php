@@ -545,6 +545,7 @@ Currently your notification preferences for this group are: %s",
 	
 	'group_tools:csv_exporter:user:group_admin:name' => "Groups administrated name",
 	'group_tools:csv_exporter:user:group_admin:url' => "Groups administrated url",
+	'group_tools:csv_exporter:user:group_role' => "Role",
 	
 	// group bulk delete
 	'group_tools:action:bulk_delete:success' => "The selected groups were deleted",

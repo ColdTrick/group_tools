@@ -173,6 +173,11 @@ return [
 				'\ColdTrick\GroupTools\Plugins\CSVExporter::addStaleInfo' => [],
 			],
 		],
+		'get_exportable_values:group' => [
+			'csv_exporter' => [
+				'\ColdTrick\GroupTools\Plugins\CSVExporter::allowUserGroupValues' => [],
+			],
+		],
 		'group_tool_widgets' => [
 			'widget_manager' => [
 				'\ColdTrick\GroupTools\Plugins\WidgetManager::groupToolWidgets' => [],
