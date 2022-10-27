@@ -1,6 +1,11 @@
 Version history
 ===============
 
+16.1 (2022-10-27):
+
+- added: csv exporter support for group role during group member export
+- removed: group member export
+
 16.0.1 (2022-10-07):
 
 - fixed: deadloop during sending of GroupMail
