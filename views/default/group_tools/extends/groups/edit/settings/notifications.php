@@ -3,6 +3,9 @@
  * Set notification settings of group members, only admins can change this for all the current members
  */
 
+use Elgg\Database\QueryBuilder;
+use Elgg\Notifications\SubscriptionsService;
+
 if (!elgg_is_admin_logged_in()) {
 	return;
 }
@@ -13,7 +16,7 @@ if (empty($methods)) {
 }
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggGroup) {
+if (!$entity instanceof \ElggGroup) {
 	return;
 }
 
@@ -28,21 +31,36 @@ $notification_count = 0;
 
 $options = [];
 foreach ($methods as $method) {
-	
 	// make correct label
 	$label = $method;
 	if (elgg_language_key_exists("notification:method:{$method}")) {
 		$label = elgg_echo("notification:method:{$method}");
 	}
 	
-	if ($entity instanceof ElggGroup) {
-		// add counters
-		$count = count($entity->getSubscribers($method));
-		$notification_count += $count;
-	
-		// append counters to label
-		$label .= ' ' . elgg_echo('group_tools:edit:group:notifications:counter', [$count, $members_count]);
-	}
+	// add counters (can't use $entity->getSubscribers() because of OOM errors on large groups)
+	$count = elgg_count_entities([
+		'wheres' => [
+			function(QueryBuilder $qb, $main_alias) use ($entity) {
+				$rel = $qb->joinRelationshipTable($main_alias, 'guid', null, true);
+				
+				return $qb->compare("{$rel}.guid_two", '=', $entity->guid, ELGG_VALUE_GUID);
+			},
+			function(QueryBuilder $qb, $main_alias) use ($method) {
+				$rel = $qb->joinRelationshipTable($main_alias, 'guid', null, true);
+				
+				$ors = [
+					$qb->compare("{$rel}.relationship", '=', SubscriptionsService::RELATIONSHIP_PREFIX . ':' . $method, ELGG_VALUE_STRING),
+					$qb->compare("{$rel}.relationship", 'like', SubscriptionsService::RELATIONSHIP_PREFIX . ':%:' . $method, ELGG_VALUE_STRING),
+				];
+				
+				return $qb->merge($ors, 'OR');
+			},
+		],
+	]);
+	$notification_count += $count;
+
+	// append counters to label
+	$label .= ' ' . elgg_echo('group_tools:edit:group:notifications:counter', [$count, $members_count]);
 	
 	$options[$label] = $method;
 }
