@@ -1,6 +1,10 @@
 Version history
 ===============
 
+16.1.1 (2022-11-16):
+
+- fixed: OOM errors when editing large groups for admins
+
 16.1 (2022-10-27):
 
 - added: csv exporter support for group role during group member export
