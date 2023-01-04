@@ -484,6 +484,11 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'widgets:group_related:name' => "Related groups",
   	'widgets:group_related:description' => "Show a list of related groups",
 	
+	// a_users_groups (group memberships)
+	'widgets:a_users_groups:sort_by' => "Sort groups by",
+	'widgets:a_users_groups:sort_by:activity' => "Recent personal activity",
+	'widgets:a_users_groups:sort_by:join_date' => "Join date",
+	
 	// welcome message
 	'group_tools:welcome_message:title' => "Group welcome message",
 	'group_tools:welcome_message:description' => "You can configure a welcome message for new users who join this group. If you don't want to send a welcome message leave this field blank.",

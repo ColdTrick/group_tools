@@ -1,10 +1,13 @@
 <?php
 /**
- * This file was created by Translation Editor v11.0
- * On 2022-10-24 15:28
+ * This file was created by Translation Editor v11.0.1
+ * On 2023-01-04 14:11
  */
 
 return array (
+  'widgets:a_users_groups:sort_by' => 'Sorteer de groepen op',
+  'widgets:a_users_groups:sort_by:activity' => 'Recente persoonlijke activiteit',
+  'widgets:a_users_groups:sort_by:join_date' => 'Datum van lidmaatschap',
   'group_tools:csv_exporter:user:group_role' => 'Rol',
   'group_tools:mail:message:default_subject' => 'Bericht uit de groep %s',
   'groups:tool:group_multiple_admin_allow:description' => 'Laat groepsbeheerders andere groepsbeheerders beheren. Normaal kan alleen de groepseigenaar dit beheren.',
