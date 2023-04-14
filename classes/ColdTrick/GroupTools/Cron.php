@@ -6,21 +6,23 @@ use Doctrine\DBAL\Query\QueryBuilder as DBalQueryBuilder;
 use Elgg\Database\QueryBuilder;
 use Elgg\Values;
 
+/**
+ * Cron handler
+ */
 class Cron {
 	
 	/**
 	 * Find the new stale groups and notify the owner
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'daily'
+	 * @param \Elgg\Event $event 'cron', 'daily'
 	 *
 	 * @return void
 	 */
-	public static function notifyStaleGroupOwners(\Elgg\Hook $hook) {
-		
+	public static function notifyStaleGroupOwners(\Elgg\Event $event): void {
 		echo 'Starting GroupTools stale group owners' . PHP_EOL;
 		elgg_log('Starting GroupTools stale group owners', 'NOTICE');
 		
-		$time = (int) $hook->getParam('time', time());
+		$time = (int) $event->getParam('time', time());
 		
 		// get stale groups
 		$groups = elgg_call(ELGG_IGNORE_ACCESS, function() use ($time) {
@@ -37,7 +39,6 @@ class Cron {
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($groups) {
 			// process groups
 			foreach ($groups as $group) {
-				
 				$stale_info = group_tools_get_stale_info($group);
 				if (empty($stale_info)) {
 					// error
@@ -62,21 +63,20 @@ class Cron {
 	 *
 	 * @param int $ts timestamp to compare to
 	 *
-	 * @return false|\ElggGroup[]
+	 * @return \ElggGroup[]
 	 */
-	protected static function findStaleGroups($ts) {
-		
+	protected static function findStaleGroups($ts): array {
 		if (empty($ts)) {
-			return false;
+			return [];
 		}
 		
 		$stale_timeout = (int) elgg_get_plugin_setting('stale_timeout', 'group_tools');
 		if ($stale_timeout < 1) {
-			return false;
+			return [];
 		}
 		
 		$compare_ts_upper = strtotime("-{$stale_timeout} days", $ts);
-		$compare_ts_lower = strtotime("-1 day", $compare_ts_upper);
+		$compare_ts_lower = strtotime('-1 day', $compare_ts_upper);
 		
 		$row_to_guid = function ($row) {
 			return (int) $row->guid;
@@ -84,7 +84,7 @@ class Cron {
 		
 		$group_guids = [];
 		
-		// groups created in timespace
+		// groups created in time window
 		$groups_created = elgg_get_entities([
 			'type' => 'group',
 			'limit' => false,
@@ -96,7 +96,7 @@ class Cron {
 			$group_guids = array_merge($group_guids, $groups_created);
 		}
 		
-		// groups with touch in timespace
+		// groups with touch in time window
 		$groups_touch_ts = elgg_get_entities([
 			'type' => 'group',
 			'limit' => false,
@@ -118,7 +118,7 @@ class Cron {
 			$group_guids = array_merge($group_guids, $groups_touch_ts);
 		}
 		
-		// groups with last content in timespace
+		// groups with last content in time window
 		$searchable_objects = StaleInfo::getObjectSubtypes();
 		$object_subtypes = [];
 		foreach ($searchable_objects as $subtype) {
@@ -164,7 +164,7 @@ class Cron {
 			}
 		}
 		
-		// groups with last comments/discussion_replies in timespace
+		// groups with last comments/discussion_replies in time window
 		$group_comments_ts = elgg_get_entities([
 			'type' => 'group',
 			'limit' => false,
@@ -195,7 +195,7 @@ class Cron {
 		
 		$group_guids = array_unique($group_guids);
 		if (empty($group_guids)) {
-			return false;
+			return [];
 		}
 		
 		return elgg_get_entities([
@@ -209,16 +209,11 @@ class Cron {
 	/**
 	 * Notify the owner of the group
 	 *
-	 * @param \ElggGroup $entity
+	 * @param \ElggGroup $entity the group to notify the owner of
 	 *
 	 * @return void
 	 */
-	protected static function notifyStaleGroupOwner(\ElggGroup $entity) {
-		
-		if (!$entity instanceof \ElggGroup) {
-			return;
-		}
-		
+	protected static function notifyStaleGroupOwner(\ElggGroup $entity): void {
 		$owner = $entity->getOwnerEntity();
 		if (!$owner instanceof \ElggUser) {
 			return;
@@ -244,12 +239,11 @@ class Cron {
 	/**
 	 * Remove the expired concept groups
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'daily'
+	 * @param \Elgg\Event $event 'cron', 'daily'
 	 *
 	 * @return void
 	 */
-	public static function removeExpiredConceptGroups(\Elgg\Hook $hook) {
-		
+	public static function removeExpiredConceptGroups(\Elgg\Event $event): void {
 		$days = (int) elgg_get_plugin_setting('concept_groups_retention', 'group_tools');
 		if ($days < 1) {
 			return;
@@ -274,7 +268,9 @@ class Cron {
 			]);
 			/* @var $group \ElggGroup */
 			foreach ($groups as $group) {
-				$group->delete();
+				if (!$group->delete()) {
+					$groups->reportFailure();
+				}
 			}
 		});
 		
@@ -285,12 +281,11 @@ class Cron {
 	/**
 	 * Notify the owners of concept groups to make their group public
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'weekly'
+	 * @param \Elgg\Event $event 'cron', 'weekly'
 	 *
 	 * @return void
 	 */
-	public static function notifyConceptGroupOwners(\Elgg\Hook $hook) {
-		
+	public static function notifyConceptGroupOwners(\Elgg\Event $event): void {
 		if (!(bool) elgg_get_plugin_setting('concept_groups', 'group_tools')) {
 			return;
 		}

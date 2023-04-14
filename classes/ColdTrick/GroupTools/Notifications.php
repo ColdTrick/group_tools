@@ -4,23 +4,26 @@ namespace ColdTrick\GroupTools;
 
 use Elgg\Notifications\NotificationEvent;
 
+/**
+ * Notification event handler
+ */
 class Notifications {
 	
 	/**
-	 * Send a confirmation notification the the owner of the group that admin approval is now pending
+	 * Send a confirmation notification to the owner of the group that admin approval is now pending
 	 *
-	 * @param \Elgg\Hook $hook 'send:after', 'notifications'
+	 * @param \Elgg\Event $event 'send:after', 'notifications'
 	 *
 	 * @return void
 	 */
-	public static function sendConfirmationOfGroupAdminApprovalToOwner(\Elgg\Hook $hook) {
-		$event = $hook->getParam('event');
-		if (!$event instanceof NotificationEvent) {
+	public static function sendConfirmationOfGroupAdminApprovalToOwner(\Elgg\Event $event): void {
+		$notification_event = $event->getParam('event');
+		if (!$notification_event instanceof NotificationEvent) {
 			return;
 		}
 		
-		$object = $event->getObject();
-		if ($event->getAction() !== 'admin_approval' || !$object instanceof \ElggGroup || $object->access_id !== ACCESS_PRIVATE) {
+		$object = $notification_event->getObject();
+		if ($notification_event->getAction() !== 'admin_approval' || !$object instanceof \ElggGroup || $object->access_id !== ACCESS_PRIVATE) {
 			return;
 		}
 		

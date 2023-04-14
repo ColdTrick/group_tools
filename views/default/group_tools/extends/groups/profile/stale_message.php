@@ -1,7 +1,7 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggGroup) {
+if (!$entity instanceof \ElggGroup) {
 	return;
 }
 
@@ -18,7 +18,8 @@ $link = '';
 
 if ($entity->canEdit()) {
 	$link = elgg_view('output/url', [
-		'text' => elgg_view_icon('exclamation-triangle') . elgg_echo('group_tools:stale_info:link'),
+		'icon' => 'exclamation-triangle',
+		'text' => elgg_echo('group_tools:stale_info:link'),
 		'href' => elgg_generate_action_url('group_tools/mark_not_stale', [
 			'guid' => $entity->guid,
 		]),

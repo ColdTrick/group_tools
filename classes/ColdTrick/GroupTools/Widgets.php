@@ -2,19 +2,21 @@
 
 namespace ColdTrick\GroupTools;
 
+/**
+ * Widget event handler
+ */
 class Widgets {
 	
 	/**
 	 * Unregister the related groups widget when needed
 	 *
-	 * @param \Elgg\Hook $hook 'handlers', 'widgets'
+	 * @param \Elgg\Event $event 'handlers', 'widgets'
 	 *
-	 * @return void|\Elgg\WidgetDefinition[]
+	 * @return null|\Elgg\WidgetDefinition[]
 	 */
-	public static function unregisterRelatedGroupsWidget(\Elgg\Hook $hook) {
-		
-		if ($hook->getParam('context') !== 'groups') {
-			return;
+	public static function unregisterRelatedGroupsWidget(\Elgg\Event $event): ?array {
+		if ($event->getParam('context') !== 'groups') {
+			return null;
 		}
 		
 		$remove = false;
@@ -23,7 +25,7 @@ class Widgets {
 			$remove = true;
 		}
 		
-		$container = $hook->getParam('container');
+		$container = $event->getParam('container');
 		if (!$remove && $container instanceof \ElggGroup) {
 			// check if group has tool enabled
 			if (!$container->isToolEnabled('related_groups')) {
@@ -32,11 +34,11 @@ class Widgets {
 		}
 		
 		if (!$remove) {
-			return;
+			return null;
 		}
 		
 		/* @var $result \Elgg\WidgetDefinition[] */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		foreach ($result as $index => $definition) {
 			if ($definition->id !== 'group_related') {
 				continue;
@@ -52,14 +54,13 @@ class Widgets {
 	/**
 	 * Unregister the groups activity widget because our version is better
 	 *
-	 * @param \Elgg\Hook $hook 'handlers', 'widgets'
+	 * @param \Elgg\Event $event 'handlers', 'widgets'
 	 *
-	 * @return void|\Elgg\WidgetDefinition[]
+	 * @return null|\Elgg\WidgetDefinition[]
 	 */
-	public static function unregisterGroupActivityWidget(\Elgg\Hook $hook) {
-		
+	public static function unregisterGroupActivityWidget(\Elgg\Event $event): ?array {
 		/* @var $result \Elgg\WidgetDefinition[] */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		foreach ($result as $index => $definition) {
 			if ($definition->id !== 'group_activity') {
 				continue;
@@ -75,20 +76,19 @@ class Widgets {
 	/**
 	 * Set the title URL for the group tools widgets
 	 *
-	 * @param \Elgg\Hook $hook 'entity:url', 'object'
+	 * @param \Elgg\Event $event 'entity:url', 'object'
 	 *
-	 * @return void|string
+	 * @return null|string
 	 */
-	public static function widgetURL(\Elgg\Hook $hook) {
-		
-		if (!empty($hook->getValue())) {
+	public static function widgetURL(\Elgg\Event $event): ?string {
+		if (!empty($event->getValue())) {
 			// someone already set an url
-			return;
+			return null;
 		}
 		
-		$widget = $hook->getEntityParam();
+		$widget = $event->getEntityParam();
 		if (!$widget instanceof \ElggWidget) {
-			return;
+			return null;
 		}
 		
 		switch ($widget->handler) {
@@ -105,6 +105,7 @@ class Widgets {
 					]);
 				}
 				break;
+				
 			case 'group_river_widget':
 				if ($widget->context !== 'groups') {
 					$group_guid = (int) $widget->group_guid;
@@ -121,6 +122,7 @@ class Widgets {
 					}
 				}
 				break;
+				
 			case 'index_groups':
 				return elgg_generate_url('collection:group:group:all');
 				
@@ -137,11 +139,13 @@ class Widgets {
 					]);
 				}
 				break;
+				
 			case 'group_related':
 				return elgg_generate_url('collection:group:group:related', [
 					'guid' => $widget->owner_guid,
 				]);
-				break;
 		}
+		
+		return null;
 	}
 }

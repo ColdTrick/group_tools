@@ -2,42 +2,45 @@
 
 namespace ColdTrick\GroupTools;
 
+use Elgg\Notifications\Notification;
 use Elgg\Notifications\NotificationEvent;
 use Elgg\Database\QueryBuilder;
 
+/**
+ * Modifications for group admins
+ */
 class GroupAdmins {
 	
 	/**
 	 * Add group admins to the notifications about a membership request
 	 *
-	 * @param \Elgg\Hook $hook 'get', 'subscriptions'
+	 * @param \Elgg\Event $event 'get', 'subscriptions'
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	public static function addGroupAdminsToMembershipRequest(\Elgg\Hook $hook) {
-		
-		$event = $hook->getParam('event');
-		if (!$event instanceof NotificationEvent) {
-			return;
+	public static function addGroupAdminsToMembershipRequest(\Elgg\Event $event): ?array {
+		$notification_event = $event->getParam('event');
+		if (!$notification_event instanceof NotificationEvent) {
+			return null;
 		}
 		
-		$action = $event->getAction();
-		$entity = $event->getObject();
+		$action = $notification_event->getAction();
+		$entity = $notification_event->getObject();
 		if ($action !== 'membership_request' || !$entity instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
 		// only send a message if group admins are allowed
 		if (!group_tools_multiple_admin_enabled()) {
-			return;
+			return null;
 		}
 		
 		$group_subscriptions = elgg_get_subscriptions_for_container($entity->guid);
 		if (empty($group_subscriptions)) {
-			return;
+			return null;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		// get group admins
 		$group_admins = elgg_get_entities([
@@ -74,34 +77,33 @@ class GroupAdmins {
 	/**
 	 * Prepare the notification message to group admins when a membershiprequest is made
 	 *
-	 * @param \Elgg\Hook $hook 'prepare', 'notification:membership_request:group:group'
+	 * @param \Elgg\Event $event 'prepare', 'notification:membership_request:group:group'
 	 *
-	 * @return void|\Elgg\Notifications\Notification
+	 * @return null|Notification
 	 */
-	public static function prepareMembershipRequestMessage(\Elgg\Hook $hook) {
-		
-		$entity = $hook->getParam('object');
-		$recipient = $hook->getParam('recipient'); // group admin (or owner)
+	public static function prepareMembershipRequestMessage(\Elgg\Event $event): ?Notification {
+		$entity = $event->getParam('object');
+		$recipient = $event->getParam('recipient'); // group admin (or owner)
 		if (!$entity instanceof \ElggGroup || !$recipient instanceof \ElggUser) {
-			return;
+			return null;
 		}
 		
 		if ($entity->owner_guid === $recipient->guid) {
 			// owner, message already correct
-			return;
+			return null;
 		}
 		
-		$sender = $hook->getParam('sender'); // user requesting membership
+		$sender = $event->getParam('sender'); // user requesting membership
 		
-		/* @var $return \Elgg\Notifications\Notification */
-		$return = $hook->getValue();
+		/* @var $return Notification */
+		$return = $event->getValue();
 		
 		$return->body = elgg_echo('groups:request:body', [
 			$sender->getDisplayName(),
 			$entity->getDisplayName(),
 			$sender->getURL(),
-			$hook->getParam('url'),
-		], $hook->getParam('language'));
+			$event->getParam('url'),
+		], $event->getParam('language'));
 		
 		return $return;
 	}

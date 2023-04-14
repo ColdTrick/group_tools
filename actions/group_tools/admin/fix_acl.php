@@ -23,6 +23,7 @@ $add_users = function ($data) {
 			if (!$acl instanceof \ElggAccessCollection) {
 				continue;
 			}
+			
 			$acl->addMember($user_data->user_guid);
 		}
 	});
@@ -42,6 +43,7 @@ $remove_users = function ($data) {
 			if (!$acl instanceof \ElggAccessCollection) {
 				continue;
 			}
+			
 			$acl->removeMember($user_data->user_guid);
 		}
 	});
@@ -55,10 +57,9 @@ switch ($fix) {
 			$add_users($missing_users);
 			
 			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
-		} else {
-			return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:missing:nothing'));
 		}
-		break;
+		return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:missing:nothing'));
+	
 	case 'excess':
 		// users with access to group content, but no longer member
 		$excess_users = group_tools_get_excess_acl_users();
@@ -66,10 +67,9 @@ switch ($fix) {
 			$remove_users($excess_users);
 			
 			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
-		} else {
-			return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:excess:nothing'));
 		}
-		break;
+		return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:excess:nothing'));
+		
 	case 'without':
 		// groups without acl
 		$groups = group_tools_get_groups_without_acl();
@@ -86,10 +86,9 @@ switch ($fix) {
 			}
 			
 			return elgg_ok_response('', elgg_echo('group_tools:action:fix_acl:success:without', [count($groups)]));
-		} else {
-			return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:without:nothing'));
 		}
-		break;
+		return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:without:nothing'));
+		
 	case 'all':
 		// fix all problems
 		
@@ -119,11 +118,9 @@ switch ($fix) {
 			
 			elgg_register_success_message(elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
 		}
-		
 		break;
 	default:
 		return elgg_error_response(elgg_echo('group_tools:action:fix_acl:error:input', [$fix]));
-		break;
 }
 
 return elgg_ok_response();

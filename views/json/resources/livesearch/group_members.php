@@ -10,7 +10,7 @@ $input_name = elgg_extract('name', $vars);
 $target_guid = (int) elgg_extract('match_target', $vars);
 
 $target = get_entity($target_guid);
-if (!$target instanceof ElggGroup) {
+if (!$target instanceof \ElggGroup) {
 	throw new EntityNotFoundException();
 }
 

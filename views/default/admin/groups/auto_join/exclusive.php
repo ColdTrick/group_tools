@@ -7,7 +7,6 @@ $content = elgg_view('output/longtext', [
 $output = '';
 $configs = group_tools_get_auto_join_configurations();
 foreach ($configs as $id => $config) {
-	
 	if (elgg_extract('type', $config) !== 'exclusive') {
 		continue;
 	}

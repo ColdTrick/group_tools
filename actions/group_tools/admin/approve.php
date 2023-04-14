@@ -6,7 +6,7 @@
 $group_guid = (int) get_input('guid');
 
 $group = get_entity($group_guid);
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 

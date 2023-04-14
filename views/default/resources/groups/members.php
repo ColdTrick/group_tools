@@ -5,13 +5,7 @@
 
 use Elgg\Database\QueryBuilder;
 
-$guid = (int) elgg_extract('guid', $vars);
-
-elgg_entity_gatekeeper($guid, 'group');
-
-$group = get_entity($guid);
-
-elgg_set_page_owner_guid($guid);
+$group = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
@@ -43,14 +37,14 @@ $options = [
 if ($filter === 'group_admins') {
 	$options['wheres'] = [
 		function (QueryBuilder $qb, $main_alias) use ($group) {
-			$owner = $qb->compare("e.guid", '=', $group->owner_guid, ELGG_VALUE_GUID);
+			$owner = $qb->compare("{$main_alias}.guid_one", '=', $group->owner_guid, ELGG_VALUE_GUID);
 			
 			$admin_query = $qb->subquery('entity_relationships')
 				->select('guid_one')
 				->where($qb->compare('relationship', '=', 'group_admin', ELGG_VALUE_STRING))
 				->andWhere($qb->compare('guid_two', '=', $group->guid, ELGG_VALUE_GUID));
 			
-			$admins = $qb->compare("e.guid", 'IN', $admin_query->getSQL());
+			$admins = $qb->compare("{$main_alias}.guid_one", 'IN', $admin_query->getSQL());
 			
 			return $qb->merge([$owner, $admins], 'OR');
 		},
@@ -86,7 +80,7 @@ if (elgg_is_xhr() && isset($members_search)) {
 
 $form = elgg_view_form('group_tools/members_search', [
 	'action' => elgg_http_add_url_query_elements(elgg_get_current_url(), [
-		'guid' => $guid,
+		'guid' => $group->guid,
 	]),
 	'disable_security' => true,
 	'prevent_double_submit' => false,

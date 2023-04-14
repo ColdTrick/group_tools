@@ -11,7 +11,7 @@ if (!in_array($setting, ['yes_off', 'yes_on'])) {
 
 $invite_members = $setting === 'yes_off' ? 'no' : 'yes';
 $group = elgg_extract('entity', $vars);
-if ($group instanceof ElggGroup) {
+if ($group instanceof \ElggGroup) {
 	$invite_members = $group->getPluginSetting('group_tools', 'invite_members', $invite_members);
 }
 

@@ -5,7 +5,7 @@
  */
 
 $user = elgg_extract('entity', $vars);
-if (!$user instanceof ElggUser || $user->guid !== elgg_get_logged_in_user_guid()) {
+if (!$user instanceof \ElggUser || $user->guid !== elgg_get_logged_in_user_guid()) {
 	// only show this form on the current user's page (only applies to admins)
 	return;
 }

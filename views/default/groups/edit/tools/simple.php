@@ -2,7 +2,6 @@
 
 $tools = elgg_extract('tools', $vars);
 $presets = elgg_extract('presets', $vars);
-
 if (empty($presets)) {
 	return;
 }

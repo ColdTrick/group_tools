@@ -8,12 +8,12 @@
  */
 
 $annotation = elgg_extract('annotation', $vars);
-if (!$annotation instanceof ElggAnnotation) {
+if (!$annotation instanceof \ElggAnnotation) {
 	return;
 }
 
 $owner = $annotation->getOwnerEntity();
-if (!$owner instanceof ElggGroup) {
+if (!$owner instanceof \ElggGroup) {
 	return;
 }
 
@@ -36,6 +36,7 @@ if ($page_owner->guid !== $owner->guid) {
 		'value' => $email,
 	]);
 }
+
 $title = elgg_format_element('h4', [], $title_text);
 
 $menu = elgg_view_menu('annotation', [
@@ -44,14 +45,8 @@ $menu = elgg_view_menu('annotation', [
 ]);
 
 $friendlytime = elgg_view_friendly_time($annotation->time_created);
+$friendlytime = elgg_format_element('span', ['class' => 'elgg-subtext'], $friendlytime);
 
-$body = <<<HTML
-<div class="mbn">
-	$title
-	<span class="elgg-subtext">
-		$friendlytime
-	</span>
-</div>
-HTML;
+$body = elgg_format_element('div', ['class' => 'mbn'], $title . $friendlytime);
 
 echo elgg_view_image_block($icon, $body, ['image_alt' => $menu]);

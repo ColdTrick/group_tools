@@ -1,14 +1,14 @@
 <?php
-use Elgg\Values;
-
 /**
  * Show a notice that the group is in concept
  *
  * @uses $vars['entity'] the group
  */
 
+use Elgg\Values;
+
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggGroup || !$entity->canEdit()) {
+if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
 	return;
 }
 

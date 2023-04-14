@@ -4,6 +4,9 @@ namespace ColdTrick\GroupTools;
 
 use Elgg\Database\QueryBuilder;
 
+/**
+ * Group membership event handler
+ */
 class Membership {
 	
 	/**
@@ -20,8 +23,7 @@ class Membership {
 	 *
 	 * @return void
 	 */
-	public static function deleteRequest(\Elgg\Event $event) {
-		
+	public static function deleteRequest(\Elgg\Event $event): void {
 		$relationship = $event->getObject();
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'membership_request') {
 			// not a membership request
@@ -36,7 +38,7 @@ class Membership {
 		
 		$logged_in_user = elgg_get_logged_in_user_entity();
 		if (!$logged_in_user instanceof \ElggUser) {
-			// some backgroup process is cleaning this
+			// some background process is cleaning this
 			return;
 		}
 		
@@ -92,13 +94,11 @@ class Membership {
 	 *
 	 * @return void
 	 */
-	public static function groupJoin(\Elgg\Event $event) {
-		
+	public static function groupJoin(\Elgg\Event $event): void {
 		$params = $event->getObject();
 		
 		$user = elgg_extract('user', $params);
 		$group = elgg_extract('group', $params);
-		
 		if (!$user instanceof \ElggUser || !$group instanceof \ElggGroup) {
 			return;
 		}
@@ -123,7 +123,7 @@ class Membership {
 	 *
 	 * @return void
 	 */
-	protected static function notificationsToggle(\ElggUser $user, \ElggGroup $group) {
+	protected static function notificationsToggle(\ElggUser $user, \ElggGroup $group): void {
 		static $register_once;
 		
 		if (!isset(self::$NOTIFICATIONS_TOGGLE)) {
@@ -163,21 +163,20 @@ class Membership {
 			
 			$register_once = true;
 			
-			elgg_register_plugin_hook_handler('invite_notification', 'group_tools', self::class . '::notificationAddedGroup');
-			elgg_register_plugin_hook_handler('email', 'system', self::class . '::notificationEmail', 400);
+			elgg_register_event_handler('invite_notification', 'group_tools', self::class . '::notificationAddedGroup');
+			elgg_register_event_handler('email', 'system', self::class . '::notificationEmail', 400);
 		}
 	}
 	
 	/**
 	 * Cleanup group invitations and membershiprequests
 	 *
-	 * @param \ElggUser  $user  the user to cleanup for
-	 * @param \ElggGroup $group the group to cleanup on
+	 * @param \ElggUser  $user  the user to clean up for
+	 * @param \ElggGroup $group the group to clean up on
 	 *
 	 * @return void
 	 */
-	protected static function cleanupGroupInvites(\ElggUser $user, \ElggGroup $group) {
-		
+	protected static function cleanupGroupInvites(\ElggUser $user, \ElggGroup $group): void {
 		// cleanup invites
 		$group->removeRelationship($user->guid, 'invited');
 		
@@ -219,16 +218,15 @@ class Membership {
 	 *
 	 * @return void
 	 */
-	protected static function sendWelcomeMessage(\ElggUser $recipient, \ElggGroup $group) {
-		
-		// get welcome messgae
+	protected static function sendWelcomeMessage(\ElggUser $recipient, \ElggGroup $group): void {
+		// get welcome message
 		$welcome_message = $group->getPluginSetting('group_tools', 'welcome_message', '');
 		$check_message = trim(strip_tags($welcome_message));
 		if (empty($check_message)) {
 			return;
 		}
 		
-		// replace the place holders
+		// replace the placeholders
 		$welcome_message = str_ireplace('[name]', $recipient->getDisplayName(), $welcome_message);
 		$welcome_message = str_ireplace('[group_name]', $group->getDisplayName(), $welcome_message);
 		$welcome_message = str_ireplace('[group_url]', $group->getURL(), $welcome_message);
@@ -240,6 +238,7 @@ class Membership {
 		} else {
 			$subscription = elgg_echo('off', [], $recipient->getLanguage());
 		}
+		
 		$subscription = elgg_format_element('b', [], $subscription);
 		
 		$welcome_message .= PHP_EOL . PHP_EOL . elgg_echo('group_tools:welcome_message:notifications', [
@@ -266,24 +265,23 @@ class Membership {
 	 *
 	 * @return bool
 	 */
-	protected static function validateSiteJoinRelationship($relationship) {
+	protected static function validateSiteJoinRelationship($relationship): bool {
 		
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'member_of_site') {
 			return false;
 		}
 		
-		return (bool) get_user($relationship->guid_one) instanceof \ElggUser;
+		return get_user($relationship->guid_one) instanceof \ElggUser;
 	}
 	
 	/**
-	 * Listen to the create user
+	 * Listen to the validate user event
 	 *
 	 * @param \Elgg\Event $event 'validate:after', 'user'
 	 *
 	 * @return void
 	 */
-	public static function autoJoinGroups(\Elgg\Event $event) {
-		
+	public static function autoJoinGroups(\Elgg\Event $event): void {
 		$user = $event->getObject();
 		if (!$user instanceof \ElggUser) {
 			return;
@@ -299,17 +297,16 @@ class Membership {
 	/**
 	 * Handle the auto join groups for users
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'fiveminute'
+	 * @param \Elgg\Event $event 'cron', 'fiveminute'
 	 *
 	 * @return void
 	 */
-	public static function autoJoinGroupsCron(\Elgg\Hook $hook) {
-		
-		$time = (int) $hook->getParam('time', time());
+	public static function autoJoinGroupsCron(\Elgg\Event $event): void {
+		$time = (int) $event->getParam('time', time());
 		
 		// ignore access
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($time) {
-			
+			/* @var $batch \ElggBatch */
 			$batch = elgg_get_entities([
 				'type' => 'user',
 				'limit' => false,
@@ -318,10 +315,10 @@ class Membership {
 				'metadata_name_value_pairs' => [
 					'group_tools_check_auto_joins' => true,
 				],
-				'created_time_upper' => ($time), // 5 minute delay
+				'created_time_upper' => $time, // 5 minute delay
 			]);
 			
-			$auto_join = false;
+			$auto_join = null;
 			
 			/* @var $user \ElggUser */
 			foreach ($batch as $user) {
@@ -362,15 +359,14 @@ class Membership {
 	 *
 	 * @return void
 	 */
-	public static function autoJoinGroupsLogin(\Elgg\Event $event) {
-		
+	public static function autoJoinGroupsLogin(\Elgg\Event $event): void {
 		$user = $event->getObject();
 		if (!$user instanceof \ElggUser) {
 			return;
 		}
 		
 		if (!isset($user->group_tools_check_auto_joins)) {
-			// user is already proccessed
+			// user is already processed
 			return;
 		}
 		
@@ -402,14 +398,13 @@ class Membership {
 	}
 	
 	/**
-	 * Listen to the create member_of_site relationship event to handle new users
+	 * Listen to the validate user event to handle new users
 	 *
 	 * @param \Elgg\Event $event 'validate:after', 'user'
 	 *
 	 * @return void
 	 */
-	public static function createUserEmailInvitedGroups(\Elgg\Event $event) {
-		
+	public static function createUserEmailInvitedGroups(\Elgg\Event $event): void {
 		$user = $event->getObject();
 		if ($user instanceof \ElggUser) {
 			return;
@@ -431,14 +426,13 @@ class Membership {
 	}
 	
 	/**
-	 * Listen to the create member_of_site relationship event to handle new users
+	 * Listen to the create user event to handle new users
 	 *
 	 * @param \Elgg\Event $event 'create', 'user'
 	 *
 	 * @return void
 	 */
-	public static function createUserGroupInviteCode(\Elgg\Event $event) {
-		
+	public static function createUserGroupInviteCode(\Elgg\Event $event): void {
 		$user = $event->getObject();
 		if (!$user instanceof \ElggUser) {
 			return;
@@ -481,14 +475,13 @@ class Membership {
 	}
 	
 	/**
-	 * Listen to the create member_of_site relationship event to handle new users
+	 * Listen to the validate user event to handle new users
 	 *
 	 * @param \Elgg\Event $event 'validate:after', 'user'
 	 *
 	 * @return void
 	 */
-	public static function createUserDomainBasedGroups(\Elgg\Event $event) {
-		
+	public static function createUserDomainBasedGroups(\Elgg\Event $event): void {
 		$user = $event->getObject();
 		if (!$user instanceof \ElggUser) {
 			return;
@@ -510,51 +503,49 @@ class Membership {
 	}
 	
 	/**
-	 * Register a plugin hook, only during the group/join action
+	 * Register an event handler, only during the group/join action
 	 *
-	 * @param \Elgg\Hook $hook 'action:validate', 'groups/join'
+	 * @param \Elgg\Event $event 'action:validate', 'groups/join'
 	 *
 	 * @return void
 	 */
-	public static function groupJoinAction(\Elgg\Hook $hook) {
-		
-		// hacky way around a short comming of Elgg core to allow users to join a group
+	public static function groupJoinAction(\Elgg\Event $event): void {
+		// hacky way around a shortcoming of Elgg core to allow users to join a group
 		if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
 			return;
 		}
 		
-		elgg_register_plugin_hook_handler('permissions_check', 'group', self::class . '::groupJoinPermission');
+		elgg_register_event_handler('permissions_check', 'group', self::class . '::groupJoinPermission');
 	}
 	
 	/**
-	 * A hook on the ->canEdit() of a group. This is done to allow e-mail domain users to join a group
+	 * An event on the ->canEdit() of a group. This is done to allow e-mail domain users to join a group
 	 *
-	 * Note: this is a very hacky way arround a short comming of Elgg core
+	 * Note: this is a very hacky way around a shortcoming of Elgg core
 	 *
-	 * @param \Elgg\Hook $hook 'permissions_check', 'group'
+	 * @param \Elgg\Event $event 'permissions_check', 'group'
 	 *
-	 * @return void|true
+	 * @return null|true
 	 */
-	public static function groupJoinPermission(\Elgg\Hook $hook) {
-		
-		if (!empty($hook->getValue())) {
+	public static function groupJoinPermission(\Elgg\Event $event): ?bool {
+		if (!empty($event->getValue())) {
 			// already allowed
-			return;
+			return null;
 		}
 		
 		if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
-			return;
+			return null;
 		}
 		
 		// domain based groups are enabled, lets check if this user is allowed to join based on that
-		$group = $hook->getEntityParam();
-		$user = $hook->getUserParam();
+		$group = $event->getEntityParam();
+		$user = $event->getUserParam();
 		if (!$group instanceof \ElggGroup || !$user instanceof \ElggUser) {
-			return;
+			return null;
 		}
 		
 		if (!group_tools_check_domain_based_group($group, $user)) {
-			return;
+			return null;
 		}
 		
 		return true;
@@ -563,19 +554,18 @@ class Membership {
 	/**
 	 * Add a link to the notifications page so a user can change the group notification settings
 	 *
-	 * @param \Elgg\Hook $hook 'invite_notification', 'group_tools'
+	 * @param \Elgg\Event $event 'invite_notification', 'group_tools'
 	 *
-	 * @return void|string
+	 * @return null|string
 	 */
-	public static function notificationAddedGroup(\Elgg\Hook $hook) {
-		
-		$group = $hook->getParam('group');
-		$user = $hook->getParam('invitee');
+	public static function notificationAddedGroup(\Elgg\Event $event): ?string {
+		$group = $event->getParam('group');
+		$user = $event->getParam('invitee');
 		if (!$user instanceof \ElggUser || !$group instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$notifications_enabled = self::notificationsEnabledForGroup($user, $group);
 		$additional_msg = self::generateEmailNotificationText($user, $notifications_enabled);
@@ -588,37 +578,36 @@ class Membership {
 	/**
 	 * Append text to an email notification with a link to the group notification settings
 	 *
-	 * @param \Elgg\Hook $hook 'email', 'system'
+	 * @param \Elgg\Event $event 'email', 'system'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return null|array
 	 */
-	public static function notificationEmail(\Elgg\Hook $hook) {
-		
-		$return = $hook->getValue();
+	public static function notificationEmail(\Elgg\Event $event): ?array {
+		$return = $event->getValue();
 		if (!is_array($return)) {
 			// someone already send the email
-			return;
+			return null;
 		}
 		
 		$mail_params = elgg_extract('params', $return);
 		if (!is_array($mail_params)) {
-			return;
+			return null;
 		}
 		
 		$action = elgg_extract('action', $mail_params);
 		$group = elgg_extract('object', $mail_params);
 		if ($action !== 'add_membership' || !$group instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
 		$notification = elgg_extract('notification', $mail_params);
 		if (!$notification instanceof \Elgg\Notifications\Notification) {
-			return;
+			return null;
 		}
 		
 		$user = $notification->getRecipient();
 		if (!$user instanceof \ElggUser) {
-			return;
+			return null;
 		}
 		
 		$notifications_enabled = self::notificationsEnabledForGroup($user, $group);
@@ -637,18 +626,10 @@ class Membership {
 	 *
 	 * @return bool
 	 */
-	public static function notificationsEnabledForGroup(\ElggUser $user, \ElggGroup $group) {
-		
+	public static function notificationsEnabledForGroup(\ElggUser $user, \ElggGroup $group): bool {
 		$subscriptions = elgg_get_subscriptions_for_container($group->guid);
-		if (!is_array($subscriptions)) {
-			return false;
-		}
 		
-		if (!empty($subscriptions[$user->guid])) {
-			return true;
-		}
-		
-		return false;
+		return !empty($subscriptions[$user->guid]);
 	}
 	
 	/**
@@ -659,8 +640,7 @@ class Membership {
 	 *
 	 * @return string
 	 */
-	protected static function generateEmailNotificationText(\ElggUser $user, bool $enabled) {
-		
+	protected static function generateEmailNotificationText(\ElggUser $user, bool $enabled): string {
 		$notifications_url = elgg_generate_url('settings:notification:groups', [
 			'username' => $user->username,
 		]);
@@ -669,9 +649,9 @@ class Membership {
 		}
 		
 		if ($enabled) {
-			return elgg_echo('group_tools:notifications:toggle:email:enabled', [$notifications_url], $user->language);
+			return elgg_echo('group_tools:notifications:toggle:email:enabled', [$notifications_url], $user->getLanguage());
 		}
 		
-		return elgg_echo('group_tools:notifications:toggle:email:disabled', [$notifications_url], $user->language);
+		return elgg_echo('group_tools:notifications:toggle:email:disabled', [$notifications_url], $user->getLanguage());
 	}
 }

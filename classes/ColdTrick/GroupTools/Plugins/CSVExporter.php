@@ -2,25 +2,29 @@
 
 namespace ColdTrick\GroupTools\Plugins;
 
+use Elgg\Database\QueryBuilder;
+
+/**
+ * Support for the CSVExporter plugin
+ */
 class CSVExporter {
 	
 	/**
 	 * Add group admins to the exportable values
 	 *
-	 * @param \Elgg\Hook $hook 'get_exportable_values', 'csv_exporter'
+	 * @param \Elgg\Event $event 'get_exportable_values', 'csv_exporter'
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	public static function addGroupAdminsToGroups(\Elgg\Hook $hook) {
-		
-		$content_type = $hook->getParam('type');
+	public static function addGroupAdminsToGroups(\Elgg\Event $event): ?array {
+		$content_type = $event->getParam('type');
 		if ($content_type !== 'group') {
-			return;
+			return null;
 		}
 		
 		if (!group_tools_multiple_admin_enabled()) {
 			// group admins not enabled
-			return;
+			return null;
 		}
 		
 		$fields = [
@@ -29,11 +33,11 @@ class CSVExporter {
 			elgg_echo('group_tools:csv_exporter:group_admin:url') => 'group_tools_group_admin_url',
 		];
 		
-		if (!(bool) $hook->getParam('readable', false)) {
+		if (!(bool) $event->getParam('readable', false)) {
 			$fields = array_values($fields);
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		return array_merge($return, $fields);
 	}
@@ -41,21 +45,20 @@ class CSVExporter {
 	/**
 	 * Supply the group admin information for the export
 	 *
-	 * @param \Elgg\Hook $hook 'export_value', 'csv_exporter'
+	 * @param \Elgg\Event $event 'export_value', 'csv_exporter'
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	public static function exportGroupAdminsForGroups(\Elgg\Hook $hook) {
-		
-		$return = $hook->getValue();
+	public static function exportGroupAdminsForGroups(\Elgg\Event $event): ?array {
+		$return = $event->getValue();
 		if (!is_null($return)) {
 			// someone already provided output
-			return;
+			return null;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
 		$group_admin_options = [
@@ -65,11 +68,13 @@ class CSVExporter {
 			'relationship_guid' => $entity->guid,
 			'inverse_relationship' => true,
 			'wheres' => [
-				"e.guid <> {$entity->owner_guid}",
+				function (QueryBuilder $qb, $main_alias) use ($entity) {
+					return $qb->compare("{$main_alias}.guid", '!=', $entity->owner_guid, ELGG_VALUE_GUID);
+				},
 			],
 		];
 		
-		$exportable_value = $hook->getParam('exportable_value');
+		$exportable_value = $event->getParam('exportable_value');
 		switch ($exportable_value) {
 			case 'group_tools_group_admin_name':
 				$result = [];
@@ -79,7 +84,7 @@ class CSVExporter {
 					$result[] = "\"{$group_admin->getDisplayName()}\"";
 				}
 				return $result;
-				break;
+				
 			case 'group_tools_group_admin_email':
 				$result = [];
 				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
@@ -88,7 +93,7 @@ class CSVExporter {
 					$result[] = $group_admin->email;
 				}
 				return $result;
-				break;
+				
 			case 'group_tools_group_admin_url':
 				$result = [];
 				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
@@ -97,27 +102,27 @@ class CSVExporter {
 					$result[] = $group_admin->getURL();
 				}
 				return $result;
-				break;
 		}
+		
+		return null;
 	}
 	
 	/**
 	 * Add the groups a user is admin of to the exportable values
 	 *
-	 * @param \Elgg\Hook $hook 'get_exportable_values', 'csv_exporter'
+	 * @param \Elgg\Event $event 'get_exportable_values', 'csv_exporter'
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	public static function addGroupAdminsToUsers(\Elgg\Hook $hook) {
-		
-		$content_type = $hook->getParam('type');
+	public static function addGroupAdminsToUsers(\Elgg\Event $event): ?array {
+		$content_type = $event->getParam('type');
 		if ($content_type !== 'user') {
-			return;
+			return null;
 		}
 		
 		if (!group_tools_multiple_admin_enabled()) {
 			// group admins not enabled
-			return;
+			return null;
 		}
 		
 		$postfix = elgg_echo('csv_exporter:exportable_value:group:postfix');
@@ -130,11 +135,11 @@ class CSVExporter {
 			elgg_echo('group_tools:csv_exporter:user:group_role') . $postfix => 'group_tools_user_group_role',
 		];
 		
-		if (!(bool) $hook->getParam('readable', false)) {
+		if (!(bool) $event->getParam('readable', false)) {
 			$fields = array_values($fields);
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		return array_merge($return, $fields);
 	}
@@ -142,23 +147,23 @@ class CSVExporter {
 	/**
 	 * Allow additional user values to be exported during group member export
 	 *
-	 * @param \Elgg\Hook $hook 'get_exportable_values:group', 'csv_exporter'
+	 * @param \Elgg\Event $event 'get_exportable_values:group', 'csv_exporter'
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	public static function allowUserGroupValues(\Elgg\Hook $hook) {
-		
-		$content_type = $hook->getParam('type');
+	public static function allowUserGroupValues(\Elgg\Event $event): ?array {
+		$content_type = $event->getParam('type');
 		if ($content_type !== 'user') {
-			return;
+			return null;
 		}
 		
 		if (!group_tools_multiple_admin_enabled()) {
 			// group admins not enabled
-			return;
+			return null;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
+		
 		$return[] = 'group_tools_user_group_role';
 		
 		return $return;
@@ -167,21 +172,20 @@ class CSVExporter {
 	/**
 	 * Supply the group admin information for the export
 	 *
-	 * @param \Elgg\Hook $hook 'export_value', 'csv_exporter'
+	 * @param \Elgg\Event $event 'export_value', 'csv_exporter'
 	 *
-	 * @return void|array|string
+	 * @return null|array|string
 	 */
-	public static function exportGroupAdminsForUsers(\Elgg\Hook $hook) {
-		
-		$return = $hook->getValue();
+	public static function exportGroupAdminsForUsers(\Elgg\Event $event) {
+		$return = $event->getValue();
 		if (!is_null($return)) {
 			// someone already provided output
-			return;
+			return null;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggUser) {
-			return;
+			return null;
 		}
 		
 		$group_admin_options = [
@@ -190,11 +194,13 @@ class CSVExporter {
 			'relationship' => 'group_admin',
 			'relationship_guid' => $entity->guid,
 			'wheres' => [
-				"e.guid <> {$entity->owner_guid}",
+				function (QueryBuilder $qb, $main_alias) use ($entity) {
+					return $qb->compare("{$main_alias}.guid", '!=', $entity->owner_guid, ELGG_VALUE_GUID);
+				},
 			],
 		];
 		
-		$exportable_value = $hook->getParam('exportable_value');
+		$exportable_value = $event->getParam('exportable_value');
 		switch ($exportable_value) {
 			case 'group_tools_user_group_admin_name':
 				$result = [];
@@ -215,10 +221,11 @@ class CSVExporter {
 				return $result;
 				
 			case 'group_tools_user_group_role':
-				$export = $hook->getParam('csv_export');
+				$export = $event->getParam('csv_export');
 				if (!$export instanceof \CSVExport) {
 					return '';
 				}
+				
 				$group = $export->getContainerEntity();
 				if (!$group instanceof \ElggGroup) {
 					return '';
@@ -229,27 +236,27 @@ class CSVExporter {
 				} elseif ($entity->hasRelationship($group->guid, 'group_admin')) {
 					return 'group admin';
 				}
-				
 				return 'member';
 		}
+		
+		return null;
 	}
 	
 	/**
 	 * Add stale information to the exportable values
 	 *
-	 * @param \Elgg\Hook $hook 'get_exportable_values', 'csv_exporter'
+	 * @param \Elgg\Event $event 'get_exportable_values', 'csv_exporter'
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	public static function addStaleInfo(\Elgg\Hook $hook) {
-		
-		$content_type = $hook->getParam('type');
+	public static function addStaleInfo(\Elgg\Event $event): ?array {
+		$content_type = $event->getParam('type');
 		if ($content_type !== 'group') {
-			return;
+			return null;
 		}
 		
 		if ((int) elgg_get_plugin_setting('stale_timeout', 'group_tools') < 1) {
-			return;
+			return null;
 		}
 		
 		$fields = [
@@ -258,11 +265,11 @@ class CSVExporter {
 			elgg_echo('group_tools:csv_exporter:stale_info:timestamp:readable') => 'group_tools_stale_info_timestamp_reabable',
 		];
 		
-		if (!(bool) $hook->getParam('readable', false)) {
+		if (!(bool) $event->getParam('readable', false)) {
 			$fields = array_values($fields);
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		return array_merge($return, $fields);
 	}
@@ -270,74 +277,73 @@ class CSVExporter {
 	/**
 	 * Export stale information about the group
 	 *
-	 * @param \Elgg\Hook $hook 'export_value', 'csv_exporter'
+	 * @param \Elgg\Event $event 'export_value', 'csv_exporter'
 	 *
-	 * @return void|int|string
+	 * @return null|int|string
 	 */
-	public static function exportStaleInfo(\Elgg\Hook $hook) {
-		
-		$return = $hook->getValue();
+	public static function exportStaleInfo(\Elgg\Event $event) {
+		$return = $event->getValue();
 		if (!is_null($return)) {
 			// someone already provided output
-			return;
+			return null;
 		}
 		
-		$entity = $hook->getEntityParam('entity');
+		$entity = $event->getEntityParam('entity');
 		if (!$entity instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
 		$stale_info = group_tools_get_stale_info($entity);
 		if (empty($stale_info)) {
-			return;
+			return null;
 		}
 		
-		$exportable_value = $hook->getParam('exportable_value');
+		$exportable_value = $event->getParam('exportable_value');
 		switch ($exportable_value) {
 			case 'group_tools_stale_info_is_stale':
 				if ($stale_info->isStale()) {
 					return 'yes';
 				}
 				return 'no';
-				break;
+				
 			case 'group_tools_stale_info_timestamp':
 				$ts = $stale_info->getTimestamp();
 				if (empty($ts)) {
-					return;
+					return null;
 				}
 				return $ts;
-				break;
+				
 			case 'group_tools_stale_info_timestamp_reabable':
 				$ts = $stale_info->getTimestamp();
 				if (empty($ts)) {
-					return;
+					return null;
 				}
 				return csv_exported_get_readable_timestamp($ts);
-				break;
 		}
+		
+		return null;
 	}
 	
 	/**
 	 * Add exportable values
 	 *
-	 * @param \Elgg\Hook $hook 'get_exportable_values', 'csv_exporter'
+	 * @param \Elgg\Event $event 'get_exportable_values', 'csv_exporter'
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	public static function addApprovalReasons(\Elgg\Hook $hook) {
-		
-		$content_type = $hook->getParam('type');
+	public static function addApprovalReasons(\Elgg\Event $event): ?array {
+		$content_type = $event->getParam('type');
 		if ($content_type !== 'group' || !(bool) elgg_get_plugin_setting('creation_reason', 'group_tools')) {
-			return;
+			return null;
 		}
 		
-		$readable = (bool) $hook->getParam('readable', false);
+		$readable = (bool) $event->getParam('readable', false);
 		
 		$fields = [
 			elgg_echo('group_tools:group:admin_approve:menu') . ': ' . elgg_echo('group_tools:group:edit:reason:question') => 'group_tools_admin_approval_reason_question',
 		];
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		// which version did we want
 		if (!$readable) {
@@ -350,20 +356,20 @@ class CSVExporter {
 	/**
 	 * Export a single value for a group
 	 *
-	 * @param \Elgg\Hook $hook 'export_value', 'csv_exporter'
+	 * @param \Elgg\Event $event 'export_value', 'csv_exporter'
 	 *
-	 * @return void|mixed
+	 * @return null|mixed
 	 */
-	public static function exportApprovalReasons(\Elgg\Hook $hook) {
-		
-		if (!is_null($hook->getValue())) {
+	public static function exportApprovalReasons(\Elgg\Event $event) {
+		$return = $event->getValue();
+		if (!is_null($return)) {
 			// someone already provided output
-			return;
+			return null;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
 		$get_annotation_value = function(string $name) use ($entity) {
@@ -381,7 +387,7 @@ class CSVExporter {
 			return unserialize($value);
 		};
 		
-		$exportable_value = $hook->getParam('exportable_value');
+		$exportable_value = $event->getParam('exportable_value');
 		switch ($exportable_value) {
 			case 'group_tools_admin_approval_reason_question':
 				return $get_annotation_value('question');

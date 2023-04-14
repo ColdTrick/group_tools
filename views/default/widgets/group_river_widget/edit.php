@@ -23,6 +23,7 @@ if (!empty($registered_entities)) {
 			if (!elgg_language_key_exists($keyname)) {
 				$keyname = "item:{$type}:{$subtype}";
 			}
+			
 			$filter_contents["{$type},{$subtype}"] = elgg_echo($keyname);
 		}
 	}
@@ -32,6 +33,7 @@ if (!empty($registered_entities)) {
 echo elgg_view('object/widget/edit/num_display', [
 	'entity' => $widget,
 	'max' => 25,
+	'min' => 1,
 ]);
 
 echo elgg_view_field([
@@ -74,6 +76,7 @@ if ($widget->context !== 'groups') {
 		if (!$widget->group_guid) {
 			$mygroups[0] = '';
 		}
+		
 		foreach ($groups as $group) {
 			$mygroups[$group->guid] = $group->getDisplayName();
 		}

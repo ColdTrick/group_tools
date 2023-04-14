@@ -4,34 +4,35 @@ namespace ColdTrick\GroupTools\Menus;
 
 use Elgg\Menu\MenuItems;
 
+/**
+ * Add menu items to the title menu
+ */
 class Title {
 	
 	/**
 	 * Change the name/function of the group join button
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function groupMembership(\Elgg\Hook $hook) {
-		
+	public static function groupMembership(\Elgg\Event $event): ?MenuItems {
 		if (!elgg_in_context('groups')) {
-			return;
+			return null;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		$user = elgg_get_logged_in_user_entity();
-		
 		if (!$entity instanceof \ElggGroup || !$user instanceof \ElggUser) {
-			return;
+			return null;
 		}
 		
 		/* @var $menu_items MenuItems */
-		$menu_items = $hook->getValue();
+		$menu_items = $event->getValue();
 		
 		$menu_item = $menu_items->get('groups:joinrequest');
 		if (!$menu_item instanceof \ElggMenuItem) {
-			return;
+			return null;
 		}
 		
 		if ($user->hasRelationship($entity->guid, 'membership_request')) {
@@ -79,25 +80,23 @@ class Title {
 	/**
 	 * Change the text of the group invite button, and maybe add it for group members
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function groupInvite(\Elgg\Hook $hook) {
-		
+	public static function groupInvite(\Elgg\Event $event): ?MenuItems {
 		if (!elgg_in_context('groups')) {
-			return;
+			return null;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		$user = elgg_get_logged_in_user_entity();
-		
 		if (!$entity instanceof \ElggGroup || !$user instanceof \ElggUser) {
-			return;
+			return null;
 		}
 		
 		/* @var $menu_items MenuItems */
-		$menu_items = $hook->getValue();
+		$menu_items = $event->getValue();
 		
 		$invite_found = false;
 		$menu_item = $menu_items->get('groups:invite');
@@ -125,13 +124,13 @@ class Title {
 		
 		// this is only allowed for group members
 		if (!$entity->isMember($user)) {
-			return;
+			return null;
 		}
 		
 		// we're on a group profile page, but haven't found the invite button yet
 		// so check if it should be here
 		if (!group_tools_allow_members_invite($entity)) {
-			return;
+			return null;
 		}
 		
 		// normal users are allowed to invite users
@@ -146,7 +145,7 @@ class Title {
 			$text = elgg_echo('groups:invite');
 		} else {
 			// not allowed
-			return;
+			return null;
 		}
 		
 		$menu_items[] = \ElggMenuItem::factory([
@@ -163,41 +162,40 @@ class Title {
 	/**
 	 * Change the text on the group membership status button
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function groupAdminStatus(\Elgg\Hook $hook) {
-		
-		$entity = $hook->getEntityParam();
+	public static function groupAdminStatus(\Elgg\Event $event): ?MenuItems {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
-			return;
+			return null;
 		}
 		
 		if (!group_tools_multiple_admin_enabled()) {
-			return;
+			return null;
 		}
 		
 		$user = elgg_get_logged_in_user_entity();
 		
 		if ($entity->owner_guid === $user->guid) {
 			// owner
-			return;
+			return null;
 		} elseif (!$entity->isMember($user)) {
 			// not member
-			return;
+			return null;
 		}
 		
 		if (!$user->hasRelationship($entity->guid, 'group_admin')) {
-			return;
+			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$menu_item = $result->get('group-dropdown');
 		if (!$menu_item instanceof \ElggMenuItem) {
-			return;
+			return null;
 		}
 		
 		$menu_item->setText(elgg_echo('group_tools:multiple_admin:status:group_admin'));
@@ -210,23 +208,22 @@ class Title {
 	/**
 	 * Change title menu buttons for a group pending admin approval
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function pendingApproval(\Elgg\Hook $hook) {
-		
+	public static function pendingApproval(\Elgg\Event $event): ?MenuItems {
 		if (!elgg_in_context('group_profile')) {
-			return;
+			return null;
 		}
 		
 		if (elgg_get_plugin_setting('admin_approve', 'group_tools') !== 'yes') {
-			return;
+			return null;
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
 		if (!$page_owner instanceof \ElggGroup || $page_owner->access_id !== ACCESS_PRIVATE) {
-			return;
+			return null;
 		}
 		
 		$allowed_items = [
@@ -235,7 +232,7 @@ class Title {
 		];
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		// cleanup all items
 		$items = [];
@@ -244,6 +241,7 @@ class Title {
 			if (!$item instanceof \ElggMenuItem) {
 				continue;
 			}
+			
 			$items[] = $item;
 			
 			// some items could be in a submenu
@@ -289,35 +287,33 @@ class Title {
 	/**
 	 * Change title menu buttons for a concept group
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function conceptGroup(\Elgg\Hook $hook) {
-		
+	public static function conceptGroup(\Elgg\Event $event): ?MenuItems {
 		if (!elgg_in_context('group_profile')) {
-			return;
+			return null;
 		}
 		
 		if (!(bool) elgg_get_plugin_setting('concept_groups', 'group_tools')) {
-			return;
+			return null;
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
 		if (!$page_owner instanceof \ElggGroup || $page_owner->access_id !== ACCESS_PRIVATE || !(bool) $page_owner->is_concept) {
-			return;
+			return null;
 		}
 		
 		$allowed_items = [
 			'edit',
 			'delete',
-			'elasticsearch_inspect', // elasticsearch
 			'entity_explorer', // developer tools
 			'opensearch_inspect', // opensearch
 		];
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		// cleanup all items
 		$items = [];
@@ -326,6 +322,7 @@ class Title {
 			if (!$item instanceof \ElggMenuItem) {
 				continue;
 			}
+			
 			$items[] = $item;
 			
 			// some items could be in a submenu
@@ -351,6 +348,7 @@ class Title {
 			$text = elgg_echo('group_tools:group:concept:profile:publish');
 			$confirm = elgg_echo('group_tools:group:concept:profile:publish:confirm');
 		}
+		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'remove_concept',
 			'text' => $text,
@@ -367,27 +365,26 @@ class Title {
 	/**
 	 * Add group tool presets to the add button
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:title'
+	 * @param \Elgg\Event $event 'register', 'menu:title'
 	 *
-	 * @return void|\Elgg\Menu\MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function addGroupToolPresets(\Elgg\Hook $hook) {
-		
+	public static function addGroupToolPresets(\Elgg\Event $event): ?MenuItems {
 		$user = elgg_get_logged_in_user_entity();
 		if (empty($user) || !elgg_in_context('groups')) {
-			return;
+			return null;
 		}
 		
 		if (elgg_get_plugin_setting('create_based_on_preset', 'group_tools') !== 'yes') {
-			return;
+			return null;
 		}
 		
-		/* @var $return \Elgg\Menu\MenuItems */
-		$return = $hook->getValue();
+		/* @var $return MenuItems */
+		$return = $event->getValue();
 		
 		$add_button = $return->get('add');
 		if (!$add_button instanceof \ElggMenuItem) {
-			return;
+			return null;
 		}
 				
 		$url = elgg_generate_url('add:group:group', [
@@ -396,12 +393,12 @@ class Title {
 		
 		if ($add_button->getHref() !== $url) {
 			// not the group add button
-			return;
+			return null;
 		}
 	
 		$presets = group_tools_get_tool_presets();
 		if (empty($presets)) {
-			return;
+			return null;
 		}
 		
 		$add_button->setChildMenuOptions([

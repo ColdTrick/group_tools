@@ -4,6 +4,7 @@ $limit = (int) get_input('limit', 50);
 if ($limit < 1) {
 	$limit = 50;
 }
+
 $offset = (int) get_input('offset', 0);
 if ($offset < 1) {
 	$offset = 0;
@@ -85,6 +86,7 @@ foreach ($batch as $group) {
 	
 	$rows[] = elgg_format_element('tr', [], implode(PHP_EOL, $cells));
 }
+
 $form_data .= elgg_format_element('tbody', [], implode(PHP_EOL, $rows));
 
 $form_data .= '</table>';

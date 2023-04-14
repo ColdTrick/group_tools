@@ -4,10 +4,13 @@ namespace ColdTrick\GroupTools\Notifications;
 
 use Elgg\Notifications\NotificationEventHandler;
 
+/**
+ * Notification handler for sending out group mails
+ */
 class GroupMailEnqueueNotificationEventHandler extends NotificationEventHandler {
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function getSubscriptions(): array {
 		$entity = $this->getGroupMail();
@@ -19,7 +22,7 @@ class GroupMailEnqueueNotificationEventHandler extends NotificationEventHandler 
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
 		$entity = $this->getGroupMail();
@@ -28,7 +31,7 @@ class GroupMailEnqueueNotificationEventHandler extends NotificationEventHandler 
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
 		$entity = $this->getGroupMail();
@@ -46,7 +49,7 @@ class GroupMailEnqueueNotificationEventHandler extends NotificationEventHandler 
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public static function isConfigurableByUser(): bool {
 		return false;

@@ -1,14 +1,12 @@
 <?php
 /**
- * Elgg groups plugin
- *
- * @package ElggGroups
+ * Elgg groups invite form
  */
 
-$comment = elgg_get_sticky_value('group_invite', 'comment');
-elgg_clear_sticky_form('group_invite');
-
-$group = elgg_extract('entity', $vars, elgg_get_page_owner_entity());
+$group = elgg_extract('entity', $vars);
+if (!$group instanceof \ElggGroup) {
+	return;
+}
 
 // invite friends
 $tabs = [];
@@ -57,20 +55,25 @@ echo elgg_view_field([
 	'#type' => 'longtext',
 	'#label' => elgg_echo('group_tools:group:invite:text'),
 	'name' => 'comment',
-	'value' => $comment,
+	'value' => elgg_extract('comment', $vars),
 ]);
 
 // renotify existing invites
 if ($group->canEdit()) {
 	echo elgg_view_field([
 		'#type' => 'checkbox',
-		'#label' => elgg_echo('group_tools:group:invite:resend'),
+		'#label' => elgg_echo('groups:invite:resend'),
 		'name' => 'resend',
-		'value' => 'yes',
+		'value' => 1,
+		'switch' => true,
 	]);
 }
 
-echo elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->guid]);
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'group_guid',
+	'value' => $group->guid,
+]);
 
 // show buttons
 $footer_fields = [
@@ -85,9 +88,10 @@ if (elgg_is_admin_logged_in()) {
 		'#type' => 'submit',
 		'name' => 'submit',
 		'value' => elgg_echo('group_tools:add_users'),
-		'onclick' => 'return confirm("' . elgg_echo('group_tools:group:invite:add:confirm') . '");',
+		'data-confirm' => elgg_echo('group_tools:group:invite:add:confirm'),
 	];
 }
+
 $footer = elgg_view('input/fieldset', [
 	'fields' => $footer_fields,
 	'align' => 'horizontal',

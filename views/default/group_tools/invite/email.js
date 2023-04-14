@@ -1,18 +1,17 @@
 define(['jquery', 'elgg/system_messages'], function ($, system_messages) {
-
 	$(document).on('keydown', '#group-tools-invite-email .elgg-input-email', function (event) {
 		if (event.keyCode === 10 || event.keyCode === 13) {
 			event.preventDefault();
 			event.stopPropagation();
-			$('#group-tools-invite-email .elgg-button-submit').click();
-		}		
+			$('#group-tools-invite-email .elgg-button-action').click();
+		}
 	});
 	
 	$(document).on('click', '#group-tools-invite-email .elgg-list-email .elgg-icon-delete', function (event) {
 		$(this).closest('li').remove();
 	});
 
-	$(document).on('click', '#group-tools-invite-email .elgg-button-submit', function (event) {
+	$(document).on('click', '#group-tools-invite-email .elgg-button-action', function (event) {
 		event.preventDefault();
 		event.stopPropagation();
 

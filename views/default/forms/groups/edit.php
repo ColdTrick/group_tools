@@ -24,6 +24,14 @@ $tabs[] = [
 	'content' => elgg_view('groups/edit/profile', $vars),
 ];
 
+// build the group images
+$tabs[] = [
+	'name' => 'images',
+	'priority' => 150,
+	'text' => elgg_echo('groups:edit:images'),
+	'content' => elgg_view('groups/edit/images', $vars),
+];
+
 // ask for a reason to approve the group
 $admin_approve = elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes';
 $admin_approve = $admin_approve && !elgg_is_admin_logged_in();
@@ -102,7 +110,7 @@ if ($entity instanceof \ElggGroup) {
 // display the save button and some additional form data
 $buttons = [];
 
-if ($admin_approve && (!$entity instanceof ElggGroup || $entity->access_id === ACCESS_PRIVATE)) {
+if ($admin_approve && (!$entity instanceof \ElggGroup || $entity->access_id === ACCESS_PRIVATE)) {
 	$buttons[] = [
 		'#type' => 'submit',
 		'value' => elgg_echo('group_tools:group:edit:save:approve'),
@@ -114,7 +122,7 @@ if ($admin_approve && (!$entity instanceof ElggGroup || $entity->access_id === A
 	];
 }
 
-if ((bool) elgg_get_plugin_setting('concept_groups', 'group_tools') && (!$entity instanceof ElggGroup || (bool) $entity->is_concept)) {
+if ((bool) elgg_get_plugin_setting('concept_groups', 'group_tools') && (!$entity instanceof \ElggGroup || (bool) $entity->is_concept)) {
 	$buttons[] = [
 		'#type' => 'submit',
 		'name' => 'concept_group',

@@ -1,6 +1,5 @@
 <?php
 
-
 // fix some problems with groups
 $rows = [];
 

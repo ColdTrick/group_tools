@@ -21,8 +21,8 @@ foreach ($values as $index => $value) {
 	
 	$operand = elgg_extract($index, $operands);
 	if ($operand === 'pregmatch') {
-		$valid = @preg_match('/' . $value . '/', null);
-		if (!$valid) {
+		$valid = @preg_match('/' . $value . '/', '');
+		if ($valid === false) {
 			return elgg_error_response(elgg_echo('group_tools:action:admin:auto_join:additional:error:pregmatch'));
 		}
 	}
@@ -43,7 +43,7 @@ $config = [
 ];
 
 if (group_tools_save_auto_join_configuration($config)) {
-	return elgg_ok_response('', elgg_echo('save:success'), REFERER);
+	return elgg_ok_response('', elgg_echo('save:success'), REFERRER);
 }
 
 return elgg_error_response(elgg_echo('save:fail'));

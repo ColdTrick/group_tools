@@ -16,6 +16,7 @@ echo elgg_view_field([
 	'name' => 'id',
 	'value' => $id,
 ]);
+
 echo elgg_view_field([
 	'#type' => 'hidden',
 	'name' => 'type',

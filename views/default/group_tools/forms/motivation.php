@@ -7,7 +7,7 @@ $group = elgg_call(ELGG_IGNORE_ACCESS, function () use ($group_guid) {
 	return get_entity($group_guid);
 });
 
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	throw new EntityNotFoundException();
 }
 

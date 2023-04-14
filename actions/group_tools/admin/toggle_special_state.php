@@ -11,7 +11,7 @@ if (empty($group_guid)) {
 }
 
 $group = get_entity($group_guid);
-if (!$group instanceof ElggGroup || !$group->canEdit()) {
+if (!$group instanceof \ElggGroup || !$group->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
@@ -29,7 +29,8 @@ switch ($state) {
 			$suggested_groups = elgg_string_to_array($suggested_setting);
 		}
 		
-		if (($key = array_search($group_guid, $suggested_groups)) !== false) {
+		$key = array_search($group_guid, $suggested_groups);
+		if ($key !== false) {
 			unset($suggested_groups[$key]);
 		} else {
 			$suggested_groups[] = $group_guid;

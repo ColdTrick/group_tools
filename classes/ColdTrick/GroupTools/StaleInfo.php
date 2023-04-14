@@ -6,18 +6,16 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Values;
 
+/**
+ * Get stale information about a group
+ */
 class StaleInfo {
 
-	/**
-	 * @var \ElggGroup
-	 */
-	protected $group;
+	protected \ElggGroup $group;
 	
-	/**
-	 * @var int
-	 */
-	protected $number_of_days;
+	protected int $number_of_days;
 	
 	/**
 	 * Create new Stale info helper
@@ -28,7 +26,6 @@ class StaleInfo {
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct(\ElggGroup $entity, int $days) {
-		
 		if ($days < 1) {
 			throw new InvalidArgumentException('Provide a positive number of days');
 		}
@@ -43,9 +40,7 @@ class StaleInfo {
 	 * @return bool
 	 */
 	public function isStale(): bool {
-		
-		$compare_ts = time() - ($this->number_of_days * 24 * 60 * 60);
-		
+		$compare_ts = Values::normalizeTimestamp("-{$this->number_of_days} days");
 		if ($this->group->time_created > $compare_ts) {
 			return false;
 		}
@@ -99,7 +94,6 @@ class StaleInfo {
 	 * @return int
 	 */
 	protected function getContentTimestamp(): int {
-		
 		$object_subtypes = $this::getObjectSubtypes();
 		if (empty($object_subtypes)) {
 			return 0;
@@ -116,7 +110,7 @@ class StaleInfo {
 			return 0;
 		}
 		
-		return (int) $entities[0]->time_updated;
+		return $entities[0]->time_updated;
 	}
 	
 	/**
@@ -125,26 +119,17 @@ class StaleInfo {
 	 * @return int
 	 */
 	protected function getCommentTimestamp(): int {
-		
-		$subtypes = ['comment'];
-		if (elgg_is_active_plugin('discussions')) {
-			$subtypes[] = 'discussion_reply';
-		}
-		
 		$guid = $this->group->guid;
 		
 		$entities = elgg_get_entities([
 			'type' => 'object',
-			'subtypes' => $subtypes,
+			'subtype' => 'comment',
 			'limit' => 1,
-			'joins' => [
-				new JoinClause('entities', 'ce', function(QueryBuilder $qb, $joined_alias, $main_alias) {
-					return $qb->compare("$joined_alias.guid", '=', "$main_alias.container_guid");
-				}),
-			],
 			'wheres' => [
-				function(QueryBuilder $qb) use ($guid) {
-					return $qb->compare('ce.container_guid', '=', $guid, ELGG_VALUE_INTEGER);
+				function(QueryBuilder $qb, $main_alias) use ($guid) {
+					$ce = $qb->joinEntitiesTable($main_alias, 'container_guid');
+					
+					return $qb->compare("{$ce}.container_guid", '=', $guid, ELGG_VALUE_INTEGER);
 				},
 			],
 			'order_by' => new OrderByClause('time_updated', 'DESC'),
@@ -153,7 +138,7 @@ class StaleInfo {
 			return 0;
 		}
 		
-		return (int) $entities[0]->time_updated;
+		return $entities[0]->time_updated;
 	}
 	
 	/**
@@ -162,10 +147,9 @@ class StaleInfo {
 	 * @return string[]
 	 */
 	public static function getObjectSubtypes(): array {
-		
 		$subtypes = elgg_extract('object', elgg_entity_types_with_capability('searchable'), []);
 	
-		return elgg_trigger_plugin_hook('stale_info_object_subtypes', 'group_tools', [
+		return elgg_trigger_event_results('stale_info_object_subtypes', 'group_tools', [
 			'subtypes' => $subtypes,
 		], $subtypes);
 	}

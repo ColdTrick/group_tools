@@ -2,23 +2,25 @@
 
 namespace ColdTrick\GroupTools\Plugins;
 
+/**
+ * Support for the Widget Manager plugin
+ */
 class WidgetManager {
 	
 	/**
 	 * Add or remove widgets based on the group tool option
 	 *
-	 * @param \Elgg\Hook $hook 'group_tool_widgets', 'widget_manager'
+	 * @param \Elgg\Event $event 'group_tool_widgets', 'widget_manager'
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	public static function groupToolWidgets(\Elgg\Hook $hook) {
-		
-		$entity = $hook->getEntityParam();
+	public static function groupToolWidgets(\Elgg\Event $event): ?array {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		// check different group tools for which we supply widgets
 		if ($entity->isToolEnabled('related_groups')) {

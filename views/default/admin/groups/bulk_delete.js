@@ -1,5 +1,5 @@
 define(['jquery', 'elgg/spinner'], function ($, spinner) {
-	$(document).on('change', '[name="checkall"]', function () {
+	$(document).on('change', 'input[name="checkall"]', function () {
 		var $form = $(this).closest('form');
 		var checked = $(this).is(":checked");
 		$('[name="group_guids[]"]', $form).prop('checked', checked);

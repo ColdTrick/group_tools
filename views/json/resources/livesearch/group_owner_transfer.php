@@ -23,7 +23,7 @@ $group_guid = (int) elgg_extract('group_guid', $vars);
 $include_banned = (bool) elgg_extract('include_banned', $vars, false);
 
 $group = get_entity($group_guid);
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	throw new EntityNotFoundException();
 }
 

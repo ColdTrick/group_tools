@@ -13,7 +13,6 @@ $group_tools = elgg()->group_tools->all();
 
 // list existing
 if (!empty($presets)) {
-
 	foreach ($presets as $index => $values) {
 		echo '<div class="group-tools-group-preset-wrapper">';
 		echo '<div class="float-alt">';
@@ -61,6 +60,7 @@ if (!empty($presets)) {
 				'class' => 'mbs',
 			]);
 		}
+		
 		echo '</div>'; // end edit part
 		echo '</div>';
 	}

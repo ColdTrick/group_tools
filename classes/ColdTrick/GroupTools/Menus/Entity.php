@@ -5,36 +5,38 @@ namespace ColdTrick\GroupTools\Menus;
 use Elgg\Database\QueryBuilder;
 use Elgg\Menu\MenuItems;
 
+/**
+ * Add menu items to the entity menu
+ */
 class Entity {
 	
 	/**
 	 * Remove the group as a related group
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:entity'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return null|MenuItems
 	 */
-	public static function relatedGroup(\Elgg\Hook $hook) {
-		
+	public static function relatedGroup(\Elgg\Event $event): ?MenuItems {
 		$page_owner = elgg_get_page_owner_entity();
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$page_owner instanceof \ElggGroup || !$entity instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
 		if ($page_owner->guid === $entity->guid) {
-			return;
+			return null;
 		}
 		
 		if (!$page_owner->canEdit()) {
-			return;
+			return null;
 		}
 		
 		if (!$page_owner->hasRelationship($entity->guid, 'related_group')) {
-			return;
+			return null;
 		}
 		
-		$return_value = $hook->getValue();
+		$return_value = $event->getValue();
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'related_group',
@@ -51,21 +53,20 @@ class Entity {
 	}
 	
 	/**
-	 * Allow toggleing the suggested state
+	 * Allow toggling the suggested state
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:entity'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return null|MenuItems
 	 */
-	public static function suggestedGroup(\Elgg\Hook $hook) {
-		
+	public static function suggestedGroup(\Elgg\Event $event): ?MenuItems {
 		if (!elgg_is_admin_logged_in()) {
-			return;
+			return null;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
 		static $suggested_groups;
@@ -76,7 +77,8 @@ class Entity {
 		
 		$suggested = in_array($entity->guid, $suggested_groups);
 		
-		$return_value = $hook->getValue();
+		/* @var $return_value MenuItems */
+		$return_value = $event->getValue();
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'set-suggested-group',
@@ -112,29 +114,28 @@ class Entity {
 	/**
 	 * Add the remove user from group menu item to the user entity menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:entity'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function addRemoveFromGroup(\Elgg\Hook $hook) {
-		
+	public static function addRemoveFromGroup(\Elgg\Event $event): ?MenuItems {
 		$group = elgg_get_page_owner_entity();
 		if (!$group instanceof \ElggGroup || !$group->canEdit()) {
-			return;
+			return null;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggUser || !$group->isMember($entity)) {
-			return;
+			return null;
 		}
 		
 		if ($entity->guid === elgg_get_logged_in_user_guid() || $group->owner_guid === $entity->guid) {
 			// can't remove yourself, or group owner
-			return;
+			return null;
 		}
 		
 		/* @var $return MenuItems */
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'removeuser',
@@ -153,19 +154,18 @@ class Entity {
 	/**
 	 * Add a menu item to the approval reasons on the group profile page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:entity'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function registerApprovalReasons(\Elgg\Hook $hook) {
-		
+	public static function registerApprovalReasons(\Elgg\Event $event): ?MenuItems {
 		if (!elgg_in_context('group_profile')) {
-			return;
+			return null;
 		}
 		
-		$entity = $hook->getEntityParam();
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
-			return;
+			return null;
 		}
 		
 		$count = $entity->getAnnotations([
@@ -177,11 +177,11 @@ class Entity {
 			],
 		]);
 		if (empty($count)) {
-			return;
+			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'approval_reasons',
@@ -199,52 +199,52 @@ class Entity {
 	/**
 	 * Add menu items to the user hover/entity menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:user_hover' | 'register', 'menu:entity'
+	 * @param \Elgg\Event $event 'register', 'menu:user_hover' | 'register', 'menu:entity'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return null|MenuItems
 	 */
-	public static function assignGroupAdmin(\Elgg\Hook $hook) {
-		
+	public static function assignGroupAdmin(\Elgg\Event $event): ?MenuItems {
 		if (!group_tools_multiple_admin_enabled()) {
-			return;
+			return null;
+		}
+		
+		$user = $event->getEntityParam();
+		if (!$user instanceof \ElggUser) {
+			// not a user menu
+			return null;
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
 		$loggedin_user = elgg_get_logged_in_user_entity();
 		if (!$page_owner instanceof \ElggGroup || empty($loggedin_user)) {
 			// not a group or logged in
-			return;
+			return null;
 		}
 		
 		if (!$page_owner->canEdit()) {
 			// can't edit the group
-			return;
+			return null;
 		}
 		
-		$user = $hook->getEntityParam();
-		if (!$user instanceof \ElggUser) {
-			// not a user menu
-			return;
-		}
-		
-		if (($page_owner->owner_guid === $user->guid) || ($loggedin_user->guid === $user->guid)) {
+		if ($page_owner->owner_guid === $user->guid || $loggedin_user->guid === $user->guid) {
 			// group owner or current user
-			return;
+			return null;
 		}
 		
 		if (!$page_owner->isMember($user)) {
 			// user is not a member of the group
-			return;
+			return null;
 		}
 		
 		if (!group_tools_can_assign_group_admin($page_owner)) {
-			return;
+			return null;
 		}
 		
-		$return_value = $hook->getValue();
+		/* @var $return_value MenuItems */
+		$return_value = $event->getValue();
 		
 		$is_admin = $user->hasRelationship($page_owner->guid, 'group_admin');
-		$section = $hook->getType() === 'menu:user_hover' ? 'action' : 'default';
+		$section = $event->getType() === 'menu:user_hover' ? 'action' : 'default';
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'group_admin',

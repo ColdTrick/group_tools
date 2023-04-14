@@ -6,8 +6,6 @@
  * elements may be omitted and the corresponding data will be left as is.
  */
 
-elgg_make_sticky_form('groups');
-
 // Get group fields
 $input = [];
 
@@ -34,13 +32,13 @@ foreach ($fields as $field) {
 	}
 
 	if ($field['#type'] == 'tags') {
-		$input[$shortname] = elgg_string_to_array($input[$shortname]);
+		$input[$shortname] = elgg_string_to_array((string) $input[$shortname]);
 	}
 }
 
 // only set if submitted
-$name = elgg_get_title_input('name', null);
-if ($name !== null) {
+$name = elgg_get_title_input('name');
+if (!elgg_is_empty($name)) {
 	$input['name'] = $name;
 }
 
@@ -61,7 +59,7 @@ if ($group_guid) {
 		return elgg_error_response($error);
 	}
 	
-	$container_guid = get_input('container_guid', $user->guid);
+	$container_guid = (int) get_input('container_guid', $user->guid);
 	$container = get_entity($container_guid);
 	
 	if (!$container || !$container->canWriteToContainer($user->guid, 'group', 'group')) {
@@ -136,7 +134,7 @@ if ($is_new_group) {
 
 	// if new group, we need to save so group acl gets set in event handler
 	if (!$group->save()) {
-		return elgg_error_response(elgg_echo("groups:save_error"));
+		return elgg_error_response(elgg_echo('groups:save_error'));
 	}
 }
 
@@ -174,7 +172,7 @@ if (group_tools_allow_hidden_groups()) {
 	if ($is_new_group || $value !== null) {
 		$visibility = (int) $value;
 		
-		if ($visibility === ACCESS_PRIVATE) {
+		if ($visibility == ACCESS_PRIVATE) {
 			// Make this group visible only to group members. We need to use
 			// ACCESS_PRIVATE on the form and convert it to group_acl here
 			// because new groups do not have acl until they have been saved once.
@@ -233,13 +231,10 @@ if (!$group->save()) {
 // join motivation
 if (!$group->isPublicMembership() && group_tools_join_motivation_required()) {
 	$join_motivation = get_input('join_motivation');
-	$group->setPrivateSetting('join_motivation', $join_motivation);
+	$group->join_motivation = $join_motivation;
 } else {
-	$group->removePrivateSetting('join_motivation');
+	unset($group->join_motivation);
 }
-
-// group saved so clear sticky form
-elgg_clear_sticky_form('groups');
 
 // group creator needs to be member of new group and river entry created
 if ($is_new_group) {
@@ -259,6 +254,13 @@ if (get_input('icon_remove')) {
 } else {
 	// try to save new icon, will fail silently if no icon provided
 	$group->saveIconFromUploadedFile('icon');
+}
+
+if (get_input('header_remove')) {
+	$group->deleteIcon('header');
+} else {
+	// try to save new icon, will fail silently if no icon provided
+	$group->saveIconFromUploadedFile('header', 'header');
 }
 
 // owner transfer

@@ -4,28 +4,30 @@ namespace ColdTrick\GroupTools\Menus;
 
 use Elgg\Menu\MenuItems;
 
+/**
+ * Add menu items to the filter menu
+ */
 class Filter {
 
 	/**
 	 * Add menu items to the user group invitations page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/invitations'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:groups/invitations'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function registerUserEmailInvitations(\Elgg\Hook $hook) {
-		
+	public static function registerUserEmailInvitations(\Elgg\Event $event): ?MenuItems {
 		if (elgg_get_plugin_setting('invite_email', 'group_tools') !== 'yes') {
-			return;
+			return null;
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
 		if (!$page_owner instanceof \ElggUser || !$page_owner->canEdit()) {
-			return;
+			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'invitations',

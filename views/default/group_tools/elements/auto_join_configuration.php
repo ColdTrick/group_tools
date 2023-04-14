@@ -37,10 +37,10 @@ $content = elgg_format_element('h4', ['class' => 'group-tools-auto-join-title'],
 $group_guids = (array) elgg_extract('group_guids', $config, []);
 foreach ($group_guids as $guid) {
 	$group = get_entity($guid);
-	if (!$group instanceof ElggGroup) {
+	if (!$group instanceof \ElggGroup) {
 		continue;
 	}
-
+	
 	$content .= elgg_view_image_block(elgg_view_entity_icon($group, 'tiny'), elgg_view_entity_url($group));
 }
 

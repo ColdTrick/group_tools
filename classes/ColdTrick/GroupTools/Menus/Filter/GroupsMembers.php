@@ -1,21 +1,23 @@
 <?php
 
-namespace ColdTrick\GroupTools\Menus;
+namespace ColdTrick\GroupTools\Menus\Filter;
 
 use Elgg\Menu\MenuItems;
 
+/**
+ * Add menu items to the group/members filter menu
+ */
 class GroupsMembers {
 	
 	/**
 	 * Add a menu item to the tabs on the group members page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/member'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:groups/member'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerGroupAdmins(\Elgg\Hook $hook) {
-		
-		$entity = $hook->getParam('filter_entity');
+	public static function registerGroupAdmins(\Elgg\Event $event) {
+		$entity = $event->getParam('filter_entity');
 		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
@@ -25,7 +27,7 @@ class GroupsMembers {
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'group_admins',
@@ -43,13 +45,12 @@ class GroupsMembers {
 	/**
 	 * Add a menu item to the tabs on the group members page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/member'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:groups/member'
 	 *
 	 * @return void|MenuItems
 	 */
-	public static function registerEmailInvitations(\Elgg\Hook $hook) {
-		
-		$entity = $hook->getParam('filter_entity');
+	public static function registerEmailInvitations(\Elgg\Event $event) {
+		$entity = $event->getParam('filter_entity');
 		if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
 			return;
 		}
@@ -60,7 +61,7 @@ class GroupsMembers {
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'email_invitations',

@@ -2,7 +2,7 @@
 
 $guid = (int) get_input('guid');
 $group = get_entity($guid);
-if (!$group instanceof ElggGroup || !(bool) $group->is_concept) {
+if (!$group instanceof \ElggGroup || !(bool) $group->is_concept) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
@@ -15,8 +15,8 @@ if (!elgg_is_admin_logged_in() && (elgg_get_plugin_setting('admin_approve', 'gro
 	// request approval
 	unset($group->is_concept);
 	
-	// prevent advanced notifications from preventing the enqueing of this event
-	elgg_unregister_plugin_hook_handler('enqueue', 'notification', 'ColdTrick\AdvancedNotifications\Enqueue::preventPrivateNotifications');
+	// prevent advanced notifications from preventing the enqueuing of this event
+	elgg_unregister_event_handler('enqueue', 'notification', '\ColdTrick\AdvancedNotifications\Enqueue::delayPrivateContentNotification');
 	
 	elgg_trigger_event('admin_approval', 'group', $group);
 	

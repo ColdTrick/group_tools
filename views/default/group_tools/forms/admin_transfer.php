@@ -10,7 +10,7 @@ $group = elgg_extract('entity', $vars);
 $user = elgg_get_logged_in_user_entity();
 $show_group_owner_transfer = (bool) elgg_extract('show_group_owner_transfer', $vars, true);
 
-if (!$show_group_owner_transfer || !$group instanceof ElggGroup || !$user instanceof ElggUser) {
+if (!$show_group_owner_transfer || !$group instanceof \ElggGroup || !$user instanceof \ElggUser) {
 	return;
 }
 
@@ -24,7 +24,7 @@ $owner_guid_options = [
 	'#type' => 'userpicker',
 	'#label' => elgg_echo('groups:owner'),
 	'name' => 'owner_guid',
-	'value' =>  $group->owner_guid,
+	'value' => $group->owner_guid,
 	'limit' => 1,
 	'match_on' => 'group_owner_transfer',
 	'show_friends' => false,

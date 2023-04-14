@@ -19,5 +19,8 @@ echo elgg_view_field([
 	'required' => true,
 ]);
 
-$footer = elgg_view('input/submit', ['value' => elgg_echo('groups:joinrequest')]);
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('groups:joinrequest'),
+]);
 elgg_set_form_footer($footer);

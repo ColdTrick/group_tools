@@ -7,7 +7,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggUser) {
+if (!$entity instanceof \ElggUser) {
 	return;
 }
 
@@ -22,7 +22,7 @@ $delete_icon = elgg_view_icon('delete', ['class' => 'elgg-autocomplete-item-remo
 $title = $entity->getDisplayName();
 
 $group = elgg_extract('group', $vars);
-if ($group instanceof ElggGroup && $group->isMember($entity)) {
+if ($group instanceof \ElggGroup && $group->isMember($entity)) {
 	$title .= elgg_format_element('span', ['class' => ['mls', 'elgg-subtext']], elgg_echo('group_tools:groups:invite:member'));
 }
 

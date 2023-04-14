@@ -4,15 +4,18 @@ namespace ColdTrick\GroupTools;
 
 use Elgg\DefaultPluginBootstrap;
 
+/**
+ * Plugin bootstrap
+ */
 class Bootstrap extends DefaultPluginBootstrap {
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function load() {
-		$hooks = $this->elgg()->hooks;
-		$hooks->registerHandler('route:config', 'account:register', __NAMESPACE__ . '\Router\GroupInviteRegistrationGatekeeper::register');
-		$hooks->registerHandler('route:config', 'action:register', __NAMESPACE__ . '\Router\GroupInviteRegistrationGatekeeper::register');
+		$events = $this->elgg()->events;
+		$events->registerHandler('route:config', 'account:register', __NAMESPACE__ . '\Router\GroupInviteRegistrationGatekeeper::register');
+		$events->registerHandler('route:config', 'action:register', __NAMESPACE__ . '\Router\GroupInviteRegistrationGatekeeper::register');
 	}
 	
 	/**

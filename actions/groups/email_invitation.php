@@ -14,7 +14,6 @@ if (empty($invitecode)) {
 }
 
 $group = group_tools_check_group_email_invitation($invitecode);
-
 if (empty($group)) {
 	return elgg_error_response(elgg_echo('group_tools:action:groups:email_invitation:error:code'));
 }

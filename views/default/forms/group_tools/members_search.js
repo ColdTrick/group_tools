@@ -1,6 +1,5 @@
 define(['jquery', 'elgg/Ajax'], function($, Ajax) {
-	
-	var submitForm = function(event) {
+	function submitForm(event) {
 		event.preventDefault();
 		
 		var $form = $(this);

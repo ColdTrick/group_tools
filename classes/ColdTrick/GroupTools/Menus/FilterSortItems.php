@@ -14,19 +14,18 @@ class FilterSortItems {
 	/**
 	 * Register sorting menu items based on the relationship 'member'
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter<:some filter_id>'
+	 * @param \Elgg\Event $event 'register', 'menu:filter<:some filter_id>'
 	 *
-	 * @return MenuItems|null
+	 * @return null|MenuItems
 	 */
-	public static function registerPopularSorting(\Elgg\Hook $hook): ?MenuItems {
-		
-		if (!(bool) $hook->getParam('filter_sorting', true)) {
+	public static function registerPopularSorting(\Elgg\Event $event): ?MenuItems {
+		if (!(bool) $event->getParam('filter_sorting', true)) {
 			// sorting is disabled for this menu
 			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		// add sorting based on relationship time_created
 		$result[] = \ElggMenuItem::factory([

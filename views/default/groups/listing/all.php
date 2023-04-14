@@ -1,7 +1,13 @@
 <?php
+/**
+ * Renders a list of groups (default sorted by creation date)
+ *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ */
 
 $defaults = [
 	'type' => 'group',
+	'full_view' => false,
 	'no_results' => elgg_echo('groups:none'),
 ];
 
@@ -11,7 +17,7 @@ $options = array_merge($defaults, $options);
 $getter = 'elgg_get_entities';
 
 // sorting options
-if (!isset($options['order_by'])) {
+if (!isset($options['sort_by'])) {
 	$sorting = get_input('sort');
 	switch ($sorting) {
 		case 'popular':

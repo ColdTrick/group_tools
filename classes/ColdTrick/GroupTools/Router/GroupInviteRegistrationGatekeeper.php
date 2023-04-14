@@ -5,10 +5,13 @@ namespace ColdTrick\GroupTools\Router;
 use Elgg\Request;
 use Elgg\Router\Middleware\RegistrationAllowedGatekeeper;
 
+/**
+ * Allow access to the registration page with a valid group invite code
+ */
 class GroupInviteRegistrationGatekeeper extends RegistrationAllowedGatekeeper {
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function __invoke(Request $request): void {
 		if ($this->validateGroupInvitecode($request)) {
@@ -39,12 +42,12 @@ class GroupInviteRegistrationGatekeeper extends RegistrationAllowedGatekeeper {
 	/**
 	 * Change the middleware of the registration to this gatekeeper
 	 *
-	 * @param \Elgg\Hook $hook 'route:config', 'account:register'|'action:register'
+	 * @param \Elgg\Event $event 'route:config', 'account:register'|'action:register'
 	 *
 	 * @return array
 	 */
-	public static function register(\Elgg\Hook $hook) {
-		$route_config = $hook->getValue();
+	public static function register(\Elgg\Event $event) {
+		$route_config = $event->getValue();
 		$middleware = elgg_extract('middleware', $route_config, []);
 		
 		// find the default registration gatekeeper

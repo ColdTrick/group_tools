@@ -12,7 +12,7 @@ if (empty($group_guid) || empty($motivation)) {
 }
 
 $group = get_entity($group_guid);
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
@@ -23,7 +23,7 @@ $user->addRelationship($group->guid, 'membership_request');
 
 // add motivation
 $group_acl = $group->getOwnedAccessCollection('group_acl');
-$access_id = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
+$access_id = ($group_acl instanceof \ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
 $group->annotate('join_motivation', $motivation, $access_id, $user->guid);
 
 // notify owner
@@ -58,8 +58,6 @@ $params = [
 ];
 
 // Notify group owner
-if (!notify_user($owner->guid, $user->guid, $subject, $body, $params)) {
-	return elgg_error_response(elgg_echo('groups:joinrequestnotmade'));
-}
+notify_user($owner->guid, $user->guid, $subject, $body, $params);
 
 return elgg_ok_response('', elgg_echo('groups:joinrequestmade'));

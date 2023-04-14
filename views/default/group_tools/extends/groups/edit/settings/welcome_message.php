@@ -3,8 +3,7 @@
  * Configure a welcome message to send to a new member when he/she joins the group
  */
 
-$content = '';
-$content .= elgg_view('output/longtext', [
+$content = elgg_view('output/longtext', [
 	'value' => elgg_echo('group_tools:welcome_message:description'),
 ]);
 
@@ -12,7 +11,7 @@ $help = null;
 $value = '';
 
 $group = elgg_extract('entity', $vars);
-if ($group instanceof ElggGroup) {
+if ($group instanceof \ElggGroup) {
 	$help = elgg_echo('group_tools:welcome_message:explain', [
 		elgg_get_logged_in_user_entity()->getDisplayName(),
 		$group->getDisplayName(),

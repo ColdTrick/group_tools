@@ -10,7 +10,6 @@ echo elgg_view('groups/listing/all', [
 	'options' => [
 		'wheres' => [
 			function(QueryBuilder $qb, $main_alias) use ($user_guid) {
-				
 				$subquery = $qb->subquery('entity_relationships', 'managed');
 				$subquery->select('guid_two')
 					->where($qb->compare('managed.guid_one', '=', $user_guid, ELGG_VALUE_GUID))
@@ -25,4 +24,3 @@ echo elgg_view('groups/listing/all', [
 		],
 	],
 ]);
-

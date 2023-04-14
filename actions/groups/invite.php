@@ -1,18 +1,15 @@
 <?php
 /**
- * Invite a user to join a group
- *
- * @package ElggGroups
+ * Invite users to join a group
  */
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
-elgg_make_sticky_form('group_invite');
 
 $user_guids = (array) get_input('user_guid');
 $non_group_members = (array) get_input('non_group_members');
 
 $user_guids = array_merge($user_guids, $non_group_members);
+$user_guids = array_filter($user_guids);
 
 $adding = false;
 if (elgg_is_admin_logged_in()) {
@@ -42,6 +39,7 @@ $group_guid = (int) get_input('group_guid');
 $text = get_input('comment', '');
 
 $emails = (array) get_input('user_guid_email');
+$emails = array_filter($emails);
 
 $csv = elgg_get_uploaded_file('csv');
 
@@ -51,8 +49,7 @@ if (get_input('resend') === 'yes') {
 }
 
 $group = get_entity($group_guid);
-
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
@@ -72,13 +69,12 @@ $join = 0;
 
 // show hidden (unvalidated) users
 elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guids, $adding, $emails, $csv, $resend, &$already_invited, &$invited, &$member, &$join) {
-	
 	// invite existing users
 	if (!empty($user_guids)) {
 		if (!$adding) {
 			// invite users
 			foreach ($user_guids as $u_id) {
-				$user = get_user($u_id);
+				$user = get_user((int) $u_id);
 				if (empty($user)) {
 					continue;
 				}
@@ -101,7 +97,7 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 		} else {
 			// add users directly
 			foreach ($user_guids as $u_id) {
-				$user = get_user($u_id);
+				$user = get_user((int) $u_id);
 				if (empty($user)) {
 					continue;
 				}
@@ -152,11 +148,9 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 					continue;
 				}
 				
-				$users = get_user_by_email($email);
-				if (!empty($users)) {
+				$user = elgg_get_user_by_email($email);
+				if ($user instanceof \ElggUser) {
 					// found a user with this email on the site, so invite (or add)
-					$user = $users[0];
-					
 					if ($group->isMember($user)) {
 						$member++;
 						continue;
@@ -166,6 +160,7 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 						if (group_tools_add_user($group, $user, $text)) {
 							$join++;
 						}
+						
 						continue;
 					}
 					
@@ -182,7 +177,6 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 				} else {
 					// user not found so invite based on email address
 					$invite_result = group_tools_invite_email($group, $email, $text, $resend);
-					
 					if ($invite_result === true) {
 						$invited++;
 					} elseif ($invite_result === null) {
@@ -196,8 +190,6 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 
 // which message to show
 if (!empty($invited) || !empty($join)) {
-	elgg_clear_sticky_form('group_invite');
-	
 	if (!$adding) {
 		return elgg_ok_response('', elgg_echo('group_tools:action:invite:success:invite', [$invited, $already_invited, $member]));
 	} else {

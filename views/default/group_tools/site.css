@@ -41,11 +41,11 @@
 }
 	
 .group-tools-simplified-option {
-	background: #f0f0f0;
+	background: $(background-color-soft);
 	border: 1px solid rgba(0, 0, 0, 0.2);
-	color: #333;
-	padding: 20px;
-	margin: 20px;
+	color: $(text-color-mild);
+	padding: 1rem;
+	margin: 1rem;
 	cursor: pointer;
 	
 	border-radius: 3px;
@@ -56,8 +56,8 @@
 	}
 	
 	&.elgg-state-active {
-		color: #FFF;
-		background: #4787b8;
+		color: $(button-action-font-color);
+		background: $(button-action-background-color);
 		
 		h3 {
 			color: inherit;
@@ -69,7 +69,7 @@
 	cursor: default;
 }
 
-.elgg-menu-filter-groups-all {	
+.elgg-menu-filter-groups-all {
 	.group-tools-listing-sorting {
 		margin-left: auto;
 	}

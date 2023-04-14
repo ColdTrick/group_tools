@@ -1,5 +1,4 @@
 define(['jquery', 'elgg/Ajax'], function($, Ajax) {
-			
 	function add_group_suggestions() {
 		var $input = $('form.elgg-form-groups-edit input[name="name"]');
 		if ($input.closest('form').find('input[name="group_guid"]').length) {
@@ -24,7 +23,7 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 	$(document).on('input', 'form.elgg-form-groups-edit input[name="name"]', function(event) {
 		clearTimeout(inputTimeout);
 		if ($(this).val().length < 3) {
-			// not enought characters (yet)
+			// not enough characters (yet)
 			return;
 		}
 		

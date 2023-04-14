@@ -2,27 +2,32 @@
 
 namespace ColdTrick\GroupTools\Menus;
 
+use Elgg\Menu\MenuItems;
+
+/**
+ * Add menu items to the owner_block menu
+ */
 class OwnerBlock {
 	
 	/**
 	 * Add a link to the related groups page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:owner_block'
+	 * @param \Elgg\Event $event 'register', 'menu:owner_block'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return null|MenuItems
 	 */
-	public static function relatedGroups(\Elgg\Hook $hook) {
-		
-		$entity = $hook->getEntityParam();
+	public static function relatedGroups(\Elgg\Event $event): ?MenuItems {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggGroup) {
-			return;
+			return null;
 		}
 		
 		if (!$entity->isToolEnabled('related_groups')) {
-			return;
+			return null;
 		}
 		
-		$return = $hook->getValue();
+		/* @var $return MenuItems */
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'related_groups',

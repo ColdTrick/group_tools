@@ -1,12 +1,12 @@
 <?php
-use Elgg\Database\QueryBuilder;
-
 /**
  * Renders a list of groups based on group tool preset
  *
  * Pass filter=preset and preset=<name of your preset> in your input to get a list of groups with the preset
  * Pass include_undefined=1 to include all groups without a preset configured
  */
+
+use Elgg\Database\QueryBuilder;
 
 $preset = get_input('preset');
 if (empty($preset)) {

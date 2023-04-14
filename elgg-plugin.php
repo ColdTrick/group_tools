@@ -4,10 +4,9 @@ use ColdTrick\GroupTools\Bootstrap;
 use ColdTrick\GroupTools\Notifications\GroupAdminApprovalNotificationHandler;
 use ColdTrick\GroupTools\Notifications\GroupMailEnqueueNotificationEventHandler;
 use ColdTrick\GroupTools\Upgrades\FixGroupAccess;
-use ColdTrick\GroupTools\Upgrades\MigrateGroupDefaultContentAccess;
-use ColdTrick\GroupTools\Upgrades\MigrateGroupPluginSettings;
 use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
+use Elgg\Router\Middleware\GroupPageOwnerGatekeeper;
 use Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
@@ -93,46 +92,17 @@ return [
 		'groups/invite' => [],
 	],
 	'events' => [
-		'create' => [
-			'user' => [
-				'\ColdTrick\GroupTools\Membership::createUserGroupInviteCode' => [],
-			],
-		],
-		'delete' => [
-			'relationship' => [
-				'\ColdTrick\GroupTools\Membership::deleteRequest' => [],
-			],
-		],
-		'join' => [
-			'group' => [
-				'\ColdTrick\GroupTools\Membership::groupJoin' => [],
-			],
-		],
-		'leave' => [
-			'group' => [
-				'\ColdTrick\GroupTools\Plugins\Groups::removeGroupAdminOnLeave' => [],
-			],
-		],
-		'login:after' => [
-			'user' => [
-				'\ColdTrick\GroupTools\Membership::autoJoinGroupsLogin' => [],
-			],
-		],
-		'validate:after' => [
-			'user' => [
-				'\ColdTrick\GroupTools\Membership::createUserEmailInvitedGroups' => [],
-				'\ColdTrick\GroupTools\Membership::createUserDomainBasedGroups' => [],
-				'\ColdTrick\GroupTools\Membership::autoJoinGroups' => [],
-			],
-		],
-	],
-	'hooks' => [
 		'action:validate' => [
 			'groups/edit' => [
 				'\ColdTrick\GroupTools\Plugins\Groups::editActionListener' => [],
 			],
 			'groups/join' => [
 				'\ColdTrick\GroupTools\Membership::groupJoinAction' => [],
+			],
+		],
+		'create' => [
+			'user' => [
+				'\ColdTrick\GroupTools\Membership::createUserGroupInviteCode' => [],
 			],
 		],
 		'cron' => [
@@ -145,6 +115,11 @@ return [
 			],
 			'weekly' => [
 				'\ColdTrick\GroupTools\Cron::notifyConceptGroupOwners' => [],
+			],
+		],
+		'delete' => [
+			'relationship' => [
+				'\ColdTrick\GroupTools\Membership::deleteRequest' => [],
 			],
 		],
 		'entity:url' => [
@@ -194,6 +169,21 @@ return [
 				'\ColdTrick\GroupTools\PageLayout::noIndexClosedGroups' => [],
 			],
 		],
+		'join' => [
+			'group' => [
+				'\ColdTrick\GroupTools\Membership::groupJoin' => [],
+			],
+		],
+		'leave' => [
+			'group' => [
+				'\ColdTrick\GroupTools\Plugins\Groups::removeGroupAdminOnLeave' => [],
+			],
+		],
+		'login:after' => [
+			'user' => [
+				'\ColdTrick\GroupTools\Membership::autoJoinGroupsLogin' => [],
+			],
+		],
 		'permissions_check' => [
 			'group' => [
 				'\ColdTrick\GroupTools\Permissions::allowGroupAdminsToEdit' => [],
@@ -205,6 +195,9 @@ return [
 			],
 		],
 		'register' => [
+			'menu:admin_header' => [
+				'\ColdTrick\GroupTools\Menus\AdminHeader::registerAdminItems' => ['priority' => 501],
+			],
 			'menu:annotation' => [
 				'\ColdTrick\GroupTools\Menus\Annotation::registerEmailInvitation' => [],
 				'\ColdTrick\GroupTools\Menus\Annotation::registerEmailInvitationUser' => [],
@@ -226,14 +219,13 @@ return [
 				'\ColdTrick\GroupTools\Menus\Filter::registerUserEmailInvitations' => [],
 			],
 			'menu:filter:groups/members' => [
-				'\ColdTrick\GroupTools\Menus\GroupsMembers::registerGroupAdmins' => [],
-				'\ColdTrick\GroupTools\Menus\GroupsMembers::registerEmailInvitations' => [],
+				'\ColdTrick\GroupTools\Menus\Filter\GroupsMembers::registerGroupAdmins' => [],
+				'\ColdTrick\GroupTools\Menus\Filter\GroupsMembers::registerEmailInvitations' => [],
 			],
 			'menu:owner_block' => [
 				'\ColdTrick\GroupTools\Menus\OwnerBlock::relatedGroups' => [],
 			],
 			'menu:page' => [
-				'\ColdTrick\GroupTools\Menus\Page::registerAdminItems' => ['priority' => 501],
 				'\ColdTrick\GroupTools\Menus\Page::registerGroupMail' => [],
 			],
 			'menu:relationship' => [
@@ -265,6 +257,13 @@ return [
 		'tool_options' => [
 			'group' => [
 				'\ColdTrick\GroupTools\Plugins\Groups::registerGroupTools' => [],
+			],
+		],
+		'validate:after' => [
+			'user' => [
+				'\ColdTrick\GroupTools\Membership::createUserEmailInvitedGroups' => [],
+				'\ColdTrick\GroupTools\Membership::createUserDomainBasedGroups' => [],
+				'\ColdTrick\GroupTools\Membership::autoJoinGroups' => [],
 			],
 		],
 		'view_vars' => [
@@ -312,6 +311,9 @@ return [
 		'collection:group:group:related' => [
 			'path' => '/groups/related/{guid}',
 			'resource' => 'groups/related',
+			'middleware' => [
+				GroupPageOwnerGatekeeper::class,
+			],
 		],
 		'collection:group:group:membership_requests' => [
 			'path' => '/groups/membership_requests/{username}',
@@ -339,8 +341,6 @@ return [
 	],
 	'upgrades' => [
 		FixGroupAccess::class,
-		MigrateGroupDefaultContentAccess::class,
-		MigrateGroupPluginSettings::class,
 	],
 	'view_extensions' => [
 		'admin.css' => [

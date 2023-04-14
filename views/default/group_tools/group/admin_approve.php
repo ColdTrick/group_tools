@@ -9,7 +9,7 @@ use Elgg\Database\QueryBuilder;
 use Elgg\Values;
 
 $group = elgg_extract('entity', $vars);
-if (!$group instanceof ElggGroup || !elgg_is_admin_logged_in()) {
+if (!$group instanceof \ElggGroup || !elgg_is_admin_logged_in()) {
 	return;
 }
 

@@ -3,6 +3,7 @@
  * Plugin settings for group tools
  */
 
+/* @var $plugin \ElggPlugin */
 $plugin = elgg_extract('entity', $vars);
 
 $listing_options = [
@@ -227,6 +228,7 @@ $cells = [];
 foreach ($listing_sorting_options as $label) {
 	$cells[] = elgg_format_element('th', ['class' => 'center'], $label);
 }
+
 $listing_tab_rows[] = elgg_format_element('tr', [], implode('', $cells));
 
 foreach ($listing_options as $tab => $tab_title) {
@@ -245,6 +247,7 @@ foreach ($listing_options as $tab => $tab_title) {
 	if ($tab_value !== '0') {
 		$checkbox_options['checked'] = true;
 	}
+	
 	$cells[] = elgg_format_element('td', [
 		'class' => 'center',
 		'title' => elgg_echo('group_tools:settings:listing:available'),
@@ -283,6 +286,7 @@ foreach ($listing_options as $tab => $tab_title) {
 	// add to table rows
 	$listing_tab_rows[] = elgg_format_element('tr', [], implode('', $cells));
 }
+
 $body .= elgg_format_element('table', ['class' => 'elgg-table-alt'], implode('', $listing_tab_rows));
 
 echo elgg_view_module('info', elgg_echo('group_tools:settings:listing:title'), $body);

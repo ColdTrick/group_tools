@@ -8,7 +8,7 @@ $plugin = elgg_extract('entity', $vars);
 $user_guid = (int) elgg_extract('user_guid', $vars);
 
 $user = get_user($user_guid);
-if (!$user instanceof ElggUser || !$user->isAdmin()) {
+if (!$user instanceof \ElggUser || !$user->isAdmin()) {
 	return;
 }
 

@@ -2,19 +2,24 @@
 
 namespace ColdTrick\GroupTools\Menus\Filter;
 
+use Elgg\Menu\MenuItems;
+
+/**
+ * Add menu items to the groups/all filter menu
+ */
 class GroupsAll {
 	
 	/**
 	 * Rewrite group listing tabs
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:groups/all'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return MenuItems
 	 */
-	public static function removeTabs(\Elgg\Hook $hook) {
+	public static function removeTabs(\Elgg\Event $event): MenuItems {
+		/* @var $return MenuItems */
+		$return = $event->getValue();
 		
-		/* @var $return \Elgg\Menu\MenuItems */
-		$return = $hook->getValue();
 		$return->remove('popular');
 		
 		return $return;
@@ -23,14 +28,13 @@ class GroupsAll {
 	/**
 	 * Rewrite group listing tabs
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:groups/all'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return MenuItems
 	 */
-	public static function addTabs(\Elgg\Hook $hook) {
-		
-		/* @var $return \Elgg\Menu\MenuItems */
-		$return = $hook->getValue();
+	public static function addTabs(\Elgg\Event $event): MenuItems {
+		/* @var $return MenuItems */
+		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'all',
@@ -40,6 +44,7 @@ class GroupsAll {
 			]),
 			'priority' => 200,
 		]);
+		
 		if (elgg_is_logged_in()) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'yours',
@@ -49,6 +54,7 @@ class GroupsAll {
 				]),
 				'priority' => 250,
 			]);
+			
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'member',
 				'text' => elgg_echo('group_tools:groups:sorting:member'),
@@ -69,6 +75,7 @@ class GroupsAll {
 				]);
 			}
 		}
+		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'open',
 			'text' => elgg_echo('group_tools:groups:sorting:open'),
@@ -77,6 +84,7 @@ class GroupsAll {
 			]),
 			'priority' => 500,
 		]);
+		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'closed',
 			'text' => elgg_echo('group_tools:groups:sorting:closed'),
@@ -85,6 +93,7 @@ class GroupsAll {
 			]),
 			'priority' => 600,
 		]);
+		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'suggested',
 			'text' => elgg_echo('group_tools:groups:sorting:suggested'),
@@ -100,13 +109,13 @@ class GroupsAll {
 	/**
 	 * Clean up the tabs on the group listing page
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
+	 * @param \Elgg\Event $event 'register', 'menu:filter:groups/all'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return MenuItems
 	 */
-	public static function cleanupTabs(\Elgg\Hook $hook) {
-		
-		$return = $hook->getValue();
+	public static function cleanupTabs(\Elgg\Event $event): MenuItems {
+		/* @var $return MenuItems */
+		$return = $event->getValue();
 		
 		$new = [];
 		
@@ -134,8 +143,7 @@ class GroupsAll {
 	 *
 	 * @return bool
 	 */
-	protected static function showTab($name) {
-		
+	protected static function showTab(string $name): bool {
 		$show_tab_setting = elgg_get_plugin_setting("group_listing_{$name}_available", 'group_tools');
 		
 		return ($show_tab_setting !== '0');

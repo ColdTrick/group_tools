@@ -1,14 +1,16 @@
 <?php
 
-class GroupMail extends ElggObject {
+/**
+ * Group Mail entity
+ */
+class GroupMail extends \ElggObject {
 	
 	const SUBTYPE = 'group_tools_group_mail';
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see ElggObject::initializeAttributes()
+	 * {@inheritdoc}
 	 */
-	protected function initializeAttributes() {
+	protected function initializeAttributes(): void {
 		parent::initializeAttributes();
 		
 		$this->attributes['subtype'] = self::SUBTYPE;
@@ -20,7 +22,7 @@ class GroupMail extends ElggObject {
 	 *
 	 * @return string
 	 */
-	public function getSubject() {
+	public function getSubject(): string {
 		return $this->title ?? elgg_echo('group_tools:mail:message:default_subject', [$this->getContainerEntity()->getDisplayName()]);
 	}
 	
@@ -29,9 +31,8 @@ class GroupMail extends ElggObject {
 	 *
 	 * @return string
 	 */
-	public function getMessage() {
-		
-		/* @var $group ElggGroup */
+	public function getMessage(): string {
+		/* @var $group \ElggGroup */
 		$group = $this->getContainerEntity();
 		
 		$message = $this->description;
@@ -50,29 +51,30 @@ class GroupMail extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setRecipients($recipients) {
+	public function setRecipients(array $recipients): void {
 		$this->recipients = $recipients;
 	}
 	
 	/**
 	 * Get the recipients for this message in the form [guid => ['email']]
 	 *
-	 * @return false|array
+	 * @return array
 	 */
-	public function getRecipients() {
-		
+	public function getRecipients(): array {
 		if (empty($this->recipients)) {
-			return false;
+			return [];
 		}
 		
 		$recipients = (array) $this->recipients;
-		$batch = new ElggBatch('elgg_get_entities', [
+		/* @var $batch \ElggBatch */
+		$batch = elgg_get_entities([
 			'type' => 'user',
 			'limit' => false,
 			'guids' => $recipients,
 			'relationship' => 'member',
 			'relationship_guid' => $this->container_guid,
 			'inverse_relationship' => true,
+			'batch' => true,
 		]);
 		
 		$formatted_recipients = [];
@@ -89,8 +91,7 @@ class GroupMail extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function enqueue() {
-		
+	public function enqueue(): bool {
 		if (!$this->save()) {
 			return false;
 		}

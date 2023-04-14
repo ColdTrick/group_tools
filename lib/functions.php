@@ -3,6 +3,7 @@
  * All helper functions for this plugin can be found here.
  */
 
+use ColdTrick\GroupTools\StaleInfo;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Select;
 use Elgg\Database\QueryBuilder;
@@ -14,10 +15,9 @@ use Elgg\Security\Base64Url;
  * @param string $invite_code the invite code
  * @param int    $group_guid  (optional) the group to check
  *
- * @return false|ElggGroup
+ * @return null|\ElggGroup
  */
-function group_tools_check_group_email_invitation(string $invite_code, int $group_guid = 0) {
-	
+function group_tools_check_group_email_invitation(string $invite_code, int $group_guid = 0): ?\ElggGroup {
 	if (empty($invite_code) || !Base64Url::decode($invite_code)) {
 		return false;
 	}
@@ -40,7 +40,6 @@ function group_tools_check_group_email_invitation(string $invite_code, int $grou
 		'annotation_name_value_pairs_operator' => 'OR',
 	];
 	
-	$group_guid = (int) $group_guid;
 	if ($group_guid > 0) {
 		$options['annotation_owner_guids'] = [$group_guid];
 	}
@@ -50,21 +49,20 @@ function group_tools_check_group_email_invitation(string $invite_code, int $grou
 		return elgg_get_entities($options);
 	});
 	
-	return elgg_extract(0, $groups, false);
+	return elgg_extract(0, $groups);
 }
 
 /**
  * Invite a user to a group
  *
- * @param ElggGroup $group  the group to be invited for
- * @param ElggUser  $user   the user to be invited
- * @param string    $text   (optional) extra text in the invitation
- * @param bool      $resend should existing invitations be resend
+ * @param \ElggGroup $group  the group to be invited for
+ * @param \ElggUser  $user   the user to be invited
+ * @param string     $text   (optional) extra text in the invitation
+ * @param bool       $resend should existing invitations be resend
  *
  * @return bool
  */
-function group_tools_invite_user(ElggGroup $group, ElggUser $user, string $text = '', bool $resend = false) {
-	
+function group_tools_invite_user(\ElggGroup $group, \ElggUser $user, string $text = '', bool $resend = false): bool {
 	$loggedin_user = elgg_get_logged_in_user_entity();
 	if (empty($loggedin_user)) {
 		return false;
@@ -107,21 +105,19 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, string $text 
 /**
  * Add a user to a group
  *
- * @param ElggGroup $group the group to add the user to
- * @param ElggUser  $user  the user to be added
- * @param string    $text  (optional) extra text for the notification
+ * @param \ElggGroup $group the group to add the user to
+ * @param \ElggUser  $user  the user to be added
+ * @param string     $text  (optional) extra text for the notification
  *
  * @return bool
  */
-function group_tools_add_user(ElggGroup $group, ElggUser $user, string $text = '') {
-	
+function group_tools_add_user(\ElggGroup $group, \ElggUser $user, string $text = ''): bool {
 	$loggedin_user = elgg_get_logged_in_user_entity();
 	if (empty($loggedin_user)) {
 		return false;
 	}
 	
 	return elgg_call(ELGG_IGNORE_ACCESS, function() use ($group, $user, $loggedin_user, $text) {
-		
 		if (!$group->join($user)) {
 			return false;
 		}
@@ -140,7 +136,7 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, string $text = '
 			'inviter' => $loggedin_user,
 			'invitee' => $user,
 		];
-		$msg = elgg_trigger_plugin_hook('invite_notification', 'group_tools', $params, $msg);
+		$msg = elgg_trigger_event_results('invite_notification', 'group_tools', $params, $msg);
 		
 		if (!notify_user($user->guid, $group->owner_guid, $subject, $msg, [], ['email'])) {
 			return false;
@@ -153,15 +149,14 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, string $text = '
 /**
  * Invite a new user by email to a group
  *
- * @param ElggGroup $group  the group to be invited for
- * @param string    $email  the email address to be invited
- * @param string    $text   (optional) extra text in the invitation
- * @param bool      $resend should existing invitations be resend
+ * @param \ElggGroup $group  the group to be invited for
+ * @param string     $email  the email address to be invited
+ * @param string     $text   (optional) extra text in the invitation
+ * @param bool       $resend should existing invitations be resend
  *
- * @return bool|NULL true is invited, false on failure, null when already send
+ * @return bool|null true is invited, false on failure, null when already send
  */
-function group_tools_invite_email(ElggGroup $group, string $email, string $text = '', bool $resend = false) {
-	
+function group_tools_invite_email(\ElggGroup $group, string $email, string $text = '', bool $resend = false): ?bool {
 	$loggedin_user = elgg_get_logged_in_user_entity();
 	if (!elgg_is_valid_email($email) || empty($loggedin_user)) {
 		return false;
@@ -207,7 +202,7 @@ function group_tools_invite_email(ElggGroup $group, string $email, string $text 
 		],
 	]);
 	
-	$body = elgg_trigger_plugin_hook('invite_notification', 'group_tools', $email->getParams(), $email->getBody());
+	$body = elgg_trigger_event_results('invite_notification', 'group_tools', $email->getParams(), $email->getBody());
 	$email->setBody($body);
 	
 	return elgg_send_email($email);
@@ -218,7 +213,7 @@ function group_tools_invite_email(ElggGroup $group, string $email, string $text 
  *
  * @param string $email the email address
  *
- * @return ElggGroup[]
+ * @return \ElggGroup[]
  */
 function group_tools_get_invited_groups_by_email(string $email): array {
 	if (empty($email)) {
@@ -249,8 +244,7 @@ function group_tools_get_invited_groups_by_email(string $email): array {
  *
  * @return stdClass[] all the found database rows
  */
-function group_tools_get_missing_acl_users(int $group_guid = 0) {
-	
+function group_tools_get_missing_acl_users(int $group_guid = 0): array {
 	$select = Select::fromTable('access_collections', 'ac');
 	$select->select('ac.id AS acl_id')
 		->addSelect('ac.owner_guid AS group_guid')
@@ -259,7 +253,6 @@ function group_tools_get_missing_acl_users(int $group_guid = 0) {
 	$select->joinRelationshipTable('ac', 'owner_guid', 'member', false, 'inner', 'er');
 	$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e2');
 	
-	$group_guid = (int) $group_guid;
 	if ($group_guid > 0) {
 		$select->where($select->compare('e.guid', '=', $group_guid, ELGG_VALUE_GUID));
 	} else {
@@ -285,8 +278,7 @@ function group_tools_get_missing_acl_users(int $group_guid = 0) {
  *
  * @return stdClass[] all the found database rows
  */
-function group_tools_get_excess_acl_users(int $group_guid = 0) {
-	
+function group_tools_get_excess_acl_users(int $group_guid = 0): array {
 	$select = Select::fromTable('access_collections', 'ac');
 	$select->select('ac.id AS acl_id')
 		->addSelect('ac.owner_guid AS group_guid')
@@ -294,7 +286,6 @@ function group_tools_get_excess_acl_users(int $group_guid = 0) {
 	$select->joinEntitiesTable('ac', 'owner_guid', 'inner', 'e');
 	$select->join('ac', 'access_collection_membership', 'acm', $select->compare('ac.id', '=', 'acm.access_collection_id'));
 	
-	$group_guid = (int) $group_guid;
 	if ($group_guid > 0) {
 		$select->where($select->compare('e.guid', '=', $group_guid, ELGG_VALUE_GUID));
 	} else {
@@ -316,7 +307,7 @@ function group_tools_get_excess_acl_users(int $group_guid = 0) {
  *
  * @param bool $count return a count
  *
- * @return int|ElggGroup[]
+ * @return int|\ElggGroup[]
  */
 function group_tools_get_groups_without_acl(bool $count = false) {
 	return elgg_get_entities([
@@ -339,14 +330,13 @@ function group_tools_get_groups_without_acl(bool $count = false) {
 /**
  * Are group members allowed to invite new members to the group
  *
- * @param ElggGroup $group The group to check the settings
+ * @param \ElggGroup $group The group to check the settings
  *
  * @return bool
  */
-function group_tools_allow_members_invite(ElggGroup $group): bool {
-	
+function group_tools_allow_members_invite(\ElggGroup $group): bool {
 	$user = elgg_get_logged_in_user_entity();
-	if (!$user instanceof ElggUser) {
+	if (!$user instanceof \ElggUser) {
 		return false;
 	}
 	
@@ -371,15 +361,14 @@ function group_tools_allow_members_invite(ElggGroup $group): bool {
 /**
  * Returns suggested groups
  *
- * @param ElggUser $user  (optional) the user to get the groups for, defaults to the current user
- * @param int      $limit (optional) the number of suggested groups to return, default = 10
+ * @param \ElggUser $user  (optional) the user to get the groups for, defaults to the current user
+ * @param int       $limit (optional) the number of suggested groups to return, default = 10
  *
- * @return ElggGroup[]
+ * @return \ElggGroup[]
  * @todo revisit this
  */
-function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = null) {
-	
-	if (!$user instanceof ElggUser) {
+function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = null): array {
+	if (!$user instanceof \ElggUser) {
 		$user = elgg_get_logged_in_user_entity();
 	}
 	
@@ -387,7 +376,7 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 		$limit = (int) get_input('limit', 10);
 	}
 	
-	if (!$user instanceof ElggUser || ($limit < 1)) {
+	if (!$user instanceof \ElggUser || $limit < 1) {
 		return [];
 	}
 
@@ -440,12 +429,13 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 				foreach ($user_values as $metadata) {
 					$user_values[] = $metadata->value;
 				}
+				
 				$user_values = array_unique($user_values);
 				$user_values = array_filter($user_values);
 			}
 			
 			if (!empty($user_values)) {
-				// find group with these metadatavalues
+				// find group with these metadata values
 				$groups = elgg_get_entities([
 					'type' => 'group',
 					'metadata_names' => $group_tag_names,
@@ -502,23 +492,22 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 /**
  * Check if the domain based settings for this group match the user
  *
- * @param ElggGroup $group the group to match to
- * @param ElggUser  $user  the user to check (defaults to current user)
+ * @param \ElggGroup $group the group to match to
+ * @param \ElggUser  $user  the user to check (defaults to current user)
  *
  * @return bool true if the domain of the user is found in the group settings
  */
-function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user = null): bool {
-	
+function group_tools_check_domain_based_group(\ElggGroup $group, \ElggUser $user = null): bool {
 	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
 		return false;
 	}
 	
-	if (!$user instanceof ElggUser) {
+	if (!$user instanceof \ElggUser) {
 		// default to current user
 		$user = elgg_get_logged_in_user_entity();
 	}
 	
-	if (!$user instanceof ElggUser) {
+	if (!$user instanceof \ElggUser) {
 		return false;
 	}
 		
@@ -537,12 +526,11 @@ function group_tools_check_domain_based_group(ElggGroup $group, ElggUser $user =
 /**
  * Get all groups based on the email domain of the user from the group settings
  *
- * @param ElggUser $user      The user used to base the search
+ * @param \ElggUser $user The user used to base the search
  *
  * @return ElggGroup[]
  */
 function group_tools_get_domain_based_groups(ElggUser $user): array {
-	
 	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
 		return [];
 	}
@@ -554,21 +542,16 @@ function group_tools_get_domain_based_groups(ElggUser $user): array {
 		'limit' => false,
 		'wheres' => [
 			function (QueryBuilder $qb, $main_alias) use ($domain) {
-				$ps = $qb->joinPrivateSettingsTable($main_alias);
+				$md = $qb->joinMetadataTable($main_alias, 'guid', 'plugin:group_setting:group_tools:domain_based');
 				
 				$ors = [
-					$qb->compare("{$ps}.value", '=', $domain, ELGG_VALUE_STRING),
-					$qb->compare("{$ps}.value", 'like', "{$domain},%", ELGG_VALUE_STRING),
-					$qb->compare("{$ps}.value", 'like', "%,{$domain}", ELGG_VALUE_STRING),
-					$qb->compare("{$ps}.value", 'like', "%,{$domain},%", ELGG_VALUE_STRING),
+					$qb->compare("{$md}.value", '=', $domain, ELGG_VALUE_STRING),
+					$qb->compare("{$md}.value", 'like', "{$domain},%", ELGG_VALUE_STRING),
+					$qb->compare("{$md}.value", 'like', "%,{$domain}", ELGG_VALUE_STRING),
+					$qb->compare("{$md}.value", 'like', "%,{$domain},%", ELGG_VALUE_STRING),
 				];
 				
-				$ands = [
-					$qb->compare("{$ps}.name", '=', 'plugin:group_setting:group_tools:domain_based', ELGG_VALUE_STRING),
-					$qb->merge($ors, 'OR'),
-				];
-				
-				return $qb->merge($ands);
+				return $qb->merge($ors, 'OR');
 			},
 		],
 	]);
@@ -577,20 +560,19 @@ function group_tools_get_domain_based_groups(ElggUser $user): array {
 /**
  * Helper function to transfer the ownership of a group to a new user
  *
- * @param ElggGroup $group        the group to transfer
- * @param ElggUser  $new_owner    the new owner
- * @param bool      $remain_admin the current owner remains an admin after transfer
+ * @param \ElggGroup $group        the group to transfer
+ * @param \ElggUser  $new_owner    the new owner
+ * @param bool       $remain_admin the current owner remains an admin after transfer
  *
  * @return bool
  */
-function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_owner, bool $remain_admin = false): bool {
-	
+function group_tools_transfer_group_ownership(\ElggGroup $group, \ElggUser $new_owner, bool $remain_admin = false): bool {
 	if (!$group->canEdit()) {
 		return false;
 	}
 	
-	// register plugin hook to make sure transfer can complete
-	elgg_register_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Permissions::allowGroupOwnerTransfer');
+	// register event handler to make sure transfer can complete
+	elgg_register_event_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Permissions::allowGroupOwnerTransfer');
 	
 	$old_owner = $group->getOwnerEntity();
 	
@@ -610,7 +592,7 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	
 	// notify new owner
 	$loggedin_user = elgg_get_logged_in_user_entity();
-	if ($loggedin_user && ($new_owner->guid !== $loggedin_user->guid)) {
+	if ($loggedin_user && $new_owner->guid !== $loggedin_user->guid) {
 		$subject = elgg_echo('group_tools:notify:transfer:subject', [$group->getDisplayName()], $new_owner->getLanguage());
 		$message = elgg_echo('group_tools:notify:transfer:message', [
 			$loggedin_user->getDisplayName(),
@@ -629,12 +611,12 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	}
 	
 	// check if the old owner wishes to remain as an admin
-	if ($remain_admin && ($old_owner->guid === $loggedin_user->guid)) {
+	if ($remain_admin && $old_owner->guid === $loggedin_user->guid) {
 		$old_owner->addRelationship($group->guid, 'group_admin');
 	}
 	
-	// unregister plugin hook to make sure transfer can complete
-	elgg_unregister_plugin_hook_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Permissions::allowGroupOwnerTransfer');
+	// unregister event handler to make sure transfer can complete
+	elgg_unregister_event_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Permissions::allowGroupOwnerTransfer');
 	
 	return true;
 }
@@ -642,13 +624,12 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 /**
  * Get the tool presets from the plugin settings
  *
- * @return false|array
+ * @return null|array
  */
-function group_tools_get_tool_presets() {
-	
+function group_tools_get_tool_presets(): ?array {
 	$presets = elgg_get_plugin_setting('group_tool_presets', 'group_tools');
 	if (empty($presets)) {
-		return false;
+		return null;
 	}
 	
 	return json_decode($presets, true);
@@ -678,12 +659,11 @@ function group_tools_multiple_admin_enabled(): bool {
 /**
  * Check if the group allows admins (not owner) to assign other admins
  *
- * @param ElggGroup $group the group to check
+ * @param \ElggGroup $group the group to check
  *
  * @return bool
  */
-function group_tools_can_assign_group_admin(ElggGroup $group): bool {
-	
+function group_tools_can_assign_group_admin(\ElggGroup $group): bool {
 	$user_guid = elgg_get_logged_in_user_guid();
 	if (empty($user_guid)) {
 		return false;
@@ -693,9 +673,9 @@ function group_tools_can_assign_group_admin(ElggGroup $group): bool {
 		return false;
 	}
 	
-	if (($group->owner_guid === $user_guid) || elgg_is_admin_logged_in()) {
+	if ($group->owner_guid === $user_guid || elgg_is_admin_logged_in()) {
 		return true;
-	} elseif (($group->group_multiple_admin_allow_enable === 'yes') && $group->canEdit($user_guid)) {
+	} elseif ($group->group_multiple_admin_allow_enable === 'yes' && $group->canEdit($user_guid)) {
 		return true;
 	}
 	
@@ -705,11 +685,11 @@ function group_tools_can_assign_group_admin(ElggGroup $group): bool {
 /**
  * Check the plugin/group setting if join motivation is needed
  *
- * @param ElggGroup $group (optional) the group to check for
+ * @param null|\ElggGroup $group (optional) the group to check for
  *
  * @return bool
  */
-function group_tools_join_motivation_required(ElggGroup $group = null): bool {
+function group_tools_join_motivation_required(\ElggGroup $group = null): bool {
 	static $plugin_settings;
 	static $check_group = false;
 	
@@ -733,7 +713,7 @@ function group_tools_join_motivation_required(ElggGroup $group = null): bool {
 	}
 	
 	// do we need to check the group settings?
-	if (!$group instanceof ElggGroup || !$check_group) {
+	if (!$group instanceof \ElggGroup || !$check_group) {
 		return ($plugin_settings || $check_group);
 	}
 	
@@ -743,14 +723,13 @@ function group_tools_join_motivation_required(ElggGroup $group = null): bool {
 	}
 	
 	// get group setting
-	$group_setting = $group->getPrivateSetting('join_motivation');
+	$group_setting = $group->join_motivation;
 	switch ($group_setting) {
 		case 'no':
 			return false;
 			
 		case 'yes':
 			return true;
-			
 	}
 	
 	return $plugin_settings;
@@ -759,7 +738,7 @@ function group_tools_join_motivation_required(ElggGroup $group = null): bool {
 /**
  * Check if group mail is allowed
  *
- * @param ElggGroup $group the group to check
+ * @param null|\ElggGroup $group (optional) the group to check
  *
  * @return bool
  */
@@ -780,7 +759,7 @@ function group_tools_group_mail_enabled(ElggGroup $group = null): bool {
 		return false;
 	}
 	
-	if (!$group instanceof ElggGroup) {
+	if (!$group instanceof \ElggGroup) {
 		return true;
 	}
 	
@@ -795,11 +774,11 @@ function group_tools_group_mail_enabled(ElggGroup $group = null): bool {
 /**
  * Check if group mail is enabled for members
  *
- * @param ElggGroup $group The group to check (can be empty to check plugin setting)
+ * @param null|\ElggGroup $group The group to check (can be empty to check plugin setting)
  *
  * @return bool
  */
-function group_tools_group_mail_members_enabled(ElggGroup $group = null): bool {
+function group_tools_group_mail_members_enabled(\ElggGroup $group = null): bool {
 	static $mail_members_enabled;
 	
 	if (!isset($mail_members_enabled)) {
@@ -820,7 +799,7 @@ function group_tools_group_mail_members_enabled(ElggGroup $group = null): bool {
 		return false;
 	}
 	
-	if (!$group instanceof ElggGroup) {
+	if (!$group instanceof \ElggGroup) {
 		return true;
 	}
 	
@@ -829,7 +808,7 @@ function group_tools_group_mail_members_enabled(ElggGroup $group = null): bool {
 		return true;
 	}
 	
-	if ($group->isMember() && ($group->mail_members_enable === 'yes')) {
+	if ($group->isMember() && $group->mail_members_enable === 'yes') {
 		return true;
 	}
 	
@@ -839,22 +818,21 @@ function group_tools_group_mail_members_enabled(ElggGroup $group = null): bool {
 /**
  * Get the helper class for stale information
  *
- * @param ElggGroup $group          the group to get the info for
- * @param int       $number_of_days (optional) a number of days to check stale against, defaults to plugin setting
+ * @param \ElggGroup $group          the group to get the info for
+ * @param int        $number_of_days (optional) a number of days to check stale against, defaults to plugin setting
  *
- * @return false|\ColdTrick\GroupTools\StaleInfo
+ * @return null|StaleInfo
  */
-function group_tools_get_stale_info(ElggGroup $group, int $number_of_days = null) {
-	
+function group_tools_get_stale_info(ElggGroup $group, int $number_of_days = null): ?StaleInfo {
 	if (!isset($number_of_days)) {
 		$number_of_days = (int) elgg_get_plugin_setting('stale_timeout', 'group_tools');
 	}
 	
 	if ($number_of_days < 1) {
-		return false;
+		return null;
 	}
 	
-	return new ColdTrick\GroupTools\StaleInfo($group, $number_of_days);
+	return new StaleInfo($group, $number_of_days);
 }
 
 /**
@@ -880,6 +858,7 @@ function group_tools_allow_hidden_groups(): bool {
 		case 'yes':
 			$result = true;
 			break;
+			
 		case 'admin':
 			$result = elgg_is_admin_logged_in();
 			break;
@@ -897,8 +876,6 @@ function group_tools_allow_hidden_groups(): bool {
  */
 function group_tools_get_auto_join_configurations(bool $refresh = false): array {
 	static $result;
-	
-	$refresh = (bool) $refresh;
 	
 	if (isset($result) && !$refresh) {
 		return $result;
@@ -918,17 +895,16 @@ function group_tools_get_auto_join_configurations(bool $refresh = false): array 
  *
  * @param string $id the id of the Configuration
  *
- * @return false|array
+ * @return array
  */
-function group_tools_get_auto_join_configuration(string $id) {
-	
+function group_tools_get_auto_join_configuration(string $id): array {
 	if (empty($id)) {
-		return false;
+		return [];
 	}
 	
 	$existing = group_tools_get_auto_join_configurations();
 	
-	return elgg_extract($id, $existing, []);
+	return (array) elgg_extract($id, $existing, []);
 }
 
 /**
@@ -939,7 +915,6 @@ function group_tools_get_auto_join_configuration(string $id) {
  * @return bool
  */
 function group_tools_save_auto_join_configuration(array $config): bool {
-	
 	if (empty($config)) {
 		return false;
 	}
@@ -956,7 +931,7 @@ function group_tools_save_auto_join_configuration(array $config): bool {
 	$plugin = elgg_get_plugin_from_id('group_tools');
 	$result = $plugin->setSetting('auto_join_config', json_encode($existing_config), 'group_tools');
 	
-	// refesh cache
+	// refresh cache
 	group_tools_get_auto_join_configurations(true);
 	
 	return $result;
@@ -970,7 +945,6 @@ function group_tools_save_auto_join_configuration(array $config): bool {
  * @return bool
  */
 function group_tools_delete_auto_join_configuration(string $id): bool {
-	
 	if (empty($id)) {
 		return false;
 	}
@@ -987,7 +961,7 @@ function group_tools_delete_auto_join_configuration(string $id): bool {
 	$plugin = elgg_get_plugin_from_id('group_tools');
 	$result = $plugin->setSetting('auto_join_config', json_encode($existing_config));
 	
-	// refesh cache
+	// refresh cache
 	group_tools_get_auto_join_configurations(true);
 	
 	return $result;
@@ -1036,8 +1010,7 @@ function group_tools_get_auto_join_pattern_user_options(): array {
  * @return bool
  */
 function group_tools_show_tools_on_edit(): bool {
-	
-	if (elgg_get_page_owner_entity() instanceof ElggGroup) {
+	if (elgg_get_page_owner_entity() instanceof \ElggGroup) {
 		// edit of a group
 		return true;
 	}

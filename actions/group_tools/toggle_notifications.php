@@ -2,7 +2,7 @@
 
 $group_guid = (int) get_input('group_guid');
 $group = get_entity($group_guid);
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
@@ -36,7 +36,7 @@ if (!empty($user_settings)) {
 	}
 }
 
-// user has no base nofitication settings
+// user has no base notification settings
 if (empty($found)) {
 	$found = $supported_notifications;
 }

@@ -4,7 +4,7 @@
  */
 
 $user = elgg_extract('entity', $vars);
-if (!$user instanceof ElggUser || !$user->canEdit()) {
+if (!$user instanceof \ElggUser || !$user->canEdit()) {
 	return;
 }
 

@@ -4,29 +4,31 @@ namespace ColdTrick\GroupTools\Menus;
 
 use Elgg\Menu\MenuItems;
 
+/**
+ * Add menu items to the annotation menu
+ */
 class Annotation {
 
 	/**
 	 * Add menu items to the email invitation annotation menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:annotation'
+	 * @param \Elgg\Event $event 'register', 'menu:annotation'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function registerEmailInvitation(\Elgg\Hook $hook) {
-		
-		$annotation = $hook->getParam('annotation');
+	public static function registerEmailInvitation(\Elgg\Event $event): ?MenuItems {
+		$annotation = $event->getParam('annotation');
 		if (!$annotation instanceof \ElggAnnotation || $annotation->name !== 'email_invitation') {
-			return;
+			return null;
 		}
 		
 		$group = $annotation->getOwnerEntity();
 		if (!$group instanceof \ElggGroup || !$group->canEdit()) {
-			return;
+			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'revoke',
@@ -45,29 +47,29 @@ class Annotation {
 	/**
 	 * Add menu items to the email invitation annotation menu
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:annotation'
+	 * @param \Elgg\Event $event 'register', 'menu:annotation'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function registerEmailInvitationUser(\Elgg\Hook $hook) {
-		
-		$annotation = $hook->getParam('annotation');
+	public static function registerEmailInvitationUser(\Elgg\Event $event): ?MenuItems {
+		$annotation = $event->getParam('annotation');
 		if (!$annotation instanceof \ElggAnnotation || $annotation->name !== 'email_invitation') {
-			return;
+			return null;
 		}
 		
 		$user = elgg_get_logged_in_user_entity();
 		if (!$user instanceof \ElggUser) {
-			return;
+			return null;
 		}
+		
 		list($secret, $email) = explode('|', $annotation->value);
 		
 		if ($email !== $user->email) {
-			return;
+			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'accept',

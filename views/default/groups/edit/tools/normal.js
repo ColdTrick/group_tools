@@ -1,5 +1,4 @@
 define(['jquery'], function($) {
-	
 	function ToolsPreset(wrapper) {
 		var self = this;
 		
@@ -13,8 +12,7 @@ define(['jquery'], function($) {
 	}
 	
 	ToolsPreset.prototype = {
-		changePreset : function(elem) {
-			
+		changePreset: function(elem) {
 			var rel = $(elem).attr('rel');
 			
 			$('#group-tools-preset-descriptions div').hide();
@@ -27,7 +25,7 @@ define(['jquery'], function($) {
 			$('#group-tools-preset-active').show();
 			
 		},
-		resetTools : function() {
+		resetTools: function() {
 			$('#group-tools-preset-active .elgg-field').each(function(index, elm) {
 				$(elm).appendTo('#group-tools-preset-more div.elgg-body');
 			});
@@ -35,7 +33,7 @@ define(['jquery'], function($) {
 			$('#group-tools-preset-more .elgg-input-checkbox[value="yes"]:checked').click();
 			$('#group-tools-preset-more-link').show();
 		},
-		presetTools : function(preset_id) {
+		presetTools: function(preset_id) {
 			if (preset_id == 'blank') {
 				$('#group-tools-preset-more .elgg-body > .elgg-field').each(function() {
 					$(this).prependTo('#group-tools-preset-active div.elgg-body');
@@ -55,7 +53,6 @@ define(['jquery'], function($) {
 			}
 		},
 		autoDetect: function(wrapper) {
-			
 			var $input = $(wrapper).find('input[name="group_tools_auto_select"]');
 			if (!$input.length) {
 				return;

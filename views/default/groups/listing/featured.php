@@ -11,5 +11,6 @@ echo elgg_view('groups/listing/all', [
 			'name' => 'featured_group',
 			'value' => 'yes',
 		],
+		'no_results' => elgg_echo('groups:nofeatured'),
 	],
 ]);

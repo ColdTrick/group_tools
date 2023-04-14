@@ -1,5 +1,4 @@
 define(['jquery', 'elgg/Ajax', 'elgg/lightbox'], function ($, Ajax, lightbox) {
-	
 	$(document).on('submit', '.elgg-form-groups-killrequest', function () {
 		var id = $(this).find('input[name="relationship_id"]').val();
 		

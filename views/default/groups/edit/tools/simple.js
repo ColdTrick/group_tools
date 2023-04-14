@@ -1,6 +1,5 @@
 define(['jquery'], function ($) {
-
-	var update_tools = function (preset_id) {
+	function update_tools(preset_id) {
 		$tool_section = $('.group-tools-edit-tools-simple').parent();
 		$tool_section.find('.elgg-input-checkbox[value="yes"]:checked').click();
 		

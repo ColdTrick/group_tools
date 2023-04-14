@@ -9,7 +9,7 @@ if (empty($guid)) {
 }
 
 $group = get_entity($guid);
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
@@ -19,11 +19,11 @@ if (empty($members_count)) {
 	return elgg_ok_response('', '', $group->getURL());
 }
 
-/* @var $members ElggBatch */
+/* @var $members \ElggBatch */
 $members = $group->getMembers(['limit' => false, 'batch' => true]);
 
 // disable notification for everyone
-/* @var $member ElggUser */
+/* @var $member \ElggUser */
 foreach ($members as $member) {
 	$group->removeSubscriptions($member->guid);
 }

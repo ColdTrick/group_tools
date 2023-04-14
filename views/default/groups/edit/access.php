@@ -20,7 +20,7 @@ $show_visibility = ($show_visibility && (empty($entity->guid) || ($entity->acces
 
 $show_motivation_option = group_tools_join_motivation_required();
 $motivation_plugin_setting = elgg_get_plugin_setting('join_motivation', 'group_tools', 'no');
-$show_motivation_option = ($show_motivation_option && (strpos($motivation_plugin_setting, 'yes') === 0));
+$show_motivation_option = ($show_motivation_option && str_starts_with($motivation_plugin_setting, 'yes'));
 
 // group membership
 echo elgg_view_field([
@@ -38,7 +38,7 @@ echo elgg_view_field([
 if ($show_motivation_option) {
 	$checked = ($motivation_plugin_setting === 'yes_on');
 	if ($entity instanceof \ElggGroup) {
-		$group_setting = $entity->getPrivateSetting('join_motivation');
+		$group_setting = $entity->join_motivation;
 		if (!empty($group_setting)) {
 			$checked = ($group_setting === 'yes');
 		}

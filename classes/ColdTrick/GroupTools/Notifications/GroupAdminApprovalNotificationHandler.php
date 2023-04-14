@@ -4,10 +4,13 @@ namespace ColdTrick\GroupTools\Notifications;
 
 use Elgg\Notifications\NotificationEventHandler;
 
+/**
+ * Notification handler for groups pending admin approval
+ */
 class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public function getSubscriptions(): array {
 		$return = [];
@@ -41,7 +44,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
 		$group = $this->getGroup();
@@ -50,7 +53,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
 		$group = $this->getGroup();
@@ -59,7 +62,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
 		$group = $this->getGroup();
@@ -83,7 +86,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	public static function isConfigurableByUser(): bool {
 		return false;

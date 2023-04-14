@@ -12,7 +12,6 @@ $group = elgg_extract('entity', $vars);
 $contents = elgg_view_field([
 	'#type' => 'fieldset',
 	'align' => 'horizontal',
-	
 	'fields' => [
 		[
 			'#type' => 'email',
@@ -24,7 +23,7 @@ $contents = elgg_view_field([
 			'#type' => 'button',
 			'value' => elgg_echo('add'),
 			'class' => [
-				'elgg-button-submit',
+				'elgg-button-action',
 			],
 		],
 	],

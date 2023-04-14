@@ -6,43 +6,38 @@ use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Database\QueryBuilder;
 use Elgg\Upgrade\Result;
 
-class FixGroupAccess implements AsynchronousUpgrade {
+class FixGroupAccess extends AsynchronousUpgrade {
 	
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\Upgrade\Batch::getVersion()
+	 * {@inheritdoc}
 	 */
 	public function getVersion(): int {
 		return 2019051000;
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\Upgrade\Batch::needsIncrementOffset()
+	 * {@inheritdoc}
 	 */
 	public function needsIncrementOffset(): bool {
 		return false;
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\Upgrade\Batch::shouldBeSkipped()
+	 * {@inheritdoc}
 	 */
 	public function shouldBeSkipped(): bool {
 		return empty($this->countItems());
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\Upgrade\Batch::countItems()
+	 * {@inheritdoc}
 	 */
 	public function countItems(): int {
 		return elgg_count_entities($this->getOptions());
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * @see \Elgg\Upgrade\Batch::run()
+	 * {@inheritdoc}
 	 */
 	public function run(Result $result, $offset): Result {
 		
@@ -100,13 +95,9 @@ class FixGroupAccess implements AsynchronousUpgrade {
 					$wheres[] = $qb->compare("{$main_alias}.guid", 'not in', $sub->getSQL());
 					
 					// admin approve, with wrong value
-					$md = $qb->joinMetadataTable($main_alias, 'guid', null, 'inner', 'aamd');
+					$md = $qb->joinMetadataTable($main_alias, 'guid', 'intended_access_id', 'inner', 'aamd');
 					
-					$admin = [];
-					$admin[] = $qb->compare("{$md}.name", '=', 'intended_access_id', ELGG_VALUE_STRING);
-					$admin[] = $qb->compare("{$md}.value", '=', ACCESS_PRIVATE, ELGG_VALUE_INTEGER);
-					
-					$wheres[] = $qb->merge($admin);
+					$wheres[] = $qb->compare("{$md}.value", '=', ACCESS_PRIVATE, ELGG_VALUE_INTEGER);
 					
 					return $qb->merge($wheres, 'OR');
 				},

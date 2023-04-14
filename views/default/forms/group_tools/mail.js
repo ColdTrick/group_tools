@@ -1,5 +1,4 @@
 define(['jquery'], function($) {
-	
 	$(document).on('click', '#group-tools-mail-clear', function() {
 		var $form = $(this).closest('form');
 		

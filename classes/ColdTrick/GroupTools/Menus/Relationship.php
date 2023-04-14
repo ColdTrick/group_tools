@@ -4,26 +4,28 @@ namespace ColdTrick\GroupTools\Menus;
 
 use Elgg\Menu\MenuItems;
 
+/**
+ * Add menu items to the relationship menu
+ */
 class Relationship {
 
 	/**
 	 * Change the decline membership request button to a form with motivation for declining
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:relationship'
+	 * @param \Elgg\Event $event 'register', 'menu:relationship'
 	 *
-	 * @return void|MenuItems
+	 * @return null|MenuItems
 	 */
-	public static function groupDeclineMembershipReason(\Elgg\Hook $hook) {
-		
-		$relationship = $hook->getParam('relationship');
+	public static function groupDeclineMembershipReason(\Elgg\Event $event): ?MenuItems {
+		$relationship = $event->getParam('relationship');
 		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'membership_request') {
-			return;
+			return null;
 		}
 		
 		/* @var $result MenuItems */
-		$result = $hook->getValue();
+		$result = $event->getValue();
 		if (!$result->has('reject')) {
-			return;
+			return null;
 		}
 		
 		$user = get_entity($relationship->guid_one);
@@ -31,12 +33,12 @@ class Relationship {
 			return get_entity($relationship->guid_two);
 		});
 		if (!$group instanceof \ElggGroup || !$user instanceof \ElggUser) {
-			return;
+			return null;
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
 		if ($page_owner->guid !== $group->guid || !$group->canEdit()) {
-			return;
+			return null;
 		}
 		
 		/* @var $reject \ElggMenuItem */

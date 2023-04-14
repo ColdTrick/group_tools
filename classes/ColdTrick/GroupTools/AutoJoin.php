@@ -2,6 +2,9 @@
 
 namespace ColdTrick\GroupTools;
 
+/**
+ * Handle automatic group join
+ */
 class AutoJoin {
 	
 	/**
@@ -9,22 +12,27 @@ class AutoJoin {
 	 *
 	 * @var \ElggUser
 	 */
-	protected $user;
+	protected \ElggUser $user;
 	
 	/**
 	 * The default auto join groups
 	 *
-	 * @var array
+	 * @var null|array
 	 */
-	protected $defaults;
+	protected ?array $defaults;
 	
 	/**
 	 * Conditional rules for auto joining
 	 *
 	 * @var array
 	 */
-	protected $configs;
+	protected array $configs;
 	
+	/**
+	 * New auto join
+	 *
+	 * @param \ElggUser $user the user to check joins for
+	 */
 	public function __construct(\ElggUser $user) {
 		$this->user = $user;
 		
@@ -37,8 +45,7 @@ class AutoJoin {
 	 *
 	 * @return int[]
 	 */
-	public function getGroupGUIDs() {
-		
+	public function getGroupGUIDs(): array {
 		// check exclusives
 		$exclusives = $this->checkExclusives();
 		if (!empty($exclusives)) {
@@ -59,11 +66,11 @@ class AutoJoin {
 	/**
 	 * Set the user to check for
 	 *
-	 * @param \ElggUser $user
+	 * @param \ElggUser $user new user to check
 	 *
 	 * @return void
 	 */
-	public function setUser(\ElggUser $user) {
+	public function setUser(\ElggUser $user): void {
 		$this->user = $user;
 	}
 	
@@ -72,10 +79,8 @@ class AutoJoin {
 	 *
 	 * @return int[]
 	 */
-	protected function checkExclusives() {
-		
+	protected function checkExclusives(): array {
 		foreach ($this->configs as $config) {
-			
 			if (elgg_extract('type', $config) !== 'exclusive') {
 				continue;
 			}
@@ -100,12 +105,10 @@ class AutoJoin {
 	 *
 	 * @return int[]
 	 */
-	protected function checkAdditionals() {
-		
+	protected function checkAdditionals(): array {
 		$group_guids = [];
 		
 		foreach ($this->configs as $config) {
-			
 			if (elgg_extract('type', $config) !== 'additional') {
 				continue;
 			}
@@ -133,9 +136,8 @@ class AutoJoin {
 	 *
 	 * @return bool
 	 */
-	protected function checkConfigPatterns($patterns) {
-		
-		if (empty($patterns) || !is_array($patterns)) {
+	protected function checkConfigPatterns(array $patterns): bool {
+		if (empty($patterns)) {
 			return false;
 		}
 		
@@ -177,30 +179,28 @@ class AutoJoin {
 	 *
 	 * @return bool
 	 */
-	protected function checkUserValue($expected_value, $operand, $user_value) {
-		
+	protected function checkUserValue(string $expected_value, string $operand, string $user_value): bool {
 		switch ($operand) {
 			case 'equals':
 				return strtolower($user_value) == strtolower($expected_value);
-				break;
+			
 			case 'not_equals':
 				return strtolower($user_value) != strtolower($expected_value);
-				break;
+				
 			case 'contains':
 				return (bool) stristr($user_value, $expected_value);
-				break;
+				
 			case 'not_contains':
 				return !(bool) stristr($user_value, $expected_value);
-				break;
+				
 			case 'pregmatch':
-				$valid = @preg_match('/' . $expected_value . '/', null);
-				if (!$valid) {
+				$valid = @preg_match('/' . $expected_value . '/', '');
+				if ($valid === false) {
 					// preg match pattern is invalid
 					// @note this shouldn't happen
 					return false;
 				}
 				return (bool) preg_match('/' . $expected_value . '/', $user_value);
-				break;
 		}
 		
 		return false;
@@ -213,8 +213,7 @@ class AutoJoin {
 	 *
 	 * @return int[]
 	 */
-	protected function sanitiseGUIDS($guids) {
-		
+	protected function sanitiseGUIDS($guids): array {
 		if (empty($guids)) {
 			return [];
 		}
@@ -234,7 +233,7 @@ class AutoJoin {
 		$guids = array_filter($guids, $positive);
 		$guids = array_unique($guids);
 		
-		return $guids;
+		return array_values($guids);
 	}
 	
 	/**
@@ -242,8 +241,7 @@ class AutoJoin {
 	 *
 	 * @return int[]
 	 */
-	protected function getDefaults() {
-		
+	protected function getDefaults(): array {
 		if (isset($this->defaults)) {
 			return $this->defaults;
 		}

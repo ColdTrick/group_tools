@@ -15,7 +15,7 @@ if (empty($group_guid) || empty($body) || (empty($user_guids) && empty($all_memb
 }
 
 $group = get_entity($group_guid);
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
@@ -38,7 +38,7 @@ if (!empty($all_members)) {
 	$user_guids = array_filter(array_unique($user_guids));
 }
 
-$group_mail = new GroupMail();
+$group_mail = new \GroupMail();
 $group_mail->container_guid = $group_guid;
 
 $group_mail->title = $subject;

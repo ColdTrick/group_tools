@@ -4,7 +4,7 @@
  */
 
 $group = elgg_extract('entity', $vars);
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	return;
 }
 

@@ -3,14 +3,9 @@
  * A page to show (and add) related groups
  */
 
-$group_guid = (int) elgg_extract('guid', $vars);
-
 elgg_group_tool_gatekeeper('related_groups');
-elgg_entity_gatekeeper($group_guid, 'group');
-$group = get_entity($group_guid);
 
-// set page owner
-elgg_set_page_owner_guid($group->guid);
+$group = elgg_get_page_owner_entity();
 
 // build breadcrumb
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));

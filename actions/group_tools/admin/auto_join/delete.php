@@ -12,7 +12,7 @@ if (empty($config)) {
 
 $title = elgg_extract('title', $config);
 if (group_tools_delete_auto_join_configuration($id)) {
-	return elgg_ok_response('', elgg_echo('entity:delete:success', [$title]), REFERER);
+	return elgg_ok_response('', elgg_echo('entity:delete:success', [$title]), REFERRER);
 }
 
 return elgg_error_response(elgg_echo('entity:delete:fail', [$title]));

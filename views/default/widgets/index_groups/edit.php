@@ -15,8 +15,9 @@ if (!empty($profile_fields)) {
 			continue;
 		}
 		
-		$label = $name = elgg_extract('name', $field_config);
+		$name = elgg_extract('name', $field_config);
 		
+		$label = $name;
 		$lan_key = "groups:{$name}";
 		if (elgg_language_key_exists($lan_key)) {
 			$label = elgg_echo($lan_key);
@@ -30,6 +31,7 @@ echo elgg_view('object/widget/edit/num_display', [
 	'entity' => $widget,
 	'name' => 'group_count',
 	'default' => 8,
+	'min' => 1,
 ]);
 
 echo elgg_view_field([

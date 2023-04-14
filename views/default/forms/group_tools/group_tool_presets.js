@@ -1,5 +1,4 @@
 define(['jquery'], function ($) {
-
 	$(document).on('click', '.group-tools-admin-add-tool-preset', function (e) {
 		e.preventDefault();
 
@@ -7,10 +6,10 @@ define(['jquery'], function ($) {
 		var $clone = $clone_base.clone();
 
 		$clone.removeAttr('id').removeClass('hidden');
-		$clone.find('>div.hidden').removeClass('hidden');
+		$clone.find('> div.hidden').removeClass('hidden');
 
 		// find inputs and set correct name
-		var counter = $clone_base.parent().find('>div').length;
+		var counter = $clone_base.parent().find('> div').length;
 		while ($clone_base.parent().find('input[name^="params[' + counter + ']"]').length) {
 			counter++;
 		}
@@ -24,7 +23,6 @@ define(['jquery'], function ($) {
 
 		// insert clone
 		$clone.insertBefore($clone_base);
-
 	});
 
 	$(document).on('click', '.group-tools-admin-edit-tool-preset', function (e) {
@@ -43,6 +41,7 @@ define(['jquery'], function ($) {
 		if (!$(this).val()) {
 			return;
 		}
+		
 		var $label = $(this).closest('.group-tools-group-preset-wrapper').find('label[rel="title"]');
 		$label.html($(this).val());
 	});
@@ -51,6 +50,7 @@ define(['jquery'], function ($) {
 		if (!$(this).val()) {
 			return;
 		}
+		
 		var $container = $(this).closest('.group-tools-group-preset-wrapper').find('div[rel="description"]');
 		$container.html($(this).val());
 	});

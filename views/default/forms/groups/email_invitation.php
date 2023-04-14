@@ -14,5 +14,8 @@ echo elgg_view_field([
 ]);
 
 // footer / buttons
-$footer = elgg_view('input/submit', ['value' => elgg_echo('submit')]);
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('submit'),
+]);
 elgg_set_form_footer($footer);

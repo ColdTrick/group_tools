@@ -2,24 +2,26 @@
 
 namespace ColdTrick\GroupTools;
 
+/**
+ * Plugin settings event handler
+ */
 class PluginSettings {
 	
 	/**
 	 * Convert an array plugin setting to JSON
 	 *
-	 * @param \Elgg\Hook $hook 'plugin_setting', 'group'
+	 * @param \Elgg\Event $event 'plugin_setting', 'group'
 	 *
-	 * @return void|string
+	 * @return null|string
 	 */
-	public static function saveGroupSettings(\Elgg\Hook $hook) {
-		
-		if ($hook->getParam('plugin_id') !== 'group_tools') {
-			return;
+	public static function saveGroupSettings(\Elgg\Event $event): ?string {
+		if ($event->getParam('plugin_id') !== 'group_tools') {
+			return null;
 		}
 		
-		$value = $hook->getValue();
+		$value = $event->getValue();
 		if (!is_array($value)) {
-			return;
+			return null;
 		}
 		
 		return json_encode($value);
