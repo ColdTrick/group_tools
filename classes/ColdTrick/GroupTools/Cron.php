@@ -65,7 +65,7 @@ class Cron {
 	 *
 	 * @return \ElggGroup[]
 	 */
-	protected static function findStaleGroups($ts): array {
+	protected static function findStaleGroups($ts) {
 		if (empty($ts)) {
 			return [];
 		}
