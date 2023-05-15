@@ -155,7 +155,7 @@ class AutoJoin {
 			
 			if (is_array($user_value)) {
 				foreach ($user_value as $v) {
-					if ($this->checkUserValue($value, $operand, $v)) {
+					if ($this->checkUserValue($value, $operand, (string) $v)) {
 						// go to next pattern
 						continue(2);
 					}
@@ -163,7 +163,7 @@ class AutoJoin {
 				
 				$result &= false;
 			} else {
-				$result &= $this->checkUserValue($value, $operand, $user_value);
+				$result &= $this->checkUserValue($value, $operand, (string) $user_value);
 			}
 		}
 		
