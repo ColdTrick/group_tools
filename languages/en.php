@@ -497,8 +497,6 @@ The first column must contain the e-mail addresses of the new members. There sho
 [group_name]: the name of this group (e.g. %s)
 [group_url]: the URL to this group (e.g. %s)",
 	
-	'group_tools:action:welcome_message:success' => "The welcome message was saved",
-	
 	'group_tools:welcome_message:subject' => "Welcome to %s",
 	'group_tools:welcome_message:notifications' => "Activity in this group can send out notifications.
 Currently your notification preferences for this group are: %s",
@@ -512,8 +510,6 @@ Currently your notification preferences for this group are: %s",
 	
 	'group_tools:domain_based:title' => "Configure e-mail domains",
 	'group_tools:domain_based:description' => "When you configure one (or more) e-mail domains, users with that e-mail domain will automatically join your group upon registration. Also if you have a closed group user with a matching e-mail domain can join without requesting membership. You can configure multiple domains by using a comma. Don't include the @ sign",
-	
-	'group_tools:action:domain_based:success' => "The new e-mail domains were saved",
 	
 	// related groups
 	'groups:tool:related_groups' => "Show related groups",

@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v11.0.1
- * On 2023-01-04 14:11
+ * This file was created by Translation Editor v11.1
+ * On 2023-05-17 14:43
  */
 
 return array (
@@ -265,7 +265,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:join:domain_based:tooltip' => 'Je mag lid worden van deze groep vanwege je e-mail domein.',
   'group_tools:domain_based:title' => 'Configureer e-mail domeinen',
   'group_tools:domain_based:description' => 'Als je één (of meerdere) e-mail domeinen configureert, zullen gebruikers tijdens de registratie automatisch lid worden van je groep als hun e-mail domein overeenkomt. Ook kunnen gebruikers lid worden als je groep besloten is, mits hun e-mail domein overeenkomt. Je kunt meerdere domein configureren door een komma te gebruiken. Neem het @ teken niet op.',
-  'group_tools:action:domain_based:success' => 'De e-mail domeinen zijn opgeslagen',
   'groups:tool:related_groups' => 'Toon gerelateerde groepen',
   'groups_tools:related_groups:none' => 'Geen gerelateerde groepen gevonden.',
   'group_tools:related_groups:title' => 'Gerelateerde groepen',
@@ -289,7 +288,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
 [name]: de naam van de nieuwe gebruiker (bijv. %s)
 [group_name]: de naam van deze groep (bijv. %s)
 [group_url]: de URL naar deze groep (bijv. %s)',
-  'group_tools:action:welcome_message:success' => 'Het welkomstbericht is opgeslagen',
   'group_tools:welcome_message:subject' => 'Welkom bij %s',
   'group_tools:action:revoke_email_invitation:error' => 'Er is een fout opgetreden tijdens het intrekken van de uitnodiging, probeer het nogmaals',
   'group_tools:action:revoke_email_invitation:success' => 'De uitnodiging is ingetrokken',

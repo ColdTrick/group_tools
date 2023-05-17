@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v8.0
- * On 2021-08-26 10:11
+ * This file was created by Translation Editor v11.1
+ * On 2023-05-17 14:44
  */
 
 return array (
@@ -239,14 +239,12 @@ La razón fue:
 [name]: el nombre del nuevo usuario (ej. %s)
 [group_name]: el nombre del grupo (ej. %s)
 [group_url]: la url del grupo (ej. %s)',
-  'group_tools:action:welcome_message:success' => 'El mensaje de bienvenida fue guardado',
   'group_tools:welcome_message:subject' => 'Bienvenido/a a %s',
   'group_tools:action:revoke_email_invitation:error' => 'Un error ocurrió mientras se revocaba la invitación, por favor intente nuevamente',
   'group_tools:action:revoke_email_invitation:success' => 'La invitación fue revocada',
   'group_tools:join:domain_based:tooltip' => 'Tu dominio de correo coincide con el de este grupo, puedes unirte.',
   'group_tools:domain_based:title' => 'Configurar los dominios de los correos electrónicos',
   'group_tools:domain_based:description' => 'Cuando configuras uno o más dominios de correo, los usuarios con ese dominio serán incorporados automáticamente a tu grupo cuando se registren. Tambien si tienes un grupo cerrado los usuarios con el dominio de correo pueden unirse sin invitación. Puedes configurar múltiples dominios usando una coma. No incluyas el símbolo @',
-  'group_tools:action:domain_based:success' => 'Los nuevos dominios de correo electrónico fueron guardados',
   'groups:tool:related_groups' => 'Mostrar grupos relacionados',
   'groups_tools:related_groups:none' => 'No se encontraron grupos relacionados.',
   'group_tools:related_groups:title' => 'Grupos relacionados',
