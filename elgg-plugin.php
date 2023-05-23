@@ -259,6 +259,11 @@ return [
 				'\ColdTrick\GroupTools\Plugins\Groups::registerGroupTools' => [],
 			],
 		],
+		'types:custom_group_field' => [
+			'profile_manager' => [
+				'\ColdTrick\GroupTools\Plugins\ProfileManager::registerGroupFields' => [],
+			],
+		],
 		'validate:after' => [
 			'user' => [
 				'\ColdTrick\GroupTools\Membership::createUserEmailInvitedGroups' => [],
