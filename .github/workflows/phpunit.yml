@@ -1,0 +1,8 @@
+name: PHPUnit Plugin Tests
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Run PHPUnit test suites
+    uses: ColdTrick/.github/.github/workflows/phpunit.yml@master
