@@ -2,6 +2,10 @@
 
 /**
  * Group Mail entity
+ *
+ * @property string $description body of the email
+ * @property int[]  $recipients  list of user GUIDs to receive this email
+ * @property string $title       subject of the email
  */
 class GroupMail extends \ElggObject {
 	
