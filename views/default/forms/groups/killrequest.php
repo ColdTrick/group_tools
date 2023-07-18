@@ -52,11 +52,11 @@ $footer = elgg_view_field([
 	'fields' => [
 		[
 			'#type' => 'submit',
-			'value' => elgg_echo('decline'),
+			'text' => elgg_echo('decline'),
 		],
 		[
 			'#type' => 'button',
-			'value' => elgg_echo('cancel'),
+			'text' => elgg_echo('cancel'),
 			'onclick' => '$.colorbox.close();',
 		],
 	],

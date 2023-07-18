@@ -43,7 +43,7 @@ $form_data .= elgg_view_field([
 		[
 			'#type' => 'button',
 			'id' => 'group-tools-mail-clear',
-			'value' => elgg_echo('group_tools:clear_selection'),
+			'text' => elgg_echo('group_tools:clear_selection'),
 			'class' => 'elgg-button-action',
 		],
 	]
@@ -72,6 +72,6 @@ echo $form_data;
 // footer
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('send'),
+	'text' => elgg_echo('send'),
 ]);
 elgg_set_form_footer($footer);

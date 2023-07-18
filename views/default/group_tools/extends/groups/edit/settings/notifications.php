@@ -96,7 +96,7 @@ if ($notification_count > 0) {
 
 $buttons[] = [
 	'#type' => 'submit',
-	'value' => elgg_echo('group_tools:notifications:enable'),
+	'text' => elgg_echo('group_tools:notifications:enable'),
 	'title' => elgg_echo('group_tools:notifications:disclaimer'),
 	'confirm' => true,
 	'formaction' => elgg_generate_action_url('group_tools/admin/notifications', [], false),

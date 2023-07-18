@@ -29,7 +29,7 @@ echo elgg_view_field([
 // form footer
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('decline'),
+	'text' => elgg_echo('decline'),
 	'class' => 'elgg-button-delete',
 	'data-confirm' => elgg_echo('group_tools:group:admin_approve:decline:confirm'),
 ]);

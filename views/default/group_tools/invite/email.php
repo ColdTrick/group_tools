@@ -21,7 +21,7 @@ $contents = elgg_view_field([
 		],
 		[
 			'#type' => 'button',
-			'value' => elgg_echo('add'),
+			'text' => elgg_echo('add'),
 			'class' => [
 				'elgg-button-action',
 			],

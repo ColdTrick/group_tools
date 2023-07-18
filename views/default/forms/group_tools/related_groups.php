@@ -15,7 +15,7 @@ $fields = [
 	],
 	[
 		'#type' => 'submit',
-		'value' => elgg_echo('add'),
+		'text' => elgg_echo('add'),
 	],
 	[
 		'#type' => 'hidden',
