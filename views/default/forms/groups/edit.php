@@ -126,7 +126,8 @@ if ((bool) elgg_get_plugin_setting('concept_groups', 'group_tools') && (!$entity
 	$buttons[] = [
 		'#type' => 'submit',
 		'name' => 'concept_group',
-		'value' => elgg_echo('group_tools:group:edit:save:concept'),
+		'value' => 1,
+		'text' => elgg_echo('group_tools:group:edit:save:concept'),
 	];
 }
 

@@ -30,9 +30,7 @@ if (elgg_is_admin_logged_in()) {
 	}
 	
 	// add users directly?
-	if (get_input('submit') == elgg_echo('group_tools:add_users')) {
-		$adding = true;
-	}
+	$adding = (bool) get_input('submit');
 }
 
 $group_guid = (int) get_input('group_guid');

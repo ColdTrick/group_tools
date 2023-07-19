@@ -80,14 +80,16 @@ $footer_fields = [
 	[
 		'#type' => 'submit',
 		'name' => 'submit',
-		'value' => elgg_echo('invite'),
+		'value' => 0,
+		'text' => elgg_echo('invite'),
 	],
 ];
 if (elgg_is_admin_logged_in()) {
 	$footer_fields[] = [
 		'#type' => 'submit',
 		'name' => 'submit',
-		'value' => elgg_echo('group_tools:add_users'),
+		'value' => 1,
+		'text' => elgg_echo('group_tools:add_users'),
 		'data-confirm' => elgg_echo('group_tools:group:invite:add:confirm'),
 	];
 }

@@ -146,7 +146,7 @@ $admin_approve = (bool) (elgg_get_plugin_setting('admin_approve', 'group_tools')
 $admin_approve = ($admin_approve && !elgg_is_admin_logged_in()); // admins don't need to wait
 
 $concept_group = (bool) elgg_get_plugin_setting('concept_groups', 'group_tools');
-$concept_group = $concept_group && !empty(get_input('concept_group'));
+$concept_group = $concept_group && (bool) get_input('concept_group');
 
 // new groups get access private, so an admin can validate it
 $access_id = (int) $group->access_id;

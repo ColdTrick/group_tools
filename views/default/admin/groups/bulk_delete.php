@@ -31,7 +31,7 @@ elgg_require_js('admin/groups/bulk_delete');
 $batch = new ElggBatch('elgg_get_entities', $options);
 
 $delete_button = elgg_view('input/submit', [
-	'value' => elgg_echo('group_tools:delete_selected'),
+	'text' => elgg_echo('group_tools:delete_selected'),
 	'class' => 'elgg-button-submit float-alt mvs',
 	'data-confirm' => elgg_echo('deleteconfirm:plural'),
 ]);
