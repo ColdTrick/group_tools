@@ -1,0 +1,11 @@
+name: Tweet about a new release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  tweet:
+    name: Send a Tweet
+    uses: ColdTrick/.github/.github/workflows/tweet-release.yml@master
+    secrets: inherit
