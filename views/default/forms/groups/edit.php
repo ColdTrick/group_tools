@@ -123,6 +123,10 @@ if ($admin_approve && (!$entity instanceof \ElggGroup || $entity->access_id === 
 }
 
 if ((bool) elgg_get_plugin_setting('concept_groups', 'group_tools') && (!$entity instanceof \ElggGroup || (bool) $entity->is_concept)) {
+	if ($entity instanceof \ElggGroup) {
+		$buttons = [];
+	}
+	
 	$buttons[] = [
 		'#type' => 'submit',
 		'name' => 'concept_group',
