@@ -37,7 +37,7 @@ $form_data .= elgg_view_field([
 			'show_friends' => false,
 			'handler' => 'livesearch/group_members',
 			'options' => [
-				'match_target' => $group->guid,
+				'group_guid' => $group->guid,
 			],
 		],
 		[

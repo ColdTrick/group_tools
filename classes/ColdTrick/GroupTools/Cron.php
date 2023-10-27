@@ -19,9 +19,6 @@ class Cron {
 	 * @return void
 	 */
 	public static function notifyStaleGroupOwners(\Elgg\Event $event): void {
-		echo 'Starting GroupTools stale group owners' . PHP_EOL;
-		elgg_log('Starting GroupTools stale group owners', 'NOTICE');
-		
 		$time = (int) $event->getParam('time', time());
 		
 		// get stale groups
@@ -29,10 +26,6 @@ class Cron {
 			return self::findStaleGroups($time);
 		});
 		if (empty($groups)) {
-			// non found
-			echo 'Done with GroupTools stale group owners' . PHP_EOL;
-			elgg_log('Done with GroupTools stale group owners', 'NOTICE');
-			
 			return;
 		}
 		
@@ -53,9 +46,6 @@ class Cron {
 				self::notifyStaleGroupOwner($group);
 			}
 		});
-		
-		echo 'Done with GroupTools stale group owners' . PHP_EOL;
-		elgg_log('Done with GroupTools stale group owners', 'NOTICE');
 	}
 	
 	/**
@@ -249,9 +239,6 @@ class Cron {
 			return;
 		}
 		
-		echo 'Starting concept group cleanup' . PHP_EOL;
-		elgg_log('Starting concept group cleanup', 'NOTICE');
-		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($days) {
 			/* @var $groups \ElggBatch */
 			$groups = elgg_get_entities([
@@ -273,9 +260,6 @@ class Cron {
 				}
 			}
 		});
-		
-		echo 'Done with concept group cleanup' . PHP_EOL;
-		elgg_log('Done with concept group cleanup', 'NOTICE');
 	}
 	
 	/**
@@ -291,9 +275,6 @@ class Cron {
 		}
 		
 		$days = (int) elgg_get_plugin_setting('concept_groups_retention', 'group_tools');
-		
-		echo 'Starting concept group owner notification' . PHP_EOL;
-		elgg_log('Starting concept group owner notification', 'NOTICE');
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($days) {
 			$site = elgg_get_site_entity();
@@ -347,8 +328,5 @@ class Cron {
 			// restore language
 			elgg()->translator->setCurrentLanguage($current_language);
 		});
-		
-		echo 'Done with concept group owner notification' . PHP_EOL;
-		elgg_log('Done with concept group owner notification', 'NOTICE');
 	}
 }

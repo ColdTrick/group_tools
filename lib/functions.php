@@ -19,7 +19,7 @@ use Elgg\Security\Base64Url;
  */
 function group_tools_check_group_email_invitation(string $invite_code, int $group_guid = 0): ?\ElggGroup {
 	if (empty($invite_code) || !Base64Url::decode($invite_code)) {
-		return false;
+		return null;
 	}
 	
 	$options = [

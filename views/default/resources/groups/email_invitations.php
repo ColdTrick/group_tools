@@ -9,8 +9,7 @@ use Elgg\Database\Clauses\OrderByClause;
 /* @var $group \ElggGroup */
 $group = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
-elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
+elgg_push_entity_breadcrumbs($group);
 
 // additional title menu item
 if ($group->canEdit() && elgg_is_active_plugin('friends')) {

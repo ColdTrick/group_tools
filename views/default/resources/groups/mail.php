@@ -18,8 +18,7 @@ elgg_set_page_owner_guid($group->guid);
 elgg_set_context('groups');
 
 // set breadcrumb
-elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
-elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
+elgg_push_entity_breadcrumbs($group);
 
 // build page elements
 $form_vars = [
