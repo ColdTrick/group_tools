@@ -10,7 +10,7 @@ use Elgg\Database\QueryBuilder;
 
 $preset = get_input('preset');
 if (empty($preset)) {
-	throw \Elgg\Exceptions\Http\BadRequestException();
+	throw new \Elgg\Exceptions\Http\BadRequestException();
 }
 
 $options = [];
