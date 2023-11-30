@@ -1,6 +1,11 @@
 Version history
 ===============
 
+18.0 (2023-11-30):
+
+- changed: updated for Elgg 5.1
+- fixed: throw correct exception
+
 17.0.2 (2023-09-28):
 
 - fixed: concept groups edit save buttons
