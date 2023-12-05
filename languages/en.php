@@ -33,7 +33,6 @@ return [
 	'admin:groups:auto_join' => "Auto join",
 	'admin:groups:featured' => "Featured",
 	'admin:groups:suggested' => "Suggested",
-	'admin:groups:repair' => "Repair",
 	
 	// plugin settings
 	'group_tools:settings:default_off' => "Yes, default off",
@@ -102,14 +101,6 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 	
 	'group_tools:settings:special_states:featured:description' => "The site administrators have chosen to feature the following groups.",
-	
-	'group_tools:settings:fix:title' => "Fix group access problems",
-	'group_tools:settings:fix:missing' => "There are %d users who are a member of a group but don't have access to the content shared with the group.",
-	'group_tools:settings:fix:excess' => "There are %d users who have access to group content of groups where they are no longer a member off.",
-	'group_tools:settings:fix:without' => "There are %d groups without the possibility to share content with their members.",
-	'group_tools:settings:fix:all:description' => "Fix all off the above problems at once.",
-	'group_tools:settings:fix_it' => "Fix this",
-	'group_tools:settings:fix:all' => "Fix all problems",
 	
 	'group_tools:settings:admin_approve' => "Site administrators need to approve new groups",
 	'group_tools:settings:admin_approve:description' => "Any user can create a group, but a site administrator has to approve the new group",
@@ -436,16 +427,6 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:action:toggle_special_state:error:suggested' => "An error occurred while saving the new suggested settings",
 	'group_tools:action:toggle_special_state:error:state' => "Invalid state provided",
 	'group_tools:action:toggle_special_state:suggested' => "The new suggested settings were saved successfully",
-	
-	// fix group problems
-	'group_tools:action:fix_acl:error:input' => "Invalid option you can't fix: %s",
-	'group_tools:action:fix_acl:error:missing:nothing' => "No missing users found in the group ACLs",
-	'group_tools:action:fix_acl:error:excess:nothing' => "No excess users found in the groups ACLs",
-	'group_tools:action:fix_acl:error:without:nothing' => "No groups found without an ACL",
-
-	'group_tools:action:fix_acl:success:missing' => "Successfully added %d users to group ACLs",
-	'group_tools:action:fix_acl:success:excess' => "Successfully removed %d users from group ACLs",
-	'group_tools:action:fix_acl:success:without' => "Successfully created %d group ACLs",
 
 	// Widgets
 	// Group River Widget
@@ -595,14 +576,4 @@ Click below to view the group's join requests:
 
 Please check on the group here:
 %s",
-	
-	// upgrades
-	'group_tools:upgrade:2019051000:title' => "Fix group access",
-	'group_tools:upgrade:2019051000:description' => "Some group could have been created with the access level 'Private', this will prevent members from accessing the group.",
-	
-	'group_tools:upgrade:2019102501:title' => "Migrate group default content access",
-	'group_tools:upgrade:2019102501:description' => "As of Elgg 3.2 group default content access is part of Elgg. This will migrate the group tools settings to the correct place in Elgg.",
-	
-	'group_tools:upgrade:2021071401:title' => "Migrate group plugin settings for Group Tools",
-	'group_tools:upgrade:2021071401:description' => "In Elgg 4.0 it's now possible to store specific plugin settings with the group. All old settings need to be migrated.",
 ];

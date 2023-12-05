@@ -72,13 +72,6 @@ class AdminHeader {
 			'parent_name' => 'groups',
 		]);
 		
-		$result[] = \ElggMenuItem::factory([
-			'name' => 'groups:repair',
-			'href' => 'admin/groups/repair',
-			'text' => elgg_echo('admin:groups:repair'),
-			'parent_name' => 'groups',
-		]);
-		
 		return $result;
 	}
 }

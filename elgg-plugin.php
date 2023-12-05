@@ -3,7 +3,6 @@
 use ColdTrick\GroupTools\Bootstrap;
 use ColdTrick\GroupTools\Notifications\GroupAdminApprovalNotificationHandler;
 use ColdTrick\GroupTools\Notifications\GroupMailEnqueueNotificationEventHandler;
-use ColdTrick\GroupTools\Upgrades\FixGroupAccess;
 use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerGatekeeper;
@@ -75,7 +74,6 @@ return [
 
 		'group_tools/order_groups' => ['access' => 'admin'],
 		'group_tools/admin/toggle_special_state' => ['access' => 'admin'],
-		'group_tools/admin/fix_acl' => ['access' => 'admin'],
 		'group_tools/admin/group_tool_presets' => ['access' => 'admin'],
 		'group_tools/admin/bulk_delete' => ['access' => 'admin'],
 		'group_tools/admin/approve' => ['access' => 'admin'],
@@ -343,9 +341,6 @@ return [
 				UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
-	],
-	'upgrades' => [
-		FixGroupAccess::class,
 	],
 	'view_extensions' => [
 		'admin.css' => [
