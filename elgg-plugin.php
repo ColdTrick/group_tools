@@ -318,13 +318,6 @@ return [
 				GroupPageOwnerGatekeeper::class,
 			],
 		],
-		'collection:group:group:membership_requests' => [
-			'path' => '/groups/membership_requests/{username}',
-			'resource' => 'groups/membership_requests',
-			'middleware' => [
-				Gatekeeper::class,
-			],
-		],
 		'collection:annotation:email_invitation:group' => [
 			'path' => '/groups/invites/{guid}/email_invitations',
 			'resource' => 'groups/email_invitations',
