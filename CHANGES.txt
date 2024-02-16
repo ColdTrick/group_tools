@@ -1,6 +1,10 @@
 Version history
 ===============
 
+18.1 (2024-02-16):
+
+- changed: removed old repair features and obsolete upgrades
+
 18.0 (2023-11-30):
 
 - changed: updated for Elgg 5.1
