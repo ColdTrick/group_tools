@@ -99,13 +99,16 @@ class StaleInfo {
 			return 0;
 		}
 		
-		$entities = elgg_get_entities([
-			'type' => 'object',
-			'subtypes' => $object_subtypes,
-			'limit' => 1,
-			'container_guid' => $this->group->guid,
-			'order_by' => new OrderByClause('time_updated', 'DESC'),
-		]);
+		$entities = elgg_call(ELGG_IGNORE_ACCESS, function() use ($object_subtypes) {
+			return elgg_get_entities([
+				'type' => 'object',
+				'subtypes' => $object_subtypes,
+				'limit' => 1,
+				'container_guid' => $this->group->guid,
+				'order_by' => new OrderByClause('time_updated', 'DESC'),
+			]);
+		});
+		
 		if (empty($entities)) {
 			return 0;
 		}
@@ -121,19 +124,22 @@ class StaleInfo {
 	protected function getCommentTimestamp(): int {
 		$guid = $this->group->guid;
 		
-		$entities = elgg_get_entities([
-			'type' => 'object',
-			'subtype' => 'comment',
-			'limit' => 1,
-			'wheres' => [
-				function(QueryBuilder $qb, $main_alias) use ($guid) {
-					$ce = $qb->joinEntitiesTable($main_alias, 'container_guid');
-					
-					return $qb->compare("{$ce}.container_guid", '=', $guid, ELGG_VALUE_INTEGER);
-				},
-			],
-			'order_by' => new OrderByClause('time_updated', 'DESC'),
-		]);
+		$entities = elgg_call(ELGG_IGNORE_ACCESS, function() use ($guid) {
+			return elgg_get_entities([
+				'type' => 'object',
+				'subtype' => 'comment',
+				'limit' => 1,
+				'wheres' => [
+					function(QueryBuilder $qb, $main_alias) use ($guid) {
+						$ce = $qb->joinEntitiesTable($main_alias, 'container_guid');
+						
+						return $qb->compare("{$ce}.container_guid", '=', $guid, ELGG_VALUE_INTEGER);
+					},
+				],
+				'order_by' => new OrderByClause('time_updated', 'DESC'),
+			]);
+		});
+		
 		if (empty($entities)) {
 			return 0;
 		}
