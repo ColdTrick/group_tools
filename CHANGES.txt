@@ -1,6 +1,10 @@
 Version history
 ===============
 
+18.1.1 (2024-04-24):
+
+- fixed: correctly get stale group information
+
 18.1 (2024-02-16):
 
 - changed: removed old repair features and obsolete upgrades
