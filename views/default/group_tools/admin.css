@@ -1,8 +1,4 @@
 /* Group Tools admin css */
-.elgg-page-admin .elgg-module-inline .elgg-head .elgg-icon {
-	color: white;
-}
-
 .group-tools-auto-join-config .group-tools-auto-join-title a {
 	display: none;
 }

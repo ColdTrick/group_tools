@@ -5,13 +5,16 @@
  * used in /forms/groups/invite
  */
 
+$group = elgg_extract('entity', $vars);
+if (!$group instanceof \ElggGroup) {
+	return;
+}
+
 $user = elgg_get_logged_in_user_entity();
 $friends_count = $user->getEntitiesFromRelationship([
 	'relationship' => 'friend',
 	'count' => true,
 ]);
-
-$group = elgg_extract('entity', $vars);
 
 if (empty($friends_count)) {
 	echo elgg_format_element('div', ['class' => 'group-tools-no-results'], elgg_echo('groups:nofriendsatall'));

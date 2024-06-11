@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('forms/group_tools/admin/auto_join/additional');
+elgg_import_esm('forms/group_tools/admin/auto_join/additional');
 
 $id = elgg_extract('id', $vars);
 $config = [];

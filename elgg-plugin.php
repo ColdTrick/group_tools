@@ -3,6 +3,7 @@
 use ColdTrick\GroupTools\Bootstrap;
 use ColdTrick\GroupTools\Notifications\GroupAdminApprovalNotificationHandler;
 use ColdTrick\GroupTools\Notifications\GroupMailEnqueueNotificationEventHandler;
+use ColdTrick\GroupTools\Upgrades\MigrateNotificationSettings;
 use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerGatekeeper;
@@ -47,9 +48,6 @@ return [
 		'notification_toggle' => 'no',
 		'search_index' => 'no',
 		'auto_suggest_groups' => 'yes',
-	],
-	'user_settings' => [
-		'notify_approval' => 0,
 	],
 	'entities' => [
 		[
@@ -335,6 +333,9 @@ return [
 			],
 		],
 	],
+	'upgrades' => [
+		MigrateNotificationSettings::class,
+	],
 	'view_extensions' => [
 		'admin.css' => [
 			'group_tools/admin.css' => [],
@@ -358,6 +359,9 @@ return [
 		],
 		'groups/sidebar/members' => [
 			'group_tools/group_admins' => ['priority' => 400],
+		],
+		'notifications/settings/records' => [
+			'group_tools/notifications/settings' => [],
 		],
 		'register/extend' => [
 			'group_tools/register_extend' => [],

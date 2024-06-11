@@ -39,5 +39,6 @@ $content = elgg_view_form('groups/invite', [
 
 echo elgg_view_page($title, [
 	'content' => $content,
-	'filter' => false,
+	'filter_id' => 'groups/invite',
+	'filter_value' => 'invite',
 ]);

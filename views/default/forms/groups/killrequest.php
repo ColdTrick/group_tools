@@ -2,7 +2,7 @@
 
 use Elgg\Exceptions\Http\BadRequestException;
 
-elgg_require_js('forms/groups/killrequest');
+elgg_import_esm('forms/groups/killrequest');
 
 $relationship_id = (int) elgg_extract('relationship_id', $vars);
 
@@ -57,7 +57,7 @@ $footer = elgg_view_field([
 		[
 			'#type' => 'button',
 			'text' => elgg_echo('cancel'),
-			'onclick' => '$.colorbox.close();',
+			'onclick' => 'import("elgg/lightbox").then((lightbox) => {lightbox.default.close();});',
 		],
 	],
 ]);

@@ -36,7 +36,7 @@ $content = elgg_list_annotations([
 	'annotation_owner_guid' => $group->guid,
 	'wheres' => [
 		function(QueryBuilder $qb, $main_alias) {
-			return $qb->compare("{$main_alias}.value", 'LIKE', '%|%');
+			return $qb->compare("{$main_alias}.value", 'LIKE', '%|%', ELGG_VALUE_STRING);
 		},
 	],
 	'offset' => $offset,

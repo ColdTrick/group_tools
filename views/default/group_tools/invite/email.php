@@ -5,9 +5,12 @@
  * used in /forms/groups/invite
  */
 
-elgg_require_js('group_tools/invite/email');
+elgg_import_esm('group_tools/invite/email');
 
 $group = elgg_extract('entity', $vars);
+if (!$group instanceof \ElggGroup) {
+	return;
+}
 
 $contents = elgg_view_field([
 	'#type' => 'fieldset',
@@ -16,11 +19,13 @@ $contents = elgg_view_field([
 		[
 			'#type' => 'email',
 			'#label' => elgg_echo('group_tools:group:invite:email:description'),
+			'#class' => 'elgg-field-stretch',
 			'name' => 'user_guid_email[]',
 			'group_guid' => $group->guid,
 		],
 		[
 			'#type' => 'button',
+			'icon' => 'plus',
 			'text' => elgg_echo('add'),
 			'class' => [
 				'elgg-button-action',

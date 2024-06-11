@@ -17,7 +17,7 @@ class Membership {
 	protected static $NOTIFICATIONS_TOGGLE;
 	
 	/**
-	 * Listen to the delete of a membership request
+	 * Listen to the delete event of a membership request
 	 *
 	 * @param \Elgg\Event $event 'delete', 'relationship'
 	 *
@@ -256,22 +256,6 @@ class Membership {
 		
 		// notify the user
 		notify_user($recipient->guid, $group->guid, $subject, $welcome_message, $mail_params);
-	}
-	
-	/**
-	 * Validate that the relationship is a site membership relationship
-	 *
-	 * @param \ElggRelationship $relationship the relationship to check
-	 *
-	 * @return bool
-	 */
-	protected static function validateSiteJoinRelationship($relationship): bool {
-		
-		if (!$relationship instanceof \ElggRelationship || $relationship->relationship !== 'member_of_site') {
-			return false;
-		}
-		
-		return get_user($relationship->guid_one) instanceof \ElggUser;
 	}
 	
 	/**

@@ -7,11 +7,12 @@ if (empty($config)) {
 
 $title = elgg_extract('title', $config);
 $title .= elgg_view('output/url', [
-	'text' => elgg_view_icon('edit'),
+	'icon' => 'edit',
+	'text' => false,
+	'title' => elgg_echo('edit'),
 	'href' => elgg_http_add_url_query_elements('ajax/form/group_tools/admin/auto_join/additional', [
 		'id' => elgg_extract('id', $config),
 	]),
-	'title' => elgg_echo('edit'),
 	'class' => [
 		'mlm',
 		'elgg-lightbox',
@@ -21,11 +22,12 @@ $title .= elgg_view('output/url', [
 	]),
 ]);
 $title .= elgg_view('output/url', [
-	'text' => elgg_view_icon('delete-alt'),
+	'icon' => 'delete-alt',
+	'text' => false,
+	'title' => elgg_echo('delete'),
 	'href' => elgg_generate_action_url('group_tools/admin/auto_join/delete', [
 		'id' => elgg_extract('id', $config),
 	]),
-	'title' => elgg_echo('delete'),
 	'confirm' => elgg_echo('deleteconfirm'),
 	'class' => [
 		'mls',

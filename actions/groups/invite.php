@@ -129,57 +129,56 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 		// this could take a while
 		set_time_limit(0);
 		
-		$fh = fopen($csv->getPathname(), 'r');
-		
-		if (!empty($fh)) {
-			while (($data = fgetcsv($fh, 0, ';')) !== false) {
-				/*
-				 * data structure
-				 * data[0] => e-mail address
-				 */
-				$email = '';
-				if (isset($data[0])) {
-					$email = trim($data[0]);
-				}
-				
-				if (empty($email) || !elgg_is_valid_email($email)) {
+		$fh = $csv->openFile('r');
+		while (!$fh->eof()) {
+			/*
+			 * data structure
+			 * data[0] => e-mail address
+			 */
+			$data = $fh->fgetcsv(';');
+			
+			$email = '';
+			if (isset($data[0])) {
+				$email = trim($data[0]);
+			}
+			
+			if (empty($email) || !elgg_is_valid_email($email)) {
+				continue;
+			}
+			
+			$user = elgg_get_user_by_email($email);
+			if ($user instanceof \ElggUser) {
+				// found a user with this email on the site, so invite (or add)
+				if ($group->isMember($user)) {
+					$member++;
 					continue;
 				}
 				
-				$user = elgg_get_user_by_email($email);
-				if ($user instanceof \ElggUser) {
-					// found a user with this email on the site, so invite (or add)
-					if ($group->isMember($user)) {
-						$member++;
-						continue;
+				if ($adding) {
+					if (group_tools_add_user($group, $user, $text)) {
+						$join++;
 					}
 					
-					if ($adding) {
-						if (group_tools_add_user($group, $user, $text)) {
-							$join++;
-						}
-						
-						continue;
-					}
-					
-					if ($group->hasRelationship($user->guid, 'invited') && !$resend) {
-						// user was already invited
-						$already_invited++;
-						continue;
-					}
-					
-					// invite user
-					if (group_tools_invite_user($group, $user, $text, $resend)) {
-						$invited++;
-					}
-				} else {
-					// user not found so invite based on email address
-					$invite_result = group_tools_invite_email($group, $email, $text, $resend);
-					if ($invite_result === true) {
-						$invited++;
-					} elseif ($invite_result === null) {
-						$already_invited++;
-					}
+					continue;
+				}
+				
+				if ($group->hasRelationship($user->guid, 'invited') && !$resend) {
+					// user was already invited
+					$already_invited++;
+					continue;
+				}
+				
+				// invite user
+				if (group_tools_invite_user($group, $user, $text, $resend)) {
+					$invited++;
+				}
+			} else {
+				// user not found so invite based on email address
+				$invite_result = group_tools_invite_email($group, $email, $text, $resend);
+				if ($invite_result === true) {
+					$invited++;
+				} elseif ($invite_result === null) {
+					$already_invited++;
 				}
 			}
 		}

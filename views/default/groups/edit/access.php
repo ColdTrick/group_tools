@@ -97,8 +97,8 @@ $access_mode_params = [
 	'id' => 'groups-content-access-mode',
 	'value' => $content_access_mode,
 	'options_values' => [
-		ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
-		ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
+		\ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
+		\ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
 	],
 ];
 
@@ -106,7 +106,7 @@ if ($entity instanceof \ElggGroup) {
 	// Disable content_access_mode field for hidden groups because the setting
 	// will be forced to members_only regardless of the entered value
 	$acl = $entity->getOwnedAccessCollection('group_acl');
-	if ($acl instanceof ElggAccessCollection && ($entity->access_id === $acl->id)) {
+	if ($acl instanceof \ElggAccessCollection && ($entity->access_id === $acl->id)) {
 		$access_mode_params['disabled'] = 'disabled';
 	}
 	

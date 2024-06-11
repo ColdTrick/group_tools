@@ -12,6 +12,7 @@
  */
 
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\RelationshipsTable;
 use Elgg\Exceptions\Http\EntityNotFoundException;
 
 elgg_gatekeeper();
@@ -45,7 +46,7 @@ $options = [
 			$subs = [];
 			
 			// group members
-			$members = $qb->subquery('entity_relationships');
+			$members = $qb->subquery(RelationshipsTable::TABLE_NAME);
 			$members->select('guid_one')
 				->where($qb->compare('relationship', '=', 'member', ELGG_VALUE_STRING))
 				->andWhere($qb->compare('guid_two', '=', $group_guid, ELGG_VALUE_GUID));
@@ -53,7 +54,7 @@ $options = [
 			$subs[] = $qb->compare("{$main_alias}.guid", 'in', $members->getSQL());
 			
 			// friends
-			$friends = $qb->subquery('entity_relationships');
+			$friends = $qb->subquery(RelationshipsTable::TABLE_NAME);
 			$friends->select('guid_two')
 				->where($qb->compare('relationship', '=', 'friend', ELGG_VALUE_STRING))
 				->andWhere($qb->compare('guid_one', '=', $user->guid, ELGG_VALUE_GUID));

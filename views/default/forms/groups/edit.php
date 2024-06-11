@@ -5,70 +5,37 @@
  * @uses $vars['entity'] The group being edited (empty during creation)
  */
 
-elgg_require_js('forms/groups/edit');
+elgg_import_esm('forms/groups/edit');
 
-/* @var ElggGroup $entity */
-$entity = elgg_extract('entity', $vars, false);
+/* @var \ElggGroup $entity */
+$entity = elgg_extract('entity', $vars);
 
 // context needed for input/access view
 elgg_push_context('group-edit');
 
+$sections = [
+	100 => 'profile',
+	150 => 'images',
+	175 => 'reason',
+	200 => 'access',
+	300 => 'tools',
+	400 => 'settings',
+];
+
 // build group edit tabs
 $tabs = [];
 
-// build the group profile fields
-$tabs[] = [
-	'name' => 'profile',
-	'priority' => 100,
-	'text' => elgg_echo('groups:edit:profile'),
-	'content' => elgg_view('groups/edit/profile', $vars),
-];
-
-// build the group images
-$tabs[] = [
-	'name' => 'images',
-	'priority' => 150,
-	'text' => elgg_echo('groups:edit:images'),
-	'content' => elgg_view('groups/edit/images', $vars),
-];
-
-// ask for a reason to approve the group
-$admin_approve = elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes';
-$admin_approve = $admin_approve && !elgg_is_admin_logged_in();
-$ask_reason = (bool) elgg_get_plugin_setting('creation_reason', 'group_tools');
-if (empty($entity) && $admin_approve && $ask_reason) {
+foreach ($sections as $priority => $name) {
+	$content = elgg_view("groups/edit/{$name}", $vars);
+	if (empty($content)) {
+		continue;
+	}
+	
 	$tabs[] = [
-		'name' => 'reason',
-		'priority' => 150,
-		'text' => elgg_echo('group_tools:group:edit:reason'),
-		'content' => elgg_view('groups/edit/reason', $vars)
-	];
-}
-
-// build the group access options
-$tabs[] = [
-	'name' => 'access',
-	'priority' => 200,
-	'text' => elgg_echo('groups:edit:access'),
-	'content' => elgg_view('groups/edit/access', $vars),
-];
-
-// build the group tools options
-$tabs[] = [
-	'name' => 'tools',
-	'priority' => 300,
-	'text' => elgg_echo('groups:edit:tools'),
-	'content' => elgg_view('groups/edit/tools', $vars),
-];
-
-// build the group settings options
-$settings = elgg_view('groups/edit/settings', $vars);
-if (!empty($settings)) {
-	$tabs[] = [
-		'name' => 'settings',
-		'priority' => 400,
-		'text' => elgg_echo('groups:edit:settings'),
-		'content' => $settings,
+		'name' => $name,
+		'priority' => $priority,
+		'text' => elgg_echo("groups:edit:{$name}"),
+		'content' => $content,
 	];
 }
 
@@ -87,7 +54,7 @@ if ($entity instanceof \ElggGroup) {
 		'value' => $entity->guid,
 	]);
 } else {
-	elgg_require_js('forms/groups/create_navigation');
+	elgg_import_esm('forms/groups/create_navigation');
 	
 	$footer .= elgg_view_field([
 		'#type' => 'fieldset',
@@ -103,13 +70,16 @@ if ($entity instanceof \ElggGroup) {
 		],
 		'align' => 'horizontal',
 	]);
+	
 	$submit_classes[] = 'hidden';
 }
 
 // build form footer
+$admin_approve = elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes';
+$admin_approve = $admin_approve && !elgg_is_admin_logged_in();
+
 // display the save button and some additional form data
 $buttons = [];
-
 if ($admin_approve && (!$entity instanceof \ElggGroup || $entity->access_id === ACCESS_PRIVATE)) {
 	$buttons[] = [
 		'#type' => 'submit',

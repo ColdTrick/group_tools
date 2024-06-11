@@ -54,7 +54,6 @@ Om naar de groep te gaan, klik hier:
   'group_tools:notification:concept_group:subject' => 'Je groep \'%s\' bevindt zich nog in de concept fase',
   'group_tools:settings:creation_reason' => 'Vraag om een reden waarom de groep goedgekeurd zou moeten worden',
   'group_tools:settings:creation_reason:description' => 'Gedurende het aanmaken van een groep zal de gebruiker gevraagd worden waarom de groep goedgekeurd zou moeten worden door een site beheerder',
-  'group_tools:usersettings:admin:notify_approval' => 'Stuur me een bericht wanneer er een groep is welke moet worden goedgekeurd',
   'group_tools:group:edit:reason' => 'Goedkeuring reden',
   'group_tools:group:edit:suggested' => 'Vergelijkbare groepen',
   'group_tools:group:edit:reason:description' => 'Vertel de site beheerders waarom jouw groep zou moeten worden goedgekeurd, door een aantal vragen hieronder te beantwoorden.',

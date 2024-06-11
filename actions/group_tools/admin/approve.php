@@ -21,7 +21,7 @@ if (group_tools_allow_hidden_groups()) {
 	if ($access_id === ACCESS_PRIVATE) {
 		$group_acl = $group->getOwnedAccessCollection('group_acl');
 		
-		$access_id = ($group_acl instanceof ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
+		$access_id = ($group_acl instanceof \ElggAccessCollection) ? (int) $group_acl->id : ACCESS_LOGGED_IN;
 	}
 }
 

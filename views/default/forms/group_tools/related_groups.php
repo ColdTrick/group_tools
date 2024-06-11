@@ -9,6 +9,7 @@ $fields = [
 	[
 		'#type' => 'grouppicker',
 		'#help' => elgg_echo('group_tools:related_groups:form:description'),
+		'#class' => 'elgg-field-stretch',
 		'name' => 'guid',
 		'placeholder' => elgg_echo('group_tools:related_groups:form:placeholder'),
 		'limit' => 1,

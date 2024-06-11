@@ -8,6 +8,7 @@ echo elgg_view('output/longtext', [
 // build elements
 $title = elgg_echo('group_tools:admin:group_tool_presets:header');
 $add_button = elgg_view('output/url', [
+	'icon' => 'plus',
 	'text' => elgg_echo('add'),
 	'href' => false,
 	'class' => 'elgg-button elgg-button-action group-tools-admin-add-tool-preset',

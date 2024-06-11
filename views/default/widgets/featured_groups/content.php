@@ -3,6 +3,7 @@
  * content of the featured groups widget
  */
 
+use Elgg\Database\MetadataTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Clauses\OrderByClause;
 
@@ -27,10 +28,10 @@ if ($show_random == 'yes') {
 		'order_by' => new OrderByClause('RAND()'),
 		'wheres' => [
 			function (QueryBuilder $qb, $main_alias) {
-				$subquery = $qb->subquery('metadata', 'featured_md');
+				$subquery = $qb->subquery(MetadataTable::TABLE_NAME, 'featured_md');
 				$subquery->select('entity_guid')
-					->andWhere($qb->compare('featured_md.name', '=', 'featured_group', ELGG_VALUE_STRING))
-					->andWhere($qb->compare('featured_md.value', '=', 'yes', ELGG_VALUE_STRING));
+					->andWhere($qb->compare("{$subquery->getTableAlias()}.name", '=', 'featured_group', ELGG_VALUE_STRING))
+					->andWhere($qb->compare("{{$subquery->getTableAlias()}}.value", '=', 'yes', ELGG_VALUE_STRING));
 				
 				return $qb->compare("{$main_alias}.guid", 'NOT IN', $subquery->getSQL());
 			},

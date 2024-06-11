@@ -3,6 +3,9 @@
  * Renders a list of groups (default sorted by creation date)
  *
  * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ *
+ * @uses $vars['options'] Additional listing options
+ * @uses $vars['getter']  Function to get entities (default: 'elgg_get_entities')
  */
 
 $defaults = [
@@ -14,7 +17,7 @@ $defaults = [
 $options = (array) elgg_extract('options', $vars, []);
 $options = array_merge($defaults, $options);
 
-$getter = 'elgg_get_entities';
+$getter = (string) elgg_extract('getter', $vars, 'elgg_get_entities');
 
 // sorting options
 if (!isset($options['sort_by'])) {

@@ -4,6 +4,7 @@
  */
 
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\RelationshipsTable;
 
 $group = elgg_get_page_owner_entity();
 
@@ -38,7 +39,7 @@ if ($filter === 'group_admins') {
 		function (QueryBuilder $qb, $main_alias) use ($group) {
 			$owner = $qb->compare("{$main_alias}.guid_one", '=', $group->owner_guid, ELGG_VALUE_GUID);
 			
-			$admin_query = $qb->subquery('entity_relationships')
+			$admin_query = $qb->subquery(RelationshipsTable::TABLE_NAME)
 				->select('guid_one')
 				->where($qb->compare('relationship', '=', 'group_admin', ELGG_VALUE_STRING))
 				->andWhere($qb->compare('guid_two', '=', $group->guid, ELGG_VALUE_GUID));

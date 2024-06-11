@@ -89,9 +89,8 @@ class Title {
 			return null;
 		}
 		
-		$entity = $event->getEntityParam();
 		$user = elgg_get_logged_in_user_entity();
-		if (!$entity instanceof \ElggGroup || !$user instanceof \ElggUser) {
+		if (!$user instanceof \ElggUser) {
 			return null;
 		}
 		
@@ -123,7 +122,8 @@ class Title {
 		}
 		
 		// this is only allowed for group members
-		if (!$entity->isMember($user)) {
+		$entity = $event->getEntityParam();
+		if ($entity instanceof \ElggGroup || !$entity->isMember($user)) {
 			return null;
 		}
 		
@@ -309,7 +309,7 @@ class Title {
 			'edit',
 			'delete',
 			'entity_explorer', // developer tools
-			'opensearch_inspect', // opensearch
+			'opensearch_inspect', // OpenSearch
 		];
 		
 		/* @var $return MenuItems */
@@ -388,11 +388,12 @@ class Title {
 		}
 				
 		$url = elgg_generate_url('add:group:group', [
-			'container_guid' => $user->guid,
+			'guid' => $user->guid,
 		]);
 		
 		if ($add_button->getHref() !== $url) {
 			// not the group add button
+			var_dump($url, $add_button->getHref());
 			return null;
 		}
 	

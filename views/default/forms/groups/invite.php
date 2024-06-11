@@ -81,6 +81,7 @@ $footer_fields = [
 		'#type' => 'submit',
 		'name' => 'submit',
 		'value' => 0,
+		'icon' => 'envelope',
 		'text' => elgg_echo('invite'),
 	],
 ];
@@ -89,13 +90,15 @@ if (elgg_is_admin_logged_in()) {
 		'#type' => 'submit',
 		'name' => 'submit',
 		'value' => 1,
+		'icon' => 'plus',
 		'text' => elgg_echo('group_tools:add_users'),
 		'data-confirm' => elgg_echo('group_tools:group:invite:add:confirm'),
 	];
 }
 
-$footer = elgg_view('input/fieldset', [
-	'fields' => $footer_fields,
+$footer = elgg_view_field([
+	'#type' => 'fieldset',
 	'align' => 'horizontal',
+	'fields' => $footer_fields,
 ]);
 elgg_set_form_footer($footer);

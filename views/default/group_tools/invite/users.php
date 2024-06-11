@@ -6,6 +6,9 @@
  */
 
 $group = elgg_extract('entity', $vars);
+if (!$group instanceof \ElggGroup) {
+	return;
+}
 
 echo elgg_view_field([
 	'#type' => 'userpicker',

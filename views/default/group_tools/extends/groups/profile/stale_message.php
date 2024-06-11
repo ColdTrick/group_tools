@@ -27,7 +27,7 @@ if ($entity->canEdit()) {
 		'id' => 'group-tools-stale-touch-link',
 	]);
 	
-	elgg_require_js('group_tools/extends/groups/profile/stale_message');
+	elgg_import_esm('group_tools/extends/groups/profile/stale_message');
 }
 
 echo elgg_view_message('warning', elgg_echo('group_tools:stale_info:description'), [

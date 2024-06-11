@@ -3,7 +3,7 @@
  * Edit the widget
  */
 
-/* @var $widget ElggWidget */
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
 // filter activity

@@ -100,8 +100,6 @@ class GroupMail extends \ElggObject {
 			return false;
 		}
 		
-		elgg_trigger_event('enqueue-mail', 'object', $this);
-		
-		return true;
+		return elgg_trigger_event('enqueue-mail', 'object', $this);
 	}
 }

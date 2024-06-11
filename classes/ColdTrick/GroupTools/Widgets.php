@@ -131,15 +131,6 @@ class Widgets {
 					'filter' => 'featured',
 				]);
 				
-			case 'a_user_groups':
-				$owner = $widget->getOwnerEntity();
-				if ($owner instanceof \ElggUser) {
-					return elgg_generate_url('collection:group:group:member', [
-						'username' => $owner->username,
-					]);
-				}
-				break;
-				
 			case 'group_related':
 				return elgg_generate_url('collection:group:group:related', [
 					'guid' => $widget->owner_guid,

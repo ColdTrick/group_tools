@@ -3,6 +3,8 @@
 namespace ColdTrick\GroupTools;
 
 use Doctrine\DBAL\Query\QueryBuilder as DBalQueryBuilder;
+use Elgg\Database\EntityTable;
+use Elgg\Database\MetadataTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Values;
 
@@ -55,7 +57,7 @@ class Cron {
 	 *
 	 * @return \ElggGroup[]
 	 */
-	protected static function findStaleGroups($ts) {
+	protected static function findStaleGroups(int $ts): array {
 		if (empty($ts)) {
 			return [];
 		}
@@ -94,11 +96,11 @@ class Cron {
 			'callback' => $row_to_guid,
 			'wheres' => [
 				function (QueryBuilder $qb, $main_alias) use ($compare_ts_lower, $compare_ts_upper) {
-					$select = $qb->subquery('metadata', 'tmd');
-					$select->select('tmd.entity_guid')
-						->andWhere($qb->compare('tmd.name', '=', 'group_tools_stale_touch_ts', ELGG_VALUE_STRING))
-						->andWhere($qb->compare('tmd.value', '>', $compare_ts_lower, ELGG_VALUE_INTEGER))
-						->andWhere($qb->compare('tmd.value', '<', $compare_ts_upper, ELGG_VALUE_INTEGER));
+					$select = $qb->subquery(MetadataTable::TABLE_NAME, 'tmd');
+					$select->select("{$select->getTableAlias()}.entity_guid")
+						->andWhere($qb->compare("{$select->getTableAlias()}.name", '=', 'group_tools_stale_touch_ts', ELGG_VALUE_STRING))
+						->andWhere($qb->compare("{$select->getTableAlias()}.value", '>', $compare_ts_lower, ELGG_VALUE_INTEGER))
+						->andWhere($qb->compare("{$select->getTableAlias()}.value", '<', $compare_ts_upper, ELGG_VALUE_INTEGER));
 					
 					return $qb->compare("{$main_alias}.guid", 'IN', $select->getSQL());
 				},
@@ -133,7 +135,7 @@ class Cron {
 				'callback' => $row_to_guid,
 				'wheres' => [
 					function (QueryBuilder $qb, $main_alias) use ($object_subtypes, $compare_ts_lower, $compare_ts_upper) {
-						$content_sub = $qb->subquery('entities');
+						$content_sub = $qb->subquery(EntityTable::TABLE_NAME);
 						$content_sub->select('container_guid', 'max(time_updated) as time_updated')
 							->where($qb->compare('type', '=', 'object', ELGG_VALUE_STRING))
 							->andWhere($qb->compare('subtype', 'in', $object_subtypes, ELGG_VALUE_STRING))
@@ -162,11 +164,11 @@ class Cron {
 			'callback' => $row_to_guid,
 			'wheres' => [
 				function (QueryBuilder $qb, $main_alias) use ($compare_ts_lower, $compare_ts_upper) {
-					$comments_sub = $qb->subquery('entities', 're');
-					$comments_sub->joinEntitiesTable('re', 'container_guid', 'inner', 'ce');
-					$comments_sub->select('ce.container_guid', 'max(re.time_updated) as time_updated')
-						->where($qb->compare('re.type', '=', 'object', ELGG_VALUE_STRING))
-						->andWhere($qb->compare('re.subtype', '=', 'comment', ELGG_VALUE_STRING))
+					$comments_sub = $qb->subquery(EntityTable::TABLE_NAME, 're');
+					$comments_sub->joinEntitiesTable($comments_sub->getTableAlias(), 'container_guid', 'inner', 'ce');
+					$comments_sub->select('ce.container_guid', "max({$comments_sub->getTableAlias()}.time_updated) as time_updated")
+						->where($qb->compare("{$comments_sub->getTableAlias()}.type", '=', 'object', ELGG_VALUE_STRING))
+						->andWhere($qb->compare("{$comments_sub->getTableAlias()}.subtype", '=', 'comment', ELGG_VALUE_STRING))
 						->groupBy('ce.container_guid');
 					
 					$container_sub = new DBalQueryBuilder($qb->getConnection());

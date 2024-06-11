@@ -21,5 +21,4 @@ $params = [
 	'icon' => elgg_view_entity_icon($entity, 'small'),
 ];
 $params = $params + $vars;
-
 echo elgg_view('group/elements/summary', $params);

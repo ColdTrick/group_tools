@@ -6,9 +6,6 @@
 use Elgg\Database\QueryBuilder;
 
 $invitecode = get_input('invitecode');
-
-$user = elgg_get_logged_in_user_entity();
-
 if (empty($invitecode)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
@@ -18,6 +15,7 @@ if (empty($group)) {
 	return elgg_error_response(elgg_echo('group_tools:action:groups:email_invitation:error:code'));
 }
 
+$user = elgg_get_logged_in_user_entity();
 if (!$group->join($user)) {
 	return elgg_error_response(elgg_echo('group_tools:action:groups:email_invitation:error:join', [$group->getDisplayName()]));
 }

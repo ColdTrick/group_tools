@@ -3,32 +3,6 @@
 	display: none;
 }
 
-.elgg-form-group-tools-related-groups .elgg-fieldset-horizontal {
-	display: flex;
-	align-items: stretch;
-	
-	> .elgg-field:first-child {
-		flex-grow: 1;
-	}
-}
-
-#group-tools-invite-email .elgg-fieldset-horizontal {
-	display: flex;
-	align-items: flex-end;
-	
-	> .elgg-field {
-		flex-grow: 1;
-		
-		&:first-child {
-			width: 100%;
-		}
-		
-		&:last-child {
-			margin: 0;
-		}
-	}
-}
-
 /* groups simplified options */
 .group-tools-simplified-options {
 	display: flex;
@@ -51,7 +25,7 @@
 	border-radius: 3px;
 	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
 	
-	> h3 {
+	> h2 {
 		display: block;
 	}
 	
@@ -72,5 +46,11 @@
 .elgg-menu-filter-groups-all {
 	.group-tools-listing-sorting {
 		margin-left: auto;
+	}
+}
+
+#group-tools-invite-email {
+	.elgg-fieldset-horizontal {
+		align-items: flex-end;
 	}
 }

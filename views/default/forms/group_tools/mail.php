@@ -3,10 +3,13 @@
  * Mail group members
  */
 
-elgg_require_js('forms/group_tools/mail');
+elgg_import_esm('forms/group_tools/mail');
 
-$group = elgg_extract('entity', $vars);
 $members = elgg_extract('members', $vars);
+$group = elgg_extract('entity', $vars);
+if (!$group instanceof \ElggGroup) {
+	return;
+}
 
 $user_guids = [];
 if (!empty($members)) {

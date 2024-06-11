@@ -17,7 +17,7 @@ if (!empty($auto_joins)) {
 	
 	$rows[] = elgg_format_element('thead', [], elgg_format_element('tr', [], implode('', $row)));
 	
-	$groups = new ElggBatch('elgg_get_entities', [
+	$groups = new \ElggBatch('elgg_get_entities', [
 		'type' => 'group',
 		'limit' => false,
 		'guids' => $auto_joins,

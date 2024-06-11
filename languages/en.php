@@ -116,8 +116,8 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:auto_accept_membership_requests' => "Automatically accept pending membership requests after opening the group",
 	'group_tools:settings:auto_accept_membership_requests:help' => "When the membership of a group changes to 'open', automatically accept all pending membership requests.",
 	
-	// user settings
-	'group_tools:usersettings:admin:notify_approval' => "Notify me when a group needs approval",
+	// notification settings
+	'group_tools:notifications::admin:notify_approval' => "Receive a notification when a group needs approval",
 	
 	// auto join
 	'group_tools:admin:auto_join:default' => "Auto join",
@@ -576,4 +576,8 @@ Click below to view the group's join requests:
 
 Please check on the group here:
 %s",
+	
+	// upgrades
+	'group_tools:upgrade:2024061101:title' => "Migrate group approval notification settings",
+	'group_tools:upgrade:2024061101:description' => "Migrate the old plugin user setting to a correct user notification setting",
 ];

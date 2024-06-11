@@ -3,9 +3,10 @@
  * content for the group river/activity widget
  */
 
+use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 
-/* @var $widget ElggWidget */
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
 // which group
@@ -49,9 +50,9 @@ $options = [
 			$wheres[] = $qb->compare("{$main_alias}.object_guid", 'in', $group_guid, ELGG_VALUE_GUID);
 			$wheres[] = $qb->compare("{$main_alias}.target_guid", 'in', $group_guid, ELGG_VALUE_GUID);
 			
-			$sub = $qb->subquery('entities', 'ce');
-			$sub->select('ce.guid')
-				->where($qb->compare('ce.container_guid', 'in', $group_guid, ELGG_VALUE_GUID));
+			$sub = $qb->subquery(EntityTable::TABLE_NAME, 'ce');
+			$sub->select("{$sub->getTableAlias()}.guid")
+				->where($qb->compare("{$sub->getTableAlias()}.container_guid", 'in', $group_guid, ELGG_VALUE_GUID));
 			
 			$wheres[] = $qb->compare("{$main_alias}.object_guid", 'in', $sub->getSQL());
 		

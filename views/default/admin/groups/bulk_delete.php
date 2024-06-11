@@ -26,7 +26,7 @@ if ($group_count < 1) {
 	return;
 }
 
-elgg_require_js('admin/groups/bulk_delete');
+elgg_import_esm('admin/groups/bulk_delete');
 
 $batch = new ElggBatch('elgg_get_entities', $options);
 
@@ -42,10 +42,10 @@ $form_data .= '<table class="elgg-table">';
 
 $form_data .= '<thead>';
 $form_data .= '<tr>';
-$form_data .= '<th class="center">' . elgg_view('input/checkbox', ['name' => 'checkall', 'default' => false]) . '</th>';
-$form_data .= '<th>' . elgg_echo('groups:group') . '</th>';
-$form_data .= '<th class="center">' . elgg_echo('groups:edit') . '</th>';
-$form_data .= '<th class="center">' . elgg_echo('delete') . '</th>';
+$form_data .= elgg_format_element('th', ['class' => 'center'], elgg_view('input/checkbox', ['name' => 'checkall', 'default' => false]));
+$form_data .= elgg_format_element('th', [], elgg_echo('groups:group'));
+$form_data .= elgg_format_element('th', ['class' => 'center'], elgg_echo('groups:edit'));
+$form_data .= elgg_format_element('th', ['class' => 'center'], elgg_echo('delete'));
 $form_data .= '</tr>';
 $form_data .= '</thead>';
 

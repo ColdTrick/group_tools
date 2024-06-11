@@ -27,17 +27,13 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 		]);
 		/* @var $user \ElggUser */
 		foreach ($batch as $user) {
-			if (!(bool) elgg_get_plugin_user_setting('notify_approval', $user->guid, 'group_tools')) {
-				// only if the admin wants the notifications
+			$settings = $user->getNotificationSettings('group_tools_group_approval');
+			$settings = array_keys(array_filter($settings));
+			if (empty($settings)) {
 				continue;
 			}
 			
-			$notification_settings = $user->getNotificationSettings();
-			if (empty($notification_settings)) {
-				continue;
-			}
-			
-			$return[$user->guid] = array_keys(array_filter($notification_settings));
+			$return[$user->guid] = $settings;
 		}
 		
 		return $return;

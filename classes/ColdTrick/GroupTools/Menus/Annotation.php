@@ -30,6 +30,8 @@ class Annotation {
 		/* @var $result MenuItems */
 		$result = $event->getValue();
 		
+		$result->remove('delete');
+		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'revoke',
 			'text' => elgg_echo('revoke'),

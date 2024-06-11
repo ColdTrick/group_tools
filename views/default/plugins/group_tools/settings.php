@@ -243,7 +243,7 @@ foreach ($listing_options as $tab => $tab_title) {
 		'name' => "params[{$tab_setting_name}]",
 		'value' => 1,
 	];
-	$tab_value = $plugin->$tab_setting_name;
+	$tab_value = $plugin->{$tab_setting_name};
 	if ($tab_value !== '0') {
 		$checkbox_options['checked'] = true;
 	}
@@ -270,7 +270,7 @@ foreach ($listing_options as $tab => $tab_title) {
 		$sorting_name = "group_listing_{$tab}_sorting";
 		$sorting_options = [
 			'name' => "params[{$sorting_name}]",
-			'value' => !empty($plugin->$sorting_name) ? $plugin->$sorting_name : 'newest',
+			'value' => $plugin->{$sorting_name} ?: 'newest',
 		];
 		foreach ($listing_sorting_options as $sort => $translation) {
 			$sorting_options['options'] = [

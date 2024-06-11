@@ -4,13 +4,16 @@
  */
 
 use ColdTrick\GroupTools\StaleInfo;
+use Elgg\Database\AccessCollections;
 use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\MetadataTable;
+use Elgg\Database\RelationshipsTable;
 use Elgg\Database\Select;
 use Elgg\Database\QueryBuilder;
 use Elgg\Security\Base64Url;
 
 /**
- * Check if a invitation code results in a group
+ * Check if an invitation code results in a group
  *
  * @param string $invite_code the invite code
  * @param int    $group_guid  (optional) the group to check
@@ -238,96 +241,6 @@ function group_tools_get_invited_groups_by_email(string $email): array {
 }
 
 /**
- * Get all the users who are missing from the ACLs of their groups
- *
- * @param int $group_guid (optional) a group GUID to check, otherwise all groups will be checked
- *
- * @return stdClass[] all the found database rows
- */
-function group_tools_get_missing_acl_users(int $group_guid = 0): array {
-	$select = Select::fromTable('access_collections', 'ac');
-	$select->select('ac.id AS acl_id')
-		->addSelect('ac.owner_guid AS group_guid')
-		->addSelect('er.guid_one AS user_guid');
-	$select->joinEntitiesTable('ac', 'owner_guid', 'inner', 'e');
-	$select->joinRelationshipTable('ac', 'owner_guid', 'member', false, 'inner', 'er');
-	$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e2');
-	
-	if ($group_guid > 0) {
-		$select->where($select->compare('e.guid', '=', $group_guid, ELGG_VALUE_GUID));
-	} else {
-		$select->where($select->compare('e.type', '=', 'group', ELGG_VALUE_STRING));
-	}
-	
-	$select->andWhere($select->compare('e2.type', '=', 'user', ELGG_VALUE_STRING));
-	
-	$sub = $select->subquery('access_collections', 'ac2');
-	$sub->select('acm.user_guid');
-	$sub->join('ac2', 'access_collection_membership', 'acm', $select->compare('ac2.id', '=', 'acm.access_collection_id'));
-	$sub->where($select->compare('ac2.owner_guid', '=', 'ac.owner_guid'));
-	
-	$select->andWhere($select->compare('er.guid_one', 'NOT IN', $sub->getSQL()));
-	
-	return elgg()->db->getData($select);
-}
-
-/**
- * Get all users who are in a group ACL but no longer member of the group
- *
- * @param int $group_guid (optional) a group GUID to check, otherwise all groups will be checked
- *
- * @return stdClass[] all the found database rows
- */
-function group_tools_get_excess_acl_users(int $group_guid = 0): array {
-	$select = Select::fromTable('access_collections', 'ac');
-	$select->select('ac.id AS acl_id')
-		->addSelect('ac.owner_guid AS group_guid')
-		->addSelect('acm.user_guid AS user_guid');
-	$select->joinEntitiesTable('ac', 'owner_guid', 'inner', 'e');
-	$select->join('ac', 'access_collection_membership', 'acm', $select->compare('ac.id', '=', 'acm.access_collection_id'));
-	
-	if ($group_guid > 0) {
-		$select->where($select->compare('e.guid', '=', $group_guid, ELGG_VALUE_GUID));
-	} else {
-		$select->where($select->compare('e.type', '=', 'group', ELGG_VALUE_STRING));
-	}
-	
-	$sub = $select->subquery('entity_relationships', 'r');
-	$sub->select('r.guid_one');
-	$sub->where($select->compare('r.relationship', '=', 'member', ELGG_VALUE_STRING));
-	$sub->andWhere($select->compare('r.guid_two', '=', 'ac.owner_guid'));
-	
-	$select->andWhere($select->compare('acm.user_guid', 'NOT IN', $sub->getSQL()));
-	
-	return elgg()->db->getData($select);
-}
-
-/**
- * Get all groups that don't have an ACL
- *
- * @param bool $count return a count
- *
- * @return int|\ElggGroup[]
- */
-function group_tools_get_groups_without_acl(bool $count = false) {
-	return elgg_get_entities([
-		'type' => 'group',
-		'limit' => false,
-		'count' => $count,
-		'wheres' => [
-			function (QueryBuilder $qb, $main_alias) {
-				$select = $qb->subquery('access_collections', 'ac');
-				$select->select('ac.owner_guid')
-					->where($qb->compare('e2.type', '=', 'group', ELGG_VALUE_STRING));
-				$select->joinEntitiesTable('ac', 'owner_guid', 'inner', 'e2');
-				
-				return $qb->compare("{$main_alias}.guid", 'NOT IN', $select->getSQL());
-			},
-		],
-	]);
-}
-
-/**
  * Are group members allowed to invite new members to the group
  *
  * @param \ElggGroup $group The group to check the settings
@@ -361,8 +274,8 @@ function group_tools_allow_members_invite(\ElggGroup $group): bool {
 /**
  * Returns suggested groups
  *
- * @param \ElggUser $user  (optional) the user to get the groups for, defaults to the current user
- * @param int       $limit (optional) the number of suggested groups to return, default = 10
+ * @param null|\ElggUser $user  (optional) the user to get the groups for, defaults to the current user
+ * @param null|int       $limit (optional) the number of suggested groups to return, default = 10
  *
  * @return \ElggGroup[]
  * @todo revisit this
@@ -382,10 +295,10 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 
 	$result = [];
 	$group_membership_where = function (QueryBuilder $qb, $main_alias) use ($user) {
-		$select = $qb->subquery('entity_relationships', 'er');
-		$select->select('er.guid_two')
-			->where($qb->compare('er.guid_one', '=', $user->guid, ELGG_VALUE_GUID))
-			->andWhere($qb->compare('er.relationship', 'in', ['member', 'membership_request'], ELGG_VALUE_STRING));
+		$select = $qb->subquery(RelationshipsTable::TABLE_NAME, 'er');
+		$select->select("{$select->getTableAlias()}.guid_two")
+			->where($qb->compare("{$select->getTableAlias()}.guid_one", '=', $user->guid, ELGG_VALUE_GUID))
+			->andWhere($qb->compare("{$select->getTableAlias()}.relationship", 'in', ['member', 'membership_request'], ELGG_VALUE_STRING));
 		
 		return $qb->compare("{$main_alias}.guid", 'NOT IN', $select->getSQL());
 	};
@@ -425,13 +338,13 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 			$user_values = elgg_get_metadata($user_metadata_options);
 			if (!empty($user_values)) {
 				// transform to values
-				$user_values = [];
+				$user_values_clean = [];
 				foreach ($user_values as $metadata) {
-					$user_values[] = $metadata->value;
+					$user_values_clean[] = $metadata->value;
 				}
 				
-				$user_values = array_unique($user_values);
-				$user_values = array_filter($user_values);
+				$user_values_clean = array_unique($user_values_clean);
+				$user_values = array_filter($user_values_clean);
 			}
 			
 			if (!empty($user_values)) {
@@ -446,7 +359,7 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 							return "{$main_alias}.guid";
 						},
 					],
-					'order_by' => new OrderByClause('count(msn.id)', 'DESC'),
+					'order_by' => new OrderByClause('count(' . MetadataTable::DEFAULT_JOIN_ALIAS . '.id)', 'DESC'),
 					'limit' => $limit,
 				]);
 				if (!empty($groups)) {
@@ -492,8 +405,8 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
 /**
  * Check if the domain based settings for this group match the user
  *
- * @param \ElggGroup $group the group to match to
- * @param \ElggUser  $user  the user to check (defaults to current user)
+ * @param \ElggGroup     $group the group to match to
+ * @param null|\ElggUser $user  the user to check (defaults to current user)
  *
  * @return bool true if the domain of the user is found in the group settings
  */
@@ -528,9 +441,9 @@ function group_tools_check_domain_based_group(\ElggGroup $group, \ElggUser $user
  *
  * @param \ElggUser $user The user used to base the search
  *
- * @return ElggGroup[]
+ * @return \ElggGroup[]
  */
-function group_tools_get_domain_based_groups(ElggUser $user): array {
+function group_tools_get_domain_based_groups(\ElggUser $user): array {
 	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
 		return [];
 	}
@@ -819,7 +732,7 @@ function group_tools_group_mail_members_enabled(\ElggGroup $group = null): bool 
  * Get the helper class for stale information
  *
  * @param \ElggGroup $group          the group to get the info for
- * @param int        $number_of_days (optional) a number of days to check stale against, defaults to plugin setting
+ * @param null|int   $number_of_days (optional) a number of days to check stale against, defaults to plugin setting
  *
  * @return null|StaleInfo
  */
@@ -1002,38 +915,4 @@ function group_tools_get_auto_join_pattern_user_options(): array {
 	}
 	
 	return $result;
-}
-
-/**
- * Show the tools section on the group edit form
- *
- * @return bool
- */
-function group_tools_show_tools_on_edit(): bool {
-	if (elgg_get_page_owner_entity() instanceof \ElggGroup) {
-		// edit of a group
-		return true;
-	}
-	
-	$group_tools_preset = get_input('group_tools_preset');
-	if (empty($group_tools_preset) || elgg_get_plugin_setting('create_based_on_preset', 'group_tools') !== 'yes') {
-		// no preset or plugin setting doesn't hide it
-		return true;
-	}
-	
-	$presets = group_tools_get_tool_presets();
-	if (empty($presets)) {
-		// no presets
-		return true;
-	}
-	
-	foreach ($presets as $preset) {
-		if ($group_tools_preset !== elgg_extract('title', $preset)) {
-			continue;
-		}
-		
-		return false;
-	}
-	
-	return true;
 }

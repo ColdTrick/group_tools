@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('forms/group_tools/members_search');
+elgg_import_esm('forms/group_tools/members_search');
 
 echo elgg_view_field([
 	'#type' => 'fieldset',

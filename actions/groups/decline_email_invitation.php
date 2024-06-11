@@ -10,7 +10,7 @@ if (empty($invitecode)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-// ignore access in order to cleanup the invitation
+// ignore access in order to clean up the invitation
 $deleted = elgg_call(ELGG_IGNORE_ACCESS, function() use ($invitecode) {
 	return elgg_delete_annotations([
 		'annotation_name' => 'email_invitation',

@@ -198,13 +198,17 @@ class CSVExporter {
 					return $qb->compare("{$main_alias}.guid", '!=', $entity->owner_guid, ELGG_VALUE_GUID);
 				},
 			],
+			'batch' => true,
 		];
 		
 		$exportable_value = $event->getParam('exportable_value');
 		switch ($exportable_value) {
 			case 'group_tools_user_group_admin_name':
 				$result = [];
-				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
+				
+				/* @var $batch \ElggBatch */
+				$batch = elgg_get_entities($group_admin_options);
+				
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
 					$result[] = "\"{$group_admin->getDisplayName()}\"";
@@ -213,7 +217,10 @@ class CSVExporter {
 				
 			case 'group_tools_user_group_admin_url':
 				$result = [];
-				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
+				
+				/* @var $batch \ElggBatch */
+				$batch = elgg_get_entities($group_admin_options);
+				
 				/* @var $group_admin \ElggUser */
 				foreach ($batch as $group_admin) {
 					$result[] = $group_admin->getURL();
@@ -362,7 +369,7 @@ class CSVExporter {
 	 */
 	public static function exportApprovalReasons(\Elgg\Event $event) {
 		$return = $event->getValue();
-		if (!is_null($return)) {
+		if (!is_null($return) || $event->getParam('exportable_value') !== 'group_tools_admin_approval_reason_question') {
 			// someone already provided output
 			return null;
 		}
@@ -387,10 +394,6 @@ class CSVExporter {
 			return unserialize($value);
 		};
 		
-		$exportable_value = $event->getParam('exportable_value');
-		switch ($exportable_value) {
-			case 'group_tools_admin_approval_reason_question':
-				return $get_annotation_value('question');
-		}
+		return $get_annotation_value('question');
 	}
 }

@@ -3,7 +3,7 @@
 $tools = elgg_extract('tools', $vars);
 $presets = elgg_extract('presets', $vars);
 
-elgg_require_js('groups/edit/tools/normal');
+elgg_import_esm('groups/edit/tools/normal');
 
 echo elgg_view('output/longtext', [
 	'value' => elgg_echo('group_tools:create_group:tool_presets:description'),
@@ -75,7 +75,7 @@ $more_link = elgg_view('output/url', [
 	'class' => 'elgg-toggle',
 ]);
 
-echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:active_header'), '', [
+echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:active_header'), '&nbsp;', [
 	'id' => 'group-tools-preset-active',
 	'class' => 'hidden',
 	'menu' => $more_link,

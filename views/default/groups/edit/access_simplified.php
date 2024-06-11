@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('groups/edit/access_simplified');
+elgg_import_esm('groups/edit/access_simplified');
 
 $open_text = elgg_format_element('h3', [], elgg_echo('group_tools:edit:access_simplified:open'));
 $open_text .= elgg_view('output/longtext', [

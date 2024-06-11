@@ -6,13 +6,21 @@ if (empty($presets)) {
 	return;
 }
 
-elgg_require_js('groups/edit/tools/simple');
+elgg_import_esm('groups/edit/tools/simple');
 
 $output = '';
 $selected_tools = [];
 
+$url_preset = get_input('group_tools_preset');
+$selected_preset = 0;
+
 foreach ($presets as $index => $preset) {
-	$preset_content = elgg_format_element('h3', [], elgg_extract('title', $preset));
+	$title = elgg_extract('title', $preset);
+	if (!empty($url_preset) && $title === $url_preset) {
+		$selected_preset = $index;
+	}
+	
+	$preset_content = elgg_format_element('h2', [], $title);
 	$preset_content .= elgg_view('output/longtext', [
 		'value' => elgg_extract('description', $preset),
 	]);
@@ -36,6 +44,12 @@ foreach ($presets as $index => $preset) {
 		'data-preset' => $index,
 	], $preset_content);
 }
+
+$output .= elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'preselected_group_tools_preset',
+	'value' => $selected_preset,
+]);
 
 echo elgg_format_element('div', ['class' => ['group-tools-edit-tools-simple', 'group-tools-simplified-options']], $output);
 
