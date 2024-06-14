@@ -1,10 +1,13 @@
 <?php
 /**
- * This file was created by Translation Editor v11.1
- * On 2023-05-17 14:43
+ * This file was created by Translation Editor v13.1.1
+ * On 2024-06-14 10:56
  */
 
 return array (
+  'group_tools:notifications::admin:notify_approval' => 'Ontvang een notificatie als er een groep moet worden goedgekeurd',
+  'group_tools:upgrade:2024061101:title' => 'Migreer notificatie instellingen tbv het goedkeuren van groepen',
+  'group_tools:upgrade:2024061101:description' => 'Migreer de oude gebuiker plugin instellingen naar een notificatie instelling',
   'widgets:a_users_groups:sort_by' => 'Sorteer de groepen op',
   'widgets:a_users_groups:sort_by:activity' => 'Recente persoonlijke activiteit',
   'widgets:a_users_groups:sort_by:join_date' => 'Datum van lidmaatschap',
