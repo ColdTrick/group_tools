@@ -393,7 +393,6 @@ class Title {
 		
 		if ($add_button->getHref() !== $url) {
 			// not the group add button
-			var_dump($url, $add_button->getHref());
 			return null;
 		}
 	
