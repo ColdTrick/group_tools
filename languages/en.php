@@ -59,6 +59,8 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:admin_transfer' => "Allow group owner transfer",
 	'group_tools:settings:admin_transfer:admin' => "Site admin only",
 	'group_tools:settings:admin_transfer:owner' => "Group owners and site admins",
+	
+	'group_tools:settings:owner_transfer_river' => "Add river activity when ownership is transferred",
 
 	'group_tools:settings:multiple_admin' => "Allow multiple group admins",
 	'group_tools:settings:auto_suggest_groups' => "Auto suggest groups on the 'Suggested' groups page based on profile information",
@@ -428,6 +430,9 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:action:toggle_special_state:error:state' => "Invalid state provided",
 	'group_tools:action:toggle_special_state:suggested' => "The new suggested settings were saved successfully",
 
+	// river
+	'river:group:owner_transfer' => '%s is now the owner of the group %s',
+	
 	// Widgets
 	// Group River Widget
 	'widgets:group_river_widget:name' => "Group activity",

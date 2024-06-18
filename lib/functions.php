@@ -528,6 +528,14 @@ function group_tools_transfer_group_ownership(\ElggGroup $group, \ElggUser $new_
 		$old_owner->addRelationship($group->guid, 'group_admin');
 	}
 	
+	if (elgg_get_plugin_setting('owner_transfer_river', 'group_tools')) {
+		elgg_create_river_item([
+			'action_type' => 'owner_transfer',
+			'subject_guid' => $new_owner->guid,
+			'object_guid' => $group->guid,
+		]);
+	}
+	
 	// unregister event handler to make sure transfer can complete
 	elgg_unregister_event_handler('permissions_check', 'group', '\ColdTrick\GroupTools\Permissions::allowGroupOwnerTransfer');
 	

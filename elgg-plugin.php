@@ -35,6 +35,7 @@ return [
 		'creation_reason' => 0,
 		'concept_groups' => 0,
 		'admin_transfer' => 'no',
+		'owner_transfer_river' => 0,
 		'simple_access_tab' => 'no',
 		'simple_tool_presets' => 'no',
 		'auto_accept_membership_requests' => 'no',

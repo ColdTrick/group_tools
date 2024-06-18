@@ -155,6 +155,16 @@ $group_edit .= elgg_view_field([
 
 $group_edit .= elgg_view_field([
 	'#type' => 'checkbox',
+	'#label' => elgg_echo('group_tools:settings:owner_transfer_river'),
+	'name' => 'params[owner_transfer_river]',
+	'checked' => (bool) $plugin->owner_transfer_river,
+	'switch' => true,
+	'default' => 0,
+	'value' => 1,
+]);
+
+$group_edit .= elgg_view_field([
+	'#type' => 'checkbox',
 	'#label' => elgg_echo('group_tools:settings:simple_access_tab'),
 	'#help' => elgg_echo('group_tools:settings:simple_access_tab:help'),
 	'name' => 'params[simple_access_tab]',

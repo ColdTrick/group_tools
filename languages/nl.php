@@ -353,6 +353,7 @@ Om de groep te bezoeken klik op onderstaande link:
   'group_tools:settings:admin_transfer' => 'Sta groep eigenaar overdracht toe',
   'group_tools:settings:admin_transfer:admin' => 'Alleen site beheerders',
   'group_tools:settings:admin_transfer:owner' => 'Groep eigenaren en site beheerder',
+  'group_tools:settings:owner_transfer_river' => 'Voeg melding toe aan de activiteitenstroom als eigenaarsschap wordt overgedragen',
   'group_tools:settings:multiple_admin' => 'Sta meerdere groepsbeheerders toe',
   'group_tools:settings:invite' => 'Mogen alle gebruikers worden uitgenodigd (niet alleen vrienden)',
   'group_tools:settings:invite_email' => 'Nodig gebruikers uit op basis van e-mailadres',
