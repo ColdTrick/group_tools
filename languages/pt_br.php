@@ -49,8 +49,6 @@ Ainda é possivel entrar nos convites de comunidades e digitar o seguinte códig
 
 Para visualizar a comunidade, clique neste link:
 %s',
-  'group_tools:group:edit:profile' => 'Comunidade',
-  'group_tools:group:edit:other' => 'Outras opções',
   'group_tools:multiple_admin:group_admins' => 'Proprietários da comunidade',
   'group_tools:multiple_admin:profile_actions:remove' => 'Remover proprietário',
   'group_tools:multiple_admin:profile_actions:add' => 'Adicionar proprietário',
@@ -64,8 +62,6 @@ Para visualizar a comunidade, clique neste link:
   'group_tools:mail:form:recipients' => 'Número de destinatários',
   'group_tools:mail:form:title' => 'Assunto',
   'group_tools:mail:form:description' => 'Mensagem',
-  'group_tools:mail:form:js:members' => 'Por favor selecionar pelo menos um membro para mandar a mensagem',
-  'group_tools:mail:form:js:description' => 'Por favor escreva uma mensagem',
   'group_tools:groups:invite:title' => 'Convidar pessoas para este grupo',
   'group_tools:groups:invite' => 'Convidar pessoas',
   'group_tools:group:invite:users' => 'Buscar pessoa(s)',

@@ -218,12 +218,7 @@ You can find the group here:
 %s",
 
 	// group edit tabbed
-	'group_tools:group:edit:profile' => "Profile",
-	'group_tools:group:edit:reason' => "Reason",
-	'group_tools:group:edit:access' => "Access",
-	'group_tools:group:edit:tools' => "Tools",
-	'group_tools:group:edit:other' => "Other options",
-	'group_tools:group:edit:suggested' => "Similar groups",
+	'groups:edit:reason' => "Reason",
 
 	// group approval reason
 	'group_tools:group:edit:reason:description' => "Please explain to the site administrator why your group should be approved by answering the questions below.",
@@ -350,9 +345,6 @@ The reason was:
 
 	'group_tools:mail:form:title' => "Subject",
 	'group_tools:mail:form:description' => "Body",
-
-	'group_tools:mail:form:js:members' => "Please select at least one member to send the message to",
-	'group_tools:mail:form:js:description' => "Please enter a message",
 
 	// group invite
 	'group_tools:groups:invite:error' => "No invitation options are available",

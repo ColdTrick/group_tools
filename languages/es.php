@@ -103,10 +103,6 @@ Puedes encontrar el grupo aquí:
 
 Puedes encontrar el grupo aquí:
 %s',
-  'group_tools:group:edit:profile' => 'Perfil',
-  'group_tools:group:edit:access' => 'Acceso',
-  'group_tools:group:edit:tools' => 'Herramientas',
-  'group_tools:group:edit:other' => 'Otras opciones',
   'group_tools:multiple_admin:group_admins' => 'Administradores de grupo',
   'group_tools:multiple_admin:profile_actions:remove' => 'Borrar administrador de grupo',
   'group_tools:multiple_admin:profile_actions:add' => 'Agregar administrador de grupo',
@@ -158,8 +154,6 @@ La razón fue:
   'group_tools:mail:form:recipients' => 'Número de destinatarios',
   'group_tools:mail:form:title' => 'Asunto',
   'group_tools:mail:form:description' => 'Cuerpo del texto',
-  'group_tools:mail:form:js:members' => 'Por favor, selecciona al menos un miembro al cual enviar el mensaje',
-  'group_tools:mail:form:js:description' => 'Por favor, ingresa el mensaje',
   'group_tools:groups:invite:error' => 'Las opciones de invitación no están disponibles',
   'group_tools:groups:invite:title' => 'Invitar usuarios a este grupo',
   'group_tools:groups:invite' => 'Invitar usuarios',
