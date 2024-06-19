@@ -241,7 +241,7 @@ class Cron {
 			return;
 		}
 		
-		elgg_call(ELGG_IGNORE_ACCESS, function() use ($days) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DELETED_ENTITIES, function() use ($days) {
 			/* @var $groups \ElggBatch */
 			$groups = elgg_get_entities([
 				'type' => 'group',
@@ -257,7 +257,7 @@ class Cron {
 			]);
 			/* @var $group \ElggGroup */
 			foreach ($groups as $group) {
-				if (!$group->delete()) {
+				if (!$group->delete(true, true)) {
 					$groups->reportFailure();
 				}
 			}
