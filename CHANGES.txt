@@ -1,6 +1,10 @@
 Version history
 ===============
 
+18.1.2 (2024-06-26):
+
+- fixed: use correct type to edit auto join groups
+
 18.1.1 (2024-04-24):
 
 - fixed: correctly get stale group information
