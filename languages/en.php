@@ -400,10 +400,10 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:action:mail:success' => "Message successfully sent",
 
 	// group - invite - action
-	'group_tools:action:invite:error:invite'=> "No users were invited (%s already invited, %s already a member)",
-	'group_tools:action:invite:error:add'=> "No users were invited (%s already invited, %s already a member)",
-	'group_tools:action:invite:success:invite'=> "Successfully invited %s users (%s already invited and %s already a member)",
-	'group_tools:action:invite:success:add'=> "Successfully added %s users (%s already invited and %s already a member)",
+	'group_tools:action:invite:error:invite' => "No users were invited (%s already invited, %s already a member)",
+	'group_tools:action:invite:error:add' => "No users were invited (%s already invited, %s already a member)",
+	'group_tools:action:invite:success:invite' => "Successfully invited %s users (%s already invited and %s already a member)",
+	'group_tools:action:invite:success:add' => "Successfully added %s users (%s already invited and %s already a member)",
 
 	// group - invite - accept e-mail
 	'group_tools:action:groups:email_invitation:error:code' => "The entered invitation code is no longer valid",
