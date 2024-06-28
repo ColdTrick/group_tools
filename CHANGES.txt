@@ -1,6 +1,11 @@
 Version history
 ===============
 
+19.0 (2024-06-28):
+
+- added: setting to add a river event on group ownership transfer
+- changed: updated for Elgg 6
+
 18.1.2 (2024-06-26):
 
 - fixed: use correct type to edit auto join groups
