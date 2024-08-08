@@ -1,10 +1,13 @@
 <?php
 /**
- * This file was created by Translation Editor v13.1.1
- * On 2024-06-14 10:56
+ * This file was created by Translation Editor v14.0
+ * On 2024-08-08 14:59
  */
 
 return array (
+  'group_tools:group:edit:suggested' => 'Vergelijkbare groepen',
+  'group_tools:group:invite:resend' => 'Uitnodiging opnieuw versturen naar gebruikers die al zijn uitgenodigd',
+  'river:group:owner_transfer' => '%s is nu de eigenaar van de groep %s',
   'group_tools:notifications::admin:notify_approval' => 'Ontvang een notificatie als er een groep moet worden goedgekeurd',
   'group_tools:upgrade:2024061101:title' => 'Migreer notificatie instellingen tbv het goedkeuren van groepen',
   'group_tools:upgrade:2024061101:description' => 'Migreer de oude gebuiker plugin instellingen naar een notificatie instelling',
@@ -327,7 +330,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:clear_selection' => 'Selectie wissen',
   'group_tools:all_members' => 'Alle leden (%d)',
   'group_tools:mail:form:recipients' => 'Aantal geselecteerde ontvangers',
-  'group_tools:mail:form:js:description' => 'Geef een bericht op',
   'group_tools:notify:transfer:subject' => 'Beheer van de groep %s is aan je overgedragen',
   'group_tools:notify:transfer:message' => '%s heeft het beheer van de groep %s aan je overgedragen.
 

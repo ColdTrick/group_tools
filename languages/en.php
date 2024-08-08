@@ -219,6 +219,7 @@ You can find the group here:
 
 	// group edit tabbed
 	'groups:edit:reason' => "Reason",
+	'group_tools:group:edit:suggested' => "Similar groups",
 
 	// group approval reason
 	'group_tools:group:edit:reason:description' => "Please explain to the site administrator why your group should be approved by answering the questions below.",

@@ -269,7 +269,7 @@ class Views {
 		$tabs[] = [
 			'name' => 'approval_reason',
 			'priority' => 110,
-			'text' => elgg_echo('group_tools:group:edit:reason'),
+			'text' => elgg_echo('groups:edit:reason'),
 			'content' => elgg_view('groups/edit/reason', self::$group_edit_approval_reason_view_vars),
 		];
 		
