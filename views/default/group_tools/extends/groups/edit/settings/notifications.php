@@ -20,6 +20,8 @@ if (!$entity instanceof \ElggGroup) {
 	return;
 }
 
+elgg_import_esm('group_tools/extends/groups/edit/settings/notifications');
+
 $content = '';
 
 // notification settings
@@ -95,19 +97,18 @@ if ($notification_count > 0) {
 }
 
 $buttons[] = [
-	'#type' => 'submit',
+	'#type' => 'button',
+	'id' => 'group-tools-edit-notifications',
 	'text' => elgg_echo('group_tools:notifications:enable'),
 	'title' => elgg_echo('group_tools:notifications:disclaimer'),
 	'confirm' => true,
-	'formaction' => elgg_generate_action_url('group_tools/admin/notifications', [], false),
+	'class' => 'elgg-button-action',
 ];
 
-if (!empty($buttons)) {
-	$content .= elgg_view_field([
-		'#type' => 'fieldset',
-		'fields' => $buttons,
-		'align' => 'horizontal',
-	]);
-}
+$content .= elgg_view_field([
+	'#type' => 'fieldset',
+	'fields' => $buttons,
+	'align' => 'horizontal',
+]);
 
 echo elgg_view_module('info', elgg_echo('group_tools:notifications:title'), $content);
