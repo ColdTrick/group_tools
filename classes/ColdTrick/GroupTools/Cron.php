@@ -24,14 +24,12 @@ class Cron {
 		$time = (int) $event->getParam('time', time());
 		
 		// get stale groups
-		$groups = elgg_call(ELGG_IGNORE_ACCESS, function() use ($time) {
-			return self::findStaleGroups($time);
-		});
-		if (empty($groups)) {
-			return;
-		}
-		
-		elgg_call(ELGG_IGNORE_ACCESS, function() use ($groups) {
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($time) {
+			$groups = self::findStaleGroups($time);
+			if (empty($groups)) {
+				return;
+			}
+			
 			// process groups
 			foreach ($groups as $group) {
 				$stale_info = group_tools_get_stale_info($group);
@@ -55,16 +53,16 @@ class Cron {
 	 *
 	 * @param int $ts timestamp to compare to
 	 *
-	 * @return \ElggGroup[]
+	 * @return null|\ElggBatch
 	 */
-	protected static function findStaleGroups(int $ts): array {
+	protected static function findStaleGroups(int $ts): ?\ElggBatch {
 		if (empty($ts)) {
-			return [];
+			return null;
 		}
 		
 		$stale_timeout = (int) elgg_get_plugin_setting('stale_timeout', 'group_tools');
 		if ($stale_timeout < 1) {
-			return [];
+			return null;
 		}
 		
 		$compare_ts_upper = strtotime("-{$stale_timeout} days", $ts);
@@ -187,7 +185,7 @@ class Cron {
 		
 		$group_guids = array_unique($group_guids);
 		if (empty($group_guids)) {
-			return [];
+			return null;
 		}
 		
 		return elgg_get_entities([
