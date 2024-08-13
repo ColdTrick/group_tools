@@ -229,6 +229,7 @@ class Title {
 		$allowed_items = [
 			'edit',
 			'delete',
+			'trash',
 		];
 		
 		/* @var $return MenuItems */
@@ -308,6 +309,7 @@ class Title {
 		$allowed_items = [
 			'edit',
 			'delete',
+			'trash',
 			'entity_explorer', // developer tools
 			'opensearch_inspect', // OpenSearch
 		];
