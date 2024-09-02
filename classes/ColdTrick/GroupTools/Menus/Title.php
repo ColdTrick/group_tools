@@ -123,7 +123,7 @@ class Title {
 		
 		// this is only allowed for group members
 		$entity = $event->getEntityParam();
-		if ($entity instanceof \ElggGroup || !$entity->isMember($user)) {
+		if (!$entity instanceof \ElggGroup || !$entity->isMember($user)) {
 			return null;
 		}
 		
