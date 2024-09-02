@@ -27,15 +27,12 @@
 	
 	> h2 {
 		display: block;
+		color: inherit;
 	}
 	
 	&.elgg-state-active {
 		color: $(button-action-font-color);
 		background: $(button-action-background-color);
-		
-		h3 {
-			color: inherit;
-		}
 	}
 }
 

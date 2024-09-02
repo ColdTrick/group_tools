@@ -2,12 +2,12 @@
 
 elgg_import_esm('groups/edit/access_simplified');
 
-$open_text = elgg_format_element('h3', [], elgg_echo('group_tools:edit:access_simplified:open'));
+$open_text = elgg_format_element('h2', [], elgg_echo('group_tools:edit:access_simplified:open'));
 $open_text .= elgg_view('output/longtext', [
 	'value' => elgg_echo('group_tools:edit:access_simplified:open:description'),
 ]);
 
-$closed_text = elgg_format_element('h3', [], elgg_echo('group_tools:edit:access_simplified:closed'));
+$closed_text = elgg_format_element('h2', [], elgg_echo('group_tools:edit:access_simplified:closed'));
 $closed_text .= elgg_view('output/longtext', [
 	'value' => elgg_echo('group_tools:edit:access_simplified:closed:description'),
 ]);
