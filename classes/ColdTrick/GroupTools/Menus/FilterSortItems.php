@@ -27,6 +27,15 @@ class FilterSortItems {
 		/* @var $result MenuItems */
 		$result = $event->getValue();
 		
+		/* @var $menu_item \ElggMenuItem */
+		foreach ($result as $menu_item) {
+			if ($menu_item->getParentName() !== 'sort:parent') {
+				continue;
+			}
+			
+			$menu_item->setHref(elgg_http_remove_url_query_element($menu_item->getHref(), 'sort'));
+		}
+		
 		// add sorting based on relationship time_created
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'popular',
