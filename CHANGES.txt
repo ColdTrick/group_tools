@@ -1,6 +1,15 @@
 Version history
 ===============
 
+19.0.1 (2024-10-10):
+
+- fixed: correctly check if we have a group
+- fixed: cron handling of stale groups
+- fixed: don't remove the trash menu item for concept groups
+- fixed: remove sort query element on other sorting menu items
+- fixed: usage of wrong button type in group edit notification settings
+- fixed: use correct headings in simplified boxes
+
 19.0 (2024-06-28):
 
 - added: setting to add a river event on group ownership transfer
