@@ -55,7 +55,7 @@ foreach ($group_tools as $group_tool) {
 	
 	$edit .= elgg_view('groups/edit/tool', [
 		'tool' => $group_tool,
-		'value' => elgg_extract($metadata_name, $values['tools']),
+		'value' => $values ? elgg_extract($metadata_name, $values['tools']) : null,
 		'name' => "params[{$index}][tools][{$metadata_name}]",
 		'class' => 'mbs',
 	]);
