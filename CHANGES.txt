@@ -1,6 +1,10 @@
 Version history
 ===============
 
+19.0.2 (2024-10-25):
+
+- several small chores/fixes
+
 19.0.1 (2024-10-10):
 
 - fixed: correctly check if we have a group
