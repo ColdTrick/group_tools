@@ -35,24 +35,7 @@ class Title {
 			return null;
 		}
 		
-		if ($user->hasRelationship($entity->guid, 'membership_request')) {
-			// user already requested to join this group
-			$menu_item->setText(elgg_echo('group_tools:joinrequest:already'));
-			$menu_item->setTooltip(elgg_echo('group_tools:joinrequest:already:tooltip'));
-			$menu_item->setHref(elgg_generate_action_url('groups/killrequest', [
-				'user_guid' => $user->guid,
-				'group_guid' => $entity->guid,
-			]));
-		} elseif ($entity->hasRelationship($user->guid, 'invited')) {
-			// the user was invited, so let him/her join
-			$menu_item->setName('groups:join');
-			$menu_item->setText(elgg_echo('groups:join'));
-			$menu_item->setTooltip(elgg_echo('group_tools:join:already:tooltip'));
-			$menu_item->setHref(elgg_generate_action_url('groups/join', [
-				'user_guid' => $user->guid,
-				'group_guid' => $entity->guid,
-			]));
-		} elseif (group_tools_check_domain_based_group($entity, $user)) {
+		if (group_tools_check_domain_based_group($entity, $user)) {
 			// user has a matching email domain
 			$menu_item->setName('groups:join');
 			$menu_item->setText(elgg_echo('groups:join'));
@@ -73,88 +56,6 @@ class Title {
 		}
 
 		$menu_items->add($menu_item);
-		
-		return $menu_items;
-	}
-	
-	/**
-	 * Change the text of the group invite button, and maybe add it for group members
-	 *
-	 * @param \Elgg\Event $event 'register', 'menu:title'
-	 *
-	 * @return null|MenuItems
-	 */
-	public static function groupInvite(\Elgg\Event $event): ?MenuItems {
-		if (!elgg_in_context('groups')) {
-			return null;
-		}
-		
-		$user = elgg_get_logged_in_user_entity();
-		if (!$user instanceof \ElggUser) {
-			return null;
-		}
-		
-		/* @var $menu_items MenuItems */
-		$menu_items = $event->getValue();
-		
-		$invite_found = false;
-		$menu_item = $menu_items->get('groups:invite');
-		if ($menu_item instanceof \ElggMenuItem) {
-			$invite_found = true;
-			
-			$invite_friends = elgg_get_plugin_setting('invite_friends', 'group_tools');
-			$invite = elgg_get_plugin_setting('invite', 'group_tools');
-			$invite_email = elgg_get_plugin_setting('invite_email', 'group_tools');
-			$invite_csv = elgg_get_plugin_setting('invite_csv', 'group_tools');
-			
-			if (in_array('yes', [$invite, $invite_csv, $invite_email])) {
-				$menu_item->setText(elgg_echo('group_tools:groups:invite'));
-				
-				$menu_items->add($menu_item);
-			} elseif ($invite_friends === 'no') {
-				$menu_items->remove('groups:invite');
-			}
-		}
-		
-		// maybe allow normal users to invite new members
-		if (!elgg_in_context('group_profile') || $invite_found) {
-			return $menu_items;
-		}
-		
-		// this is only allowed for group members
-		$entity = $event->getEntityParam();
-		if (!$entity instanceof \ElggGroup || !$entity->isMember($user)) {
-			return null;
-		}
-		
-		// we're on a group profile page, but haven't found the invite button yet
-		// so check if it should be here
-		if (!group_tools_allow_members_invite($entity)) {
-			return null;
-		}
-		
-		// normal users are allowed to invite users
-		$invite_friends = elgg_get_plugin_setting('invite_friends', 'group_tools');
-		$invite = elgg_get_plugin_setting('invite', 'group_tools');
-		$invite_email = elgg_get_plugin_setting('invite_email', 'group_tools');
-		$invite_csv = elgg_get_plugin_setting('invite_csv', 'group_tools');
-		
-		if (in_array('yes', [$invite, $invite_csv, $invite_email])) {
-			$text = elgg_echo('group_tools:groups:invite');
-		} elseif ($invite_friends !== 'no') {
-			$text = elgg_echo('groups:invite');
-		} else {
-			// not allowed
-			return null;
-		}
-		
-		$menu_items[] = \ElggMenuItem::factory([
-			'name' => 'groups:invite',
-			'icon' => 'user-plus',
-			'href' => elgg_generate_url('invite:group:group', ['guid' => $entity->guid]),
-			'text' => $text,
-			'link_class' => 'elgg-button elgg-button-action',
-		]);
 		
 		return $menu_items;
 	}

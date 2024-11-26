@@ -39,11 +39,8 @@ return [
 		'simple_access_tab' => 'no',
 		'simple_tool_presets' => 'no',
 		'auto_accept_membership_requests' => 'no',
-		'invite' => 'no',
 		'invite_email' => 'no',
-		'invite_friends' => 'yes',
 		'invite_csv' => 'no',
-		'invite_members' => 'no',
 		'domain_based' => 'no',
 		'join_motivation' => 'no',
 		'notification_toggle' => 'no',
@@ -209,8 +206,6 @@ return [
 			'menu:filter:groups/all' => [
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::addTabs' => ['priority' => 550],
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::cleanupTabs' => ['priority' => 900],
-				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::removeTabs' => ['priority' => 560],
-				'\ColdTrick\GroupTools\Menus\FilterSortItems::registerPopularSorting' => ['priority' => 560],
 			],
 			'menu:filter:groups/invitations' => [
 				'\ColdTrick\GroupTools\Menus\Filter::registerUserEmailInvitations' => [],
@@ -232,7 +227,6 @@ return [
 				'\ColdTrick\GroupTools\Menus\Title::addGroupToolPresets' => [],
 				'\ColdTrick\GroupTools\Menus\Title::conceptGroup' => ['priority' => 9999],
 				'\ColdTrick\GroupTools\Menus\Title::groupAdminStatus' => ['priority' => 501],
-				'\ColdTrick\GroupTools\Menus\Title::groupInvite' => ['priority' => 501],
 				'\ColdTrick\GroupTools\Menus\Title::groupMembership' => ['priority' => 501],
 				'\ColdTrick\GroupTools\Menus\Title::pendingApproval' => ['priority' => 9998],
 			],
@@ -278,9 +272,6 @@ return [
 			],
 			'input/form' => [
 				'\ColdTrick\GroupTools\Views::allowDoubleSubmitWhenConceptGroupsEnabled' => [],
-			],
-			'page/components/list' => [
-				'\ColdTrick\GroupTools\Views::livesearchUserListing' => [],
 			],
 			'relationship/membership_request' => [
 				'\ColdTrick\GroupTools\Views::addJoinMotivationToGroupMembershipRequest' => [],
@@ -349,7 +340,6 @@ return [
 		],
 		'groups/edit/settings' => [
 			'group_tools/extends/groups/edit/settings/domain_based' => [],
-			'group_tools/extends/groups/edit/settings/invite_members' => [],
 			'group_tools/extends/groups/edit/settings/notifications' => [],
 			'group_tools/extends/groups/edit/settings/welcome_message' => [],
 		],

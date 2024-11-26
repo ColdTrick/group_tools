@@ -6,9 +6,6 @@
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 $user_guids = (array) get_input('user_guid');
-$non_group_members = (array) get_input('non_group_members');
-
-$user_guids = array_merge($user_guids, $non_group_members);
 $user_guids = array_filter($user_guids);
 
 $adding = false;
@@ -55,7 +52,7 @@ if (empty($user_guids) && empty($emails) && empty($csv)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
-if (!$group->canEdit() && !group_tools_allow_members_invite($group)) {
+if (!$group->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 

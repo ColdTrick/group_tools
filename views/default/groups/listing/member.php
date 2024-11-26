@@ -19,22 +19,6 @@ $member_options = [
 	'inverse_relationship' => false,
 ];
 
-if (get_input('sort') === 'popular' && empty(get_input('sort_by'))) {
-	$member_options['select'] = [
-		function (QueryBuilder $qb, $main_alias) {
-			$sub = $qb->subquery(RelationshipsTable::TABLE_NAME);
-			$sub->select('count(*)')
-				->where($qb->compare('guid_two', '=', "{$main_alias}.guid"))
-				->andWhere($qb->compare('relationship', '=', 'member', ELGG_VALUE_STRING));
-			
-			return "({$sub->getSQL()}) as total";
-		},
-	];
-	$member_options['order_by'] = [
-		new OrderByClause('total', 'desc'),
-	];
-}
-
 $vars['options'] = array_merge($options, $member_options);
 
 echo elgg_view('groups/listing/all', $vars);

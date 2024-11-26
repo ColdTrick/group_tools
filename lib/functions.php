@@ -241,37 +241,6 @@ function group_tools_get_invited_groups_by_email(string $email): array {
 }
 
 /**
- * Are group members allowed to invite new members to the group
- *
- * @param \ElggGroup $group The group to check the settings
- *
- * @return bool
- */
-function group_tools_allow_members_invite(\ElggGroup $group): bool {
-	$user = elgg_get_logged_in_user_entity();
-	if (!$user instanceof \ElggUser) {
-		return false;
-	}
-	
-	// only for group members
-	if (!$group->isMember($user)) {
-		return false;
-	}
-	
-	// check plugin setting, is this even allowed
-	$setting = elgg_get_plugin_setting('invite_members', 'group_tools');
-	if (!in_array($setting, ['yes_off', 'yes_on'])) {
-		return false;
-	}
-	
-	// check group setting
-	$invite_members = $setting === 'yes_off' ? 'no' : 'yes';
-	$invite_members = $group->getPluginSetting('group_tools', 'invite_members', $invite_members);
-	
-	return $invite_members === 'yes';
-}
-
-/**
  * Returns suggested groups
  *
  * @param null|\ElggUser $user  (optional) the user to get the groups for, defaults to the current user

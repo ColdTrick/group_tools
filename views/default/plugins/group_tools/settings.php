@@ -323,26 +323,6 @@ $invite_settings = '';
 
 $invite_settings .= elgg_view_field([
 	'#type' => 'checkbox',
-	'#label' => elgg_echo('group_tools:settings:invite_friends'),
-	'name' => 'params[invite_friends]',
-	'checked' => $plugin->invite_friends === 'yes',
-	'switch' => true,
-	'default' => 'no',
-	'value' => 'yes',
-]);
-
-$invite_settings .= elgg_view_field([
-	'#type' => 'checkbox',
-	'#label' => elgg_echo('group_tools:settings:invite'),
-	'name' => 'params[invite]',
-	'checked' => $plugin->invite === 'yes',
-	'switch' => true,
-	'default' => 'no',
-	'value' => 'yes',
-]);
-
-$invite_settings .= elgg_view_field([
-	'#type' => 'checkbox',
 	'#label' => elgg_echo('group_tools:settings:invite_email'),
 	'name' => 'params[invite_email]',
 	'checked' => $plugin->invite_email === 'yes',
@@ -359,19 +339,6 @@ $invite_settings .= elgg_view_field([
 	'switch' => true,
 	'default' => 'no',
 	'value' => 'yes',
-]);
-
-$invite_settings .= elgg_view_field([
-	'#type' => 'select',
-	'#label' => elgg_echo('group_tools:settings:invite_members'),
-	'#help' => elgg_echo('group_tools:settings:invite_members:description'),
-	'name' => 'params[invite_members]',
-	'options_values' => [
-		'no' => elgg_echo('option:no'),
-		'yes_off' => elgg_echo('group_tools:settings:default_off'),
-		'yes_on' => elgg_echo('group_tools:settings:default_on'),
-	],
-	'value' => $plugin->invite_members,
 ]);
 
 $invite_settings .= elgg_view_field([

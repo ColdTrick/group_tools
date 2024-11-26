@@ -11,20 +11,11 @@ if (!$group instanceof \ElggGroup) {
 // invite friends
 $tabs = [];
 
-if ((bool) elgg_extract('invite_friends', $vars)) {
-	$tabs[] = [
-		'text' => elgg_echo('friends'),
-		'content' => elgg_view('group_tools/invite/friends', $vars),
-	];
-}
-
 // invite site members
-if ((bool) elgg_extract('invite', $vars)) {
-	$tabs[] = [
-		'text' => elgg_echo('group_tools:group:invite:users'),
-		'content' => elgg_view('group_tools/invite/users', $vars),
-	];
-}
+$tabs[] = [
+	'text' => elgg_echo('group_tools:group:invite:users'),
+	'content' => elgg_view('group_tools/invite/users', $vars),
+];
 
 // invite email
 if ((bool) elgg_extract('invite_email', $vars)) {

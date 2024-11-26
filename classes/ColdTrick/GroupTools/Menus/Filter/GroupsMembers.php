@@ -2,6 +2,7 @@
 
 namespace ColdTrick\GroupTools\Menus\Filter;
 
+use Elgg\Database\QueryBuilder;
 use Elgg\Menu\MenuItems;
 
 /**
@@ -70,6 +71,21 @@ class GroupsMembers {
 				'guid' => $entity->guid,
 			]),
 			'priority' => 600,
+			'badge' => elgg_get_annotations([
+				'selects' => [
+					function(QueryBuilder $qb, $main_alias) {
+						return "SUBSTRING_INDEX({$main_alias}.value, '|', -1) AS invited_email";
+					},
+				],
+				'annotation_name' => 'email_invitation',
+				'annotation_owner_guid' => $entity->guid,
+				'wheres' => [
+					function(QueryBuilder $qb, $main_alias) {
+						return $qb->compare("{$main_alias}.value", 'LIKE', '%|%', ELGG_VALUE_STRING);
+					},
+				],
+				'count' => true,
+			]),
 		]);
 		
 		return $result;

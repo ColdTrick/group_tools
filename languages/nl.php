@@ -1,12 +1,11 @@
 <?php
 /**
- * This file was created by Translation Editor v14.0
- * On 2024-08-08 14:59
+ * This file was created by Translation Editor v14.0.1
+ * On 2024-11-26 15:22
  */
 
 return array (
   'group_tools:group:edit:suggested' => 'Vergelijkbare groepen',
-  'group_tools:group:invite:resend' => 'Uitnodiging opnieuw versturen naar gebruikers die al zijn uitgenodigd',
   'river:group:owner_transfer' => '%s is nu de eigenaar van de groep %s',
   'group_tools:notifications::admin:notify_approval' => 'Ontvang een notificatie als er een groep moet worden goedgekeurd',
   'group_tools:upgrade:2024061101:title' => 'Migreer notificatie instellingen tbv het goedkeuren van groepen',
@@ -72,7 +71,6 @@ Om naar de groep te gaan, klik hier:
   'group_tools:menu:group:invitations:invitations' => 'Uitnodigingen',
   'group_tools:menu:group:invitations:email_invitations' => 'E-mail uitnodigingen',
   'group_tools:action:notifications:success:disable' => 'Alle notificaties zijn uitgeschakeld',
-  'group_tools:groups:invite:member' => 'Reeds lid van de groep',
   'group_tools:settings:simple_tool_presets' => 'Vereenvoudig groep tools preset selectie',
   'group_tools:settings:simple_tool_presets:help' => 'Vereenvoudigd de groep tool preset selectie. Enkel de groep tool preset titel en omschrijving worden getoond. De individuele tools worden niet getoond. Ook kan er in deze eenvoudige modus geen individuele tools worden geselecteerd.',
   'group_tools:profile:field:group_tools_preset' => 'Groep tool set',
@@ -90,7 +88,6 @@ om een groep te maken op basis van deze tool set. Dit zal ook de tool selectie o
   'group_tools:groups:sorting:managed' => 'Beheerder van',
   'widgets:group_related:name' => 'Gerelateerde groepen',
   'widgets:group_related:description' => 'Toon een lijst van gerelateerde groepen',
-  'group_tools:edit:group:notifications:no_methods' => 'Geen notificatie methodes beschikbaar',
   'group_tools:edit:group:notifications:counter' => '(%d van %d)',
   'group_tools:notifications:enable' => 'Instellingen toepassen op alle leden',
   'group_tools:admin_transfer:remain_admin' => 'Blijf aan als groepsbeheerder na eigenaar overdracht',
@@ -148,8 +145,6 @@ Bekijk de groep hier:
   'group_tools:settings:mail:members:description' => 'Dit vereist dat groep mail ingeschakeld is',
   'groups:tool:mail_members' => 'Mogen groep leden andere leden een e-mail sturen',
   'groups:tool:mail_members:description' => 'Dit maakt het mogelijk dat gewone groep leden een e-mail kunnen versturen aan de andere leden. Standaard is dit voorbehouden aan de groep beheerders.',
-  'group_tools:settings:invite_friends' => 'Vrienden uitnodigen toestaan',
-  'group_tools:groups:invite:error' => 'Er zijn geen uitnodigingsopties beschikbaar',
   'group_tools:settings:default_off' => 'Ja, standaard uit',
   'group_tools:settings:default_on' => 'Ja, standaard aan',
   'group_tools:settings:required' => 'Ja, vereist',
@@ -275,7 +270,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:action:remove_related_groups:error:not_related' => 'De groep is niet gerelateerd',
   'group_tools:action:remove_related_groups:error:remove' => 'Er is een onbekende fout opgetreden tijdens het verwijderen van de relatie, probeer het nogmaals',
   'group_tools:action:remove_related_groups:success' => 'De groep is niet langer gerelateerd',
-  'group_tools:join:already:tooltip' => 'Je bent uitgenodigd voor deze groep, dus je kunt direct lid worden.',
   'group_tools:groups:membershipreq:email_invitations:none' => 'Geen uitstaande e-mail uitnodigingen',
   'group_tools:welcome_message:title' => 'Groep welkom bericht',
   'group_tools:welcome_message:description' => 'Je kunt een welkomstbericht configureren welke wordt verzonden aan nieuwe leden van de groep zodra ze lid worden. Als je geen bericht wilt versturen moet je dit veld leeg laten.',
@@ -296,11 +290,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'group_tools:action:toggle_special_state:error:suggested' => 'Er is een fout opgetreden tijdens het opslaan van de nieuwe instelling voor het voorstellen',
   'group_tools:action:toggle_special_state:error:state' => 'Ongeldige status opgegeven',
   'group_tools:action:toggle_special_state:suggested' => 'De nieuwe instelling voor het voorstellen is opgeslagen',
-  'group_tools:settings:invite_members' => 'Mogen groepsleden andere gebruikers uitnodigen',
-  'group_tools:settings:invite_members:description' => 'Groepseigenaren of -beheerders kunnen dit aan- of uitzetten voor hun groep',
-  'group_tools:invite_members:title' => 'Groepsleden mogen uitnodigen',
-  'group_tools:invite_members:description' => 'Mogen de leden van deze groep nieuwe leden uitnodigen',
-  'group_tools:invite_members:disclaimer' => 'Let op, voor besloten groepen geldt dat als je leden nieuwe gebruikers mogen uitnodigen deze gebruikers geen goedkeuring nodig hebben van de groepseigenaar/-beheerder(s).',
   'group_tools:action:groups:decline_email_invitation:error:delete' => 'Er is een fout opgetreden tijdens het verwijderen van de uitnodiging',
   'widgets:index_groups:filter:field' => 'Filter de groepen obv een profielveld',
   'widgets:index_groups:filter:value' => 'met de waarde',
@@ -317,9 +306,6 @@ Als een gebruiker een groep aanmaakt krijgt hij/zij de keuze uit een van de voor
   'widgets:featured_groups:name' => 'Aangeraden groepen',
   'widgets:featured_groups:description' => 'Toont een lijst met willekeurig geselecteerde aangeraden groepen',
   'widgets:featured_groups:edit:show_random_group' => 'Toon een willekeurige niet aangeraden groep',
-  'group_tools:joinrequest:already' => 'Lidmaatschap verzoek intrekken',
-  'group_tools:joinrequest:already:tooltip' => 'Je hebt reeds verzocht lid te worden van deze groep, klik hier om dit verzoek in te trekken',
-  'group_tools:groups:invite:title' => 'Nodig gebruikers uit voor deze groep',
   'group_tools:action:invite:error:invite' => 'Er zijn geen gebruikers uitgenodigd (%s waren al uitgenodigd, %s waren al lid)',
   'group_tools:action:invite:error:add' => 'Er zijn geen gebruikers uitgenodigd (%s waren al uitgenodigd, %s waren al lid)',
   'group_tools:action:invite:success:invite' => 'Er zijn %s gebruikers uitgenodigd (%s waren al uitgenodigd, %s waren al lid)',
@@ -350,7 +336,6 @@ Om de groep te bezoeken klik op onderstaande link:
   'group_tools:settings:admin_transfer:owner' => 'Groep eigenaren en site beheerder',
   'group_tools:settings:owner_transfer_river' => 'Voeg melding toe aan de activiteitenstroom als eigenaarsschap wordt overgedragen',
   'group_tools:settings:multiple_admin' => 'Sta meerdere groepsbeheerders toe',
-  'group_tools:settings:invite' => 'Mogen alle gebruikers worden uitgenodigd (niet alleen vrienden)',
   'group_tools:settings:invite_email' => 'Nodig gebruikers uit op basis van e-mailadres',
   'group_tools:settings:invite_csv' => 'Nodig gebruikers uit op basis van een CSV-bestand',
   'group_tools:settings:mail' => 'Groepsbeheerders mogen alle leden een e-mail sturen',
@@ -388,9 +373,7 @@ Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende co
   'group_tools:mail:title' => 'Stuur een e-mail naar de groepsleden',
   'group_tools:mail:form:title' => 'Onderwerp',
   'group_tools:mail:form:description' => 'Bericht',
-  'group_tools:groups:invite' => 'Nodig gebruikers uit',
   'group_tools:group:invite:users' => 'Zoek gebruiker(s)',
-  'group_tools:group:invite:users:description' => 'Vul een naam of gebruikersnaam van een site gebruiker in en selecteer hem/haar uit de lijst',
   'group_tools:group:invite:email' => 'Obv e-mailadres',
   'group_tools:group:invite:email:description' => 'Geef een geldig e-mailadres op en voeg het toe aan de lijst',
   'group_tools:group:invite:csv' => 'Obv CSV bestand',

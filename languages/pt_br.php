@@ -1,15 +1,13 @@
 <?php
 /**
- * This file was created by Translation Editor v11.1
- * On 2023-05-17 14:44
+ * This file was created by Translation Editor v14.0.1
+ * On 2024-11-26 15:23
  */
 
 return array (
   'group_tools:add_users' => 'Adicionar usuários',
   'group_tools:clear_selection' => 'Remover seleção',
   'group_tools:all_members' => 'Todos membros (%d)',
-  'group_tools:joinrequest:already' => 'Cancelar requisição de entrada no grupo',
-  'group_tools:joinrequest:already:tooltip' => 'Você já solicitou entrada neste grupo, clique aqui para cancelar a requisição',
   'group_tools:menu:mail' => 'Enviar email para os membros',
   'group_tools:settings:invite:title' => 'Opções de convite',
   'group_tools:settings:management:title' => 'Opções gerais dos grupos',
@@ -17,7 +15,6 @@ return array (
   'group_tools:settings:admin_transfer:admin' => 'Apenas adminstradores do site',
   'group_tools:settings:admin_transfer:owner' => 'Proprietários dos grupos e administadores',
   'group_tools:settings:multiple_admin' => 'Permitir múltiplos proprietários',
-  'group_tools:settings:invite' => 'Permitir convite para todos os usuários (não apenas amigos)',
   'group_tools:settings:invite_email' => 'Permitir convites por email',
   'group_tools:settings:invite_csv' => 'Permitir convites por arquivo CSV',
   'group_tools:settings:mail' => 'Permitir email para grupo (permite proprietários dos grupos enviar um email para todos os membros)',
@@ -62,10 +59,7 @@ Para visualizar a comunidade, clique neste link:
   'group_tools:mail:form:recipients' => 'Número de destinatários',
   'group_tools:mail:form:title' => 'Assunto',
   'group_tools:mail:form:description' => 'Mensagem',
-  'group_tools:groups:invite:title' => 'Convidar pessoas para este grupo',
-  'group_tools:groups:invite' => 'Convidar pessoas',
   'group_tools:group:invite:users' => 'Buscar pessoa(s)',
-  'group_tools:group:invite:users:description' => 'Digita um nome de uma pessoa e a selecione da lista',
   'group_tools:group:invite:users:all' => 'Convidar todas as pessoas do site para a lista',
   'group_tools:group:invite:email' => 'Usando endereço de email',
   'group_tools:group:invite:email:description' => 'Digite um endereço de email válido e selecione da lista',
@@ -73,7 +67,6 @@ Para visualizar a comunidade, clique neste link:
   'group_tools:group:invite:csv:description' => 'Você pode enviar um arquivo CSV com os usuários.<br />O formato deve ser: e-mail . Não deve possuir uma linha de cabeçalho.',
   'group_tools:group:invite:text' => 'Nota pessoal (opcional)',
   'group_tools:group:invite:add:confirm' => 'Tem certeza que deseja adicionar estes usuários diretamente?',
-  'group_tools:group:invite:resend' => 'Reenviar convites para usuários que já foram convidados',
   'group_tools:groups:invitation:code:title' => 'Convite por email',
   'group_tools:groups:invitation:code:description' => 'Se você recebei um convite para entrar na comunidade por email, você pode digitar o código aqui para aceitá-lo. Caso clique no link no email de convite, o código será inserido automaticamente para você.',
   'group_tools:groups:membershipreq:invitations:revoke:confirm' => 'Tem certeza que deseja cancelar este convite',

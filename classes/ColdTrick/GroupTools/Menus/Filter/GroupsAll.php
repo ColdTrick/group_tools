@@ -16,22 +16,6 @@ class GroupsAll {
 	 *
 	 * @return MenuItems
 	 */
-	public static function removeTabs(\Elgg\Event $event): MenuItems {
-		/* @var $return MenuItems */
-		$return = $event->getValue();
-		
-		$return->remove('popular');
-		
-		return $return;
-	}
-	
-	/**
-	 * Rewrite group listing tabs
-	 *
-	 * @param \Elgg\Event $event 'register', 'menu:filter:groups/all'
-	 *
-	 * @return MenuItems
-	 */
 	public static function addTabs(\Elgg\Event $event): MenuItems {
 		/* @var $return MenuItems */
 		$return = $event->getValue();

@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v11.1
- * On 2023-05-17 14:44
+ * This file was created by Translation Editor v14.0.1
+ * On 2024-11-26 15:23
  */
 
 return array (
@@ -9,9 +9,6 @@ return array (
   'group_tools:delete_selected' => 'Borrar usuarios',
   'group_tools:clear_selection' => 'Limpiar selección',
   'group_tools:all_members' => 'Todos los miembros (%d)',
-  'group_tools:joinrequest:already' => 'Cancelar pedido de incorporación a este grupo',
-  'group_tools:joinrequest:already:tooltip' => 'Ya has solicitado la incorporación a este grupo, haz click aquí para cancelar tu solicitud',
-  'group_tools:join:already:tooltip' => 'Fuiste invitado a este grupo, puedes unirte ahora.',
   'item:object:group_tools_group_mail' => 'Mail del Grupo',
   'group_tools:menu:mail' => 'Miembros del Mail',
   'admin:groups:bulk_delete' => 'Borrar varios grupos',
@@ -31,12 +28,8 @@ return array (
   'group_tools:settings:notifications:title' => 'Configuración de las notificaciones de grupo',
   'group_tools:settings:notifications:notification_toggle' => 'Mostrar la configuración de notificaciónes al unirse al grupo',
   'group_tools:settings:notifications:notification_toggle:description' => 'Esto mostrará un mensaje del sistma en el cual los usuarios podrán modificar la configuración de noticiaciones, y agragar un link en las notificaciones via email para acceder a la configuración.',
-  'group_tools:settings:invite' => 'Permitir la invitación a todos los usuarios (no solamente amigos)',
-  'group_tools:settings:invite_friends' => 'Permitir la invitación a amigos',
   'group_tools:settings:invite_email' => 'Permitir la invitación a todos los usuarios via dirección de correo electrónico',
   'group_tools:settings:invite_csv' => 'Permitir la invitación a todos los usuarios via archivo CSV',
-  'group_tools:settings:invite_members' => 'Permitir a los miembros la invitación de nuevos usuarios.',
-  'group_tools:settings:invite_members:description' => 'Propietarios y administradores de grupo pueden habilitar/deshabilitar esta opción para su grupo',
   'group_tools:settings:domain_based' => 'Permitir grupos basados en dominios',
   'group_tools:settings:domain_based:description' => 'Los usuarios pueden unirse a grupos basados en su dominio de correo electrónico (@ejemplo.com). Durante el registro serán incorporados automáticamente según el dominio de su correo.',
   'group_tools:settings:join_motivation' => 'La incorporación en grupos cerrados requiere una motivación',
@@ -52,7 +45,6 @@ return array (
   'group_tools:settings:listing:available' => 'Pestañas de listados de grupos disponibles',
   'group_tools:settings:search_index' => 'Permitir que los grupos cerrados sean indexados en los motores de búsqueda',
   'group_tools:settings:special_states:featured:description' => 'Los administradores de grupo han elegido esta funcionalidad para los siguientes grupos.',
-  'group_tools:settings:fix:all' => 'Corregir todos los problemas',
   'group_tools:settings:admin_approve' => 'Los administradores de usuario necesitan aprobar nuevos grupos',
   'group_tools:settings:admin_approve:description' => 'Cualquier usuario puede crear un grupo, pero un administrador del sitio debe aprobarlo',
   'group_tools:admin:group_tool_presets:description' => 'Aquí puedes configurar las herramientas predefinidas del grupo.
@@ -154,11 +146,7 @@ La razón fue:
   'group_tools:mail:form:recipients' => 'Número de destinatarios',
   'group_tools:mail:form:title' => 'Asunto',
   'group_tools:mail:form:description' => 'Cuerpo del texto',
-  'group_tools:groups:invite:error' => 'Las opciones de invitación no están disponibles',
-  'group_tools:groups:invite:title' => 'Invitar usuarios a este grupo',
-  'group_tools:groups:invite' => 'Invitar usuarios',
   'group_tools:group:invite:users' => 'Encontrar usuario(s)',
-  'group_tools:group:invite:users:description' => 'Ingresa el nombre o usuario que quieres encontrar y seleccionalo de la lista',
   'group_tools:group:invite:users:all' => 'Invitar a todos los usuarios del sitio a este grupo',
   'group_tools:group:invite:email' => 'Usa una dirección de correo electrónico',
   'group_tools:group:invite:email:description' => 'Ingresa una dirección de correo electrónico válida y eligela del listado',
@@ -166,7 +154,6 @@ La razón fue:
   'group_tools:group:invite:csv:description' => 'Puedes cargar un archivo CSV que contenga usuarios para invitar.<br />El formato del archivo debe ser: e-mail. No debe tener encabezado.',
   'group_tools:group:invite:text' => 'Nota personal (opcional)',
   'group_tools:group:invite:add:confirm' => 'Estás seguro que desea agregar estos usuarios directamente?',
-  'group_tools:group:invite:resend' => 'Reenviar invitaciones a usuarios que ya fueron invitados',
   'group_tools:groups:invitation:code:title' => 'Invitación a grupo vía correo electrónico',
   'group_tools:groups:invitation:code:description' => 'Si has recibido una invitación para unirte a un grupo via correo electrónico, puedes ingresar el código de la invitación aquí para aceptarla. Si hacer click en el link que te fue enviado, el código será ingresado automáticamente.',
   'group_tools:groups:membershipreq:email_invitations:none' => 'No hay invitaciones a correos electrónicos pendientes',
@@ -175,9 +162,6 @@ La razón fue:
   'group_tools:groups:sorting:open' => 'Abiertos',
   'group_tools:groups:sorting:closed' => 'Cerrados',
   'group_tools:groups:sorting:suggested' => 'Sugeridos',
-  'group_tools:invite_members:title' => 'Los miembros del grupo pueden invitar',
-  'group_tools:invite_members:description' => 'Permite a los miembros de un grupo invitar a nuevos miembros',
-  'group_tools:invite_members:disclaimer' => 'Por favor ten en cuenta que para grupos cerrados esto significa que las invitaciones realizadas por miembros no requerirán aprobación del propietario o administradores de grupo.',
   'group_tools:action:toggle_admin:error:group' => 'El valor ingresado no sirve en un grupo, no puedes editar este grupo o el usuario no es miembro',
   'group_tools:action:toggle_admin:error:remove' => 'Un error desconocido ocurrió mientras se quitaba al usuario como administrador de grupo',
   'group_tools:action:toggle_admin:error:add' => 'Un error desconocido ocurrió mientras se añadía al usuario como administrador de grupo',

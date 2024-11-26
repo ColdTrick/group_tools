@@ -10,10 +10,6 @@ return [
 	
 	'group_tools:profile:field:group_tools_preset' => "Group Tools Preset",
 	
-	'group_tools:joinrequest:already' => "Revoke membership request",
-	'group_tools:joinrequest:already:tooltip' => "You already requested to join this group, click here to revoke this request",
-	'group_tools:join:already:tooltip' => "You were invited to this group so you can join right now.",
-	
 	'item:object:group_tools_group_mail' => "Group mail",
 	'collection:annotation:email_invitation:group' => "Manage e-mail invitations",
 	'collection:annotation:email_invitation:user' => "E-mail group invitations",
@@ -70,12 +66,8 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:settings:notifications:notification_toggle' => "Show notification settings on group join",
 	'group_tools:settings:notifications:notification_toggle:description' => "This will show a system message where to user can toggle the notification settings, and add a link in the e-mail notification to the group notification settings.",
 	
-	'group_tools:settings:invite' => "Allow all users to be invited (not just friends)",
-	'group_tools:settings:invite_friends' => "Allow friends to be invited",
 	'group_tools:settings:invite_email' => "Allow all users to be invited by e-mail address",
 	'group_tools:settings:invite_csv' => "Allow all users to be invited by CSV-file",
-	'group_tools:settings:invite_members' => "Allow group members to invite new users",
-	'group_tools:settings:invite_members:description' => "Group owners/admins can enable/disable this for their group",
 	'group_tools:settings:domain_based' => "Enable domain based groups",
 	'group_tools:settings:domain_based:description' => "Users can join a group based on their e-mail domain. During registration they will auto join groups based on their e-mail domain.",
 	'group_tools:settings:join_motivation' => "Joining closed groups requires a motivation",
@@ -321,7 +313,6 @@ The reason was:
 	'group_tools:notifications:enable' => "Apply settings to all members",
 	'group_tools:notifications:disable' => "Disable notifications for everyone",
 	
-	'group_tools:edit:group:notifications:no_methods' => "No notification methods available.",
 	'group_tools:edit:group:notifications:counter' => "(%d of %d)",
 	'group_tools:edit:group:notifications:change_settings' => "Change the notification settings of all members",
 	'group_tools:edit:group:notifications:change_settings:help' => "Select the notification methods to enable for all group members, any non selected method will be disabled.",
@@ -348,13 +339,7 @@ The reason was:
 	'group_tools:mail:form:description' => "Body",
 
 	// group invite
-	'group_tools:groups:invite:error' => "No invitation options are available",
-	'group_tools:groups:invite:title' => "Invite users to this group",
-	'group_tools:groups:invite' => "Invite users",
-	'group_tools:groups:invite:member' => "Already a member of the group",
-	
 	'group_tools:group:invite:users' => "Find user(s)",
-	'group_tools:group:invite:users:description' => "Enter a name or username of a site member and select him/her from the list",
 	'group_tools:group:invite:users:all' => "Invite all site members to this group",
 
 	'group_tools:group:invite:email' => "Using e-mail address",
@@ -366,8 +351,6 @@ The first column must contain the e-mail addresses of the new members. There sho
 
 	'group_tools:group:invite:text' => "Personal note (optional)",
 	'group_tools:group:invite:add:confirm' => "Are you sure you wish to add these users directly?",
-
-	'group_tools:group:invite:resend' => "Resend invitations to users who already have been invited",
 
 	'group_tools:groups:invitation:code:title' => "Group invitation by e-mail",
 	'group_tools:groups:invitation:code:description' => "If you have received an invitation to join a group by e-mail, you can enter the invitation code here to accept the invitation. If you click on the link in the invitation e-mail the code will be entered for you.",
@@ -383,11 +366,6 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:groups:sorting:suggested' => "Suggested",
 	'group_tools:groups:sorting:member' => "Member",
 	'group_tools:groups:sorting:managed' => "Managed",
-	
-	// allow group members to invite
-	'group_tools:invite_members:title' => "Group members can invite",
-	'group_tools:invite_members:description' => "Allow the members of this group to invite new members",
-	'group_tools:invite_members:disclaimer' => "Please note that for closed groups allowing your users to invite new members means they don't require approval by the group owner/admin(s).",
 	
 	// actions
 	// group admins - action

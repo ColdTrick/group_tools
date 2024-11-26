@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v11.1
- * On 2023-05-17 14:44
+ * This file was created by Translation Editor v14.0.1
+ * On 2024-11-26 15:23
  */
 
 return array (
@@ -9,7 +9,6 @@ return array (
   'groups:tool:related_groups' => 'Indiquer les groupes suggérés',
   'groups_tools:related_groups:none' => 'Aucun groupe suggéré trouvé.',
   'group_tools:related_groups:form:description' => 'Vous pouvez chercher dans les suggestions de groupes, sélectionnez en un et cliquez sur Ajouter.',
-  'group_tools:joinrequest:already' => 'Supprimer l\'invitation du membre',
   'group_tools:notifications:title' => 'Notifications du groupe',
   'group_tools:notifications:disable' => 'Désactiver les notifications pour tous les membres',
   'group_tools:notifications:enable' => 'Activer les notifications pour tous les membres',
@@ -20,8 +19,6 @@ return array (
   'group_tools:delete_selected' => 'Supprimer la sélection',
   'group_tools:clear_selection' => 'Réinitialiser la sélection',
   'group_tools:all_members' => 'Tous les membres (%d)',
-  'group_tools:joinrequest:already:tooltip' => 'Vous avez déjà demandé à rejoindre ce groupe. Cliquez ici pour annuler votre demande.',
-  'group_tools:join:already:tooltip' => 'Vous avez été invité à rejoindre ce groupe et pouvez l\'intégrer dès à présent.',
   'group_tools:menu:mail' => 'Envoyer un e-mail aux membres',
   'group_tools:settings:invite:title' => 'Gestion des options d\'invitation du groupe',
   'group_tools:settings:management:title' => 'Gestion des options générales du groupe',
@@ -53,16 +50,12 @@ Cliquez ci dessous pour voir votre invitation.
 
 Parcours Croisés',
   'group_tools:related_groups:notify:owner:message' => '%s a ajouté votre groupe %s au groupe associé %s.',
-  'group_tools:groups:invite:title' => 'Inviter des membres à rejoindre ce groupe',
   'group_tools:group:invite:users' => 'Trouver des membres',
   'group_tools:group:invite:email' => 'Utiliser des e-mails',
   'group_tools:group:invite:csv' => 'Utiliser fichier CSV',
-  'group_tools:group:invite:users:description' => 'Entrer le nom d\'un membre de Parcours Croisés et sélectionnez le dans la liste',
   'group_tools:group:invite:users:all' => 'Inviter tous les membres de Parcours Croisés à ce groupe',
   'group_tools:group:invite:text' => 'Message personnel (optionnel)',
-  'group_tools:group:invite:resend' => 'Renvoyer l\'invitation aux membres qui ont déjà été invités',
   'group_tools:group:invite:add:confirm' => 'Etes-vous sûr(e) de vouloir ajouter ces utilisateurs directement ?',
-  'group_tools:groups:invite' => 'Inviter des membres',
   'group_tools:groups:invite:email:subject' => 'Vous avez été invité à rejoindre le Groupe %s',
   'group_tools:suggested_groups:none' => 'Nous ne pouvons vous suggérer des groupes de discussion. Nous n\'avons pas assez d\'information sur vous pour vous conseiller ou vous avez déjà rejoint les groupes que nous souhaitions vous suggérer. Utilisez le moteur de recherche pour trouvez de nouveaux groupes.',
   'widgets:group_river_widget:name' => 'Activité du groupe',
@@ -80,13 +73,9 @@ Parcours Croisés',
   'group_tools:settings:auto_suggest_groups:help' => 'Sera complété par les groupes suggérés prédéfinis. Ne pas sélectionner cette option conduira à n"\'afficher que les groupes suggérés prédéfinis (si tant est qu\'il y en ait)',
   'group_tools:settings:notifications:title' => 'Paramètres de notification de groupe',
   'group_tools:settings:notifications:notification_toggle' => 'Afficher les paramètres de notification lors de l\'adhésion au groupe.',
-  'group_tools:settings:invite_friends' => 'Permettre d\'inviter des amis',
-  'group_tools:settings:invite' => 'Permettre d\'inviter tout le monde (et pas seulement les amis)',
   'group_tools:settings:notifications:notification_toggle:description' => 'Ceci affichera un message système, où l\'utilisateur pourra basculer les paramètres de notification, et ajoutera un lien vers les paramètres de notification en bas du mail de notification.',
   'group_tools:settings:invite_email' => 'Permettre d\'inviter tout le monde via les adresses mail',
   'group_tools:settings:invite_csv' => 'Permettre d\'inviter tout le monde via un fichier CSV',
-  'group_tools:settings:invite_members' => 'Autoriser les membres de groupe d\'inviter de nouveaux membres',
-  'group_tools:settings:invite_members:description' => 'Propriétaires de groupes / admins peuvent activer/désactiver ceci pour leur groupe',
   'group_tools:settings:domain_based' => 'Activer les groupes basés sur les domaines',
   'group_tools:settings:domain_based:description' => 'Les utilisateurs peuvent rejoindre un groupe basé sur leur adresse mail. Ils seront automatiquement inscrit à un groupe basé" sur le domaine de leur mail pendant leur enregistrement',
   'group_tools:settings:join_motivation' => 'Demander une raison lorsqu\'un utilisateur veut rejoindre un groupe fermé',
@@ -170,7 +159,6 @@ La raison était:
   'group_tools:mail:title' => 'Envoyer un mail a tous les membres du groupe',
   'group_tools:mail:form:title' => 'Sujet',
   'group_tools:mail:form:description' => 'Corps',
-  'group_tools:groups:invite:error' => 'Aucune option d’invitation disponible',
   'group_tools:groups:sorting:open' => 'Ouvrir',
   'group_tools:groups:sorting:closed' => 'Fermé',
   'group_tools:groups:sorting:suggested' => 'Suggéré',

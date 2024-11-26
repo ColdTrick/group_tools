@@ -22,7 +22,7 @@ class Views {
 	 * @return null|array
 	 */
 	public static function prepareGroupAll(\Elgg\Event $event): ?array {
-		if (!empty(get_input('sort_by')) || !empty(get_input('sort'))) {
+		if (!empty(get_input('sort_by'))) {
 			return null;
 		}
 		
@@ -35,73 +35,32 @@ class Views {
 		
 		$vars = $event->getValue();
 		
-		// support for 'old' tabs
-		switch ($filter) {
-			case 'popular':
-				set_input('sort', 'popular');
-				set_input('filter', 'all');
-				$vars['filter_sorting_selected'] = 'popular';
+		set_input('filter', $filter);
+		$sorting = elgg_get_plugin_setting("group_listing_{$filter}_sorting", 'group_tools', 'newest');
+		switch ($sorting) {
+			case 'alpha':
+				set_input('sort_by', [
+					'property_type' => 'metadata',
+					'property' => 'name',
+					'direction' => 'asc',
+				]);
+				$vars['filter_sorting_selected'] = 'sort:name:asc';
 				break;
 				
-			default:
-				set_input('filter', $filter);
-				$sorting = elgg_get_plugin_setting("group_listing_{$filter}_sorting", 'group_tools', 'newest');
-				switch ($sorting) {
-					case 'alpha':
-						set_input('sort_by', [
-							'property_type' => 'metadata',
-							'property' => 'name',
-							'direction' => 'asc',
-						]);
-						$vars['filter_sorting_selected'] = 'sort:name:asc';
-						break;
-						
-					case 'newest':
-						set_input('sort_by', [
-							'property_type' => 'attribute',
-							'property' => 'time_created',
-							'direction' => 'desc',
-						]);
-						$vars['filter_sorting_selected'] = 'sort:time_created:desc';
-						break;
-						
-					case 'popular':
-						set_input('sort', $sorting);
-						$vars['filter_sorting_selected'] = 'popular';
-						break;
-				}
+			case 'newest':
+				set_input('sort_by', [
+					'property_type' => 'attribute',
+					'property' => 'time_created',
+					'direction' => 'desc',
+				]);
+				$vars['filter_sorting_selected'] = 'sort:time_created:desc';
+				break;
+				
+			case 'popular':
+				set_input('sort_by', $sorting);
+				$vars['filter_sorting_selected'] = 'popular';
 				break;
 		}
-		
-		return $vars;
-	}
-	
-	/**
-	 * Change some inputs when listing users in livesearch for group invites
-	 *
-	 * @param \Elgg\Event $event 'view_vars', 'page/components/list'
-	 *
-	 * @return null|array
-	 */
-	public static function livesearchUserListing(\Elgg\Event $event): ?array {
-		$group_guid = (int) get_input('group_guid');
-		$group_invite = (bool) get_input('group_invite');
-		if ($group_guid < 1 || empty($group_invite)) {
-			return null;
-		}
-		
-		$group = get_entity($group_guid);
-		if (!$group instanceof \ElggGroup) {
-			return null;
-		}
-		
-		$vars = $event->getValue();
-		if (elgg_extract('type', $vars) !== 'user') {
-			return null;
-		}
-		
-		$vars['item_view'] = 'group_tools/group_invite/user';
-		$vars['group'] = $group;
 		
 		return $vars;
 	}

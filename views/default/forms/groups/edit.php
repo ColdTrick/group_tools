@@ -10,9 +10,6 @@ elgg_import_esm('forms/groups/edit');
 /* @var \ElggGroup $entity */
 $entity = elgg_extract('entity', $vars);
 
-// context needed for input/access view
-elgg_push_context('group-edit');
-
 $sections = [
 	100 => 'profile',
 	150 => 'images',
@@ -113,5 +110,3 @@ $footer .= elgg_view_field([
 ]);
 
 elgg_set_form_footer($footer);
-
-elgg_pop_context();
