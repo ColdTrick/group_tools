@@ -21,7 +21,7 @@ class PageLayout {
 			return null;
 		}
 		
-		if ($page_owner->isPublicMembership()) {
+		if ($page_owner->getContentAccessMode() === \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED) {
 			// public group
 			return null;
 		}
