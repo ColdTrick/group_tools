@@ -1,6 +1,11 @@
 Version history
 ===============
 
+20.0.1 (2025-02-12):
+
+- fixed: load esm module on groups edit form
+- fixed: ownership transfer now is able to select a user again
+
 20.0 (2025-01-23):
 
 - changed: updated for Elgg 6.1
