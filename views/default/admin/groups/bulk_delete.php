@@ -71,12 +71,14 @@ foreach ($batch as $group) {
 	]));
 	$cells[] = elgg_format_element('td', [], $group_summary);
 	$cells[] = elgg_format_element('td', ['class' => 'center'], elgg_view('output/url', [
-		'text' => elgg_view_icon('settings-alt'),
+		'icon' => 'settings-alt',
+		'text' => false,
 		'title' => elgg_echo('edit'),
 		'href' => elgg_generate_entity_url($group, 'edit'),
 	]));
 	$cells[] = elgg_format_element('td', ['class' => 'center'], elgg_view('output/url', [
-		'text' => elgg_view_icon('delete-alt'),
+		'icon' => 'delete-alt',
+		'text' => false,
 		'title' => elgg_echo('delete'),
 		'confirm' => elgg_echo('deleteconfirm'),
 		'href' => elgg_generate_action_url('entity/delete', [
