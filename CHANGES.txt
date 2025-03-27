@@ -1,6 +1,10 @@
 Version history
 ===============
 
+20.0.2 (2025-03-27):
+
+- fixed: use correct styling of icon only URLs
+
 20.0.1 (2025-02-12):
 
 - fixed: load esm module on groups edit form
