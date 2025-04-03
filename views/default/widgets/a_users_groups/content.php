@@ -7,7 +7,6 @@
 
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\RiverTable;
-use Elgg\Database\Select;
 use Elgg\Database\QueryBuilder;
 
 /* @var $widget \ElggWidget */

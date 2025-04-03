@@ -10,7 +10,7 @@ $group = elgg_get_page_owner_entity();
 
 elgg_push_entity_breadcrumbs($group);
 
-if ($group->canEdit() && elgg_is_active_plugin('friends')) {
+if ($group->canEdit()) {
 	elgg_register_menu_item('title', [
 		'name' => 'groups:invite',
 		'icon' => 'user-plus',

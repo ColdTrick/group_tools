@@ -8,6 +8,12 @@ if (!$group instanceof \ElggGroup) {
 	return;
 }
 
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'group_guid',
+	'value' => $group->guid,
+]);
+
 // invite friends
 $tabs = [];
 
@@ -52,19 +58,11 @@ echo elgg_view_field([
 // renotify existing invites
 if ($group->canEdit()) {
 	echo elgg_view_field([
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo('groups:invite:resend'),
 		'name' => 'resend',
-		'value' => 1,
-		'switch' => true,
 	]);
 }
-
-echo elgg_view_field([
-	'#type' => 'hidden',
-	'name' => 'group_guid',
-	'value' => $group->guid,
-]);
 
 // show buttons
 $footer_fields = [
