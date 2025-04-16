@@ -1,6 +1,10 @@
 Version history
 ===============
 
+21.0 (2025-04-16):
+
+- changed: updated for Elgg 6.2
+
 20.0.2 (2025-03-27):
 
 - fixed: use correct styling of icon only URLs
