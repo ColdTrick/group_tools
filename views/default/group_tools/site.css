@@ -40,12 +40,6 @@
 	cursor: default;
 }
 
-.elgg-menu-filter-groups-all {
-	.group-tools-listing-sorting {
-		margin-left: auto;
-	}
-}
-
 #group-tools-invite-email {
 	.elgg-fieldset-horizontal {
 		align-items: flex-end;
