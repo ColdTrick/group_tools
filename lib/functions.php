@@ -4,12 +4,10 @@
  */
 
 use ColdTrick\GroupTools\StaleInfo;
-use Elgg\Database\AccessCollections;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\MetadataTable;
-use Elgg\Database\RelationshipsTable;
-use Elgg\Database\Select;
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\RelationshipsTable;
 use Elgg\Security\Base64Url;
 
 /**
@@ -249,7 +247,7 @@ function group_tools_get_invited_groups_by_email(string $email): array {
  * @return \ElggGroup[]
  * @todo revisit this
  */
-function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = null): array {
+function group_tools_get_suggested_groups(?\ElggUser $user = null, ?int $limit = null): array {
 	if (!$user instanceof \ElggUser) {
 		$user = elgg_get_logged_in_user_entity();
 	}
@@ -379,7 +377,7 @@ function group_tools_get_suggested_groups(ElggUser $user = null, int $limit = nu
  *
  * @return bool true if the domain of the user is found in the group settings
  */
-function group_tools_check_domain_based_group(\ElggGroup $group, \ElggUser $user = null): bool {
+function group_tools_check_domain_based_group(\ElggGroup $group, ?\ElggUser $user = null): bool {
 	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
 		return false;
 	}
@@ -579,7 +577,7 @@ function group_tools_can_assign_group_admin(\ElggGroup $group): bool {
  *
  * @return bool
  */
-function group_tools_join_motivation_required(\ElggGroup $group = null): bool {
+function group_tools_join_motivation_required(?\ElggGroup $group = null): bool {
 	static $plugin_settings;
 	static $check_group = false;
 	
@@ -632,7 +630,7 @@ function group_tools_join_motivation_required(\ElggGroup $group = null): bool {
  *
  * @return bool
  */
-function group_tools_group_mail_enabled(ElggGroup $group = null): bool {
+function group_tools_group_mail_enabled(?\ElggGroup $group = null): bool {
 	static $mail_enabled;
 	
 	if (!isset($mail_enabled)) {
@@ -668,7 +666,7 @@ function group_tools_group_mail_enabled(ElggGroup $group = null): bool {
  *
  * @return bool
  */
-function group_tools_group_mail_members_enabled(\ElggGroup $group = null): bool {
+function group_tools_group_mail_members_enabled(?\ElggGroup $group = null): bool {
 	static $mail_members_enabled;
 	
 	if (!isset($mail_members_enabled)) {
@@ -713,7 +711,7 @@ function group_tools_group_mail_members_enabled(\ElggGroup $group = null): bool 
  *
  * @return null|StaleInfo
  */
-function group_tools_get_stale_info(ElggGroup $group, int $number_of_days = null): ?StaleInfo {
+function group_tools_get_stale_info(ElggGroup $group, ?int $number_of_days = null): ?StaleInfo {
 	if (!isset($number_of_days)) {
 		$number_of_days = (int) elgg_get_plugin_setting('stale_timeout', 'group_tools');
 	}
