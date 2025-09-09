@@ -31,7 +31,6 @@ echo elgg_view('object/widget/edit/num_display', [
 	'entity' => $widget,
 	'name' => 'group_count',
 	'default' => 8,
-	'min' => 1,
 ]);
 
 echo elgg_view_field([

@@ -26,5 +26,4 @@ echo elgg_view('object/widget/edit/num_display', [
 	'entity' => $widget,
 	'label' => elgg_echo('groups:widget:num_display'),
 	'default' => 4,
-	'min' => 1,
 ]);
