@@ -62,29 +62,9 @@ class Membership {
 			return;
 		}
 		
-		$reason = get_input('reason');
-		if (empty($reason)) {
-			$body = elgg_echo('group_tools:notify:membership:declined:message', [
-				$group->getDisplayName(),
-				$group->getURL(),
-			], $user->getLanguage());
-		} else {
-			$body = elgg_echo('group_tools:notify:membership:declined:message:reason', [
-				$group->getDisplayName(),
-				$reason,
-				$group->getURL(),
-			], $user->getLanguage());
-		}
-		
-		$subject = elgg_echo('group_tools:notify:membership:declined:subject', [
-			$group->getDisplayName(),
-		], $user->getLanguage());
-		
-		$params = [
-			'object' => $group,
-			'action' => 'delete',
-		];
-		notify_user($user->guid, $logged_in_user->guid, $subject, $body, $params);
+		$user->notify('membership:decline', $group, [
+			'reason' => get_input('reason'),
+		], $logged_in_user);
 	}
 	
 	/**
@@ -108,7 +88,7 @@ class Membership {
 			self::notificationsToggle($user, $group);
 		}
 		
-		// cleanup invites and membershiprequests
+		// cleanup invites and membership requests
 		self::cleanupGroupInvites($user, $group);
 		
 		// welcome message
@@ -169,7 +149,7 @@ class Membership {
 	}
 	
 	/**
-	 * Cleanup group invitations and membershiprequests
+	 * Cleanup group invitations and membership requests
 	 *
 	 * @param \ElggUser  $user  the user to clean up for
 	 * @param \ElggGroup $group the group to clean up on
@@ -226,36 +206,9 @@ class Membership {
 			return;
 		}
 		
-		// replace the placeholders
-		$welcome_message = str_ireplace('[name]', $recipient->getDisplayName(), $welcome_message);
-		$welcome_message = str_ireplace('[group_name]', $group->getDisplayName(), $welcome_message);
-		$welcome_message = str_ireplace('[group_url]', $group->getURL(), $welcome_message);
-		
-		// get notification preferences for this group
-		$methods = elgg_get_notification_methods();
-		if ($group->hasSubscription($recipient->guid, $methods)) {
-			$subscription = elgg_echo('on', [], $recipient->getLanguage());
-		} else {
-			$subscription = elgg_echo('off', [], $recipient->getLanguage());
-		}
-		
-		$subscription = elgg_format_element('b', [], $subscription);
-		
-		$welcome_message .= PHP_EOL . PHP_EOL . elgg_echo('group_tools:welcome_message:notifications', [
-			$subscription,
-		], $recipient->getLanguage());
-		
-		// subject
-		$subject = elgg_echo('group_tools:welcome_message:subject', [$group->getDisplayName()], $recipient->getLanguage());
-		
-		// mail params
-		$mail_params = [
-			'object' => $group,
-			'action' => 'welcome',
-		];
-		
-		// notify the user
-		notify_user($recipient->guid, $group->guid, $subject, $welcome_message, $mail_params);
+		$recipient->notify('welcome', $group, [
+			'welcome_message' => $welcome_message,
+		], $group);
 	}
 	
 	/**

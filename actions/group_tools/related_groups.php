@@ -44,19 +44,9 @@ if ($group->owner_guid !== $related->owner_guid && $related->owner_guid !== $log
 	/* @var $related_owner \ElggUser */
 	$related_owner = $related->getOwnerEntity();
 	
-	$subject = elgg_echo('group_tools:related_groups:notify:owner:subject', [], $related_owner->getLanguage());
-	$message = elgg_echo('group_tools:related_groups:notify:owner:message', [
-		$logged_in_user->getDisplayName(),
-		$related->getDisplayName(),
-		$group->getDisplayName(),
-	], $related_owner->getLanguage());
-	
-	$params = [
-		'action' => 'relate',
-		'object' => $related,
-	];
-	
-	notify_user($related_owner->guid, $logged_in_user->guid, $subject, $message, $params);
+	$related_owner->notify('relate', $related, [
+		'group' => $group,
+	], $logged_in_user);
 }
 
 return elgg_ok_response('', elgg_echo('group_tools:action:related_groups:success'));

@@ -1,0 +1,77 @@
+<?php
+
+namespace ColdTrick\GroupTools\Notifications;
+
+use Elgg\Notifications\InstantNotificationEventHandler;
+
+/**
+ * Send a notification on group invite with a custom text
+ *
+ * @note because of the custom text we can't use the default group invite handler
+ */
+class InviteGroupHandler extends InstantNotificationEventHandler {
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
+		$group = $this->getEventEntity();
+		if (!$group instanceof \ElggGroup) {
+			return parent::getNotificationSubject($recipient, $method);
+		}
+		
+		return elgg_echo('groups:invite:subject', [
+			$recipient->getDisplayName(),
+			$group->getDisplayName(),
+		]);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
+		$group = $this->getEventEntity();
+		if (!$group instanceof \ElggGroup) {
+			return parent::getNotificationSummary($recipient, $method);
+		}
+		
+		return elgg_echo('groups:invite:subject', [
+			$recipient->getDisplayName(),
+			$group->getDisplayName(),
+		]);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
+		$group = $this->getEventEntity();
+		$actor = $this->getEventActor();
+		if (!$group instanceof \ElggGroup || !$actor instanceof \ElggUser) {
+			return parent::getNotificationBody($recipient, $method);
+		}
+		
+		return elgg_echo('group_tools:groups:invite:body', [
+			$actor->getDisplayName(),
+			$group->getDisplayName(),
+			(string) $this->getParam('invite_text'),
+			$this->getNotificationURL($recipient, $method),
+		]);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getNotificationURL(\ElggUser $recipient, string $method): string {
+		return elgg_generate_url('collection:group:group:invitations', [
+			'username' => $recipient->username,
+		]);
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getNotificationMethods(): array {
+		return ['site', 'email'];
+	}
+}

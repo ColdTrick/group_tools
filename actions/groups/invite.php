@@ -64,6 +64,9 @@ $join = 0;
 
 // show hidden (unvalidated) users
 elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guids, $adding, $emails, $csv, $resend, &$already_invited, &$invited, &$member, &$join) {
+	// unregister default invite notification handler
+	elgg_unregister_notification_event('relationship', 'invited', ['create:after']);
+	
 	// invite existing users
 	if (!empty($user_guids)) {
 		if (!$adding) {

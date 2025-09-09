@@ -6,7 +6,6 @@ use Doctrine\DBAL\Query\QueryBuilder as DBalQueryBuilder;
 use Elgg\Database\EntityTable;
 use Elgg\Database\MetadataTable;
 use Elgg\Database\QueryBuilder;
-use Elgg\Values;
 
 /**
  * Cron handler
@@ -209,21 +208,7 @@ class Cron {
 			return;
 		}
 		
-		$site = elgg_get_site_entity();
-		
-		$subject = elgg_echo('groups_tools:state_info:notification:subject', [$entity->getDisplayName()], $owner->getLanguage());
-		$message = elgg_echo('groups_tools:state_info:notification:message', [
-			$entity->getDisplayName(),
-			$entity->getURL(),
-		], $owner->getLanguage());
-		
-		$mail_params = [
-			'object' => $entity,
-			'action' => 'group_tools:stale',
-			'summary' => elgg_echo('groups_tools:state_info:notification:summary', [$entity->getDisplayName()], $owner->getLanguage()),
-		];
-		
-		notify_user($owner->guid, $site->guid, $subject, $message, $mail_params);
+		$owner->notify('group_tools:stale', $entity);
 	}
 	
 	/**
@@ -277,9 +262,6 @@ class Cron {
 		$days = (int) elgg_get_plugin_setting('concept_groups_retention', 'group_tools');
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($days) {
-			$site = elgg_get_site_entity();
-			$current_language = elgg()->translator->getCurrentLanguage();
-			
 			/* @var $groups \ElggBatch */
 			$groups = elgg_get_entities([
 				'type' => 'group',
@@ -296,37 +278,10 @@ class Cron {
 				/* @var $owner \ElggUser */
 				$owner = $group->getOwnerEntity();
 				
-				// setting language to make sure friendly time is in the correct language
-				elgg()->translator->setCurrentLanguage($owner->getLanguage());
-				
-				if ($days > 0) {
-					$expires = Values::normalizeTime($group->time_created);
-					$expires->modify("+{$days} days");
-					
-					$subject = elgg_echo('group_tools:notification:concept_group:expires:subject', [$group->getDisplayName()], $owner->getLanguage());
-					$message = elgg_echo('group_tools:notification:concept_group:expires:message', [
-						$group->getDisplayName(),
-						elgg_get_friendly_time($expires->getTimestamp()),
-						$group->getURL(),
-					], $owner->getLanguage());
-				} else {
-					$subject = elgg_echo('group_tools:notification:concept_group:subject', [$group->getDisplayName()]);
-					$message = elgg_echo('group_tools:notification:concept_group:message', [
-						$group->getDisplayName(),
-						$group->getURL(),
-					], $owner->getLanguage());
-				}
-				
-				$params = [
-					'object' => $group,
-					'action' => 'concept_group_reminder',
-				];
-				
-				notify_user($owner->guid, $site->guid, $subject, $message, $params, ['email']);
+				$owner->notify('concept_group_reminder', $group, [
+					'retention' => $days,
+				]);
 			}
-			
-			// restore language
-			elgg()->translator->setCurrentLanguage($current_language);
 		});
 	}
 }

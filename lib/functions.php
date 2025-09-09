@@ -64,8 +64,7 @@ function group_tools_check_group_email_invitation(string $invite_code, int $grou
  * @return bool
  */
 function group_tools_invite_user(\ElggGroup $group, \ElggUser $user, string $text = '', bool $resend = false): bool {
-	$loggedin_user = elgg_get_logged_in_user_entity();
-	if (empty($loggedin_user)) {
+	if (!elgg_is_logged_in()) {
 		return false;
 	}
 	
@@ -75,32 +74,11 @@ function group_tools_invite_user(\ElggGroup $group, \ElggUser $user, string $tex
 		return false;
 	}
 	
-	// Send email
-	$url = elgg_generate_url('collection:group:group:invitations', [
-		'username' => $user->username,
+	$user->notify('invite', $group, [
+		'invite_text' => $text,
 	]);
 	
-	$subject = elgg_echo('groups:invite:subject', [
-		$user->getDisplayName(),
-		$group->getDisplayName(),
-	], $user->getLanguage());
-	$msg = elgg_echo('group_tools:groups:invite:body', [
-		$loggedin_user->getDisplayName(),
-		$group->getDisplayName(),
-		$text,
-		$url,
-	], $user->getLanguage());
-	
-	$params = [
-		'object' => $group,
-		'action' => 'invite',
-	];
-	
-	if (notify_user($user->guid, $group->owner_guid, $subject, $msg, $params, ['email', 'site'])) {
-		return true;
-	}
-	
-	return false;
+	return true;
 }
 
 /**
@@ -124,24 +102,9 @@ function group_tools_add_user(\ElggGroup $group, \ElggUser $user, string $text =
 		}
 		
 		// notify user
-		$subject = elgg_echo('group_tools:groups:invite:add:subject', [$group->getDisplayName()], $user->getLanguage());
-		$msg = elgg_echo('group_tools:groups:invite:add:body', [
-			$loggedin_user->getDisplayName(),
-			$group->getDisplayName(),
-			$text,
-			$group->getURL(),
-		], $user->getLanguage());
-		
-		$params = [
-			'group' => $group,
-			'inviter' => $loggedin_user,
-			'invitee' => $user,
-		];
-		$msg = elgg_trigger_event_results('invite_notification', 'group_tools', $params, $msg);
-		
-		if (!notify_user($user->guid, $group->owner_guid, $subject, $msg, [], ['email'])) {
-			return false;
-		}
+		$user->notify('add_user', $group, [
+			'text' => $text,
+		]);
 		
 		return true;
 	});
@@ -473,21 +436,9 @@ function group_tools_transfer_group_ownership(\ElggGroup $group, \ElggUser $new_
 	// notify new owner
 	$loggedin_user = elgg_get_logged_in_user_entity();
 	if ($loggedin_user && $new_owner->guid !== $loggedin_user->guid) {
-		$subject = elgg_echo('group_tools:notify:transfer:subject', [$group->getDisplayName()], $new_owner->getLanguage());
-		$message = elgg_echo('group_tools:notify:transfer:message', [
-			$loggedin_user->getDisplayName(),
-			$group->getDisplayName(),
-			$group->getURL(),
-		], $new_owner->getLanguage());
-		
-		$params = [
-			'object' => $group,
-			'action' => 'transfer_owner',
+		$new_owner->notify('transfer_owner', $group, [
 			'old_owner' => $old_owner,
-			'new_owner' => $new_owner,
-		];
-		
-		notify_user($new_owner->guid, $loggedin_user->guid, $subject, $message, $params);
+		], $loggedin_user);
 	}
 	
 	// check if the old owner wishes to remain as an admin

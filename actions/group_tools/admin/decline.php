@@ -5,6 +5,7 @@
 
 $group_guid = (int) get_input('guid');
 $reason = get_input('reason');
+
 $group = get_entity($group_guid);
 if (!$group instanceof \ElggGroup) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
@@ -14,17 +15,9 @@ if (!$group instanceof \ElggGroup) {
 /* @var $owner \ElggUser */
 $owner = $group->getOwnerEntity();
 
-$subject = elgg_echo('group_tools:group:admin_approve:decline:subject', [$group->getDisplayName()], $owner->getLanguage());
-$summary = elgg_echo('group_tools:group:admin_approve:decline:summary', [$group->getDisplayName()], $owner->getLanguage());
-$message = elgg_echo('group_tools:group:admin_approve:decline:message', [
-	$group->getDisplayName(),
-	$reason,
-], $owner->getLanguage());
-
-$params = [
-	'summary' => $summary,
-];
-notify_user($owner->guid, elgg_get_logged_in_user_guid(), $subject, $message, $params);
+$owner->notify('decline', $group, [
+	'reason' => $reason,
+], elgg_get_logged_in_user_entity());
 
 // correct forward url
 $forward_url = REFERRER;

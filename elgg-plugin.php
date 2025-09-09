@@ -1,8 +1,20 @@
 <?php
 
 use ColdTrick\GroupTools\Bootstrap;
+use ColdTrick\GroupTools\Notifications\AddUserHandler;
+use ColdTrick\GroupTools\Notifications\ApproveGroupRequestHandler;
+use ColdTrick\GroupTools\Notifications\ConceptGroupOwnerReminderHandler;
+use ColdTrick\GroupTools\Notifications\DeclineGroupRequestHandler;
+use ColdTrick\GroupTools\Notifications\DeclineMembershipRequestHandler;
 use ColdTrick\GroupTools\Notifications\GroupAdminApprovalNotificationHandler;
 use ColdTrick\GroupTools\Notifications\GroupMailEnqueueNotificationEventHandler;
+use ColdTrick\GroupTools\Notifications\GroupOwnerApprovalHandler;
+use ColdTrick\GroupTools\Notifications\GroupOwnerTransferHandler;
+use ColdTrick\GroupTools\Notifications\InviteGroupHandler;
+use ColdTrick\GroupTools\Notifications\RelatedGroupHandler;
+use ColdTrick\GroupTools\Notifications\RequestMembershipMotivationHandler;
+use ColdTrick\GroupTools\Notifications\StaleGroupHandler;
+use ColdTrick\GroupTools\Notifications\WelcomeMessageGroupHandler;
 use ColdTrick\GroupTools\Upgrades\MigrateNotificationSettings;
 use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
@@ -284,14 +296,30 @@ return [
 	'notifications' => [
 		'group' => [
 			'group' => [
+				'add_user' => AddUserHandler::class,
 				'admin_approval' => GroupAdminApprovalNotificationHandler::class,
+				'admin_approval:owner' => GroupOwnerApprovalHandler::class,
+				'approve' => ApproveGroupRequestHandler::class,
+				'concept_group_reminder' => ConceptGroupOwnerReminderHandler::class,
+				'decline' => DeclineGroupRequestHandler::class,
+				'group_tools:stale' => StaleGroupHandler::class,
+				'invite' => InviteGroupHandler::class,
+				'membership:decline' => DeclineMembershipRequestHandler::class,
+				'relate' => RelatedGroupHandler::class,
+				'transfer_owner' => GroupOwnerTransferHandler::class,
+				'welcome' => WelcomeMessageGroupHandler::class,
 			],
 		],
 		'object' => [
 			'group_tools_group_mail' => [
 				'enqueue-mail' => GroupMailEnqueueNotificationEventHandler::class,
 			],
-		]
+		],
+		'relationship' => [
+			'membership_request' => [
+				'create:after' => RequestMembershipMotivationHandler::class,
+			],
+		],
 	],
 	'routes' => [
 		'add:object:group_tools_group_mail' => [
