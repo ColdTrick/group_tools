@@ -89,7 +89,7 @@ class Cron {
 		$groups_touch_ts = elgg_get_entities([
 			'type' => 'group',
 			'limit' => false,
-			'created_time_upper' => $compare_ts_upper,
+			'created_before' => $compare_ts_upper,
 			'callback' => $row_to_guid,
 			'wheres' => [
 				function (QueryBuilder $qb, $main_alias) use ($compare_ts_lower, $compare_ts_upper) {
@@ -157,7 +157,7 @@ class Cron {
 		$group_comments_ts = elgg_get_entities([
 			'type' => 'group',
 			'limit' => false,
-			'created_time_upper' => $compare_ts_upper,
+			'created_before' => $compare_ts_upper,
 			'callback' => $row_to_guid,
 			'wheres' => [
 				function (QueryBuilder $qb, $main_alias) use ($compare_ts_lower, $compare_ts_upper) {

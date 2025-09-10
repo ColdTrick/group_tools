@@ -252,7 +252,7 @@ class Membership {
 				'metadata_name_value_pairs' => [
 					'group_tools_check_auto_joins' => true,
 				],
-				'created_time_upper' => $time, // 5 minute delay
+				'created_before' => $time, // 5 minute delay
 			]);
 			
 			$auto_join = null;
