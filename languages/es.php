@@ -241,8 +241,6 @@ La razón fue:
   'group_tools:join_motivation:title' => 'Porque quieres unirte a \'%s\'?',
   'group_tools:join_motivation:description' => 'El propietario de \'%s\' ha fijado que una motivación es necesaria para unirse a este grupo. Por favor, escribe tu motivación debajo para que el propietario pueda decidir sobre tu solicitud.',
   'group_tools:join_motivation:label' => 'Mi motivación para unirme a este grupo',
-  'group_tools:join_motivation:notification:subject' => '%s ha solicitado unirse a %s',
-  'group_tools:join_motivation:notification:summary' => '%s ha solicitado unirse a %s',
   'group_tools:join_motivation:notification:body' => '%s ha solicitado unirse al grupo \'%s\'.
 
 Su motivación para unirse es:

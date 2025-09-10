@@ -524,8 +524,6 @@ Currently your notification preferences for this group are: %s",
 	'group_tools:join_motivation:description' => "The owner of '%s' has indicated that a motivation is required to join this group. Please provide a motivation below so the owner can judge your membership request.",
 	'group_tools:join_motivation:label' => "My motivation for joining this group",
 	
-	'group_tools:join_motivation:notification:subject' => "%s has requested to join %s",
-	'group_tools:join_motivation:notification:summary' => "%s has requested to join %s",
 	'group_tools:join_motivation:notification:body' => "%s has requested to join the '%s' group.
 
 Their motivation for joining is:

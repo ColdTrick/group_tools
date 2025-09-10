@@ -155,8 +155,6 @@ Bekijk de groep hier:
   'group_tools:join_motivation:title' => 'Waarom wil je lid worden van \'%s\'?',
   'group_tools:join_motivation:description' => 'De eigenaar van \'%s\' heeft aangegeven dat een motivatie verplicht is om lid te kunnen worden van deze groep. Geeft hieronder je motivatie op om lid te worden van deze groep zodat de eigenaar dit kan beoordelen.',
   'group_tools:join_motivation:label' => 'Mijn motivatie om lid te worden van deze groep',
-  'group_tools:join_motivation:notification:subject' => '%s wil lid worden van %s',
-  'group_tools:join_motivation:notification:summary' => '%s wil lid worden van %s',
   'group_tools:join_motivation:notification:body' => '%s wil lid worden van de groep \'%s\'.
 
 De motivatie om lid te worden was:
