@@ -45,7 +45,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
 		$group = $this->getGroup();
 		
-		return elgg_echo('group_tools:group:admin_approve:admin:subject', [$group->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('group_tools:group:admin_approve:admin:subject', [$group->getDisplayName()]);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
 		$group = $this->getGroup();
 		
-		return elgg_echo('group_tools:group:admin_approve:admin:summary', [$group->getDisplayName()], $recipient->getLanguage());
+		return elgg_echo('group_tools:group:admin_approve:admin:summary', [$group->getDisplayName()]);
 	}
 	
 	/**
@@ -69,7 +69,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 			$group->getDisplayName(),
 			$group->getURL(),
 			elgg_normalize_url('admin/groups/admin_approval'),
-		], $recipient->getLanguage());
+		]);
 	}
 	
 	/**
