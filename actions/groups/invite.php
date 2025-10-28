@@ -135,7 +135,7 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($text, $group, $user_guid
 			 * data structure
 			 * data[0] => e-mail address
 			 */
-			$data = $fh->fgetcsv(';');
+			$data = $fh->fgetcsv(';', '"', '\\');
 			
 			$email = '';
 			if (isset($data[0])) {
