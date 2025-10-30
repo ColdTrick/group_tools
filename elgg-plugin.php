@@ -213,7 +213,6 @@ return [
 				'\ColdTrick\GroupTools\Menus\Entity::registerApprovalReasons' => [],
 				'\ColdTrick\GroupTools\Menus\Entity::relatedGroup' => [],
 				'\ColdTrick\GroupTools\Menus\Entity::suggestedGroup' => [],
-				'\ColdTrick\GroupTools\Menus\Entity::assignGroupAdmin' => [],
 			],
 			'menu:filter:groups/all' => [
 				'\ColdTrick\GroupTools\Menus\Filter\GroupsAll::addTabs' => ['priority' => 550],
@@ -234,6 +233,7 @@ return [
 			],
 			'menu:relationship' => [
 				'\ColdTrick\GroupTools\Menus\Relationship::groupDeclineMembershipReason' => ['priority' => 501],
+				'\ColdTrick\GroupTools\Menus\Relationship::toggleGroupAdmin' => [],
 			],
 			'menu:title' => [
 				'\ColdTrick\GroupTools\Menus\Title::addGroupToolPresets' => [],
@@ -241,9 +241,6 @@ return [
 				'\ColdTrick\GroupTools\Menus\Title::groupAdminStatus' => ['priority' => 501],
 				'\ColdTrick\GroupTools\Menus\Title::groupMembership' => ['priority' => 501],
 				'\ColdTrick\GroupTools\Menus\Title::pendingApproval' => ['priority' => 9998],
-			],
-			'menu:user_hover' => [
-				'\ColdTrick\GroupTools\Menus\Entity::assignGroupAdmin' => [],
 			],
 		],
 		'prepare' => [
