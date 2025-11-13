@@ -1,6 +1,12 @@
 Version history
 ===============
 
+22.0 (2025-11-13):
+
+- changed: moved assignment of group admin to members listing actions
+- changed: updated for Elgg 6.3
+- fixed: PHP implicit null declaration
+
 21.0.1 (2025-07-09):
 
 - several small chores/fixes
