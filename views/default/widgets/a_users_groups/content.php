@@ -6,8 +6,8 @@
  */
 
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Database\RiverTable;
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\RiverTable;
 
 /* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
@@ -57,12 +57,8 @@ if ($widget->context !== 'profile') {
 			$params['select'][] = function (QueryBuilder $qb, $main_alias) use ($owner) {
 				$river = $qb->subquery(RiverTable::TABLE_NAME, 'river');
 				$river->select("{$river->getTableAlias()}.posted");
-				$river->joinEntitiesTable($river->getTableAlias(), 'object_guid', 'inner', 'ent');
 				$river->where($qb->compare("{$river->getTableAlias()}.subject_guid", '=', $owner->guid, ELGG_VALUE_GUID));
-				$river->andWhere($qb->merge([
-					$qb->compare("{$main_alias}.guid", '=', 'ent.container_guid'),
-					$qb->compare("{$main_alias}.guid", '=', 'river.object_guid'),
-				], 'OR'));
+				$river->andWhere($qb->compare("{$river->getTableAlias()}.target_guid", '=', "{$main_alias}.guid"));
 				$river->orderBy("{$river->getTableAlias()}.posted", 'desc');
 				$river->setMaxResults(1);
 				
