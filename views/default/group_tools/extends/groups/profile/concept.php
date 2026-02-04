@@ -8,11 +8,7 @@
 use Elgg\Values;
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof \ElggGroup || !$entity->canEdit()) {
-	return;
-}
-
-if ($entity->access_id !== ACCESS_PRIVATE || !(bool) $entity->is_concept) {
+if (!$entity instanceof \ElggGroup || !$entity->canEdit() || !(bool) $entity->is_concept) {
 	return;
 }
 

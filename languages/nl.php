@@ -1,10 +1,12 @@
 <?php
 /**
- * This file was created by Translation Editor v14.0.1
- * On 2024-11-26 15:22
+ * This file was created by Translation Editor v14.0.4
+ * On 2026-02-04 15:03
  */
 
 return array (
+  'group_tools:upgrade:2026020401:title' => 'Migreer groep concept / goedkeuring status',
+  'group_tools:upgrade:2026020401:description' => 'Er zijn wijzigingen doorgevoerd in hoe wordt opgeslagen dat een groep in concept is of wacht op goedkeuring',
   'group_tools:group:edit:suggested' => 'Vergelijkbare groepen',
   'river:group:owner_transfer' => '%s is nu de eigenaar van de groep %s',
   'group_tools:notifications::admin:notify_approval' => 'Ontvang een notificatie als er een groep moet worden goedgekeurd',

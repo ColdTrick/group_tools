@@ -15,6 +15,7 @@ use ColdTrick\GroupTools\Notifications\RelatedGroupHandler;
 use ColdTrick\GroupTools\Notifications\RequestMembershipMotivationHandler;
 use ColdTrick\GroupTools\Notifications\StaleGroupHandler;
 use ColdTrick\GroupTools\Notifications\WelcomeMessageGroupHandler;
+use ColdTrick\GroupTools\Upgrades\MigrateConceptAdminApproval;
 use ColdTrick\GroupTools\Upgrades\MigrateNotificationSettings;
 use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
@@ -352,6 +353,7 @@ return [
 	],
 	'upgrades' => [
 		MigrateNotificationSettings::class,
+		MigrateConceptAdminApproval::class,
 	],
 	'view_extensions' => [
 		'admin.css' => [

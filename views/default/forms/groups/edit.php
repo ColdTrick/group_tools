@@ -7,7 +7,7 @@
 
 elgg_import_esm('forms/groups/edit');
 
-/* @var \ElggGroup $entity */
+/** @var \ElggGroup $entity */
 $entity = elgg_extract('entity', $vars);
 
 $sections = [
@@ -77,7 +77,7 @@ $admin_approve = $admin_approve && !elgg_is_admin_logged_in();
 
 // display the save button and some additional form data
 $buttons = [];
-if ($admin_approve && (!$entity instanceof \ElggGroup || $entity->access_id === ACCESS_PRIVATE)) {
+if ($admin_approve && (!$entity instanceof \ElggGroup || (bool) $entity->admin_approval)) {
 	$buttons[] = [
 		'#type' => 'submit',
 		'text' => elgg_echo('group_tools:group:edit:save:approve'),

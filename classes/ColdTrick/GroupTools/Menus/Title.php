@@ -27,7 +27,7 @@ class Title {
 			return null;
 		}
 		
-		/* @var $menu_items MenuItems */
+		/** @var MenuItems $menu_items */
 		$menu_items = $event->getValue();
 		
 		$menu_item = $menu_items->get('groups:joinrequest');
@@ -91,7 +91,7 @@ class Title {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$menu_item = $result->get('group-dropdown');
@@ -123,7 +123,7 @@ class Title {
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
-		if (!$page_owner instanceof \ElggGroup || $page_owner->access_id !== ACCESS_PRIVATE) {
+		if (!$page_owner instanceof \ElggGroup || !(bool) $page_owner->admin_approval) {
 			return null;
 		}
 		
@@ -133,7 +133,7 @@ class Title {
 			'trash',
 		];
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		// cleanup all items
@@ -203,7 +203,7 @@ class Title {
 		}
 		
 		$page_owner = elgg_get_page_owner_entity();
-		if (!$page_owner instanceof \ElggGroup || $page_owner->access_id !== ACCESS_PRIVATE || !(bool) $page_owner->is_concept) {
+		if (!$page_owner instanceof \ElggGroup || !(bool) $page_owner->is_concept) {
 			return null;
 		}
 		
@@ -215,7 +215,7 @@ class Title {
 			'opensearch_inspect', // OpenSearch
 		];
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		// cleanup all items
@@ -282,7 +282,7 @@ class Title {
 			return null;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$add_button = $return->get('add');

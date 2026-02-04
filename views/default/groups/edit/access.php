@@ -18,7 +18,7 @@ $content_default_access = elgg_extract('content_default_access', $vars);
 $show_group_owner_transfer = (bool) elgg_extract('show_group_owner_transfer', $vars, true);
 
 $show_visibility = group_tools_allow_hidden_groups();
-$show_visibility = ($show_visibility && (empty($entity->guid) || ($entity->access_id !== ACCESS_PRIVATE)));
+$show_visibility = ($show_visibility && (empty($entity->guid) || (!$entity->admin_approval && !$entity->is_concept)));
 
 $show_motivation_option = group_tools_join_motivation_required();
 $motivation_plugin_setting = elgg_get_plugin_setting('join_motivation', 'group_tools', 'no');
@@ -108,7 +108,7 @@ if ($entity instanceof \ElggGroup) {
 	// Disable content_access_mode field for hidden groups because the setting
 	// will be forced to members_only regardless of the entered value
 	$acl = $entity->getOwnedAccessCollection('group_acl');
-	if ($acl instanceof \ElggAccessCollection && ($entity->access_id === $acl->id)) {
+	if ($acl instanceof \ElggAccessCollection && ($entity->access_id === $acl->id) && !$entity->admin_approval && !$entity->is_concept) {
 		$access_mode_params['disabled'] = 'disabled';
 	}
 	

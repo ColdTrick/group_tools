@@ -225,20 +225,19 @@ class Cron {
 		}
 		
 		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DELETED_ENTITIES, function() use ($days) {
-			/* @var $groups \ElggBatch */
+			/** @var \ElggBatch $groups */
 			$groups = elgg_get_entities([
 				'type' => 'group',
 				'metadata_name_value_pairs' => [
 					'name' => 'is_concept',
 					'value' => true,
 				],
-				'access_id' => ACCESS_PRIVATE,
 				'created_before' => "-{$days} days",
 				'limit' => false,
 				'batch' => true,
 				'batch_inc_offset' => false,
 			]);
-			/* @var $group \ElggGroup */
+			/** @var \ElggGroup $group  */
 			foreach ($groups as $group) {
 				if (!$group->delete(true, true)) {
 					$groups->reportFailure();
@@ -262,20 +261,19 @@ class Cron {
 		$days = (int) elgg_get_plugin_setting('concept_groups_retention', 'group_tools');
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($days) {
-			/* @var $groups \ElggBatch */
+			/** @var \ElggBatch $groups */
 			$groups = elgg_get_entities([
 				'type' => 'group',
 				'metadata_name_value_pairs' => [
 					'name' => 'is_concept',
 					'value' => true,
 				],
-				'access_id' => ACCESS_PRIVATE,
 				'limit' => false,
 				'batch' => true,
 			]);
-			/* @var $group \ElggGroup */
+			/** @var \ElggGroup $group */
 			foreach ($groups as $group) {
-				/* @var $owner \ElggUser */
+				/** @var \ElggUser $owner */
 				$owner = $group->getOwnerEntity();
 				
 				$owner->notify('concept_group_reminder', $group, [

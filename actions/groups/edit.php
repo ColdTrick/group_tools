@@ -151,7 +151,8 @@ $concept_group = $concept_group && (bool) get_input('concept_group');
 // new groups get access private, so an admin can validate it
 $access_id = (int) $group->access_id;
 if ($is_new_group && ($admin_approve || $concept_group)) {
-	$access_id = ACCESS_PRIVATE;
+	$acl = $group->getOwnedAccessCollection('group_acl');
+	$access_id = ($acl instanceof ElggAccessCollection) ? $acl->id : ACCESS_PRIVATE;
 	
 	if ((bool) elgg_get_plugin_setting('creation_reason', 'group_tools')) {
 		$reasons = (array) get_input('reasons', []);
@@ -161,6 +162,8 @@ if ($is_new_group && ($admin_approve || $concept_group)) {
 	}
 	
 	if (!$concept_group) {
+		$group->admin_approval = true;
+		
 		elgg_trigger_event('admin_approval', 'group', $group);
 	} else {
 		$group->is_concept = true;
@@ -185,7 +188,7 @@ if (group_tools_allow_hidden_groups()) {
 			$group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
 		}
 		
-		if (($access_id === ACCESS_PRIVATE) && ($admin_approve || $concept_group)) {
+		if ($admin_approve || $concept_group) {
 			// admins has not yet approved the group, store wanted access
 			$group->intended_access_id = $visibility;
 		} else {

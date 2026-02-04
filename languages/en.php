@@ -554,4 +554,6 @@ Please check on the group here:
 	// upgrades
 	'group_tools:upgrade:2024061101:title' => "Migrate group approval notification settings",
 	'group_tools:upgrade:2024061101:description' => "Migrate the old plugin user setting to a correct user notification setting",
+	'group_tools:upgrade:2026020401:title' => "Migrate group concept/admin approval status",
+	'group_tools:upgrade:2026020401:description' => "Changes have been made to how concept or admin approval is being stored",
 ];

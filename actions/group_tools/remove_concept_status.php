@@ -10,13 +10,12 @@ if (!$group->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
+// remove concept status
+unset($group->is_concept);
+
 // should the group be approved by and admin?
 if (!elgg_is_admin_logged_in() && (elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes')) {
-	// request approval
-	unset($group->is_concept);
-	
-	// prevent advanced notifications from preventing the enqueuing of this event
-	elgg_unregister_event_handler('enqueue', 'notification', '\ColdTrick\AdvancedNotifications\Enqueue::delayPrivateContentNotification');
+	$group->admin_approval = true;
 	
 	elgg_trigger_event('admin_approval', 'group', $group);
 	

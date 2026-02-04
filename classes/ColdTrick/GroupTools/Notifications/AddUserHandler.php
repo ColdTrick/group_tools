@@ -2,6 +2,7 @@
 
 namespace ColdTrick\GroupTools\Notifications;
 
+use Elgg\Notifications\InstantNotificationEvent;
 use Elgg\Notifications\InstantNotificationEventHandler;
 
 /**
@@ -38,7 +39,7 @@ class AddUserHandler extends InstantNotificationEventHandler {
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
 		$group = $this->getEventEntity();
-		$actor = $this->getEventActor();
+		$actor = ($this->event instanceof InstantNotificationEvent) ? elgg_get_logged_in_user_entity() : $this->getEventActor();
 		if (!$group instanceof \ElggGroup || !$actor instanceof \ElggUser) {
 			return parent::getNotificationBody($recipient, $method);
 		}

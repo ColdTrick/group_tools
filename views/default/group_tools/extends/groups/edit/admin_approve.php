@@ -2,7 +2,7 @@
 
 use Elgg\Database\QueryBuilder;
 
-/* @var $entity \ElggGroup */
+/** @var \ElggGroup $entity */
 $entity = elgg_extract('entity', $vars);
 if (empty($entity->guid) && elgg_is_admin_logged_in()) {
 	// group create form
@@ -16,7 +16,7 @@ if (elgg_get_plugin_setting('admin_approve', 'group_tools') !== 'yes') {
 if (empty($entity->guid)) {
 	// create form
 	echo elgg_view_message('notice', elgg_echo('group_tools:group:admin_approve:notice'));
-} elseif ($entity->access_id === ACCESS_PRIVATE && !(bool) $entity->is_concept) {
+} elseif ((bool) $entity->admin_approval) {
 	// group profile / edit form
 	$message = elgg_echo('group_tools:group:admin_approve:notice:profile');
 	$link = '';

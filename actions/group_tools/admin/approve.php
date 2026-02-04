@@ -31,9 +31,10 @@ $group->save();
 
 // unset temp access
 unset($group->intended_access_id);
+unset($group->admin_approval);
 
 // notify owner
-/* @var $owner \ElggUser */
+/** @var \ElggUser $owner */
 $owner = $group->getOwnerEntity();
 
 $owner->notify('approve', $group, [], elgg_get_logged_in_user_entity());

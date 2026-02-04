@@ -38,10 +38,7 @@ $emails = array_filter($emails);
 
 $csv = elgg_get_uploaded_file('csv');
 
-$resend = false;
-if (get_input('resend') === 'yes') {
-	$resend = true;
-}
+$resend = (bool) get_input('resend');
 
 $group = get_entity($group_guid);
 if (!$group instanceof \ElggGroup) {

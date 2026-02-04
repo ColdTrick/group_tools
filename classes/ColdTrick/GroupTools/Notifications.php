@@ -23,11 +23,11 @@ class Notifications {
 		}
 		
 		$object = $notification_event->getObject();
-		if ($notification_event->getAction() !== 'admin_approval' || !$object instanceof \ElggGroup || $object->access_id !== ACCESS_PRIVATE) {
+		if ($notification_event->getAction() !== 'admin_approval' || !$object instanceof \ElggGroup || !(bool) $object->admin_approval) {
 			return;
 		}
 		
-		/* @var $owner \ElggUser */
+		/** @var \ElggUser $owner */
 		$owner = $object->getOwnerEntity();
 		
 		$owner->notify('admin_approval:owner', $object);
