@@ -1,10 +1,12 @@
 <?php
 /**
  * This file was created by Translation Editor v14.0.4
- * On 2026-02-04 15:03
+ * On 2026-02-06 09:15
  */
 
 return array (
+  'group_tools:group:concept:profile:description:user' => 'Deze groep is nog in concept.',
+  'group_tools:group:admin_approve:notice:profile:user' => 'Deze groep wacht op goedkeuring door een site beheerder.',
   'group_tools:upgrade:2026020401:title' => 'Migreer groep concept / goedkeuring status',
   'group_tools:upgrade:2026020401:description' => 'Er zijn wijzigingen doorgevoerd in hoe wordt opgeslagen dat een groep in concept is of wacht op goedkeuring',
   'group_tools:group:edit:suggested' => 'Vergelijkbare groepen',

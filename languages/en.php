@@ -229,6 +229,7 @@ You can find the group here:
 	'group_tools:group:concept:profile:publish' => "Remove draft status",
 	'group_tools:group:concept:profile:publish:confirm' => "Are you sure your group is ready to be used by the community?",
 	'group_tools:group:concept:profile:description' => "This group is still in concept, when you're ready click the button at the top of the profile.",
+	'group_tools:group:concept:profile:description:user' => "This group is still in concept.",
 	'group_tools:group:concept:profile:retention' => "This group will be removed %s",
 	'group_tools:action:remove_concept_status:success:approval' => "The group is now awaiting approval by a site administrator",
 	'group_tools:action:remove_concept_status:success:published' => "The group is now available on the community",
@@ -266,6 +267,7 @@ To view the group, click here:
 	// group admin approve
 	'group_tools:group:admin_approve:notice' => "New groups need to be approved by a site administrator. You can make/edit the group, but it won't be visible to other users until approved by a site administrator.",
 	'group_tools:group:admin_approve:notice:profile' => "This group is awaiting approval by a site administrator. You can edit the group, but it won't be visible to other users until approved by a site administrator.",
+	'group_tools:group:admin_approve:notice:profile:user' => "This group is awaiting approval by a site administrator.",
 	'group_tools:group:admin_approve:decline:title' => "Decline the group approval request",
 	'group_tools:group:admin_approve:decline:description' => "Here you can give a reason why the group '%s' isn't being approved. The group owner will receive a notification that the group was declined and the reason why. After the group is declined it'll be removed.",
 	'group_tools:group:admin_approve:decline:reason' => "Reason for declining the group",

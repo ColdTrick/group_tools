@@ -8,11 +8,15 @@
 use Elgg\Values;
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof \ElggGroup || !$entity->canEdit() || !(bool) $entity->is_concept) {
+if (!$entity instanceof \ElggGroup || !(bool) $entity->is_concept) {
 	return;
 }
 
-$content = elgg_echo('group_tools:group:concept:profile:description');
+if ($entity->canEdit()) {
+	$content = elgg_echo('group_tools:group:concept:profile:description');
+} else {
+	$content = elgg_echo('group_tools:group:concept:profile:description:user');
+}
 
 $retention = (int) elgg_get_plugin_setting('concept_groups_retention', 'group_tools');
 if ($retention > 0) {
