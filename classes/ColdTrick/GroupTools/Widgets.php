@@ -37,7 +37,7 @@ class Widgets {
 			return null;
 		}
 		
-		/* @var $result \Elgg\WidgetDefinition[] */
+		/** @var \Elgg\WidgetDefinition[] $result */
 		$result = $event->getValue();
 		foreach ($result as $index => $definition) {
 			if ($definition->id !== 'group_related') {
@@ -59,7 +59,7 @@ class Widgets {
 	 * @return null|\Elgg\WidgetDefinition[]
 	 */
 	public static function unregisterGroupActivityWidget(\Elgg\Event $event): ?array {
-		/* @var $result \Elgg\WidgetDefinition[] */
+		/** @var \Elgg\WidgetDefinition[] $result */
 		$result = $event->getValue();
 		foreach ($result as $index => $definition) {
 			if ($definition->id !== 'group_activity') {

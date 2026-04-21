@@ -2,7 +2,7 @@
 
 $tools = elgg_extract('tools', $vars);
 
-/* @var $tool \Elgg\Groups\Tool */
+/** @var \Elgg\Groups\Tool $tool */
 foreach ($tools as $tool) {
 	echo elgg_view('groups/edit/tool', [
 		'entity' => elgg_extract('entity', $vars),

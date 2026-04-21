@@ -17,7 +17,7 @@ class GroupsAll {
 	 * @return MenuItems
 	 */
 	public static function addTabs(\Elgg\Event $event): MenuItems {
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -98,12 +98,12 @@ class GroupsAll {
 	 * @return MenuItems
 	 */
 	public static function cleanupTabs(\Elgg\Event $event): MenuItems {
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$new = [];
 		
-		/* @var $menu_item \ElggMenuItem */
+		/** @var \ElggMenuItem $menu_item */
 		foreach ($return as $menu_item) {
 			$menu_name = $menu_item->getName();
 			

@@ -7,7 +7,7 @@ use Elgg\Database\MetadataTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Clauses\OrderByClause;
 
-/* @var $widget \ElggWidget */
+/** @var \ElggWidget $widget */
 $widget = elgg_extract('entity', $vars);
 
 $num_display = (int) $widget->num_display ?: 5;

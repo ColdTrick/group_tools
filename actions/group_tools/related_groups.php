@@ -41,7 +41,7 @@ $logged_in_user = elgg_get_logged_in_user_entity();
 
 // notify the other owner about this
 if ($group->owner_guid !== $related->owner_guid && $related->owner_guid !== $logged_in_user->guid) {
-	/* @var $related_owner \ElggUser */
+	/** @var \ElggUser $related_owner */
 	$related_owner = $related->getOwnerEntity();
 	
 	$related_owner->notify('relate', $related, [

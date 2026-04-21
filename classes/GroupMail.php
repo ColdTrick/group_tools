@@ -36,7 +36,7 @@ class GroupMail extends \ElggObject {
 	 * @return string
 	 */
 	public function getMessage(): string {
-		/* @var $group \ElggGroup */
+		/** @var \ElggGroup $group */
 		$group = $this->getContainerEntity();
 		
 		$message = $this->description;
@@ -70,7 +70,7 @@ class GroupMail extends \ElggObject {
 		}
 		
 		$recipients = (array) $this->recipients;
-		/* @var $batch \ElggBatch */
+		/** @var \ElggBatch $batch */
 		$batch = elgg_get_entities([
 			'type' => 'user',
 			'limit' => false,
@@ -82,7 +82,7 @@ class GroupMail extends \ElggObject {
 		]);
 		
 		$formatted_recipients = [];
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		foreach ($batch as $user) {
 			$formatted_recipients[$user->guid] = ['email'];
 		}

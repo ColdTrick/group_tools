@@ -12,7 +12,7 @@ if (!$group instanceof \ElggGroup) {
 }
 
 // notify owner
-/* @var $owner \ElggUser */
+/** @var \ElggUser $owner */
 $owner = $group->getOwnerEntity();
 
 $owner->notify('decline', $group, [

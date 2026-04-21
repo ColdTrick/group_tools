@@ -53,7 +53,7 @@ $output .= elgg_view_field([
 
 echo elgg_format_element('div', ['class' => ['group-tools-edit-tools-simple', 'group-tools-simplified-options']], $output);
 
-/* @var $tool \Elgg\Groups\Tool */
+/** @var \Elgg\Groups\Tool $tool */
 foreach ($tools as $tool) {
 	$name = $tool->mapMetadataName();
 	

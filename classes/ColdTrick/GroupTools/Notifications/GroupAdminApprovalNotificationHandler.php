@@ -25,7 +25,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 			'batch' => true,
 			'limit' => false,
 		]);
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		foreach ($batch as $user) {
 			$settings = $user->getNotificationSettings('group_tools_group_approval');
 			$settings = array_keys(array_filter($settings));

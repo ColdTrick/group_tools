@@ -84,7 +84,7 @@ class Groups {
 		set_time_limit(0);
 		
 		// get pending requests
-		/* @var $pending_requests \ElggBatch */
+		/** @var \ElggBatch $pending_requests */
 		$pending_requests = $entity->getEntitiesFromRelationship([
 			'type' => 'user',
 			'relationship' => 'membership_request',
@@ -93,7 +93,7 @@ class Groups {
 			'batch' => true,
 			'batch_inc_offset' => false,
 		]);
-		/* @var $requesting_user \ElggUser */
+		/** @var \ElggUser $requesting_user */
 		foreach ($pending_requests as $requesting_user) {
 			// join the group
 			if (!$entity->join($requesting_user)) {

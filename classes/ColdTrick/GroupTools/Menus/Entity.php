@@ -77,7 +77,7 @@ class Entity {
 		
 		$suggested = in_array($entity->guid, $suggested_groups);
 		
-		/* @var $return_value MenuItems */
+		/** @var MenuItems $return_value */
 		$return_value = $event->getValue();
 		
 		$return_value[] = \ElggMenuItem::factory([
@@ -134,7 +134,7 @@ class Entity {
 			return null;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
@@ -180,7 +180,7 @@ class Entity {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([

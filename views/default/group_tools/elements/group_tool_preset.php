@@ -49,7 +49,7 @@ $edit .= elgg_view_field([
 	'class' => 'group-tools-admin-change-tool-preset-description',
 ]);
 
-/* @var $group_tool \Elgg\Groups\Tool */
+/** @var \Elgg\Groups\Tool $group_tool */
 foreach ($group_tools as $group_tool) {
 	$metadata_name = $group_tool->mapMetadataName();
 	

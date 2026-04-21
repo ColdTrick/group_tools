@@ -82,7 +82,7 @@ echo elgg_view_module('info', elgg_echo('group_tools:create_group:tool_presets:a
 ]);
 
 $tools_content = '';
-/* @var $tool \Elgg\Groups\Tool */
+/** @var \Elgg\Groups\Tool $tool */
 foreach ($tools as $tool) {
 	$group_option_toggle_name = $tool->mapMetadataName();
 	

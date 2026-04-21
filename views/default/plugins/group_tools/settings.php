@@ -3,7 +3,7 @@
  * Plugin settings for group tools
  */
 
-/* @var $plugin \ElggPlugin */
+/** @var \ElggPlugin $plugin */
 $plugin = elgg_extract('entity', $vars);
 
 $listing_options = [

@@ -6,7 +6,7 @@
 use Elgg\Database\EntityTable;
 use Elgg\Database\QueryBuilder;
 
-/* @var $widget \ElggWidget */
+/** @var \ElggWidget $widget */
 $widget = elgg_extract('entity', $vars);
 
 // which group

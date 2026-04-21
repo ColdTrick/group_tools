@@ -8,7 +8,7 @@ if (empty($group_guids)) {
 // this could take a while
 set_time_limit(0);
 
-/* @var $batch \ElggBatch */
+/** @var \ElggBatch $batch */
 $batch = elgg_get_entities([
 	'type' => 'group',
 	'guids' => $group_guids,
@@ -18,7 +18,7 @@ $batch = elgg_get_entities([
 ]);
 
 $failure = false;
-/* @var $group \ElggGroup */
+/** @var \ElggGroup $group */
 foreach ($batch as $group) {
 	if (!$group->delete()) {
 		$failure = true;

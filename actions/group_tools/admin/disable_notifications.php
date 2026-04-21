@@ -19,11 +19,11 @@ if (empty($members_count)) {
 	return elgg_ok_response('', '', $group->getURL());
 }
 
-/* @var $members \ElggBatch */
+/** @var \ElggBatch $members */
 $members = $group->getMembers(['limit' => false, 'batch' => true]);
 
 // disable notification for everyone
-/* @var $member \ElggUser */
+/** @var \ElggUser $member */
 foreach ($members as $member) {
 	$group->removeSubscriptions($member->guid);
 }

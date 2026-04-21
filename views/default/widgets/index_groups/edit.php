@@ -3,7 +3,7 @@
  * settings for the index group widget
  */
 
-/* @var $widget \ElggWidget */
+/** @var \ElggWidget $widget */
 $widget = elgg_extract('entity', $vars);
 
 // filter based on tag fields

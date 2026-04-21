@@ -79,7 +79,7 @@ class CSVExporter {
 			case 'group_tools_group_admin_name':
 				$result = [];
 				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
-				/* @var $group_admin \ElggUser */
+				/** @var \ElggUser $group_admin */
 				foreach ($batch as $group_admin) {
 					$result[] = "\"{$group_admin->getDisplayName()}\"";
 				}
@@ -88,7 +88,7 @@ class CSVExporter {
 			case 'group_tools_group_admin_email':
 				$result = [];
 				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
-				/* @var $group_admin \ElggUser */
+				/** @var \ElggUser $group_admin */
 				foreach ($batch as $group_admin) {
 					$result[] = $group_admin->email;
 				}
@@ -97,7 +97,7 @@ class CSVExporter {
 			case 'group_tools_group_admin_url':
 				$result = [];
 				$batch = new \ElggBatch('elgg_get_entities', $group_admin_options);
-				/* @var $group_admin \ElggUser */
+				/** @var \ElggUser $group_admin */
 				foreach ($batch as $group_admin) {
 					$result[] = $group_admin->getURL();
 				}
@@ -206,10 +206,10 @@ class CSVExporter {
 			case 'group_tools_user_group_admin_name':
 				$result = [];
 				
-				/* @var $batch \ElggBatch */
+				/** @var \ElggBatch $batch */
 				$batch = elgg_get_entities($group_admin_options);
 				
-				/* @var $group_admin \ElggUser */
+				/** @var \ElggUser $group_admin */
 				foreach ($batch as $group_admin) {
 					$result[] = "\"{$group_admin->getDisplayName()}\"";
 				}
@@ -218,10 +218,10 @@ class CSVExporter {
 			case 'group_tools_user_group_admin_url':
 				$result = [];
 				
-				/* @var $batch \ElggBatch */
+				/** @var \ElggBatch $batch */
 				$batch = elgg_get_entities($group_admin_options);
 				
-				/* @var $group_admin \ElggUser */
+				/** @var \ElggUser $group_admin */
 				foreach ($batch as $group_admin) {
 					$result[] = $group_admin->getURL();
 				}

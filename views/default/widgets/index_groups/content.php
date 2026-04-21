@@ -3,7 +3,7 @@
  * content of the index groups widget
  */
 
-/* @var $widget \ElggWidget */
+/** @var \ElggWidget $widget */
 $widget = elgg_extract('entity', $vars);
 
 // get widget settings

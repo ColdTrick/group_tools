@@ -243,7 +243,7 @@ class Membership {
 		
 		// ignore access
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($time) {
-			/* @var $batch \ElggBatch */
+			/** @var \ElggBatch $batch */
 			$batch = elgg_get_entities([
 				'type' => 'user',
 				'limit' => false,
@@ -257,7 +257,7 @@ class Membership {
 			
 			$auto_join = null;
 			
-			/* @var $user \ElggUser */
+			/** @var \ElggUser $user */
 			foreach ($batch as $user) {
 				// prep helper class
 				if (empty($auto_join)) {
@@ -281,7 +281,7 @@ class Membership {
 					'limit' => false,
 					'batch' => true,
 				]);
-				/* @var $group \ElggGroup */
+				/** @var \ElggGroup $group */
 				foreach ($groups as $group) {
 					$group->join($user);
 				}
@@ -327,7 +327,7 @@ class Membership {
 				'batch' => true,
 			]);
 			
-			/* @var $group \ElggGroup */
+			/** @var \ElggGroup $group */
 			foreach ($groups as $group) {
 				$group->join($user);
 			}

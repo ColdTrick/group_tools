@@ -65,9 +65,6 @@ return [
 			'type' => 'object',
 			'subtype' => 'group_tools_group_mail',
 			'class' => GroupMail::class,
-			'capabilities' => [
-				'commentable' => false,
-			],
 		],
 	],
 	'actions' => [
@@ -97,6 +94,38 @@ return [
 		'groups/decline_email_invitation' => [],
 		'groups/edit' => [],
 		'groups/invite' => [],
+	],
+	'routes' => [
+		'add:object:group_tools_group_mail' => [
+			'path' => '/groups/mail/{guid}',
+			'resource' => 'groups/mail',
+			'middleware' => [
+				Gatekeeper::class,
+			],
+		],
+		'collection:group:group:related' => [
+			'path' => '/groups/related/{guid}',
+			'resource' => 'groups/related',
+			'middleware' => [
+				GroupPageOwnerGatekeeper::class,
+			],
+		],
+		'collection:annotation:email_invitation:group' => [
+			'path' => '/groups/invites/{guid}/email_invitations',
+			'resource' => 'groups/email_invitations',
+			'middleware' => [
+				Gatekeeper::class,
+				GroupPageOwnerCanEditGatekeeper::class,
+			],
+		],
+		'collection:annotation:email_invitation:user' => [
+			'path' => '/groups/invitations/{username}/email',
+			'resource' => 'groups/user/email_invitations',
+			'middleware' => [
+				Gatekeeper::class,
+				UserPageOwnerCanEditGatekeeper::class,
+			],
+		],
 	],
 	'events' => [
 		'action:validate' => [
@@ -294,66 +323,59 @@ return [
 	'notifications' => [
 		'group' => [
 			'group' => [
-				'add_user' => AddUserHandler::class,
-				'admin_approval' => GroupAdminApprovalNotificationHandler::class,
-				'admin_approval:owner' => GroupOwnerApprovalHandler::class,
-				'approve' => ApproveGroupRequestHandler::class,
-				'concept_group_reminder' => ConceptGroupOwnerReminderHandler::class,
-				'decline' => DeclineGroupRequestHandler::class,
-				'group_tools:stale' => StaleGroupHandler::class,
-				'invite' => InviteGroupHandler::class,
-				'membership:decline' => DeclineMembershipRequestHandler::class,
-				'relate' => RelatedGroupHandler::class,
-				'transfer_owner' => GroupOwnerTransferHandler::class,
-				'welcome' => WelcomeMessageGroupHandler::class,
+				'add_user' => [
+					AddUserHandler::class => [],
+				],
+				'admin_approval' => [
+					GroupAdminApprovalNotificationHandler::class => [],
+				],
+				'admin_approval:owner' => [
+					GroupOwnerApprovalHandler::class => [],
+				],
+				'approve' => [
+					ApproveGroupRequestHandler::class => [],
+				],
+				'concept_group_reminder' => [
+					ConceptGroupOwnerReminderHandler::class => [],
+				],
+				'decline' => [
+					DeclineGroupRequestHandler::class => [],
+				],
+				'group_tools:stale' => [
+					StaleGroupHandler::class => [],
+				],
+				'invite' => [
+					InviteGroupHandler::class => [],
+				],
+				'membership:decline' => [
+					DeclineMembershipRequestHandler::class => [],
+				],
+				'relate' => [
+					RelatedGroupHandler::class => [],
+				],
+				'transfer_owner' => [
+					GroupOwnerTransferHandler::class => [],
+				],
+				'welcome' => [
+					WelcomeMessageGroupHandler::class => [],
+				],
 			],
 		],
 		'object' => [
 			'group_tools_group_mail' => [
-				'enqueue-mail' => GroupMailEnqueueNotificationEventHandler::class,
+				'enqueue-mail' => [
+					GroupMailEnqueueNotificationEventHandler::class => [],
+				],
 			],
 		],
 		'relationship' => [
 			'membership_request' => [
-				'create:after' => RequestMembershipMotivationHandler::class,
+				'create:after' => [
+					\Elgg\Groups\Notifications\RequestMembershipEventHandler::class => ['unregister' => true],
+					RequestMembershipMotivationHandler::class => [],
+				],
 			],
 		],
-	],
-	'routes' => [
-		'add:object:group_tools_group_mail' => [
-			'path' => '/groups/mail/{guid}',
-			'resource' => 'groups/mail',
-			'middleware' => [
-				Gatekeeper::class,
-			],
-		],
-		'collection:group:group:related' => [
-			'path' => '/groups/related/{guid}',
-			'resource' => 'groups/related',
-			'middleware' => [
-				GroupPageOwnerGatekeeper::class,
-			],
-		],
-		'collection:annotation:email_invitation:group' => [
-			'path' => '/groups/invites/{guid}/email_invitations',
-			'resource' => 'groups/email_invitations',
-			'middleware' => [
-				Gatekeeper::class,
-				GroupPageOwnerCanEditGatekeeper::class,
-			],
-		],
-		'collection:annotation:email_invitation:user' => [
-			'path' => '/groups/invitations/{username}/email',
-			'resource' => 'groups/user/email_invitations',
-			'middleware' => [
-				Gatekeeper::class,
-				UserPageOwnerCanEditGatekeeper::class,
-			],
-		],
-	],
-	'upgrades' => [
-		MigrateNotificationSettings::class,
-		MigrateConceptAdminApproval::class,
 	],
 	'view_extensions' => [
 		'admin.css' => [

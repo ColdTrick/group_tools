@@ -22,7 +22,7 @@ class Relationship {
 			return null;
 		}
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$result = $event->getValue();
 		if (!$result->has('reject')) {
 			return null;
@@ -41,7 +41,7 @@ class Relationship {
 			return null;
 		}
 		
-		/* @var $reject \ElggMenuItem */
+		/** @var \ElggMenuItem $reject */
 		$reject = $result->get('reject');
 		$reject->setHref(elgg_http_add_url_query_elements('ajax/form/groups/killrequest', [
 			'relationship_id' => $relationship->id,
@@ -84,7 +84,7 @@ class Relationship {
 			return null;
 		}
 		
-		/* @var $return_value MenuItems */
+		/** @var MenuItems $return_value */
 		$return_value = $event->getValue();
 		
 		$is_admin = $member->hasRelationship($group->guid, 'group_admin');

@@ -13,26 +13,23 @@
 		flex-grow: 1;
 	}
 }
-	
+
 .group-tools-simplified-option {
-	background: $(background-color-soft);
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	color: $(text-color-mild);
+	background: var(--elgg-background-color-soft);
+	border: 1px solid var(--elgg-border-color-soft);
+	border-radius: 3px;
+	color: var(--elgg-text-color-soft);
 	padding: 1rem;
 	margin: 1rem;
 	cursor: pointer;
-	
-	border-radius: 3px;
-	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
-	
-	> h2 {
-		display: block;
-		color: inherit;
-	}
-	
+
 	&.elgg-state-active {
-		color: $(button-action-font-color);
-		background: $(button-action-background-color);
+		color: var(--elgg-button-action-font-color);
+		background: var(--elgg-button-action-background-color);
+	}
+
+	.elgg-output {
+		color: inherit;
 	}
 }
 

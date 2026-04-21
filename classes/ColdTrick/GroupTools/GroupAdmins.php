@@ -56,7 +56,7 @@ class GroupAdmins {
 			],
 			'batch' => true,
 		]);
-		/* @var $group_admin \ElggUser */
+		/** @var \ElggUser $group_admin */
 		foreach ($group_admins as $group_admin) {
 			if (!isset($group_subscriptions[$group_admin->guid])) {
 				// group admin has no notification settings for this group
@@ -95,7 +95,7 @@ class GroupAdmins {
 		
 		$sender = $event->getParam('sender'); // user requesting membership
 		
-		/* @var $return Notification */
+		/** @var Notification $return */
 		$return = $event->getValue();
 		
 		$return->body = elgg_echo('groups:request:body', [

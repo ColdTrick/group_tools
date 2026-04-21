@@ -21,7 +21,7 @@ class AdminHeader {
 			return null;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$result = $event->getValue();
 		
 		$result[] = \ElggMenuItem::factory([

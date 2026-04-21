@@ -5,7 +5,7 @@
  * added: sort_by options
  */
 
-/* @var $widget \ElggWidget */
+/** @var \ElggWidget $widget */
 $widget = elgg_extract('entity', $vars);
 
 if ($widget->context !== 'profile') {
