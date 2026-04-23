@@ -14,7 +14,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 	 */
 	public function getSubscriptions(): array {
 		$return = [];
-		
+		error_log(__METHOD__);
 		// get all admins
 		$batch = elgg_get_entities([
 			'type' => 'user',
@@ -35,7 +35,7 @@ class GroupAdminApprovalNotificationHandler extends NotificationEventHandler {
 			
 			$return[$user->guid] = $settings;
 		}
-		
+		error_log(count($return));
 		return $return;
 	}
 	

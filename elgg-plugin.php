@@ -265,6 +265,11 @@ return [
 				'\ColdTrick\GroupTools\Plugins\ProfileManager::registerGroupFields' => [],
 			],
 		],
+		'validate:acl_membership' => [
+			'advanced_notifications' => [
+				'\ColdTrick\GroupTools\Plugins\AdvancedNotifications::allowAdminApprovalNotifications' => [],
+			],
+		],
 		'validate:after' => [
 			'user' => [
 				'\ColdTrick\GroupTools\Membership::createUserEmailInvitedGroups' => [],

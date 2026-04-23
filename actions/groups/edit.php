@@ -160,10 +160,10 @@ if ($is_new_group && ($admin_approve || $concept_group)) {
 			$group->annotate("approval_reason:{$question}", serialize($answer), ACCESS_PRIVATE);
 		}
 	}
-	
+	error_log(__LINE__);
 	if (!$concept_group) {
 		$group->admin_approval = true;
-		
+		error_log(__LINE__);
 		elgg_trigger_event('admin_approval', 'group', $group);
 	} else {
 		$group->is_concept = true;
