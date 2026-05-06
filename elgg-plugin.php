@@ -26,7 +26,7 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'version' => '22.2',
+		'version' => '22.2.1',
 		'dependencies' => [
 			'groups' => [
 				'position' => 'after',
@@ -292,6 +292,11 @@ return [
 		'types:custom_group_field' => [
 			'profile_manager' => [
 				'\ColdTrick\GroupTools\Plugins\ProfileManager::registerGroupFields' => [],
+			],
+		],
+		'validate:acl_membership' => [
+			'advanced_notifications' => [
+				'\ColdTrick\GroupTools\Plugins\AdvancedNotifications::allowAdminApprovalNotifications' => [],
 			],
 		],
 		'validate:after' => [

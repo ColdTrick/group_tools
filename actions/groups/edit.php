@@ -163,7 +163,6 @@ if ($is_new_group && ($admin_approve || $concept_group)) {
 	
 	if (!$concept_group) {
 		$group->admin_approval = true;
-		
 		elgg_trigger_event('admin_approval', 'group', $group);
 	} else {
 		$group->is_concept = true;
