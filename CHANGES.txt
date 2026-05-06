@@ -1,6 +1,10 @@
 Version history
 ===============
 
+22.2.1 (2026-05-06):
+
+- fixed: admin approval notifications are no longer blocked
+
 22.2 (2026-02-11):
 
 - changed: concept / admin approval groups have more options
