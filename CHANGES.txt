@@ -1,6 +1,10 @@
 Version history
 ===============
 
+23.0 (2026-05-29):
+
+- changed: updated for Elgg 7.0
+
 22.2.1 (2026-05-06):
 
 - fixed: admin approval notifications are no longer blocked
