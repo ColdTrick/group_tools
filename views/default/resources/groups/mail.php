@@ -6,9 +6,8 @@
 use Elgg\Exceptions\Http\EntityPermissionsException;
 
 $group_guid = (int) elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($group_guid, 'group');
+$group = elgg_entity_gatekeeper($group_guid, 'group');
 
-$group = get_entity($group_guid);
 if (!group_tools_group_mail_enabled($group) && !group_tools_group_mail_members_enabled($group)) {
 	throw new EntityPermissionsException();
 }
