@@ -47,7 +47,7 @@ foreach ($presets as $index => $values) {
 // blank preset
 $preset_selectors .= elgg_view('output/url', [
 	'text' => elgg_echo('group_tools:create_group:tool_presets:blank:title'),
-	'href' => '#',
+	'href' => false,
 	'class' => 'elgg-button elgg-button-action mrm',
 	'rel' => 'blank',
 ]);

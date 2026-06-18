@@ -38,7 +38,7 @@ $label = elgg_view('elements/forms/label', [
 ]);
 $help = elgg_view('output/url', [
 	'text' => elgg_echo('group_tools:form:admin:auto_join:additional:pattern:add'),
-	'href' => '#',
+	'href' => false,
 	'id' => 'group-tools-auto-join-add-pattern',
 ]);
 $help .= elgg_view('elements/forms/help', [
