@@ -1,10 +1,11 @@
 <?php
 /**
- * This file was created by Translation Editor v14.0.4
- * On 2026-02-06 09:15
+ * This file was created by Translation Editor v14.0.5
+ * On 2026-07-13 11:36
  */
 
 return array (
+  'widgets:a_users_groups:sort_by:group_activity' => 'Recente groep activiteit',
   'group_tools:group:concept:profile:description:user' => 'Deze groep is nog in concept.',
   'group_tools:group:admin_approve:notice:profile:user' => 'Deze groep wacht op goedkeuring door een site beheerder.',
   'group_tools:upgrade:2026020401:title' => 'Migreer groep concept / goedkeuring status',

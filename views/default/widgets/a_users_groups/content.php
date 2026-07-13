@@ -68,6 +68,23 @@ if ($widget->context !== 'profile') {
 			$params['order_by'][] = new OrderByClause('latest_activity', 'desc');
 			$params['order_by'][] = new OrderByClause('e.time_created', 'desc');
 			break;
+		case 'group_activity':
+			unset($params['sort_by']);
+			
+			// sort by latest activity
+			$params['select'][] = function (QueryBuilder $qb, $main_alias) {
+				$river = $qb->subquery(RiverTable::TABLE_NAME, 'river');
+				$river->select("{$river->getTableAlias()}.posted");
+				$river->andWhere($qb->compare("{$river->getTableAlias()}.target_guid", '=', "{$main_alias}.guid"));
+				$river->orderBy("{$river->getTableAlias()}.posted", 'desc');
+				$river->setMaxResults(1);
+				
+				return '('. $river->getSQL() . ') AS latest_activity';
+			};
+			
+			$params['order_by'][] = new OrderByClause('latest_activity', 'desc');
+			$params['order_by'][] = new OrderByClause('e.time_created', 'desc');
+			break;
 	}
 }
 

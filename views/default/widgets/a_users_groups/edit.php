@@ -17,6 +17,7 @@ if ($widget->context !== 'profile') {
 		'options_values' => [
 			'alpha' => elgg_echo('sort:alpha'),
 			'activity' => elgg_echo('widgets:a_users_groups:sort_by:activity'),
+			'group_activity' => elgg_echo('widgets:a_users_groups:sort_by:group_activity'),
 			'join_date' => elgg_echo('widgets:a_users_groups:sort_by:join_date'),
 		],
 	]);

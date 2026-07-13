@@ -446,6 +446,7 @@ The first column must contain the e-mail addresses of the new members. There sho
 	// a_users_groups (group memberships)
 	'widgets:a_users_groups:sort_by' => "Sort groups by",
 	'widgets:a_users_groups:sort_by:activity' => "Recent personal activity",
+	'widgets:a_users_groups:sort_by:group_activity' => "Recent group activity",
 	'widgets:a_users_groups:sort_by:join_date' => "Join date",
 	
 	// welcome message
