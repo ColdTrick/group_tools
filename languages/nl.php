@@ -1,26 +1,30 @@
 <?php
 /**
- * This file was created by Translation Editor v14.0.5
- * On 2026-07-13 11:36
+ * This file was created by Translation Editor v14.0.6
+ * On 2026-08-11 14:44
  */
 
 return array (
+  'group_tools:edit:group:settings:group_admins:title' => 'Groepbeheerders',
+  'group_tools:edit:group:settings:group_admins:description' => 'Als groepseigenaar kun je leden van je groep aanwijzen als groepsbeheerder.
+
+Dit geeft hen grotendeels dezelfde rechten als dat je als eigenaar hebt. Ze kunnen de groep bewerken en helpen bij het modereren van de groepsinhoud.
+
+Standaard kan alleen jij als groepseigenaar andere groepsbeheerders toe-/afwijzen, maar met deze instelling kun je groepsbeheerders toestaan ​​om andere groepsbeheerders toe of af te wijzen. Alleen jij als groepseigenaar kunt deze instelling wijzigen.',
+  'group_tools:edit:group:settings:group_admins:assign' => 'Groepsbeheerders mogen andere groepsbeheerders toewijzen',
+  'group_tools:upgrade:2026081101:title' => 'Migreer de groepbeheerders toewijzen instelling',
+  'group_tools:upgrade:2026081101:description' => 'Migreer de oude groep tool optie voor het toewijzen van groepsbeheerders naar een groep plugin instelling',
   'widgets:a_users_groups:sort_by:group_activity' => 'Recente groep activiteit',
   'group_tools:group:concept:profile:description:user' => 'Deze groep is nog in concept.',
   'group_tools:group:admin_approve:notice:profile:user' => 'Deze groep wacht op goedkeuring door een site beheerder.',
-  'group_tools:upgrade:2026020401:title' => 'Migreer groep concept / goedkeuring status',
-  'group_tools:upgrade:2026020401:description' => 'Er zijn wijzigingen doorgevoerd in hoe wordt opgeslagen dat een groep in concept is of wacht op goedkeuring',
   'group_tools:group:edit:suggested' => 'Vergelijkbare groepen',
   'river:group:owner_transfer' => '%s is nu de eigenaar van de groep %s',
   'group_tools:notifications::admin:notify_approval' => 'Ontvang een notificatie als er een groep moet worden goedgekeurd',
-  'group_tools:upgrade:2024061101:title' => 'Migreer notificatie instellingen tbv het goedkeuren van groepen',
-  'group_tools:upgrade:2024061101:description' => 'Migreer de oude gebuiker plugin instellingen naar een notificatie instelling',
   'widgets:a_users_groups:sort_by' => 'Sorteer de groepen op',
   'widgets:a_users_groups:sort_by:activity' => 'Recente persoonlijke activiteit',
   'widgets:a_users_groups:sort_by:join_date' => 'Datum van lidmaatschap',
   'group_tools:csv_exporter:user:group_role' => 'Rol',
   'group_tools:mail:message:default_subject' => 'Bericht uit de groep %s',
-  'groups:tool:group_multiple_admin_allow:description' => 'Laat groepsbeheerders andere groepsbeheerders beheren. Normaal kan alleen de groepseigenaar dit beheren.',
   'groups:tool:related_groups:description' => 'Toon een lijst met gerelateerde groepen aan de leden van deze groep.',
   'group_tools:welcome_message:notifications' => 'Activiteiten binnen deze groep kunnen notificaties versturen.
 Op dit moment staan je notificatie voorkeuren voor deze groep: %s',
@@ -371,7 +375,6 @@ Je kunt ook gaan naar Alle groepen -> Groep uitnodigingen en daar de volgende co
   'group_tools:multiple_admin:status:group_admin' => 'Groepsbeheerder',
   'group_tools:multiple_admin:profile_actions:remove' => 'Verwijder groepsbeheerder',
   'group_tools:multiple_admin:profile_actions:add' => 'Maak groepsbeheerder',
-  'groups:tool:group_multiple_admin_allow' => 'Mogen groepsbeheerders andere groepsbeheerder aanmaken',
   'group_tools:mail:message:from' => 'Van groep',
   'group_tools:mail:title' => 'Stuur een e-mail naar de groepsleden',
   'group_tools:mail:form:title' => 'Onderwerp',

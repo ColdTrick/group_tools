@@ -162,7 +162,6 @@ When a user creates a group he/she gets to choose one of the presets in order to
 	'group_tools:create_group:tool_presets:blank:title' => "Blank group",
 	'group_tools:create_group:tool_presets:blank:description' => "Choose this group to select your own tools.",
 	
-	
 	// group invite message
 	'group_tools:groups:invite:body' => "%s invited you to join the '%s' group.
 %s
@@ -261,8 +260,12 @@ To view the group, click here:
 	'group_tools:multiple_admin:profile_actions:remove' => "Remove group admin",
 	'group_tools:multiple_admin:profile_actions:add' => "Add group admin",
 
-	'groups:tool:group_multiple_admin_allow' => "Enable group admins to assign other group admins",
-	'groups:tool:group_multiple_admin_allow:description' => "Allow other group admins to (un)assign group admins. Normally this is only allowed by the group owner.",
+	'group_tools:edit:group:settings:group_admins:title' => "Group administrators",
+	'group_tools:edit:group:settings:group_admins:description' => "As a group owner you can assign members of your group as a group administrator.
+This gives them mostly the same rights that you as an owner have. They can edit the group and help moderate with group content.
+
+By default only you as the group owner can (un)assign other group administrators, but with this setting you can allow group administrators to (un)assign other group administrators. Only you as the group owner can change this setting.",
+	'group_tools:edit:group:settings:group_admins:assign' => "Allow group administrators to assign other group administrators",
 	
 	// group admin approve
 	'group_tools:group:admin_approve:notice' => "New groups need to be approved by a site administrator. You can make/edit the group, but it won't be visible to other users until approved by a site administrator.",
@@ -555,8 +558,6 @@ Please check on the group here:
 %s",
 	
 	// upgrades
-	'group_tools:upgrade:2024061101:title' => "Migrate group approval notification settings",
-	'group_tools:upgrade:2024061101:description' => "Migrate the old plugin user setting to a correct user notification setting",
-	'group_tools:upgrade:2026020401:title' => "Migrate group concept/admin approval status",
-	'group_tools:upgrade:2026020401:description' => "Changes have been made to how concept or admin approval is being stored",
+	'group_tools:upgrade:2026081101:title' => "Migrate the assign group admin setting",
+	'group_tools:upgrade:2026081101:description' => "Migrate the old group tool for assigning group admins to a group plugin setting",
 ];

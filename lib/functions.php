@@ -514,7 +514,7 @@ function group_tools_can_assign_group_admin(\ElggGroup $group): bool {
 	
 	if ($group->owner_guid === $user_guid || elgg_is_admin_logged_in()) {
 		return true;
-	} elseif ($group->group_multiple_admin_allow_enable === 'yes' && $group->canEdit($user_guid)) {
+	} elseif ((bool) $group->getPluginSetting('group_tools', 'assign_group_admins') && $group->canEdit($user_guid)) {
 		return true;
 	}
 	

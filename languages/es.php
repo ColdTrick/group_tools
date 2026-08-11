@@ -98,7 +98,6 @@ Puedes encontrar el grupo aquí:
   'group_tools:multiple_admin:group_admins' => 'Administradores de grupo',
   'group_tools:multiple_admin:profile_actions:remove' => 'Borrar administrador de grupo',
   'group_tools:multiple_admin:profile_actions:add' => 'Agregar administrador de grupo',
-  'groups:tool:group_multiple_admin_allow' => 'Permitir a los administradores de grupo asignar otros administradores',
   'group_tools:group:admin_approve:notice' => 'Los grupos nuevos necesitan se aprobados por el administrador del sitio. Puedes crear/editar el grupo, pero este no será visible para los otros usuarios hasta que sea aprobado por el administrador.',
   'group_tools:group:admin_approve:decline:confirm' => 'Estas seguro que deseas rechazar este grupo? Esto eliminaría el grupo.',
   'group_tools:group:admin_approve:admin:description' => 'Esta es una lista de grupos que necesitan ser aprobados por el administrador del sitio antes de que puedan utilizarse.
