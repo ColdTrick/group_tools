@@ -357,6 +357,8 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:group:invite:text' => "Personal note (optional)",
 	'group_tools:group:invite:add:confirm' => "Are you sure you wish to add these users directly?",
 
+	'group_tools:group:invite:offloaded' => "Currently there are invitations processing in the background",
+	
 	'group_tools:groups:invitation:code:title' => "Group invitation by e-mail",
 	'group_tools:groups:invitation:code:description' => "If you have received an invitation to join a group by e-mail, you can enter the invitation code here to accept the invitation. If you click on the link in the invitation e-mail the code will be entered for you.",
 
@@ -384,10 +386,39 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:action:mail:success' => "Message successfully sent",
 
 	// group - invite - action
+	'group_tools:action:invite:error:unknown' => "Unknown error occurred while inviting users, please try again",
 	'group_tools:action:invite:error:invite' => "No users were invited (%s already invited, %s already a member)",
 	'group_tools:action:invite:error:add' => "No users were invited (%s already invited, %s already a member)",
 	'group_tools:action:invite:success:invite' => "Successfully invited %s users (%s already invited and %s already a member)",
 	'group_tools:action:invite:success:add' => "Successfully added %s users (%s already invited and %s already a member)",
+	'group_tools:action:invite:success:offloaded' => "Because of the amount of invited users, processing will continue in the background. You'll receive a notification when all invitations have been processed.",
+
+	'group_tools:notification:invite_results:subject' => "Invitations for the group '%s' have been processed",
+	'group_tools:notification:invite_results:summary' => "Invitations for the group '%s' have been processed",
+	'group_tools:notification:invite_results:body' => "The processing of your invitations for the group '%s' has finished.
+
+%d users were invited to join the group.
+%d users were already invited to the group.
+%d users were already a member of the group.
+
+To view the group, check the link:
+%s",
+	'group_tools:notification:invite_results:body:adding' => "The processing of your invitations for the group '%s' has finished.
+
+%d users were added to the group.
+%d users were already invited to the group.
+%d users were already a member of the group.
+
+To view the group, check the link:
+%s",
+	'group_tools:notification:invite_failure:subject' => "Failure while processing invitations for the group '%s'",
+	'group_tools:notification:invite_failure:summary' => "Failure while processing invitations for the group '%s'",
+	'group_tools:notification:invite_failure:body' => "An error occurred during the processing of your invitations for the group '%s'.
+
+Please check the current group invitations and decide how you wish to proceed.
+
+To view the group, check the link:
+%s",
 
 	// group - invite - accept e-mail
 	'group_tools:action:groups:email_invitation:error:code' => "The entered invitation code is no longer valid",
@@ -395,7 +426,7 @@ The first column must contain the e-mail addresses of the new members. There sho
 	'group_tools:action:groups:email_invitation:success' => "You've successfully joined the group",
 
 	// group - invite - decline e-mail
-	'group_tools:action:groups:decline_email_invitation:error:delete' => "An error occured while deleting the invitation",
+	'group_tools:action:groups:decline_email_invitation:error:delete' => "An error occurred while deleting the invitation",
 
 	// suggested groups
 	'group_tools:suggested_groups:info' => "The following groups might be interesting for you. Click the join buttons to join them immediately or click the title to view more information about the group.",

@@ -282,4 +282,86 @@ class Cron {
 			}
 		});
 	}
+	
+	/**
+	 * Process the offloaded group invitations
+	 *
+	 * @param \Elgg\Event $event 'cron', 'minute'
+	 *
+	 * @return void
+	 */
+	public static function processGroupInvites(\Elgg\Event $event): void {
+		$time = (int) $event->getParam('time');
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($time) {
+			/** @var \ElggBatch $invites */
+			$invites = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => \GroupInvite::SUBTYPE,
+				'created_before' => $time,
+				'limit' => false,
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
+			
+			// don't run forever
+			$time_remaining = 30;
+			$start_time = time();
+			
+			/** @var \GroupInvite $invite */
+			foreach ($invites as $invite) {
+				if ($invite->locked) {
+					// already processing in another cron process
+					$invites->reportFailure();
+					continue;
+				}
+				
+				$invite->locked = true;
+				
+				$invite->process();
+				$invite->sendStatusNotification();
+				
+				if (!$invite->delete()) {
+					$invites->reportFailure();
+				}
+				
+				$time_remaining = $time_remaining - (time() - $start_time);
+				if ($time_remaining < 1) {
+					break;
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Cleanup locked offloaded group invites
+	 *
+	 * @param \Elgg\Event $event 'cron', 'daily'
+	 *
+	 * @return void
+	 */
+	public static function cleanupLockedGroupInvites(\Elgg\Event $event): void {
+		/** @var \DateTimeImmutable $dt */
+		$dt = $event->getParam('dt');
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($dt) {
+			/** @var \ElggBatch $invites */
+			$invites = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => \GroupInvite::SUBTYPE,
+				'created_before' => $dt->modify('-1 day'),
+				'metadata_name' => 'locked',
+				'limit' => false,
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
+			
+			/** @var \GroupInvite $invite */
+			foreach ($invites as $invite) {
+				$invite->sendFailureNotification();
+				
+				if (!$invite->delete()) {
+					$invites->reportFailure();
+				}
+			}
+		});
+	}
 }

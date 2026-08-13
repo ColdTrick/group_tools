@@ -1,12 +1,15 @@
 <?php
 
 use ColdTrick\GroupTools\Bootstrap;
+use ColdTrick\GroupTools\Controllers\InviteAction;
 use ColdTrick\GroupTools\Notifications\AddUserHandler;
 use ColdTrick\GroupTools\Notifications\ApproveGroupRequestHandler;
 use ColdTrick\GroupTools\Notifications\ConceptGroupOwnerReminderHandler;
 use ColdTrick\GroupTools\Notifications\DeclineGroupRequestHandler;
 use ColdTrick\GroupTools\Notifications\DeclineMembershipRequestHandler;
 use ColdTrick\GroupTools\Notifications\GroupAdminApprovalNotificationHandler;
+use ColdTrick\GroupTools\Notifications\GroupInviteFailureHandler;
+use ColdTrick\GroupTools\Notifications\GroupInviteResultHandler;
 use ColdTrick\GroupTools\Notifications\GroupMailEnqueueNotificationEventHandler;
 use ColdTrick\GroupTools\Notifications\GroupOwnerApprovalHandler;
 use ColdTrick\GroupTools\Notifications\GroupOwnerTransferHandler;
@@ -63,7 +66,12 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'group_tools_group_mail',
-			'class' => GroupMail::class,
+			'class' => \GroupMail::class,
+		],
+		[
+			'type' => 'object',
+			'subtype' => 'group_tools_group_invite',
+			'class' => \GroupInvite::class,
 		],
 	],
 	'actions' => [
@@ -92,7 +100,9 @@ return [
 		'groups/email_invitation' => [],
 		'groups/decline_email_invitation' => [],
 		'groups/edit' => [],
-		'groups/invite' => [],
+		'groups/invite' => [
+			'controller' => InviteAction::class,
+		],
 	],
 	'routes' => [
 		'add:object:group_tools_group_mail' => [
@@ -135,6 +145,12 @@ return [
 				'\ColdTrick\GroupTools\Membership::groupJoinAction' => [],
 			],
 		],
+		'container_logic_check' => [
+			'object' => [
+				'\ColdTrick\GroupTools\Permissions::groupInviteContainerLogic' => [],
+				'\ColdTrick\GroupTools\Permissions::groupMailContainerLogic' => [],
+			],
+		],
 		'create' => [
 			'user' => [
 				'\ColdTrick\GroupTools\Membership::createUserGroupInviteCode' => [],
@@ -144,9 +160,13 @@ return [
 			'daily' => [
 				'\ColdTrick\GroupTools\Cron::notifyStaleGroupOwners' => [],
 				'\ColdTrick\GroupTools\Cron::removeExpiredConceptGroups' => [],
+				'\ColdTrick\GroupTools\Cron::cleanupLockedGroupInvites' => [],
 			],
 			'fiveminute' => [
 				'\ColdTrick\GroupTools\Membership::autoJoinGroupsCron' => [],
+			],
+			'minute' => [
+				'\ColdTrick\GroupTools\Cron::processGroupInvites' => [],
 			],
 			'weekly' => [
 				'\ColdTrick\GroupTools\Cron::notifyConceptGroupOwners' => [],
@@ -350,6 +370,12 @@ return [
 				],
 				'invite' => [
 					InviteGroupHandler::class => [],
+				],
+				'invite_failure' => [
+					GroupInviteFailureHandler::class => [],
+				],
+				'invite_results' => [
+					GroupInviteResultHandler::class => [],
 				],
 				'membership:decline' => [
 					DeclineMembershipRequestHandler::class => [],

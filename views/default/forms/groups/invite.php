@@ -14,6 +14,18 @@ echo elgg_view_field([
 	'value' => $group->guid,
 ]);
 
+// check for pending/processing offloaded invitations
+$offloaded = elgg_call(ELGG_IGNORE_ACCESS, function() use ($group) {
+	return elgg_count_entities([
+		'type' => 'object',
+		'subtype' => \GroupInvite::SUBTYPE,
+		'container_guid' => $group->guid,
+	]);
+});
+if ($offloaded > 0) {
+	echo elgg_view_message('info', elgg_echo('group_tools:group:invite:offloaded'));
+}
+
 // invite friends
 $tabs = [];
 

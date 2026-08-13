@@ -58,4 +58,34 @@ class Permissions {
 		
 		return $user->hasRelationship($entity->guid, 'group_admin');
 	}
+	
+	/**
+	 * Make sure group mail objects can only be created in a group
+	 *
+	 * @param \Elgg\Event $event 'container_logic_check', 'object'
+	 *
+	 * @return bool|null
+	 */
+	public static function groupMailContainerLogic(\Elgg\Event $event): ?bool {
+		if ($event->getParam('subtype') !== \GroupMail::SUBTYPE) {
+			return null;
+		}
+		
+		return $event->getParam('container') instanceof \ElggGroup;
+	}
+	
+	/**
+	 * Make sure group invite objects can only be created in a group
+	 *
+	 * @param \Elgg\Event $event 'container_logic_check', 'object'
+	 *
+	 * @return bool|null
+	 */
+	public static function groupInviteContainerLogic(\Elgg\Event $event): ?bool {
+		if ($event->getParam('subtype') !== \GroupInvite::SUBTYPE) {
+			return null;
+		}
+		
+		return $event->getParam('container') instanceof \ElggGroup;
+	}
 }

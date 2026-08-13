@@ -1,10 +1,39 @@
 <?php
 /**
  * This file was created by Translation Editor v14.0.6
- * On 2026-08-11 14:44
+ * On 2026-08-13 15:34
  */
 
 return array (
+  'group_tools:group:invite:offloaded' => 'Er worden op dit moment uitnodigingen verzonden op de achtergrond',
+  'group_tools:action:invite:error:unknown' => 'Er is een fout opgetreden tijdens het uitnodigen van gebruikers, probeer het nogmaals',
+  'group_tools:action:invite:success:offloaded' => 'Vanwege de hoeveelheid uit te nodigen gebruiker vind de verwerking plaats op de achtergrond. Je ontvangt een notificatie waneer alle uitnodigingen zijn verwerkt.',
+  'group_tools:notification:invite_results:subject' => 'Uitnodigingen voor de groep \'%s\' zijn verwerkt',
+  'group_tools:notification:invite_results:summary' => 'Uitnodigingen voor de groep \'%s\' zijn verwerkt',
+  'group_tools:notification:invite_results:body' => 'Het verwerken van jouw uitnodigingen voor de groep \'%s\' is afgerond.
+
+%d gebruikers zijn uitgenodigd om lid te worden van de groep.
+%d gebruikers waren al uitgenodigd om lid te worden van de groep.
+%d gebruikers waren al lid van de groep.
+
+Om de groep te bekijken, volg de link:
+%s',
+  'group_tools:notification:invite_results:body:adding' => 'Het verwerken van jouw uitnodigingen voor de groep \'%s\' is afgerond.
+
+%d gebruikers zijn toegevoegd aan de groep.
+%d gebruikers waren al uitgenodigd om lid te worden van de groep.
+%d gebruikers waren al lid van de groep.
+
+Om de groep te bekijken, volg de link:
+%s',
+  'group_tools:notification:invite_failure:subject' => 'Fout tijdens het verwerken van de uitnodigingen voor de groep \'%s\'',
+  'group_tools:notification:invite_failure:summary' => 'Fout tijdens het verwerken van de uitnodigingen voor de groep \'%s\'',
+  'group_tools:notification:invite_failure:body' => 'Er is een fout opgetreden tijdens het verwerken van jouw uitnodigingen voor de groep \'%s\'.
+
+Controlleer de huidige groepsuitnodigingen en bedenk hoe je verder wilt gaan.
+
+Om de groep te bekijken, volg de link:
+%s',
   'group_tools:edit:group:settings:group_admins:title' => 'Groepbeheerders',
   'group_tools:edit:group:settings:group_admins:description' => 'Als groepseigenaar kun je leden van je groep aanwijzen als groepsbeheerder.
 
