@@ -150,6 +150,10 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:edit:access_simplified:closed' => 'Closed Group',
 	'group_tools:edit:access_simplified:closed:description' => '<ul><li>Membership needs to be approved</li><li>Content can only be shared with group members</li></ul>',
 	
+	// group tools
+	'group_tools:group:edit:tools:default:description' => "Below you can configure which tools you wish to enable for the members of your group.
+If you don't like certain features or they are not used simply disable them. You can always change this at a later point.",
+	
 	// group tool presets
 	'group_tools:admin:group_tool_presets:description' => "Here you can configure group tool presets.
 When a user creates a group he/she gets to choose one of the presets in order to quickly get the correct tools. A blank option is also offered to the user to allow his/her own choices.",

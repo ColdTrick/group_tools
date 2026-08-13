@@ -1,10 +1,12 @@
 <?php
 /**
  * This file was created by Translation Editor v14.0.6
- * On 2026-08-13 15:34
+ * On 2026-08-13 16:02
  */
 
 return array (
+  'group_tools:group:edit:tools:default:description' => 'Hieronder vind je een lijst van verschillende tools die je kunt aanbieden aan de leden van je groep.
+Als je een bepaalde tool niet nuttig vindt of het wordt niet gebruikt kun je dit eenvoudig uitschakelen. Je kunt dit op een later moment altijd nog weer aanpassen.',
   'group_tools:group:invite:offloaded' => 'Er worden op dit moment uitnodigingen verzonden op de achtergrond',
   'group_tools:action:invite:error:unknown' => 'Er is een fout opgetreden tijdens het uitnodigen van gebruikers, probeer het nogmaals',
   'group_tools:action:invite:success:offloaded' => 'Vanwege de hoeveelheid uit te nodigen gebruiker vind de verwerking plaats op de achtergrond. Je ontvangt een notificatie waneer alle uitnodigingen zijn verwerkt.',
