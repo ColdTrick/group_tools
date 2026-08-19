@@ -95,6 +95,11 @@ class Widgets {
 			case 'group_members':
 				return elgg_generate_url('collection:user:user:group_members', [
 					'guid' => $widget->owner_guid,
+					'sort_by' => [
+						'property' => 'member',
+						'property_type' => 'relationship',
+						'direction' => 'desc',
+					],
 				]);
 				
 			case 'group_invitations':
