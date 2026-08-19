@@ -1,6 +1,12 @@
 Version history
 ===============
 
+23.2 (2026-08-19):
+
+- added: validation of required fields on group edit before switching tab
+- changed: group invitations will be offloaded if too large
+- changed: group tool for assigning group admins is now a plugin setting
+
 23.1 (2026-07-30):
 
 - added: sorting by recent group activity in group membership widget
