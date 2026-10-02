@@ -26,11 +26,7 @@ $icon = elgg_view_entity_icon($owner, 'tiny');
 
 $title_text = '';
 if ($page_owner->guid !== $owner->guid) {
-	$title_text = elgg_view('output/url', [
-		'text' => $owner->getDisplayName(),
-		'href' => $owner->getURL(),
-		'is_trusted' => true,
-	]);
+	$title_text = elgg_view_entity_url($owner);
 } else {
 	$title_text = elgg_view('output/email', [
 		'value' => $email,
