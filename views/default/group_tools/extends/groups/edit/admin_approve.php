@@ -35,7 +35,9 @@ if (empty($entity->guid)) {
 			if (!empty($count)) {
 				$link = elgg_view('output/url', [
 					'text' => elgg_echo('group_tools:group:admin_approve:reasons'),
-					'href' => elgg_http_add_url_query_elements('ajax/view/group_tools/group/reasons', [
+					'href' => elgg_generate_url('ajax', [
+						'type' => 'view',
+						'segments' => 'group_tools/group/reasons',
 						'guid' => $entity->guid,
 					]),
 					'class' => 'elgg-lightbox',

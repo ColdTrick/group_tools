@@ -1,10 +1,10 @@
 <?php
 
 $id = get_input('id');
-$type = get_input('type');
+$join_type = get_input('join_type');
 $title = get_input('title');
 
-if (empty($id) || empty($type) || empty($title)) {
+if (empty($id) || empty($join_type) || empty($title)) {
 	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
@@ -36,7 +36,7 @@ foreach ($values as $index => $value) {
 
 $config = [
 	'id' => $id,
-	'type' => $type,
+	'type' => $join_type,
 	'title' => $title,
 	'group_guids' => (array) get_input('group_guids', []),
 	'patterns' => $patterns,

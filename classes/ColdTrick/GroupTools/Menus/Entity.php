@@ -187,7 +187,9 @@ class Entity {
 			'name' => 'approval_reasons',
 			'icon' => 'check-square',
 			'text' => elgg_echo('group_tools:group:admin_approve:menu'),
-			'href' => elgg_http_add_url_query_elements('ajax/view/group_tools/group/reasons', [
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'view',
+				'segments' => 'group_tools/group/reasons',
 				'guid' => $entity->guid,
 			]),
 			'link_class' => 'elgg-lightbox',

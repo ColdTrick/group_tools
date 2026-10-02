@@ -41,12 +41,13 @@ if (!empty($auto_joins)) {
 }
 
 $menu = elgg_view('output/url', [
-	'text' => elgg_echo('edit'),
 	'icon' => 'edit',
-	'href' => 'ajax/form/group_tools/admin/auto_join/default',
-	'class' => [
-		'elgg-lightbox',
-	],
+	'text' => elgg_echo('edit'),
+	'href' => elgg_generate_url('ajax', [
+		'type' => 'form',
+		'segments' => 'group_tools/admin/auto_join/default',
+	]),
+	'class' => ['elgg-lightbox'],
 	'data-colorbox-opts' => json_encode([
 		'maxWidth' => '650px',
 	]),

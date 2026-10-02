@@ -23,12 +23,13 @@ if (empty($output)) {
 $content .= $output;
 
 $menu = elgg_view('output/url', [
-	'text' => elgg_echo('add'),
 	'icon' => 'plus-circle',
-	'href' => 'ajax/form/group_tools/admin/auto_join/additional',
-	'class' => [
-		'elgg-lightbox',
-	],
+	'text' => elgg_echo('add'),
+	'href' => elgg_generate_url('ajax', [
+		'type' => 'form',
+		'segments' => 'group_tools/admin/auto_join/additional',
+	]),
+	'class' => ['elgg-lightbox'],
 	'data-colorbox-opts' => json_encode([
 		'maxWidth' => '650px',
 	]),

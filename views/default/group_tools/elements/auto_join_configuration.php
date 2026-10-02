@@ -10,7 +10,9 @@ $title .= elgg_view('output/url', [
 	'icon' => 'edit',
 	'text' => false,
 	'title' => elgg_echo('edit'),
-	'href' => elgg_http_add_url_query_elements('ajax/form/group_tools/admin/auto_join/additional', [
+	'href' => elgg_generate_url('ajax', [
+		'type' => 'form',
+		'segments' => 'group_tools/admin/auto_join/additional',
 		'id' => elgg_extract('id', $config),
 	]),
 	'class' => [

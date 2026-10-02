@@ -43,7 +43,9 @@ class Relationship {
 		
 		/** @var \ElggMenuItem $reject */
 		$reject = $result->get('reject');
-		$reject->setHref(elgg_http_add_url_query_elements('ajax/form/groups/killrequest', [
+		$reject->setHref(elgg_generate_url('ajax', [
+			'type' => 'form',
+			'segments' => 'groups/killrequest',
 			'relationship_id' => $relationship->id,
 		]));
 		$reject->setConfirmText(false);

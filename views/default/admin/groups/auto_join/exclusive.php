@@ -25,8 +25,10 @@ $content .= $output;
 $menu = elgg_view('output/url', [
 	'icon' => 'plus-circle',
 	'text' => elgg_echo('add'),
-	'href' => elgg_http_add_url_query_elements('ajax/form/group_tools/admin/auto_join/additional', [
-		'type' => 'exclusive',
+	'href' => elgg_generate_url('ajax', [
+		'type' => 'form',
+		'segments' => 'group_tools/admin/auto_join/additional',
+		'join_type' => 'exclusive',
 	]),
 	'class' => [
 		'elgg-lightbox',

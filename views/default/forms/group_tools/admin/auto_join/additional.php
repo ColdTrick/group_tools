@@ -6,7 +6,7 @@ $id = elgg_extract('id', $vars);
 $config = [];
 if (empty($id)) {
 	$id = 'additional-' . str_ireplace('.', '', microtime(true));
-	$config['type'] = elgg_extract('type', $vars, 'additional');
+	$config['type'] = elgg_extract('join_type', $vars, 'additional');
 } else {
 	$config = group_tools_get_auto_join_configuration($id);
 }
@@ -19,7 +19,7 @@ echo elgg_view_field([
 
 echo elgg_view_field([
 	'#type' => 'hidden',
-	'name' => 'type',
+	'name' => 'join_type',
 	'value' => elgg_extract('type', $config, 'additional'),
 ]);
 
