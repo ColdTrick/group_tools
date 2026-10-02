@@ -104,6 +104,6 @@ $form_data .= elgg_view('navigation/pagination', [
 
 echo elgg_view('input/form', [
 	'id' => 'group-tools-admin-bulk-delete',
-	'action' => 'action/group_tools/admin/bulk_delete',
+	'action' => elgg_generate_action_url('group_tools/admin/bulk_delete', [], false),
 	'body' => $form_data,
 ]);
