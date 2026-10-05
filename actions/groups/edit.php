@@ -120,12 +120,8 @@ foreach ($tools as $tool) {
 	}
 }
 
-// Group membership - should these be treated with same constants as access permissions?
-$value = get_input('membership');
-if ($group->membership === null || $value !== null) {
-	$is_public_membership = ($value == ACCESS_PUBLIC);
-	$group->membership = $is_public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
-}
+// Group membership
+$group->membership = (int) get_input('membership');
 
 $group->setContentAccessMode((string) get_input('content_access_mode'));
 

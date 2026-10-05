@@ -37,8 +37,6 @@ return [
 	'group_tools:settings:admin_only' => "Admin only",
 	
 	'group_tools:settings:edit:title' => "Group edit settings",
-	'group_tools:settings:simple_access_tab' => "Simplified group access selection",
-	'group_tools:settings:simple_access_tab:help' => "Replaces group access options when creating groups with a simplified choice between 'Open' and 'Closed'",
 
 	'group_tools:settings:simple_tool_presets' => "Simplified group tool preset selection",
 	'group_tools:settings:simple_tool_presets:help' => "Simplifies the group tool preset selection. It uses the group tool preset title and description. The individual tools will not be shown. There are also no options to configure individual tools in the simplified mode.",
@@ -143,12 +141,6 @@ use that preset on the group creation form. This will also hide the tool selecti
 	'group_tools:auto_join:pattern:value:placeholder' => "Enter a matching value",
 	
 	'group_tools:action:admin:auto_join:additional:error:pregmatch' => "The provided preg match pattern was invalid",
-	
-	// simplified access
-	'group_tools:edit:access_simplified:open' => 'Open Group',
-	'group_tools:edit:access_simplified:open:description' => '<ul><li>Any user may join</li><li>Content can be shared with anyone</li></ul>',
-	'group_tools:edit:access_simplified:closed' => 'Closed Group',
-	'group_tools:edit:access_simplified:closed:description' => '<ul><li>Membership needs to be approved</li><li>Content can only be shared with group members</li></ul>',
 	
 	// group tools
 	'group_tools:group:edit:tools:default:description' => "Below you can configure which tools you wish to enable for the members of your group.

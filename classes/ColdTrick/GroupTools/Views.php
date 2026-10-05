@@ -101,31 +101,6 @@ class Views {
 	}
 	
 	/**
-	 * Show a simplified version of the group access tab (only during creation)
-	 *
-	 * @param \Elgg\Event $event 'view_vars', 'groups/edit/access'
-	 *
-	 * @return null|array
-	 */
-	public static function showSimplefiedAccess(\Elgg\Event $event): ?array {
-		$vars = $event->getValue();
-		
-		$group = elgg_extract('entity', $vars);
-		if ($group instanceof \ElggGroup || elgg_get_plugin_setting('simple_access_tab', 'group_tools') !== 'yes') {
-			// edit existing group, or not enabled in the settings
-			return null;
-		}
-		
-		if ((bool) elgg_extract('_group_tools_simplified_deadloop', $vars, false)) {
-			return null;
-		}
-		
-		$vars[ViewsService::OUTPUT_KEY] = elgg_view('groups/edit/access_simplified', $vars);
-		
-		return $vars;
-	}
-	
-	/**
 	 * Show the join motivation on a membership request
 	 *
 	 * @param \Elgg\Event $event 'view_vars', 'relationship/membership_request'

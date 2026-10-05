@@ -119,10 +119,6 @@ Parcours Croisés',
   'group_tools:auto_join:pattern:operand:pregmatch' => 'Correspondance par expression régulière',
   'group_tools:auto_join:pattern:value:placeholder' => 'Entrer une valeur correspondante',
   'group_tools:action:admin:auto_join:additional:error:pregmatch' => 'L\'expression régulière saisie n\'est pas valide',
-  'group_tools:edit:access_simplified:open' => 'Groupe ouvert',
-  'group_tools:edit:access_simplified:open:description' => '<ul><li>Tout utilisateur peut s\'inscrire </li><li>Le contenu peut être partagé avec tous le monde</li></ul>',
-  'group_tools:edit:access_simplified:closed' => 'Groupe fermé',
-  'group_tools:edit:access_simplified:closed:description' => '<ul><li>L\'adhésion a besoin d\'être validée</li><li>Le contenu ne peut être partagé que par les membres du groupe</li></ul>',
   'groups_tools:state_info:notification:message' => 'Votre groupe \'%s\' est inactif depuis un bon moment
 
 Nous vous remercions de vérifier votre groupe ici:
