@@ -19,12 +19,10 @@ if (!empty($members)) {
 }
 
 $form_data = elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('group_tools:all_members', [$group->getMembers(['count' => true])]),
 	'name' => 'all_members',
-	'value' => 1,
-	'checked' => true,
-	'switch' => true,
+	'value' => true,
 ]);
 
 $form_data .= elgg_view_field([

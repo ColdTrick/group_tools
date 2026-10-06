@@ -19,6 +19,7 @@ use ColdTrick\GroupTools\Notifications\RequestMembershipMotivationHandler;
 use ColdTrick\GroupTools\Notifications\StaleGroupHandler;
 use ColdTrick\GroupTools\Notifications\WelcomeMessageGroupHandler;
 use ColdTrick\GroupTools\Upgrades\MigrateAssignGroupAdmins;
+use ColdTrick\GroupTools\Upgrades\MigratePluginSwitchSettings;
 use Elgg\Router\Middleware\Gatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper;
 use Elgg\Router\Middleware\GroupPageOwnerGatekeeper;
@@ -42,24 +43,24 @@ return [
 	'bootstrap' => Bootstrap::class,
 	'settings' => [
 		'group_listing' => 'all',
-		'multiple_admin' => 'no',
-		'mail' => 'no',
-		'mail_members' => 'no',
-		'related_groups' => 'yes',
-		'admin_approve' => 'no',
-		'creation_reason' => 0,
-		'concept_groups' => 0,
+		'multiple_admin' => false,
+		'mail' => false,
+		'mail_members' => false,
+		'related_groups' => true,
+		'admin_approve' => false,
+		'creation_reason' => false,
+		'concept_groups' => false,
 		'admin_transfer' => 'no',
-		'owner_transfer_river' => 0,
-		'simple_tool_presets' => 'no',
-		'auto_accept_membership_requests' => 'no',
-		'invite_email' => 'no',
-		'invite_csv' => 'no',
-		'domain_based' => 'no',
+		'owner_transfer_river' => false,
+		'simple_tool_presets' => false,
+		'auto_accept_membership_requests' => false,
+		'invite_email' => false,
+		'invite_csv' => false,
+		'domain_based' => false,
 		'join_motivation' => 'no',
-		'notification_toggle' => 'no',
-		'search_index' => 'no',
-		'auto_suggest_groups' => 'yes',
+		'notification_toggle' => false,
+		'search_index' => false,
+		'auto_suggest_groups' => true,
 	],
 	'entities' => [
 		[
@@ -407,6 +408,7 @@ return [
 	],
 	'upgrades' => [
 		MigrateAssignGroupAdmins::class,
+		MigratePluginSwitchSettings::class,
 	],
 	'view_extensions' => [
 		'admin.css' => [

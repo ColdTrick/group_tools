@@ -587,4 +587,7 @@ Please check on the group here:
 	// upgrades
 	'group_tools:upgrade:2026081101:title' => "Migrate the assign group admin setting",
 	'group_tools:upgrade:2026081101:description' => "Migrate the old group tool for assigning group admins to a group plugin setting",
+	
+	'group_tools:upgrade:2026100601:title' => "Migrate plugin switch settings",
+	'group_tools:upgrade:2026100601:description' => "The plugin settings stored as yes/no will be changed to 1/0 for easier boolean comparison",
 ];

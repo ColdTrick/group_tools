@@ -5,6 +5,8 @@
  */
 
 return array (
+  'group_tools:upgrade:2026100601:title' => "Migreer plugin switch instellingen",
+  'group_tools:upgrade:2026100601:description' => "Plugin instellen die waren opgeslagen als yes/no worden vervangen door 1/0 voor eenvoudiger gebruik",
   'group_tools:group:edit:tools:default:description' => 'Hieronder vind je een lijst van verschillende tools die je kunt aanbieden aan de leden van je groep.
 Als je een bepaalde tool niet nuttig vindt of het wordt niet gebruikt kun je dit eenvoudig uitschakelen. Je kunt dit op een later moment altijd nog weer aanpassen.',
   'group_tools:group:invite:offloaded' => 'Er worden op dit moment uitnodigingen verzonden op de achtergrond',

@@ -43,13 +43,11 @@ echo elgg_view_field($owner_guid_options);
 // stay admin
 if (group_tools_multiple_admin_enabled() && $group->owner_guid === $user->guid) {
 	echo elgg_view_field([
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo('group_tools:admin_transfer:remain_admin'),
 		'#help' => elgg_echo('group_tools:admin_transfer:remain_admin:help'),
 		'#class' => 'elgg-divide-left plm',
 		'name' => 'admin_transfer_remain',
-		'value' => 1,
-		'checked' => true,
-		'switch' => true,
+		'value' => true,
 	]);
 }

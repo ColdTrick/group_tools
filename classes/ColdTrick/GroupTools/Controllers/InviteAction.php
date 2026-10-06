@@ -51,7 +51,7 @@ class InviteAction extends GenericAction {
 		$this->csv = elgg_get_uploaded_file('csv');
 		
 		if (elgg_is_admin_logged_in()) {
-			if (get_input('all_users') === 'yes') {
+			if (get_input('all_users')) {
 				$this->all_users = true;
 				$this->user_guids = null;
 			}

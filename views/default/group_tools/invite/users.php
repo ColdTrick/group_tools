@@ -22,10 +22,8 @@ echo elgg_view_field([
 
 if (elgg_is_admin_logged_in()) {
 	echo elgg_view_field([
-		'#type' => 'checkbox',
+		'#type' => 'switch',
 		'#label' => elgg_echo('group_tools:group:invite:users:all'),
 		'name' => 'all_users',
-		'value' => 'yes',
-		'switch' => true,
 	]);
 }
