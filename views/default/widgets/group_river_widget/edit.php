@@ -11,7 +11,7 @@ $widget = elgg_extract('entity', $vars);
 $filter_contents = [
 	'0' => elgg_echo('all'),
 ];
-$registered_entities = elgg_entity_types_with_capability('searchable');
+$registered_entities = elgg_entity_types_with_capability('river_emittable');
 if (!empty($registered_entities)) {
 	foreach ($registered_entities as $type => $subtypes) {
 		if (empty($subtypes)) {
