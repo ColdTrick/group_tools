@@ -73,10 +73,6 @@ if ($show_visibility) {
 
 	if (elgg_get_config('walled_garden')) {
 		unset($visibility_options[ACCESS_PUBLIC]);
-		
-		if ($visibility == ACCESS_PUBLIC) {
-			$visibility = ACCESS_LOGGED_IN;
-		}
 	}
 
 	echo elgg_view_field([
