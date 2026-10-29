@@ -107,7 +107,7 @@ class Membership {
 		static $register_once;
 		
 		if (!isset(self::$NOTIFICATIONS_TOGGLE)) {
-			self::$NOTIFICATIONS_TOGGLE = (elgg_get_plugin_setting('notification_toggle', 'group_tools') === 'yes');
+			self::$NOTIFICATIONS_TOGGLE = (bool) elgg_get_plugin_setting('notification_toggle', 'group_tools');
 		}
 		
 		if (!self::$NOTIFICATIONS_TOGGLE) {
@@ -241,6 +241,9 @@ class Membership {
 	public static function autoJoinGroupsCron(\Elgg\Event $event): void {
 		$time = (int) $event->getParam('time', time());
 		
+		// no system messages in the cron
+		self::$NOTIFICATIONS_TOGGLE = false;
+		
 		// ignore access
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($time) {
 			/** @var \ElggBatch $batch */
@@ -307,6 +310,9 @@ class Membership {
 			return;
 		}
 		
+		// no system messages on login due to the fact it could be a lot of groups
+		self::$NOTIFICATIONS_TOGGLE = false;
+		
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($user) {
 			// prep helper class
 			$auto_join = new AutoJoin($user);
@@ -347,9 +353,12 @@ class Membership {
 			return;
 		}
 		
+		// no system messages on validation due to the fact it could be a lot of groups
+		self::$NOTIFICATIONS_TOGGLE = false;
+		
 		// ignore access
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
-			// auto detect email invited groups
+			// auto-detect email invited groups
 			$groups = group_tools_get_invited_groups_by_email($user->email);
 			if (empty($groups)) {
 				return;
@@ -380,6 +389,9 @@ class Membership {
 		if (empty($group_invitecode)) {
 			return;
 		}
+		
+		// no system messages when creating a user this is confusing for the user
+		self::$NOTIFICATIONS_TOGGLE = false;
 		
 		// ignore access
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user, $group_invitecode) {
@@ -423,6 +435,9 @@ class Membership {
 		if (!$user instanceof \ElggUser) {
 			return;
 		}
+		
+		// no system messages on validation due to the fact it could be a lot of groups
+		self::$NOTIFICATIONS_TOGGLE = false;
 		
 		// ignore access
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
