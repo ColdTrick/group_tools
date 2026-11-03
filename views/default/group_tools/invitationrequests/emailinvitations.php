@@ -8,7 +8,7 @@ if (!$user instanceof \ElggUser || !$user->canEdit()) {
 	return;
 }
 
-if (elgg_get_plugin_setting('invite_email', 'group_tools') !== 'yes') {
+if (!(bool) elgg_get_plugin_setting('invite_email', 'group_tools')) {
 	return;
 }
 

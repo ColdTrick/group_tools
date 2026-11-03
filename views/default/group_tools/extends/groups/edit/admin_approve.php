@@ -9,7 +9,7 @@ if (empty($entity->guid) && elgg_is_admin_logged_in()) {
 	return;
 }
 
-if (elgg_get_plugin_setting('admin_approve', 'group_tools') !== 'yes') {
+if (!(bool) elgg_get_plugin_setting('admin_approve', 'group_tools')) {
 	return;
 }
 

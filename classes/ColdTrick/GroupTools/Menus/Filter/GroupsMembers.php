@@ -56,7 +56,7 @@ class GroupsMembers {
 			return;
 		}
 		
-		if (elgg_get_plugin_setting('invite_email', 'group_tools') === 'no' && elgg_get_plugin_setting('invite_csv', 'group_tools') === 'no') {
+		if (!(bool) elgg_get_plugin_setting('invite_email', 'group_tools') && !(bool) elgg_get_plugin_setting('invite_csv', 'group_tools')) {
 			// no way to get e-mail invitations
 			return;
 		}

@@ -10,7 +10,7 @@ if (!$user instanceof \ElggUser || !$user->isAdmin()) {
 	return;
 }
 
-if (elgg_get_plugin_setting('admin_approve', 'group_tools') !== 'yes') {
+if (!(bool) elgg_get_plugin_setting('admin_approve', 'group_tools')) {
 	return;
 }
 

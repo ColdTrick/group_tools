@@ -20,7 +20,7 @@ class Widgets {
 		}
 		
 		$remove = false;
-		if (elgg_get_plugin_setting('related_groups', 'group_tools') === 'no') {
+		if (!(bool) elgg_get_plugin_setting('related_groups', 'group_tools')) {
 			// not allowed by plugin setting
 			$remove = true;
 		}

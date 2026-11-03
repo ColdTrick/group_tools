@@ -10,7 +10,7 @@ if (!$user instanceof \ElggUser || $user->guid !== elgg_get_logged_in_user_guid(
 	return;
 }
 
-if (elgg_get_plugin_setting('invite_email', 'group_tools') !== 'yes') {
+if (!(bool) elgg_get_plugin_setting('invite_email', 'group_tools')) {
 	return;
 }
 

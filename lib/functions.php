@@ -114,7 +114,7 @@ function group_tools_get_suggested_groups(?\ElggUser $user = null, ?int $limit =
 		return $qb->compare("{$main_alias}.guid", 'NOT IN', $select->getSQL());
 	};
 	
-	if (elgg_get_plugin_setting('auto_suggest_groups', 'group_tools') !== 'no') {
+	if ((bool) elgg_get_plugin_setting('auto_suggest_groups', 'group_tools')) {
 		$user_tag_names = [];
 		$group_tag_names = [];
 		
@@ -222,7 +222,7 @@ function group_tools_get_suggested_groups(?\ElggUser $user = null, ?int $limit =
  * @return bool true if the domain of the user is found in the group settings
  */
 function group_tools_check_domain_based_group(\ElggGroup $group, ?\ElggUser $user = null): bool {
-	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
+	if (!(bool) elgg_get_plugin_setting('domain_based', 'group_tools')) {
 		return false;
 	}
 	
@@ -255,7 +255,7 @@ function group_tools_check_domain_based_group(\ElggGroup $group, ?\ElggUser $use
  * @return \ElggGroup[]
  */
 function group_tools_get_domain_based_groups(\ElggUser $user): array {
-	if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
+	if (!(bool) elgg_get_plugin_setting('domain_based', 'group_tools')) {
 		return [];
 	}
 	
@@ -367,13 +367,7 @@ function group_tools_multiple_admin_enabled(): bool {
 		return $result;
 	}
 	
-	$result = false;
-	
-	if (elgg_get_plugin_setting('multiple_admin', 'group_tools') === 'yes') {
-		$result = true;
-	}
-	
-	return $result;
+	return (bool) elgg_get_plugin_setting('multiple_admin', 'group_tools');
 }
 
 /**
@@ -466,12 +460,7 @@ function group_tools_group_mail_enabled(?\ElggGroup $group = null): bool {
 	static $mail_enabled;
 	
 	if (!isset($mail_enabled)) {
-		$mail_enabled = false;
-		
-		$setting = elgg_get_plugin_setting('mail', 'group_tools');
-		if ($setting === 'yes') {
-			$mail_enabled = true;
-		}
+		$mail_enabled = (bool) elgg_get_plugin_setting('mail', 'group_tools');
 	}
 	
 	// quick return if plugin setting says no
@@ -502,12 +491,7 @@ function group_tools_group_mail_members_enabled(?\ElggGroup $group = null): bool
 	static $mail_members_enabled;
 	
 	if (!isset($mail_members_enabled)) {
-		$mail_members_enabled = false;
-	
-		$setting = elgg_get_plugin_setting('mail_members', 'group_tools');
-		if ($setting === 'yes') {
-			$mail_members_enabled = true;
-		}
+		$mail_members_enabled = (bool) elgg_get_plugin_setting('mail_members', 'group_tools');
 	}
 	
 	// quick return if mail members is not allowed

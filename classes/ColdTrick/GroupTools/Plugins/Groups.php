@@ -27,7 +27,7 @@ class Groups {
 		}
 		
 		// related groups
-		if (elgg_get_plugin_setting('related_groups', 'group_tools') === 'yes') {
+		if ((bool) elgg_get_plugin_setting('related_groups', 'group_tools')) {
 			$tools[] = new Tool('related_groups', [
 				'default_on' => false,
 			]);
@@ -58,7 +58,7 @@ class Groups {
 			return;
 		}
 		
-		if (elgg_get_plugin_setting('auto_accept_membership_requests', 'group_tools') !== 'yes') {
+		if (!(bool) elgg_get_plugin_setting('auto_accept_membership_requests', 'group_tools')) {
 			return;
 		}
 		

@@ -51,7 +51,7 @@ if (!$entity instanceof \ElggGroup) {
 
 // new group can choose from preset (if any)
 if (empty($entity) && !empty($presets)) {
-	if (elgg_get_plugin_setting('simple_tool_presets', 'group_tools') === 'yes') {
+	if ((bool) elgg_get_plugin_setting('simple_tool_presets', 'group_tools')) {
 		echo elgg_view('groups/edit/tools/simple', $vars);
 	} else {
 		echo elgg_view('groups/edit/tools/normal', $vars);

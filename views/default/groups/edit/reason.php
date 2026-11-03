@@ -11,7 +11,7 @@ if ($entity instanceof \ElggGroup) {
 	return;
 }
 
-$admin_approve = elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes';
+$admin_approve = (bool) elgg_get_plugin_setting('admin_approve', 'group_tools');
 $admin_approve = $admin_approve && !elgg_is_admin_logged_in();
 $ask_reason = (bool) elgg_get_plugin_setting('creation_reason', 'group_tools');
 if (!$admin_approve || !$ask_reason) {

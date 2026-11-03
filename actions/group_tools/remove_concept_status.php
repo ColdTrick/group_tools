@@ -14,7 +14,7 @@ if (!$group->canEdit()) {
 unset($group->is_concept);
 
 // should the group be approved by and admin?
-if (!elgg_is_admin_logged_in() && (elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes')) {
+if (!elgg_is_admin_logged_in() && (bool) elgg_get_plugin_setting('admin_approve', 'group_tools')) {
 	$group->admin_approval = true;
 	
 	elgg_trigger_event('admin_approval', 'group', $group);

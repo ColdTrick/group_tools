@@ -1,6 +1,6 @@
 <?php
 
-if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
+if (!(bool) elgg_get_plugin_setting('domain_based', 'group_tools')) {
 	return;
 }
 

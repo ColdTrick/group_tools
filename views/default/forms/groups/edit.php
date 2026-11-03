@@ -72,7 +72,7 @@ if ($entity instanceof \ElggGroup) {
 }
 
 // build form footer
-$admin_approve = elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes';
+$admin_approve = (bool) elgg_get_plugin_setting('admin_approve', 'group_tools');
 $admin_approve = $admin_approve && !elgg_is_admin_logged_in();
 
 // display the save button and some additional form data

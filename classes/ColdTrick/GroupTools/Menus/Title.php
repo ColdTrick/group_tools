@@ -118,7 +118,7 @@ class Title {
 			return null;
 		}
 		
-		if (elgg_get_plugin_setting('admin_approve', 'group_tools') !== 'yes') {
+		if (!(bool) elgg_get_plugin_setting('admin_approve', 'group_tools')) {
 			return null;
 		}
 		
@@ -243,7 +243,7 @@ class Title {
 		
 		// add owner action
 		// publish
-		if (elgg_get_plugin_setting('admin_approve', 'group_tools') === 'yes' && !elgg_is_admin_logged_in()) {
+		if ((bool) elgg_get_plugin_setting('admin_approve', 'group_tools') && !elgg_is_admin_logged_in()) {
 			// ask to be approved
 			$text = elgg_echo('group_tools:group:concept:profile:approve');
 			$confirm = elgg_echo('group_tools:group:concept:profile:approve:confirm');
@@ -278,7 +278,7 @@ class Title {
 			return null;
 		}
 		
-		if (elgg_get_plugin_setting('create_based_on_preset', 'group_tools') !== 'yes') {
+		if (!(bool) elgg_get_plugin_setting('create_based_on_preset', 'group_tools')) {
 			return null;
 		}
 		

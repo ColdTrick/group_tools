@@ -3,8 +3,8 @@
 $group = elgg_get_page_owner_entity();
 
 // get plugin settings
-$invite_email = elgg_get_plugin_setting('invite_email', 'group_tools') === 'yes';
-$invite_csv = elgg_get_plugin_setting('invite_csv', 'group_tools') === 'yes';
+$invite_email = (bool) elgg_get_plugin_setting('invite_email', 'group_tools');
+$invite_csv = (bool) elgg_get_plugin_setting('invite_csv', 'group_tools');
 
 elgg_push_entity_breadcrumbs($group);
 

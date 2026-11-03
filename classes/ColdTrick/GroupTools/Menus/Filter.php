@@ -17,7 +17,7 @@ class Filter {
 	 * @return null|MenuItems
 	 */
 	public static function registerUserEmailInvitations(\Elgg\Event $event): ?MenuItems {
-		if (elgg_get_plugin_setting('invite_email', 'group_tools') !== 'yes') {
+		if (!(bool) elgg_get_plugin_setting('invite_email', 'group_tools')) {
 			return null;
 		}
 		

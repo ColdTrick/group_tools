@@ -463,7 +463,7 @@ class Membership {
 	 */
 	public static function groupJoinAction(\Elgg\Event $event): void {
 		// hacky way around a shortcoming of Elgg core to allow users to join a group
-		if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
+		if (!(bool) elgg_get_plugin_setting('domain_based', 'group_tools')) {
 			return;
 		}
 		
@@ -485,7 +485,7 @@ class Membership {
 			return null;
 		}
 		
-		if (elgg_get_plugin_setting('domain_based', 'group_tools') !== 'yes') {
+		if (!(bool) elgg_get_plugin_setting('domain_based', 'group_tools')) {
 			return null;
 		}
 		

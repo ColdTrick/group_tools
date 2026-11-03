@@ -26,7 +26,7 @@ class PageLayout {
 			return null;
 		}
 		
-		if (elgg_get_plugin_setting('search_index', 'group_tools') === 'yes') {
+		if ((bool) elgg_get_plugin_setting('search_index', 'group_tools')) {
 			// indexing is allowed
 			return null;
 		}
