@@ -1,6 +1,15 @@
 Version history
 ===============
 
+24.0 (2026-11-12):
+
+- changed: minimal Elgg version to 7.0
+- changed: replaced yes/no switches with 1/0 values
+- fixed: no more confusing group notification messages on login
+- fixed: retain group access level in walled garden mode
+- fixed: use correct entity types for river filter
+- removed: simplified access on group creation
+
 23.2 (2026-08-19):
 
 - added: validation of required fields on group edit before switching tab
