@@ -32,43 +32,55 @@ class AdminHeader {
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:tool_presets',
-			'href' => 'admin/groups/tool_presets',
 			'text' => elgg_echo('admin:groups:tool_presets'),
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'groups/tool_presets',
+			]),
 			'parent_name' => 'groups',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:bulk_delete',
-			'href' => 'admin/groups/bulk_delete',
 			'text' => elgg_echo('admin:groups:bulk_delete'),
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'groups/bulk_delete',
+			]),
 			'parent_name' => 'groups',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:auto_join',
-			'href' => 'admin/groups/auto_join',
 			'text' => elgg_echo('admin:groups:auto_join'),
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'groups/auto_join',
+			]),
 			'parent_name' => 'groups',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:featured',
-			'href' => 'admin/groups/featured',
 			'text' => elgg_echo('admin:groups:featured'),
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'groups/featured',
+			]),
 			'parent_name' => 'groups',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:suggested',
-			'href' => 'admin/groups/suggested',
 			'text' => elgg_echo('admin:groups:suggested'),
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'groups/suggested',
+			]),
 			'parent_name' => 'groups',
 		]);
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:admin_approval',
-			'href' => 'admin/groups/admin_approval',
 			'text' => elgg_echo('admin:groups:admin_approval'),
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'groups/admin_approval',
+			]),
 			'parent_name' => 'groups',
 		]);
 		
