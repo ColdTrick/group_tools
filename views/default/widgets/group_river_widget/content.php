@@ -44,6 +44,7 @@ if ($limit < 1) {
 // prepare options
 $options = [
 	'limit' => $limit,
+	'type_subtype_pairs' => [],
 	'wheres' => [
 		function (QueryBuilder $qb, $main_alias) use ($group_guid) {
 			$wheres = [];
@@ -66,17 +67,25 @@ $options = [
 ];
 
 // get activity filter
-$activity_filter = $widget->activity_filter;
-if (!empty($activity_filter) && is_string($activity_filter)) {
-	list($type, $subtype) = explode(',', $activity_filter);
-	
-	if (!empty($type)) {
-		$options['type'] = $type;
+$activity_filter = (array) $widget->activity_filter;
+foreach ($activity_filter as $content) {
+	list($type, $subtype) = explode(',', $content);
+	if (empty($type)) {
+		continue;
 	}
-	
-	if (!empty($subtype)) {
-		$options['subtype'] = $subtype;
+
+	$value = $subtype;
+	if (array_key_exists($type, $options['type_subtype_pairs'])) {
+		if (!is_array($options['type_subtype_pairs'][$type])) {
+			$value = [$options['type_subtype_pairs'][$type]];
+		} else {
+			$value = $options['type_subtype_pairs'][$type];
+		}
+
+		$value[] = $subtype;
 	}
+
+	$options['type_subtype_pairs'][$type] = $value;
 }
 
 echo elgg_list_river($options);

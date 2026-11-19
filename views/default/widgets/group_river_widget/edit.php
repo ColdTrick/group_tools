@@ -8,11 +8,20 @@ $widget = elgg_extract('entity', $vars);
 
 // filter activity
 // get filter options
-$filter_contents = [
-	'0' => elgg_echo('all'),
-];
+$filter_contents = [];
 $registered_entities = elgg_entity_types_with_capability('river_emittable');
+unset($registered_entities['site']);
+
 if (!empty($registered_entities)) {
+	$container = $widget->getContainerEntity();
+	if ($container instanceof \ElggGroup && array_key_exists('object', $registered_entities)) {
+		foreach ($registered_entities['object'] as $index => $subtype) {
+			if (!$container->canWriteToContainer(0, 'object', $subtype)) {
+				unset($registered_entities['object'][$index]);
+			}
+		}
+	}
+	
 	foreach ($registered_entities as $type => $subtypes) {
 		if (empty($subtypes)) {
 			return;
@@ -36,7 +45,7 @@ echo elgg_view('object/widget/edit/num_display', [
 ]);
 
 echo elgg_view_field([
-	'#type' => 'select',
+	'#type' => 'checkboxes',
 	'#label' => elgg_echo('filter'),
 	'name' => 'params[activity_filter]',
 	'value' => $widget->activity_filter,
