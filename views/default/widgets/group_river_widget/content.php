@@ -69,11 +69,13 @@ $options = [
 // get activity filter
 $activity_filter = (array) $widget->activity_filter;
 foreach ($activity_filter as $content) {
-	list($type, $subtype) = explode(',', $content);
-	if (empty($type)) {
+	$entity_info = explode(',', $content);
+	if (count($entity_info) < 2) {
 		continue;
 	}
 
+	list($type, $subtype) = $entity_info;
+	
 	$value = $subtype;
 	if (array_key_exists($type, $options['type_subtype_pairs'])) {
 		if (!is_array($options['type_subtype_pairs'][$type])) {
